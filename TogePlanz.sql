@@ -10,13 +10,13 @@ CREATE TABLE users (
     last_name VARCHAR(50)
 );
 
-CREATE TABLE user_preferences (
-    preference_id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE user_history (
+    history_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    preference_type VARCHAR(50) NOT NULL,
-    preference_value VARCHAR(100) NOT NULL,
-    is_liked BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+    trip_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (trip_id) REFERENCES trips(trip_id) ON DELETE CASCADE
 );
 
 CREATE TABLE trips (
