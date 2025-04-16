@@ -1,0 +1,14 @@
+2025-04-17 01:13:55,881 - INFO - Starting unified extraction for 2 tours
+2025-04-17 01:13:55,881 - INFO - Selenium enabled: False
+2025-04-17 01:13:55,881 - INFO - Output prefix: data/tripadvisor_tours
+2025-04-17 01:13:55,881 - INFO - Processing tour 1/2
+2025-04-17 01:13:55,881 - INFO - Extracting data for: https://www.tripadvisor.com/AttractionProductReview-g293924-d11988179-Ninh_Binh_Day_Tour_To_Visit_Hoa_Lu_Trang_An_Tam_Coc_Mua_Cave-Hanoi.html
+2025-04-17 01:13:55,881 - INFO - Falling back to image-based extraction...
+2025-04-17 01:13:55,881 - INFO - Image-based extraction succeeded
+2025-04-17 01:13:55,881 - INFO - Processing tour 2/2
+2025-04-17 01:13:55,881 - INFO - Extracting data for: https://www.tripadvisor.com/AttractionProductReview-g293924-d14781418-Ninh_Binh_Full_Day_Tour_from_Hanoi_to_Hoa_Lu_Tam_Coc_Mua_Cave_Via_Boat_Bike-Hanoi.html
+2025-04-17 01:13:55,881 - INFO - Falling back to image-based extraction...
+2025-04-17 01:13:55,881 - INFO - Image-based extraction succeeded
+2025-04-17 01:13:55,881 - INFO - Data saved to data/tripadvisor_tours.csv
+2025-04-17 01:13:55,881 - INFO - Data saved to data/tripadvisor_tours.json
+2025-04-17 01:13:55,881 - INFO - Completed extraction of 2 tours
