@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Hanoi TripAdvisor Attractions Crawler - Fixed Version
-A specialized crawler that extracts attraction details from TripAdvisor.
+Enhanced Hanoi TripAdvisor Attractions Crawler
+A specialized crawler that extracts clean, structured attraction details from TripAdvisor.
 """
 
 import requests
@@ -13,6 +13,8 @@ import random
 import re
 import logging
 from urllib.parse import urljoin
+import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Set up logging
 logging.basicConfig(
@@ -25,20 +27,22 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-class ImprovedAttractionsCrawler:
-    """Fixed crawler for TripAdvisor attractions in Hanoi"""
+class EnhancedAttractionsCrawler:
+    """Enhanced crawler for TripAdvisor attractions in Hanoi with better data extraction"""
     
-    def __init__(self, delay=3.0):
+    def __init__(self, base_url=None, delay=3.0):
+        self.base_url = base_url or "https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html"
         self.min_delay = delay
         self.max_delay = delay * 2  # Randomize delay
         self.headers = {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36',
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             'Accept-Language': 'en-US,en;q=0.9',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
             'Connection': 'keep-alive',
             'Upgrade-Insecure-Requests': '1',
             'Referer': 'https://www.tripadvisor.com/'
         }
+        self.visited_urls = set()  # Track visited URLs to avoid duplicates
         
     def _random_delay(self):
         """Add a random delay between requests to avoid being blocked"""
@@ -76,9 +80,442 @@ class ImprovedAttractionsCrawler:
                 else:
                     logger.error(f"Failed to fetch {url} after {retries} attempts")
         return None
+
+    def get_attraction_listings(self, url=None, page=1):
+        """Get attraction listings from the TripAdvisor page"""
+        current_url = url or self.base_url
+        
+        # Add page parameter if not first page
+        if page > 1:
+            if "oa" in current_url:
+                current_url = re.sub(r'oa\d+', f'oa{(page-1)*30}', current_url)
+            else:
+                # Insert before .html or add at the end
+                if '.html' in current_url:
+                    current_url = current_url.replace('.html', f'-oa{(page-1)*30}.html')
+                else:
+                    current_url = f"{current_url}-oa{(page-1)*30}"
+                
+        logger.info(f"Getting attraction listings from page {page}: {current_url}")
+        
+        soup = self.get_soup(current_url)
+        if not soup:
+            return [], False
+            
+        attractions = []
+        
+        # Try multiple selectors to find attraction cards - updated for current TripAdvisor structure
+        selectors = [
+            'div[data-automation="attraction"]',
+            'div[data-automation="attraction-card"]',
+            'div.alPVI.eNNhq.eLAsv.bnqFK',
+            'div.XfVdV.o.AIbhI',
+            'div.BMQDV.o.AIbhI',
+            'div.eLWJL',
+            'div.listing',
+            'div.result-title',
+            'div.keSJH',
+            'div.listItem',
+            'div.attraction_clarity_cell',
+            'div.cJbIw',  # New selector
+            'div.jsTCA', # New selector
+            'div.fVbwn', # New selector
+            'div[data-automation="AttractionProductCard"]', # New product card selector
+            'div.RGISr' # New card selector
+        ]
+        
+        # Debug - print the entire HTML structure if needed
+        # with open('debug_page.html', 'w', encoding='utf-8') as f:
+        #     f.write(str(soup))
+        
+        found_attractions = False
+        for selector in selectors:
+            attraction_elements = soup.select(selector)
+            if attraction_elements:
+                logger.info(f"Found {len(attraction_elements)} attractions using selector: {selector}")
+                found_attractions = True
+                
+                for item in attraction_elements:
+                    # Try multiple selectors for finding the attraction link
+                    link_selectors = [
+                        'a[href*="Attraction_Review"]', 
+                        'a[href*="review"]',
+                        'a[href*="attraction"]',
+                        'a.vIjFZ', 
+                        'a.VLKGO', 
+                        'a.kPMxA',
+                        'a'  # As a last resort, try any link
+                    ]
+                    
+                    link_elem = None
+                    for link_selector in link_selectors:
+                        link_elem = item.select_one(link_selector)
+                        if link_elem and link_elem.has_attr('href'):
+                            break
+                    
+                    # If we still can't find a link, try getting any link that might be relevant
+                    if not link_elem or not link_elem.has_attr('href'):
+                        all_links = item.select('a')
+                        for link in all_links:
+                            if link.has_attr('href') and ('Attraction' in link['href'] or 'attraction' in link['href']):
+                                link_elem = link
+                                break
+                        
+                        # If we still don't have a link, skip this item
+                        if not link_elem or not link_elem.has_attr('href'):
+                            continue
+                        
+                    href = link_elem['href']
+                    # Make sure it's an absolute URL
+                    if not href.startswith('http'):
+                        href = urljoin("https://www.tripadvisor.com", href)
+                    
+                    # Skip if we've already processed this URL
+                    if href in self.visited_urls:
+                        continue
+                    
+                    # Look for name in various places with updated selectors
+                    name_selectors = [
+                        'h3', 'h2', 'div.biGQs', 'span.biGQs', 'div.name', 'div.listing_title', 'div.title',
+                        'span.yzLvM', 'div.jLzuM', 'span.gMMry', 'div.WlYyy', 'div.VLKGO'
+                    ]
+                    
+                    name = None
+                    for name_selector in name_selectors:
+                        name_elem = item.select_one(name_selector)
+                        if name_elem:
+                            name = name_elem.get_text(strip=True)
+                            if name:  # If we found a non-empty name, break
+                                break
+                    
+                    # If we still don't have a name, try to get it from the link text
+                    if not name:
+                        name = link_elem.get_text(strip=True)
+                    
+                    # Default name if still not found
+                    if not name:
+                        name = "Unknown Attraction"
+                    
+                    # Clean up the name by removing any ratings or reviews that might be included
+                    name = re.sub(r'\d+(\.\d+)?\s+of\s+5\s+bubbles', '', name)
+                    name = re.sub(r'[\d,]+\s+reviews?', '', name)
+                    name = name.strip()
+                    
+                    # Try to find rating with updated selectors
+                    rating = None
+                    rating_selectors = [
+                        'span.ui_bubble_rating', 'span.bvcyz', 'svg.jWkzb', 'div.ryXeZ'
+                    ]
+                    
+                    for rating_selector in rating_selectors:
+                        rating_elem = item.select_one(rating_selector)
+                        if rating_elem:
+                            # Try to extract from class
+                            rating_class = rating_elem.get('class', [])
+                            for cls in rating_class:
+                                if 'bubble_' in cls:
+                                    try:
+                                        rating = float(cls.split('_')[1]) / 10
+                                        break
+                                    except (IndexError, ValueError):
+                                        pass
+                            
+                            # If not found in class, try text content (might contain a rating like "4.5")
+                            if rating is None:
+                                rating_text = rating_elem.get_text(strip=True)
+                                matches = re.search(r'(\d+\.?\d*)', rating_text)
+                                if matches:
+                                    try:
+                                        rating = float(matches.group(1))
+                                        if rating > 5:  # Normalize if it's out of 10
+                                            rating = rating / 2
+                                        break
+                                    except ValueError:
+                                        pass
+                    
+                    # Try to find thumbnail image URL with updated selectors
+                    image_url = None
+                    img_selectors = ['img', 'div.TMdR img', 'div.RqLQH img', 'picture img']
+                    
+                    for img_selector in img_selectors:
+                        img_elem = item.select_one(img_selector)
+                        if img_elem and img_elem.has_attr('src'):
+                            image_url = img_elem['src']
+                            # Also check data-src attribute for lazy-loaded images
+                            for attr in ['data-src', 'data-lazy', 'data-srcset', 'data-lazyurl']:
+                                if img_elem.has_attr(attr):
+                                    image_url = img_elem[attr]
+                                    break
+                            
+                            # Make sure the image URL is absolute
+                            if not image_url.startswith('http'):
+                                image_url = urljoin("https://www.tripadvisor.com", image_url)
+                            break
+                    
+                    # Create the attraction object
+                    attraction_data = {
+                        "name": name,
+                        "url": href,
+                        "thumbnail_url": image_url
+                    }
+                    
+                    if rating is not None:
+                        attraction_data["rating"] = rating
+                    
+                    attractions.append(attraction_data)
+                    self.visited_urls.add(href)  # Mark as visited
+                    
+                    # Debug log for each attraction found
+                    logger.info(f"Found attraction: {name} - {href}")
+                
+                if attractions:
+                    break
+        
+        logger.info(f"Found {len(attractions)} attractions on page {page}")
+        if not attractions and found_attractions:
+            logger.warning("Found attraction elements but couldn't extract any valid attraction data.")
+            logger.warning("Consider running with --debug flag to save the HTML for inspection.")
+            
+            # Add fallback method to extract any link that might be an attraction
+            all_links = soup.select('a')
+            for link in all_links:
+                if not link.has_attr('href'):
+                    continue
+                    
+                href = link['href']
+                if 'Attraction_Review' in href and href not in self.visited_urls:
+                    name = link.get_text(strip=True)
+                    if not name:
+                        name = "Unknown Attraction"
+                        
+                    # Make URL absolute
+                    if not href.startswith('http'):
+                        href = urljoin("https://www.tripadvisor.com", href)
+                        
+                    attractions.append({
+                        "name": name,
+                        "url": href
+                    })
+                    self.visited_urls.add(href)
+                    logger.info(f"Fallback method found attraction: {name}")
+        
+        # Look for "Next" button to determine if there are more pages
+        has_next_page = False
+        next_selectors = [
+            'a.nav.next', 'a.ui_button.nav.next', 'a[data-page-number="next"]', 'a.BrOJk[href*="oa"]',
+            'a.JSRZY', 'a[data-smoke-attr="pagination-next-arrow"]'
+        ]
+        
+        for selector in next_selectors:
+            next_buttons = soup.select(selector)
+            for btn in next_buttons:
+                if ("next" in btn.get_text().lower() or 
+                    "next" in str(btn.get('class', [])).lower() or 
+                    "oa" in btn.get('href', '') or
+                    "→" in btn.get_text() or
+                    "pagination-next" in str(btn)):
+                    has_next_page = True
+                    break
+            if has_next_page:
+                break
+        
+        return attractions, has_next_page
+    
+    def _extract_clean_address(self, soup):
+        """Extract just the address from the soup, using improved selectors"""
+        address = None
+        
+        # Try to find address with various selectors
+        address_selectors = [
+            'span.DsyBj[data-test-target="detailsAddressInfo"]',
+            'div[data-automation="location__address"]',
+            'div.czkFU a',
+            'button.KTXIj',
+            'div.XQaIe',
+            'div.euDRl > a',
+            'div[data-automation="WebPresentation_LocalizationMapCard"] div.euDRl',
+            'div[data-automation="WebPresentation_PoiLocationCard"] div.euDRl',
+            'div.euDRl > div[data-automation="webPresentation"]'
+        ]
+        
+        for selector in address_selectors:
+            addr_elem = soup.select_one(selector)
+            if addr_elem:
+                address_text = addr_elem.get_text(strip=True)
+                # Clean up any "Address" label
+                address_text = re.sub(r'^Address\s*', '', address_text)
+                # Check if we have a reasonable address
+                if address_text and len(address_text) > 5 and len(address_text) < 200:
+                    address = address_text
+                    break
+        
+        # If not found, try looking for a specific pattern in the text
+        if not address:
+            # Look for a pattern like "27 Hang Be Hang Bac, Hoan Kiem, Hanoi 100000 Vietnam"
+            addr_pattern = re.compile(r'(\d+\s+[\w\s]+,\s+[\w\s]+,\s+Hanoi\s+\d+\s+Vietnam)', re.IGNORECASE)
+            for script in soup.find_all('script'):
+                if script.string and addr_pattern.search(script.string):
+                    address = addr_pattern.search(script.string).group(1)
+                    break
+            
+            # Try to find it in any div text
+            if not address:
+                for div in soup.find_all('div'):
+                    text = div.get_text(strip=True)
+                    if addr_pattern.search(text):
+                        address = addr_pattern.search(text).group(1)
+                        break
+        
+        # One more method - check for "The area" text and extract what follows
+        if not address:
+            area_text = soup.find(string=re.compile(r'The\s+area', re.IGNORECASE))
+            if area_text:
+                parent = area_text.parent
+                if parent:
+                    next_elem = parent.next_sibling
+                    if next_elem:
+                        addr_text = next_elem.get_text(strip=True)
+                        if addr_text and len(addr_text) > 5 and len(addr_text) < 200:
+                            address = addr_text
+        
+        return address
+    
+    def _extract_clean_opening_hours(self, soup):
+        """Extract just the opening hours from the soup"""
+        hours = None
+        
+        # Try specific hours selectors
+        hours_selectors = [
+            'div[data-automation="WebPresentation_PoiOpenHours"]',
+            'div.IMlHP',
+            'div.QvzAT',
+            'div.YbkpN',
+            'div.JguWG:contains("Open now")',
+            'div:contains("Open today")',
+            'div:contains("Hours:")',
+            'div[data-section-id="HoursSection"]'
+        ]
+        
+        for selector in hours_selectors:
+            if ':contains' in selector:
+                base_selector, contains_text = selector.split(':contains(')
+                contains_text = contains_text.rstrip(')')
+                contains_text = contains_text.strip('"\'')
+                
+                elements = soup.select(base_selector)
+                for elem in elements:
+                    if contains_text in elem.get_text():
+                        hours_text = elem.get_text(strip=True)
+                        # Clean up to just get times
+                        hours_match = re.search(r'(\d{1,2}:\d{2}\s*[AP]M\s*-\s*\d{1,2}:\d{2}\s*[AP]M)', hours_text)
+                        if hours_match:
+                            hours = hours_match.group(1)
+                        else:
+                            hours = hours_text
+                        break
+            else:
+                hours_elem = soup.select_one(selector)
+                if hours_elem:
+                    hours_text = hours_elem.get_text(strip=True)
+                    if hours_text and ('open' in hours_text.lower() or 'hour' in hours_text.lower() or 'am' in hours_text.lower() or 'pm' in hours_text.lower()):
+                        # Clean up to just get times
+                        hours_match = re.search(r'(\d{1,2}:\d{2}\s*[AP]M\s*-\s*\d{1,2}:\d{2}\s*[AP]M)', hours_text)
+                        if hours_match:
+                            hours = hours_match.group(1)
+                        else:
+                            # Limit to a reasonable length
+                            if len(hours_text) < 50:
+                                hours = hours_text
+                        break
+        
+        # Try looking for time pattern directly
+        if not hours:
+            time_pattern = re.compile(r'\d{1,2}:\d{2}\s*[AP]M\s*-\s*\d{1,2}:\d{2}\s*[AP]M')
+            time_elems = soup.find_all(string=time_pattern)
+            if time_elems:
+                for elem in time_elems:
+                    match = time_pattern.search(elem)
+                    if match:
+                        hours = match.group(0)
+                        break
+        
+        return hours
+    
+    def _extract_clean_duration(self, soup):
+        """Extract just the duration from the soup"""
+        duration = None
+        
+        # Try specific duration selectors
+        duration_selectors = [
+            'svg[aria-label="Duration"] + div',
+            'div:contains("Duration:")',
+            'div:contains("Suggested duration:")',
+            'div[data-automation="WebPresentation_PoiDetailsTags"] span:contains("hour")',
+            'div.eYKGZ:contains("Duration")'
+        ]
+        
+        for selector in duration_selectors:
+            if ':contains' in selector:
+                base_selector, contains_text = selector.split(':contains(')
+                contains_text = contains_text.rstrip(')')
+                contains_text = contains_text.strip('"\'')
+                
+                elements = soup.select(base_selector)
+                for elem in elements:
+                    if contains_text in elem.get_text():
+                        duration_text = elem.get_text(strip=True)
+                        # Extract just the duration part (e.g., "1-2 hours")
+                        duration_match = re.search(r'(?:duration|suggested duration)[:\s]*([^,;]+)', duration_text, re.IGNORECASE)
+                        if duration_match:
+                            duration = duration_match.group(1).strip()
+                        elif 'hour' in duration_text.lower():
+                            duration = duration_text
+                        break
+            else:
+                duration_elem = soup.select_one(selector)
+                if duration_elem:
+                    duration_text = duration_elem.get_text(strip=True)
+                    if 'hour' in duration_text.lower() or 'min' in duration_text.lower():
+                        # Clean it up
+                        duration_match = re.search(r'((?:\d+(?:-\d+)?\s+hours?)|(?:\d+(?:-\d+)?\s+minutes?))', duration_text)
+                        if duration_match:
+                            duration = duration_match.group(1)
+                        else:
+                            # Remove any irrelevant text
+                            duration = re.sub(r'suggest.*?edit.*', '', duration_text)
+                            duration = duration.strip()
+                        break
+        
+        # If we didn't find it with selectors, look for text patterns
+        if not duration:
+            hour_pattern = re.compile(r'(\d+-\d+\s+hours?|\d+\s+hours?|\d+-\d+\s+min|\d+\s+min)')
+            for div in soup.find_all('div'):
+                text = div.get_text(strip=True)
+                match = hour_pattern.search(text)
+                if match and len(text) < 100:  # Ensure it's a reasonable string
+                    duration = match.group(1)
+                    break
+        
+        return duration
+    
+    def _clean_name(self, name):
+        """Clean up the attraction name"""
+        if not name:
+            return "Unknown Attraction"
+            
+        # Remove claim/ownership text
+        name = re.sub(r'If you own this business.*', '', name, flags=re.IGNORECASE)
+        # Remove review counts
+        name = re.sub(r'\d+(\.\d+)?\s+of\s+5\s+bubbles', '', name)
+        name = re.sub(r'[\d,]+\s+reviews?', '', name)
+        # Remove any trailing numbers or punctuation
+        name = re.sub(r'\s*\(\d+\)\s*$', '', name)
+        return name.strip()
     
     def get_attraction_details(self, attraction_url):
         """Get detailed information about an attraction"""
+        self._random_delay()
+        
         soup = self.get_soup(attraction_url)
         if not soup:
             return {"url": attraction_url, "error": "Failed to fetch attraction page"}
@@ -89,7 +526,7 @@ class ImprovedAttractionsCrawler:
             "type": "Attraction"
         }
         
-        # 1. Extract name
+        # 1. Extract name with better cleaning
         name_selectors = [
             'h1.QdLfr',
             'h1.eIegw',
@@ -105,52 +542,24 @@ class ImprovedAttractionsCrawler:
         for selector in name_selectors:
             name_elem = soup.select_one(selector)
             if name_elem:
-                details["name"] = name_elem.get_text(strip=True)
+                details["name"] = self._clean_name(name_elem.get_text(strip=True))
                 break
         
-        # 2. Extract address
-        address_selectors = [
-            'div[data-test-target="attraction-detail-card"] button.UikbF',
-            'button.KEaY',
-            'div.kUaGX button',
-            'div.XPUSn span.yEWoV',
-            'div.FUHHI span',
-            'div.CEQvT button',
-            'button[data-automation="searchFilters_filterGroup_address"]',
-            'div.NXSyd',
-            'a[href*="maps"]',
-            'address',
-            'div.euDRl',
-            'div[data-automation="WebPresentation_POIInfoSection"] div.euDRl'
-        ]
-        for selector in address_selectors:
-            address_elem = soup.select_one(selector)
-            if address_elem:
-                address_text = address_elem.get_text(strip=True)
-                if address_text and len(address_text) > 5:  # Ensure it's a meaningful address
-                    details["address"] = address_text
-                    break
+        # Extract name from URL if not found on page
+        if 'name' not in details or not details['name'] or details['name'] == "Unknown Attraction":
+            try:
+                if 'Attraction_Review' in attraction_url:
+                    url_parts = attraction_url.split('-')
+                    name_part = url_parts[-2] if len(url_parts) > 2 else ""
+                    details["name"] = name_part.replace('_', ' ').title()
+            except Exception as e:
+                logger.error(f"Error extracting name from URL {attraction_url}: {e}")
+                details["name"] = "Unknown Attraction"
         
-        # If address not found, try directly accessing the structured text
-        if 'address' not in details:
-            address_area = soup.find(string=re.compile('The area', re.IGNORECASE))
-            if address_area:
-                parent = address_area.parent
-                if parent:
-                    next_sibling = parent.next_sibling
-                    if next_sibling:
-                        address_text = next_sibling.get_text(strip=True)
-                        details["address"] = address_text
-        
-        # Try looking for location within a section
-        if 'address' not in details:
-            location_sections = soup.find_all(['div', 'section'], string=lambda t: t and 'location' in t.lower())
-            for section in location_sections:
-                # Look for nearby content that might contain the address
-                address_text = section.get_text(strip=True)
-                if address_text and len(address_text) > 10:
-                    details["address"] = address_text
-                    break
+        # 2. Extract address with better cleaning
+        address = self._extract_clean_address(soup)
+        if address:
+            details["address"] = address
         
         # 3. Extract description (About section)
         description_selectors = [
@@ -191,66 +600,141 @@ class ImprovedAttractionsCrawler:
                         details["description"] = description_text
                         break
         
-        # 4. Extract opening hours
-        hours_selectors = [
-            'div.eRsNA',
-            'div[data-automation="WebPresentation_POIOpeningHoursSection"]',
-            'div.MWPpe',
-            'div.wgNTK',
-            'button.iGCTW',
-            'div.QvzAT',
-            'div[data-section-id="HoursSection"]'
-        ]
-        for selector in hours_selectors:
-            hours_elem = soup.select_one(selector)
-            if hours_elem:
-                hours_text = hours_elem.get_text(strip=True)
-                if hours_text and ('open' in hours_text.lower() or 'hour' in hours_text.lower() or 'am' in hours_text.lower() or 'pm' in hours_text.lower()):
-                    details["opening_hours"] = hours_text.replace('Closed now', 'Currently closed')
-                    break
+        # 4. Extract opening hours - improved
+        opening_hours = self._extract_clean_opening_hours(soup)
+        if opening_hours:
+            details["opening_hours"] = opening_hours
         
-        # Try looking for time directly
-        if 'opening_hours' not in details:
-            time_patterns = soup.find_all(string=re.compile(r'\d{1,2}:\d{2}\s*[AP]M\s*-\s*\d{1,2}:\d{2}\s*[AP]M'))
-            if time_patterns:
-                details["opening_hours"] = time_patterns[0].strip()
+        # 5. Extract "Duration" information - improved
+        duration = self._extract_clean_duration(soup)
+        if duration:
+            details["duration"] = duration
         
-        # 5. Extract "Duration" information
-        duration_selectors = [
-            'div[data-section-id="DetailSection"] div:contains("Duration")',
-            'div.NXSyd span:contains("Duration")',
-            'div:contains("Duration")',
-            'svg[aria-label="Duration"]'
+        # 9. Extract type/category - IMPROVED IMPLEMENTATION
+        type_selectors = [
+            'div.aSJLV a',
+            'div.EEIGK a',
+            'div.CskSA a',
+            'div.xkSty a',
+            'div.IKxsX a',
+            'div.dyezQ a',
+            'a.cMKgw',  # Additional selectors for type
+            'a[href*="Attractions-g293924-Activities-c"]',  # Category links
+            'div.bJQut span',  # Category bubbles/tags
+            'div.KgSvs a',  # New selector for categories
+            'div.VZeht a',  # Another category selector
+            'div.fINpo a',  # Breadcrumb selectors that might contain type
+            'div.fINpo span'
         ]
         
-        for selector in duration_selectors:
-            if ':contains' in selector:
-                base_selector, contains_text = selector.split(':contains(')
-                contains_text = contains_text.rstrip(')')
-                contains_text = contains_text.strip('"\'')
+        types = []
+        breadcrumb_types = set()
+        attraction_type = "Attraction"  # Default type
+        
+        # First try to extract from breadcrumbs which often has the most specific type
+        breadcrumb_selectors = [
+            'div.fINpo a',
+            'div.fINpo span',
+            'div.drcGn a',
+            'div.breadcrumb a',
+            'div.TkWMV a',
+            'ul.breadcrumbs li a',
+            '.crumbs a'
+        ]
+        
+        for selector in breadcrumb_selectors:
+            breadcrumb_elems = soup.select(selector)
+            for elem in breadcrumb_elems:
+                type_text = elem.get_text(strip=True)
+                # Skip general location breadcrumbs
+                if (type_text and len(type_text) > 1 and 
+                    type_text.lower() not in ['hanoi', 'vietnam', 'asia', 'things to do', 'home']):
+                    breadcrumb_types.add(type_text)
+        
+        # Look for the most specific type in the URL
+        if 'Attractions-g293924-Activities-c' in attraction_url:
+            category_match = re.search(r'Activities-c(\d+)', attraction_url)
+            if category_match:
+                # Try to extract the category from the page content
+                activity_type_elems = soup.select('h2.RyMnA, h2.YzSip, h1 + div span')
+                for elem in activity_type_elems:
+                    type_text = elem.get_text(strip=True)
+                    if type_text and len(type_text) > 1 and type_text.lower() not in ['hanoi', 'vietnam', 'asia']:
+                        types.append(type_text)
+                        # Update the main attraction type
+                        attraction_type = type_text
+                        break
+        
+        # If we found specific types in breadcrumbs, use them
+        if breadcrumb_types:
+            # Sort by length to get the most specific (usually longer) type
+            sorted_types = sorted(breadcrumb_types, key=len, reverse=True)
+            if sorted_types:
+                types.extend(sorted_types)
+                # Update the main attraction type to the most specific one
+                attraction_type = sorted_types[0]
+        
+        # Use the regular type selectors as fallback
+        if not types:
+            for selector in type_selectors:
+                type_elems = soup.select(selector)
+                for elem in type_elems:
+                    type_text = elem.get_text(strip=True)
+                    if type_text and len(type_text) > 1 and type_text.lower() not in ['hanoi', 'vietnam', 'asia']:
+                        types.append(type_text)
+        
+        # For specific known attraction types, check meta tags and descriptions
+        spa_keywords = ['spa', 'massage', 'wellness']
+        tour_keywords = ['tour', 'excursion', 'trip', 'journey']
+        food_keywords = ['restaurant', 'dining', 'food', 'cuisine']
+        
+        for meta in soup.find_all('meta', {'name': ['description', 'keywords']}):
+            if meta.has_attr('content'):
+                content = meta['content'].lower()
                 
-                elements = soup.select(base_selector)
-                for elem in elements:
-                    if contains_text in elem.get_text():
-                        duration_text = elem.get_text(strip=True)
-                        # Extract just the duration part (e.g., "1-2 hours")
-                        duration_match = re.search(r'duration[:\s]*([^,;]+)', duration_text, re.IGNORECASE)
-                        if duration_match:
-                            details["duration"] = duration_match.group(1).strip()
-                        else:
-                            details["duration"] = duration_text
-                        break
-            else:
-                duration_elem = soup.select_one(selector)
-                if duration_elem:
-                    parent_elem = duration_elem.parent
-                    duration_text = parent_elem.get_text(strip=True) if parent_elem else duration_elem.get_text(strip=True)
-                    if 'hour' in duration_text.lower():
-                        details["duration"] = duration_text
-                        break
+                # Check for specific attraction types
+                if any(keyword in content for keyword in spa_keywords) and "spa" not in attraction_type.lower():
+                    attraction_type = "Spas"
+                    types.append("Spas")
+                    
+                elif any(keyword in content for keyword in tour_keywords) and "tour" not in attraction_type.lower():
+                    attraction_type = "Tours"
+                    types.append("Tours")
+                    
+                elif any(keyword in content for keyword in food_keywords) and "restaurant" not in attraction_type.lower():
+                    attraction_type = "Restaurants"
+                    types.append("Restaurants")
         
-        # 6. Extract images
+        # Set the primary type and all found types
+        details["type"] = attraction_type
+        if types:
+            details["types"] = ", ".join(set(types))  # Use set to remove duplicates
+        
+        # 6. Extract images - IMPROVED IMPLEMENTATION
         image_urls = []
+        
+        # Find all photoviewer URLs which often contain multiple images
+        photo_viewer_selectors = [
+            'a.iTxXD',
+            'a.IXaZR',
+            'a.cWwQK',
+            'a[href*="PhotoViewer"]',
+            'a[data-automation="photo"]',
+            'a[data-testid="photo-viewer"]',
+            'div.pZUbB a.cWwQK'
+        ]
+        
+        for selector in photo_viewer_selectors:
+            photo_links = soup.select(selector)
+            for link in photo_links:
+                if link.has_attr('href') and 'PhotoViewer' in link['href']:
+                    # These links often contain image IDs we can use to construct high-quality URLs
+                    photo_matches = re.findall(r'-i(\d+)-', link['href'])
+                    for photo_id in photo_matches:
+                        # Construct a high-quality image URL
+                        hq_img_url = f"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/{photo_id}.jpg?w=1200&h=-1&s=1"
+                        if hq_img_url not in image_urls:
+                            image_urls.append(hq_img_url)
         
         # Find the main hero image
         hero_img_selectors = [
@@ -331,10 +815,46 @@ class ImprovedAttractionsCrawler:
                     if img_url not in image_urls and 'icons' not in img_url.lower() and not re.search(r'-s\d+x\d+', img_url):
                         image_urls.append(img_url)
         
-        # Add images to details
+        # Try to find more images in any carousels or photo sections
+        carousel_selectors = [
+            'div.fqZom img',  # Carousel images
+            'div.KoBzE img',  # More carousel images
+            'div.nhGNz img',  # Photo carousel
+            'div[data-automation="PhotoCarousel"] img',
+            'div.photo-carousel img',
+            'div.CphgL img',  # One more type of carousel
+            'div.photos img',  # Generic photos container
+            'div.YbkpN div.Vcsum img'  # Photo section
+        ]
+        
+        for selector in carousel_selectors:
+            img_elems = soup.select(selector)
+            for img in img_elems:
+                if img.has_attr('src'):
+                    img_url = img['src']
+                    # Check other attributes for higher quality image
+                    for attr in ['data-src', 'data-lazy', 'data-srcset', 'data-lazyurl']:
+                        if img.has_attr(attr):
+                            img_url = img[attr]
+                            break
+                    
+                    # Improve image quality by modifying URL parameters
+                    img_url = re.sub(r'-s\d+x\d+', '-s1600x1200', img_url)
+                    
+                    # Make absolute URL
+                    if not img_url.startswith('http'):
+                        img_url = urljoin("https://www.tripadvisor.com", img_url)
+                    
+                    # Add to images list
+                    if img_url not in image_urls and 'icons' not in img_url.lower():
+                        image_urls.append(img_url)
+        
+        # Add images to details - limit to 5 unique images to avoid excessive data
         if image_urls:
-            details["image_urls"] = image_urls
-            details["main_image"] = image_urls[0]  # Main image
+            # Remove duplicates and limit to 5 images
+            unique_images = list(dict.fromkeys(image_urls))[:5]
+            details["image_urls"] = unique_images
+            details["main_image"] = unique_images[0]  # Main image
         
         # Add social media image URL as a fallback
         if 'main_image' not in details:
@@ -422,26 +942,6 @@ class ImprovedAttractionsCrawler:
                     except ValueError:
                         pass
         
-        # 9. Extract type/category
-        type_selectors = [
-            'div.aSJLV a',
-            'div.EEIGK a',
-            'div.CskSA a',
-            'div.xkSty a',
-            'div.IKxsX a',
-            'div.dyezQ a'
-        ]
-        types = []
-        for selector in type_selectors:
-            type_elems = soup.select(selector)
-            for elem in type_elems:
-                type_text = elem.get_text(strip=True)
-                if type_text and len(type_text) > 1 and type_text.lower() not in ['hanoi', 'vietnam', 'asia']:
-                    types.append(type_text)
-        
-        if types:
-            details["types"] = ", ".join(types)
-        
         # 10. Extract number of reviews
         reviews_selectors = [
             'a.iUttq',
@@ -461,24 +961,205 @@ class ImprovedAttractionsCrawler:
                     break
         
         return details
+    
+    def crawl_attractions(self, max_pages=3, max_attractions=None, threads=4):
+        """Crawl attractions from TripAdvisor Hanoi attractions page with multithreading"""
+        all_attraction_listings = []
+        page = 1
+        has_next_page = True
+        
+        # Get attraction listings from each page
+        while page <= max_pages and has_next_page:
+            page_listings, has_next_page = self.get_attraction_listings(page=page)
+            if not page_listings:
+                logger.warning(f"No attraction listings found on page {page}")
+                break
+                
+            all_attraction_listings.extend(page_listings)
+            logger.info(f"Collected {len(all_attraction_listings)} attraction listings so far")
+            
+            if max_attractions and len(all_attraction_listings) >= max_attractions:
+                all_attraction_listings = all_attraction_listings[:max_attractions]
+                break
+                
+            page += 1
+            self._random_delay()
+        
+        # Get detailed information for each attraction using ThreadPoolExecutor
+        detailed_attractions = []
+        
+        with ThreadPoolExecutor(max_workers=threads) as executor:
+            # Create a map of future to attraction index
+            future_to_index = {}
+            
+            for i, attraction in enumerate(all_attraction_listings):
+                # Check that we have a valid URL
+                if not attraction.get('url') or not attraction['url'].startswith('http'):
+                    logger.warning(f"Skipping attraction with invalid URL: {attraction.get('url')}")
+                    continue
+                
+                # Submit the task to the executor
+                future = executor.submit(self.get_attraction_details, attraction['url'])
+                future_to_index[future] = i
+            
+            # Process completed futures as they complete
+            for future in as_completed(future_to_index):
+                i = future_to_index[future]
+                attraction = all_attraction_listings[i]
+                
+                try:
+                    details = future.result()
+                    
+                    # Merge the listing data with the details
+                    merged_details = {**attraction, **details}
+                    
+                    # Ensure we have name from either source
+                    if 'name' not in merged_details or not merged_details['name'] or merged_details['name'] == "Unknown Attraction":
+                        if 'name' in attraction and attraction['name'] and attraction['name'] != "Unknown Attraction":
+                            merged_details['name'] = attraction['name']
+                    
+                    # Keep thumbnail URL if we couldn't get full size images
+                    if 'thumbnail_url' in attraction and ('main_image' not in merged_details or not merged_details.get('main_image')):
+                        merged_details['main_image'] = attraction['thumbnail_url']
+                        if 'image_urls' not in merged_details:
+                            merged_details['image_urls'] = [attraction['thumbnail_url']]
+                    
+                    detailed_attractions.append(merged_details)
+                    logger.info(f"Processed attraction {i+1}/{len(all_attraction_listings)}: {merged_details.get('name', 'Unknown')}")
+                    
+                except Exception as e:
+                    logger.error(f"Error processing attraction {attraction.get('name', 'Unknown')}: {e}")
+        
+        return detailed_attractions
+    
+    def save_to_json(self, data, filename):
+        """Save attraction data to JSON file"""
+        if not data:
+            logger.warning("No data to save")
+            return
+            
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
 
 def main():
-    """Main function to test the crawler with La Spa Hang Be URL"""
-    crawler = ImprovedAttractionsCrawler(delay=4.0)
-    url = "https://www.tripadvisor.com/Attraction_Review-g293924-d17707099-Reviews-La_Spa_Hang_Be-Hanoi.html"
+    """Main function to crawl all Hanoi attractions from the main page"""
+    parser = argparse.ArgumentParser(description='TripAdvisor Hanoi Attractions Crawler')
+    parser.add_argument('--max-pages', type=int, default=3, help='Maximum number of pages to crawl')
+    parser.add_argument('--max-attractions', type=int, default=None, help='Maximum number of attractions to crawl')
+    parser.add_argument('--delay', type=float, default=4.0, help='Delay between requests in seconds')
+    parser.add_argument('--threads', type=int, default=4, help='Number of threads for parallel processing')
+    parser.add_argument('--output', type=str, default='hanoi_attractions.json', help='Output file name')
+    parser.add_argument('--download-images', action='store_true', help='Download images locally')
+    parser.add_argument('--url', type=str, default=None, help='Optional specific URL to crawl instead of main attractions page')
+    parser.add_argument('--debug', action='store_true', help='Enable debug mode to save HTML for inspection')
     
-    print(f"Fetching details for La Spa Hang Be...")
-    details = crawler.get_attraction_details(url)
+    args = parser.parse_args()
     
-    # Print the results in a formatted way
-    print("\nResults:")
-    print(json.dumps(details, indent=2, ensure_ascii=False))
+    # Initialize the crawler
+    crawler = EnhancedAttractionsCrawler(delay=args.delay)
     
-    # Save the results to file
-    with open("la_spa_hang_be.json", "w", encoding="utf-8") as f:
-        json.dump(details, f, indent=2, ensure_ascii=False)
+    if args.debug:
+        # Set up additional logging for debugging
+        logger.setLevel(logging.DEBUG)
+        print("Debug mode enabled - will save HTML for inspection")
     
-    print(f"\nData saved to la_spa_hang_be.json")
+    if args.url:
+        # If a specific URL is provided, just get details for that attraction
+        print(f"Fetching details for {args.url}...")
+        details = crawler.get_attraction_details(args.url)
+        
+        # Print the results in a formatted way
+        print("\nResults:")
+        print(json.dumps(details, indent=2, ensure_ascii=False))
+        
+        # Save the results to file
+        output_file = f"{details.get('name', 'attraction').replace(' ', '_').lower()}.json"
+        with open(output_file, "w", encoding="utf-8") as f:
+            json.dump(details, f, indent=2, ensure_ascii=False)
+        
+        print(f"\nData saved to {output_file}")
+    else:
+        # Crawl all attractions from the main page
+        print(f"Crawling up to {args.max_pages} pages of Hanoi attractions...")
+        
+        try:
+            # Only for debugging - save the HTML of the first page
+            if args.debug:
+                current_url = crawler.base_url
+                print(f"Saving HTML of the first page for debugging: {current_url}")
+                
+                try:
+                    response = requests.get(current_url, headers=crawler.headers, timeout=30)
+                    response.raise_for_status()
+                    
+                    with open("debug_first_page.html", "w", encoding="utf-8") as f:
+                        f.write(response.text)
+                    
+                    print("HTML saved to debug_first_page.html")
+                except Exception as e:
+                    print(f"Error saving debug HTML: {e}")
+            
+            # Start the crawling process
+            attractions = crawler.crawl_attractions(
+                max_pages=args.max_pages,
+                max_attractions=args.max_attractions,
+                threads=args.threads
+            )
+            
+            if attractions:
+                print(f"\nSuccessfully crawled {len(attractions)} attractions")
+                
+                # Save attractions to JSON file
+                crawler.save_to_json(attractions, args.output)
+                print(f"Data saved to {args.output}")
+                
+                # Print first 5 attractions for quick verification
+                print("\nFirst 5 attractions:")
+                for i, attraction in enumerate(attractions[:5]):
+                    print(f"{i+1}. {attraction.get('name', 'Unknown')} - {attraction.get('type', 'Unknown Type')}")
+                    print(f"   URL: {attraction.get('url', 'No URL')}")
+                    if 'image_urls' in attraction:
+                        print(f"   Images: {len(attraction.get('image_urls', []))} images found")
+                    print()
+                
+                # Optionally download images
+                if args.download_images:
+                    download_dir = "attraction_images"
+                    os.makedirs(download_dir, exist_ok=True)
+                    
+                    print(f"Downloading images to {download_dir}...")
+                    for i, attraction in enumerate(attractions):
+                        if 'image_urls' in attraction and attraction['image_urls']:
+                            attraction_name = re.sub(r'[^\w\s-]', '', attraction.get('name', f'attraction_{i}'))
+                            attraction_name = re.sub(r'[\s]+', '_', attraction_name).lower()
+                            
+                            for j, img_url in enumerate(attraction['image_urls']):
+                                try:
+                                    img_response = requests.get(img_url, stream=True, timeout=30)
+                                    img_response.raise_for_status()
+                                    
+                                    img_path = os.path.join(download_dir, f"{attraction_name}_{j+1}.jpg")
+                                    with open(img_path, 'wb') as img_file:
+                                        for chunk in img_response.iter_content(1024):
+                                            img_file.write(chunk)
+                                    
+                                    print(f"Downloaded image {j+1} for {attraction.get('name')}")
+                                except Exception as e:
+                                    print(f"Error downloading image {img_url}: {e}")
+                    
+                    print(f"Finished downloading images")
+            else:
+                print("\nNo attractions found. This could be due to:")
+                print("1. TripAdvisor may have changed their website structure")
+                print("2. TripAdvisor might be blocking the requests")
+                print("3. There might be network issues")
+                print("\nTry running with --debug flag for more detailed information")
+        
+        except Exception as e:
+            print(f"\nAn error occurred during crawling: {e}")
+            import traceback
+            traceback.print_exc()
+            print("\nTry running with --debug flag for more detailed information")
 
 if __name__ == "__main__":
     main() 
