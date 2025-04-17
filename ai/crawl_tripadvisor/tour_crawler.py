@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 class EnhancedAttractionsCrawler:
     """Enhanced crawler for TripAdvisor attractions in Hanoi with better data extraction"""
     
-    def __init__(self, base_url=None, delay=3.0):
+    def __init__(self, base_url=None, delay=3.0, custom_type=None):
         self.base_url = base_url or "https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html"
         self.min_delay = delay
         self.max_delay = delay * 2  # Randomize delay
@@ -43,6 +43,8 @@ class EnhancedAttractionsCrawler:
             'Referer': 'https://www.tripadvisor.com/'
         }
         self.visited_urls = set()  # Track visited URLs to avoid duplicates
+        self.visited_attractions = set()  # Track attraction names to avoid duplicates
+        self.custom_type = custom_type  # User-specified attraction type
         
     def _random_delay(self):
         """Add a random delay between requests to avoid being blocked"""
@@ -278,26 +280,59 @@ class EnhancedAttractionsCrawler:
             
             # Add fallback method to extract any link that might be an attraction
             all_links = soup.select('a')
+            attraction_links = []
+            
+            # First, gather meaningful links with proper URLs
             for link in all_links:
                 if not link.has_attr('href'):
                     continue
                     
                 href = link['href']
+                # Only consider links that look like attraction links
                 if 'Attraction_Review' in href and href not in self.visited_urls:
-                    name = link.get_text(strip=True)
-                    if not name:
-                        name = "Unknown Attraction"
+                    text = link.get_text(strip=True)
+                    # Skip "Review of:" links that are duplicates
+                    if text and text.startswith("Review of:"):
+                        continue
+                    # Skip very short texts, empty texts, ratings, and numbers
+                    if not text or len(text) < 3 or re.match(r'^[\d.]+$', text):
+                        continue
+                    # Skip navigation links
+                    if text in ['Next', 'Previous', '1', '2', '3', '4', '5']:
+                        continue
                         
+                    # Clean the name from ratings, reviews, etc.
+                    name = re.sub(r'\d+(\.\d+)?\s+of\s+5\s+bubbles', '', text)
+                    name = re.sub(r'[\d,]+\s+reviews?', '', name)
+                    name = name.strip()
+                    
                     # Make URL absolute
                     if not href.startswith('http'):
                         href = urljoin("https://www.tripadvisor.com", href)
-                        
-                    attractions.append({
-                        "name": name,
-                        "url": href
-                    })
-                    self.visited_urls.add(href)
-                    logger.info(f"Fallback method found attraction: {name}")
+                    
+                    # Add to potential attractions list if it looks like a name    
+                    if name and len(name) > 3 and not name.isdigit() and not re.match(r'^\d+\.\s*$', name):
+                        attraction_links.append((name, href))
+                        logger.info(f"Fallback found potential attraction: {name}")
+            
+            # Sort by name length (longer names are usually more meaningful) 
+            # and deduplicate by URL
+            seen_urls = set()
+            for name, href in sorted(attraction_links, key=lambda x: len(x[0]), reverse=True):
+                if href in seen_urls:
+                    continue
+                
+                attractions.append({
+                    "name": name,
+                    "url": href
+                })
+                self.visited_urls.add(href)
+                seen_urls.add(href)
+                logger.info(f"Added fallback attraction: {name}")
+                
+                # Limit to 30 attractions per page to avoid excessive processing
+                if len(attractions) >= 30:
+                    break
         
         # Look for "Next" button to determine if there are more pages
         has_next_page = False
@@ -522,8 +557,7 @@ class EnhancedAttractionsCrawler:
             
         # Initialize the attraction details
         details = {
-            "url": attraction_url,
-            "type": "Attraction"
+            "url": attraction_url
         }
         
         # 1. Extract name with better cleaning
@@ -610,110 +644,116 @@ class EnhancedAttractionsCrawler:
         if duration:
             details["duration"] = duration
         
-        # 9. Extract type/category - IMPROVED IMPLEMENTATION
-        type_selectors = [
-            'div.aSJLV a',
-            'div.EEIGK a',
-            'div.CskSA a',
-            'div.xkSty a',
-            'div.IKxsX a',
-            'div.dyezQ a',
-            'a.cMKgw',  # Additional selectors for type
-            'a[href*="Attractions-g293924-Activities-c"]',  # Category links
-            'div.bJQut span',  # Category bubbles/tags
-            'div.KgSvs a',  # New selector for categories
-            'div.VZeht a',  # Another category selector
-            'div.fINpo a',  # Breadcrumb selectors that might contain type
-            'div.fINpo span'
-        ]
-        
-        types = []
-        breadcrumb_types = set()
-        attraction_type = "Attraction"  # Default type
-        
-        # First try to extract from breadcrumbs which often has the most specific type
-        breadcrumb_selectors = [
-            'div.fINpo a',
-            'div.fINpo span',
-            'div.drcGn a',
-            'div.breadcrumb a',
-            'div.TkWMV a',
-            'ul.breadcrumbs li a',
-            '.crumbs a'
-        ]
-        
-        for selector in breadcrumb_selectors:
-            breadcrumb_elems = soup.select(selector)
-            for elem in breadcrumb_elems:
-                type_text = elem.get_text(strip=True)
-                # Skip general location breadcrumbs
-                if (type_text and len(type_text) > 1 and 
-                    type_text.lower() not in ['hanoi', 'vietnam', 'asia', 'things to do', 'home']):
-                    breadcrumb_types.add(type_text)
-        
-        # Look for the most specific type in the URL
-        if 'Attractions-g293924-Activities-c' in attraction_url:
-            category_match = re.search(r'Activities-c(\d+)', attraction_url)
-            if category_match:
-                # Try to extract the category from the page content
-                activity_type_elems = soup.select('h2.RyMnA, h2.YzSip, h1 + div span')
-                for elem in activity_type_elems:
+        # Apply custom type if provided, otherwise use extracted type
+        if self.custom_type:
+            details["type"] = self.custom_type
+        else:
+            # 9. Extract type/category - IMPROVED IMPLEMENTATION
+            type_selectors = [
+                'div.aSJLV a',
+                'div.EEIGK a',
+                'div.CskSA a',
+                'div.xkSty a',
+                'div.IKxsX a',
+                'div.dyezQ a',
+                'a.cMKgw',  # Additional selectors for type
+                'a[href*="Attractions-g293924-Activities-c"]',  # Category links
+                'div.bJQut span',  # Category bubbles/tags
+                'div.KgSvs a',  # New selector for categories
+                'div.VZeht a',  # Another category selector
+                'div.fINpo a',  # Breadcrumb selectors that might contain type
+                'div.fINpo span'
+            ]
+            
+            attraction_type = "Attraction"  # Default type
+            type_categories = []
+            
+            # First try to extract from breadcrumbs which often has the most specific type
+            breadcrumb_selectors = [
+                'div.fINpo a',
+                'div.fINpo span',
+                'div.drcGn a',
+                'div.breadcrumb a',
+                'div.TkWMV a',
+                'ul.breadcrumbs li a',
+                '.crumbs a'
+            ]
+            
+            breadcrumb_types = []
+            for selector in breadcrumb_selectors:
+                breadcrumb_elems = soup.select(selector)
+                for elem in breadcrumb_elems:
                     type_text = elem.get_text(strip=True)
-                    if type_text and len(type_text) > 1 and type_text.lower() not in ['hanoi', 'vietnam', 'asia']:
-                        types.append(type_text)
-                        # Update the main attraction type
-                        attraction_type = type_text
-                        break
-        
-        # If we found specific types in breadcrumbs, use them
-        if breadcrumb_types:
-            # Sort by length to get the most specific (usually longer) type
-            sorted_types = sorted(breadcrumb_types, key=len, reverse=True)
-            if sorted_types:
-                types.extend(sorted_types)
-                # Update the main attraction type to the most specific one
-                attraction_type = sorted_types[0]
-        
-        # Use the regular type selectors as fallback
-        if not types:
-            for selector in type_selectors:
-                type_elems = soup.select(selector)
-                for elem in type_elems:
-                    type_text = elem.get_text(strip=True)
-                    if type_text and len(type_text) > 1 and type_text.lower() not in ['hanoi', 'vietnam', 'asia']:
-                        types.append(type_text)
-        
-        # For specific known attraction types, check meta tags and descriptions
-        spa_keywords = ['spa', 'massage', 'wellness']
-        tour_keywords = ['tour', 'excursion', 'trip', 'journey']
-        food_keywords = ['restaurant', 'dining', 'food', 'cuisine']
-        
-        for meta in soup.find_all('meta', {'name': ['description', 'keywords']}):
-            if meta.has_attr('content'):
-                content = meta['content'].lower()
-                
-                # Check for specific attraction types
-                if any(keyword in content for keyword in spa_keywords) and "spa" not in attraction_type.lower():
-                    attraction_type = "Spas"
-                    types.append("Spas")
+                    # Skip general location breadcrumbs
+                    if (type_text and len(type_text) > 1 and 
+                        type_text.lower() not in ['hanoi', 'vietnam', 'asia', 'things to do', 'home']):
+                        breadcrumb_types.append(type_text)
+            
+            # Look for the most specific type in the URL
+            if 'Attractions-g293924-Activities-c' in attraction_url:
+                category_match = re.search(r'Activities-c(\d+)', attraction_url)
+                if category_match:
+                    # Try to extract the category from the page content
+                    activity_type_elems = soup.select('h2.RyMnA, h2.YzSip, h1 + div span')
+                    for elem in activity_type_elems:
+                        type_text = elem.get_text(strip=True)
+                        if type_text and len(type_text) > 1 and type_text.lower() not in ['hanoi', 'vietnam', 'asia']:
+                            type_categories.append(type_text)
+                            # Update the main attraction type
+                            attraction_type = type_text
+                            break
+            
+            # If we found specific types in breadcrumbs, use them
+            if breadcrumb_types:
+                # Sort by length to get the most specific (usually longer) type
+                sorted_types = sorted(breadcrumb_types, key=len, reverse=True)
+                if sorted_types:
+                    type_categories.extend(sorted_types)
+                    # Update the main attraction type to the most specific one
+                    attraction_type = sorted_types[0]
+            
+            # Use the regular type selectors as fallback
+            if not type_categories:
+                for selector in type_selectors:
+                    type_elems = soup.select(selector)
+                    for elem in type_elems:
+                        type_text = elem.get_text(strip=True)
+                        if type_text and len(type_text) > 1 and type_text.lower() not in ['hanoi', 'vietnam', 'asia']:
+                            type_categories.append(type_text)
+            
+            # For specific known attraction types, check meta tags and descriptions
+            spa_keywords = ['spa', 'massage', 'wellness']
+            tour_keywords = ['tour', 'excursion', 'trip', 'journey']
+            food_keywords = ['restaurant', 'dining', 'food', 'cuisine']
+            
+            for meta in soup.find_all('meta', {'name': ['description', 'keywords']}):
+                if meta.has_attr('content'):
+                    content = meta['content'].lower()
                     
-                elif any(keyword in content for keyword in tour_keywords) and "tour" not in attraction_type.lower():
-                    attraction_type = "Tours"
-                    types.append("Tours")
-                    
-                elif any(keyword in content for keyword in food_keywords) and "restaurant" not in attraction_type.lower():
-                    attraction_type = "Restaurants"
-                    types.append("Restaurants")
+                    # Check for specific attraction types
+                    if any(keyword in content for keyword in spa_keywords) and "spa" not in attraction_type.lower():
+                        attraction_type = "Spas"
+                        type_categories.append("Spas")
+                        
+                    elif any(keyword in content for keyword in tour_keywords) and "tour" not in attraction_type.lower():
+                        attraction_type = "Tours"
+                        type_categories.append("Tours")
+                        
+                    elif any(keyword in content for keyword in food_keywords) and "restaurant" not in attraction_type.lower():
+                        attraction_type = "Restaurants"
+                        type_categories.append("Restaurants")
+            
+            # Set the primary type
+            details["type"] = attraction_type
+            
+            # Instead of a long comma-separated string, store categories as a list
+            if type_categories:
+                details["categories"] = list(set(type_categories[:5]))  # Limit to 5 unique categories
         
-        # Set the primary type and all found types
-        details["type"] = attraction_type
-        if types:
-            details["types"] = ", ".join(set(types))  # Use set to remove duplicates
-        
-        # 6. Extract images - IMPROVED IMPLEMENTATION
+        # 6. Extract images - IMPROVED IMPLEMENTATION to get more images
         image_urls = []
         
-        # Find all photoviewer URLs which often contain multiple images
+        # Find high-resolution images from PhotoViewer links
         photo_viewer_selectors = [
             'a.iTxXD',
             'a.IXaZR',
@@ -724,17 +764,20 @@ class EnhancedAttractionsCrawler:
             'div.pZUbB a.cWwQK'
         ]
         
+        photo_ids = []
         for selector in photo_viewer_selectors:
             photo_links = soup.select(selector)
             for link in photo_links:
                 if link.has_attr('href') and 'PhotoViewer' in link['href']:
-                    # These links often contain image IDs we can use to construct high-quality URLs
+                    # Extract all photo IDs from the link
                     photo_matches = re.findall(r'-i(\d+)-', link['href'])
-                    for photo_id in photo_matches:
-                        # Construct a high-quality image URL
-                        hq_img_url = f"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/{photo_id}.jpg?w=1200&h=-1&s=1"
-                        if hq_img_url not in image_urls:
-                            image_urls.append(hq_img_url)
+                    photo_ids.extend(photo_matches)
+        
+        # Deduplicate photo IDs and construct high-quality image URLs
+        for photo_id in set(photo_ids):
+            hq_img_url = f"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/{photo_id}.jpg?w=1200&h=-1&s=1"
+            if hq_img_url not in image_urls:
+                image_urls.append(hq_img_url)
         
         # Find the main hero image
         hero_img_selectors = [
@@ -815,44 +858,10 @@ class EnhancedAttractionsCrawler:
                     if img_url not in image_urls and 'icons' not in img_url.lower() and not re.search(r'-s\d+x\d+', img_url):
                         image_urls.append(img_url)
         
-        # Try to find more images in any carousels or photo sections
-        carousel_selectors = [
-            'div.fqZom img',  # Carousel images
-            'div.KoBzE img',  # More carousel images
-            'div.nhGNz img',  # Photo carousel
-            'div[data-automation="PhotoCarousel"] img',
-            'div.photo-carousel img',
-            'div.CphgL img',  # One more type of carousel
-            'div.photos img',  # Generic photos container
-            'div.YbkpN div.Vcsum img'  # Photo section
-        ]
-        
-        for selector in carousel_selectors:
-            img_elems = soup.select(selector)
-            for img in img_elems:
-                if img.has_attr('src'):
-                    img_url = img['src']
-                    # Check other attributes for higher quality image
-                    for attr in ['data-src', 'data-lazy', 'data-srcset', 'data-lazyurl']:
-                        if img.has_attr(attr):
-                            img_url = img[attr]
-                            break
-                    
-                    # Improve image quality by modifying URL parameters
-                    img_url = re.sub(r'-s\d+x\d+', '-s1600x1200', img_url)
-                    
-                    # Make absolute URL
-                    if not img_url.startswith('http'):
-                        img_url = urljoin("https://www.tripadvisor.com", img_url)
-                    
-                    # Add to images list
-                    if img_url not in image_urls and 'icons' not in img_url.lower():
-                        image_urls.append(img_url)
-        
-        # Add images to details - limit to 5 unique images to avoid excessive data
+        # Add images to details - increased limit to collect more images
         if image_urls:
-            # Remove duplicates and limit to 5 images
-            unique_images = list(dict.fromkeys(image_urls))[:5]
+            # Remove duplicates but increase limit to 10 images
+            unique_images = list(dict.fromkeys(image_urls))[:10]  # Increased from 5 to 10
             details["image_urls"] = unique_images
             details["main_image"] = unique_images[0]  # Main image
         
@@ -985,12 +994,19 @@ class EnhancedAttractionsCrawler:
             page += 1
             self._random_delay()
         
+        # Exit early if no attractions were found
+        if not all_attraction_listings:
+            logger.warning("No attraction listings found on any page. Nothing to process.")
+            return []
+            
         # Get detailed information for each attraction using ThreadPoolExecutor
         detailed_attractions = []
+        processed_urls = set()  # Track URLs we've already processed
         
         with ThreadPoolExecutor(max_workers=threads) as executor:
             # Create a map of future to attraction index
             future_to_index = {}
+            futures = []
             
             for i, attraction in enumerate(all_attraction_listings):
                 # Check that we have a valid URL
@@ -998,17 +1014,31 @@ class EnhancedAttractionsCrawler:
                     logger.warning(f"Skipping attraction with invalid URL: {attraction.get('url')}")
                     continue
                 
+                url = attraction['url']
+                # Skip duplicates based on URL
+                if url in self.visited_urls or url in processed_urls:
+                    logger.info(f"Skipping already processed URL: {url}")
+                    continue
+                
+                # Mark URL as being processed
+                processed_urls.add(url)
+                
                 # Submit the task to the executor
-                future = executor.submit(self.get_attraction_details, attraction['url'])
+                future = executor.submit(self.get_attraction_details, url)
+                futures.append(future)
                 future_to_index[future] = i
             
             # Process completed futures as they complete
-            for future in as_completed(future_to_index):
-                i = future_to_index[future]
-                attraction = all_attraction_listings[i]
-                
+            for future in as_completed(futures):
                 try:
+                    i = future_to_index[future]
+                    attraction = all_attraction_listings[i]
                     details = future.result()
+                    
+                    # Skip if there was an error getting details
+                    if 'error' in details and not details.get('name'):
+                        logger.error(f"Error getting details for {attraction.get('url')}: {details.get('error')}")
+                        continue
                     
                     # Merge the listing data with the details
                     merged_details = {**attraction, **details}
@@ -1018,18 +1048,40 @@ class EnhancedAttractionsCrawler:
                         if 'name' in attraction and attraction['name'] and attraction['name'] != "Unknown Attraction":
                             merged_details['name'] = attraction['name']
                     
+                    # Skip duplicate attractions by name (case-insensitive)
+                    attraction_name = merged_details.get('name', '').lower()
+                    if attraction_name and attraction_name in self.visited_attractions:
+                        logger.info(f"Skipping duplicate attraction: {merged_details.get('name')}")
+                        continue
+                    
                     # Keep thumbnail URL if we couldn't get full size images
                     if 'thumbnail_url' in attraction and ('main_image' not in merged_details or not merged_details.get('main_image')):
                         merged_details['main_image'] = attraction['thumbnail_url']
                         if 'image_urls' not in merged_details:
                             merged_details['image_urls'] = [attraction['thumbnail_url']]
                     
+                    # Make sure we have a type
+                    if 'type' not in merged_details or not merged_details['type']:
+                        if self.custom_type:
+                            merged_details['type'] = self.custom_type
+                        else:
+                            merged_details['type'] = "Attraction"
+                    
+                    # Add to the list of detailed attractions
                     detailed_attractions.append(merged_details)
+                    
+                    # Mark as visited
+                    if attraction_name:
+                        self.visited_attractions.add(attraction_name)
+                    self.visited_urls.add(attraction['url'])
+                    
                     logger.info(f"Processed attraction {i+1}/{len(all_attraction_listings)}: {merged_details.get('name', 'Unknown')}")
                     
                 except Exception as e:
-                    logger.error(f"Error processing attraction {attraction.get('name', 'Unknown')}: {e}")
+                    logger.error(f"Error processing attraction: {e}")
+                    logger.debug(f"Exception details: {str(e)}", exc_info=True)
         
+        logger.info(f"Found {len(detailed_attractions)} unique attractions")
         return detailed_attractions
     
     def save_to_json(self, data, filename):
@@ -1052,11 +1104,12 @@ def main():
     parser.add_argument('--download-images', action='store_true', help='Download images locally')
     parser.add_argument('--url', type=str, default=None, help='Optional specific URL to crawl instead of main attractions page')
     parser.add_argument('--debug', action='store_true', help='Enable debug mode to save HTML for inspection')
+    parser.add_argument('--custom-type', type=str, default=None, help='Specify a custom type for all attractions (e.g., "Museum", "Temple")')
     
     args = parser.parse_args()
     
-    # Initialize the crawler
-    crawler = EnhancedAttractionsCrawler(delay=args.delay)
+    # Initialize the crawler with optional custom type
+    crawler = EnhancedAttractionsCrawler(delay=args.delay, custom_type=args.custom_type)
     
     if args.debug:
         # Set up additional logging for debugging
@@ -1081,6 +1134,8 @@ def main():
     else:
         # Crawl all attractions from the main page
         print(f"Crawling up to {args.max_pages} pages of Hanoi attractions...")
+        if args.custom_type:
+            print(f"Using custom type for all attractions: {args.custom_type}")
         
         try:
             # Only for debugging - save the HTML of the first page
@@ -1107,7 +1162,7 @@ def main():
             )
             
             if attractions:
-                print(f"\nSuccessfully crawled {len(attractions)} attractions")
+                print(f"\nSuccessfully crawled {len(attractions)} unique attractions")
                 
                 # Save attractions to JSON file
                 crawler.save_to_json(attractions, args.output)
@@ -1123,7 +1178,7 @@ def main():
                     print()
                 
                 # Optionally download images
-                if args.download_images:
+                if args.download_images and attractions:
                     download_dir = "attraction_images"
                     os.makedirs(download_dir, exist_ok=True)
                     
