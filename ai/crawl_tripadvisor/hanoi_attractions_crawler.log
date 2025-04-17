@@ -1,0 +1,14 @@
+2025-04-17 16:32:29,685 - INFO - Starting crawler for Hanoi TripAdvisor attractions
+2025-04-17 16:32:29,685 - INFO - URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-17 16:32:29,685 - INFO - Max pages: 1
+2025-04-17 16:32:29,685 - INFO - Max attractions: unlimited
+2025-04-17 16:32:29,685 - INFO - Delay: 4.0-8.0 seconds
+2025-04-17 16:32:29,685 - INFO - Getting attraction listings from page 1: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-17 16:32:29,685 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-17 16:32:31,666 - INFO - Found 30 attractions using selector: div.XfVdV.o.AIbhI
+2025-04-17 16:32:31,727 - INFO - Found 0 attractions on page 1
+2025-04-17 16:32:31,727 - WARNING - No attraction listings found on page 1
+2025-04-17 16:32:31,727 - WARNING - No data to save
+2025-04-17 16:32:31,727 - WARNING - No data to save
+2025-04-17 16:32:31,727 - INFO - Completed crawling 0 attractions
+2025-04-17 16:47:41,714 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293924-d17707099-Reviews-La_Spa_Hang_Be-Hanoi.html
