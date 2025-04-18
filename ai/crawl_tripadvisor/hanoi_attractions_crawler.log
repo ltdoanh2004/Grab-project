@@ -15531,3 +15531,242 @@ Founded in 2005 by Dr. Pham Ha, Lux Travel DMC is Vietnam’s first luxury tour 
 2025-04-17 20:25:08,141 - INFO - ✓ Old Quarter
 2025-04-17 20:25:08,142 - INFO - Found 1 unique attractions
 2025-04-17 20:25:08,142 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 08:46:44,349 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 08:46:44,918 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 08:46:44,918 - INFO - Retrying after 30 seconds...
+2025-04-18 08:47:14,919 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 08:47:15,367 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 08:47:15,368 - INFO - Retrying after 60 seconds...
+2025-04-18 08:48:15,372 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 08:48:16,043 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 08:48:16,044 - ERROR - Failed to fetch https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html after 3 attempts
+2025-04-18 08:48:16,045 - INFO - Waiting for 6.51 seconds
+2025-04-18 08:48:22,560 - WARNING - No attraction listings found.
+2025-04-18 08:48:22,561 - WARNING - No data to save
+2025-04-18 08:48:22,561 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 08:49:31,738 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 08:49:32,329 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 08:49:32,330 - INFO - Retrying after 30 seconds...
+2025-04-18 08:50:03,187 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 08:50:03,614 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 08:50:03,614 - INFO - Retrying after 30 seconds...
+2025-04-18 08:50:33,621 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 08:50:34,635 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 08:50:34,635 - INFO - Retrying after 60 seconds...
+2025-04-18 08:51:34,639 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 08:51:35,379 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 08:51:35,379 - ERROR - Failed to fetch https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html after 3 attempts
+2025-04-18 08:51:35,380 - INFO - Waiting for 6.99 seconds
+2025-04-18 08:51:42,371 - WARNING - No attraction listings found.
+2025-04-18 08:51:42,372 - WARNING - No data to save
+2025-04-18 08:51:42,372 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 08:57:32,952 – INFO – GET https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 08:57:41,599 – WARNING – captcha detected – give up page
+2025-04-18 08:57:41,600 – INFO – listings → 0
+2025-04-18 08:58:44,585 – INFO – GET https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 08:58:53,272 – WARNING – captcha detected – give up page
+2025-04-18 08:58:53,273 – INFO – listings → 0
+2025-04-18 08:58:53,419 – WARNING – no data scraped
+2025-04-18 08:59:52,766 – INFO – GET https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:00:01,476 – WARNING – captcha detected – give up page
+2025-04-18 09:00:01,477 – INFO – listings → 0
+2025-04-18 09:00:39,287 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:00:39,714 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:00:39,714 - INFO - Retrying after 30 seconds...
+2025-04-18 09:01:09,721 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:01:10,080 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:01:10,080 - INFO - Retrying after 60 seconds...
+2025-04-18 09:02:10,087 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:02:10,792 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:02:10,792 - ERROR - Failed to fetch https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html after 3 attempts
+2025-04-18 09:02:10,793 - INFO - Waiting for 6.11 seconds
+2025-04-18 09:02:16,906 - WARNING - No attraction listings found.
+2025-04-18 09:02:16,907 - WARNING - No data to save
+2025-04-18 09:02:16,907 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 09:02:25,630 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:02:26,064 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:02:26,065 - INFO - Retrying after 30 seconds...
+2025-04-18 09:02:32,316 – INFO – GET https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:02:40,992 – WARNING – captcha detected – give up page
+2025-04-18 09:02:40,993 – INFO – listings → 0
+2025-04-18 09:02:41,063 – WARNING – no data scraped
+2025-04-18 09:42:07,706 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 09:42:09,391 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 09:42:09,392 - INFO - Retrying after 30 seconds...
+2025-04-18 09:42:39,397 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 09:42:39,805 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 09:42:39,805 - INFO - Retrying after 60 seconds...
+2025-04-18 09:43:39,808 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 09:43:40,219 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 09:43:40,220 - ERROR - Failed to fetch https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html after 3 attempts
+2025-04-18 09:43:40,220 - INFO - Waiting for 4.89 seconds
+2025-04-18 09:43:45,117 - WARNING - No attraction listings found.
+2025-04-18 09:43:45,118 - WARNING - No data to save
+2025-04-18 09:43:45,118 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 09:45:16,618 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:45:17,073 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:45:17,074 - INFO - Retrying after 30 seconds...
+2025-04-18 09:45:47,077 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:45:47,461 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:45:47,461 - INFO - Retrying after 60 seconds...
+2025-04-18 09:46:47,466 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:46:47,952 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:46:47,952 - ERROR - Failed to fetch https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html after 3 attempts
+2025-04-18 09:46:47,952 - INFO - Waiting for 4.50 seconds
+2025-04-18 09:46:52,462 - WARNING - No attraction listings found.
+2025-04-18 09:46:52,463 - WARNING - No data to save
+2025-04-18 09:46:52,463 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 09:58:41,923 - INFO - Warm‑up OK – cookies stored
+2025-04-18 09:58:41,924 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 09:58:43,953 - INFO - Found 80 attractions on page 1
+2025-04-18 09:58:43,959 - INFO - Waiting for 6.52 seconds
+2025-04-18 09:58:50,487 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293924-d317503-Reviews-Old_Quarter-Hanoi.html
+2025-04-18 09:58:56,985 - ERROR - name 'extract_images_with_playwright' is not defined – https://www.tripadvisor.com/Attraction_Review-g293924-d317503-Reviews-Old_Quarter-Hanoi.html
+2025-04-18 09:58:56,985 - INFO - Found 0 unique attractions
+2025-04-18 09:58:56,986 - WARNING - No data to save
+2025-04-18 09:58:56,986 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 10:00:05,091 - INFO - Warm‑up OK – cookies stored
+2025-04-18 10:00:05,093 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 10:00:07,016 - INFO - Found 80 attractions on page 1
+2025-04-18 10:00:07,022 - INFO - Waiting for 6.85 seconds
+2025-04-18 10:00:13,876 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293924-d317503-Reviews-Old_Quarter-Hanoi.html
+2025-04-18 10:00:20,716 - INFO - ✓ Old Quarter
+2025-04-18 10:00:20,717 - INFO - Found 1 unique attractions
+2025-04-18 10:00:20,720 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 10:00:58,545 - INFO - Warm‑up OK – cookies stored
+2025-04-18 10:00:58,547 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 10:01:00,357 - INFO - Found 80 attractions on page 1
+2025-04-18 10:01:00,363 - INFO - Waiting for 5.61 seconds
+2025-04-18 10:01:05,981 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293924-d317503-Reviews-Old_Quarter-Hanoi.html
+2025-04-18 10:01:11,569 - INFO - ✓ Old Quarter
+2025-04-18 10:01:11,570 - INFO - Found 1 unique attractions
+2025-04-18 10:01:11,571 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 10:02:17,262 - INFO - Warm‑up OK – cookies stored
+2025-04-18 10:02:17,263 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 10:02:19,740 - INFO - Found 80 attractions on page 1
+2025-04-18 10:02:19,746 - INFO - Waiting for 7.14 seconds
+2025-04-18 10:02:26,889 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293924-d317503-Reviews-Old_Quarter-Hanoi.html
+2025-04-18 10:02:42,551 - INFO - ✓ Old Quarter
+2025-04-18 10:02:42,552 - INFO - Found 1 unique attractions
+2025-04-18 10:02:42,553 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 10:10:58,591 - WARNING - Warm‑up failed: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/
+2025-04-18 10:10:58,592 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 10:10:58,923 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 10:10:58,924 - INFO - Retrying after 30 seconds...
+2025-04-18 10:11:28,930 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 10:11:29,296 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 10:11:29,296 - INFO - Retrying after 60 seconds...
+2025-04-18 10:12:49,302 - WARNING - Warm‑up failed: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/
+2025-04-18 10:12:49,302 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-c36-Hanoi.html
+2025-04-18 10:12:49,607 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-c36-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-c36-Hanoi.html
+2025-04-18 10:12:49,607 - INFO - Retrying after 30 seconds...
+2025-04-18 10:13:19,612 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-c36-Hanoi.html
+2025-04-18 10:13:20,199 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-c36-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-c36-Hanoi.html
+2025-04-18 10:13:20,200 - INFO - Retrying after 60 seconds...
+2025-04-18 10:14:20,171 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-c36-Hanoi.html
+2025-04-18 10:14:20,980 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-c36-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-c36-Hanoi.html
+2025-04-18 10:14:20,980 - ERROR - Failed to fetch https://www.tripadvisor.com/Attractions-g293924-Activities-c36-Hanoi.html after 3 attempts
+2025-04-18 10:14:20,981 - INFO - Waiting for 6.57 seconds
+2025-04-18 10:14:27,552 - WARNING - No attraction listings found.
+2025-04-18 10:14:27,553 - WARNING - No data to save
+2025-04-18 10:14:27,553 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 10:16:00,116 - WARNING - Warm-up failed: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/
+2025-04-18 10:16:00,117 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 10:16:00,117 - INFO - Waiting for 4.49 seconds
+2025-04-18 10:16:05,472 - WARNING - Captcha detected! Increasing delay and retrying...
+2025-04-18 10:16:05,472 - INFO - Retrying after 60 seconds...
+2025-04-18 10:17:05,474 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 10:17:05,476 - INFO - Waiting for 6.76 seconds
+2025-04-18 10:17:12,545 - WARNING - Captcha detected! Increasing delay and retrying...
+2025-04-18 10:17:12,546 - INFO - Retrying after 120 seconds...
+2025-04-18 10:18:57,386 - INFO - Browser warm-up successful
+2025-04-18 10:18:57,399 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 10:19:12,296 - WARNING - Captcha detected! Increasing delay and retrying...
+2025-04-18 10:19:12,302 - INFO - Retrying after 60 seconds...
+2025-04-18 10:20:12,304 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 10:20:24,871 - WARNING - Captcha detected! Increasing delay and retrying...
+2025-04-18 10:20:24,879 - INFO - Retrying after 120 seconds...
+2025-04-18 10:20:38,845 - INFO - Browser warm-up successful
+2025-04-18 10:20:38,855 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 10:20:59,666 - WARNING - Captcha detected! Increasing delay and retrying...
+2025-04-18 10:20:59,672 - INFO - Retrying after 60 seconds...
+2025-04-18 10:21:59,675 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 10:22:18,490 - WARNING - Captcha detected! Increasing delay and retrying...
+2025-04-18 10:22:18,496 - INFO - Retrying after 120 seconds...
+2025-04-18 10:34:15,217 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 10:56:20,334 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html: Page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+Call log:
+  - navigating to "https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html", waiting until "networkidle"
+
+2025-04-18 10:56:20,334 - ERROR - Failed to fetch https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html after 3 attempts
+2025-04-18 10:56:26,978 - WARNING - No attraction listings found.
+2025-04-18 10:56:27,021 - WARNING - No data to save
+2025-04-18 10:56:27,022 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 10:59:56,513 - INFO - Browser warm-up successful
+2025-04-18 10:59:56,526 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 11:00:09,659 - WARNING - Captcha detected! Increasing delay and retrying...
+2025-04-18 11:00:09,665 - INFO - Retrying after 60 seconds...
+2025-04-18 11:00:34,650 - WARNING - Warm‑up failed: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/
+2025-04-18 11:00:34,651 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 11:00:34,947 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 11:00:34,947 - INFO - Retrying after 30 seconds...
+2025-04-18 11:01:04,954 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 11:01:05,345 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 11:01:05,346 - INFO - Retrying after 60 seconds...
+2025-04-18 11:01:09,668 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 11:01:28,087 - WARNING - Captcha detected! Increasing delay and retrying...
+2025-04-18 11:01:28,094 - INFO - Retrying after 120 seconds...
+2025-04-18 11:02:05,347 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 11:02:05,649 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 11:02:05,649 - ERROR - Failed to fetch https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html after 3 attempts
+2025-04-18 11:02:05,650 - INFO - Waiting for 7.47 seconds
+2025-04-18 11:02:13,122 - WARNING - No attraction listings found.
+2025-04-18 11:02:13,123 - WARNING - No data to save
+2025-04-18 11:02:13,124 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 11:03:28,095 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 11:03:43,575 - WARNING - Captcha detected! Increasing delay and retrying...
+2025-04-18 11:03:51,176 - WARNING - No attraction listings found.
+2025-04-18 11:03:51,216 - WARNING - No data to save
+2025-04-18 11:03:51,216 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 11:09:08,814 - WARNING - Warm‑up failed: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/
+2025-04-18 11:09:08,815 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 11:09:09,102 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 11:09:09,102 - INFO - Retrying after 30 seconds...
+2025-04-18 11:09:39,103 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 11:09:39,392 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 11:09:39,392 - INFO - Retrying after 60 seconds...
+2025-04-18 11:10:39,400 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 11:10:39,716 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html
+2025-04-18 11:10:39,717 - ERROR - Failed to fetch https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html after 3 attempts
+2025-04-18 11:10:39,718 - INFO - Waiting for 5.89 seconds
+2025-04-18 11:10:45,611 - WARNING - No attraction listings found.
+2025-04-18 11:10:45,621 - WARNING - No data to save
+2025-04-18 11:10:45,622 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 11:16:28,741 - INFO - Browser warm-up successful
+2025-04-18 11:16:28,752 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 11:16:49,978 - WARNING - Captcha detected! Increasing delay and retrying...
+2025-04-18 11:16:49,984 - INFO - Retrying after 60 seconds...
+2025-04-18 11:17:49,985 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 11:18:24,468 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html", waiting until "networkidle"
+
+2025-04-18 11:18:24,469 - INFO - Retrying after 60 seconds...
+2025-04-18 11:19:24,471 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-18 11:20:02,525 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html", waiting until "networkidle"
+
+2025-04-18 11:20:02,526 - ERROR - Failed to fetch https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html after 3 attempts
+2025-04-18 11:20:02,527 - WARNING - No listings found on page 1, retrying...
+2025-04-18 11:20:02,527 - INFO - Waiting 60 seconds before retry...
+2025-04-18 11:21:02,528 - WARNING - No attraction listings found.
+2025-04-18 11:21:02,581 - WARNING - No data to save
+2025-04-18 11:21:02,581 - INFO - Saved → hanoi_attractions_patched.json
+2025-04-18 11:46:27,866 - INFO - Browser warm-up successful
+2025-04-18 11:46:27,872 - INFO - Fetching URL: http://tripadvisor.com/Attractions-g293922-Activities-oa0-Da_Lat_Lam_Dong_Province.html
+2025-04-18 11:46:43,415 - WARNING - Captcha detected! Increasing delay and retrying...
+2025-04-18 11:46:43,421 - INFO - Retrying after 60 seconds...
+2025-04-18 11:47:43,422 - INFO - Fetching URL: http://tripadvisor.com/Attractions-g293922-Activities-oa0-Da_Lat_Lam_Dong_Province.html
+2025-04-18 11:48:01,487 - WARNING - Captcha detected! Increasing delay and retrying...
+2025-04-18 11:48:01,492 - INFO - Retrying after 120 seconds...

@@ -10,8 +10,7 @@ A specialized crawler that extracts clean, structured attraction details from Tr
    • Sau khi crawl chi tiết thành công mới add visited    (# PATCH 4)
 """
 
-import asyncio
-from playwright.async_api import async_playwright
+import requests
 from bs4 import BeautifulSoup
 import json
 import time
@@ -23,6 +22,7 @@ from urllib.parse import urljoin
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from get_image import crawl_tripadvisor_carousel_images
+import asyncio
 
 import nest_asyncio
 nest_asyncio.apply()
@@ -43,111 +43,41 @@ class EnhancedAttractionsCrawler:
 
     # -------------------- INIT -------------------- #
     def __init__(self, base_url=None, delay=3.0, custom_type=None):
-        self.base_url = base_url or "http://tripadvisor.com/Attractions-g293922-Activities-oa0-Da_Lat_Lam_Dong_Province.html"
+        self.base_url = base_url or "https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html"
         self.min_delay = delay
         self.max_delay = delay * 2
+        self.headers = {
+            'User-Agent': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
+                           'AppleWebKit/537.36 (KHTML, like Gecko) '
+                           'Chrome/123.0.0.0 Safari/537.36'),
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Referer': 'https://www.tripadvisor.com/'
+        }
         self.visited_urls = set()
         self.visited_attractions = set()
         self.custom_type = custom_type
-        self.browser = None
-        self.context = None
 
-    async def init_browser(self):
-        """Initialize Playwright browser with proper settings"""
-        playwright = await async_playwright().start()
-        
-        # More sophisticated browser launch options
-        self.browser = await playwright.chromium.launch(
-            headless=True,
-            args=[
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-infobars',
-                '--window-position=0,0',
-                '--ignore-certifcate-errors',
-                '--ignore-certifcate-errors-spki-list',
-                '--disable-blink-features=AutomationControlled',
-                '--disable-accelerated-2d-canvas',
-                '--disable-gpu',
-                '--hide-scrollbars',
-                '--disable-notifications',
-                '--disable-extensions',
-                '--force-color-profile=srgb',
-                '--disable-web-security',
-                '--disable-features=IsolateOrigins,site-per-process,SitePerProcess',
-                '--disable-site-isolation-trials'
-            ]
-        )
-        
-        # Create a new context with more realistic settings
-        self.context = await self.browser.new_context(
-            viewport={'width': 1920, 'height': 1080},
-            user_agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
-            locale='en-US',
-            timezone_id='America/New_York',
-            geolocation={'latitude': 21.0285, 'longitude': 105.8542},  # Hanoi coordinates
-            permissions=['geolocation'],
-            color_scheme='dark',
-            reduced_motion='no-preference',
-            forced_colors='none',
-            accept_downloads=True,
-            extra_http_headers={
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-                'Accept-Language': 'en-US,en;q=0.9',
-                'Accept-Encoding': 'gzip, deflate, br',
-                'Connection': 'keep-alive',
-                'DNT': '1',
-                'Upgrade-Insecure-Requests': '1',
-                'Sec-Fetch-Dest': 'document',
-                'Sec-Fetch-Mode': 'navigate',
-                'Sec-Fetch-Site': 'none',
-                'Sec-Fetch-User': '?1',
-                'Cache-Control': 'max-age=0'
-            }
-        )
+        self.session = requests.Session()
+        # Giữ nguyên header order “browser‑like”
+        self.session.headers.update({
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "accept-language": "en-US,en;q=0.9",
+            "upgrade-insecure-requests": "1",
+            "user-agent": self.headers["User-Agent"],
+            "sec-fetch-dest": "document",
+            "sec-fetch-mode": "navigate",
+            "sec-fetch-site": "none",
+            "sec-fetch-user": "?1",
+        })
 
-        # Add stealth script to prevent detection
-        await self.context.add_init_script("""
-            Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
-            Object.defineProperty(navigator, 'plugins', {get: () => [1, 2, 3, 4, 5]});
-            Object.defineProperty(navigator, 'languages', {get: () => ['en-US', 'en']});
-            window.chrome = { runtime: {} };
-        """)
-
-        # Add cookies that TripAdvisor expects
-        await self.context.add_cookies([
-            {'name': 'TASession', 'value': '1', 'domain': '.tripadvisor.com', 'path': '/'},
-            {'name': 'TAUnique', 'value': '1', 'domain': '.tripadvisor.com', 'path': '/'},
-            {'name': 'TACds', 'value': '2', 'domain': '.tripadvisor.com', 'path': '/'},
-            {'name': 'TATravelInfo', 'value': '1', 'domain': '.tripadvisor.com', 'path': '/'},
-            {'name': 'TASSK', 'value': '1', 'domain': '.tripadvisor.com', 'path': '/'},
-            {'name': 'TART', 'value': '1', 'domain': '.tripadvisor.com', 'path': '/'},
-            {'name': 'TAReturnTo', 'value': '1', 'domain': '.tripadvisor.com', 'path': '/'},
-            {'name': 'TALanguage', 'value': 'en', 'domain': '.tripadvisor.com', 'path': '/'},
-            {'name': 'TALocale', 'value': 'en_US', 'domain': '.tripadvisor.com', 'path': '/'},
-            {'name': 'TACurrency', 'value': 'USD', 'domain': '.tripadvisor.com', 'path': '/'}
-        ])
-
-        # Warm up with multiple pages to look more natural
+        #  👉 warm‑up để lấy cookie TASession/TAUnique
         try:
-            page = await self.context.new_page()
-            await page.goto("https://www.tripadvisor.com/", wait_until="networkidle")
-            await page.wait_for_timeout(2000)
-            
-            # Simulate some human-like behavior
-            await page.mouse.move(random.randint(100, 500), random.randint(100, 500))
-            await page.mouse.wheel(0, random.randint(100, 300))
-            await page.wait_for_timeout(1000)
-            
-            # Visit another page
-            await page.goto("http://tripadvisor.com/Attractions-g293922-Activities-oa0-Da_Lat_Lam_Dong_Province.html", wait_until="networkidle")
-            await page.wait_for_timeout(2000)
-            
-            logger.info("Browser warm-up successful")
+            r = self.session.get("https://www.tripadvisor.com/", timeout=30)
+            r.raise_for_status()
+            logger.info("Warm‑up OK – cookies stored")
         except Exception as e:
-            logger.warning(f"Browser warm-up failed: {e}")
-        finally:
-            await page.close()
+            logger.warning(f"Warm‑up failed: {e}")
 
     # -------------------- HELPERS -------------------- #
     def _random_delay(self):
@@ -167,75 +97,37 @@ class EnhancedAttractionsCrawler:
             print(f"❌ Playwright error: {e}")
         return {}
 
-    async def get_soup(self, url, retries=3):
-        """Get BeautifulSoup object from URL using Playwright"""
+    def get_soup(self, url, retries=3):
+        """Get BeautifulSoup object from URL with retries"""
         for attempt in range(retries):
             try:
                 logger.info(f"Fetching URL: {url}")
-                await asyncio.sleep(random.uniform(self.min_delay, self.max_delay))
+                response = self.session.get(url, timeout=30)
+                # response = requests.get(url, headers=self.headers, timeout=30)
+                response.raise_for_status()
                 
-                page = await self.context.new_page()
-                
-                # Randomize viewport slightly
-                await page.set_viewport_size({
-                    'width': random.randint(1200, 1920),
-                    'height': random.randint(800, 1080)
-                })
-                
-                # Initial mouse movement
-                await page.mouse.move(
-                    random.randint(0, 800),
-                    random.randint(0, 600)
-                )
-                
-                # Navigate to the page with a referrer
-                await page.goto(url, wait_until="networkidle", referer="https://www.tripadvisor.com/")
-                
-                # Wait for dynamic content
-                await page.wait_for_timeout(random.randint(2000, 4000))
-                
-                # Simulate natural scrolling behavior
-                for _ in range(random.randint(3, 7)):
-                    # Random scroll amount
-                    scroll_amount = random.randint(100, 800)
-                    await page.mouse.wheel(0, scroll_amount)
-                    # Random pause between scrolls
-                    await page.wait_for_timeout(random.randint(500, 2000))
-                    
-                    # Occasionally move mouse while scrolling
-                    if random.random() > 0.5:
-                        await page.mouse.move(
-                            random.randint(0, 800),
-                            random.randint(scroll_amount, scroll_amount + 600)
-                        )
-                
-                # Check for captcha
-                if await page.query_selector('iframe[src*="captcha"]'):
-                    logger.warning("Captcha detected! Increasing delay and retrying...")
-                    await page.close()
+                # Check if we got a captcha page
+                if "captcha" in response.text.lower() or "please enable js" in response.text.lower():
+                    logger.warning("Captcha detected! Try using a different approach or wait longer between requests")
                     if attempt < retries - 1:
-                        wait_time = (attempt + 1) * 60
+                        wait_time = (attempt + 1) * 60  # Incremental backoff
                         logger.info(f"Retrying after {wait_time} seconds...")
-                        await asyncio.sleep(wait_time)
+                        time.sleep(wait_time)
                         continue
                     else:
-                        return None
+                        break
                 
-                # Get the page content
-                content = await page.content()
-                await page.close()
-                
-                return BeautifulSoup(content, 'html.parser')
-                
-            except Exception as e:
+                soup = BeautifulSoup(response.content, 'html.parser')
+                return soup
+            except requests.exceptions.RequestException as e:
                 logger.error(f"Error fetching URL {url}: {e}")
                 if attempt < retries - 1:
                     wait_time = (attempt + 1) * 30
                     logger.info(f"Retrying after {wait_time} seconds...")
-                    await asyncio.sleep(wait_time)
+                    time.sleep(wait_time)
                 else:
                     logger.error(f"Failed to fetch {url} after {retries} attempts")
-                    return None
+        return None
 
     # -----------  PATCH 2: small utility to filter bad names ----------- #
     def _valid_name(self, txt: str) -> bool:
@@ -249,8 +141,7 @@ class EnhancedAttractionsCrawler:
         return True
 
     # -------------------- LISTING PAGE -------------------- #
-    async def get_attraction_listings(self, url=None, page=1):
-        """Get attraction listings from a page"""
+    def get_attraction_listings(self, url=None, page=1):
         current_url = url or self.base_url
         if page > 1:
             if "oa" in current_url:
@@ -258,15 +149,15 @@ class EnhancedAttractionsCrawler:
             else:
                 current_url = current_url.replace('.html', f'-oa{(page-1)*30}.html')
 
-        soup = await self.get_soup(current_url)
+        soup = self.get_soup(current_url)
         if not soup:
             return [], False
 
         attractions = []
-        local_seen = set()
+        local_seen = set()             # PATCH 1a: track inside this call only
 
         selectors = [
-            'a[data-automation="poiTitleLink"]',
+            'a[data-automation="poiTitleLink"]',           # PATCH 3
             'div[data-automation="attraction"] a[href^="/Attraction_Review"]',
             'a[href^="/Attraction_Review"]'
         ]
@@ -275,13 +166,14 @@ class EnhancedAttractionsCrawler:
             for a in soup.select(sel):
                 href = a.get('href')
                 name = a.get_text(strip=True)
-                if not href or not self._valid_name(name):
+                if not href or not self._valid_name(name):  # PATCH 2
                     continue
                 if not href.startswith('http'):
                     href = urljoin("https://www.tripadvisor.com", href)
-                if href in local_seen:
+                if href in local_seen:                      # PATCH 1b
                     continue
                 local_seen.add(href)
+                # ❌ KHÔNG thêm vào self.visited_urls ở đây nữa  (# PATCH 1c)
                 attractions.append({"name": name, "url": href})
 
         logger.info(f"Found {len(attractions)} attractions on page {page}")
@@ -468,11 +360,11 @@ class EnhancedAttractionsCrawler:
         name = re.sub(r'\s*\(\d+\)\s*$', '', name)
         return name.strip()
     
-    async def get_attraction_details(self, attraction_url):
+    def get_attraction_details(self, attraction_url):
         """Get detailed information about an attraction"""
-        await asyncio.sleep(random.uniform(self.min_delay, self.max_delay))
+        self._random_delay()
         
-        soup = await self.get_soup(attraction_url)
+        soup = self.get_soup(attraction_url)
         if not soup:
             return {"url": attraction_url, "error": "Failed to fetch attraction page"}
             
@@ -904,87 +796,42 @@ class EnhancedAttractionsCrawler:
         return details
 
     # -------------------- MAIN CRAWL -------------------- #
-    async def crawl_attractions(self, max_pages=3, max_attractions=None):
-        """Main crawling function using async/await"""
-        await self.init_browser()
-        
-        try:
-            all_listings, page, more = [], 1, True
-            retry_count = 0
-            max_retries = 3
-            
-            while more and page <= max_pages:
-                try:
-                    # Try to get listings with retries
-                    lst, more = await self.get_attraction_listings(page=page)
-                    
-                    if not lst and retry_count < max_retries:
-                        logger.warning(f"No listings found on page {page}, retrying...")
-                        retry_count += 1
-                        # Exponential backoff
-                        wait_time = (2 ** retry_count) * 30
-                        logger.info(f"Waiting {wait_time} seconds before retry...")
-                        await asyncio.sleep(wait_time)
-                        continue
-                    
-                    retry_count = 0  # Reset retry count on success
-                    all_listings.extend(lst)
-                    
-                    if max_attractions and len(all_listings) >= max_attractions:
-                        all_listings = all_listings[:max_attractions]
-                        break
-                        
-                    page += 1
-                    # Random delay between pages
-                    delay = random.uniform(self.min_delay * 2, self.max_delay * 2)
-                    logger.info(f"Waiting {delay:.2f} seconds before next page...")
-                    await asyncio.sleep(delay)
-                    
-                except Exception as e:
-                    logger.error(f"Error on page {page}: {e}")
-                    if retry_count < max_retries:
-                        retry_count += 1
-                        wait_time = (2 ** retry_count) * 30
-                        logger.info(f"Retrying page {page} after {wait_time} seconds...")
-                        await asyncio.sleep(wait_time)
-                        continue
-                    else:
-                        logger.error(f"Failed to fetch page {page} after {max_retries} retries")
-                        break
+    def crawl_attractions(self, max_pages=3, max_attractions=None, threads=4):
+        all_listings, page, more = [], 1, True
+        while more and page <= max_pages:
+            lst, more = self.get_attraction_listings(page=page)
+            all_listings.extend(lst)
+            if max_attractions and len(all_listings) >= max_attractions:
+                all_listings = all_listings[:max_attractions]
+                break
+            page += 1
+            self._random_delay()
 
-            if not all_listings:
-                logger.warning("No attraction listings found.")
-                return []
+        if not all_listings:
+            logger.warning("No attraction listings found.")
+            return []
 
-            detailed = []
-            for it in all_listings:
+        detailed = []
+        with ThreadPoolExecutor(max_workers=threads) as executor:
+            future_map = {executor.submit(self.get_attraction_details, it["url"]): it for it in all_listings}
+            for fut in as_completed(future_map):
+                it = future_map[fut]
                 try:
-                    # Add longer delay between attraction details
-                    await asyncio.sleep(random.uniform(self.min_delay * 1.5, self.max_delay * 1.5))
-                    
-                    det = await self.get_attraction_details(it["url"])
+                    det = fut.result()
                     if "error" in det:
                         continue
-                    
+                    # ---------------- PATCH 4 ---------------- #
                     if det["url"] in self.visited_urls or det["name"].lower() in self.visited_attractions:
                         continue
-                        
                     self.visited_urls.add(det["url"])
                     self.visited_attractions.add(det["name"].lower())
+                    # ---------------------------------------- #
                     detailed.append({**it, **det})
                     logger.info(f"✓ {det.get('name')}")
-                    
                 except Exception as e:
                     logger.error(f"{e} – {it['url']}")
-                    # Don't retry individual attractions to avoid getting blocked
-                    continue
-            
-            logger.info(f"Found {len(detailed)} unique attractions")
-            return detailed
-            
-        finally:
-            if self.browser:
-                await self.browser.close()
+        logger.info(f"Found {len(detailed)} unique attractions")
+        return detailed
 
     # -------------------- SAVE -------------------- #
     def save_to_json(self, data, filename):
@@ -1001,15 +848,17 @@ def main():
     parser.add_argument('--max-pages', type=int, default=3)
     parser.add_argument('--max-attractions', type=int)
     parser.add_argument('--delay', type=float, default=4.0)
+    parser.add_argument('--threads', type=int, default=4)
     parser.add_argument('--custom-type')
     parser.add_argument('--output', default='hanoi_attractions_patched.json')
     args = parser.parse_args()
 
     crawler = EnhancedAttractionsCrawler(delay=args.delay, custom_type=args.custom_type)
-    data = asyncio.run(crawler.crawl_attractions(
+    data = crawler.crawl_attractions(
         max_pages=args.max_pages,
-        max_attractions=args.max_attractions
-    ))
+        max_attractions=args.max_attractions,
+        threads=args.threads
+    )
     crawler.save_to_json(data, args.output)
     logger.info(f"Saved → {args.output}")
 

@@ -1,0 +1,27 @@
+2025-04-18 11:11:37,546 - INFO - patching driver executable /Users/doa_ai/Library/Application Support/undetected_chromedriver/undetected_chromedriver
+2025-04-18 11:11:46,907 - INFO - Browser initialized successfully
+2025-04-18 11:11:57,981 - WARNING - Error in human behavior simulation: Message: move target out of bounds
+  (Session info: chrome=135.0.7049.96)
+Stacktrace:
+0   undetected_chromedriver             0x0000000104726448 undetected_chromedriver + 6149192
+1   undetected_chromedriver             0x000000010471db0a undetected_chromedriver + 6114058
+2   undetected_chromedriver             0x00000001041aecc3 undetected_chromedriver + 416963
+3   undetected_chromedriver             0x0000000104256556 undetected_chromedriver + 1103190
+4   undetected_chromedriver             0x0000000104226792 undetected_chromedriver + 907154
+5   undetected_chromedriver             0x000000010424daca undetected_chromedriver + 1067722
+6   undetected_chromedriver             0x0000000104226563 undetected_chromedriver + 906595
+7   undetected_chromedriver             0x00000001041f2955 undetected_chromedriver + 694613
+8   undetected_chromedriver             0x00000001041f35b1 undetected_chromedriver + 697777
+9   undetected_chromedriver             0x00000001046e3f00 undetected_chromedriver + 5877504
+10  undetected_chromedriver             0x00000001046e7df1 undetected_chromedriver + 5893617
+11  undetected_chromedriver             0x00000001046be344 undetected_chromedriver + 5722948
+12  undetected_chromedriver             0x00000001046e880b undetected_chromedriver + 5896203
+13  undetected_chromedriver             0x00000001046acac4 undetected_chromedriver + 5651140
+14  undetected_chromedriver             0x000000010470b918 undetected_chromedriver + 6039832
+15  undetected_chromedriver             0x000000010470bae0 undetected_chromedriver + 6040288
+16  undetected_chromedriver             0x000000010471d6d1 undetected_chromedriver + 6112977
+17  libsystem_pthread.dylib             0x00007ff819ce018b _pthread_start + 99
+18  libsystem_pthread.dylib             0x00007ff819cdbae3 thread_start + 15
+
+2025-04-18 11:11:57,983 - WARNING - Captcha detected!
+2025-04-18 11:11:57,983 - INFO - Waiting 30 seconds before retry...

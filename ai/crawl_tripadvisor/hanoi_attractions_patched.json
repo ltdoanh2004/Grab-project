@@ -7,11 +7,11 @@
     "duration": "3 hours",
     "type": "Attraction",
     "categories": [
-      "Ancient Ruins in Hanoi",
+      "Battlefields in Hanoi",
       "See all",
-      "Architectural Buildings in Hanoi",
+      "Ancient Ruins in Hanoi",
       "Also popular with travelers",
-      "Battlefields in Hanoi"
+      "Architectural Buildings in Hanoi"
     ],
     "main_image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/09/32/1d/c4/old-quarter.jpg?w=1200&h=1200&s=1",
     "image_urls": [
@@ -19,6 +19,6 @@
     ],
     "price": "$4.00",
     "rating": 4.5,
-    "reviews": "28,902"
+    "reviews": "28,904"
   }
 ]
