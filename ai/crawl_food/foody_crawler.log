@@ -5169,3 +5169,608 @@ Example of first item fields:
 2025-04-18 13:07:23,673 - INFO - Extracted data for restaurant: Trang Cháo - Nguyễn Ngọc Vũ
 2025-04-18 13:07:23,674 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
 2025-04-18 13:07:24,002 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:22:31,639 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:22:31,639 - INFO - Fetching page 1
+2025-04-18 13:22:32,264 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:22:32,851 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:22:34,587 - INFO - Extracted data for restaurant: Sweetc Hut - Tiệm Bánh Online
+2025-04-18 13:22:34,587 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:22:36,086 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:22:37,575 - INFO - Extracted data for restaurant: Trang Cháo - Nguyễn Ngọc Vũ
+2025-04-18 13:22:37,576 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:22:38,092 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:22:40,092 - INFO - Extracted data for restaurant: Trà Sữa Gong Cha - 貢茶 - Hoàng Thành Tower
+2025-04-18 13:22:40,092 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/ga-ran-burger-mcdonald-s-thai-ha
+2025-04-18 13:22:40,881 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/ga-ran-burger-mcdonald-s-thai-ha
+2025-04-18 13:22:42,813 - INFO - Extracted data for restaurant: Gà Rán & Burger McDonald's - Thái Hà
+2025-04-18 13:22:42,813 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/ga-ran-va-mi-y-jollibee-co-linh
+2025-04-18 13:22:43,395 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/ga-ran-va-mi-y-jollibee-co-linh
+2025-04-18 13:22:44,592 - INFO - Extracted data for restaurant: Gà rán và Mì Ý - Jollibee - Cổ Linh
+2025-04-18 13:22:44,592 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/salavi-banh-mi-nuong-muoi-ot-nghi-tam
+2025-04-18 13:22:45,113 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/salavi-banh-mi-nuong-muoi-ot-nghi-tam
+2025-04-18 13:22:46,551 - INFO - Extracted data for restaurant: Salavi - Bánh Mì Nướng Muối Ớt - Nghi Tàm
+2025-04-18 13:22:46,551 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/sinh-to-nuoc-ep-191
+2025-04-18 13:22:47,126 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/sinh-to-nuoc-ep-191
+2025-04-18 13:22:48,980 - INFO - Extracted data for restaurant: Sinh Tố & Nước Ép 191
+2025-04-18 13:22:48,981 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/canh-bun-pho-co-ba-diep-food
+2025-04-18 13:22:49,647 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/canh-bun-pho-co-ba-diep-food
+2025-04-18 13:22:51,384 - INFO - Extracted data for restaurant: Canh Bún Phố Cổ - Bà Điệp Food
+2025-04-18 13:22:51,384 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/laboong-tra-o-long-lang-la-boong-146-vu-pham-ham
+2025-04-18 13:22:52,086 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/laboong-tra-o-long-lang-la-boong-146-vu-pham-ham
+2025-04-18 13:22:53,702 - INFO - Extracted data for restaurant: LaBoong - Trà Ô Long Làng La Boong - 146 Vũ Phạm Hàm
+2025-04-18 13:22:53,702 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/che-sau-lien-tran-quoc-hoan
+2025-04-18 13:22:54,445 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/che-sau-lien-tran-quoc-hoan
+2025-04-18 13:22:56,095 - INFO - Extracted data for restaurant: Chè Sầu Liên - 79 Trần Quốc Hoàn
+2025-04-18 13:22:56,096 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/banh-mi-co-thuy-pate-hai-phong
+2025-04-18 13:22:56,987 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/banh-mi-co-thuy-pate-hai-phong
+2025-04-18 13:22:58,969 - INFO - Extracted data for restaurant: Bánh Mì Cô Thủy - Pate Hải Phòng
+2025-04-18 13:22:58,970 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/thang-huyen-my-van-than-sui-cao
+2025-04-18 13:23:00,148 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/thang-huyen-my-van-than-sui-cao
+2025-04-18 13:23:01,595 - INFO - Extracted data for restaurant: Thắng Huyền - Mì Vằn Thắn & Sủi Cảo
+2025-04-18 13:23:01,596 - INFO - Saved data to data/sweetc-hut-tiệm-bánh-online_20250418_132301.json
+2025-04-18 13:23:01,596 - INFO - Progress: 1/100 restaurants processed
+2025-04-18 13:23:01,597 - INFO - Saved data to data/trang-cháo-nguyễn-ngọc-vũ_20250418_132301.json
+2025-04-18 13:23:01,597 - INFO - Progress: 2/100 restaurants processed
+2025-04-18 13:23:01,597 - INFO - Saved data to data/trà-sữa-gong-cha-貢茶-hoàng-thành-tower_20250418_132301.json
+2025-04-18 13:23:01,597 - INFO - Progress: 3/100 restaurants processed
+2025-04-18 13:23:01,598 - INFO - Saved data to data/gà-rán-burger-mcdonalds-thái-hà_20250418_132301.json
+2025-04-18 13:23:01,598 - INFO - Progress: 4/100 restaurants processed
+2025-04-18 13:23:01,598 - INFO - Saved data to data/gà-rán-và-mì-ý-jollibee-cổ-linh_20250418_132301.json
+2025-04-18 13:23:01,598 - INFO - Progress: 5/100 restaurants processed
+2025-04-18 13:23:01,598 - INFO - Saved data to data/salavi-bánh-mì-nướng-muối-ớt-nghi-tàm_20250418_132301.json
+2025-04-18 13:23:01,598 - INFO - Progress: 6/100 restaurants processed
+2025-04-18 13:23:01,599 - INFO - Saved data to data/sinh-tố-nước-ép-191_20250418_132301.json
+2025-04-18 13:23:01,599 - INFO - Progress: 7/100 restaurants processed
+2025-04-18 13:23:01,599 - INFO - Saved data to data/canh-bún-phố-cổ-bà-điệp-food_20250418_132301.json
+2025-04-18 13:23:01,599 - INFO - Progress: 8/100 restaurants processed
+2025-04-18 13:23:01,599 - INFO - Saved data to data/laboong-trà-ô-long-làng-la-boong-146-vũ-phạm-hàm_20250418_132301.json
+2025-04-18 13:23:01,599 - INFO - Progress: 9/100 restaurants processed
+2025-04-18 13:23:01,600 - INFO - Saved data to data/chè-sầu-liên-79-trần-quốc-hoàn_20250418_132301.json
+2025-04-18 13:23:01,600 - INFO - Progress: 10/100 restaurants processed
+2025-04-18 13:23:01,600 - INFO - Saved data to data/bánh-mì-cô-thủy-pate-hải-phòng_20250418_132301.json
+2025-04-18 13:23:01,600 - INFO - Progress: 11/100 restaurants processed
+2025-04-18 13:23:01,601 - INFO - Saved data to data/thắng-huyền-mì-vằn-thắn-sủi-cảo_20250418_132301.json
+2025-04-18 13:23:01,601 - INFO - Progress: 12/100 restaurants processed
+2025-04-18 13:23:01,601 - INFO - Waiting 1.38 seconds before next page...
+2025-04-18 13:23:02,987 - INFO - Fetching page 2
+2025-04-18 13:23:03,607 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/com-ngon-me-nau-kim-giang
+2025-04-18 13:23:05,164 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/com-ngon-me-nau-kim-giang
+2025-04-18 13:23:07,081 - INFO - Extracted data for restaurant: Cơm Ngon Mẹ Nấu - Kim Giang
+2025-04-18 13:23:07,082 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/bento-delichi-com-ga-xoi-mo-com-ga-mam-toi-duong-khue
+2025-04-18 13:23:07,790 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/bento-delichi-com-ga-xoi-mo-com-ga-mam-toi-duong-khue
+2025-04-18 13:23:09,165 - INFO - Extracted data for restaurant: Bento Delichi - Cơm Gà Xối Mỡ, Cơm Gà Mắm Tỏi - Dương Khuê
+2025-04-18 13:23:09,166 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/co-huong-banh-da-tron-ngoc-ha
+2025-04-18 13:23:10,002 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/co-huong-banh-da-tron-ngoc-ha
+2025-04-18 13:23:11,651 - INFO - Extracted data for restaurant: Cô Hương - Bánh Đa Trộn - Ngọc Hà
+2025-04-18 13:23:11,651 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/minh-vu-do-an-han-quoc-online
+2025-04-18 13:23:12,471 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/minh-vu-do-an-han-quoc-online
+2025-04-18 13:23:13,990 - INFO - Extracted data for restaurant: Minh Vũ - Đồ Ăn Hàn Quốc Online
+2025-04-18 13:23:13,990 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/quan-thuy-bun-ca-banh-da-ca-ro-dong
+2025-04-18 13:23:14,524 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/quan-thuy-bun-ca-banh-da-ca-ro-dong
+2025-04-18 13:23:16,093 - INFO - Extracted data for restaurant: Quán Thúy - Bún Cá & Bánh Đa Cá Rô Đồng
+2025-04-18 13:23:16,093 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/starbucks-coffee-somerset-westpoint-hanoi
+2025-04-18 13:23:16,846 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/starbucks-coffee-somerset-westpoint-hanoi
+2025-04-18 13:24:21,182 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:24:21,182 - INFO - Fetching page 1
+2025-04-18 13:24:21,479 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:24:23,812 - INFO - Extracted data for restaurant: Sweetc Hut - Tiệm Bánh Online
+2025-04-18 13:24:23,813 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:24:25,863 - INFO - Extracted data for restaurant: Trang Cháo - Nguyễn Ngọc Vũ
+2025-04-18 13:24:25,863 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:24:28,105 - INFO - Extracted data for restaurant: Trà Sữa Gong Cha - 貢茶 - Hoàng Thành Tower
+2025-04-18 13:24:28,105 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/ga-ran-burger-mcdonald-s-thai-ha
+2025-04-18 13:24:30,625 - INFO - Extracted data for restaurant: Gà Rán & Burger McDonald's - Thái Hà
+2025-04-18 13:24:30,626 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/ga-ran-va-mi-y-jollibee-co-linh
+2025-04-18 13:24:32,801 - INFO - Extracted data for restaurant: Gà rán và Mì Ý - Jollibee - Cổ Linh
+2025-04-18 13:24:32,801 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/salavi-banh-mi-nuong-muoi-ot-nghi-tam
+2025-04-18 13:24:34,690 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:24:34,690 - INFO - Fetching page 1
+2025-04-18 13:24:34,803 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:24:37,457 - INFO - Extracted data for restaurant: Sweetc Hut - Tiệm Bánh Online
+2025-04-18 13:24:37,457 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:24:39,023 - INFO - Extracted data for restaurant: Trang Cháo - Nguyễn Ngọc Vũ
+2025-04-18 13:24:39,024 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:24:41,276 - INFO - Extracted data for restaurant: Trà Sữa Gong Cha - 貢茶 - Hoàng Thành Tower
+2025-04-18 13:24:41,276 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/ga-ran-burger-mcdonald-s-thai-ha
+2025-04-18 13:24:43,543 - INFO - Extracted data for restaurant: Gà Rán & Burger McDonald's - Thái Hà
+2025-04-18 13:24:43,543 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/ga-ran-va-mi-y-jollibee-co-linh
+2025-04-18 13:24:45,464 - INFO - Extracted data for restaurant: Gà rán và Mì Ý - Jollibee - Cổ Linh
+2025-04-18 13:24:45,465 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/salavi-banh-mi-nuong-muoi-ot-nghi-tam
+2025-04-18 13:24:47,466 - INFO - Extracted data for restaurant: Salavi - Bánh Mì Nướng Muối Ớt - Nghi Tàm
+2025-04-18 13:24:47,467 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/sinh-to-nuoc-ep-191
+2025-04-18 13:24:49,547 - INFO - Extracted data for restaurant: Sinh Tố & Nước Ép 191
+2025-04-18 13:24:49,547 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/canh-bun-pho-co-ba-diep-food
+2025-04-18 13:24:51,728 - INFO - Extracted data for restaurant: Canh Bún Phố Cổ - Bà Điệp Food
+2025-04-18 13:24:51,728 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/laboong-tra-o-long-lang-la-boong-146-vu-pham-ham
+2025-04-18 13:24:54,303 - INFO - Extracted data for restaurant: LaBoong - Trà Ô Long Làng La Boong - 146 Vũ Phạm Hàm
+2025-04-18 13:24:54,303 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/che-sau-lien-tran-quoc-hoan
+2025-04-18 13:24:56,624 - INFO - Extracted data for restaurant: Chè Sầu Liên - 79 Trần Quốc Hoàn
+2025-04-18 13:24:56,624 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/banh-mi-co-thuy-pate-hai-phong
+2025-04-18 13:24:58,617 - INFO - Extracted data for restaurant: Bánh Mì Cô Thủy - Pate Hải Phòng
+2025-04-18 13:24:58,618 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/thang-huyen-my-van-than-sui-cao
+2025-04-18 13:25:00,389 - INFO - Extracted data for restaurant: Thắng Huyền - Mì Vằn Thắn & Sủi Cảo
+2025-04-18 13:25:00,391 - INFO - Saved data to data/sweetc-hut-tiệm-bánh-online_20250418_132500.json
+2025-04-18 13:25:00,391 - INFO - Progress: 1/100 restaurants processed
+2025-04-18 13:25:00,391 - INFO - Saved data to data/trang-cháo-nguyễn-ngọc-vũ_20250418_132500.json
+2025-04-18 13:25:00,391 - INFO - Progress: 2/100 restaurants processed
+2025-04-18 13:25:00,392 - INFO - Saved data to data/trà-sữa-gong-cha-貢茶-hoàng-thành-tower_20250418_132500.json
+2025-04-18 13:25:00,392 - INFO - Progress: 3/100 restaurants processed
+2025-04-18 13:25:00,392 - INFO - Saved data to data/gà-rán-burger-mcdonalds-thái-hà_20250418_132500.json
+2025-04-18 13:25:00,392 - INFO - Progress: 4/100 restaurants processed
+2025-04-18 13:25:00,393 - INFO - Saved data to data/gà-rán-và-mì-ý-jollibee-cổ-linh_20250418_132500.json
+2025-04-18 13:25:00,393 - INFO - Progress: 5/100 restaurants processed
+2025-04-18 13:25:00,393 - INFO - Saved data to data/salavi-bánh-mì-nướng-muối-ớt-nghi-tàm_20250418_132500.json
+2025-04-18 13:25:00,393 - INFO - Progress: 6/100 restaurants processed
+2025-04-18 13:25:00,394 - INFO - Saved data to data/sinh-tố-nước-ép-191_20250418_132500.json
+2025-04-18 13:25:00,394 - INFO - Progress: 7/100 restaurants processed
+2025-04-18 13:25:00,395 - INFO - Saved data to data/canh-bún-phố-cổ-bà-điệp-food_20250418_132500.json
+2025-04-18 13:25:00,395 - INFO - Progress: 8/100 restaurants processed
+2025-04-18 13:25:00,395 - INFO - Saved data to data/laboong-trà-ô-long-làng-la-boong-146-vũ-phạm-hàm_20250418_132500.json
+2025-04-18 13:25:00,395 - INFO - Progress: 9/100 restaurants processed
+2025-04-18 13:25:00,396 - INFO - Saved data to data/chè-sầu-liên-79-trần-quốc-hoàn_20250418_132500.json
+2025-04-18 13:25:00,397 - INFO - Progress: 10/100 restaurants processed
+2025-04-18 13:25:00,397 - INFO - Saved data to data/bánh-mì-cô-thủy-pate-hải-phòng_20250418_132500.json
+2025-04-18 13:25:00,397 - INFO - Progress: 11/100 restaurants processed
+2025-04-18 13:25:00,398 - INFO - Saved data to data/thắng-huyền-mì-vằn-thắn-sủi-cảo_20250418_132500.json
+2025-04-18 13:25:00,398 - INFO - Progress: 12/100 restaurants processed
+2025-04-18 13:25:00,398 - INFO - Waiting 2.46 seconds before next page...
+2025-04-18 13:25:02,865 - INFO - Fetching page 2
+2025-04-18 13:25:04,155 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/com-ngon-me-nau-kim-giang
+2025-04-18 13:25:06,056 - INFO - Extracted data for restaurant: Cơm Ngon Mẹ Nấu - Kim Giang
+2025-04-18 13:25:06,056 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/bento-delichi-com-ga-xoi-mo-com-ga-mam-toi-duong-khue
+2025-04-18 13:25:08,298 - INFO - Extracted data for restaurant: Bento Delichi - Cơm Gà Xối Mỡ, Cơm Gà Mắm Tỏi - Dương Khuê
+2025-04-18 13:25:08,299 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/co-huong-banh-da-tron-ngoc-ha
+2025-04-18 13:25:10,127 - INFO - Extracted data for restaurant: Cô Hương - Bánh Đa Trộn - Ngọc Hà
+2025-04-18 13:25:10,127 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/minh-vu-do-an-han-quoc-online
+2025-04-18 13:25:12,095 - INFO - Extracted data for restaurant: Minh Vũ - Đồ Ăn Hàn Quốc Online
+2025-04-18 13:25:12,095 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/quan-thuy-bun-ca-banh-da-ca-ro-dong
+2025-04-18 13:25:14,256 - INFO - Extracted data for restaurant: Quán Thúy - Bún Cá & Bánh Đa Cá Rô Đồng
+2025-04-18 13:25:14,256 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/starbucks-coffee-somerset-westpoint-hanoi
+2025-04-18 13:26:17,089 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:26:17,090 - INFO - Fetching page 1
+2025-04-18 13:26:17,397 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:26:17,964 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:26:19,320 - INFO - Extracted data for restaurant: Sweetc Hut - Tiệm Bánh Online
+2025-04-18 13:26:19,320 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:26:19,784 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:26:21,149 - INFO - Extracted data for restaurant: Trang Cháo - Nguyễn Ngọc Vũ
+2025-04-18 13:26:21,149 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:26:21,733 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:27:48,411 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:27:48,411 - INFO - Fetching page 1
+2025-04-18 13:27:48,606 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:27:49,073 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:27:50,648 - INFO - Extracted data for restaurant: Sweetc Hut - Tiệm Bánh Online
+2025-04-18 13:27:50,648 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:27:51,495 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:29:23,798 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:29:23,799 - INFO - Fetching page 1
+2025-04-18 13:29:23,902 - ERROR - Error fetching page 1: Expecting value: line 1 column 1 (char 0)
+2025-04-18 13:29:23,902 - INFO - Waiting 1.57 seconds before next page...
+2025-04-18 13:29:25,479 - INFO - Fetching page 2
+2025-04-18 13:29:25,548 - ERROR - Error fetching page 2: Expecting value: line 1 column 1 (char 0)
+2025-04-18 13:29:25,549 - INFO - Waiting 1.48 seconds before next page...
+2025-04-18 13:29:27,033 - INFO - Fetching page 3
+2025-04-18 13:29:27,090 - ERROR - Error fetching page 3: Expecting value: line 1 column 1 (char 0)
+2025-04-18 13:29:27,090 - INFO - Waiting 1.39 seconds before next page...
+2025-04-18 13:29:28,486 - INFO - Fetching page 4
+2025-04-18 13:29:28,680 - ERROR - Error fetching page 4: Expecting value: line 1 column 1 (char 0)
+2025-04-18 13:29:28,681 - INFO - Waiting 1.94 seconds before next page...
+2025-04-18 13:29:30,628 - INFO - Fetching page 5
+2025-04-18 13:29:30,684 - ERROR - Error fetching page 5: Expecting value: line 1 column 1 (char 0)
+2025-04-18 13:29:30,684 - INFO - Waiting 1.21 seconds before next page...
+2025-04-18 13:29:31,902 - INFO - Fetching page 6
+2025-04-18 13:29:31,953 - ERROR - Error fetching page 6: Expecting value: line 1 column 1 (char 0)
+2025-04-18 13:29:31,954 - INFO - Waiting 2.58 seconds before next page...
+2025-04-18 13:29:34,542 - INFO - Fetching page 7
+2025-04-18 13:29:34,602 - ERROR - Error fetching page 7: Expecting value: line 1 column 1 (char 0)
+2025-04-18 13:29:34,602 - INFO - Waiting 1.77 seconds before next page...
+2025-04-18 13:29:36,375 - INFO - Fetching page 8
+2025-04-18 13:29:36,429 - ERROR - Error fetching page 8: Expecting value: line 1 column 1 (char 0)
+2025-04-18 13:29:36,430 - INFO - Waiting 1.80 seconds before next page...
+2025-04-18 13:29:38,229 - INFO - Fetching page 9
+2025-04-18 13:29:38,281 - ERROR - Error fetching page 9: Expecting value: line 1 column 1 (char 0)
+2025-04-18 13:29:38,282 - INFO - Crawling completed. Processed 0 restaurants
+2025-04-18 13:29:57,521 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:29:57,521 - INFO - Fetching page 1
+2025-04-18 13:29:57,809 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:29:58,123 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:29:59,821 - INFO - Extracted data for restaurant: Sweetc Hut - Tiệm Bánh Online
+2025-04-18 13:29:59,821 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:30:00,311 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:30:01,962 - INFO - Extracted data for restaurant: Trang Cháo - Nguyễn Ngọc Vũ
+2025-04-18 13:30:01,963 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:30:02,423 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:30:04,336 - INFO - Extracted data for restaurant: Trà Sữa Gong Cha - 貢茶 - Hoàng Thành Tower
+2025-04-18 13:30:04,336 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/ga-ran-burger-mcdonald-s-thai-ha
+2025-04-18 13:30:04,849 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/ga-ran-burger-mcdonald-s-thai-ha
+2025-04-18 13:30:06,815 - INFO - Extracted data for restaurant: Gà Rán & Burger McDonald's - Thái Hà
+2025-04-18 13:30:06,815 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/ga-ran-va-mi-y-jollibee-co-linh
+2025-04-18 13:30:07,368 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/ga-ran-va-mi-y-jollibee-co-linh
+2025-04-18 13:30:08,780 - INFO - Extracted data for restaurant: Gà rán và Mì Ý - Jollibee - Cổ Linh
+2025-04-18 13:30:08,780 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/salavi-banh-mi-nuong-muoi-ot-nghi-tam
+2025-04-18 13:30:09,245 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/salavi-banh-mi-nuong-muoi-ot-nghi-tam
+2025-04-18 13:30:11,024 - INFO - Extracted data for restaurant: Salavi - Bánh Mì Nướng Muối Ớt - Nghi Tàm
+2025-04-18 13:30:11,024 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/sinh-to-nuoc-ep-191
+2025-04-18 13:30:11,469 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/sinh-to-nuoc-ep-191
+2025-04-18 13:30:12,903 - INFO - Extracted data for restaurant: Sinh Tố & Nước Ép 191
+2025-04-18 13:30:12,903 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/canh-bun-pho-co-ba-diep-food
+2025-04-18 13:30:13,353 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/canh-bun-pho-co-ba-diep-food
+2025-04-18 13:32:09,231 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:32:09,231 - INFO - Fetching page 1
+2025-04-18 13:32:09,327 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:32:09,778 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:32:11,403 - INFO - Extracted data for restaurant: Sweetc Hut - Tiệm Bánh Online
+2025-04-18 13:32:11,403 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:32:11,938 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:32:13,170 - INFO - Extracted data for restaurant: Trang Cháo - Nguyễn Ngọc Vũ
+2025-04-18 13:32:13,170 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:32:13,489 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:32:15,067 - INFO - Extracted data for restaurant: Trà Sữa Gong Cha - 貢茶 - Hoàng Thành Tower
+2025-04-18 13:32:15,067 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/ga-ran-burger-mcdonald-s-thai-ha
+2025-04-18 13:32:15,575 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/ga-ran-burger-mcdonald-s-thai-ha
+2025-04-18 13:32:17,312 - INFO - Extracted data for restaurant: Gà Rán & Burger McDonald's - Thái Hà
+2025-04-18 13:32:17,312 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/ga-ran-va-mi-y-jollibee-co-linh
+2025-04-18 13:32:17,850 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/ga-ran-va-mi-y-jollibee-co-linh
+2025-04-18 13:32:19,851 - INFO - Extracted data for restaurant: Gà rán và Mì Ý - Jollibee - Cổ Linh
+2025-04-18 13:32:19,851 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/salavi-banh-mi-nuong-muoi-ot-nghi-tam
+2025-04-18 13:32:20,388 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/salavi-banh-mi-nuong-muoi-ot-nghi-tam
+2025-04-18 13:32:21,882 - INFO - Extracted data for restaurant: Salavi - Bánh Mì Nướng Muối Ớt - Nghi Tàm
+2025-04-18 13:32:21,883 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/sinh-to-nuoc-ep-191
+2025-04-18 13:32:22,287 - WARNING - No menu items found for URL: https://www.foody.vn/ha-noi/sinh-to-nuoc-ep-191
+2025-04-18 13:35:06,422 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:35:06,422 - INFO - Fetching page 1
+2025-04-18 13:35:06,779 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:35:08,821 - INFO - Extracted data for restaurant: Sweetc Hut - Tiệm Bánh Online
+2025-04-18 13:35:08,821 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:35:10,398 - INFO - Extracted data for restaurant: Trang Cháo - Nguyễn Ngọc Vũ
+2025-04-18 13:35:10,398 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:35:12,533 - INFO - Extracted data for restaurant: Trà Sữa Gong Cha - 貢茶 - Hoàng Thành Tower
+2025-04-18 13:35:12,534 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/ga-ran-burger-mcdonald-s-thai-ha
+2025-04-18 13:35:14,869 - INFO - Extracted data for restaurant: Gà Rán & Burger McDonald's - Thái Hà
+2025-04-18 13:35:14,869 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/ga-ran-va-mi-y-jollibee-co-linh
+2025-04-18 13:35:17,068 - INFO - Extracted data for restaurant: Gà rán và Mì Ý - Jollibee - Cổ Linh
+2025-04-18 13:35:17,069 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/salavi-banh-mi-nuong-muoi-ot-nghi-tam
+2025-04-18 13:35:18,740 - INFO - Extracted data for restaurant: Salavi - Bánh Mì Nướng Muối Ớt - Nghi Tàm
+2025-04-18 13:35:18,741 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/sinh-to-nuoc-ep-191
+2025-04-18 13:35:20,542 - INFO - Extracted data for restaurant: Sinh Tố & Nước Ép 191
+2025-04-18 13:35:20,543 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/canh-bun-pho-co-ba-diep-food
+2025-04-18 13:35:22,355 - INFO - Extracted data for restaurant: Canh Bún Phố Cổ - Bà Điệp Food
+2025-04-18 13:35:22,355 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/laboong-tra-o-long-lang-la-boong-146-vu-pham-ham
+2025-04-18 13:35:24,238 - INFO - Extracted data for restaurant: LaBoong - Trà Ô Long Làng La Boong - 146 Vũ Phạm Hàm
+2025-04-18 13:35:24,239 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/che-sau-lien-tran-quoc-hoan
+2025-04-18 13:35:25,883 - INFO - Extracted data for restaurant: Chè Sầu Liên - 79 Trần Quốc Hoàn
+2025-04-18 13:35:25,883 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/banh-mi-co-thuy-pate-hai-phong
+2025-04-18 13:35:27,841 - INFO - Extracted data for restaurant: Bánh Mì Cô Thủy - Pate Hải Phòng
+2025-04-18 13:35:27,841 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/thang-huyen-my-van-than-sui-cao
+2025-04-18 13:35:29,914 - INFO - Extracted data for restaurant: Thắng Huyền - Mì Vằn Thắn & Sủi Cảo
+2025-04-18 13:35:29,917 - INFO - Saved data to data/sweetc-hut-tiệm-bánh-online_20250418_133529.json
+2025-04-18 13:35:29,917 - INFO - Progress: 1/100 restaurants processed
+2025-04-18 13:35:29,917 - INFO - Saved data to data/trang-cháo-nguyễn-ngọc-vũ_20250418_133529.json
+2025-04-18 13:35:29,917 - INFO - Progress: 2/100 restaurants processed
+2025-04-18 13:35:29,918 - INFO - Saved data to data/trà-sữa-gong-cha-貢茶-hoàng-thành-tower_20250418_133529.json
+2025-04-18 13:35:29,918 - INFO - Progress: 3/100 restaurants processed
+2025-04-18 13:35:29,919 - INFO - Saved data to data/gà-rán-burger-mcdonalds-thái-hà_20250418_133529.json
+2025-04-18 13:35:29,919 - INFO - Progress: 4/100 restaurants processed
+2025-04-18 13:35:29,919 - INFO - Saved data to data/gà-rán-và-mì-ý-jollibee-cổ-linh_20250418_133529.json
+2025-04-18 13:35:29,919 - INFO - Progress: 5/100 restaurants processed
+2025-04-18 13:35:29,920 - INFO - Saved data to data/salavi-bánh-mì-nướng-muối-ớt-nghi-tàm_20250418_133529.json
+2025-04-18 13:35:29,920 - INFO - Progress: 6/100 restaurants processed
+2025-04-18 13:35:29,920 - INFO - Saved data to data/sinh-tố-nước-ép-191_20250418_133529.json
+2025-04-18 13:35:29,920 - INFO - Progress: 7/100 restaurants processed
+2025-04-18 13:35:29,921 - INFO - Saved data to data/canh-bún-phố-cổ-bà-điệp-food_20250418_133529.json
+2025-04-18 13:35:29,921 - INFO - Progress: 8/100 restaurants processed
+2025-04-18 13:35:29,921 - INFO - Saved data to data/laboong-trà-ô-long-làng-la-boong-146-vũ-phạm-hàm_20250418_133529.json
+2025-04-18 13:35:29,922 - INFO - Progress: 9/100 restaurants processed
+2025-04-18 13:35:29,922 - INFO - Saved data to data/chè-sầu-liên-79-trần-quốc-hoàn_20250418_133529.json
+2025-04-18 13:35:29,922 - INFO - Progress: 10/100 restaurants processed
+2025-04-18 13:35:29,923 - INFO - Saved data to data/bánh-mì-cô-thủy-pate-hải-phòng_20250418_133529.json
+2025-04-18 13:35:29,923 - INFO - Progress: 11/100 restaurants processed
+2025-04-18 13:35:29,923 - INFO - Saved data to data/thắng-huyền-mì-vằn-thắn-sủi-cảo_20250418_133529.json
+2025-04-18 13:35:29,923 - INFO - Progress: 12/100 restaurants processed
+2025-04-18 13:35:29,923 - INFO - Waiting 1.70 seconds before next page...
+2025-04-18 13:35:31,622 - INFO - Fetching page 2
+2025-04-18 13:35:32,041 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/com-ngon-me-nau-kim-giang
+2025-04-18 13:35:33,938 - INFO - Extracted data for restaurant: Cơm Ngon Mẹ Nấu - Kim Giang
+2025-04-18 13:35:33,938 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/bento-delichi-com-ga-xoi-mo-com-ga-mam-toi-duong-khue
+2025-04-18 13:35:35,657 - INFO - Extracted data for restaurant: Bento Delichi - Cơm Gà Xối Mỡ, Cơm Gà Mắm Tỏi - Dương Khuê
+2025-04-18 13:35:35,658 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/co-huong-banh-da-tron-ngoc-ha
+2025-04-18 13:35:37,915 - INFO - Extracted data for restaurant: Cô Hương - Bánh Đa Trộn - Ngọc Hà
+2025-04-18 13:35:37,915 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/minh-vu-do-an-han-quoc-online
+2025-04-18 13:35:39,707 - INFO - Extracted data for restaurant: Minh Vũ - Đồ Ăn Hàn Quốc Online
+2025-04-18 13:35:39,708 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/quan-thuy-bun-ca-banh-da-ca-ro-dong
+2025-04-18 13:35:42,246 - INFO - Extracted data for restaurant: Quán Thúy - Bún Cá & Bánh Đa Cá Rô Đồng
+2025-04-18 13:35:42,246 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/starbucks-coffee-somerset-westpoint-hanoi
+2025-04-18 13:35:44,441 - INFO - Extracted data for restaurant: Starbucks Coffee - Somerset Westpoint
+2025-04-18 13:35:44,441 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/che-juco
+2025-04-18 13:35:46,772 - INFO - Extracted data for restaurant: Chè Juco
+2025-04-18 13:35:46,772 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/hung-thai-bun-cha-hang-manh
+2025-04-18 13:35:48,564 - INFO - Extracted data for restaurant: Hùng Thái - Bún Chả Hàng Mành
+2025-04-18 13:35:48,564 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/phuong-beo-mi-van-than
+2025-04-18 13:35:50,254 - INFO - Extracted data for restaurant: Phương Béo - Mì Vằn Thắn
+2025-04-18 13:35:50,254 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/pizza-ong-tay-do-quang
+2025-04-18 13:35:52,320 - INFO - Extracted data for restaurant: Pizza Ông Tây - Đỗ Quang
+2025-04-18 13:35:52,320 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/12-mois-patisserie-tiem-banh-ngot
+2025-04-18 13:35:54,032 - INFO - Extracted data for restaurant: 12 Mois Patisserie - Tiệm Bánh Ngọt
+2025-04-18 13:35:54,033 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/tu-anh-banh-xeo-nem-lui
+2025-04-18 13:35:56,345 - INFO - Extracted data for restaurant: Tú Anh - Bánh Xèo & Nem Lụi
+2025-04-18 13:35:56,347 - INFO - Saved data to data/cơm-ngon-mẹ-nấu-kim-giang_20250418_133556.json
+2025-04-18 13:35:56,347 - INFO - Progress: 13/100 restaurants processed
+2025-04-18 13:35:56,347 - INFO - Saved data to data/bento-delichi-cơm-gà-xối-mỡ-cơm-gà-mắm-tỏi-dương-khuê_20250418_133556.json
+2025-04-18 13:35:56,347 - INFO - Progress: 14/100 restaurants processed
+2025-04-18 13:35:56,348 - INFO - Saved data to data/cô-hương-bánh-đa-trộn-ngọc-hà_20250418_133556.json
+2025-04-18 13:35:56,348 - INFO - Progress: 15/100 restaurants processed
+2025-04-18 13:35:56,348 - INFO - Saved data to data/minh-vũ-đồ-ăn-hàn-quốc-online_20250418_133556.json
+2025-04-18 13:35:56,348 - INFO - Progress: 16/100 restaurants processed
+2025-04-18 13:35:56,349 - INFO - Saved data to data/quán-thúy-bún-cá-bánh-đa-cá-rô-đồng_20250418_133556.json
+2025-04-18 13:35:56,349 - INFO - Progress: 17/100 restaurants processed
+2025-04-18 13:35:56,349 - INFO - Saved data to data/starbucks-coffee-somerset-westpoint_20250418_133556.json
+2025-04-18 13:35:56,350 - INFO - Progress: 18/100 restaurants processed
+2025-04-18 13:35:56,350 - INFO - Saved data to data/chè-juco_20250418_133556.json
+2025-04-18 13:35:56,350 - INFO - Progress: 19/100 restaurants processed
+2025-04-18 13:35:56,351 - INFO - Saved data to data/hùng-thái-bún-chả-hàng-mành_20250418_133556.json
+2025-04-18 13:35:56,351 - INFO - Progress: 20/100 restaurants processed
+2025-04-18 13:35:56,351 - INFO - Saved data to data/phương-béo-mì-vằn-thắn_20250418_133556.json
+2025-04-18 13:35:56,351 - INFO - Progress: 21/100 restaurants processed
+2025-04-18 13:35:56,352 - INFO - Saved data to data/pizza-ông-tây-đỗ-quang_20250418_133556.json
+2025-04-18 13:35:56,352 - INFO - Progress: 22/100 restaurants processed
+2025-04-18 13:35:56,353 - INFO - Saved data to data/12-mois-patisserie-tiệm-bánh-ngọt_20250418_133556.json
+2025-04-18 13:35:56,353 - INFO - Progress: 23/100 restaurants processed
+2025-04-18 13:35:56,353 - INFO - Saved data to data/tú-anh-bánh-xèo-nem-lụi_20250418_133556.json
+2025-04-18 13:35:56,354 - INFO - Progress: 24/100 restaurants processed
+2025-04-18 13:35:56,354 - INFO - Waiting 1.42 seconds before next page...
+2025-04-18 13:35:57,775 - INFO - Fetching page 3
+2025-04-18 13:35:58,160 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/hoa-qua-dam-hang-chi
+2025-04-18 13:36:00,256 - INFO - Extracted data for restaurant: Hoa Quả Dầm - Hàng Chỉ
+2025-04-18 13:36:00,257 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/burger-king-giang-vo
+2025-04-18 13:36:02,855 - INFO - Extracted data for restaurant: Burger King - Giảng Võ
+2025-04-18 13:36:02,856 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/ga-36-linh-dam
+2025-04-18 13:36:04,561 - INFO - Extracted data for restaurant: Gà 36 - Linh Đàm
+2025-04-18 13:36:04,562 - INFO - Fetching menu from URL: https://www.foody.vn/ha-noi/ga-tuoi-manh-hoach-232-thai-ha
+2025-04-18 13:40:26,407 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:40:26,408 - INFO - Fetching page 1
+2025-04-18 13:40:27,620 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:41:27,667 - ERROR - Playwright error: Page.goto: Timeout 60000ms exceeded.
+Call log:
+  - navigating to "https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online", waiting until "load"
+
+2025-04-18 13:41:29,352 - INFO - Extracted data for restaurant: Sweetc Hut - Tiệm Bánh Online
+2025-04-18 13:41:29,721 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:42:29,774 - ERROR - Playwright error: Page.goto: Timeout 60000ms exceeded.
+Call log:
+  - navigating to "https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu", waiting until "load"
+
+2025-04-18 13:42:30,993 - INFO - Extracted data for restaurant: Trang Cháo - Nguyễn Ngọc Vũ
+2025-04-18 13:42:31,400 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:43:16,303 - ERROR - Future exception was never retrieved
+future: <Future finished exception=TargetClosedError('Target page, context or browser has been closed')>
+playwright._impl._errors.TargetClosedError: Target page, context or browser has been closed
+2025-04-18 13:43:48,428 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:43:48,428 - INFO - Fetching page 1
+2025-04-18 13:43:48,539 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:48,539 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:48,539 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:48,539 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:48,539 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:48,539 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:48,539 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:48,539 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:48,539 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:48,539 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:48,539 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:48,539 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:48,540 - INFO - Waiting 2.86 seconds before next page...
+2025-04-18 13:43:51,407 - INFO - Fetching page 2
+2025-04-18 13:43:51,745 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:51,745 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:51,745 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:51,745 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:51,745 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:51,745 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:51,745 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:51,745 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:51,746 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:51,746 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:51,746 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:51,746 - ERROR - Error processing restaurant item: FoodyCrawler.get_menu_by_playwright() takes 1 positional argument but 2 were given
+2025-04-18 13:43:51,746 - INFO - Waiting 1.92 seconds before next page...
+2025-04-18 13:43:59,884 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:43:59,884 - INFO - Fetching page 1
+2025-04-18 13:44:00,901 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:44:23,344 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:44:25,207 - INFO - Extracted data for restaurant: Sweetc Hut - Tiệm Bánh Online
+2025-04-18 13:44:25,597 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:44:48,496 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:44:49,661 - INFO - Extracted data for restaurant: Trang Cháo - Nguyễn Ngọc Vũ
+2025-04-18 13:44:50,059 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:45:13,949 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:45:15,441 - INFO - Extracted data for restaurant: Trà Sữa Gong Cha - 貢茶 - Hoàng Thành Tower
+2025-04-18 13:45:15,835 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/ga-ran-burger-mcdonald-s-thai-ha
+2025-04-18 13:45:39,247 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:45:40,553 - INFO - Extracted data for restaurant: Gà Rán & Burger McDonald's - Thái Hà
+2025-04-18 13:45:40,989 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/ga-ran-va-mi-y-jollibee-co-linh
+2025-04-18 13:46:03,588 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:46:05,431 - INFO - Extracted data for restaurant: Gà rán và Mì Ý - Jollibee - Cổ Linh
+2025-04-18 13:46:05,829 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/salavi-banh-mi-nuong-muoi-ot-nghi-tam
+2025-04-18 13:46:28,644 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:46:30,415 - INFO - Extracted data for restaurant: Salavi - Bánh Mì Nướng Muối Ớt - Nghi Tàm
+2025-04-18 13:46:30,809 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/sinh-to-nuoc-ep-191
+2025-04-18 13:46:54,275 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:46:55,694 - INFO - Extracted data for restaurant: Sinh Tố & Nước Ép 191
+2025-04-18 13:46:56,100 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/canh-bun-pho-co-ba-diep-food
+2025-04-18 13:47:18,982 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:47:20,561 - INFO - Extracted data for restaurant: Canh Bún Phố Cổ - Bà Điệp Food
+2025-04-18 13:47:20,959 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/laboong-tra-o-long-lang-la-boong-146-vu-pham-ham
+2025-04-18 13:47:44,114 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:47:45,836 - INFO - Extracted data for restaurant: LaBoong - Trà Ô Long Làng La Boong - 146 Vũ Phạm Hàm
+2025-04-18 13:47:46,224 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/che-sau-lien-tran-quoc-hoan
+2025-04-18 13:48:08,542 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:48:10,378 - INFO - Extracted data for restaurant: Chè Sầu Liên - 79 Trần Quốc Hoàn
+2025-04-18 13:48:10,822 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/banh-mi-co-thuy-pate-hai-phong
+2025-04-18 13:48:33,446 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:48:35,221 - INFO - Extracted data for restaurant: Bánh Mì Cô Thủy - Pate Hải Phòng
+2025-04-18 13:48:35,647 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/thang-huyen-my-van-than-sui-cao
+2025-04-18 13:48:58,611 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:48:59,953 - INFO - Extracted data for restaurant: Thắng Huyền - Mì Vằn Thắn & Sủi Cảo
+2025-04-18 13:48:59,955 - INFO - Saved data to data/sweetc-hut-tiệm-bánh-online_20250418_134859.json
+2025-04-18 13:48:59,955 - INFO - Progress: 1/100 restaurants processed
+2025-04-18 13:48:59,955 - INFO - Saved data to data/trang-cháo-nguyễn-ngọc-vũ_20250418_134859.json
+2025-04-18 13:48:59,955 - INFO - Progress: 2/100 restaurants processed
+2025-04-18 13:48:59,955 - INFO - Saved data to data/trà-sữa-gong-cha-貢茶-hoàng-thành-tower_20250418_134859.json
+2025-04-18 13:48:59,956 - INFO - Progress: 3/100 restaurants processed
+2025-04-18 13:48:59,956 - INFO - Saved data to data/gà-rán-burger-mcdonalds-thái-hà_20250418_134859.json
+2025-04-18 13:48:59,956 - INFO - Progress: 4/100 restaurants processed
+2025-04-18 13:48:59,956 - INFO - Saved data to data/gà-rán-và-mì-ý-jollibee-cổ-linh_20250418_134859.json
+2025-04-18 13:48:59,956 - INFO - Progress: 5/100 restaurants processed
+2025-04-18 13:48:59,956 - INFO - Saved data to data/salavi-bánh-mì-nướng-muối-ớt-nghi-tàm_20250418_134859.json
+2025-04-18 13:48:59,956 - INFO - Progress: 6/100 restaurants processed
+2025-04-18 13:48:59,957 - INFO - Saved data to data/sinh-tố-nước-ép-191_20250418_134859.json
+2025-04-18 13:48:59,957 - INFO - Progress: 7/100 restaurants processed
+2025-04-18 13:48:59,957 - INFO - Saved data to data/canh-bún-phố-cổ-bà-điệp-food_20250418_134859.json
+2025-04-18 13:48:59,957 - INFO - Progress: 8/100 restaurants processed
+2025-04-18 13:48:59,957 - INFO - Saved data to data/laboong-trà-ô-long-làng-la-boong-146-vũ-phạm-hàm_20250418_134859.json
+2025-04-18 13:48:59,957 - INFO - Progress: 9/100 restaurants processed
+2025-04-18 13:48:59,957 - INFO - Saved data to data/chè-sầu-liên-79-trần-quốc-hoàn_20250418_134859.json
+2025-04-18 13:48:59,957 - INFO - Progress: 10/100 restaurants processed
+2025-04-18 13:48:59,957 - INFO - Saved data to data/bánh-mì-cô-thủy-pate-hải-phòng_20250418_134859.json
+2025-04-18 13:48:59,958 - INFO - Progress: 11/100 restaurants processed
+2025-04-18 13:48:59,958 - INFO - Saved data to data/thắng-huyền-mì-vằn-thắn-sủi-cảo_20250418_134859.json
+2025-04-18 13:48:59,958 - INFO - Progress: 12/100 restaurants processed
+2025-04-18 13:48:59,958 - INFO - Waiting 1.51 seconds before next page...
+2025-04-18 13:49:01,476 - INFO - Fetching page 2
+2025-04-18 13:49:02,008 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/com-ngon-me-nau-kim-giang
+2025-04-18 13:49:24,482 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:49:25,772 - INFO - Extracted data for restaurant: Cơm Ngon Mẹ Nấu - Kim Giang
+2025-04-18 13:49:26,141 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/bento-delichi-com-ga-xoi-mo-com-ga-mam-toi-duong-khue
+2025-04-18 13:49:34,660 - ERROR - Future exception was never retrieved
+future: <Future finished exception=TargetClosedError('Target page, context or browser has been closed')>
+playwright._impl._errors.TargetClosedError: Target page, context or browser has been closed
+2025-04-18 13:51:18,895 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:51:18,896 - INFO - Fetching page 1
+2025-04-18 13:51:19,887 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:51:42,785 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:51:44,650 - INFO - Extracted data for restaurant: Sweetc Hut - Tiệm Bánh Online
+2025-04-18 13:51:45,042 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:52:07,911 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:52:09,352 - INFO - Extracted data for restaurant: Trang Cháo - Nguyễn Ngọc Vũ
+2025-04-18 13:52:09,742 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:52:32,210 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:52:33,352 - INFO - Extracted data for restaurant: Trà Sữa Gong Cha - 貢茶 - Hoàng Thành Tower
+2025-04-18 13:52:33,729 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/ga-ran-burger-mcdonald-s-thai-ha
+2025-04-18 13:52:56,513 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:52:58,460 - INFO - Extracted data for restaurant: Gà Rán & Burger McDonald's - Thái Hà
+2025-04-18 13:52:58,872 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/ga-ran-va-mi-y-jollibee-co-linh
+2025-04-18 13:53:21,661 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:53:23,143 - INFO - Extracted data for restaurant: Gà rán và Mì Ý - Jollibee - Cổ Linh
+2025-04-18 13:53:23,708 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/salavi-banh-mi-nuong-muoi-ot-nghi-tam
+2025-04-18 13:53:46,280 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:53:47,615 - INFO - Extracted data for restaurant: Salavi - Bánh Mì Nướng Muối Ớt - Nghi Tàm
+2025-04-18 13:53:48,014 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/sinh-to-nuoc-ep-191
+2025-04-18 13:54:10,439 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-item") to be visible
+
+2025-04-18 13:54:11,542 - INFO - Extracted data for restaurant: Sinh Tố & Nước Ép 191
+2025-04-18 13:54:11,921 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/canh-bun-pho-co-ba-diep-food
+2025-04-18 13:54:14,747 - ERROR - Future exception was never retrieved
+future: <Future finished exception=TargetClosedError('Target page, context or browser has been closed')>
+playwright._impl._errors.TargetClosedError: Target page, context or browser has been closed
+2025-04-18 13:54:20,322 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:54:20,322 - INFO - Fetching page 1
+2025-04-18 13:54:20,744 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:54:44,011 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-group div.delivery-dishes-item") to be visible
+
+2025-04-18 13:54:45,832 - INFO - Extracted data for restaurant: Sweetc Hut - Tiệm Bánh Online
+2025-04-18 13:54:46,462 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:55:08,846 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-group div.delivery-dishes-item") to be visible
+
+2025-04-18 13:55:10,089 - INFO - Extracted data for restaurant: Trang Cháo - Nguyễn Ngọc Vũ
+2025-04-18 13:55:10,495 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/tra-sua-gong-cha-hoang-thanh-tower
+2025-04-18 13:55:13,762 - ERROR - Future exception was never retrieved
+future: <Future finished exception=TargetClosedError('Target page, context or browser has been closed')>
+playwright._impl._errors.TargetClosedError: Target page, context or browser has been closed
+2025-04-18 13:56:31,255 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:56:31,255 - INFO - Fetching page 1
+2025-04-18 13:56:32,701 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:56:56,540 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-group div.delivery-dishes-item")
+
+2025-04-18 13:56:58,274 - INFO - Extracted data for restaurant: Sweetc Hut - Tiệm Bánh Online
+2025-04-18 13:56:58,646 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:57:02,387 - ERROR - Future exception was never retrieved
+future: <Future finished exception=TargetClosedError('Target page, context or browser has been closed')>
+playwright._impl._errors.TargetClosedError: Target page, context or browser has been closed
+2025-04-18 13:57:45,896 - INFO - Starting crawler, targeting 100 items
+2025-04-18 13:57:45,896 - INFO - Fetching page 1
+2025-04-18 13:57:46,927 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/sweetc-hut-tiem-banh-online
+2025-04-18 13:58:09,304 - ERROR - Playwright error: Page.wait_for_selector: Timeout 20000ms exceeded.
+Call log:
+  - waiting for locator("div.delivery-dishes-group div.delivery-dishes-item")
+
+2025-04-18 13:58:10,926 - INFO - Extracted data for restaurant: Sweetc Hut - Tiệm Bánh Online
+2025-04-18 13:58:11,322 - INFO - Fetching page via Playwright: https://www.foody.vn/ha-noi/trang-chao-nguyen-ngoc-vu
+2025-04-18 13:58:14,167 - ERROR - Future exception was never retrieved
+future: <Future finished exception=TargetClosedError('Target page, context or browser has been closed')>
+playwright._impl._errors.TargetClosedError: Target page, context or browser has been closed
