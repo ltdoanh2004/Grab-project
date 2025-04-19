@@ -1,0 +1,124 @@
+2025-04-19 22:15:06,490 - INFO - Starting crawler from page 1, targeting 100 items
+2025-04-19 22:15:06,490 - INFO - Fetching initial page
+2025-04-19 22:15:06,659 - ERROR - Error fetching initial page: 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-19 22:15:06,659 - INFO - Loading page 2
+2025-04-19 22:15:08,309 - ERROR - Error loading more data (page 2): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/load-more
+2025-04-19 22:15:08,309 - INFO - No more tours found
+2025-04-19 22:15:08,309 - INFO - Crawling completed. Total tours collected: 0
+2025-04-19 22:15:08,311 - INFO - Progress saved
+2025-04-19 22:16:32,476 - INFO - Loaded progress: 0 URLs visited
+2025-04-19 22:16:32,476 - INFO - Starting crawler from page 1, targeting 100 items
+2025-04-19 22:16:32,476 - INFO - Fetching initial page
+2025-04-19 22:16:32,663 - ERROR - Error fetching initial page: 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-19 22:16:32,664 - INFO - Loading page 2
+2025-04-19 22:16:34,204 - ERROR - Error loading more data (page 2): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/content_mota_tour_con.php?page=2&ct=163&t=1745075794049
+2025-04-19 22:16:34,204 - INFO - No more tours found
+2025-04-19 22:16:34,204 - INFO - Crawling completed. Total tours collected: 0
+2025-04-19 22:16:34,205 - INFO - Progress saved
+2025-04-19 22:20:31,384 - INFO - Loaded progress: 0 URLs visited
+2025-04-19 22:20:31,384 - INFO - Starting crawler from page 1, targeting 100 items
+2025-04-19 22:20:31,384 - INFO - Fetching initial page
+2025-04-19 22:20:33,828 - WARNING - Request failed (attempt 1/3): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-19 22:20:41,447 - WARNING - Request failed (attempt 2/3): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-19 22:20:54,784 - ERROR - Error fetching initial page: 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-19 22:20:54,785 - INFO - Loading page 2
+2025-04-19 22:20:57,948 - INFO - Progress saved
+2025-04-19 22:22:22,454 - INFO - Loaded progress: 0 URLs visited
+2025-04-19 22:22:22,454 - INFO - Starting crawler, targeting 100 items
+2025-04-19 22:22:22,454 - INFO - ====== WebDriver manager ======
+2025-04-19 22:22:22,607 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-19 22:22:22,732 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-19 22:22:22,813 - INFO - There is no [mac64] chromedriver "135.0.7049.95" for browser google-chrome "135.0.7049" in cache
+2025-04-19 22:22:22,822 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-19 22:22:23,031 - INFO - WebDriver version 135.0.7049.95 selected
+2025-04-19 22:22:23,034 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/135.0.7049.95/mac-arm64/chromedriver-mac-arm64.zip
+2025-04-19 22:22:23,034 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/135.0.7049.95/mac-arm64/chromedriver-mac-arm64.zip
+2025-04-19 22:22:23,328 - INFO - Driver downloading response is 200
+2025-04-19 22:22:24,270 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-19 22:22:24,442 - INFO - Driver has been saved in cache [/Users/doa_ai/.wdm/drivers/chromedriver/mac64/135.0.7049.95]
+2025-04-19 22:22:38,989 - ERROR - Error in crawler execution: Message: 
+
+2025-04-19 22:22:38,991 - INFO - Progress saved
+2025-04-19 22:23:56,859 - INFO - Loaded progress: 0 URLs visited
+2025-04-19 22:23:56,859 - INFO - Starting crawler, targeting 100 items
+2025-04-19 22:23:56,859 - INFO - ====== WebDriver manager ======
+2025-04-19 22:23:56,984 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-19 22:23:57,075 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-19 22:23:57,157 - INFO - Driver [/Users/doa_ai/.wdm/drivers/chromedriver/mac64/135.0.7049.95/chromedriver-mac-arm64/chromedriver] found in cache
+2025-04-19 22:24:11,643 - ERROR - Error in crawler execution: Message: 
+
+2025-04-19 22:24:11,643 - INFO - Progress saved
+2025-04-19 22:25:48,917 - INFO - Loaded progress: 0 URLs visited
+2025-04-19 22:25:48,917 - INFO - Starting crawler, targeting 100 items
+2025-04-19 22:25:48,917 - INFO - Attempting to initialize Chrome driver (attempt 1/3)
+2025-04-19 22:25:48,917 - INFO - ====== WebDriver manager ======
+2025-04-19 22:25:49,048 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-19 22:25:49,137 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-19 22:25:49,222 - INFO - Driver [/Users/doa_ai/.wdm/drivers/chromedriver/mac64/135.0.7049.95/chromedriver-mac-arm64/chromedriver] found in cache
+2025-04-19 22:25:50,892 - INFO - Chrome driver initialized successfully
+2025-04-19 22:25:50,894 - INFO - Loading initial page...
+2025-04-19 22:26:10,665 - ERROR - Error finding tour items: Message: 
+
+2025-04-19 22:26:10,666 - WARNING - No tours found on current page
+2025-04-19 22:26:10,666 - INFO - Crawling completed. Total tours collected: 0
+2025-04-19 22:26:10,760 - INFO - Progress saved
+2025-04-19 22:28:01,423 - INFO - Loaded progress: 0 URLs visited
+2025-04-19 22:28:01,423 - INFO - Starting crawler, targeting 100 items
+2025-04-19 22:28:01,423 - INFO - Attempting to initialize Chrome driver (attempt 1/3)
+2025-04-19 22:28:01,424 - INFO - ====== WebDriver manager ======
+2025-04-19 22:28:01,565 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-19 22:28:01,656 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-19 22:28:01,742 - INFO - Driver [/Users/doa_ai/.wdm/drivers/chromedriver/mac64/135.0.7049.95/chromedriver-mac-arm64/chromedriver] found in cache
+2025-04-19 22:28:03,436 - INFO - Chrome driver initialized successfully
+2025-04-19 22:28:03,439 - INFO - Loading initial page...
+2025-04-19 22:30:00,283 - INFO - Found 4 tour items using selector: div[class*='tour']
+2025-04-19 22:32:11,886 - INFO - Loaded progress: 0 URLs visited
+2025-04-19 22:32:11,887 - INFO - Starting crawler, targeting 100 items
+2025-04-19 22:32:11,887 - INFO - Crawling page 1: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-19 22:32:12,123 - ERROR - Error fetching https://dulichviet.com.vn/du-lich-ha-noi (attempt 1): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-19 22:32:17,115 - ERROR - Error fetching https://dulichviet.com.vn/du-lich-ha-noi (attempt 2): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-19 22:32:20,911 - ERROR - Error fetching https://dulichviet.com.vn/du-lich-ha-noi (attempt 3): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-19 22:32:20,911 - ERROR - Error processing page 1: 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-19 22:32:20,911 - INFO - Crawling completed. Total tours collected: 0
+2025-04-19 22:32:20,913 - INFO - Progress saved
+2025-04-19 22:37:03,816 - INFO - Extracted tour: Tour Độc Lạ
+2025-04-19 22:38:44,006 - WARNING - Could not find tour link, skipping item
+2025-04-19 22:44:46,920 - INFO - Extracted tour: 
+2025-04-19 22:46:27,097 - WARNING - Could not find tour link, skipping item
+2025-04-19 22:46:27,097 - INFO - Collected 2 tours so far
+2025-04-19 22:46:27,097 - INFO - Progress saved
+2025-04-19 22:46:27,097 - INFO - Saved 2 tours to data_attractions/hanoi_tours_20250419_224627.json
+2025-04-19 22:46:47,122 - INFO - No more content to load (button not found)
+2025-04-19 22:46:47,122 - INFO - No more tours to load
+2025-04-19 22:46:47,122 - INFO - Crawling completed. Total tours collected: 2
+2025-04-19 22:46:47,272 - INFO - Progress saved
+2025-04-20 00:03:56,297 - INFO - Loaded progress: 2 URLs visited
+2025-04-20 00:03:56,298 - INFO - Starting crawler, targeting 100 items
+2025-04-20 00:03:56,298 - INFO - Crawling page 1: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-20 00:04:00,302 - ERROR - Error fetching https://dulichviet.com.vn/du-lich-ha-noi (attempt 1): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-20 00:04:09,996 - ERROR - Error fetching https://dulichviet.com.vn/du-lich-ha-noi (attempt 2): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-20 00:04:21,451 - ERROR - Error fetching https://dulichviet.com.vn/du-lich-ha-noi (attempt 3): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-20 00:04:21,452 - ERROR - Error processing page 1: 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-20 00:04:21,452 - INFO - Crawling completed. Total tours collected: 0
+2025-04-20 00:04:21,453 - INFO - Progress saved
+2025-04-20 00:05:09,844 - INFO - Loaded progress: 2 URLs visited
+2025-04-20 00:05:09,844 - INFO - Starting crawler, targeting 100 items
+2025-04-20 00:05:09,844 - INFO - Crawling page 1: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-20 00:05:13,416 - ERROR - Error fetching https://dulichviet.com.vn/du-lich-ha-noi (attempt 1): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-20 00:05:26,662 - ERROR - Error fetching https://dulichviet.com.vn/du-lich-ha-noi (attempt 2): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-20 00:05:35,043 - ERROR - Error fetching https://dulichviet.com.vn/du-lich-ha-noi (attempt 3): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-20 00:05:35,043 - ERROR - Error processing page 1: 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-20 00:05:35,043 - INFO - Crawling completed. Total tours collected: 0
+2025-04-20 00:05:35,044 - INFO - Progress saved
+2025-04-20 00:09:59,017 - INFO - Loaded progress: 2 URLs visited
+2025-04-20 00:10:00,810 - INFO - Loaded progress: 2 URLs visited
+2025-04-20 00:10:02,104 - INFO - Loaded progress: 2 URLs visited
+2025-04-20 00:12:10,207 - INFO - Loaded progress: 2 URLs visited
+2025-04-20 00:12:10,225 - INFO - Starting crawler, targeting 100 items
+2025-04-20 00:12:10,225 - INFO - Crawling page 1: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-20 00:12:13,859 - ERROR - Error fetching https://dulichviet.com.vn/du-lich-ha-noi (attempt 1): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-20 00:12:26,199 - ERROR - Error fetching https://dulichviet.com.vn/du-lich-ha-noi (attempt 2): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-20 00:12:36,034 - ERROR - Error fetching https://dulichviet.com.vn/du-lich-ha-noi (attempt 3): 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-20 00:12:36,036 - ERROR - Error processing page 1: 403 Client Error: Forbidden for url: https://dulichviet.com.vn/du-lich-ha-noi
+2025-04-20 00:12:36,036 - INFO - Crawling completed. Total tours collected: 0
+2025-04-20 00:12:36,037 - INFO - Progress saved
