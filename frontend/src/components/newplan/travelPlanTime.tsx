@@ -62,15 +62,14 @@ export const TimeStep: React.FC<TimeStepProps> = ({
         </div>
       </div>
 
-      <div className="mt-8 flex justify-between">
-        <Space>
-          <Button onClick={onPrev}>Quay lại</Button>
-        </Space>
+      <div className="flex justify-between">
+        <Button className="!rounded-full" onClick={onPrev}>
+          Quay lại
+        </Button>
         <Button
           type="primary"
-          disabled={isNextDisabled}
+          className="!bg-black !rounded-full"
           onClick={onNext}
-          className="px-8"
         >
           Tiếp tục
         </Button>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TravelTime } from "../types/travelPlan";
+import { TravelTime, PersonalOption } from "../types/travelPlan";
 
 export const useTravelPlan = () => {
   const [currentStep, setCurrentStep] = useState<number>(-1);
@@ -12,6 +12,7 @@ export const useTravelPlan = () => {
     startDate: new Date(),
     endDate: new Date(),
   });
+  const [selectedOptions, setSelectedOptions] = useState<PersonalOption[]>([]);
 
   const handleTimeType = (type: "exact" | "flexible") => {
     if (type === "exact" && travelTime.type !== "exact") {
@@ -77,6 +78,22 @@ export const useTravelPlan = () => {
     setCurrentStep(-1);
   };
 
+  const handleAddOption = (option: PersonalOption) => {
+    const optionExists = selectedOptions.some(
+      (item) => item.type === option.type && item.name === option.name
+    );
+
+    if (optionExists) {
+      setSelectedOptions(
+        selectedOptions.filter(
+          (item) => !(item.type === option.type && item.name === option.name)
+        )
+      );
+    } else {
+      setSelectedOptions([...selectedOptions, option]);
+    }
+  };
+
   return {
     currentStep,
     selectedDestinationId,
@@ -89,6 +106,8 @@ export const useTravelPlan = () => {
     handleBacktoMain,
     handleDateChange,
     handleMonthChange,
+    handleAddOption,
+    selectedOptions,
     handleLengthChange,
     isDestinationSelection: currentStep === -1,
   };

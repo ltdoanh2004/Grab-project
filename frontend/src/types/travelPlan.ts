@@ -29,3 +29,17 @@ export interface Budget {
   transportation: number;
   other: number;
 }
+
+export interface PersonalOption {
+  type: "places" | "activities" | "food" | "transportation" | "accommodation";
+  description: string;
+  name: string;
+  imageUrl?: string;
+}
+export interface PersonalOptions {
+  places: PersonalOption[];
+  activities: PersonalOption[];
+  food: PersonalOption[];
+  transportation: PersonalOption[];
+  accommodation: PersonalOption[];
+}

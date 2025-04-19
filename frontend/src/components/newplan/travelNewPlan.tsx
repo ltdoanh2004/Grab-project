@@ -1,6 +1,7 @@
 import React from "react";
 import { DestinationStep } from "./travelPlanDestination";
 import { TimeStep } from "./travelPlanTime";
+import { PersonalStep } from "./travelPlanPersonal";
 import { StepNavigation } from "./navbar";
 import { useTravelPlan } from "../../hooks/useTravelPlans";
 import { Typography, Button } from "antd";
@@ -18,6 +19,8 @@ export const TravelNewPlan: React.FC = () => {
     handleBacktoMain,
     handleDateChange,
     handleTimeType,
+    handleAddOption,
+    selectedOptions,
     travelTime,
     handleMonthChange,
     handleLengthChange,
@@ -40,6 +43,15 @@ export const TravelNewPlan: React.FC = () => {
             onLengthChange={handleLengthChange}
             onNext={handleNextStep}
             onPrev={handleBacktoMain}
+          />
+        );
+      case 1:
+        return (
+          <PersonalStep
+            selectedOptions={selectedOptions}
+            onAddOption={handleAddOption}
+            onNext={handleNextStep}
+            onPrev={handlePrevStep}
           />
         );
 

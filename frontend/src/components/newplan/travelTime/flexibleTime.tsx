@@ -46,12 +46,15 @@ export const FlexibleTimeComponent: React.FC<FlexibleTimeComponentProps> = ({
               <Radio.Button
                 key={index}
                 value={index + 1}
-                className={`text-center rounded-full !h-10 overflow-hidden ${
+                className={`text-center !rounded-full !h-10 overflow-hidden ${
                   timeData.month === index + 1
                     ? "!bg-green-500 !text-black !font-semibold"
                     : ""
                 }`}
-                style={{ border: "1px solid #d9d9d9" }}
+                style={{
+                  border: "1px solid #d9d9d9",
+                  borderRadius: "9999px",
+                }}
               >
                 {timeData.month === index + 1 && <CheckOutlined className="" />}{" "}
                 {month}
