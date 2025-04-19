@@ -1,5 +1,6 @@
 import React from "react";
 import { DestinationStep } from "./travelPlanDestination";
+import { TimeStep } from "./travelPlanTime";
 import { StepNavigation } from "./navbar";
 import { useTravelPlan } from "../../hooks/useTravelPlans";
 import { Typography, Button } from "antd";
@@ -11,10 +12,15 @@ export const TravelNewPlan: React.FC = () => {
   const {
     currentStep,
     selectedDestinationId,
-
     handleNextStep,
+    handlePrevStep,
     handleDestinationSelect,
     handleBacktoMain,
+    handleDateChange,
+    handleTimeType,
+    travelTime,
+    handleMonthChange,
+    handleLengthChange,
     isDestinationSelection,
   } = useTravelPlan();
 
@@ -24,6 +30,19 @@ export const TravelNewPlan: React.FC = () => {
 
   const renderStepContent = () => {
     switch (currentStep) {
+      case 0:
+        return (
+          <TimeStep
+            travelTime={travelTime}
+            onSwitchTimeType={handleTimeType}
+            onDateChange={handleDateChange}
+            onMonthChange={handleMonthChange}
+            onLengthChange={handleLengthChange}
+            onNext={handleNextStep}
+            onPrev={handleBacktoMain}
+          />
+        );
+
       default:
         return null;
     }

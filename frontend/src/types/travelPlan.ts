@@ -6,14 +6,22 @@ export interface Destination {
   imageUrl: string;
   rating: number;
 }
-export interface TravelDate {
-  startDate: Date;
-  endDate: Date;
-  months: number;
+
+export interface ExactTime {
+  type: "exact";
+  startDate: Date | null;
+  endDate: Date | null;
+}
+
+export interface FlexibleTime {
+  type: "flexible";
+  month: number;
   length: number;
 }
 
-export interface budget {
+export type TravelTime = ExactTime | FlexibleTime;
+
+export interface Budget {
   total: number;
   accommodation: number;
   food: number;

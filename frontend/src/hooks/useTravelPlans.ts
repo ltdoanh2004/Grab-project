@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TravelTime } from "../types/travelPlan";
 
 export const useTravelPlan = () => {
   const [currentStep, setCurrentStep] = useState<number>(-1);
@@ -6,7 +7,55 @@ export const useTravelPlan = () => {
     string | null
   >(null);
 
-  const [isExactDates, setIsExactDates] = useState<boolean>(true);
+  const [travelTime, setTravelTime] = useState<TravelTime>({
+    type: "exact",
+    startDate: new Date(),
+    endDate: new Date(),
+  });
+
+  const handleTimeType = (type: "exact" | "flexible") => {
+    if (type === "exact" && travelTime.type !== "exact") {
+      setTravelTime({
+        type: "exact",
+        startDate: new Date(),
+        endDate: new Date(),
+      });
+    } else if (type === "flexible" && travelTime.type !== "flexible") {
+      setTravelTime({
+        type: "flexible",
+        month: 0,
+        length: 0,
+      });
+    }
+  };
+
+  const handleDateChange = (dates: any) => {
+    if (dates && travelTime.type === "exact") {
+      setTravelTime({
+        ...travelTime,
+        startDate: dates[0] ? dates[0].toDate() : new Date(),
+        endDate: dates[1] ? dates[1].toDate() : null,
+      });
+    }
+  };
+
+  const handleMonthChange = (month: number) => {
+    if (travelTime.type === "flexible") {
+      setTravelTime({
+        ...travelTime,
+        month,
+      });
+    }
+  };
+
+  const handleLengthChange = (days: number) => {
+    if (travelTime.type === "flexible") {
+      setTravelTime({
+        ...travelTime,
+        length: days,
+      });
+    }
+  };
 
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1);
@@ -28,22 +77,19 @@ export const useTravelPlan = () => {
     setCurrentStep(-1);
   };
 
-  const toggleDateMode = () => {
-    setIsExactDates(!isExactDates);
-  };
-
   return {
     currentStep,
     selectedDestinationId,
-
-    isExactDates,
+    travelTime,
     handleNextStep,
     handlePrevStep,
     handleDestinationSelect,
+    handleTimeType,
     handleStartPlan,
     handleBacktoMain,
-
-    toggleDateMode,
+    handleDateChange,
+    handleMonthChange,
+    handleLengthChange,
     isDestinationSelection: currentStep === -1,
   };
 };
