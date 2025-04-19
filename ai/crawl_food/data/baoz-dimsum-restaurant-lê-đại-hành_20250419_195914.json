@@ -1,0 +1,46 @@
+{
+  "id": 1145390,
+  "name": "Baoz Dimsum Restaurant - Lê Đại Hành",
+  "address": "299 Lê Đại Hành, P. 13, Quận 11, TP. HCM",
+  "rating": 1.8,
+  "total_reviews": 2,
+  "total_pictures": 0,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g115/1145390/prof/s640x400/foody-upload-api-foody-mobile-fo-694e139c-220720154120.jpeg",
+  "url": "https://www.foody.vn/ho-chi-minh/baoz-dimsum-restaurant-le-dai-hanh",
+  "location": {
+    "lat": 10.7651509,
+    "lon": 106.6548705
+  },
+  "reviews": [
+    {
+      "user": "lananhnguyn2079",
+      "rating": 1.0,
+      "comment": "Nhà hàng kém. Khách hàng mất đồ, quản lý kêu không biết và nói nhân viên không biết nên vứt đồ của khách và không 1 lời xin lỗi. Các bạn không nên ghé, đồ ăn bth, thái độ quá kém",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g826/8252680/avt/c100x100/beauty-upload-api-foody-avatar-5709acdf-6f5f-43ac-88c8-c4c813c048ff-191128111206.jpg"
+    },
+    {
+      "user": "Lâm Đoàn",
+      "rating": 2.6,
+      "comment": "Đồ ăn các món có thể nói tương đối ổn\nTuy nhiên phục vụ có kém. Mình đi 6 người quán có xếp một bàn tròn khu vực chung, nhưng vì ồn quá. \n\nMình đề nghị chuyển vào khu vực bàn tròn khu vực riêng. Bàn này ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g73/726197/avt/c100x100/beauty-upload-api-foody-avatar-21e25a20-9bdd-4c54-a394-f95c71178070-200623230952.jpeg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/baoz-dimsum-restaurant-le-dai-hanh",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:05.387853"
+}

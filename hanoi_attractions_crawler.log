@@ -1,0 +1,1116 @@
+2025-04-17 17:46:20,963 - INFO - Getting attraction listings from page 1: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-17 17:46:20,963 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-17 17:46:22,653 - INFO - Found 30 attractions using selector: div.XfVdV.o.AIbhI
+2025-04-17 17:46:22,764 - INFO - Found 0 attractions on page 1
+2025-04-17 17:46:22,764 - WARNING - Found attraction elements but couldn't extract any valid attraction data.
+2025-04-17 17:46:22,764 - WARNING - Consider running with --debug flag to save the HTML for inspection.
+2025-04-17 17:46:22,770 - INFO - Fallback found potential attraction: 1.Old Quarter
+2025-04-17 17:46:22,770 - INFO - Fallback found potential attraction: 4.28,902
+2025-04-17 17:46:22,770 - INFO - Fallback found potential attraction: Hanoi’s lively Old Quarter comprises nearly 40 streets packed with shops selling all kinds of goods, each street named for its primary good or service.
+2025-04-17 17:46:22,770 - INFO - Fallback found potential attraction: See tickets
+2025-04-17 17:46:22,770 - INFO - Fallback found potential attraction: 2.Lake of the Restored Sword (Hoan Kiem Lake)
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: 4.13,770
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: A rare breed of turtle enjoys this popular lake almost as much as countless locals and tourists. Hoan Kiem Lake is a dynamic daily tableau, from morning walks amid locals doing exercises on the shore…
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: See tickets
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: 3.Mf Spa Hanoi
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: 4.812
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: In the heart of Hanoi’s Old Quarter, surrounded by history and charm, lies MF Spa Hanoi, a sanctuary of renewal and rejuvenation. Here, the East harmonizes with the West, and ancient philosophies …
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: 4.NGO GIA Tailor
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: Best tailoring, suit maker, jacket, suit, shirt, services within 24 hours, bespoke tailoring. Cash or credit card are accepted. Delivering services all around the world
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: 5.Thang Long Water Puppet
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: 12,398
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: Traditional legends and historical tales are among the enchanting puppet plays performed at this popular theatre.
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: See tickets
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: 6.Apron Up Cooking Class
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: 5,584
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: Apron Up Cooking Class was found in 2015 with the aim of introducing Vietnamese cuisine and culture to the outside world. We have been hosting hundreds of thousands of people who are eager to immerse…
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: 7.Mf Boutique Spa
+2025-04-17 17:46:22,771 - INFO - Fallback found potential attraction: In the heart of Hanoi’s Old Quarter, surrounded by history and charm, lies MF Boutique Spa, a sanctuary of renewal and rejuvenation. Here, the East harmonizes with the West, and ancient philosophies…
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 8.Rose Kitchen
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 5,128
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: We introduce and offer the finest cuisines that Vietnam can ever offer. Cuisine is a part of the culture, we will help you get the real taste of our culture! You will be provided with an immersive…
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 9.L'essence Spa
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 1,899
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: WELCOME TO LESSENCE GROUP INTRODUCTION The Lessence Group (LSG) has come a long way since the original members’ humble beginnings running a mini Spa in Hanoi’s Old Quarter at the end of 2015. Ours…
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 10.La Belle Vie Spa & Massage
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 1,727
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 11.L'essence De La Vie Spa
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 1,656
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: The L'essence De La Vie Spa Group (LSG) has come a long way since the original members’ humble beginnings running a mini Spa in Hanoi’s Old Quarter at the end of 2015. Ours is an inspirational story…
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 12.Ngo Minh Tailor
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 4.103
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: Tailor made suit and shirt
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 13.Authentic Bat Trang
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 1,027
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: We bring the oldest ceramics village of Bat Trang to you right in the heart of Hanoi's old quarter, at 115 Hang Gai, Hang gai, Hoan Kiem. Here you will find a wide selection of authentic Bat Trang…
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 14.MasterTan
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: Beyond a reflection of Vietnamese ingenuity and ancestral know-how, traditional herbalism offers an insight into our People's bond with Nature, as She forms our beliefs, tends to our aspirations, …
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 15.JM Spa Hanoi
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: Immerse yourself into calming atmospheres of our. Body, Foot massage and hair nourishing therapy, get your feeling relaxed and refreshed. Enjoy moments of tranquillity, unwind and temporarily get …
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 16.An Handmade - Hemp Fabric Gift Shop
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: An Handmade - we are selling Authentic hemp fabric from the Ethnic group like H'mong, Thai up on the moutains. Besides bring vietnamese culture to the world we also support the local with their amazing…
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 17.Alisa Bella Spa Hanoi
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: Alisa Bella Spa is a company belongs to ALISA GROUP which provide 5 star services such as Alisa Premier Cruise, Alisa Cruise in Halong Bay and Alisa Hotel & Spa in Hanoi. Alisa Bella Spa proud of …
+2025-04-17 17:46:22,772 - INFO - Fallback found potential attraction: 18.Mido Spa
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 4.2,158
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: Mido Hanoi Spa is a haven for relaxation and beauty for Foreigners. Located near many Hanoi Hotel (Sofitel Legend Metropole, Sheraton Hanoi Hotel, Hanoi Elegance Diamond Hotel, Melia Hanoi, ..). Our…
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 19.Ngo Minh Tailor
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 4.93
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: Cửa Hàng Quần Áo, Thợ May Đo Cung Cấp Các Sản Phẩm May Đo Thủ Công Như Quần Âu, Sơ Mi, Áo Khoác, Áo Vest, Gile, Măng Tô
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 20.Omamori Spa Hà Nội
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 4.637
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: Omamori Spa is a chain of massage center established and run by BlindLink, established in 2013, a leading and pioneering social impact organization providing training opportunities in the area of …
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 21.Bee'znees Speakeasy Bar
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: Located in the heart of busy Hanoi,1920s-inspired Bee’Znees cocktail bar brings you to a completely different time and space.It is the ultimate destination for those who appreciate exclusivity and…
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 22.Midori Spa Hanoi
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 4.1,891
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: Midori Hanoi Spa is a social enterprise providing training and employment opportunities young blind Vietnam as masseur. It was helped by the Vietnam Blind Association. Until 2013, estimates in Vietnam…
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 23.Ngai Spa
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 4.151
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 24.Senses Massage & Wellness
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: Our professional hands you can trust. We are a professional Vietnamese team who work from the heart. Senses Massage & Wellness Hanoi the cozy and stunning space for relaxation. Our best massage and…
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 25.Peony Garden Spa
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 4.434
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 26.Blue Butterfly Cooking Class
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 4.907
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 27.La Spa Ma May
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 1,965
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: La Spa Ma May is classically designed and each service room comes with its own private sauna. It enjoys a prime location on the edge of the Old Quarter and not far from Hoan Kiem Lake.
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 28.Hanoi Shining Spa 2
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: Shinning Spa would like to provide customers with the highest quality healthcare service to make their trip in Hanoi as pleasant as possible. Customers will have the most tranquil and pleasurable …
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 29.Tailor Bros
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: 4.182
+2025-04-17 17:46:22,773 - INFO - Fallback found potential attraction: Our mission is to provide an exceptional tailoring service with professional experience in facilitating one-on-one interactions among customers and our talented consultants with passionately skillful…
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: 30.VIP Massage Tokyo
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Experience the transformative power of massage at VIP Massage Tokyo. We offer a wide range of therapeutic treatments in a serene and welcoming environment, all professionally delivered by our team…
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Moonstone Beach
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Elephant's Trunk Flea Market
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: She-Qua-Ga Falls
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Alas Harum Bali
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Munich Christmas Market
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: National Elk Refuge
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: The International Church of Cannabis
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Midway Atoll
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Kurama Onsen
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Landour
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Auroras Flying Dress Egypt
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Kuriftu Entoto Adventure Park
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Waynesville Walking Ghost Tour
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Funicolare Como Brunate
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Mount Bromo Ijen Tour
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Scientist's Gift Organization
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Book Tour Egypt
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Prague Boats
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: MycoMeditations Psilocybin-Assisted Retreats
+2025-04-17 17:46:22,774 - INFO - Fallback found potential attraction: Abbycar Rentals
+2025-04-17 17:46:22,774 - INFO - Added fallback attraction: An Handmade - we are selling Authentic hemp fabric from the Ethnic group like H'mong, Thai up on the moutains. Besides bring vietnamese culture to the world we also support the local with their amazing…
+2025-04-17 17:46:22,774 - INFO - Added fallback attraction: Midori Hanoi Spa is a social enterprise providing training and employment opportunities young blind Vietnam as masseur. It was helped by the Vietnam Blind Association. Until 2013, estimates in Vietnam…
+2025-04-17 17:46:22,774 - INFO - Added fallback attraction: A rare breed of turtle enjoys this popular lake almost as much as countless locals and tourists. Hoan Kiem Lake is a dynamic daily tableau, from morning walks amid locals doing exercises on the shore…
+2025-04-17 17:46:22,774 - INFO - Added fallback attraction: Apron Up Cooking Class was found in 2015 with the aim of introducing Vietnamese cuisine and culture to the outside world. We have been hosting hundreds of thousands of people who are eager to immerse…
+2025-04-17 17:46:22,774 - INFO - Added fallback attraction: Our mission is to provide an exceptional tailoring service with professional experience in facilitating one-on-one interactions among customers and our talented consultants with passionately skillful…
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: In the heart of Hanoi’s Old Quarter, surrounded by history and charm, lies MF Boutique Spa, a sanctuary of renewal and rejuvenation. Here, the East harmonizes with the West, and ancient philosophies…
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: The L'essence De La Vie Spa Group (LSG) has come a long way since the original members’ humble beginnings running a mini Spa in Hanoi’s Old Quarter at the end of 2015. Ours is an inspirational story…
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: Mido Hanoi Spa is a haven for relaxation and beauty for Foreigners. Located near many Hanoi Hotel (Sofitel Legend Metropole, Sheraton Hanoi Hotel, Hanoi Elegance Diamond Hotel, Melia Hanoi, ..). Our…
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: Our professional hands you can trust. We are a professional Vietnamese team who work from the heart. Senses Massage & Wellness Hanoi the cozy and stunning space for relaxation. Our best massage and…
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: In the heart of Hanoi’s Old Quarter, surrounded by history and charm, lies MF Spa Hanoi, a sanctuary of renewal and rejuvenation. Here, the East harmonizes with the West, and ancient philosophies …
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: We introduce and offer the finest cuisines that Vietnam can ever offer. Cuisine is a part of the culture, we will help you get the real taste of our culture! You will be provided with an immersive…
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: WELCOME TO LESSENCE GROUP INTRODUCTION The Lessence Group (LSG) has come a long way since the original members’ humble beginnings running a mini Spa in Hanoi’s Old Quarter at the end of 2015. Ours…
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: We bring the oldest ceramics village of Bat Trang to you right in the heart of Hanoi's old quarter, at 115 Hang Gai, Hang gai, Hoan Kiem. Here you will find a wide selection of authentic Bat Trang…
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: Beyond a reflection of Vietnamese ingenuity and ancestral know-how, traditional herbalism offers an insight into our People's bond with Nature, as She forms our beliefs, tends to our aspirations, …
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: Immerse yourself into calming atmospheres of our. Body, Foot massage and hair nourishing therapy, get your feeling relaxed and refreshed. Enjoy moments of tranquillity, unwind and temporarily get …
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: Alisa Bella Spa is a company belongs to ALISA GROUP which provide 5 star services such as Alisa Premier Cruise, Alisa Cruise in Halong Bay and Alisa Hotel & Spa in Hanoi. Alisa Bella Spa proud of …
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: Omamori Spa is a chain of massage center established and run by BlindLink, established in 2013, a leading and pioneering social impact organization providing training opportunities in the area of …
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: Located in the heart of busy Hanoi,1920s-inspired Bee’Znees cocktail bar brings you to a completely different time and space.It is the ultimate destination for those who appreciate exclusivity and…
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: Shinning Spa would like to provide customers with the highest quality healthcare service to make their trip in Hanoi as pleasant as possible. Customers will have the most tranquil and pleasurable …
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: Experience the transformative power of massage at VIP Massage Tokyo. We offer a wide range of therapeutic treatments in a serene and welcoming environment, all professionally delivered by our team…
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: La Spa Ma May is classically designed and each service room comes with its own private sauna. It enjoys a prime location on the edge of the Old Quarter and not far from Hoan Kiem Lake.
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: Best tailoring, suit maker, jacket, suit, shirt, services within 24 hours, bespoke tailoring. Cash or credit card are accepted. Delivering services all around the world
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: Hanoi’s lively Old Quarter comprises nearly 40 streets packed with shops selling all kinds of goods, each street named for its primary good or service.
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: Cửa Hàng Quần Áo, Thợ May Đo Cung Cấp Các Sản Phẩm May Đo Thủ Công Như Quần Âu, Sơ Mi, Áo Khoác, Áo Vest, Gile, Măng Tô
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: Traditional legends and historical tales are among the enchanting puppet plays performed at this popular theatre.
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: MycoMeditations Psilocybin-Assisted Retreats
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: The International Church of Cannabis
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: 26.Blue Butterfly Cooking Class
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: Waynesville Walking Ghost Tour
+2025-04-17 17:46:22,775 - INFO - Added fallback attraction: 10.La Belle Vie Spa & Massage
+2025-04-17 17:46:22,817 - INFO - Collected 30 attraction listings so far
+2025-04-17 17:46:22,817 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d23959149-Reviews-An_Handmade_Hemp_Fabric_Gift_Shop-Hanoi.html
+2025-04-17 17:46:22,817 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d8262801-Reviews-Midori_Spa_Hanoi-Hanoi.html
+2025-04-17 17:46:22,817 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d311070-Reviews-Lake_of_the_Restored_Sword_Hoan_Kiem_Lake-Hanoi.html
+2025-04-17 17:46:22,817 - INFO - Found 0 unique attractions
+2025-04-17 17:46:31,313 - INFO - Getting attraction listings from page 1: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-17 17:46:31,313 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-17 17:46:33,185 - INFO - Found 30 attractions using selector: div.XfVdV.o.AIbhI
+2025-04-17 17:46:33,296 - INFO - Found 0 attractions on page 1
+2025-04-17 17:46:33,296 - WARNING - Found attraction elements but couldn't extract any valid attraction data.
+2025-04-17 17:46:33,296 - WARNING - Consider running with --debug flag to save the HTML for inspection.
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: 1.Old Quarter
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: 4.28,902
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: Hanoi’s lively Old Quarter comprises nearly 40 streets packed with shops selling all kinds of goods, each street named for its primary good or service.
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: See tickets
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: 2.Lake of the Restored Sword (Hoan Kiem Lake)
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: 4.13,770
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: A rare breed of turtle enjoys this popular lake almost as much as countless locals and tourists. Hoan Kiem Lake is a dynamic daily tableau, from morning walks amid locals doing exercises on the shore…
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: See tickets
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: 3.Mf Spa Hanoi
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: 4.812
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: In the heart of Hanoi’s Old Quarter, surrounded by history and charm, lies MF Spa Hanoi, a sanctuary of renewal and rejuvenation. Here, the East harmonizes with the West, and ancient philosophies …
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: 4.NGO GIA Tailor
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: Best tailoring, suit maker, jacket, suit, shirt, services within 24 hours, bespoke tailoring. Cash or credit card are accepted. Delivering services all around the world
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: 5.Thang Long Water Puppet
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: 12,398
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: Traditional legends and historical tales are among the enchanting puppet plays performed at this popular theatre.
+2025-04-17 17:46:33,302 - INFO - Fallback found potential attraction: See tickets
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 6.Apron Up Cooking Class
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 5,584
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: Apron Up Cooking Class was found in 2015 with the aim of introducing Vietnamese cuisine and culture to the outside world. We have been hosting hundreds of thousands of people who are eager to immerse…
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 7.Mf Boutique Spa
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: In the heart of Hanoi’s Old Quarter, surrounded by history and charm, lies MF Boutique Spa, a sanctuary of renewal and rejuvenation. Here, the East harmonizes with the West, and ancient philosophies…
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 8.Rose Kitchen
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 5,128
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: We introduce and offer the finest cuisines that Vietnam can ever offer. Cuisine is a part of the culture, we will help you get the real taste of our culture! You will be provided with an immersive…
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 9.L'essence Spa
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 1,899
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: WELCOME TO LESSENCE GROUP INTRODUCTION The Lessence Group (LSG) has come a long way since the original members’ humble beginnings running a mini Spa in Hanoi’s Old Quarter at the end of 2015. Ours…
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 10.La Belle Vie Spa & Massage
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 1,727
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 11.L'essence De La Vie Spa
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 1,656
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: The L'essence De La Vie Spa Group (LSG) has come a long way since the original members’ humble beginnings running a mini Spa in Hanoi’s Old Quarter at the end of 2015. Ours is an inspirational story…
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 12.Ngo Minh Tailor
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 4.103
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: Tailor made suit and shirt
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 13.Authentic Bat Trang
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 1,027
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: We bring the oldest ceramics village of Bat Trang to you right in the heart of Hanoi's old quarter, at 115 Hang Gai, Hang gai, Hoan Kiem. Here you will find a wide selection of authentic Bat Trang…
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 14.MasterTan
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: Beyond a reflection of Vietnamese ingenuity and ancestral know-how, traditional herbalism offers an insight into our People's bond with Nature, as She forms our beliefs, tends to our aspirations, …
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 15.JM Spa Hanoi
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: Immerse yourself into calming atmospheres of our. Body, Foot massage and hair nourishing therapy, get your feeling relaxed and refreshed. Enjoy moments of tranquillity, unwind and temporarily get …
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 16.An Handmade - Hemp Fabric Gift Shop
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: An Handmade - we are selling Authentic hemp fabric from the Ethnic group like H'mong, Thai up on the moutains. Besides bring vietnamese culture to the world we also support the local with their amazing…
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: 17.Alisa Bella Spa Hanoi
+2025-04-17 17:46:33,303 - INFO - Fallback found potential attraction: Alisa Bella Spa is a company belongs to ALISA GROUP which provide 5 star services such as Alisa Premier Cruise, Alisa Cruise in Halong Bay and Alisa Hotel & Spa in Hanoi. Alisa Bella Spa proud of …
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 18.Mido Spa
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 4.2,158
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: Mido Hanoi Spa is a haven for relaxation and beauty for Foreigners. Located near many Hanoi Hotel (Sofitel Legend Metropole, Sheraton Hanoi Hotel, Hanoi Elegance Diamond Hotel, Melia Hanoi, ..). Our…
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 19.Ngo Minh Tailor
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 4.93
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: Cửa Hàng Quần Áo, Thợ May Đo Cung Cấp Các Sản Phẩm May Đo Thủ Công Như Quần Âu, Sơ Mi, Áo Khoác, Áo Vest, Gile, Măng Tô
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 20.Omamori Spa Hà Nội
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 4.637
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: Omamori Spa is a chain of massage center established and run by BlindLink, established in 2013, a leading and pioneering social impact organization providing training opportunities in the area of …
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 21.Bee'znees Speakeasy Bar
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: Located in the heart of busy Hanoi,1920s-inspired Bee’Znees cocktail bar brings you to a completely different time and space.It is the ultimate destination for those who appreciate exclusivity and…
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 22.Midori Spa Hanoi
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 4.1,891
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: Midori Hanoi Spa is a social enterprise providing training and employment opportunities young blind Vietnam as masseur. It was helped by the Vietnam Blind Association. Until 2013, estimates in Vietnam…
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 23.Ngai Spa
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 4.151
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 24.Senses Massage & Wellness
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: Our professional hands you can trust. We are a professional Vietnamese team who work from the heart. Senses Massage & Wellness Hanoi the cozy and stunning space for relaxation. Our best massage and…
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 25.Peony Garden Spa
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 4.434
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 26.Blue Butterfly Cooking Class
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 4.907
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 27.La Spa Ma May
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 1,965
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: La Spa Ma May is classically designed and each service room comes with its own private sauna. It enjoys a prime location on the edge of the Old Quarter and not far from Hoan Kiem Lake.
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 28.Hanoi Shining Spa 2
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: Shinning Spa would like to provide customers with the highest quality healthcare service to make their trip in Hanoi as pleasant as possible. Customers will have the most tranquil and pleasurable …
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 29.Tailor Bros
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 4.182
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: Our mission is to provide an exceptional tailoring service with professional experience in facilitating one-on-one interactions among customers and our talented consultants with passionately skillful…
+2025-04-17 17:46:33,304 - INFO - Fallback found potential attraction: 30.VIP Massage Tokyo
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Experience the transformative power of massage at VIP Massage Tokyo. We offer a wide range of therapeutic treatments in a serene and welcoming environment, all professionally delivered by our team…
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Moonstone Beach
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Elephant's Trunk Flea Market
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: She-Qua-Ga Falls
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Alas Harum Bali
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Munich Christmas Market
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: National Elk Refuge
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: The International Church of Cannabis
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Midway Atoll
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Kurama Onsen
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Landour
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Auroras Flying Dress Egypt
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Kuriftu Entoto Adventure Park
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Waynesville Walking Ghost Tour
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Funicolare Como Brunate
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Mount Bromo Ijen Tour
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Scientist's Gift Organization
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Book Tour Egypt
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Prague Boats
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: MycoMeditations Psilocybin-Assisted Retreats
+2025-04-17 17:46:33,305 - INFO - Fallback found potential attraction: Abbycar Rentals
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: An Handmade - we are selling Authentic hemp fabric from the Ethnic group like H'mong, Thai up on the moutains. Besides bring vietnamese culture to the world we also support the local with their amazing…
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Midori Hanoi Spa is a social enterprise providing training and employment opportunities young blind Vietnam as masseur. It was helped by the Vietnam Blind Association. Until 2013, estimates in Vietnam…
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: A rare breed of turtle enjoys this popular lake almost as much as countless locals and tourists. Hoan Kiem Lake is a dynamic daily tableau, from morning walks amid locals doing exercises on the shore…
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Apron Up Cooking Class was found in 2015 with the aim of introducing Vietnamese cuisine and culture to the outside world. We have been hosting hundreds of thousands of people who are eager to immerse…
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Our mission is to provide an exceptional tailoring service with professional experience in facilitating one-on-one interactions among customers and our talented consultants with passionately skillful…
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: In the heart of Hanoi’s Old Quarter, surrounded by history and charm, lies MF Boutique Spa, a sanctuary of renewal and rejuvenation. Here, the East harmonizes with the West, and ancient philosophies…
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: The L'essence De La Vie Spa Group (LSG) has come a long way since the original members’ humble beginnings running a mini Spa in Hanoi’s Old Quarter at the end of 2015. Ours is an inspirational story…
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Mido Hanoi Spa is a haven for relaxation and beauty for Foreigners. Located near many Hanoi Hotel (Sofitel Legend Metropole, Sheraton Hanoi Hotel, Hanoi Elegance Diamond Hotel, Melia Hanoi, ..). Our…
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Our professional hands you can trust. We are a professional Vietnamese team who work from the heart. Senses Massage & Wellness Hanoi the cozy and stunning space for relaxation. Our best massage and…
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: In the heart of Hanoi’s Old Quarter, surrounded by history and charm, lies MF Spa Hanoi, a sanctuary of renewal and rejuvenation. Here, the East harmonizes with the West, and ancient philosophies …
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: We introduce and offer the finest cuisines that Vietnam can ever offer. Cuisine is a part of the culture, we will help you get the real taste of our culture! You will be provided with an immersive…
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: WELCOME TO LESSENCE GROUP INTRODUCTION The Lessence Group (LSG) has come a long way since the original members’ humble beginnings running a mini Spa in Hanoi’s Old Quarter at the end of 2015. Ours…
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: We bring the oldest ceramics village of Bat Trang to you right in the heart of Hanoi's old quarter, at 115 Hang Gai, Hang gai, Hoan Kiem. Here you will find a wide selection of authentic Bat Trang…
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Beyond a reflection of Vietnamese ingenuity and ancestral know-how, traditional herbalism offers an insight into our People's bond with Nature, as She forms our beliefs, tends to our aspirations, …
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Immerse yourself into calming atmospheres of our. Body, Foot massage and hair nourishing therapy, get your feeling relaxed and refreshed. Enjoy moments of tranquillity, unwind and temporarily get …
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Alisa Bella Spa is a company belongs to ALISA GROUP which provide 5 star services such as Alisa Premier Cruise, Alisa Cruise in Halong Bay and Alisa Hotel & Spa in Hanoi. Alisa Bella Spa proud of …
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Omamori Spa is a chain of massage center established and run by BlindLink, established in 2013, a leading and pioneering social impact organization providing training opportunities in the area of …
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Located in the heart of busy Hanoi,1920s-inspired Bee’Znees cocktail bar brings you to a completely different time and space.It is the ultimate destination for those who appreciate exclusivity and…
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Shinning Spa would like to provide customers with the highest quality healthcare service to make their trip in Hanoi as pleasant as possible. Customers will have the most tranquil and pleasurable …
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Experience the transformative power of massage at VIP Massage Tokyo. We offer a wide range of therapeutic treatments in a serene and welcoming environment, all professionally delivered by our team…
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: La Spa Ma May is classically designed and each service room comes with its own private sauna. It enjoys a prime location on the edge of the Old Quarter and not far from Hoan Kiem Lake.
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Best tailoring, suit maker, jacket, suit, shirt, services within 24 hours, bespoke tailoring. Cash or credit card are accepted. Delivering services all around the world
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Hanoi’s lively Old Quarter comprises nearly 40 streets packed with shops selling all kinds of goods, each street named for its primary good or service.
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Cửa Hàng Quần Áo, Thợ May Đo Cung Cấp Các Sản Phẩm May Đo Thủ Công Như Quần Âu, Sơ Mi, Áo Khoác, Áo Vest, Gile, Măng Tô
+2025-04-17 17:46:33,305 - INFO - Added fallback attraction: Traditional legends and historical tales are among the enchanting puppet plays performed at this popular theatre.
+2025-04-17 17:46:33,306 - INFO - Added fallback attraction: MycoMeditations Psilocybin-Assisted Retreats
+2025-04-17 17:46:33,306 - INFO - Added fallback attraction: The International Church of Cannabis
+2025-04-17 17:46:33,306 - INFO - Added fallback attraction: 26.Blue Butterfly Cooking Class
+2025-04-17 17:46:33,306 - INFO - Added fallback attraction: Waynesville Walking Ghost Tour
+2025-04-17 17:46:33,306 - INFO - Added fallback attraction: 10.La Belle Vie Spa & Massage
+2025-04-17 17:46:33,346 - INFO - Collected 30 attraction listings so far
+2025-04-17 17:46:33,346 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d23959149-Reviews-An_Handmade_Hemp_Fabric_Gift_Shop-Hanoi.html
+2025-04-17 17:46:33,346 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d8262801-Reviews-Midori_Spa_Hanoi-Hanoi.html
+2025-04-17 17:46:33,346 - INFO - Found 0 unique attractions
+2025-04-17 18:21:06,749 - INFO - Getting attraction listings from page 1: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-17 18:21:06,750 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi.html
+2025-04-17 18:21:08,485 - INFO - Found 30 attractions using selector: div.XfVdV.o.AIbhI
+2025-04-17 18:21:08,595 - INFO - Found 0 attractions on page 1
+2025-04-17 18:21:08,595 - WARNING - Found attraction elements but couldn't extract any valid attraction data.
+2025-04-17 18:21:08,595 - WARNING - Consider running with --debug flag to save the HTML for inspection.
+2025-04-17 18:21:08,601 - INFO - Fallback found potential attraction: 1.Old Quarter
+2025-04-17 18:21:08,601 - INFO - Fallback found potential attraction: 4.28,902
+2025-04-17 18:21:08,601 - INFO - Fallback found potential attraction: Hanoi’s lively Old Quarter comprises nearly 40 streets packed with shops selling all kinds of goods, each street named for its primary good or service.
+2025-04-17 18:21:08,601 - INFO - Fallback found potential attraction: See tickets
+2025-04-17 18:21:08,601 - INFO - Fallback found potential attraction: 2.Lake of the Restored Sword (Hoan Kiem Lake)
+2025-04-17 18:21:08,601 - INFO - Fallback found potential attraction: 4.13,770
+2025-04-17 18:21:08,601 - INFO - Fallback found potential attraction: A rare breed of turtle enjoys this popular lake almost as much as countless locals and tourists. Hoan Kiem Lake is a dynamic daily tableau, from morning walks amid locals doing exercises on the shore…
+2025-04-17 18:21:08,601 - INFO - Fallback found potential attraction: See tickets
+2025-04-17 18:21:08,601 - INFO - Fallback found potential attraction: 3.Mf Spa Hanoi
+2025-04-17 18:21:08,601 - INFO - Fallback found potential attraction: 4.812
+2025-04-17 18:21:08,601 - INFO - Fallback found potential attraction: In the heart of Hanoi’s Old Quarter, surrounded by history and charm, lies MF Spa Hanoi, a sanctuary of renewal and rejuvenation. Here, the East harmonizes with the West, and ancient philosophies …
+2025-04-17 18:21:08,601 - INFO - Fallback found potential attraction: 4.NGO GIA Tailor
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: Best tailoring, suit maker, jacket, suit, shirt, services within 24 hours, bespoke tailoring. Cash or credit card are accepted. Delivering services all around the world
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 5.Thang Long Water Puppet
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 12,398
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: Traditional legends and historical tales are among the enchanting puppet plays performed at this popular theatre.
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: See tickets
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 6.Apron Up Cooking Class
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 5,584
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: Apron Up Cooking Class was found in 2015 with the aim of introducing Vietnamese cuisine and culture to the outside world. We have been hosting hundreds of thousands of people who are eager to immerse…
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 7.Mf Boutique Spa
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: In the heart of Hanoi’s Old Quarter, surrounded by history and charm, lies MF Boutique Spa, a sanctuary of renewal and rejuvenation. Here, the East harmonizes with the West, and ancient philosophies…
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 8.Rose Kitchen
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 5,128
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: We introduce and offer the finest cuisines that Vietnam can ever offer. Cuisine is a part of the culture, we will help you get the real taste of our culture! You will be provided with an immersive…
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 9.L'essence Spa
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 1,899
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: WELCOME TO LESSENCE GROUP INTRODUCTION The Lessence Group (LSG) has come a long way since the original members’ humble beginnings running a mini Spa in Hanoi’s Old Quarter at the end of 2015. Ours…
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 10.La Belle Vie Spa & Massage
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 1,727
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 11.L'essence De La Vie Spa
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 1,656
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: The L'essence De La Vie Spa Group (LSG) has come a long way since the original members’ humble beginnings running a mini Spa in Hanoi’s Old Quarter at the end of 2015. Ours is an inspirational story…
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 12.Ngo Minh Tailor
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 4.103
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: Tailor made suit and shirt
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 13.Authentic Bat Trang
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: 1,027
+2025-04-17 18:21:08,602 - INFO - Fallback found potential attraction: We bring the oldest ceramics village of Bat Trang to you right in the heart of Hanoi's old quarter, at 115 Hang Gai, Hang gai, Hoan Kiem. Here you will find a wide selection of authentic Bat Trang…
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 14.MasterTan
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: Beyond a reflection of Vietnamese ingenuity and ancestral know-how, traditional herbalism offers an insight into our People's bond with Nature, as She forms our beliefs, tends to our aspirations, …
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 15.JM Spa Hanoi
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: Immerse yourself into calming atmospheres of our. Body, Foot massage and hair nourishing therapy, get your feeling relaxed and refreshed. Enjoy moments of tranquillity, unwind and temporarily get …
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 16.An Handmade - Hemp Fabric Gift Shop
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: An Handmade - we are selling Authentic hemp fabric from the Ethnic group like H'mong, Thai up on the moutains. Besides bring vietnamese culture to the world we also support the local with their amazing…
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 17.Alisa Bella Spa Hanoi
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: Alisa Bella Spa is a company belongs to ALISA GROUP which provide 5 star services such as Alisa Premier Cruise, Alisa Cruise in Halong Bay and Alisa Hotel & Spa in Hanoi. Alisa Bella Spa proud of …
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 18.Mido Spa
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 4.2,158
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: Mido Hanoi Spa is a haven for relaxation and beauty for Foreigners. Located near many Hanoi Hotel (Sofitel Legend Metropole, Sheraton Hanoi Hotel, Hanoi Elegance Diamond Hotel, Melia Hanoi, ..). Our…
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 19.Ngo Minh Tailor
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 4.93
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: Cửa Hàng Quần Áo, Thợ May Đo Cung Cấp Các Sản Phẩm May Đo Thủ Công Như Quần Âu, Sơ Mi, Áo Khoác, Áo Vest, Gile, Măng Tô
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 20.Omamori Spa Hà Nội
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 4.637
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: Omamori Spa is a chain of massage center established and run by BlindLink, established in 2013, a leading and pioneering social impact organization providing training opportunities in the area of …
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 21.Bee'znees Speakeasy Bar
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: Located in the heart of busy Hanoi,1920s-inspired Bee’Znees cocktail bar brings you to a completely different time and space.It is the ultimate destination for those who appreciate exclusivity and…
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 22.Midori Spa Hanoi
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 4.1,891
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: Midori Hanoi Spa is a social enterprise providing training and employment opportunities young blind Vietnam as masseur. It was helped by the Vietnam Blind Association. Until 2013, estimates in Vietnam…
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 23.Ngai Spa
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 4.151
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 24.Senses Massage & Wellness
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: Our professional hands you can trust. We are a professional Vietnamese team who work from the heart. Senses Massage & Wellness Hanoi the cozy and stunning space for relaxation. Our best massage and…
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 25.Peony Garden Spa
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 4.434
+2025-04-17 18:21:08,603 - INFO - Fallback found potential attraction: 26.Blue Butterfly Cooking Class
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: 4.907
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: 27.La Spa Ma May
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: 1,965
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: La Spa Ma May is classically designed and each service room comes with its own private sauna. It enjoys a prime location on the edge of the Old Quarter and not far from Hoan Kiem Lake.
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: 28.Hanoi Shining Spa 2
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Shinning Spa would like to provide customers with the highest quality healthcare service to make their trip in Hanoi as pleasant as possible. Customers will have the most tranquil and pleasurable …
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: 29.Tailor Bros
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: 4.182
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Our mission is to provide an exceptional tailoring service with professional experience in facilitating one-on-one interactions among customers and our talented consultants with passionately skillful…
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: 30.VIP Massage Tokyo
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Experience the transformative power of massage at VIP Massage Tokyo. We offer a wide range of therapeutic treatments in a serene and welcoming environment, all professionally delivered by our team…
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Moonstone Beach
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Elephant's Trunk Flea Market
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: She-Qua-Ga Falls
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Alas Harum Bali
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Munich Christmas Market
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: National Elk Refuge
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: The International Church of Cannabis
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Midway Atoll
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Kurama Onsen
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Landour
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Auroras Flying Dress Egypt
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Kuriftu Entoto Adventure Park
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Waynesville Walking Ghost Tour
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Funicolare Como Brunate
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Mount Bromo Ijen Tour
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Scientist's Gift Organization
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Book Tour Egypt
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Prague Boats
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: MycoMeditations Psilocybin-Assisted Retreats
+2025-04-17 18:21:08,604 - INFO - Fallback found potential attraction: Abbycar Rentals
+2025-04-17 18:21:08,604 - INFO - Added fallback attraction: An Handmade - we are selling Authentic hemp fabric from the Ethnic group like H'mong, Thai up on the moutains. Besides bring vietnamese culture to the world we also support the local with their amazing…
+2025-04-17 18:21:08,604 - INFO - Added fallback attraction: Midori Hanoi Spa is a social enterprise providing training and employment opportunities young blind Vietnam as masseur. It was helped by the Vietnam Blind Association. Until 2013, estimates in Vietnam…
+2025-04-17 18:21:08,604 - INFO - Added fallback attraction: A rare breed of turtle enjoys this popular lake almost as much as countless locals and tourists. Hoan Kiem Lake is a dynamic daily tableau, from morning walks amid locals doing exercises on the shore…
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Apron Up Cooking Class was found in 2015 with the aim of introducing Vietnamese cuisine and culture to the outside world. We have been hosting hundreds of thousands of people who are eager to immerse…
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Our mission is to provide an exceptional tailoring service with professional experience in facilitating one-on-one interactions among customers and our talented consultants with passionately skillful…
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: In the heart of Hanoi’s Old Quarter, surrounded by history and charm, lies MF Boutique Spa, a sanctuary of renewal and rejuvenation. Here, the East harmonizes with the West, and ancient philosophies…
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: The L'essence De La Vie Spa Group (LSG) has come a long way since the original members’ humble beginnings running a mini Spa in Hanoi’s Old Quarter at the end of 2015. Ours is an inspirational story…
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Mido Hanoi Spa is a haven for relaxation and beauty for Foreigners. Located near many Hanoi Hotel (Sofitel Legend Metropole, Sheraton Hanoi Hotel, Hanoi Elegance Diamond Hotel, Melia Hanoi, ..). Our…
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Our professional hands you can trust. We are a professional Vietnamese team who work from the heart. Senses Massage & Wellness Hanoi the cozy and stunning space for relaxation. Our best massage and…
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: In the heart of Hanoi’s Old Quarter, surrounded by history and charm, lies MF Spa Hanoi, a sanctuary of renewal and rejuvenation. Here, the East harmonizes with the West, and ancient philosophies …
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: We introduce and offer the finest cuisines that Vietnam can ever offer. Cuisine is a part of the culture, we will help you get the real taste of our culture! You will be provided with an immersive…
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: WELCOME TO LESSENCE GROUP INTRODUCTION The Lessence Group (LSG) has come a long way since the original members’ humble beginnings running a mini Spa in Hanoi’s Old Quarter at the end of 2015. Ours…
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: We bring the oldest ceramics village of Bat Trang to you right in the heart of Hanoi's old quarter, at 115 Hang Gai, Hang gai, Hoan Kiem. Here you will find a wide selection of authentic Bat Trang…
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Beyond a reflection of Vietnamese ingenuity and ancestral know-how, traditional herbalism offers an insight into our People's bond with Nature, as She forms our beliefs, tends to our aspirations, …
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Immerse yourself into calming atmospheres of our. Body, Foot massage and hair nourishing therapy, get your feeling relaxed and refreshed. Enjoy moments of tranquillity, unwind and temporarily get …
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Alisa Bella Spa is a company belongs to ALISA GROUP which provide 5 star services such as Alisa Premier Cruise, Alisa Cruise in Halong Bay and Alisa Hotel & Spa in Hanoi. Alisa Bella Spa proud of …
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Omamori Spa is a chain of massage center established and run by BlindLink, established in 2013, a leading and pioneering social impact organization providing training opportunities in the area of …
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Located in the heart of busy Hanoi,1920s-inspired Bee’Znees cocktail bar brings you to a completely different time and space.It is the ultimate destination for those who appreciate exclusivity and…
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Shinning Spa would like to provide customers with the highest quality healthcare service to make their trip in Hanoi as pleasant as possible. Customers will have the most tranquil and pleasurable …
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Experience the transformative power of massage at VIP Massage Tokyo. We offer a wide range of therapeutic treatments in a serene and welcoming environment, all professionally delivered by our team…
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: La Spa Ma May is classically designed and each service room comes with its own private sauna. It enjoys a prime location on the edge of the Old Quarter and not far from Hoan Kiem Lake.
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Best tailoring, suit maker, jacket, suit, shirt, services within 24 hours, bespoke tailoring. Cash or credit card are accepted. Delivering services all around the world
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Hanoi’s lively Old Quarter comprises nearly 40 streets packed with shops selling all kinds of goods, each street named for its primary good or service.
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Cửa Hàng Quần Áo, Thợ May Đo Cung Cấp Các Sản Phẩm May Đo Thủ Công Như Quần Âu, Sơ Mi, Áo Khoác, Áo Vest, Gile, Măng Tô
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Traditional legends and historical tales are among the enchanting puppet plays performed at this popular theatre.
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: MycoMeditations Psilocybin-Assisted Retreats
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: The International Church of Cannabis
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: 26.Blue Butterfly Cooking Class
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: Waynesville Walking Ghost Tour
+2025-04-17 18:21:08,605 - INFO - Added fallback attraction: 10.La Belle Vie Spa & Massage
+2025-04-17 18:21:08,647 - INFO - Collected 30 attraction listings so far
+2025-04-17 18:21:08,647 - INFO - Waiting for 5.76 seconds
+2025-04-17 18:21:14,407 - INFO - Getting attraction listings from page 2: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi-oa30.html
+2025-04-17 18:21:14,407 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi-oa30.html
+2025-04-17 18:21:17,475 - INFO - Found 30 attractions using selector: div.XfVdV.o.AIbhI
+2025-04-17 18:21:17,585 - INFO - Found 0 attractions on page 2
+2025-04-17 18:21:17,585 - WARNING - Found attraction elements but couldn't extract any valid attraction data.
+2025-04-17 18:21:17,585 - WARNING - Consider running with --debug flag to save the HTML for inspection.
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: 31.La Spa Hang Be
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: La Spa is ready to surprise you with meticulous care from the smallest details, absolute cleanliness and unexpected service. What makes us proud is not just the increase in the number of customers…
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: 32.Hanoi Transport Service
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: Pick-up service in Hanoi.
+Pick-up service for tourists in Hanoi city. Pick-up and drop-off service at Noi Bai airport and tourist attractions such as Ha Long Bay, Ninh Binh, Ha Giang, SaPa, Moc Chau…
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: 33.Hoang's Spa
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: 34.Fuji Spa Center
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: 4.276
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: Fuji Spa Center is a place for everyone to relax their mind and health. Coming to Fuji, you will experience massage services from experienced technicians, applying Japanese massage procedures. With…
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: 35.La énMay Spa
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: We believe the body, mind, and spirit need to be nurtured as one, aligned and in harmony. At La énMay Spa, we offer holistic treatments and therapies focused on the three pillars of movement, breathing…
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: 36.The Garden Nail Spa
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: 4.210
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: NON-TOXIC POLISH ONLY At The Garden Nail Spa, we aim to create the perfect environment for you to completely relax and unwind; and to make every treatment a deeply refreshing pampering; from manicures…
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: 37.Hoang's Cooking Class
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: Hoang’s Cooking Class is a must-do activity when you are in Hanoi, Vietnam. Hoang’s restaurant serves a great combination menu with traditional Vietnamese dishes all around Vietnam. Besides, we would…
+2025-04-17 18:21:17,591 - INFO - Fallback found potential attraction: 38.Estheva Spa
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 4.740
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: We work hard to create a friendly day spa environment that is inclusive and welcoming, providing affordable luxury delivered by friendly, trained professionals. You can always expect a warm welcome…
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 39.With Love From The Mountains
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: With Love from the Mountain is a company that deals in exactly that- love from the mountain. Every product that is sold here is %100 handmade by the people from three ethnic groups located in the …
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 40.Spa1995
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 4.246
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: At 1995 Spa, we specialize in delivering deeply relaxing and therapeutic massage experiences. Our skilled therapists are experts in a variety of techniques, from Swedish and Deep Tissue to Hot Stone…
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 41.Sống Spa
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: Located in the 4th floor of Grand Mercure Hanoi hotel, Sống is a peaceful sanctuary above the city and a place to relax from stress, refresh after sightseeing, or recharge after travel. Every visit…
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 42.Nowhere Spa - Earth
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: The right way of pronouncing Nowhere Spa is /naʊ/ /hir/ /spɑ/. The concept of Now and Here conveys valuable messages about finding true happiness in simple things, by living in the “here and now”. “…
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 43.Orient Spa
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 4.382
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: With a hope to become a perfect escape for all your senses, Orient Spa Hanoi always tries our best to serve you not only as customers but as family members. We offer foot massage, body massage, body…
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 44.La Spa Hang Thung
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 4.783
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: Nearly 10 years of operation is such a long way, starting from a small spa in the hotel to nowadays becoming spa chain with many branches and bringing the pioneer mission to take the spa industry …
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 45.Spas Hanoi
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 4.455
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: SpasHanoi is founded on the premise of providing an affordable service to all travellers and locals who want to relax after the stress and tensions from travel and daily life. Come and visit us for…
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 46.Tailor Đức Nhân
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 4.278
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 47.Mountain's Color Shop
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: Moutain's Color is a social interprise connecting the local handcraft products of ethnic minorities such as H'mong, Zao, Thái, Tày, Nùng...to everyone in the world. It's also contributing to preserve…
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 48.Vip Massage Tokyo2
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: Experience the transformative power of massage at VIP Massage Tokyo2. We offer a wide range of therapeutic treatments in a serene and welcoming environment, all professionally delivered by our team…
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 49.Collective Memory - The House of Curios
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 4.187
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: Founded by a Vietnamese duo of travel writer and photographer, the concept for Collective Memory emerged from a shared enthusiasm for Vietnamese culture. While constantly on the move for assignments…
+2025-04-17 18:21:17,592 - INFO - Fallback found potential attraction: 50.Serene Spa
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: Offering pioneering therapies and a holistic philosophy, we are proud on being one of the best spa in Hanoi voted by guest. The quest for good health through massage and use of natural herbal remedies…
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: 51.Cerender Ceramic Shop
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: 4.211
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: CERENDER is a brand of hand-made ceramics manufactured in Bat Trang. CERENDER is really outstanding with products: furniture accessories for export like: flower pots, cups, tea sets, plates, table…
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: 52.Yolo Spa
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: 4.154
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: Kakao talk ID : yolospa Whatsapp : +84(0)382 075 214 Instagram : yolospa_hanoi Hanoi massage. Welcome to our massage shop located in Hanoi! Experience the ultimate relaxation and rejuvenation at our…
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: 53.An handmade Hang Manh - Ethnic Craft Station
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: An Handmade, we not only create stunning fabric products but also share and inspire traditional art from Vietnam. We believe that each of our products is not just an item but also a part of the story…
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: 54.La Maison Spa
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: Amidst the hustle and bustle of Hanoi city, a peaceful paradise is waiting for you. At La Maison Spa, we create a tranquill space, bringing a different side of Vietnam where you will nourish your …
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: 55.Serene Signature Spa
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: Warmest greeting from Serene Signature! Serene Signature Spa is a contemporary urban day spa concept with exceptionally designed facilities. We provide a 5-stars experience at affordable prices, using…
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: 56.La énMay Spa Đình Ngang
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: We believe the body, mind, and spirit need to be nurtured as one, aligned and in harmony. At La énMay Spa, we offer holistic treatments and therapies focused on the three pillars of movement, breathing…
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: 57.Carpe Diem
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: Located in Hanoi’s Old Quarter, Carpe Diem provides handcrafted candles, Vietnamese traditional souvenirs, and candle-making workshops with sustainable materials. We have been proudly making exceptional…
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: 58.Grand La Maison Spa Hanoi
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: Amidst the hustle and bustle of Hanoi city, a peaceful paradise is waiting for you. At GRAND La Maison Spa, we create a tranquill space, bringing a different side of Vietnam where you will nourish…
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: 59.Vietnam Motorbike Tours | Vietnambikers
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: Join Vietnam Motorcycle Tours today on one of our specialized motorcycle tours in Vietnam. Don't miss out on an epic motorbike tours in north Vietnam! Check out dates and infos on our website and …
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: 60.Be Wellness Spa
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: Tired after a long journey? Be Wellness Spa will revitalize your body and soul through high quality natural oilments and both modern or traditional practices.
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: Matrix Club Berlin
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: Alligator River National Wildlife Refuge
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: Dikteon Cave
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: Uber Arena
+2025-04-17 18:21:17,593 - INFO - Fallback found potential attraction: Poas Volcano
+2025-04-17 18:21:17,594 - INFO - Fallback found potential attraction: Seoul International Fireworks Festival
+2025-04-17 18:21:17,594 - INFO - Fallback found potential attraction: Sausalito Boardwalk
+2025-04-17 18:21:17,594 - INFO - Fallback found potential attraction: Mount Nebo State Park
+2025-04-17 18:21:17,594 - INFO - Fallback found potential attraction: Keri Caves
+2025-04-17 18:21:17,594 - INFO - Fallback found potential attraction: Chastain Park Amphitheater
+2025-04-17 18:21:17,594 - INFO - Fallback found potential attraction: Sky Combat Ace
+2025-04-17 18:21:17,594 - INFO - Fallback found potential attraction: Politically Incorrect Tours
+2025-04-17 18:21:17,594 - INFO - Fallback found potential attraction: Fillmore & Western Railway Company
+2025-04-17 18:21:17,594 - INFO - Fallback found potential attraction: Game of Thrones Tours
+2025-04-17 18:21:17,594 - INFO - Fallback found potential attraction: Bolton Hometown Tour
+2025-04-17 18:21:17,594 - INFO - Fallback found potential attraction: Maison Cailler
+2025-04-17 18:21:17,594 - INFO - Fallback found potential attraction: Happy Gringo Tours
+2025-04-17 18:21:17,594 - INFO - Fallback found potential attraction: Boston Crawling
+2025-04-17 18:21:17,594 - INFO - Fallback found potential attraction: Reading Blue Mountain & Northern Railroad
+2025-04-17 18:21:17,594 - INFO - Fallback found potential attraction: Hanuman World
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Located in Hanoi’s Old Quarter, Carpe Diem provides handcrafted candles, Vietnamese traditional souvenirs, and candle-making workshops with sustainable materials. We have been proudly making exceptional…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: We believe the body, mind, and spirit need to be nurtured as one, aligned and in harmony. At La énMay Spa, we offer holistic treatments and therapies focused on the three pillars of movement, breathing…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: We believe the body, mind, and spirit need to be nurtured as one, aligned and in harmony. At La énMay Spa, we offer holistic treatments and therapies focused on the three pillars of movement, breathing…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: NON-TOXIC POLISH ONLY At The Garden Nail Spa, we aim to create the perfect environment for you to completely relax and unwind; and to make every treatment a deeply refreshing pampering; from manicures…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Offering pioneering therapies and a holistic philosophy, we are proud on being one of the best spa in Hanoi voted by guest. The quest for good health through massage and use of natural herbal remedies…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Warmest greeting from Serene Signature! Serene Signature Spa is a contemporary urban day spa concept with exceptionally designed facilities. We provide a 5-stars experience at affordable prices, using…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Hoang’s Cooking Class is a must-do activity when you are in Hanoi, Vietnam. Hoang’s restaurant serves a great combination menu with traditional Vietnamese dishes all around Vietnam. Besides, we would…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Moutain's Color is a social interprise connecting the local handcraft products of ethnic minorities such as H'mong, Zao, Thái, Tày, Nùng...to everyone in the world. It's also contributing to preserve…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: An Handmade, we not only create stunning fabric products but also share and inspire traditional art from Vietnam. We believe that each of our products is not just an item but also a part of the story…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Pick-up service in Hanoi.
+Pick-up service for tourists in Hanoi city. Pick-up and drop-off service at Noi Bai airport and tourist attractions such as Ha Long Bay, Ninh Binh, Ha Giang, SaPa, Moc Chau…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: At 1995 Spa, we specialize in delivering deeply relaxing and therapeutic massage experiences. Our skilled therapists are experts in a variety of techniques, from Swedish and Deep Tissue to Hot Stone…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: The right way of pronouncing Nowhere Spa is /naʊ/ /hir/ /spɑ/. The concept of Now and Here conveys valuable messages about finding true happiness in simple things, by living in the “here and now”. “…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: With a hope to become a perfect escape for all your senses, Orient Spa Hanoi always tries our best to serve you not only as customers but as family members. We offer foot massage, body massage, body…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Founded by a Vietnamese duo of travel writer and photographer, the concept for Collective Memory emerged from a shared enthusiasm for Vietnamese culture. While constantly on the move for assignments…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Kakao talk ID : yolospa Whatsapp : +84(0)382 075 214 Instagram : yolospa_hanoi Hanoi massage. Welcome to our massage shop located in Hanoi! Experience the ultimate relaxation and rejuvenation at our…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Fuji Spa Center is a place for everyone to relax their mind and health. Coming to Fuji, you will experience massage services from experienced technicians, applying Japanese massage procedures. With…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: We work hard to create a friendly day spa environment that is inclusive and welcoming, providing affordable luxury delivered by friendly, trained professionals. You can always expect a warm welcome…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Located in the 4th floor of Grand Mercure Hanoi hotel, Sống is a peaceful sanctuary above the city and a place to relax from stress, refresh after sightseeing, or recharge after travel. Every visit…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: SpasHanoi is founded on the premise of providing an affordable service to all travellers and locals who want to relax after the stress and tensions from travel and daily life. Come and visit us for…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Experience the transformative power of massage at VIP Massage Tokyo2. We offer a wide range of therapeutic treatments in a serene and welcoming environment, all professionally delivered by our team…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: La Spa is ready to surprise you with meticulous care from the smallest details, absolute cleanliness and unexpected service. What makes us proud is not just the increase in the number of customers…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: With Love from the Mountain is a company that deals in exactly that- love from the mountain. Every product that is sold here is %100 handmade by the people from three ethnic groups located in the …
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Nearly 10 years of operation is such a long way, starting from a small spa in the hotel to nowadays becoming spa chain with many branches and bringing the pioneer mission to take the spa industry …
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: CERENDER is a brand of hand-made ceramics manufactured in Bat Trang. CERENDER is really outstanding with products: furniture accessories for export like: flower pots, cups, tea sets, plates, table…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Amidst the hustle and bustle of Hanoi city, a peaceful paradise is waiting for you. At La Maison Spa, we create a tranquill space, bringing a different side of Vietnam where you will nourish your …
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Amidst the hustle and bustle of Hanoi city, a peaceful paradise is waiting for you. At GRAND La Maison Spa, we create a tranquill space, bringing a different side of Vietnam where you will nourish…
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Join Vietnam Motorcycle Tours today on one of our specialized motorcycle tours in Vietnam. Don't miss out on an epic motorbike tours in north Vietnam! Check out dates and infos on our website and …
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Tired after a long journey? Be Wellness Spa will revitalize your body and soul through high quality natural oilments and both modern or traditional practices.
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Reading Blue Mountain & Northern Railroad
+2025-04-17 18:21:17,594 - INFO - Added fallback attraction: Alligator River National Wildlife Refuge
+2025-04-17 18:21:17,633 - INFO - Collected 60 attraction listings so far
+2025-04-17 18:21:17,633 - INFO - Waiting for 4.96 seconds
+2025-04-17 18:21:22,596 - INFO - Getting attraction listings from page 3: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi-oa60.html
+2025-04-17 18:21:22,596 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi-oa60.html
+2025-04-17 18:21:25,564 - INFO - Found 30 attractions using selector: div.XfVdV.o.AIbhI
+2025-04-17 18:21:25,674 - INFO - Found 0 attractions on page 3
+2025-04-17 18:21:25,674 - WARNING - Found attraction elements but couldn't extract any valid attraction data.
+2025-04-17 18:21:25,674 - WARNING - Consider running with --debug flag to save the HTML for inspection.
+2025-04-17 18:21:25,679 - INFO - Fallback found potential attraction: 61.Essencia Spa
+2025-04-17 18:21:25,679 - INFO - Fallback found potential attraction: 4.444
+2025-04-17 18:21:25,679 - INFO - Fallback found potential attraction: Located at 38A Tran Phu Street, Ba Dinh District, Essencia Spa has been created for your complete relaxation, where tranquility prevails throughout the exquisite, elegant, and soothing architectural…
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 62.Dao's Care Spa - Ba Đình
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 4.196
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: Founded in 2016, Dao’s Care is a social enterprise offering Red Dao herbal baths and therapeutic massages. We employ visually impaired people and train them to become skilled therapists. 70% of our…
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 63.TRE Boutique Spa & Massage
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 4.191
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: Experience the difference with our signature Combination Massage — thoughtfully designed to blend multiple techniques into one harmonious session. Whether it’s your very first massage or you’re a …
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 64.Amora Spa
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 65.Booking Car
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 4.378
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: Vietnam Private Car Rental Services provides the best transfer services for both individual travelers and meeting groups to Vietnam at a high standard and at very special discount. We help to plan…
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 66.Carpe Diem
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: Located in the heart of Hanoi’s Old Quarter, Carpe Diem provides handcrafted candles, Vietnamese traditional gifts, and candle-making workshops with sustainable materials. We have been proudly presenting…
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 67.Lang Toi - My Village by Lune Production
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 4.809
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: Lang Toi is one of the Vietnamese Bamboo Circus shows, now performing in Hanoi. Lang Toi, also known as My Village, is a delicate merging of tradition and innovation, where the poetic beauty of Vietnamese…
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 68.Thuy Design House - Ha Noi
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: Thuy Design House, led by founder Thuỷ Nguyễn, celebrates Vietnam's cultural heritage through elegant fashion. Their collections blend traditional textiles and handicraft techniques with modern trends…
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 69.Peridot Spa (grand)
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: At Peridot Spa, the spa rituals use local ingredients and a therapeutic touch for wellbeing and deep relaxation. Revitalize the body and mind with gentle massage, jacuzzi, steam room and sauna. Himalayan…
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 70.1st Football Store
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 71.Trap Viet Nam
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 4.415
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: Trap Escape Vietnam is a live escape game in an enigmatic basement where you can test your skills in an unusual setting as a team.
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 72.Midori Spa 2
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: 4.709
+2025-04-17 18:21:25,680 - INFO - Fallback found potential attraction: Vietnamese Blind massage
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 73.Pure Bliss Spa
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 4.248
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: As a Pure Bliss Spa, we use only the finest organic and botanical essences and ingredients. Beauty means more than looking good on the outside but experiencing daily moments of wellness. Our team …
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 74.Tinh Tan Gemstones
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: Gems, Jadeite, Quatz, Pearl, Agate, Agarwood, Jewelry... Healing Crystal , Chakra Balancing, Color Therapy...
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 75.Diory NailsLab 3
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 4.96
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: Diory NailsLab with 03 locations in Cau Giay, Thanh Xuan and Hoan Kiem Districts- Hanoi is a pleasant and relaxing beauty paradise for women/men who prefer gentle and delicate South Korean style. …
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 76.Style Motorbikes - Hanoi
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 4.362
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: We are Style Motorbikes. A Motorbike shop with locations in Hanoi, Hoi An, Ho Chi Minh and Ha Giang. We buy, sell, rent, repair and customise all types of motorbikes. We offer one way rentals between…
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 77.James Hanoi Motorbikes
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 4.211
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: JAMES HANOI MOTORBIKE SELL - RENT - BUY A wide range of motorbikes for rent and sale Provide bike accessories like helmets, bungee cords, luggage racks, gloves, mobile holders, usb chargers, elbow…
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 78.Hanoi Free Private Tour Guide
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 4,491
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: Hanoi Free Private Tour Guide is a NON-PROFIT ORGANIZATION established in 2015. Our community has more 2.000 members who are well-trained tour guides, organised more 20.000 free tours for FOREIGN …
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 79.La enMay Spa Cau Go
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: We believe the body, mind, and spirit need to be nurtured as one, aligned and in harmony. At La énMay Spa, we offer holistic treatments and therapies focused on the three pillars of movement, breathing…
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 80.Mido Spa 1
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 4.1,281
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: Mido Spa is a famous collection of spas, discreetly located in prime central Ha Noi locations – the Old Quarter. Offering an exclusive body treatments & massages with professional expert therapists…
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 81.Hanoi Street Food Tour
+2025-04-17 18:21:25,681 - INFO - Fallback found potential attraction: 4.9,708
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: Hanoi street food tour is a leading local street food travel company located inside old quarter . Our company is not only organizing for street food walking tours ,but also organizing Hanoi city sightseeing…
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: 82.Danny Phan Travel
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: - Hanoi Airport Pickup Services - Private Car For Tour Trip To SAPA - HALONG BAY - NINH BINH - HA GIANG LOOP - WATERFALL BAN - CAT BA ISLAND - MAI CHAU
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: 83.Mf Maison Spa Hanoi
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: In the heart of Hanoi’s Old Quarter, surrounded by history and charm, lies MF Maison Spa, a sanctuary of renewal and rejuvenation. Here, the East harmonizes with the West, and ancient philosophies…
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: 84.Crossing Vietnam Tour
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: 4.5,434
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: Crossing Vietnam Tour is a prominent travel agency based in Hanoi, known for providing exceptional travel experiences throughout Vietnam. Established with a mission to showcase the rich culture, history…
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: 85.Peony Cruise
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: 4.3,325
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: Peony Cruise is a New Intention about the Luxury Cruises in Ha Long Bay. This cruise is a well-mixed between a charming of Vietnamese traditional culture and a charming of European break – through…
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: 86.Vega Travel
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: 4.6,986
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: Vega Travel really became a truly tour operator, a reliable destination address. Rest assured that your lasting unforgettable experiences in Vietnam. Well trained for sustainable eco-tourism industry…
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: 87.L’amour Spa
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: Located in a peaceful and serene environment, L'amour Spa provides a variety of treatments including massages, facials, body treatments, and beauty services. With a focus on health and well-being, …
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: 88.Le Spa Du Metropole
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: 4.258
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: Located in the center of the hotel, Le Spa du Metropole blends harmoniously into its environment, a pleasant 400-square meter space overlooking the charming garden courtyard and pool. Each massage…
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: 89.BestPrice Travel
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: 4.3,718
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: BestPrice Travel is one of the leading travel companies in Southeast Asia. We provide group & customized tour packages, flight booking and other travel services in Vietnam, Cambodia, Thailand, Laos…
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: 90.Tiredcity 37 Hàng Hành
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: Chain store of Tee & Creative Gifts is bold local stories and local culture. The product is a collaboration of young Vietnamese artists with the aim of nurturing and spreading creativity.
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: Frere Hall
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: The Boardwalk on Okaloosa Island
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: Almeria
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: Bowman Lake
+2025-04-17 18:21:25,682 - INFO - Fallback found potential attraction: Munich Marienplatz
+2025-04-17 18:21:25,683 - INFO - Fallback found potential attraction: Castle Rock
+2025-04-17 18:21:25,683 - INFO - Fallback found potential attraction: Calaveras Big Trees State Park
+2025-04-17 18:21:25,683 - INFO - Fallback found potential attraction: Sea Turtle Conservation Project (Koggala)
+2025-04-17 18:21:25,683 - INFO - Fallback found potential attraction: Tunnel View
+2025-04-17 18:21:25,683 - INFO - Fallback found potential attraction: Clear Creek Reservoir
+2025-04-17 18:21:25,683 - INFO - Fallback found potential attraction: Mundo Aventura Parque Ecologico de Mazamitla
+2025-04-17 18:21:25,683 - INFO - Fallback found potential attraction: World War II in Prague Tour
+2025-04-17 18:21:25,683 - INFO - Fallback found potential attraction: JA Bateaux Dubai
+2025-04-17 18:21:25,683 - INFO - Fallback found potential attraction: Stillwater River Boats
+2025-04-17 18:21:25,683 - INFO - Fallback found potential attraction: Hanuman Paragliding
+2025-04-17 18:21:25,683 - INFO - Fallback found potential attraction: Downtown Bradenton Ghost Tour
+2025-04-17 18:21:25,683 - INFO - Fallback found potential attraction: SK Tours Of Maine, LLC
+2025-04-17 18:21:25,683 - INFO - Fallback found potential attraction: Royal Gorge Zip Line Tours
+2025-04-17 18:21:25,683 - INFO - Fallback found potential attraction: Club Camelot
+2025-04-17 18:21:25,683 - INFO - Fallback found potential attraction: Jakarta City Tour Bus
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Hanoi street food tour is a leading local street food travel company located inside old quarter . Our company is not only organizing for street food walking tours ,but also organizing Hanoi city sightseeing…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Lang Toi is one of the Vietnamese Bamboo Circus shows, now performing in Hanoi. Lang Toi, also known as My Village, is a delicate merging of tradition and innovation, where the poetic beauty of Vietnamese…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Located in the heart of Hanoi’s Old Quarter, Carpe Diem provides handcrafted candles, Vietnamese traditional gifts, and candle-making workshops with sustainable materials. We have been proudly presenting…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: At Peridot Spa, the spa rituals use local ingredients and a therapeutic touch for wellbeing and deep relaxation. Revitalize the body and mind with gentle massage, jacuzzi, steam room and sauna. Himalayan…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Crossing Vietnam Tour is a prominent travel agency based in Hanoi, known for providing exceptional travel experiences throughout Vietnam. Established with a mission to showcase the rich culture, history…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: We believe the body, mind, and spirit need to be nurtured as one, aligned and in harmony. At La énMay Spa, we offer holistic treatments and therapies focused on the three pillars of movement, breathing…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Thuy Design House, led by founder Thuỷ Nguyễn, celebrates Vietnam's cultural heritage through elegant fashion. Their collections blend traditional textiles and handicraft techniques with modern trends…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: We are Style Motorbikes. A Motorbike shop with locations in Hanoi, Hoi An, Ho Chi Minh and Ha Giang. We buy, sell, rent, repair and customise all types of motorbikes. We offer one way rentals between…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Vega Travel really became a truly tour operator, a reliable destination address. Rest assured that your lasting unforgettable experiences in Vietnam. Well trained for sustainable eco-tourism industry…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Located at 38A Tran Phu Street, Ba Dinh District, Essencia Spa has been created for your complete relaxation, where tranquility prevails throughout the exquisite, elegant, and soothing architectural…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Founded in 2016, Dao’s Care is a social enterprise offering Red Dao herbal baths and therapeutic massages. We employ visually impaired people and train them to become skilled therapists. 70% of our…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Mido Spa is a famous collection of spas, discreetly located in prime central Ha Noi locations – the Old Quarter. Offering an exclusive body treatments & massages with professional expert therapists…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Located in a peaceful and serene environment, L'amour Spa provides a variety of treatments including massages, facials, body treatments, and beauty services. With a focus on health and well-being, …
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: BestPrice Travel is one of the leading travel companies in Southeast Asia. We provide group & customized tour packages, flight booking and other travel services in Vietnam, Cambodia, Thailand, Laos…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Experience the difference with our signature Combination Massage — thoughtfully designed to blend multiple techniques into one harmonious session. Whether it’s your very first massage or you’re a …
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Vietnam Private Car Rental Services provides the best transfer services for both individual travelers and meeting groups to Vietnam at a high standard and at very special discount. We help to plan…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: As a Pure Bliss Spa, we use only the finest organic and botanical essences and ingredients. Beauty means more than looking good on the outside but experiencing daily moments of wellness. Our team …
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Diory NailsLab with 03 locations in Cau Giay, Thanh Xuan and Hoan Kiem Districts- Hanoi is a pleasant and relaxing beauty paradise for women/men who prefer gentle and delicate South Korean style. …
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: JAMES HANOI MOTORBIKE SELL - RENT - BUY A wide range of motorbikes for rent and sale Provide bike accessories like helmets, bungee cords, luggage racks, gloves, mobile holders, usb chargers, elbow…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Hanoi Free Private Tour Guide is a NON-PROFIT ORGANIZATION established in 2015. Our community has more 2.000 members who are well-trained tour guides, organised more 20.000 free tours for FOREIGN …
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: In the heart of Hanoi’s Old Quarter, surrounded by history and charm, lies MF Maison Spa, a sanctuary of renewal and rejuvenation. Here, the East harmonizes with the West, and ancient philosophies…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Peony Cruise is a New Intention about the Luxury Cruises in Ha Long Bay. This cruise is a well-mixed between a charming of Vietnamese traditional culture and a charming of European break – through…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Located in the center of the hotel, Le Spa du Metropole blends harmoniously into its environment, a pleasant 400-square meter space overlooking the charming garden courtyard and pool. Each massage…
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Chain store of Tee & Creative Gifts is bold local stories and local culture. The product is a collaboration of young Vietnamese artists with the aim of nurturing and spreading creativity.
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: - Hanoi Airport Pickup Services - Private Car For Tour Trip To SAPA - HALONG BAY - NINH BINH - HA GIANG LOOP - WATERFALL BAN - CAT BA ISLAND - MAI CHAU
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Trap Escape Vietnam is a live escape game in an enigmatic basement where you can test your skills in an unusual setting as a team.
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Gems, Jadeite, Quatz, Pearl, Agate, Agarwood, Jewelry... Healing Crystal , Chakra Balancing, Color Therapy...
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Mundo Aventura Parque Ecologico de Mazamitla
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: Sea Turtle Conservation Project (Koggala)
+2025-04-17 18:21:25,683 - INFO - Added fallback attraction: The Boardwalk on Okaloosa Island
+2025-04-17 18:21:25,723 - INFO - Collected 90 attraction listings so far
+2025-04-17 18:21:25,723 - INFO - Waiting for 5.86 seconds
+2025-04-17 18:21:31,584 - INFO - Getting attraction listings from page 4: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi-oa90.html
+2025-04-17 18:21:31,585 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi-oa90.html
+2025-04-17 18:21:34,106 - INFO - Found 30 attractions using selector: div.XfVdV.o.AIbhI
+2025-04-17 18:21:34,222 - INFO - Found 0 attractions on page 4
+2025-04-17 18:21:34,222 - WARNING - Found attraction elements but couldn't extract any valid attraction data.
+2025-04-17 18:21:34,222 - WARNING - Consider running with --debug flag to save the HTML for inspection.
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: 91.GolfLux
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: 4.83
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: Established in 2011, GolfLux has been recognized as the leading dedicated golf tour operator in Vietnam, Thailand, Laos, Cambodia, Indonesia, Malaysia, Singapore, Philippines, UAE, and other Asia …
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: 92.Aloha Vietnam Travel & Guide
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: 6,534
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: Aloha Vietnam Travel & Guide is one of the best tour services in Vietnam. Our ultimate goal is to help you tailor a unique and flexible tour, full of oriental beauty and pleasurable experiences. You…
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: 93.Mon Cheri Cruises
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: 4.3,186
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: Experience great hospitality and fall in love with the incredible natural landscape of Halong Bay. It is our honor to serve you to experience the best that Vietnam has to offer on this cruise.
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: 94.Kadupul Spa
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: Health is always considered as the most precious gift for all of us. That is why Kadupul spa would love to bring customers the best therapies. In combination with ancient exclusive therapies from …
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: 95.Horizon Vietnam Travel
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: 2,172
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: Our local team will bring you a wide range of tailor –made, extraordinary, emotional and relaxing tours in Vietnam, Laos and Cambodia. Our trips are off-the-beaten-track, history & culture exploration…
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: 96.NOTE - THE SCENT LAB
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: NOTE is a contemporary fragrance brand established in 2019 in Saigon by a team of art-science enthusiasts. We offer unique workshops, scents, and products to enhance every aspect of your life: personal…
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: 97.The Craft House Cathedral - Souvenir & Gift Shop
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: 4.163
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: The Craft House is Vietnam’s first curated retailer of modern craft and design. Born in 2017 by a young Vietnamese team, we are passionate about introducing handmade products proudly crafted in Vietnam…
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: 98.Soleil Spa Hanoi
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: A Spa area is invested professionally to provide guestswith a perfect relaxation and health-care service
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: 99.La Pandora Cruises
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: 4.4,668
+2025-04-17 18:21:34,228 - INFO - Fallback found potential attraction: Newly outfitted in July 2019 in a modern design of oriental style, La Pandora Cruise is a SPECIAL GIFT in harmonious combination of iron and wood, making the safety and also brings a cozy, luxurious…
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 100.La Belle Vie Spa 1
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: WELCOME TO LA BELLE VIE SPA 1 INTRODUCTION The La Belle Spa Group has come a long way since the original members’ humble beginnings running a mini Spa in Hanoi’s Old Quarter at the end of 2013 Ours…
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 101.Asiatica Travel
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 4.4,077
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: Asiatica Travel is a tour operator based in Vietnam, offering not just private day trips in Hanoi but also customized private journeys to Vietnam, Laos and Cambodia. Founded in 2001 by four local …
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 102.Mido Spa
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 4.604
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: This is new shop of Mido spa.
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 103.Duong's Cooking Class
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: Duong Cooking Class is run by a famous Vietnamese top chef, one of the most talented and creative chefs in Hanoi. Chef Duong is ranked 4th in the Top Chef Vietnam program and also frequently appears…
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 104.Lotus Spa
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 4.344
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: Travel services, health care. Massager Aromatherapy. Body. Foot Manicure color waxing .vietnammese . Skin of the face Acupressure
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 105.Ha Food Tours
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 6,028
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: Ha Food Tours is a company provides and operated tourism products relate with cuisine and culture in Hanoi Old Quarter such as: walking street food tour, cooking class, market visiting e.g.
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 106.Lily's Travel Agency
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 4.2,116
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: With Lily's Travel Agency, TRUST is our priority, as our slogan is : TRUST IS MORE VALUABLE THAN GOLD . Mistake can be fixed, but lie is unacceptable. We offer quality and honest advices, reasonable…
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 107.Juan's Tailor
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: Welcome to Juan's Tailor, your go-to destination for high-quality bespoke tailoring services in Hanoi! Located in the charming neighborhood of 08 Nha Chung in Hoan Kiem, our family-owned shop has …
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 108.Midori Spa 3
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 4.711
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: Vietnamese Blind Massage
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 109.Four Palaces Show
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 4.234
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: The Four Palaces show (Tứ Phủ) is inspired by Đạo Mẫu (refers to the worship of mother goddesses in Vietnam), thousand years of history. Four Places show is a beautiful journey into spiritual world…
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 110.Halong Hideaway Tour
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: 4.4,091
+2025-04-17 18:21:34,229 - INFO - Fallback found potential attraction: With Halong Hideaway Cruise, we can pay a visit to the best and untouched parts of the bay. We offer this tour right here in Central backpackers hostel and Buffalo Hostels. Based on the pristine area…
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 111.Metis Spa
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: Metis Spa pampers the Guest with its exceptional Spa-Menu. There are vast array of massages and techniques to choose from, each devoted to personal care and the deep relaxation of the senses, as well…
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 112.Hanoi Cooking Centre
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 4.368
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: Hanoi Cooking Centre established in 2009, remains Hanoi's only purpose built cooking school and culinary centre. A variety of cooking classes and street food tours are available twice daily. All classes…
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 113.MK Spa
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 4.681
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: Welcome to MK Spa – where you can start a journey of luxury treatment and reawakening. Proud of being a recognized establishment and trust-able address, MK Spa is the combination of Vietnamese therapy…
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 114.Hanoi Flowers Art Tour
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: Wonderful experience in Hanoi to learn about the beautiful tradition of flowers arrangement by local artists. The art of flower arrangement as offerings of Vietnamese, used for buddhism, ancestor …
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 115.Cozy Bay Cruise
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 4.6,035
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: Cozy Bay Cruise - Cozy Like Home is so proud to be the leading tour operator who is specializing in Halong Bay. We wish to provide our customers the best culinary and unique route cruising experiences…
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 116.Unique Tours
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 4.2,212
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: VietNam Unique Travels Specializes in organizing domestic and international tours. Specializes in organizing meetings, outdoor learning trips. Organizes seminars, conferences, recreational activities…
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 117.Sunlight Cruise
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 4.4,575
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: Welcome to Sunlight Cruise Halong Bay and Lan Ha Bay, where your dream voyage across the tranquil waters of one of Vietnam's hidden gems becomes a reality. Nestled in the serene landscapes of the …
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 118.Lemongrass Spa
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: A true calm oasis in the heart of Hanoi Old Quarter, Lemongrass is the latest addition of Hanoi's spa map. We offer a spacious nail care service and one of the most beautiful of its type in Hanoi …
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 119.Splendid Spa
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: Splendid Spa is a business that provides a variety of services for the purpose of improving health, beauty and relaxation through personal care treatments such as body massages and facials.
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 120.Seni World Travel
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: 4.1,360
+2025-04-17 18:21:34,230 - INFO - Fallback found potential attraction: Seni World is a travel company based in Vietnam with a big dream to reach the world. After more than 10 years working on thousands of trips for our customers, we found out our big mission and vision…
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Beluga Point
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Essel World
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Limassol Zoo
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Meschutt Beach
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Nuuksio National Park
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Point Sublime
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Baiyoke Observation Deck
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Carnaval Court at Harrah's
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Olas Altas Farmers Market
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Kajeng Rice Field
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Hulu Langat Fishing Park & Resort
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Sidetrips from Prague
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: JW Tours Day Tours
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Kramer's Reality Tour
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Adirondack Flying Service
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Llama Path
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Aqua Luna
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Alleppey Houseboat
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Snow King Mountain Resort
+2025-04-17 18:21:34,231 - INFO - Fallback found potential attraction: Oceanair Travels
+2025-04-17 18:21:34,231 - INFO - Added fallback attraction: Hanoi Cooking Centre established in 2009, remains Hanoi's only purpose built cooking school and culinary centre. A variety of cooking classes and street food tours are available twice daily. All classes…
+2025-04-17 18:21:34,231 - INFO - Added fallback attraction: NOTE is a contemporary fragrance brand established in 2019 in Saigon by a team of art-science enthusiasts. We offer unique workshops, scents, and products to enhance every aspect of your life: personal…
+2025-04-17 18:21:34,231 - INFO - Added fallback attraction: The Craft House is Vietnam’s first curated retailer of modern craft and design. Born in 2017 by a young Vietnamese team, we are passionate about introducing handmade products proudly crafted in Vietnam…
+2025-04-17 18:21:34,231 - INFO - Added fallback attraction: Our local team will bring you a wide range of tailor –made, extraordinary, emotional and relaxing tours in Vietnam, Laos and Cambodia. Our trips are off-the-beaten-track, history & culture exploration…
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Welcome to MK Spa – where you can start a journey of luxury treatment and reawakening. Proud of being a recognized establishment and trust-able address, MK Spa is the combination of Vietnamese therapy…
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Cozy Bay Cruise - Cozy Like Home is so proud to be the leading tour operator who is specializing in Halong Bay. We wish to provide our customers the best culinary and unique route cruising experiences…
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: With Halong Hideaway Cruise, we can pay a visit to the best and untouched parts of the bay. We offer this tour right here in Central backpackers hostel and Buffalo Hostels. Based on the pristine area…
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Metis Spa pampers the Guest with its exceptional Spa-Menu. There are vast array of massages and techniques to choose from, each devoted to personal care and the deep relaxation of the senses, as well…
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: VietNam Unique Travels Specializes in organizing domestic and international tours. Specializes in organizing meetings, outdoor learning trips. Organizes seminars, conferences, recreational activities…
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Aloha Vietnam Travel & Guide is one of the best tour services in Vietnam. Our ultimate goal is to help you tailor a unique and flexible tour, full of oriental beauty and pleasurable experiences. You…
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Newly outfitted in July 2019 in a modern design of oriental style, La Pandora Cruise is a SPECIAL GIFT in harmonious combination of iron and wood, making the safety and also brings a cozy, luxurious…
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Duong Cooking Class is run by a famous Vietnamese top chef, one of the most talented and creative chefs in Hanoi. Chef Duong is ranked 4th in the Top Chef Vietnam program and also frequently appears…
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: With Lily's Travel Agency, TRUST is our priority, as our slogan is : TRUST IS MORE VALUABLE THAN GOLD . Mistake can be fixed, but lie is unacceptable. We offer quality and honest advices, reasonable…
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Seni World is a travel company based in Vietnam with a big dream to reach the world. After more than 10 years working on thousands of trips for our customers, we found out our big mission and vision…
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: WELCOME TO LA BELLE VIE SPA 1 INTRODUCTION The La Belle Spa Group has come a long way since the original members’ humble beginnings running a mini Spa in Hanoi’s Old Quarter at the end of 2013 Ours…
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: The Four Palaces show (Tứ Phủ) is inspired by Đạo Mẫu (refers to the worship of mother goddesses in Vietnam), thousand years of history. Four Places show is a beautiful journey into spiritual world…
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Established in 2011, GolfLux has been recognized as the leading dedicated golf tour operator in Vietnam, Thailand, Laos, Cambodia, Indonesia, Malaysia, Singapore, Philippines, UAE, and other Asia …
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Health is always considered as the most precious gift for all of us. That is why Kadupul spa would love to bring customers the best therapies. In combination with ancient exclusive therapies from …
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Asiatica Travel is a tour operator based in Vietnam, offering not just private day trips in Hanoi but also customized private journeys to Vietnam, Laos and Cambodia. Founded in 2001 by four local …
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Welcome to Juan's Tailor, your go-to destination for high-quality bespoke tailoring services in Hanoi! Located in the charming neighborhood of 08 Nha Chung in Hoan Kiem, our family-owned shop has …
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Wonderful experience in Hanoi to learn about the beautiful tradition of flowers arrangement by local artists. The art of flower arrangement as offerings of Vietnamese, used for buddhism, ancestor …
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Welcome to Sunlight Cruise Halong Bay and Lan Ha Bay, where your dream voyage across the tranquil waters of one of Vietnam's hidden gems becomes a reality. Nestled in the serene landscapes of the …
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: A true calm oasis in the heart of Hanoi Old Quarter, Lemongrass is the latest addition of Hanoi's spa map. We offer a spacious nail care service and one of the most beautiful of its type in Hanoi …
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Experience great hospitality and fall in love with the incredible natural landscape of Halong Bay. It is our honor to serve you to experience the best that Vietnam has to offer on this cruise.
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Ha Food Tours is a company provides and operated tourism products relate with cuisine and culture in Hanoi Old Quarter such as: walking street food tour, cooking class, market visiting e.g.
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Splendid Spa is a business that provides a variety of services for the purpose of improving health, beauty and relaxation through personal care treatments such as body massages and facials.
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Travel services, health care. Massager Aromatherapy. Body. Foot Manicure color waxing .vietnammese . Skin of the face Acupressure
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: A Spa area is invested professionally to provide guestswith a perfect relaxation and health-care service
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: Hulu Langat Fishing Park & Resort
+2025-04-17 18:21:34,232 - INFO - Added fallback attraction: This is new shop of Mido spa.
+2025-04-17 18:21:34,270 - INFO - Collected 120 attraction listings so far
+2025-04-17 18:21:34,270 - INFO - Waiting for 5.69 seconds
+2025-04-17 18:21:39,967 - INFO - Getting attraction listings from page 5: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi-oa120.html
+2025-04-17 18:21:39,968 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293924-Activities-a_allAttractions.true-Hanoi-oa120.html
+2025-04-17 18:21:42,307 - INFO - Found 30 attractions using selector: div.XfVdV.o.AIbhI
+2025-04-17 18:21:42,418 - INFO - Found 0 attractions on page 5
+2025-04-17 18:21:42,419 - WARNING - Found attraction elements but couldn't extract any valid attraction data.
+2025-04-17 18:21:42,419 - WARNING - Consider running with --debug flag to save the HTML for inspection.
+2025-04-17 18:21:42,424 - INFO - Fallback found potential attraction: 121.Ve'hanoi Wellness & Spa
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: As you reflect on your experience at Ve'hanoi Wellness & Spa, you realize that it's more than just a place to relax – it's a sanctuary for the soul, a refuge from the chaos of modern life, and a reminder…
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: 122.Hanoi Coffee Workshop: Make Taste 5 Signature Brews+History Story by Su Quan Roastery
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: 2,144
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: 1. Learn about Vietnam coffee historical stories 2. Make and taste Hanoi Egg Coffee, Iced Milk Coffee/Coconut under the guidance of coffee experts 3. Feast your eyes on all kinds of different coffee…
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: 123.Anne's Maison
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: Anne’s Maison is proud to preserve and promote the signature of Vietnamese culture, which was formed thousands of years ago. Where our cultural quintessence gathers to be given as a gift to international…
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: 124.Renea Cruises
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: 4.2,206
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: RENEA Cruises Halong was launched in Sept 2018 by a super friendly and outstanding team who are working in tourism industry for a long time . With about 10 years of experience in the tourism industry…
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: 125.Hagiang Buffalo Tour
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: 1,641
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: Hagiang Buffalo Tour provides you such amazing and unforgettable experiences that you would not get elsewhere. No words can describe the beautiful scenery of Hagiang loop. Once you ride your bike …
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: 126.Gifthaus Ngôi Nhà Quà Tặng
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: Board Game Toy - Figure - key Drinking Game - gift Cosplay Halloween Gift Xmas Noel
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: 127.Cat Ba Express
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: 4.1,567
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: Cat Ba Island is known for its rugged limestone mountains, hot & cold springs, moist tropical forests and coral reefs, as well as its deserted beaches and casual island lifestyle.Travelling to Cat…
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: 128.Hanoikids Voluntary English Tour Guiding Club
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: 4.2,896
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: Hanoikids, established in 2006, is known as a student-run organization based in Hanoi, Vietnam. By providing voluntary city tours for English-speaking travellers in Hanoi, we hope to bring travellers…
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: 129.Authentik Vietnam Travel
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: 4.1,432
+2025-04-17 18:21:42,425 - INFO - Fallback found potential attraction: Authentik Vietnam is the first destination travel agency to provide DIRECT service to travellers from the 4 corners of the globe. Every other agency, whether traditional or Internet-based, has at …
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 130.V'Spirit Cruises
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 4.3,728
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: In Halong Bay, the V’Spirit Cruise takes the route less travelled, bestowing to you a chance to step back in time and see the bay before the dawn of tourism. We find this in Lan Ha Bay, the southern…
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 131.Trendy Spa & Massage
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: Trendy Spa & Massage is a perfect remedy through the use of a hot stone massage applied to one’s legs and feet. Feet can typically take a lot of heat. So, a combination of pressure massage on one’…
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 132.Hanoi Free Tour Guides
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 4.1,668
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: Hanoi Free Tour Guides is a social non-profit organization founded and run by a group of students and ex-students.Hanoi Free Tour Guides is aimed at promoting and publicly introducing the images of…
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 133.Stellar Of The Seas
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 1,926
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 134.Hera Cruises Ha Long Bay
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 4.1,766
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: The most luxurious and pretigious 5 Star Cruise in Ha Long Bay Hera – The Queen of the Gods, patron of marriage and fertility, the cruise ship is impressively designed in white, predominantly using…
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 135.Lux Travel Dmc Asia - Inspiring Journeys
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 4.1,346
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: Lux Travel DMC – Inspiring Journeys Across Asia
+Tailor-made by locals. Unique. Sustainable. Guaranteed satisfaction.
+
+Founded in 2005 by Dr. Pham Ha, Lux Travel DMC is Vietnam’s first luxury tour …
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 136.Le Journey Halong Bay Cruise
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 4.1,316
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: Le Journey Cruise offers a luxurious and personalized experience in Halong Bay, featuring spacious cabins and top-notch service. Guests can enjoy activities like kayaking, tai chi, cooking classes…
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 137.Motorbike City Tours
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 2,591
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: Motorbike City Tours – Hanoi Food and Sights Motorbike Tours Led by Women is mainly female drivers Hanoi-based Motorbikes, Vespa and Jeep Tours providing safe and fun adventures for travelers who …
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 138.Travel Sense Asia
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 4.1,138
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: With over 15 years of expertise in Vietnam and Southeast Asia, Travel Sense Asia connects travelers with the heartbeat of each destination through a team of local experts. We offer tailor-made travel…
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 139.Cozy Vietnam Travel
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 4.2,895
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: Cozy Viet Nam Travel is the one of best companies in Hanoi. We have Cozy Bay Cruise, we are orgnaizing daily tour: Cozy Bay Classic cruise 2 days 1 night, Halong 01 day normal cruise, Halong premium…
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 140.Daiichi Travel
+2025-04-17 18:21:42,426 - INFO - Fallback found potential attraction: 4.949
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: We believe that, Partners and guests will be really satisfied with our products and services. -Latest Model Vehicles -Inclusive Packages -Good Accommodations -Handpicked Hotels -Accesibility managment…
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 141.Marvellous Spa
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 4.332
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 142.Vi spa 2
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 4.333
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: Escape through Vi spa for an on hour, an affternoon or an entire day of total personal pampering. Vi spa loctated in Hang Buom street, less than 10 minutes from Hoan Kiem lake- the heart and the soul…
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 143.Easytours24h - Hanoi  Day Tours
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 4.3,376
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: Easytours24h is one of the best tour agency in Hanoi, Vietnam with many optional tours & all serrvices are in Hanoi and Vietnam. Easytours24h gives you a great holiday with the best price!
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 144.Adventure Indochina Travel
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 4.1,903
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: Adventure Indochina is a specialist travel agency servicing international and domestic clients in the Indochina region. We can service your travel needs within Vietnam, Cambodia and Laos. Our dynamic…
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 145.Asia Pioneer Travel
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 4.847
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: Step into a world of bespoke adventures with Asia Pioneer Travel Co., Ltd. As a vibrant International Tour Operator, we unlock the hidden treasures of Vietnam, Thailand, Cambodia, Laos, and beyond…
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 146.Inside Travel
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 4.1,633
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: Being locals, we are proud of our land and love showing our backyard to visitors. As the leading tourism company in Vietnam & Asia, our team is always trying to improve to give the visitor a most …
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 147.VivuTravel
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 1,012
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: Vivutravel is a leading, trustworthy and professional tour operator in Vietnam since 2006. We offer a wide range of Vietnam tours and extensions to the most exciting destinations in Thailand, Cambodia…
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 148.Realistic Asia
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: Realistic Asia is committed to providing with a very best customer-friendly services during each step of your journey, from planning your sightseeing tour or your vacation to arranging your best and…
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 149.Hanoi Food Tasting Tours
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 2,289
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: Travelling to Hanoi - Vietnam capital, you may be surprised by Hanoi street food - it is plentiful at everywhere that you look and is an integral part of the livelihoods of many locals. With the balance…
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 150.Sapa May Travel
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: 4.2,053
+2025-04-17 18:21:42,427 - INFO - Fallback found potential attraction: We provide one of the best travel experiences in Vietnam. We offer affordable prices and well-planed tours featuring friendly and experienced guides. We are committed to providing travelers with an…
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Gran Cenote
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Atkinson Farms
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Lusail Katara Twin Tower
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Yabuli Ski Resort
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Kek Lok Tong Cave Temple and Zen Gardens
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Indianapolis Zoo
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Schreiner Farms
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Takachiho Gorge
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Staromestske namesti
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Nylon Pool
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Jerusalem From Amman - Day Tours
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Sidetrips from Prague
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Sky Walker Yacht Rental
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Trolltunga Active
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Strawberry Tours
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Cumbres Pass
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Secret Food Tours Barcelona
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Puttery
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Dav Safaris
+2025-04-17 18:21:42,428 - INFO - Fallback found potential attraction: Halong Elite of the Seas Cruise.
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: As you reflect on your experience at Ve'hanoi Wellness & Spa, you realize that it's more than just a place to relax – it's a sanctuary for the soul, a refuge from the chaos of modern life, and a reminder…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Anne’s Maison is proud to preserve and promote the signature of Vietnamese culture, which was formed thousands of years ago. Where our cultural quintessence gathers to be given as a gift to international…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Travelling to Hanoi - Vietnam capital, you may be surprised by Hanoi street food - it is plentiful at everywhere that you look and is an integral part of the livelihoods of many locals. With the balance…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: We believe that, Partners and guests will be really satisfied with our products and services. -Latest Model Vehicles -Inclusive Packages -Good Accommodations -Handpicked Hotels -Accesibility managment…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Vivutravel is a leading, trustworthy and professional tour operator in Vietnam since 2006. We offer a wide range of Vietnam tours and extensions to the most exciting destinations in Thailand, Cambodia…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: RENEA Cruises Halong was launched in Sept 2018 by a super friendly and outstanding team who are working in tourism industry for a long time . With about 10 years of experience in the tourism industry…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Hanoikids, established in 2006, is known as a student-run organization based in Hanoi, Vietnam. By providing voluntary city tours for English-speaking travellers in Hanoi, we hope to bring travellers…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: With over 15 years of expertise in Vietnam and Southeast Asia, Travel Sense Asia connects travelers with the heartbeat of each destination through a team of local experts. We offer tailor-made travel…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Escape through Vi spa for an on hour, an affternoon or an entire day of total personal pampering. Vi spa loctated in Hang Buom street, less than 10 minutes from Hoan Kiem lake- the heart and the soul…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Adventure Indochina is a specialist travel agency servicing international and domestic clients in the Indochina region. We can service your travel needs within Vietnam, Cambodia and Laos. Our dynamic…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: 1. Learn about Vietnam coffee historical stories 2. Make and taste Hanoi Egg Coffee, Iced Milk Coffee/Coconut under the guidance of coffee experts 3. Feast your eyes on all kinds of different coffee…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: In Halong Bay, the V’Spirit Cruise takes the route less travelled, bestowing to you a chance to step back in time and see the bay before the dawn of tourism. We find this in Lan Ha Bay, the southern…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Cozy Viet Nam Travel is the one of best companies in Hanoi. We have Cozy Bay Cruise, we are orgnaizing daily tour: Cozy Bay Classic cruise 2 days 1 night, Halong 01 day normal cruise, Halong premium…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Realistic Asia is committed to providing with a very best customer-friendly services during each step of your journey, from planning your sightseeing tour or your vacation to arranging your best and…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Hanoi Free Tour Guides is a social non-profit organization founded and run by a group of students and ex-students.Hanoi Free Tour Guides is aimed at promoting and publicly introducing the images of…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: The most luxurious and pretigious 5 Star Cruise in Ha Long Bay Hera – The Queen of the Gods, patron of marriage and fertility, the cruise ship is impressively designed in white, predominantly using…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: We provide one of the best travel experiences in Vietnam. We offer affordable prices and well-planed tours featuring friendly and experienced guides. We are committed to providing travelers with an…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Hagiang Buffalo Tour provides you such amazing and unforgettable experiences that you would not get elsewhere. No words can describe the beautiful scenery of Hagiang loop. Once you ride your bike …
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Cat Ba Island is known for its rugged limestone mountains, hot & cold springs, moist tropical forests and coral reefs, as well as its deserted beaches and casual island lifestyle.Travelling to Cat…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Authentik Vietnam is the first destination travel agency to provide DIRECT service to travellers from the 4 corners of the globe. Every other agency, whether traditional or Internet-based, has at …
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Trendy Spa & Massage is a perfect remedy through the use of a hot stone massage applied to one’s legs and feet. Feet can typically take a lot of heat. So, a combination of pressure massage on one’…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Lux Travel DMC – Inspiring Journeys Across Asia
+Tailor-made by locals. Unique. Sustainable. Guaranteed satisfaction.
+
+Founded in 2005 by Dr. Pham Ha, Lux Travel DMC is Vietnam’s first luxury tour …
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Le Journey Cruise offers a luxurious and personalized experience in Halong Bay, featuring spacious cabins and top-notch service. Guests can enjoy activities like kayaking, tai chi, cooking classes…
+2025-04-17 18:21:42,428 - INFO - Added fallback attraction: Motorbike City Tours – Hanoi Food and Sights Motorbike Tours Led by Women is mainly female drivers Hanoi-based Motorbikes, Vespa and Jeep Tours providing safe and fun adventures for travelers who …
+2025-04-17 18:21:42,429 - INFO - Added fallback attraction: Step into a world of bespoke adventures with Asia Pioneer Travel Co., Ltd. As a vibrant International Tour Operator, we unlock the hidden treasures of Vietnam, Thailand, Cambodia, Laos, and beyond…
+2025-04-17 18:21:42,429 - INFO - Added fallback attraction: Being locals, we are proud of our land and love showing our backyard to visitors. As the leading tourism company in Vietnam & Asia, our team is always trying to improve to give the visitor a most …
+2025-04-17 18:21:42,429 - INFO - Added fallback attraction: Easytours24h is one of the best tour agency in Hanoi, Vietnam with many optional tours & all serrvices are in Hanoi and Vietnam. Easytours24h gives you a great holiday with the best price!
+2025-04-17 18:21:42,429 - INFO - Added fallback attraction: Board Game Toy - Figure - key Drinking Game - gift Cosplay Halloween Gift Xmas Noel
+2025-04-17 18:21:42,429 - INFO - Added fallback attraction: Kek Lok Tong Cave Temple and Zen Gardens
+2025-04-17 18:21:42,429 - INFO - Added fallback attraction: Jerusalem From Amman - Day Tours
+2025-04-17 18:21:42,470 - INFO - Collected 150 attraction listings so far
+2025-04-17 18:21:42,470 - INFO - Waiting for 5.85 seconds
+2025-04-17 18:21:48,321 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d23959149-Reviews-An_Handmade_Hemp_Fabric_Gift_Shop-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d8262801-Reviews-Midori_Spa_Hanoi-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d311070-Reviews-Lake_of_the_Restored_Sword_Hoan_Kiem_Lake-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d10308834-Reviews-Apron_Up_Cooking_Class-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d14795423-Reviews-Tailor_Bros-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d16120929-Reviews-Mf_Boutique_Spa-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d24178578-Reviews-L_essence_De_La_Vie_Spa-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d5781022-Reviews-Mido_Spa-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d26866767-Reviews-Senses_Massage_Wellness-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d10825946-Reviews-Mf_Spa_Hanoi-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d11961561-Reviews-Rose_Kitchen-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d7916190-Reviews-L_essence_Spa-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d12666120-Reviews-Authentic_Bat_Trang-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d17757712-Reviews-MasterTan-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d13921070-Reviews-JM_Spa_Hanoi-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d15681047-Reviews-Alisa_Bella_Spa_Hanoi-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d5566921-Reviews-Omamori_Spa_Ha_N_i-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d16698522-Reviews-Bee_znees_Speakeasy_Bar-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d26209487-Reviews-Hanoi_Shining_Spa_2-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d26363717-Reviews-VIP_Massage_Tokyo-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d8078381-Reviews-La_Spa_Ma_May-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d15269608-Reviews-NGO_GIA_Tailor-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d317503-Reviews-Old_Quarter-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d17779950-Reviews-Ngo_Minh_Tailor-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d455018-Reviews-Thang_Long_Water_Puppet-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g635963-d15695234-Reviews-MycoMeditations_Psilocybin_Assisted_Retreats-Treasure_Beach_Saint_Elizabeth_Pari.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g33388-d15200553-Reviews-The_International_Church_of_Cannabis-Denver_Colorado.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d1488975-Reviews-Blue_Butterfly_Cooking_Class-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g51116-d1176473-Reviews-Waynesville_Walking_Ghost_Tour-Waynesville_Ohio.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d12051459-Reviews-La_Belle_Vie_Spa_Massage-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d25226850-Reviews-Carpe_Diem-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d19216012-Reviews-La_enMay_Spa-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d15334687-Reviews-La_enMay_Spa_Dinh_Ngang-Hanoi.html
+2025-04-17 18:21:48,322 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d14051370-Reviews-The_Garden_Nail_Spa-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d15263803-Reviews-Serene_Spa-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d26799897-Reviews-Serene_Signature_Spa-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d17779626-Reviews-Hoang_s_Cooking_Class-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d25231950-Reviews-Mountain_s_Color_Shop-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d26244773-Reviews-An_handmade_Hang_Manh_Ethnic_Craft_Station-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d11898757-Reviews-Hanoi_Transport_Service-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d25295344-Reviews-Spa1995-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d27925858-Reviews-Nowhere_Spa_Earth-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d12940258-Reviews-Orient_Spa-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g27501570-d12286966-Reviews-Collective_Memory_The_House_of_Curios-Hoan_Kiem_Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d18978651-Reviews-Yolo_Spa-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d15244225-Reviews-Fuji_Spa_Center-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d18717800-Reviews-Estheva_Spa-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d26697812-Reviews-S_ng_Spa-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d11835794-Reviews-Spas_Hanoi-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d27512991-Reviews-Vip_Massage_Tokyo2-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d17707099-Reviews-La_Spa_Hang_Be-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d15589124-Reviews-With_Love_From_The_Mountains-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d1799586-Reviews-La_Spa_Hang_Thung-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d12279224-Reviews-Cerender_Ceramic_Shop-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d25165611-Reviews-La_Maison_Spa-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d27422301-Reviews-Grand_La_Maison_Spa_Hanoi-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d6279888-Reviews-Vietnam_Motorbike_Tours_Vietnambikers-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d26359633-Reviews-Be_Wellness_Spa-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g53518-d13326741-Reviews-Reading_Blue_Mountain_Northern_Railroad-Reading_Pennsylvania.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g49317-d106533-Reviews-Alligator_River_National_Wildlife_Refuge-Manns_Harbor_North_Carolina.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d5583955-Reviews-Hanoi_Street_Food_Tour-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d10804777-Reviews-Lang_Toi_My_Village_by_Lune_Production-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d26554354-Reviews-Carpe_Diem-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d25080393-Reviews-Peridot_Spa_grand-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d5584555-Reviews-Crossing_Vietnam_Tour-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d26450885-Reviews-La_enMay_Spa_Cau_Go-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d12821459-Reviews-Thuy_Design_House_Ha_Noi-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d10077825-Reviews-Style_Motorbikes_Hanoi-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d1771418-Reviews-Vega_Travel-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d7055050-Reviews-Essencia_Spa-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d11950353-Reviews-Dao_s_Care_Spa_Ba_Dinh-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d11674337-Reviews-Mido_Spa_1-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d26342766-Reviews-L_amour_Spa-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d4869921-Reviews-BestPrice_Travel-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d12378768-Reviews-TRE_Boutique_Spa_Massage-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d8611006-Reviews-Booking_Car-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d15292474-Reviews-Pure_Bliss_Spa-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d27105086-Reviews-Diory_NailsLab_3-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d7975671-Reviews-James_Hanoi_Motorbikes-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d11922020-Reviews-Hanoi_Free_Private_Tour_Guide-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d28000116-Reviews-Mf_Maison_Spa_Hanoi-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d15360201-Reviews-Peony_Cruise-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d6684667-Reviews-Le_Spa_Du_Metropole-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d25054330-Reviews-Tiredcity_37_Hang_Hanh-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d25353831-Reviews-Danny_Phan_Travel-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d8587645-Reviews-Trap_Viet_Nam-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d25068410-Reviews-Tinh_Tan_Gemstones-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g666387-d12030865-Reviews-Mundo_Aventura_Parque_Ecologico_de_Mazamitla-Mazamitla.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g1189030-d12429078-Reviews-Sea_Turtle_Conservation_Project_Koggala-Koggala_Galle_District_Southern_Provinc.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g34234-d2265070-Reviews-The_Boardwalk_on_Okaloosa_Island-Fort_Walton_Beach_Florida.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d2435553-Reviews-Hanoi_Cooking_Centre-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g21301834-d26585843-Reviews-NOTE_THE_SCENT_LAB-Tay_Ho_Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d15236850-Reviews-The_Craft_House_Cathedral_Souvenir_Gift_Shop-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d8797035-Reviews-Horizon_Vietnam_Travel-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d12529969-Reviews-MK_Spa-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d15232523-Reviews-Cozy_Bay_Cruise-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d10620620-Reviews-Halong_Hideaway_Tour-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d20056436-Reviews-Metis_Spa-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d5413130-Reviews-Unique_Tours-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d15224304-Reviews-Aloha_Vietnam_Travel_Guide-Hanoi.html
+2025-04-17 18:21:48,323 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d17713585-Reviews-La_Pandora_Cruises-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d11670779-Reviews-Duong_s_Cooking_Class-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d6894263-Reviews-Lily_s_Travel_Agency-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d8587814-Reviews-Seni_World_Travel-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d17688564-Reviews-La_Belle_Vie_Spa_1-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d8779731-Reviews-Four_Palaces_Show-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d20224991-Reviews-GolfLux-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d24967200-Reviews-Kadupul_Spa-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d6105895-Reviews-Asiatica_Travel-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d26561659-Reviews-Juan_s_Tailor-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d25070733-Reviews-Hanoi_Flowers_Art_Tour-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d15232743-Reviews-Sunlight_Cruise-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d17423690-Reviews-Lemongrass_Spa-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d13368103-Reviews-Mon_Cheri_Cruises-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d12492674-Reviews-Ha_Food_Tours-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d19073588-Reviews-Splendid_Spa-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d11548880-Reviews-Lotus_Spa-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d18928515-Reviews-Soleil_Spa_Hanoi-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g15130023-d8521578-Reviews-Hulu_Langat_Fishing_Park_Resort-Kampung_Jawa_Hulu_Langat_District_Selangor.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d15189974-Reviews-Mido_Spa-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d28055375-Reviews-Ve_hanoi_Wellness_Spa-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d26269783-Reviews-Anne_s_Maison-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d6786740-Reviews-Hanoi_Food_Tasting_Tours-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d12496086-Reviews-Daiichi_Travel-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d2178753-Reviews-VivuTravel-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d15106485-Reviews-Renea_Cruises-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d1752779-Reviews-Hanoikids_Voluntary_English_Tour_Guiding_Club-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d1809048-Reviews-Travel_Sense_Asia-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d7339851-Reviews-Vi_spa_2-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d3247001-Reviews-Adventure_Indochina_Travel-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d25178672-Reviews-Hanoi_Coffee_Workshop_Make_Taste_5_Signature_Brews_History_Story_by_Su_Quan_Roas.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d3651752-Reviews-V_Spirit_Cruises-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d19059498-Reviews-Cozy_Vietnam_Travel-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d8540658-Reviews-Realistic_Asia-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d1910923-Reviews-Hanoi_Free_Tour_Guides-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d26101044-Reviews-Hera_Cruises_Ha_Long_Bay-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d19524426-Reviews-Sapa_May_Travel-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d26266641-Reviews-Hagiang_Buffalo_Tour-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d12529983-Reviews-Cat_Ba_Express-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d11641267-Reviews-Authentik_Vietnam_Travel-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d12925605-Reviews-Trendy_Spa_Massage-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d5984191-Reviews-Lux_Travel_Dmc_Asia_Inspiring_Journeys-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d25306762-Reviews-Le_Journey_Halong_Bay_Cruise-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d13737525-Reviews-Motorbike_City_Tours-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d2211874-Reviews-Asia_Pioneer_Travel-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d6215277-Reviews-Inside_Travel-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d8444841-Reviews-Easytours24h_Hanoi_Day_Tours-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293924-d25321313-Reviews-Gifthaus_Ngoi_Nha_Qua_T_ng-Hanoi.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g298298-d6882920-Reviews-Kek_Lok_Tong_Cave_Temple_and_Zen_Gardens-Ipoh_Kinta_District_Perak.html
+2025-04-17 18:21:48,324 - INFO - Skipping already processed URL: https://www.tripadvisor.com/Attraction_Review-g293986-d9826256-Reviews-Jerusalem_From_Amman_Day_Tours-Amman_Amman_Governorate.html
+2025-04-17 18:21:48,324 - INFO - Found 0 unique attractions

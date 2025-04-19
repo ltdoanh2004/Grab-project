@@ -1,0 +1,46 @@
+{
+  "id": 939911,
+  "name": "Bánh Mì Que Chip - Hòa Hảo",
+  "address": "355 Hòa Hảo, P. 5, Quận 10, TP. HCM",
+  "rating": 7.998,
+  "total_reviews": 3,
+  "total_pictures": 22,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g94/939911/prof/s640x400/vn-11134513-7r98o-lsu82dgghdxg7b",
+  "url": "https://www.foody.vn/ho-chi-minh/banh-mi-que-chip-hoa-hao",
+  "location": {
+    "lat": 10.7616588,
+    "lon": 106.6679991
+  },
+  "reviews": [
+    {
+      "user": "Hanh M Le",
+      "rating": 4.2,
+      "comment": "Bánh mì cũ, khô, cứng ăn không nuốt nổi.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g1059/10580295/avt/c100x100/hanhmle-avatar-157-638184347478955888.jpg"
+    },
+    {
+      "user": "Trang Vo",
+      "rating": 9.8,
+      "comment": "Mình là fan bánh mì que đã ăn thử qua nhiều chỗ mà đây là chỗ mình thấy ngon nhất lun ý!! Bánh mì được nướng giòn không bị tình trạng ỉu như mình từng ăn. Đặc biệt nữa là có bonus sate nhà làm rất thơm ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g906/9050311/avt/c100x100/beauty-upload-api-foody-avatar-2c428138-d78b-425b-932b-3f7719fecb82-191231194023.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/banh-mi-que-chip-hoa-hao",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:08.636129"
+}

@@ -1,0 +1,46 @@
+{
+  "id": 759512,
+  "name": "Hồng Ký - Mì Vịt Tiềm",
+  "address": "175/3 Nguyễn Thiện Thuật, P. 1, Quận 3, TP. HCM",
+  "rating": 5.8,
+  "total_reviews": 3,
+  "total_pictures": 15,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g76/759512/prof/s640x400/vn-11134513-7r98o-lsu464c37z5w21",
+  "url": "https://www.foody.vn/ho-chi-minh/hong-ky-mi-vit-tiem",
+  "location": {
+    "lat": 10.768288,
+    "lon": 106.679221
+  },
+  "reviews": [
+    {
+      "user": "Minh Hà",
+      "rating": 8.0,
+      "comment": "Nhiều ngon và sạch sẽ chất lượng nha&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g2375/23741370/avt/c100x100/foody-avatar-f3c910ee-4ce1-480a--42a2052a-210422234038.jpg"
+    },
+    {
+      "user": "Bé Hí",
+      "rating": 8.0,
+      "comment": "1 phần nhiều đồ ăn, sạch sẽ, ngon và chất lượng. Thích nhất là bánh chiên và xá xíu 😍",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g7/64018/avt/c100x100/foody-avatar-05f6ee9a-bc54-46d5--e0d7b6f5-210914131822.jpeg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/hong-ky-mi-vit-tiem",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:23.159792"
+}

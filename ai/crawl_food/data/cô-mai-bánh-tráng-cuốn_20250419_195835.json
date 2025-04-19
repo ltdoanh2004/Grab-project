@@ -1,0 +1,46 @@
+{
+  "id": 95227,
+  "name": "Cô Mai - Bánh Tráng Cuốn",
+  "address": "57/23A Hồ Thị Kỷ, P. 1, Quận 10, TP. HCM",
+  "rating": 5.366,
+  "total_reviews": 17,
+  "total_pictures": 60,
+  "phone": "0909 442 963",
+  "photo_url": "https://images.foody.vn/res/g10/95227/prof/s640x400/vn-11134513-7r98o-lstsjhlteqvt18",
+  "url": "https://www.foody.vn/ho-chi-minh/co-mai-banh-trang-cuon",
+  "location": {
+    "lat": 10.7648,
+    "lon": 106.677
+  },
+  "reviews": [
+    {
+      "user": "Lộc Tấn",
+      "rating": 1.8,
+      "comment": "Giao thiếu đồ k thấy sddt&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g2536/25353164/avt/c100x100/foody-avatar-1ab4abc7-afe6-4ddf--f2d429ca-211021100728.jpeg"
+    },
+    {
+      "user": "Nhivo58",
+      "rating": 5.0,
+      "comment": "Bánh tráng dẻo  ngon , mua 2 phần mùa cho ít nước sốt quá , chấm tiết kiệm lắm luôn mà vẫn k đủ , làm ăn những cuốn k có nước chấm mất ngon",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g914/9131903/avt/c100x100/beauty-upload-api-foody-avatar-00a683f8-6c9c-4664-94ef-f840202061f1-191021073127.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/co-mai-banh-trang-cuon",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:26.735230"
+}

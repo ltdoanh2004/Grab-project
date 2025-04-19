@@ -1,0 +1,46 @@
+{
+  "id": 105195,
+  "name": "Đặc Sản Trảng Bàng Hoàng Ty - Các Món Cuốn Bánh Tráng & Bánh Canh Trảng Bàng - Nguyễn Trung Nguyệt",
+  "address": "29 Nguyễn Trung Nguyệt, P. Bình Trưng Đông, Tp. Thủ Đức, TP. HCM",
+  "rating": 8.332,
+  "total_reviews": 3,
+  "total_pictures": 18,
+  "phone": "(028) 37 437 460",
+  "photo_url": "https://images.foody.vn/res/g11/105195/prof/s640x400/vn-11134513-7r98o-lststsf6rk49da",
+  "url": "https://www.foody.vn/ho-chi-minh/hoang-ty-dac-san-trang-bang-nguyen-trung-nguyet",
+  "location": {
+    "lat": 10.7867251,
+    "lon": 106.7715948
+  },
+  "reviews": [
+    {
+      "user": "Bill Bui",
+      "rating": 8.8,
+      "comment": "Lâu rồi quay lại quán, vẫn sạch\nThích nhất là nhiều rau rừng ăn tốt cho sức khoẻ\n\nGiá cả hợp lý với ở quận 2, khu vực Bình Trưng , quận 9 mời bạn bè qua ăn thì rất vui",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g42/411217/avt/c100x100/buivinhnguyen-avatar-863-635511638491835087.jpg"
+    },
+    {
+      "user": "Mai Anh",
+      "rating": 7.6,
+      "comment": "-Đồ ăn ở đây khá ngon,rau tuoi sạch sẽ, thực phẩm sạch. Phục vụ chu đáo, giá cả cũng khá hợp lý\nBánh canh trảng bàng ở đây khá đặc biệt, hương vị đậm đà hơn những chỗ khác",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g149/1489664/avt/c100x100/beauty-upload-api-foody-avatar-255fa23d-e8b2-4cad-84c3-a0404651eb39-190913171557.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/hoang-ty-dac-san-trang-bang-nguyen-trung-nguyet",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:49.256042"
+}

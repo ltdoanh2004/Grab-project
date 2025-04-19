@@ -1,0 +1,46 @@
+{
+  "id": 68977,
+  "name": "Bánh Canh Cua Bùi Phát - Bánh Canh Cua - Lê Văn Sỹ",
+  "address": "453/95 Lê Văn Sỹ, P. 12, Quận 3, TP. HCM",
+  "rating": 6.828,
+  "total_reviews": 24,
+  "total_pictures": 83,
+  "phone": "(028) 82 005 846",
+  "photo_url": "https://images.foody.vn/res/g7/68977/prof/s640x400/vn-11134513-7r98o-lstryeq3xtw927",
+  "url": "https://www.foody.vn/ho-chi-minh/banh-canh-cua-le-van-sy",
+  "location": {
+    "lat": 10.7886639,
+    "lon": 106.672706
+  },
+  "reviews": [
+    {
+      "user": "Phan Chí Lâm",
+      "rating": 4.2,
+      "comment": "Do buổi tối đói bụng nên mới đặt hàng\nGiá: 38k 1 tô ( k bánh quẩy)\nChất lượng, dở, nước lèo mặn chát, hoàn toàn k có vị lẫn mùi của bánh canh cua, thịt thì toàn gân, tôm bở giống như để lâu ngày vậy, ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g1511/15100474/avt/c100x100/beauty-upload-api-foody-avatar-ccc5d23d-e1ff-45e8-b210-342415ddc2d9-200119185755.jpg"
+    },
+    {
+      "user": "Thành Phan",
+      "rating": 7.2,
+      "comment": "Hết 55k thôi đó&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g174/1733183/avt/c100x100/foody-avatar-9c66144d-8c32-44b3--8b9e6c48-230403165103.jpeg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/banh-canh-cua-le-van-sy",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:57:50.473243"
+}

@@ -1,0 +1,46 @@
+{
+  "id": 196250,
+  "name": "Quán Ăn Minh Ký - Hủ Tiếu Xào",
+  "address": "181 Phạm Phú Thứ, P. 4, Quận 6, TP. HCM",
+  "rating": 6.96,
+  "total_reviews": 5,
+  "total_pictures": 15,
+  "phone": "01229 799 786",
+  "photo_url": "https://images.foody.vn/res/g20/196250/prof/s640x400/vn-11134513-7r98o-lstvyw2ydti1ee",
+  "url": "https://www.foody.vn/ho-chi-minh/quan-an-minh-ky-hu-tieu-xao",
+  "location": {
+    "lat": 10.74434,
+    "lon": 106.6438
+  },
+  "reviews": [
+    {
+      "user": "Vy Lưu",
+      "rating": 7.8,
+      "comment": "Quán cơm gà mình ăn từ nhỏ đến lớn luôn nhưng vẫn k ngán . Quán k để biển hiệu gì hết, nhưng vẫn đông kinh dị luôn. Cơm gà ở đây làm rất ư là chất lượng, gà giòn giòn chiên vàng rượm luôn , có thêm củ ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g210/2094058/avt/c100x100/vylu0559-avatar-151-636591626621056346.jpg"
+    },
+    {
+      "user": "trcthanh8499",
+      "rating": 7.6,
+      "comment": "Cơm gà rất ngon , gà nhiều k bị khô <3 hủ tíu xào dùng bánh phơr mình ăn thấy rất hợp <3",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g1002/10015069/avt/c100x100/foody-avatar-bcc061a0-4001-4e95--89aac16f-211108230701.jpeg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/quan-an-minh-ky-hu-tieu-xao",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:53.749370"
+}

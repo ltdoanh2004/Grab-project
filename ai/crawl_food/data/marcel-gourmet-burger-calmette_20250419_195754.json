@@ -1,0 +1,46 @@
+{
+  "id": 707512,
+  "name": "Marcel Gourmet Burger - Calmette",
+  "address": "115 Calmette, P. Nguyễn Thái Bình, Quận 1, TP. HCM",
+  "rating": 7.532,
+  "total_reviews": 26,
+  "total_pictures": 135,
+  "phone": "0933 452 105",
+  "photo_url": "https://images.foody.vn/res/g71/707512/prof/s640x400/vn-11134513-7r98o-lsu1wqum62l502",
+  "url": "https://www.foody.vn/ho-chi-minh/marcel-gourmet-burger-calmette",
+  "location": {
+    "lat": 10.7685917,
+    "lon": 106.6984967
+  },
+  "reviews": [
+    {
+      "user": "Da Thao Tran",
+      "rating": 6.6,
+      "comment": "I can only give my comment on the cheese bread and the veggie patty for their burgers!\n\nThe cheese balls/bread were okay. Nothing to write home about but not as satisfying as I wish they were.\n\nOn to ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g25/244022/avt/c100x100/beauty-upload-api-foody-avatar-f82368f7-8604-47fb-91e8-578c29f2ed68-191023133852.jpg"
+    },
+    {
+      "user": "tntnhi.1129",
+      "rating": 8.0,
+      "comment": "👉 Quán bé xíu xiu à, khách ko đông nhưng ra vô liên tục nha! \n👉 Không gian hơi tối (mình đi buổi trưa)\n👉 Burger nổi nhất là Smokey và Bamboo - 2 cái trong hình. Ngon đều nhau 😂\n👉 Giá hơi chát hen! ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g7/64133/avt/c100x100/beauty-upload-api-foody-avatar-2d33d510-4a6f-49cc-a0ef-b6115eaea8a3-191218133152.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/marcel-gourmet-burger-calmette",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:57:36.960402"
+}

@@ -1,0 +1,46 @@
+{
+  "id": 4375,
+  "name": "Gà rán và Mì Ý - Jollibee - Cộng Hòa",
+  "address": "Tầng Trệt, Vincom Maximark Cộng Hòa, 15 -17 Cộng Hòa, P. 4, Quận Tân Bình, TP. HCM",
+  "rating": 7.01,
+  "total_reviews": 63,
+  "total_pictures": 390,
+  "phone": "1900 1533 - (028) 38 117 000",
+  "photo_url": "https://images.foody.vn/res/g1/4375/prof/s640x400/vn-11134513-7ra0g-m819pn0h0w3rd1",
+  "url": "https://www.foody.vn/ho-chi-minh/ga-ran-va-mi-y-jollibee-cong-hoa",
+  "location": {
+    "lat": 10.800638,
+    "lon": 106.658953
+  },
+  "reviews": [
+    {
+      "user": "Meo Cú",
+      "rating": 6.4,
+      "comment": "• Nằm trong Vincom Maximark Cộng Hoà, ngay mặt tiền luôn nên dễ thấy\n\n• Menu không quá đa dạng, mình gọi combo Cơm gà Sài Gòn sốt cay (50k) và combo mì Ý + gà giòn (65k). Nhìn chung hương vị không có ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g130/1294945/avt/c100x100/dhejbxhd-avatar-565-637601811958069919.jpg"
+    },
+    {
+      "user": "Tien Tien",
+      "rating": 8.0,
+      "comment": "Mình có code 50k Now thèm mì ý thế là lên Now search mì ý thì có Jollibee gần nhất có mì ý nên đặt luôn. Mình đặt combo 1 mì ý sốt bò bằm, 1 miếng gà rán và 1 ly nước ngọt (65k). Gà rán giao tới vẫn còn ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g58/571074/avt/c100x100/i_love_you_forever0511-avatar-137-636804295608338366.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/ga-ran-va-mi-y-jollibee-cong-hoa",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:47.383223"
+}

@@ -1,0 +1,46 @@
+{
+  "id": 695027,
+  "name": "Cô Nga - Nem Nướng Ninh Hòa - Nguyễn Thái Bình",
+  "address": "389 Nguyễn Thái Bình, Quận Tân Bình, TP. HCM",
+  "rating": 6.604,
+  "total_reviews": 48,
+  "total_pictures": 212,
+  "phone": "0908 295 585",
+  "photo_url": "https://images.foody.vn/res/g70/695027/prof/s640x400/vn-11134513-7r98o-lsu1erwsvw6192",
+  "url": "https://www.foody.vn/ho-chi-minh/co-nga-nem-nuong-ninh-hoa",
+  "location": {
+    "lat": 10.795486,
+    "lon": 106.650697
+  },
+  "reviews": [
+    {
+      "user": "Annie Nghiem",
+      "rating": 1.0,
+      "comment": "Nem nướng hay nem hấp mà trắng nhách, lạnh tanh như chưa hề được nướng. Đặt 2 phần mà chỉ cho rau, bún, đồ chua mỗi thứ 1 bịch. Tệ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g4/36206/avt/c100x100/beauty-upload-api-foody-avatar-84664665-625f-47e4-848e-39c4c8330bce-191018162436.jpg"
+    },
+    {
+      "user": "Huy Hoàng Trần",
+      "rating": 7.8,
+      "comment": "Mong shop chú ý hơn đến về việc này. Bánh tráng mà vỡ vụn thế này thì phải ra ngoài mua thêm bánh tráng để ăn nữa.",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g20/196099/avt/c100x100/beauty-upload-api-foody-avatar-468f5356-504c-4c6a-8022-5b1d92e09461-191015155001.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/co-nga-nem-nuong-ninh-hoa",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:32.086000"
+}

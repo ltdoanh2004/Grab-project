@@ -1,0 +1,46 @@
+{
+  "id": 1034557,
+  "name": "Miss Đác - Chè Không Ngọt - Hoàng Sa",
+  "address": "111B Hoàng Sa, P. Đa Kao, Quận 1, TP. HCM",
+  "rating": 7.346,
+  "total_reviews": 11,
+  "total_pictures": 187,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g104/1034557/prof/s640x400/vn-11134513-7r98o-lsuatibjuduh40",
+  "url": "https://www.foody.vn/ho-chi-minh/miss-dac-che-khong-ngot-hoang-sa",
+  "location": {
+    "lat": 10.793216,
+    "lon": 106.696805
+  },
+  "reviews": [
+    {
+      "user": "Nga Trần",
+      "rating": 8.2,
+      "comment": "Ăn tối xong rồi thì kiếm quán ăn tráng miệng. Đi dạo bờ kè vô tình thấy quán này màu vàng nổi bật với dòng chữ Chè không ngọt mà lại chỉ có 27k thôi nên tấp vô liền.\n2 người gọi sương sương 2 chén chè ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g95/945545/avt/c100x100/pebap_lovely-avatar-194-638209076280023096.jpg"
+    },
+    {
+      "user": "B Mai Luu",
+      "rating": 7.4,
+      "comment": "Bữa sau mình gọi loại đơn giản hơn, k gọi sầu riêng nữa thì ăn ok hơn, vị thanh, ngọt nhẹ. Mít ăn kèm ngọt.",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g36/359392/avt/c100x100/lbmai1410-avatar-294-637863548338176705.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/miss-dac-che-khong-ngot-hoang-sa",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:59.822742"
+}

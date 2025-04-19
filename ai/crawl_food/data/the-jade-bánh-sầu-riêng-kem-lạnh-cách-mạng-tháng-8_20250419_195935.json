@@ -1,0 +1,46 @@
+{
+  "id": 102503,
+  "name": "The Jade - Bánh Sầu Riêng Kem Lạnh - Cách Mạng Tháng 8",
+  "address": "358/2/15A Cách Mạng Tháng 8, P. 10, Quận 3, TP. HCM",
+  "rating": 6.78,
+  "total_reviews": 194,
+  "total_pictures": 456,
+  "phone": "0966 279 272 - 0931 069 068",
+  "photo_url": "https://images.foody.vn/res/g11/102503/prof/s640x400/vn-11134259-7r98o-lw8kzb9f4qmx48",
+  "url": "https://www.foody.vn/ho-chi-minh/the-jade-banh-sau-rieng-kem-lanh-cach-mang-thang-8",
+  "location": {
+    "lat": 10.7821676,
+    "lon": 106.6744231
+  },
+  "reviews": [
+    {
+      "user": "Oanh Le",
+      "rating": 8.0,
+      "comment": "Đợt mua 2 hộp thì 1 hộp bánh hư nên đã báo với cửa hàng , sau đó quán gửi lại cho hộp khác nhanh chóng , mua thêm 4 chai sữa chua shop tặng thêm 1 trà sữa",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g138/1371118/avt/c100x100/onefineday_87870476-avatar-255-637173690782969515.jpg"
+    },
+    {
+      "user": "H N",
+      "rating": 8.6,
+      "comment": "Bánh ngon, không ngọt, nguyên miếng sầu riêng trong bánh, không bị đắng như một số chỗ khác, kem béo thơm, vỏ bánh ngon. Sẽ ủng hộ lại.",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g130/1294414/avt/c100x100/xuanhan411-avatar-714-637345429440736671.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/the-jade-banh-sau-rieng-kem-lanh-cach-mang-thang-8",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:20.622920"
+}

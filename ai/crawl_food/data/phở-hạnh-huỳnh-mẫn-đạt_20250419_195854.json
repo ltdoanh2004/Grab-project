@@ -1,0 +1,46 @@
+{
+  "id": 787448,
+  "name": "Phở Hạnh - Huỳnh Mẫn Đạt",
+  "address": "93/1 Huỳnh Mẫn Đạt, P. 7, Quận 5, TP. HCM",
+  "rating": 8.026,
+  "total_reviews": 8,
+  "total_pictures": 22,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g79/787448/prof/s640x400/vn-11134513-7r98o-lsu5f9gl1qc98d",
+  "url": "https://www.foody.vn/ho-chi-minh/pho-hanh-huynh-man-dat",
+  "location": {
+    "lat": 10.754963,
+    "lon": 106.676545
+  },
+  "reviews": [
+    {
+      "user": "Phương Phương",
+      "rating": 5.6,
+      "comment": "Đặt thêm phần bánh phở nhưng quán quên ko giao rồi&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g2214/22131300/avt/c100x100/foody-avatar-3ea28c59-fa0c-4a62--ad08a107-201103190405.jpeg"
+    },
+    {
+      "user": "kieu trang",
+      "rating": 7.0,
+      "comment": "Ít khi siêng đi review mà phải lên ghi vài dòng.  Nước phở vừa miệng,  thơm,  THỊT VÀ VIÊN nhiềuuuu. Tô tái nạm viên 45k đáng tiền. Còn m áp dụng code giảm giá,  còn 36k, quá đã!!!!!  \nÀ m ghiền ăn gân ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/pho-hanh-huynh-man-dat",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:38.115572"
+}

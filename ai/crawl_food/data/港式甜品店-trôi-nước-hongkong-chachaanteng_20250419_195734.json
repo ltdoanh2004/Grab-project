@@ -1,0 +1,46 @@
+{
+  "id": 1000046397,
+  "name": "港式甜品店 Trôi Nước HongKong - ChaChaanTeng",
+  "address": "28 Phan Phú Tiên, P. 10, Quận 5, TP. HCM",
+  "rating": 7.31,
+  "total_reviews": 69,
+  "total_pictures": 50,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g100005/1000046397/prof/s640x400/vn-11134513-7ras8-m3j9a3jjjzxkfd",
+  "url": "https://www.foody.vn/ho-chi-minh/%E6%B8%AF%E5%BC%8F%E7%94%9C%E5%93%81%E5%BA%97-troi-nuoc-hongkong-chachaanteng",
+  "location": {
+    "lat": 10.7519372,
+    "lon": 106.6656543
+  },
+  "reviews": [
+    {
+      "user": "Quỳnh Trương",
+      "rating": 10.0,
+      "comment": "Món trôi nước Hong Kong tại quán thực sự là một trải nghiệm ẩm thực tuyệt vời mà mình muốn chia sẻ. Khi món ăn được mang ra, mình đã ngay lập tức ấn tượng với bát trôi nước nóng hổi, tỏa hương thơm nhẹ ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g5729/57285893/avt/c100x100/vn-11134523-7ra0g-m7ns0vvsj3k6a4"
+    },
+    {
+      "user": "Ng Trường",
+      "rating": 5.0,
+      "comment": "\"Bánh trôi nước hồng công\" - một món ăn truyền thống***\n\nBánh trôi nước hồng công là một món ăn đơn giản nhưng đầy hấp dẫn. Với sự kết hợp giữa bánh trôi mềm mại và nước hồng công ngọt ngào, món ăn này ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g5719/57187466/avt/c100x100/vn-11134523-7ra0g-m6v65xndrs6017"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/港式甜品店-troi-nuoc-hongkong-chachaanteng",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:57:23.576852"
+}

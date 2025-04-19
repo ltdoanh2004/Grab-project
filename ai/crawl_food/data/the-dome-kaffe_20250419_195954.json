@@ -1,0 +1,46 @@
+{
+  "id": 652385,
+  "name": "The Dome Kaffe",
+  "address": "10/16 Đoàn Thị Điểm, P. 1, Quận Phú Nhuận, TP. HCM",
+  "rating": 7.76,
+  "total_reviews": 89,
+  "total_pictures": 633,
+  "phone": "0905 350 221",
+  "photo_url": "https://images.foody.vn/res/g66/652385/prof/s640x400/vn-11134513-7r98o-lstztr4mx8rd0a",
+  "url": "https://www.foody.vn/ho-chi-minh/the-dome-kaffe",
+  "location": {
+    "lat": 10.798768,
+    "lon": 106.681112
+  },
+  "reviews": [
+    {
+      "user": "Thuy Vy Dinh",
+      "rating": 9.0,
+      "comment": "Không gian quán đẹp, thức uống lạ ngon, nhân viên thân thiện&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    },
+    {
+      "user": "T4_ eattheworld",
+      "rating": 6.6,
+      "comment": "Quán nhỏ xinh kiểu đơn giản nhưng khá ấn tượng nè 👍🏻👍🏻👍🏻\nNước uống ok chứ không quá khác biệt nha ☺️☺️☺️\n@t4_eattheworld",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g60/590575/avt/c100x100/chillyt4-avatar-212-638097331971690763.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/the-dome-kaffe",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:42.510989"
+}

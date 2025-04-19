@@ -1,0 +1,46 @@
+{
+  "id": 667807,
+  "name": "Tàu Hủ Cóc - Hoa Sứ",
+  "address": "32 Hoa Sứ, P. 2, Quận Phú Nhuận, TP. HCM",
+  "rating": 7.184,
+  "total_reviews": 47,
+  "total_pictures": 114,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g67/667807/prof/s640x400/vn-11134513-7r98o-lsu0h1j7za1l55",
+  "url": "https://www.foody.vn/ho-chi-minh/tau-hu-coc-hoa-su",
+  "location": {
+    "lat": 10.797281,
+    "lon": 106.688294
+  },
+  "reviews": [
+    {
+      "user": "Nguyễn Thanh Bình",
+      "rating": 4.4,
+      "comment": "Đặc phần rau câu dừa non mà không có dừa non. Làm ăn sượng trân&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g212/2118396/avt/c100x100/foody-avatar-613-637183137640649780.jpg"
+    },
+    {
+      "user": "Jurin Nguyen",
+      "rating": 1.0,
+      "comment": "Đang thèm ăn tàu hủ ghé đây ăn thử cho biết\nAi dè tệ k thể tả\nVừa dở, chủ quán chảnh choẹ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g1037/10368558/avt/c100x100/beauty-upload-api-foody-avatar-c831a0b9-a73a-4aca-bfbc-f790a7eb1521-200118132053.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/tau-hu-coc-hoa-su",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:25.459386"
+}

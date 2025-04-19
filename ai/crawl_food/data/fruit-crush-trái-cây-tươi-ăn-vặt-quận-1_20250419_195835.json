@@ -1,0 +1,46 @@
+{
+  "id": 874771,
+  "name": "Fruit Crush - Trái Cây Tươi & Ăn Vặt - Quận 1",
+  "address": "5/64B Nguyễn Trung Nhạn, P. Bến Nghé, Quận 1, TP. HCM",
+  "rating": 8.038,
+  "total_reviews": 70,
+  "total_pictures": 318,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g88/874771/prof/s640x400/vn-11134513-7r98o-lsu6j0i8vveseb",
+  "url": "https://www.foody.vn/ho-chi-minh/fruit-crush-trai-cay-tuoi-an-vat-quan-1",
+  "location": {
+    "lat": 10.7843942,
+    "lon": 106.705955
+  },
+  "reviews": [
+    {
+      "user": "Vy Vy",
+      "rating": 3.4,
+      "comment": "Mình order của shop 2 hộp dưa và 2 hộp hồng gọt sẵn. \nShop lại gọt cho mình 2 hộp hồng chưa chín, vừa chát, vừa nhiều mủ, mình ăn ko hết nổi 1 miếng hồng cắt sẵn vì chát và quá nhiều mủ,mà cả 2 hộp đều ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g143/1425176/avt/c100x100/foody-avatar-b9282d1a-7289-433f--60eb6119-240429155811.jpeg"
+    },
+    {
+      "user": "Ly  Huong",
+      "rating": 1.0,
+      "comment": "Thấy ảnh ở quán là 80k cho 1 ly dâu đầy và ly cao nên mình đã đặt. Và đây là thứ mình nhận được cho 80k bỏ ra có thêm hủ sữa chua nhỏ xíu nữa. Không hiểu được là quán làm ăn kiểu gì, thấy ở dưới mn khen, ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g19/189145/avt/c100x100/lymyhuongthongminh-avatar-709-636842957029607530.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/fruit-crush-trai-cay-tuoi-an-vat-quan-1",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:23.264825"
+}
