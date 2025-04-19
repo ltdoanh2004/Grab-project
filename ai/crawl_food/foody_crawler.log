@@ -17060,3 +17060,63 @@ playwright._impl._errors.TargetClosedError: Target page, context or browser has 
 2025-04-19 21:55:02,671 - INFO - Saved progress: page 1371, items 1884
 2025-04-19 21:55:02,671 - INFO - Waiting 1.27 seconds before next page...
 2025-04-19 21:55:03,950 - INFO - Fetching page 1372
+2025-04-19 21:55:05,453 - WARNING - No items found on page 1372
+2025-04-19 21:55:05,454 - INFO - Saved progress: page 1372, items 1884
+2025-04-19 21:55:05,454 - INFO - Waiting 2.39 seconds before next page...
+2025-04-19 21:55:07,847 - INFO - Fetching page 1373
+2025-04-19 21:55:09,203 - WARNING - No items found on page 1373
+2025-04-19 21:55:09,203 - INFO - Saved progress: page 1373, items 1884
+2025-04-19 21:55:09,203 - INFO - Waiting 2.52 seconds before next page...
+2025-04-19 21:55:11,731 - INFO - Fetching page 1374
+2025-04-19 21:55:13,192 - WARNING - No items found on page 1374
+2025-04-19 21:55:13,193 - INFO - Saved progress: page 1374, items 1884
+2025-04-19 21:55:13,193 - INFO - Waiting 2.43 seconds before next page...
+2025-04-19 21:55:15,632 - INFO - Fetching page 1375
+2025-04-19 21:55:17,110 - WARNING - No items found on page 1375
+2025-04-19 21:55:17,111 - INFO - Saved progress: page 1375, items 1884
+2025-04-19 21:55:17,111 - INFO - Waiting 1.87 seconds before next page...
+2025-04-19 21:55:18,983 - INFO - Fetching page 1376
+2025-04-19 21:55:20,326 - WARNING - No items found on page 1376
+2025-04-19 21:55:20,327 - INFO - Saved progress: page 1376, items 1884
+2025-04-19 21:55:20,327 - INFO - Waiting 1.14 seconds before next page...
+2025-04-19 21:55:21,469 - INFO - Fetching page 1377
+2025-04-19 21:55:23,093 - WARNING - No items found on page 1377
+2025-04-19 21:55:23,094 - INFO - Saved progress: page 1377, items 1884
+2025-04-19 21:55:23,094 - INFO - Waiting 2.17 seconds before next page...
+2025-04-19 21:55:25,267 - INFO - Fetching page 1378
+2025-04-19 21:55:26,338 - WARNING - No items found on page 1378
+2025-04-19 21:55:26,340 - INFO - Saved progress: page 1378, items 1884
+2025-04-19 21:55:26,340 - INFO - Waiting 1.48 seconds before next page...
+2025-04-19 21:55:27,829 - INFO - Fetching page 1379
+2025-04-19 21:55:29,350 - WARNING - No items found on page 1379
+2025-04-19 21:55:29,350 - INFO - Saved progress: page 1379, items 1884
+2025-04-19 21:55:29,350 - INFO - Waiting 1.52 seconds before next page...
+2025-04-19 21:55:30,878 - INFO - Fetching page 1380
+2025-04-19 21:55:32,217 - WARNING - No items found on page 1380
+2025-04-19 21:55:32,218 - INFO - Saved progress: page 1380, items 1884
+2025-04-19 21:55:32,218 - INFO - Waiting 2.54 seconds before next page...
+2025-04-19 21:55:34,759 - INFO - Fetching page 1381
+2025-04-19 21:55:36,091 - WARNING - No items found on page 1381
+2025-04-19 21:55:36,103 - INFO - Saved progress: page 1381, items 1884
+2025-04-19 21:55:36,103 - INFO - Waiting 2.03 seconds before next page...
+2025-04-19 21:55:38,138 - INFO - Fetching page 1382
+2025-04-19 21:55:39,513 - WARNING - No items found on page 1382
+2025-04-19 21:55:39,515 - INFO - Saved progress: page 1382, items 1884
+2025-04-19 21:55:39,515 - INFO - Waiting 2.27 seconds before next page...
+2025-04-19 21:55:41,787 - INFO - Fetching page 1383
+2025-04-19 21:55:43,228 - WARNING - No items found on page 1383
+2025-04-19 21:55:43,230 - INFO - Saved progress: page 1383, items 1884
+2025-04-19 21:55:43,230 - INFO - Waiting 1.24 seconds before next page...
+2025-04-19 21:55:44,470 - INFO - Fetching page 1384
+2025-04-19 21:55:45,537 - WARNING - No items found on page 1384
+2025-04-19 21:55:45,538 - INFO - Saved progress: page 1384, items 1884
+2025-04-19 21:55:45,538 - INFO - Waiting 2.94 seconds before next page...
+2025-04-19 21:55:48,479 - INFO - Fetching page 1385
+2025-04-19 21:55:49,877 - WARNING - No items found on page 1385
+2025-04-19 21:55:49,878 - INFO - Saved progress: page 1385, items 1884
+2025-04-19 21:55:49,878 - INFO - Waiting 1.03 seconds before next page...
+2025-04-19 21:55:50,913 - INFO - Fetching page 1386
+2025-04-19 21:55:52,470 - WARNING - No items found on page 1386
+2025-04-19 21:55:52,472 - INFO - Saved progress: page 1386, items 1884
+2025-04-19 21:55:52,472 - INFO - Waiting 1.82 seconds before next page...
+2025-04-19 21:55:54,296 - INFO - Fetching page 1387
