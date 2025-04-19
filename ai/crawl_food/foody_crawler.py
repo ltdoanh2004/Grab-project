@@ -9,6 +9,7 @@ import re
 from typing import List, Dict, Any
 import os
 import math
+import argparse
 
 # Configure logging
 logging.basicConfig(
@@ -21,7 +22,7 @@ logging.basicConfig(
 )
 
 class FoodyCrawler:
-    def __init__(self):
+    def __init__(self, start_page=1):
         self.api_url = "https://www.foody.vn/__get/Place/HomeListPlace"
         self.output_dir = "data"
         self.headers = {
@@ -35,8 +36,38 @@ class FoodyCrawler:
         self.lat = 21.033333
         self.lon = 105.85
         self.items_per_page = 12  # Default items per page from API
+        self.start_page = start_page
         
         os.makedirs(self.output_dir, exist_ok=True)
+
+        # Create progress tracking file
+        self.progress_file = os.path.join(self.output_dir, "crawl_progress.json")
+        self.load_progress()
+
+    def load_progress(self):
+        """Load previous crawling progress if exists"""
+        try:
+            if os.path.exists(self.progress_file):
+                with open(self.progress_file, 'r', encoding='utf-8') as f:
+                    progress = json.load(f)
+                    self.start_page = progress.get('last_page', self.start_page)
+                    logging.info(f"Loaded previous progress: last page was {self.start_page}")
+        except Exception as e:
+            logging.error(f"Error loading progress: {str(e)}")
+
+    def save_progress(self, current_page: int, items_collected: int):
+        """Save current crawling progress"""
+        try:
+            progress = {
+                'last_page': current_page,
+                'items_collected': items_collected,
+                'last_update': datetime.now().isoformat()
+            }
+            with open(self.progress_file, 'w', encoding='utf-8') as f:
+                json.dump(progress, f, indent=2)
+            logging.info(f"Saved progress: page {current_page}, items {items_collected}")
+        except Exception as e:
+            logging.error(f"Error saving progress: {str(e)}")
 
     def get_page_data(self, page: int = 1) -> List[Dict]:
         """Fetch restaurant data from a specific page"""
@@ -165,14 +196,14 @@ class FoodyCrawler:
             total_items: Total number of restaurants to crawl
         """
         try:
-            logging.info(f"Starting crawler, targeting {total_items} items")
+            logging.info(f"Starting crawler from page {self.start_page}, targeting {total_items} items")
             
             # Calculate number of pages needed
             total_pages = math.ceil(total_items / self.items_per_page)
             items_collected = 0
-            current_page = 1
+            current_page = self.start_page
             
-            while items_collected < total_items and current_page <= total_pages:
+            while items_collected < total_items and current_page <= (self.start_page + total_pages - 1):
                 # Get restaurants from current page
                 restaurants = self.get_page_data(current_page)
                 
@@ -193,11 +224,14 @@ class FoodyCrawler:
                         logging.error(f"Error processing restaurant: {str(e)}")
                         continue
                 
+                # Save progress after each page
+                self.save_progress(current_page, items_collected)
+                
                 # Move to next page
                 current_page += 1
                 
                 # Random delay between pages
-                if current_page <= total_pages:
+                if current_page <= (self.start_page + total_pages - 1):
                     delay = random.uniform(1, 3)
                     logging.info(f"Waiting {delay:.2f} seconds before next page...")
                     time.sleep(delay)
@@ -207,9 +241,19 @@ class FoodyCrawler:
         except Exception as e:
             logging.error(f"Error in main crawler loop: {str(e)}")
 
-if __name__ == "__main__":
+def main():
+    parser = argparse.ArgumentParser(description='Foody.vn Restaurant Crawler')
+    parser.add_argument('--total-items', type=int, default=100,
+                      help='Total number of restaurants to crawl')
+    parser.add_argument('--start-page', type=int, default=1,
+                      help='Page number to start crawling from')
+    args = parser.parse_args()
+
     try:
-        crawler = FoodyCrawler()
-        crawler.run(100)
+        crawler = FoodyCrawler(start_page=args.start_page)
+        crawler.run(args.total_items)
     except Exception as e:
-        logging.error(f"Critical error in main execution: {str(e)}") 
+        logging.error(f"Critical error in main execution: {str(e)}")
+
+if __name__ == "__main__":
+    main() 
