@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Radio, Typography, Select, InputNumber, Space } from "antd";
+import { Card, Radio, Typography, InputNumber } from "antd";
 import { FlexibleTime } from "../../../types/travelPlan";
 import { CheckOutlined } from "@ant-design/icons";
 

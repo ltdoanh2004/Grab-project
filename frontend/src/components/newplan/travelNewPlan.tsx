@@ -4,10 +4,6 @@ import { TimeStep } from "./travelPlanTime";
 import { PersonalStep } from "./travelPlanPersonal";
 import { StepNavigation } from "./navbar";
 import { useTravelPlan } from "../../hooks/useTravelPlans";
-import { Typography, Button } from "antd";
-import { DESTINATIONS } from "../../constants/travelPlanConstants";
-
-const { Title } = Typography;
 
 export const TravelNewPlan: React.FC = () => {
   const {
@@ -26,10 +22,6 @@ export const TravelNewPlan: React.FC = () => {
     handleLengthChange,
     isDestinationSelection,
   } = useTravelPlan();
-
-  const selectedDestination = DESTINATIONS.find(
-    (dest) => dest.id === selectedDestinationId
-  );
 
   const renderStepContent = () => {
     switch (currentStep) {

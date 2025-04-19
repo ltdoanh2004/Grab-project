@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Typography, Button } from "antd";
+import { Typography, Button } from "antd";
 import { PERSONAL_OPTIONS } from "../../constants/travelPlanConstants";
 import { PersonalOption } from "../../types/travelPlan";
 import { CheckOutlined, PlusOutlined } from "@ant-design/icons";

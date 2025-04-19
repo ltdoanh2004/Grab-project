@@ -1,7 +1,5 @@
 import React from "react";
-import { Typography, Progress, Space } from "antd";
-
-const { Title } = Typography;
+import { Progress } from "antd";
 
 interface StepNavigationProps {
   currentStep: number;

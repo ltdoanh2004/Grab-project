@@ -32,7 +32,7 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
           thành lịch trình du lịch của riêng bạn.
         </Text>
       </div>
-      <div className="mb-6 justify-center flex mb-16">
+      <div className="justify-center flex mb-16">
         <Input
           placeholder="Chọn điểm đến"
           className="w-full max-w-xl mx-auto"
