@@ -24,10 +24,10 @@ async def crawl_tripadvisor_carousel_images(url, num_clicks=10):
                 if await next_btn.is_visible():
                     await next_btn.click()
                     await page.wait_for_timeout(800)
-                else:
-                    print(f"[{i}] Không thấy nút next.")
+                # else:
+                #     print(f"[{i}] Không thấy nút next.")
             except Exception as e:
-                print(f"[{i}] ❌ Không bấm được: {e}")
+                # print(f"[{i}] ❌ Không bấm được: {e}")
                 break
 
         html = await page.content()

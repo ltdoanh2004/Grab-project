@@ -23,6 +23,7 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from get_image import crawl_tripadvisor_carousel_images
 import asyncio
+from datetime import datetime
 
 import nest_asyncio
 nest_asyncio.apply()
@@ -42,10 +43,12 @@ class EnhancedAttractionsCrawler:
     """Enhanced crawler for TripAdvisor attractions in Hanoi with better data extraction"""
 
     # -------------------- INIT -------------------- #
-    def __init__(self, base_url=None, delay=3.0, custom_type=None):
+    def __init__(self, base_url=None, delay=3.0, custom_type=None, save_interval=15):
         self.base_url = base_url or "https://www.tripadvisor.com/Attractions-g293924-Activities-oa0-Hanoi.html"
         self.min_delay = delay
         self.max_delay = delay * 2
+        self.save_interval = save_interval  # Minutes between saves
+        self.last_save_time = time.time()
         self.headers = {
             'User-Agent': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
                            'AppleWebKit/537.36 (KHTML, like Gecko) '
@@ -57,9 +60,14 @@ class EnhancedAttractionsCrawler:
         self.visited_urls = set()
         self.visited_attractions = set()
         self.custom_type = custom_type
+        self.checkpoint_dir = "checkpoints"
+        os.makedirs(self.checkpoint_dir, exist_ok=True)
+
+        # Load previous checkpoint if exists
+        self.load_checkpoint()
 
         self.session = requests.Session()
-        # Giữ nguyên header order “browser‑like”
+        # Giữ nguyên header order "browser‑like"
         self.session.headers.update({
             "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
             "accept-language": "en-US,en;q=0.9",
@@ -78,6 +86,79 @@ class EnhancedAttractionsCrawler:
             logger.info("Warm‑up OK – cookies stored")
         except Exception as e:
             logger.warning(f"Warm‑up failed: {e}")
+
+    def save_checkpoint(self, detailed_data, current_page):
+        """Save crawler state and data to checkpoint"""
+        checkpoint = {
+            'timestamp': datetime.now().isoformat(),
+            'visited_urls': list(self.visited_urls),
+            'visited_attractions': list(self.visited_attractions),
+            'current_page': current_page,
+            'detailed_data': detailed_data
+        }
+        
+        # Create checkpoint filename with timestamp
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        checkpoint_file = os.path.join(self.checkpoint_dir, f'checkpoint_{timestamp}.json')
+        
+        # Save checkpoint
+        with open(checkpoint_file, 'w', encoding='utf-8') as f:
+            json.dump(checkpoint, f, indent=2, ensure_ascii=False)
+        
+        # Keep only last 5 checkpoints
+        self._cleanup_old_checkpoints()
+        
+        logger.info(f"Checkpoint saved: {checkpoint_file}")
+        self.last_save_time = time.time()
+
+    def load_checkpoint(self):
+        """Load most recent checkpoint if exists"""
+        if not os.path.exists(self.checkpoint_dir):
+            return None
+        
+        checkpoint_files = sorted([
+            f for f in os.listdir(self.checkpoint_dir)
+            if f.startswith('checkpoint_') and f.endswith('.json')
+        ], reverse=True)
+        
+        if not checkpoint_files:
+            return None
+        
+        latest_checkpoint = checkpoint_files[0]
+        checkpoint_path = os.path.join(self.checkpoint_dir, latest_checkpoint)
+        
+        try:
+            with open(checkpoint_path, 'r', encoding='utf-8') as f:
+                checkpoint = json.load(f)
+                
+            self.visited_urls = set(checkpoint['visited_urls'])
+            self.visited_attractions = set(checkpoint['visited_attractions'])
+            
+            logger.info(f"Loaded checkpoint: {checkpoint_path}")
+            logger.info(f"Resumed from page {checkpoint['current_page']}")
+            
+            return checkpoint
+        except Exception as e:
+            logger.error(f"Error loading checkpoint: {e}")
+            return None
+
+    def _cleanup_old_checkpoints(self, keep_last=5):
+        """Keep only the most recent checkpoints"""
+        checkpoint_files = sorted([
+            f for f in os.listdir(self.checkpoint_dir)
+            if f.startswith('checkpoint_') and f.endswith('.json')
+        ], reverse=True)
+        
+        for old_file in checkpoint_files[keep_last:]:
+            try:
+                os.remove(os.path.join(self.checkpoint_dir, old_file))
+            except Exception as e:
+                logger.error(f"Error removing old checkpoint {old_file}: {e}")
+
+    def _should_save_checkpoint(self):
+        """Check if it's time to save a checkpoint"""
+        minutes_since_last_save = (time.time() - self.last_save_time) / 60
+        return minutes_since_last_save >= self.save_interval
 
     # -------------------- HELPERS -------------------- #
     def _random_delay(self):
@@ -639,6 +720,12 @@ class EnhancedAttractionsCrawler:
 
         # Get gallery images
         gallery_selectors = [
+            'div[data-testid="carousel-with-strip"] img',
+            'div[data-testid="media-strip"] img',
+            'div.PKDJv img',
+            'div.AKIQt img',
+            'button.BUTbe img',
+            'picture.NhVvC img',
             'div.MRIyS picture img',
             'div.UCacc img',
             'div.HRZla img',
@@ -796,9 +883,19 @@ class EnhancedAttractionsCrawler:
         return details
 
     # -------------------- MAIN CRAWL -------------------- #
-    def crawl_attractions(self, max_pages=3, max_attractions=None, threads=4):
-        all_listings, page, more = [], 1, True
-        while more and page <= max_pages:
+    def crawl_attractions(self, max_pages=3, max_attractions=None, threads=4, start_page=1):
+        all_listings, page, more = [], start_page, True
+        detailed = []
+        
+        # Try to load checkpoint if starting from page 1
+        if start_page == 1:
+            checkpoint = self.load_checkpoint()
+            if checkpoint:
+                detailed = checkpoint['detailed_data']
+                page = checkpoint['current_page']
+                logger.info(f"Resumed crawling from page {page} with {len(detailed)} attractions")
+
+        while more and (page - start_page + 1) <= max_pages:
             lst, more = self.get_attraction_listings(page=page)
             all_listings.extend(lst)
             if max_attractions and len(all_listings) >= max_attractions:
@@ -807,11 +904,14 @@ class EnhancedAttractionsCrawler:
             page += 1
             self._random_delay()
 
+            # Save checkpoint periodically
+            if self._should_save_checkpoint() and detailed:
+                self.save_checkpoint(detailed, page)
+
         if not all_listings:
             logger.warning("No attraction listings found.")
-            return []
+            return detailed  # Return existing data from checkpoint if any
 
-        detailed = []
         with ThreadPoolExecutor(max_workers=threads) as executor:
             future_map = {executor.submit(self.get_attraction_details, it["url"]): it for it in all_listings}
             for fut in as_completed(future_map):
@@ -820,42 +920,113 @@ class EnhancedAttractionsCrawler:
                     det = fut.result()
                     if "error" in det:
                         continue
-                    # ---------------- PATCH 4 ---------------- #
                     if det["url"] in self.visited_urls or det["name"].lower() in self.visited_attractions:
                         continue
                     self.visited_urls.add(det["url"])
                     self.visited_attractions.add(det["name"].lower())
-                    # ---------------------------------------- #
                     detailed.append({**it, **det})
                     logger.info(f"✓ {det.get('name')}")
+                    
+                    # Save checkpoint if needed
+                    if self._should_save_checkpoint():
+                        self.save_checkpoint(detailed, page)
+                        
                 except Exception as e:
                     logger.error(f"{e} – {it['url']}")
+
+        # Final save
+        self.save_checkpoint(detailed, page)
         logger.info(f"Found {len(detailed)} unique attractions")
         return detailed
 
     # -------------------- SAVE -------------------- #
     def save_to_json(self, data, filename):
+        """Save or append data to JSON file"""
         if not data:
             logger.warning("No data to save")
             return
-        with open(filename, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
+
+        try:
+            existing_data = []
+            # Try to load existing data if file exists
+            if os.path.exists(filename):
+                try:
+                    with open(filename, 'r', encoding='utf-8') as f:
+                        existing_data = json.load(f)
+                        if not isinstance(existing_data, list):
+                            existing_data = [existing_data]
+                except json.JSONDecodeError:
+                    logger.warning(f"Could not read existing file {filename}, it might be corrupted")
+                    # Backup the corrupted file
+                    backup_name = f"{filename}.bak.{int(time.time())}"
+                    os.rename(filename, backup_name)
+                    logger.info(f"Backed up corrupted file to {backup_name}")
+                except Exception as e:
+                    logger.error(f"Error reading existing file {filename}: {e}")
+
+            # Convert single item to list if necessary
+            new_data = data if isinstance(data, list) else [data]
+
+            # Merge existing and new data
+            if existing_data:
+                # Create a set of existing URLs to avoid duplicates
+                existing_urls = {item.get('url') for item in existing_data if item.get('url')}
+                # Only add items that don't exist yet
+                for item in new_data:
+                    if item.get('url') not in existing_urls:
+                        existing_data.append(item)
+                        existing_urls.add(item.get('url'))
+                merged_data = existing_data
+            else:
+                merged_data = new_data
+
+            # Save the merged data
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(merged_data, f, indent=2, ensure_ascii=False)
+            
+            logger.info(f"Saved {len(new_data)} new items to {filename} (total: {len(merged_data)} items)")
+
+        except Exception as e:
+            logger.error(f"Error saving data to {filename}: {str(e)}")
+            # Create backup of the data in case of error
+            error_backup = f"error_backup_{int(time.time())}.json"
+            try:
+                with open(error_backup, 'w', encoding='utf-8') as f:
+                    json.dump(data, f, indent=2, ensure_ascii=False)
+                logger.info(f"Created error backup at {error_backup}")
+            except Exception as backup_error:
+                logger.error(f"Failed to create error backup: {str(backup_error)}")
 
 
 # ----------------------------- CLI ----------------------------- #
 def main():
     parser = argparse.ArgumentParser(description='TripAdvisor Hanoi Attractions Crawler (patched)')
-    parser.add_argument('--max-pages', type=int, default=3)
-    parser.add_argument('--max-attractions', type=int)
-    parser.add_argument('--delay', type=float, default=4.0)
-    parser.add_argument('--threads', type=int, default=4)
-    parser.add_argument('--custom-type')
-    parser.add_argument('--output', default='hanoi_attractions_patched.json')
+    parser.add_argument('--max-pages', type=int, default=3,
+                      help='Maximum number of pages to crawl')
+    parser.add_argument('--start-page', type=int, default=1,
+                      help='Page number to start crawling from')
+    parser.add_argument('--max-attractions', type=int,
+                      help='Maximum number of attractions to crawl')
+    parser.add_argument('--delay', type=float, default=4.0,
+                      help='Delay between requests in seconds')
+    parser.add_argument('--threads', type=int, default=4,
+                      help='Number of concurrent threads')
+    parser.add_argument('--custom-type',
+                      help='Custom type to assign to all attractions')
+    parser.add_argument('--output', default='hanoi_attractions_patched.json',
+                      help='Output JSON file path')
+    parser.add_argument('--save-interval', type=int, default=15,
+                      help='Minutes between periodic saves (default: 15)')
     args = parser.parse_args()
 
-    crawler = EnhancedAttractionsCrawler(delay=args.delay, custom_type=args.custom_type)
+    crawler = EnhancedAttractionsCrawler(
+        delay=args.delay,
+        custom_type=args.custom_type,
+        save_interval=args.save_interval
+    )
     data = crawler.crawl_attractions(
         max_pages=args.max_pages,
+        start_page=args.start_page,
         max_attractions=args.max_attractions,
         threads=args.threads
     )
