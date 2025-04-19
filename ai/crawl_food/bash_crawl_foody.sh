@@ -1,0 +1,1 @@
+python foody_crawler.py --total-items 100000 --start-page 10
