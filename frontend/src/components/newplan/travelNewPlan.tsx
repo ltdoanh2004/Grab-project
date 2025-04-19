@@ -60,7 +60,7 @@ export const TravelNewPlan: React.FC = () => {
         />
       ) : (
         <>
-          <div className="p-4 border-b bg-blue-50">
+          {/* <div className="p-4 border-b bg-blue-50">
             <div className="flex justify-between items-center">
               <div className="flex items-center">
                 <img
@@ -76,7 +76,7 @@ export const TravelNewPlan: React.FC = () => {
                 Thay đổi
               </Button>
             </div>
-          </div>
+          </div> */}
 
           <StepNavigation currentStep={currentStep} />
           {renderStepContent()}

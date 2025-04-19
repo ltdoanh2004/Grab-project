@@ -15,30 +15,14 @@ export const StepNavigation: React.FC<StepNavigationProps> = ({
   const progressPercentage = ((currentStep + 1) / steps.length) * 100;
 
   return (
-    <div className="p-4 border-b">
-      <div className="w-full px-2">
+    <div className="p-4">
+      <div className="w-1/2 mx-auto">
         <Progress
           percent={progressPercentage}
           showInfo={false}
-          strokeColor={{
-            "0%": "#108ee9",
-            "100%": "#87d068",
-          }}
-          strokeWidth={10}
+          strokeColor="#000000"
+          strokeWidth={5}
         />
-
-        <div className="flex justify-between mt-1 text-xs text-gray-500">
-          {steps.map((step, index) => (
-            <div
-              key={index}
-              className={`${
-                currentStep >= index ? "text-blue-600 font-medium" : ""
-              }`}
-            >
-              {index + 1}. {step}
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
