@@ -1,0 +1,46 @@
+{
+  "id": 1024763,
+  "name": "Bánh Mì Bảy Quang",
+  "address": "7 Huỳnh Khương Ninh, P. Đa Kao, Quận 1, TP. HCM",
+  "rating": 7.2,
+  "total_reviews": 2,
+  "total_pictures": 4,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g103/1024763/prof/s640x400/vn-11134513-7r98o-lsua4djzuwt542",
+  "url": "https://www.foody.vn/ho-chi-minh/banh-mi-bay-quang",
+  "location": {
+    "lat": 10.790557,
+    "lon": 106.69685
+  },
+  "reviews": [
+    {
+      "user": "B Mai Luu",
+      "rating": 7.0,
+      "comment": "Nhiều thịt, vị bình thường k đặc sắc lắm.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g36/359392/avt/c100x100/lbmai1410-avatar-294-637863548338176705.jpg"
+    },
+    {
+      "user": "Tê Ngố",
+      "rating": 7.4,
+      "comment": "Bánh mỳ tuy mỗi ngày không đều nhưng nhìn chung khá ngon bắt mồm bắt miệng giá cả bình dân. Bơ và pate đều ngon mịn màng ướt át hơn cái hàng kế bên rất nhiều khô không khốc dở tệ. Đồ chua không được giòn ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g2/19030/avt/c100x100/beauty-upload-api-foody-avatar-bba2e796-61eb-44bd-b6a0-bea451d36f08-191021071708.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/banh-mi-bay-quang",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": false,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:24.302310"
+}

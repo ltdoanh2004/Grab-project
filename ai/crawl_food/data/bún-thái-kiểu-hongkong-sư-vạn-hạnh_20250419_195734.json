@@ -1,0 +1,46 @@
+{
+  "id": 1002239,
+  "name": "Bún Thái - Kiểu Hongkong - Sư Vạn Hạnh",
+  "address": "456 Sư Vạn Hạnh, P. 9, Quận 10, TP. HCM",
+  "rating": 7.56,
+  "total_reviews": 19,
+  "total_pictures": 45,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g101/1002239/prof/s640x400/vn-11134513-7r98o-lsu9gmy6gyhl46",
+  "url": "https://www.foody.vn/ho-chi-minh/bun-thai-kieu-hongkong-su-van-hanh",
+  "location": {
+    "lat": 10.7662535,
+    "lon": 106.6720215
+  },
+  "reviews": [
+    {
+      "user": "Châu",
+      "rating": 7.8,
+      "comment": "Đồ ăn không ngon như mình tưởng tượng lắm, mình gọi tô 55k full topping nhưng thấy chủ yếu là rau, bún không nhiều. Mực với tôm không tươi, chả cá thì ngon. Nước dùng theo khẩu vị của mình thì hơi nhạt ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    },
+    {
+      "user": "Đặng Hoàng Phúc",
+      "rating": 1.0,
+      "comment": "Quán đông không thể nhận khách tại quán được thì nói thẳng từ đầu để mua về khỏi mắc công vòng tới vòng lui. Đến đã kêu 20p sau quay lại, đi 20p quay lại, nói y chang câu cũ. Hỏi chỗ để xe gửi trước đứng ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g889/8883419/avt/c100x100/beauty-upload-api-foody-avatar-36e1a9ea-e0d6-4516-a5ea-b85c11966ee4-191031173110.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/bun-thai-kieu-hongkong-su-van-hanh",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:57:16.145249"
+}

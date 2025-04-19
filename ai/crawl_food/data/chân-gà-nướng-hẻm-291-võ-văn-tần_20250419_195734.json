@@ -1,0 +1,46 @@
+{
+  "id": 781978,
+  "name": "Chân Gà Nướng - Hẻm 291 Võ Văn Tần",
+  "address": "291/22 Võ Văn Tần, Quận 3, TP. HCM",
+  "rating": 8.378,
+  "total_reviews": 8,
+  "total_pictures": 25,
+  "phone": "0938448479",
+  "photo_url": "https://images.foody.vn/res/g79/781978/prof/s640x400/vn-11134513-7r98o-lsu55t4l31s40c",
+  "url": "https://www.foody.vn/ho-chi-minh/chan-ga-nuong-hem-291-vo-van-tan",
+  "location": {
+    "lat": 10.771664,
+    "lon": 106.686433
+  },
+  "reviews": [
+    {
+      "user": "Trinh  Nguyễn",
+      "rating": 10.0,
+      "comment": "Chân gà ướp thấm vị , cay cay , nước chấm thì vừa cay vừa thơm , có cả dưa leo và rau răm . Còn có những món như cánh gà , mề . Theo mình món nào cũng ổn",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g1378/13771476/avt/c100x100/foody-avatar-83286f31-8b3e-469a--51b13dce-210411185458.jpeg"
+    },
+    {
+      "user": "Hưng Phát",
+      "rating": 10.0,
+      "comment": "Đi ngang thì thấy khói nướng nghi ngút và các a shipper đứng đông nên ghé vào ăn thử ko ngờ vì bản thân tình cờ tìm dc quán ngon , chân gà thấm vị , nc chấm cay cay thơm thơm 👍🏻👍🏻👍🏻",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/chan-ga-nuong-hem-291-vo-van-tan",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:57:31.348601"
+}

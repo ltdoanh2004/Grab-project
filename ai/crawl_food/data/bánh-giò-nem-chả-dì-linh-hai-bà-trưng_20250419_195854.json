@@ -1,0 +1,46 @@
+{
+  "id": 207290,
+  "name": "Bánh Giò Nem Chả Dì Linh - Hai Bà Trưng",
+  "address": "Vỉa Hè 185 Hai Bà Trưng, Quận 3, TP. HCM",
+  "rating": 7.506,
+  "total_reviews": 21,
+  "total_pictures": 92,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g21/207290/prof/s640x400/vn-11134513-7r98o-lstwajty6461a5",
+  "url": "https://www.foody.vn/ho-chi-minh/banh-gio-nem-cha-di-linh",
+  "location": {
+    "lat": 10.785896,
+    "lon": 106.694355
+  },
+  "reviews": [
+    {
+      "user": "Nga Trần",
+      "rating": 7.8,
+      "comment": "Buổi chiều cả đám đói bụng nên rủ nhau ra đây mua đồ ăn. Thấy trên insta vớk tik tok được review nhiều lắm nè. Bán ở góc đường thôi mà hot quá trời. Mình cứ tưởng chỉ bán mỗi bánh giò thôi ai ngờ còn ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g95/945545/avt/c100x100/pebap_lovely-avatar-194-638209076280023096.jpg"
+    },
+    {
+      "user": "Zen Usagi",
+      "rating": 8.0,
+      "comment": "Dì bán từ 16h30 nhưng 17h mấy lại có khi hết bánh mì luôn rồi. Mình rất thích ăn nem ở đây, rất ngon luôn. Nói chung không chê gì nhưng mỗi tội đợi mua hơi lâu :))))) Dì và mấy anh bán cũng vui vẻ chứ ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g2/10014/avt/c100x100/zen-usagi-avatar-131-636196929364920668.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/banh-gio-nem-cha-di-linh",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": false,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:52.408430"
+}

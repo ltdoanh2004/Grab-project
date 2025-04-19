@@ -1,0 +1,46 @@
+{
+  "id": 1232800,
+  "name": "Cơm Nắm I'm Hihi Quận 4",
+  "address": "37 Vĩnh Hội, P. 4, Quận 4, TP. HCM",
+  "rating": 10.0,
+  "total_reviews": 32,
+  "total_pictures": 0,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g124/1232800/prof/s640x400/vn-11134513-7ras8-m2ym800klpm8ac",
+  "url": "https://www.foody.vn/ho-chi-minh/com-nam-i-m-hihi-quan-4",
+  "location": {
+    "lat": 10.7562207,
+    "lon": 106.703201
+  },
+  "reviews": [
+    {
+      "user": "Hoang Tam",
+      "rating": 10.0,
+      "comment": "Cơm xá xíu chay ở đây ăn siêu ngon luôn, đậm vị mà vẫn nhẹ bụng, cực kỳ hợp với người thích ăn healthy.",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g5640/56399974/avt/c100x100/vn-11134523-7r98o-m09n23nf8n3h04"
+    },
+    {
+      "user": "Khúc Hương  Thanh ",
+      "rating": 10.0,
+      "comment": "Không thể tin được mình lại tìm được một quán hợp khẩu vị đến vậy! Món nào cũng ngon, không có gì để chê!",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g5621/56208239/avt/c100x100/vn-11134259-7r98o-lytgl1mc5p5ta1"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/com-nam-i-m-hihi-quan-4",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:52.055738"
+}

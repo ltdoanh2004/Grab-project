@@ -1,0 +1,46 @@
+{
+  "id": 887297,
+  "name": "Bún Cá Chàng Thơ",
+  "address": "18/18 Đường Số 53, Quận Gò Vấp, TP. HCM",
+  "rating": 9.734,
+  "total_reviews": 3,
+  "total_pictures": 9,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g89/887297/prof/s640x400/vn-11134513-7r98o-ltrmncevpc7ed9",
+  "url": "https://www.foody.vn/ho-chi-minh/bun-ca-chang-tho",
+  "location": {
+    "lat": 10.851371,
+    "lon": 106.643972
+  },
+  "reviews": [
+    {
+      "user": "Trang Thùy",
+      "rating": 9.8,
+      "comment": "Trà sữa rất đậm đà, béo ngậy lun!&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g2372/23714859/avt/c100x100/foody-avatar-01990507-3879-4218--97d81aff-210420093040.jpeg"
+    },
+    {
+      "user": "Trang Thùy",
+      "rating": 9.8,
+      "comment": "Trà sữa rất đậm đà, béo ngậy lun!&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g2372/23714859/avt/c100x100/foody-avatar-01990507-3879-4218--97d81aff-210420093040.jpeg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/bun-ca-chang-tho",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:20.066593"
+}

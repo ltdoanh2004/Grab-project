@@ -1,0 +1,39 @@
+{
+  "id": 858376,
+  "name": "Bảo Bảo - Cơm Tấm & Mì Xào",
+  "address": "32b Quốc Lộ 13 Cũ, P. Hiệp Bình Phước, Tp. Thủ Đức, TP. HCM",
+  "rating": 4.2,
+  "total_reviews": 1,
+  "total_pictures": 2,
+  "phone": "0383850787",
+  "photo_url": "https://images.foody.vn/res/g86/858376/prof/s640x400/vn-11134513-7r98o-lsu65erlk6u187",
+  "url": "https://www.foody.vn/ho-chi-minh/bao-bao-com-tam-mi-xao",
+  "location": {
+    "lat": 10.858783,
+    "lon": 106.722351
+  },
+  "reviews": [
+    {
+      "user": "Nguyen",
+      "rating": 4.2,
+      "comment": "Thịt ướp khá ngon nhưng quán làm ơn xem lại cách làm việc và phục vụ đi, buôn bán gì mà lề mề chậm chạp, rề rề nhìn bực hết cả người, tới mua lần nào cũng đợi 10-15p, buôn bán thì nhanh cái tay, lẹ cái ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g2415/24140487/avt/c100x100/foody-avatar-582fe6e4-0dbc-443e--59f1fd25-210601134335.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/bao-bao-com-tam-mi-xao",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:28.613281"
+}

@@ -1,0 +1,46 @@
+{
+  "id": 16336,
+  "name": "Gỏi Khô Bò - Công Viên Lê Văn Tám",
+  "address": "Vỉa Hè 259A Hai Bà Trưng, P. 8 (Đối Diện Công Viên Lê Văn Tám), Quận 3, TP. HCM",
+  "rating": 6.874,
+  "total_reviews": 1132,
+  "total_pictures": 561,
+  "phone": "1900 2042 - 0906 734 676",
+  "photo_url": "https://images.foody.vn/res/g2/16336/prof/s640x400/vn-11134513-7r98o-lstqhj4tm56sb5",
+  "url": "https://www.foody.vn/ho-chi-minh/goi-bo-kho",
+  "location": {
+    "lat": 10.787673,
+    "lon": 106.691963
+  },
+  "reviews": [
+    {
+      "user": "vongan_123",
+      "rating": 5.2,
+      "comment": "Ngon lắm&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    },
+    {
+      "user": "namhylary",
+      "rating": 5.0,
+      "comment": "Ở đây ngon nha mợi người sẽ ủng hộ quán lâu dài&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/goi-bo-kho",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:57:59.590308"
+}

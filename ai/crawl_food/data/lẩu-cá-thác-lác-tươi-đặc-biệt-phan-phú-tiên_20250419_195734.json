@@ -1,0 +1,46 @@
+{
+  "id": 1000046303,
+  "name": "Lẩu Cá Thác Lác Tươi Đặc Biệt  - Phan Phú Tiên",
+  "address": "28 Phan Phú Tiên, P. 10, Quận 5, TP. HCM",
+  "rating": 6.964,
+  "total_reviews": 531,
+  "total_pictures": 7,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g100005/1000046303/prof/s640x400/vn-11134259-7r98o-lw8kujo88b17c7",
+  "url": "https://www.foody.vn/ho-chi-minh/lau-ca-thac-lac-tuoi-dac-biet-phan-phu-tien.jj93kq",
+  "location": {
+    "lat": 10.7519372,
+    "lon": 106.6656543
+  },
+  "reviews": [
+    {
+      "user": "Ng Trường",
+      "rating": 5.0,
+      "comment": "\"Cá thác lác\" - một món ăn đặc sản của miền Tây!\n\nCá thác lác là một loại cá nước ngọt, có thịt mềm và ngọt. Món ăn này được chế biến từ cá thác lác tươi, sau đó được nấu với các loại gia vị như tỏi, ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g5719/57187466/avt/c100x100/vn-11134523-7ra0g-m6v65xndrs6017"
+    },
+    {
+      "user": "Hoa Son19h",
+      "rating": 5.0,
+      "comment": "Phục vụ chu đáo&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g5628/56275275/avt/c100x100/vn-11134523-7r98o-lzdaobuk95ql38"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/lau-ca-thac-lac-tuoi-dac-biet-phan-phu-tien.jj93kq",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:57:27.442598"
+}

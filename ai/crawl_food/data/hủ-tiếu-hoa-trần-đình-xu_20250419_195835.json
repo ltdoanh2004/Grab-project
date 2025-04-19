@@ -1,0 +1,46 @@
+{
+  "id": 969341,
+  "name": "Hủ Tiếu Hoa - Trần Đình Xu",
+  "address": "122/10 Trần Đình Xu, P. Nguyễn Cư Trinh, Quận 1, TP. HCM",
+  "rating": 7.2,
+  "total_reviews": 13,
+  "total_pictures": 23,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g97/969341/prof/s640x400/vn-11134513-7r98o-lsu8n1t569w9a6",
+  "url": "https://www.foody.vn/ho-chi-minh/hu-tieu-hoa-tran-dinh-xu",
+  "location": {
+    "lat": 10.762993,
+    "lon": 106.688536
+  },
+  "reviews": [
+    {
+      "user": "PHƯƠNG QUYÊN",
+      "rating": 8.0,
+      "comment": "Giá 32k nhưng đồ ăn nhiều ăn hoài ko hết , nước dùng khá đậm đà lại gần chỗ làm nên mình cũng hay đặt giao đến công ty để ăn sáng thấy khá ổn",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g1050/10495881/avt/c100x100/quyen9737-avatar-301-637591225182344781.jpg"
+    },
+    {
+      "user": "charlotteclark",
+      "rating": 9.0,
+      "comment": "Thường order đồ nước quán cho ít thịt nhưng chỗ này cho nhiều thịt rất đáng đồng tiền. Nêm nếm ok. Hi vọng quán bên ngoài sạch :))",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g1018/10177280/avt/c100x100/charlotteclark-avatar-969-636779076133510113.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/hu-tieu-hoa-tran-dinh-xu",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": false,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:29.961541"
+}

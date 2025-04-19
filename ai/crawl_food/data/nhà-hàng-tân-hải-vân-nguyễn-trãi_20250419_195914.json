@@ -1,0 +1,51 @@
+{
+  "id": 1728,
+  "name": "Nhà Hàng Tân Hải Vân - Nguyễn Trãi",
+  "address": "158 - 164 Nguyễn Trãi, Quận 1, TP. HCM",
+  "rating": 7.344,
+  "total_reviews": 250,
+  "total_pictures": 1692,
+  "phone": "(028) 38 399 617 - (028) 39 250 824",
+  "photo_url": "https://images.foody.vn/res/g1/1728/prof/s640x400/vn-11134513-7r98o-lstpocij2hms2e",
+  "url": "https://www.foody.vn/ho-chi-minh/tan-hai-van",
+  "location": {
+    "lat": 10.769304,
+    "lon": 106.6904
+  },
+  "reviews": [
+    {
+      "user": "Khôi Trương",
+      "rating": 6.0,
+      "comment": "Đồ ăn:\n- Món quay 3 món gồm thịt heo quay, vịt quay và gà quay. Tất cả đều dai, thịt heo còn đỏ hồng như còn sống, vịt và gà khô và dai nhách, vị ngọt và chán, da không hề giòn, ăn tệ kinh khủng.\n- Bánh ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g1282/12815090/avt/c100x100/beauty-upload-api-foody-avatar-0f820a0d-0d1c-450d-981b-11e3a61432ae-191114172700.jpg"
+    },
+    {
+      "user": "Linda Nguyen",
+      "rating": 8.2,
+      "comment": "Mình ghé đến quán đã có đặt bàn trước qua fb rồi mà không ngờ lúc đến nơi, hỏi nhân viên thì bị nói là chưa đặt bàn. Cũng may là do mình đặt bàn tầm đầu giờ tối nên khi đến vẫn còn bàn trống. Hơi không ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g7/61758/avt/c100x100/beauty-upload-api-foody-avatar-d11a6019-9b8c-4ea2-ba6b-b24233818cc4-200308131946.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "tablenow.vn",
+      "url": "https://shopeefood.vn/ho-chi-minh/table/tan-hai-van",
+      "type": 0
+    },
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/tan-hai-van",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": true,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:03.492873"
+}

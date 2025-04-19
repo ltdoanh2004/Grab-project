@@ -1,0 +1,46 @@
+{
+  "id": 208347,
+  "name": "Cơm Tấm Hòa",
+  "address": "415 Hậu Giang, P. 11, Quận 6, TP. HCM",
+  "rating": 7.91,
+  "total_reviews": 20,
+  "total_pictures": 39,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g21/208347/prof/s640x400/foody-mobile-t2-jpg-748-635895722491434703.jpg",
+  "url": "https://www.foody.vn/ho-chi-minh/com-tam-hoa",
+  "location": {
+    "lat": 10.7486339,
+    "lon": 106.638206
+  },
+  "reviews": [
+    {
+      "user": "B Mai Luu",
+      "rating": 9.0,
+      "comment": "Nghe theo cmt 1 bạn trên fb bảo ngon nên mình ghé ăn thử.\nQuán đông mà khẩu phần ăn siêu nhiều, bạn nào sức ăn yếu k ăn nổi 1 phần đâu.\nCơm ngon\nHơn hết là quán xử lý tình huống, phục vụ tốt lắm, hôm ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g36/359392/avt/c100x100/lbmai1410-avatar-294-637863548338176705.jpg"
+    },
+    {
+      "user": "foodee_0cb8e078",
+      "rating": 4.6,
+      "comment": "Chỉ được nhiều, không có gì là đặc sắc&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/com-tam-hoa",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:48.944284"
+}

@@ -1,0 +1,46 @@
+{
+  "id": 160457,
+  "name": "Bánh Bò Thốt Nốt Nguyễn Sơn - Giao Hàng Tận Nơi",
+  "address": "6 Lê Tự Tài, P. 4, Quận Phú Nhuận, TP. HCM",
+  "rating": 2.024,
+  "total_reviews": 838,
+  "total_pictures": 607,
+  "phone": "0906 978 991",
+  "photo_url": "https://images.foody.vn/res/g17/160457/prof/s640x400/vn-11134513-7r98o-lxjxdcvqqeop91",
+  "url": "https://www.foody.vn/ho-chi-minh/banh-bo-thot-not-nguyen-son-giao-hang-tan-noi",
+  "location": {
+    "lat": 10.8048783,
+    "lon": 106.6791516
+  },
+  "reviews": [
+    {
+      "user": "Phương Lê",
+      "rating": 2.8,
+      "comment": "Mình đặt bánh bên tiệm, bánh giao mở ra như vầy, bánh chưa nguội là bỏ vào đem giao khách, mồ hôi ra thấm bánh nở và mềm nhũng ra\nNước cốt bánh bò bị gắt dầu alo cho tiệm đổi lại ko giải quyết còn nói ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    },
+    {
+      "user": "Bùi Thuy",
+      "rating": 5.0,
+      "comment": "Ngon lắm mn ná&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g4620/46192782/avt/c100x100/foody-avatar-82e5b1cf-de54-4b9a--5ede0bf1-230609190416.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/banh-bo-thot-not-nguyen-son-giao-hang-tan-noi",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:41.070377"
+}

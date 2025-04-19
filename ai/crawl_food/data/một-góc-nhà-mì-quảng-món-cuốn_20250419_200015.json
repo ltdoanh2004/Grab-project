@@ -1,0 +1,39 @@
+{
+  "id": 1040738,
+  "name": "Một Góc Nhà - Mì Quảng & Món Cuốn",
+  "address": "439-441 Bạch Đằng, P. 2, Quận Bình Thạnh, TP. HCM",
+  "rating": 9.2,
+  "total_reviews": 1,
+  "total_pictures": 12,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g105/1040738/prof/s640x400/vn-11134513-7r98o-lsv0zmbbxl7d68",
+  "url": "https://www.foody.vn/ho-chi-minh/mot-goc-nha-mi-quang-mon-cuon",
+  "location": {
+    "lat": 10.8035048,
+    "lon": 106.7021158
+  },
+  "reviews": [
+    {
+      "user": "Trịnh Bảo Nhân (Nhân Sumo)",
+      "rating": 9.2,
+      "comment": "Hương vị các món ăn ngon, hơi đậm vị. không gian quán đẹp thoải mái. bàn ghế hơi nhỏ ngồi hơi cấn với kiểu lên 2 3 món sẽ hơi khó ăn. Các phần ăn tương đối ăn no okay. sẽ quay lại",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g2165/21640048/avt/c100x100/vn-11134523-7r98o-lzaiodsvawm9d1"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/mot-goc-nha-mi-quang-mon-cuon",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T20:00:01.466631"
+}

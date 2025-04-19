@@ -5774,3 +5774,330 @@ Call log:
 2025-04-18 13:58:14,167 - ERROR - Future exception was never retrieved
 future: <Future finished exception=TargetClosedError('Target page, context or browser has been closed')>
 playwright._impl._errors.TargetClosedError: Target page, context or browser has been closed
+2025-04-19 19:57:16,009 - INFO - Starting crawler, targeting 100 items
+2025-04-19 19:57:16,010 - INFO - Fetching page 1
+2025-04-19 19:57:16,145 - INFO - Extracted data for restaurant: Bún Thái - Kiểu Hongkong - Sư Vạn Hạnh
+2025-04-19 19:57:17,678 - INFO - Extracted data for restaurant: Mì Dầu Hào HongKong Thượng Hạng 港式蚝油捞面 - ChaChaanTeng - Phan Phú Tiên
+2025-04-19 19:57:19,513 - INFO - Extracted data for restaurant: Đậu Hủ Cá Viên HongKong 港式鱼丸豆腐 - ChaChaanTeng
+2025-04-19 19:57:21,314 - INFO - Extracted data for restaurant: Xôi Cadé Trần Phú Chính Gốc - 咖椰糯米饭
+2025-04-19 19:57:22,439 - INFO - Extracted data for restaurant: Kaya Toast Nướng - Cá Viên 咖椰吐司-鱼丸 & ChaChaanTeng
+2025-04-19 19:57:23,576 - INFO - Extracted data for restaurant: 港式甜品店 Trôi Nước HongKong - ChaChaanTeng
+2025-04-19 19:57:24,583 - INFO - Extracted data for restaurant: 茶餐厅 - Cha Chaan Teng - Ẩm Thực HongKong
+2025-04-19 19:57:26,340 - INFO - Extracted data for restaurant: American Hotdog
+2025-04-19 19:57:27,442 - INFO - Extracted data for restaurant: Lẩu Cá Thác Lác Tươi Đặc Biệt  - Phan Phú Tiên
+2025-04-19 19:57:29,404 - INFO - Extracted data for restaurant: Taka Cha - Trà Sữa
+2025-04-19 19:57:31,348 - INFO - Extracted data for restaurant: Chân Gà Nướng - Hẻm 291 Võ Văn Tần
+2025-04-19 19:57:33,226 - INFO - Extracted data for restaurant: Wakeup - Mì Ý & Bò Mỹ - 166 Ngô Tất Tố
+2025-04-19 19:57:34,504 - INFO - Saved data to data/bún-thái-kiểu-hongkong-sư-vạn-hạnh_20250419_195734.json
+2025-04-19 19:57:34,504 - INFO - Progress: 1/100 restaurants processed
+2025-04-19 19:57:34,505 - INFO - Saved data to data/mì-dầu-hào-hongkong-thượng-hạng-港式蚝油捞面-chachaanteng-phan-phú-tiên_20250419_195734.json
+2025-04-19 19:57:34,505 - INFO - Progress: 2/100 restaurants processed
+2025-04-19 19:57:34,505 - INFO - Saved data to data/đậu-hủ-cá-viên-hongkong-港式鱼丸豆腐-chachaanteng_20250419_195734.json
+2025-04-19 19:57:34,505 - INFO - Progress: 3/100 restaurants processed
+2025-04-19 19:57:34,505 - INFO - Saved data to data/xôi-cadé-trần-phú-chính-gốc-咖椰糯米饭_20250419_195734.json
+2025-04-19 19:57:34,505 - INFO - Progress: 4/100 restaurants processed
+2025-04-19 19:57:34,505 - INFO - Saved data to data/kaya-toast-nướng-cá-viên-咖椰吐司-鱼丸-chachaanteng_20250419_195734.json
+2025-04-19 19:57:34,505 - INFO - Progress: 5/100 restaurants processed
+2025-04-19 19:57:34,505 - INFO - Saved data to data/港式甜品店-trôi-nước-hongkong-chachaanteng_20250419_195734.json
+2025-04-19 19:57:34,505 - INFO - Progress: 6/100 restaurants processed
+2025-04-19 19:57:34,505 - INFO - Saved data to data/茶餐厅-cha-chaan-teng-ẩm-thực-hongkong_20250419_195734.json
+2025-04-19 19:57:34,505 - INFO - Progress: 7/100 restaurants processed
+2025-04-19 19:57:34,505 - INFO - Saved data to data/american-hotdog_20250419_195734.json
+2025-04-19 19:57:34,505 - INFO - Progress: 8/100 restaurants processed
+2025-04-19 19:57:34,506 - INFO - Saved data to data/lẩu-cá-thác-lác-tươi-đặc-biệt-phan-phú-tiên_20250419_195734.json
+2025-04-19 19:57:34,506 - INFO - Progress: 9/100 restaurants processed
+2025-04-19 19:57:34,506 - INFO - Saved data to data/taka-cha-trà-sữa_20250419_195734.json
+2025-04-19 19:57:34,506 - INFO - Progress: 10/100 restaurants processed
+2025-04-19 19:57:34,506 - INFO - Saved data to data/chân-gà-nướng-hẻm-291-võ-văn-tần_20250419_195734.json
+2025-04-19 19:57:34,506 - INFO - Progress: 11/100 restaurants processed
+2025-04-19 19:57:34,506 - INFO - Saved data to data/wakeup-mì-ý-bò-mỹ-166-ngô-tất-tố_20250419_195734.json
+2025-04-19 19:57:34,506 - INFO - Progress: 12/100 restaurants processed
+2025-04-19 19:57:34,506 - INFO - Waiting 2.18 seconds before next page...
+2025-04-19 19:57:36,687 - INFO - Fetching page 2
+2025-04-19 19:57:36,960 - INFO - Extracted data for restaurant: Marcel Gourmet Burger - Calmette
+2025-04-19 19:57:38,926 - INFO - Extracted data for restaurant: BreadTalk - AEON Mall Tân Phú
+2025-04-19 19:57:40,297 - INFO - Extracted data for restaurant: Akiko Sushi - Nhà Hàng Nhật Bản - Phan Xích Long
+2025-04-19 19:57:41,461 - INFO - Extracted data for restaurant: Bánh Mì 362 - Thảo Điền
+2025-04-19 19:57:42,845 - INFO - Extracted data for restaurant: Chè Người Hoa An Điềm
+2025-04-19 19:57:43,951 - INFO - Extracted data for restaurant: 港式点心火锅 - Dimsum & Lẩu Hải Sản HongKong
+2025-04-19 19:57:45,893 - INFO - Extracted data for restaurant: Chè HongKong - 港式糖水 - Phan Phú Tiên
+2025-04-19 19:57:47,387 - INFO - Extracted data for restaurant: 吐司工坊 奶茶档 - Phan Phú Tiên
+2025-04-19 19:57:48,508 - INFO - Extracted data for restaurant: Breakfast Shop - Phan Phú Tiên
+2025-04-19 19:57:50,473 - INFO - Extracted data for restaurant: Bánh Canh Cua Bùi Phát - Bánh Canh Cua - Lê Văn Sỹ
+2025-04-19 19:57:51,708 - INFO - Extracted data for restaurant: Cơm Gà Đệ Nhất - Nguyễn Duy Trinh
+2025-04-19 19:57:52,794 - INFO - Extracted data for restaurant: Trà Sữa Nhà Làm 76 - 123 Tăng Nhơn Phú
+2025-04-19 19:57:54,300 - INFO - Saved data to data/marcel-gourmet-burger-calmette_20250419_195754.json
+2025-04-19 19:57:54,300 - INFO - Progress: 13/100 restaurants processed
+2025-04-19 19:57:54,301 - INFO - Saved data to data/breadtalk-aeon-mall-tân-phú_20250419_195754.json
+2025-04-19 19:57:54,301 - INFO - Progress: 14/100 restaurants processed
+2025-04-19 19:57:54,301 - INFO - Saved data to data/akiko-sushi-nhà-hàng-nhật-bản-phan-xích-long_20250419_195754.json
+2025-04-19 19:57:54,301 - INFO - Progress: 15/100 restaurants processed
+2025-04-19 19:57:54,301 - INFO - Saved data to data/bánh-mì-362-thảo-điền_20250419_195754.json
+2025-04-19 19:57:54,301 - INFO - Progress: 16/100 restaurants processed
+2025-04-19 19:57:54,302 - INFO - Saved data to data/che-ngươi-hoa-an-điêm_20250419_195754.json
+2025-04-19 19:57:54,302 - INFO - Progress: 17/100 restaurants processed
+2025-04-19 19:57:54,302 - INFO - Saved data to data/港式点心火锅-dimsum-lẩu-hải-sản-hongkong_20250419_195754.json
+2025-04-19 19:57:54,302 - INFO - Progress: 18/100 restaurants processed
+2025-04-19 19:57:54,302 - INFO - Saved data to data/chè-hongkong-港式糖水-phan-phú-tiên_20250419_195754.json
+2025-04-19 19:57:54,302 - INFO - Progress: 19/100 restaurants processed
+2025-04-19 19:57:54,303 - INFO - Saved data to data/吐司工坊-奶茶档-phan-phú-tiên_20250419_195754.json
+2025-04-19 19:57:54,303 - INFO - Progress: 20/100 restaurants processed
+2025-04-19 19:57:54,303 - INFO - Saved data to data/breakfast-shop-phan-phú-tiên_20250419_195754.json
+2025-04-19 19:57:54,303 - INFO - Progress: 21/100 restaurants processed
+2025-04-19 19:57:54,303 - INFO - Saved data to data/bánh-canh-cua-bùi-phát-bánh-canh-cua-lê-văn-sỹ_20250419_195754.json
+2025-04-19 19:57:54,303 - INFO - Progress: 22/100 restaurants processed
+2025-04-19 19:57:54,303 - INFO - Saved data to data/cơm-gà-đệ-nhất-nguyễn-duy-trinh_20250419_195754.json
+2025-04-19 19:57:54,303 - INFO - Progress: 23/100 restaurants processed
+2025-04-19 19:57:54,303 - INFO - Saved data to data/trà-sữa-nhà-làm-76-123-tăng-nhơn-phú_20250419_195754.json
+2025-04-19 19:57:54,303 - INFO - Progress: 24/100 restaurants processed
+2025-04-19 19:57:54,304 - INFO - Waiting 2.38 seconds before next page...
+2025-04-19 19:57:56,687 - INFO - Fetching page 3
+2025-04-19 19:57:57,110 - INFO - Extracted data for restaurant: Bánh Cuốn Gạo Lứt & Chè Ngon
+2025-04-19 19:57:58,222 - INFO - Extracted data for restaurant: Cheese Coffee - Estella Place
+2025-04-19 19:57:59,590 - INFO - Extracted data for restaurant: Gỏi Khô Bò - Công Viên Lê Văn Tám
+2025-04-19 19:58:00,806 - INFO - Extracted data for restaurant: Hồng Trà Ngô Gia - Tỉnh Lộ 10
+2025-04-19 19:58:02,453 - INFO - Extracted data for restaurant: Gà Rán & Burger McDonald's Đa Kao
+2025-04-19 19:58:04,108 - INFO - Extracted data for restaurant: Cô Vy - Bún Cá Châu Đốc
+2025-04-19 19:58:05,218 - INFO - Extracted data for restaurant: SteakZone
+2025-04-19 19:58:06,654 - INFO - Extracted data for restaurant: Chè Thái Út Lyly
+2025-04-19 19:58:08,636 - INFO - Extracted data for restaurant: Bánh Mì Que Chip - Hòa Hảo
+2025-04-19 19:58:10,531 - INFO - Extracted data for restaurant: Fruit Crush - Trái Cây Tươi & Ăn Vặt - 62 Đường Số 1
+2025-04-19 19:58:11,943 - INFO - Extracted data for restaurant: Bánh Mì Thịt Bò Nướng Cô Lành - Hồ Xuân Hương
+2025-04-19 19:58:13,154 - INFO - Extracted data for restaurant: Cơm Gà Hai Nam - Phan Văn Trị
+2025-04-19 19:58:14,451 - INFO - Saved data to data/bánh-cuốn-gạo-lứt-chè-ngon_20250419_195814.json
+2025-04-19 19:58:14,451 - INFO - Progress: 25/100 restaurants processed
+2025-04-19 19:58:14,451 - INFO - Saved data to data/cheese-coffee-estella-place_20250419_195814.json
+2025-04-19 19:58:14,451 - INFO - Progress: 26/100 restaurants processed
+2025-04-19 19:58:14,451 - INFO - Saved data to data/gỏi-khô-bò-công-viên-lê-văn-tám_20250419_195814.json
+2025-04-19 19:58:14,451 - INFO - Progress: 27/100 restaurants processed
+2025-04-19 19:58:14,452 - INFO - Saved data to data/hồng-trà-ngô-gia-tỉnh-lộ-10_20250419_195814.json
+2025-04-19 19:58:14,452 - INFO - Progress: 28/100 restaurants processed
+2025-04-19 19:58:14,452 - INFO - Saved data to data/gà-rán-burger-mcdonalds-đa-kao_20250419_195814.json
+2025-04-19 19:58:14,452 - INFO - Progress: 29/100 restaurants processed
+2025-04-19 19:58:14,452 - INFO - Saved data to data/cô-vy-bún-cá-châu-đốc_20250419_195814.json
+2025-04-19 19:58:14,452 - INFO - Progress: 30/100 restaurants processed
+2025-04-19 19:58:14,452 - INFO - Saved data to data/steakzone_20250419_195814.json
+2025-04-19 19:58:14,452 - INFO - Progress: 31/100 restaurants processed
+2025-04-19 19:58:14,452 - INFO - Saved data to data/chè-thái-út-lyly_20250419_195814.json
+2025-04-19 19:58:14,452 - INFO - Progress: 32/100 restaurants processed
+2025-04-19 19:58:14,452 - INFO - Saved data to data/bánh-mì-que-chip-hòa-hảo_20250419_195814.json
+2025-04-19 19:58:14,452 - INFO - Progress: 33/100 restaurants processed
+2025-04-19 19:58:14,452 - INFO - Saved data to data/fruit-crush-trái-cây-tươi-ăn-vặt-62-đường-số-1_20250419_195814.json
+2025-04-19 19:58:14,452 - INFO - Progress: 34/100 restaurants processed
+2025-04-19 19:58:14,453 - INFO - Saved data to data/bánh-mì-thịt-bò-nướng-cô-lành-hồ-xuân-hương_20250419_195814.json
+2025-04-19 19:58:14,453 - INFO - Progress: 35/100 restaurants processed
+2025-04-19 19:58:14,453 - INFO - Saved data to data/cơm-gà-hai-nam-phan-văn-trị_20250419_195814.json
+2025-04-19 19:58:14,453 - INFO - Progress: 36/100 restaurants processed
+2025-04-19 19:58:14,453 - INFO - Waiting 2.74 seconds before next page...
+2025-04-19 19:58:17,195 - INFO - Fetching page 4
+2025-04-19 19:58:17,490 - INFO - Extracted data for restaurant: Bạch Hoa Trà - Trà Sâm Olong & Trà Sâm Nhiệt Đới - Thạnh Xuân 22
+2025-04-19 19:58:18,987 - INFO - Extracted data for restaurant: Bún Đậu Cô Khàn - Món Bắc Bình Dân
+2025-04-19 19:58:20,066 - INFO - Extracted data for restaurant: Bún Cá Chàng Thơ
+2025-04-19 19:58:21,921 - INFO - Extracted data for restaurant: Bánh Mì Như Lan - 50 Hàm Nghi
+2025-04-19 19:58:23,264 - INFO - Extracted data for restaurant: Fruit Crush - Trái Cây Tươi & Ăn Vặt - Quận 1
+2025-04-19 19:58:24,801 - INFO - Extracted data for restaurant: Hủ Tiếu Nam Vang Nhân Quán - Âu Dương Lân
+2025-04-19 19:58:26,735 - INFO - Extracted data for restaurant: Cô Mai - Bánh Tráng Cuốn
+2025-04-19 19:58:28,613 - INFO - Extracted data for restaurant: Bảo Bảo - Cơm Tấm & Mì Xào
+2025-04-19 19:58:29,961 - INFO - Extracted data for restaurant: Hủ Tiếu Hoa - Trần Đình Xu
+2025-04-19 19:58:31,749 - INFO - Extracted data for restaurant: Bánh Bèo Số 2 - Thống Nhất
+2025-04-19 19:58:32,796 - INFO - Extracted data for restaurant: Mì Trộn Tên Lửa - Cộng Hòa
+2025-04-19 19:58:34,474 - INFO - Extracted data for restaurant: BreadTalk - Saigon Centre
+2025-04-19 19:58:35,895 - INFO - Saved data to data/bạch-hoa-trà-trà-sâm-olong-trà-sâm-nhiệt-đới-thạnh-xuân-22_20250419_195835.json
+2025-04-19 19:58:35,895 - INFO - Progress: 37/100 restaurants processed
+2025-04-19 19:58:35,896 - INFO - Saved data to data/bún-đậu-cô-khàn-món-bắc-bình-dân_20250419_195835.json
+2025-04-19 19:58:35,896 - INFO - Progress: 38/100 restaurants processed
+2025-04-19 19:58:35,896 - INFO - Saved data to data/bún-cá-chàng-thơ_20250419_195835.json
+2025-04-19 19:58:35,896 - INFO - Progress: 39/100 restaurants processed
+2025-04-19 19:58:35,896 - INFO - Saved data to data/bánh-mì-như-lan-50-hàm-nghi_20250419_195835.json
+2025-04-19 19:58:35,896 - INFO - Progress: 40/100 restaurants processed
+2025-04-19 19:58:35,896 - INFO - Saved data to data/fruit-crush-trái-cây-tươi-ăn-vặt-quận-1_20250419_195835.json
+2025-04-19 19:58:35,896 - INFO - Progress: 41/100 restaurants processed
+2025-04-19 19:58:35,896 - INFO - Saved data to data/hủ-tiếu-nam-vang-nhân-quán-âu-dương-lân_20250419_195835.json
+2025-04-19 19:58:35,896 - INFO - Progress: 42/100 restaurants processed
+2025-04-19 19:58:35,896 - INFO - Saved data to data/cô-mai-bánh-tráng-cuốn_20250419_195835.json
+2025-04-19 19:58:35,896 - INFO - Progress: 43/100 restaurants processed
+2025-04-19 19:58:35,896 - INFO - Saved data to data/bảo-bảo-cơm-tấm-mì-xào_20250419_195835.json
+2025-04-19 19:58:35,896 - INFO - Progress: 44/100 restaurants processed
+2025-04-19 19:58:35,897 - INFO - Saved data to data/hủ-tiếu-hoa-trần-đình-xu_20250419_195835.json
+2025-04-19 19:58:35,897 - INFO - Progress: 45/100 restaurants processed
+2025-04-19 19:58:35,897 - INFO - Saved data to data/bánh-bèo-số-2-thống-nhất_20250419_195835.json
+2025-04-19 19:58:35,897 - INFO - Progress: 46/100 restaurants processed
+2025-04-19 19:58:35,897 - INFO - Saved data to data/mì-trộn-tên-lửa-cộng-hòa_20250419_195835.json
+2025-04-19 19:58:35,897 - INFO - Progress: 47/100 restaurants processed
+2025-04-19 19:58:35,897 - INFO - Saved data to data/breadtalk-saigon-centre_20250419_195835.json
+2025-04-19 19:58:35,897 - INFO - Progress: 48/100 restaurants processed
+2025-04-19 19:58:35,897 - INFO - Waiting 1.92 seconds before next page...
+2025-04-19 19:58:37,820 - INFO - Fetching page 5
+2025-04-19 19:58:38,115 - INFO - Extracted data for restaurant: Phở Hạnh - Huỳnh Mẫn Đạt
+2025-04-19 19:58:39,555 - INFO - Extracted data for restaurant: Ốc Tô - Xóm Chiếu
+2025-04-19 19:58:41,045 - INFO - Extracted data for restaurant: Ốc Thúy - Quận 4
+2025-04-19 19:58:42,520 - INFO - Extracted data for restaurant: Phan Rang Quán - Bánh Căn, Nem Cuốn & Bánh Xèo - Đường D5
+2025-04-19 19:58:43,604 - INFO - Extracted data for restaurant: Highlands Coffee - Trà, Cà Phê & Bánh - Lý Chính Thắng
+2025-04-19 19:58:44,671 - INFO - Extracted data for restaurant: Hủ Tiếu Bò Viên 1122
+2025-04-19 19:58:46,142 - INFO - Extracted data for restaurant: Shiba Sushi - Phan Xích Long
+2025-04-19 19:58:48,062 - INFO - Extracted data for restaurant: Cơm Tấm Bà Chị Hai - Cơm Tấm - Đặng Văn Ngữ
+2025-04-19 19:58:49,256 - INFO - Extracted data for restaurant: Đặc Sản Trảng Bàng Hoàng Ty - Các Món Cuốn Bánh Tráng & Bánh Canh Trảng Bàng - Nguyễn Trung Nguyệt
+2025-04-19 19:58:50,870 - INFO - Extracted data for restaurant: Phở Hà Nội - Hồng Hà
+2025-04-19 19:58:52,408 - INFO - Extracted data for restaurant: Bánh Giò Nem Chả Dì Linh - Hai Bà Trưng
+2025-04-19 19:58:53,749 - INFO - Extracted data for restaurant: Quán Ăn Minh Ký - Hủ Tiếu Xào
+2025-04-19 19:58:54,972 - INFO - Saved data to data/phở-hạnh-huỳnh-mẫn-đạt_20250419_195854.json
+2025-04-19 19:58:54,972 - INFO - Progress: 49/100 restaurants processed
+2025-04-19 19:58:54,973 - INFO - Saved data to data/ốc-tô-xóm-chiếu_20250419_195854.json
+2025-04-19 19:58:54,973 - INFO - Progress: 50/100 restaurants processed
+2025-04-19 19:58:54,974 - INFO - Saved data to data/ốc-thúy-quận-4_20250419_195854.json
+2025-04-19 19:58:54,974 - INFO - Progress: 51/100 restaurants processed
+2025-04-19 19:58:54,975 - INFO - Saved data to data/phan-rang-quán-bánh-căn-nem-cuốn-bánh-xèo-đường-d5_20250419_195854.json
+2025-04-19 19:58:54,975 - INFO - Progress: 52/100 restaurants processed
+2025-04-19 19:58:54,976 - INFO - Saved data to data/highlands-coffee-trà-cà-phê-bánh-lý-chính-thắng_20250419_195854.json
+2025-04-19 19:58:54,977 - INFO - Progress: 53/100 restaurants processed
+2025-04-19 19:58:54,977 - INFO - Saved data to data/hủ-tiếu-bò-viên-1122_20250419_195854.json
+2025-04-19 19:58:54,977 - INFO - Progress: 54/100 restaurants processed
+2025-04-19 19:58:54,978 - INFO - Saved data to data/shiba-sushi-phan-xích-long_20250419_195854.json
+2025-04-19 19:58:54,978 - INFO - Progress: 55/100 restaurants processed
+2025-04-19 19:58:54,981 - INFO - Saved data to data/cơm-tấm-bà-chị-hai-cơm-tấm-đặng-văn-ngữ_20250419_195854.json
+2025-04-19 19:58:54,981 - INFO - Progress: 56/100 restaurants processed
+2025-04-19 19:58:54,982 - INFO - Saved data to data/đặc-sản-trảng-bàng-hoàng-ty-các-món-cuốn-bánh-tráng-bánh-canh-trảng-bàng-nguyễn-trung-nguyệt_20250419_195854.json
+2025-04-19 19:58:54,982 - INFO - Progress: 57/100 restaurants processed
+2025-04-19 19:58:54,982 - INFO - Saved data to data/phở-hà-nội-hồng-hà_20250419_195854.json
+2025-04-19 19:58:54,983 - INFO - Progress: 58/100 restaurants processed
+2025-04-19 19:58:54,984 - INFO - Saved data to data/bánh-giò-nem-chả-dì-linh-hai-bà-trưng_20250419_195854.json
+2025-04-19 19:58:54,984 - INFO - Progress: 59/100 restaurants processed
+2025-04-19 19:58:54,984 - INFO - Saved data to data/quan-ăn-minh-ky-hủ-tiếu-xào_20250419_195854.json
+2025-04-19 19:58:54,985 - INFO - Progress: 60/100 restaurants processed
+2025-04-19 19:58:54,985 - INFO - Waiting 1.26 seconds before next page...
+2025-04-19 19:58:56,254 - INFO - Fetching page 6
+2025-04-19 19:58:56,573 - INFO - Extracted data for restaurant: Quán Hai Mập - Cơm Gà Da Giòn & Hủ Tiếu Mì Xào
+2025-04-19 19:58:58,040 - INFO - Extracted data for restaurant: Bún Quậy Tâm Quán - Lê Văn Lương
+2025-04-19 19:58:59,822 - INFO - Extracted data for restaurant: Miss Đác - Chè Không Ngọt - Hoàng Sa
+2025-04-19 19:59:00,957 - INFO - Extracted data for restaurant: Cà Ri Gà 1357
+2025-04-19 19:59:01,985 - INFO - Extracted data for restaurant: LongBuri Cancook - Gân Bò, Chân Gà Sốt Thái
+2025-04-19 19:59:03,492 - INFO - Extracted data for restaurant: Nhà Hàng Tân Hải Vân - Nguyễn Trãi
+2025-04-19 19:59:05,387 - INFO - Extracted data for restaurant: Baoz Dimsum Restaurant - Lê Đại Hành
+2025-04-19 19:59:07,072 - INFO - Extracted data for restaurant: Hua Wu Lou - Dimsum Street - Bàn Cờ
+2025-04-19 19:59:08,821 - INFO - Extracted data for restaurant: Bánh Cuốn Song Mộc - Vườn Chuối
+2025-04-19 19:59:09,933 - INFO - Extracted data for restaurant: Gà Rán KFC - Tỉnh Lộ 10
+2025-04-19 19:59:11,090 - INFO - Extracted data for restaurant: The Black Tea - Nguyễn Thị Minh Khai
+2025-04-19 19:59:13,060 - INFO - Extracted data for restaurant: Tar Tar Trà
+2025-04-19 19:59:14,711 - INFO - Saved data to data/quán-hai-mập-cơm-gà-da-giòn-hủ-tiếu-mì-xào_20250419_195914.json
+2025-04-19 19:59:14,711 - INFO - Progress: 61/100 restaurants processed
+2025-04-19 19:59:14,711 - INFO - Saved data to data/bún-quậy-tâm-quán-lê-văn-lương_20250419_195914.json
+2025-04-19 19:59:14,711 - INFO - Progress: 62/100 restaurants processed
+2025-04-19 19:59:14,711 - INFO - Saved data to data/miss-đác-chè-không-ngọt-hoàng-sa_20250419_195914.json
+2025-04-19 19:59:14,711 - INFO - Progress: 63/100 restaurants processed
+2025-04-19 19:59:14,711 - INFO - Saved data to data/cà-ri-gà-1357_20250419_195914.json
+2025-04-19 19:59:14,711 - INFO - Progress: 64/100 restaurants processed
+2025-04-19 19:59:14,711 - INFO - Saved data to data/longburi-cancook-gân-bò-chân-gà-sốt-thái_20250419_195914.json
+2025-04-19 19:59:14,711 - INFO - Progress: 65/100 restaurants processed
+2025-04-19 19:59:14,711 - INFO - Saved data to data/nhà-hàng-tân-hải-vân-nguyễn-trãi_20250419_195914.json
+2025-04-19 19:59:14,711 - INFO - Progress: 66/100 restaurants processed
+2025-04-19 19:59:14,712 - INFO - Saved data to data/baoz-dimsum-restaurant-lê-đại-hành_20250419_195914.json
+2025-04-19 19:59:14,712 - INFO - Progress: 67/100 restaurants processed
+2025-04-19 19:59:14,712 - INFO - Saved data to data/hua-wu-lou-dimsum-street-bàn-cờ_20250419_195914.json
+2025-04-19 19:59:14,712 - INFO - Progress: 68/100 restaurants processed
+2025-04-19 19:59:14,712 - INFO - Saved data to data/bánh-cuốn-song-mộc-vườn-chuối_20250419_195914.json
+2025-04-19 19:59:14,712 - INFO - Progress: 69/100 restaurants processed
+2025-04-19 19:59:14,712 - INFO - Saved data to data/gà-rán-kfc-tỉnh-lộ-10_20250419_195914.json
+2025-04-19 19:59:14,712 - INFO - Progress: 70/100 restaurants processed
+2025-04-19 19:59:14,712 - INFO - Saved data to data/the-black-tea-nguyễn-thị-minh-khai_20250419_195914.json
+2025-04-19 19:59:14,712 - INFO - Progress: 71/100 restaurants processed
+2025-04-19 19:59:14,712 - INFO - Saved data to data/tar-tar-trà_20250419_195914.json
+2025-04-19 19:59:14,712 - INFO - Progress: 72/100 restaurants processed
+2025-04-19 19:59:14,712 - INFO - Waiting 2.96 seconds before next page...
+2025-04-19 19:59:17,677 - INFO - Fetching page 7
+2025-04-19 19:59:17,985 - INFO - Extracted data for restaurant: Morico - Contemporary Japanese Lifestyle - Somerset
+2025-04-19 19:59:19,247 - INFO - Extracted data for restaurant: Trà Sữa Bobapop - Nguyễn Thị Minh Khai
+2025-04-19 19:59:20,622 - INFO - Extracted data for restaurant: The Jade - Bánh Sầu Riêng Kem Lạnh - Cách Mạng Tháng 8
+2025-04-19 19:59:21,924 - INFO - Extracted data for restaurant: Lẩu Gà Ớt Hiểm 109 - Nguyễn Thiện Thuật
+2025-04-19 19:59:23,159 - INFO - Extracted data for restaurant: Hồng Ký - Mì Vịt Tiềm
+2025-04-19 19:59:24,302 - INFO - Extracted data for restaurant: Bánh Mì Bảy Quang
+2025-04-19 19:59:25,459 - INFO - Extracted data for restaurant: Tàu Hủ Cóc - Hoa Sứ
+2025-04-19 19:59:26,707 - INFO - Extracted data for restaurant: Hangu - Ăn Vặt Hàn Quốc - Lê Niệm
+2025-04-19 19:59:28,520 - INFO - Extracted data for restaurant: OTONAGE KOROKKE
+2025-04-19 19:59:30,189 - INFO - Extracted data for restaurant: Quán Cháo Lòng Nam Định 18A - Cháo Lòng & Má Heo - 97 Ung Văn Khiêm
+2025-04-19 19:59:32,086 - INFO - Extracted data for restaurant: Cô Nga - Nem Nướng Ninh Hòa - Nguyễn Thái Bình
+2025-04-19 19:59:33,828 - INFO - Extracted data for restaurant: Bún Quậy Tâm Quán - Nguyễn Tri Phương
+2025-04-19 19:59:35,595 - INFO - Saved data to data/morico-contemporary-japanese-lifestyle-somerset_20250419_195935.json
+2025-04-19 19:59:35,595 - INFO - Progress: 73/100 restaurants processed
+2025-04-19 19:59:35,595 - INFO - Saved data to data/trà-sữa-bobapop-nguyễn-thị-minh-khai_20250419_195935.json
+2025-04-19 19:59:35,595 - INFO - Progress: 74/100 restaurants processed
+2025-04-19 19:59:35,595 - INFO - Saved data to data/the-jade-bánh-sầu-riêng-kem-lạnh-cách-mạng-tháng-8_20250419_195935.json
+2025-04-19 19:59:35,595 - INFO - Progress: 75/100 restaurants processed
+2025-04-19 19:59:35,595 - INFO - Saved data to data/lẩu-gà-ớt-hiểm-109-nguyễn-thiện-thuật_20250419_195935.json
+2025-04-19 19:59:35,595 - INFO - Progress: 76/100 restaurants processed
+2025-04-19 19:59:35,596 - INFO - Saved data to data/hồng-ký-mì-vịt-tiềm_20250419_195935.json
+2025-04-19 19:59:35,596 - INFO - Progress: 77/100 restaurants processed
+2025-04-19 19:59:35,596 - INFO - Saved data to data/bánh-mì-bảy-quang_20250419_195935.json
+2025-04-19 19:59:35,596 - INFO - Progress: 78/100 restaurants processed
+2025-04-19 19:59:35,596 - INFO - Saved data to data/tàu-hủ-cóc-hoa-sứ_20250419_195935.json
+2025-04-19 19:59:35,596 - INFO - Progress: 79/100 restaurants processed
+2025-04-19 19:59:35,596 - INFO - Saved data to data/hangu-ăn-vặt-hàn-quốc-lê-niệm_20250419_195935.json
+2025-04-19 19:59:35,596 - INFO - Progress: 80/100 restaurants processed
+2025-04-19 19:59:35,596 - INFO - Saved data to data/otonage-korokke_20250419_195935.json
+2025-04-19 19:59:35,596 - INFO - Progress: 81/100 restaurants processed
+2025-04-19 19:59:35,596 - INFO - Saved data to data/quán-cháo-lòng-nam-định-18a-cháo-lòng-má-heo-97-ung-văn-khiêm_20250419_195935.json
+2025-04-19 19:59:35,597 - INFO - Progress: 82/100 restaurants processed
+2025-04-19 19:59:35,597 - INFO - Saved data to data/cô-nga-nem-nướng-ninh-hòa-nguyễn-thái-bình_20250419_195935.json
+2025-04-19 19:59:35,597 - INFO - Progress: 83/100 restaurants processed
+2025-04-19 19:59:35,597 - INFO - Saved data to data/bún-quậy-tâm-quán-nguyễn-tri-phương_20250419_195935.json
+2025-04-19 19:59:35,597 - INFO - Progress: 84/100 restaurants processed
+2025-04-19 19:59:35,597 - INFO - Waiting 2.05 seconds before next page...
+2025-04-19 19:59:37,655 - INFO - Fetching page 8
+2025-04-19 19:59:37,949 - INFO - Extracted data for restaurant: Cơm Tấm Phúc Lộc Thọ - 590 Quang Trung
+2025-04-19 19:59:39,523 - INFO - Extracted data for restaurant: Phở Chí Phèo - Đồng Đen
+2025-04-19 19:59:41,070 - INFO - Extracted data for restaurant: Bánh Bò Thốt Nốt Nguyễn Sơn - Giao Hàng Tận Nơi
+2025-04-19 19:59:42,511 - INFO - Extracted data for restaurant: The Dome Kaffe
+2025-04-19 19:59:43,560 - INFO - Extracted data for restaurant: Gà Rán Popeyes - Điện Biên Phủ
+2025-04-19 19:59:45,275 - INFO - Extracted data for restaurant: Tí Đô Quán - Trà Sữa & Ăn Vặt
+2025-04-19 19:59:46,292 - INFO - Extracted data for restaurant: Miến Phở Gà 43 Mạc Đĩnh Chi - Hồ Bá Kiện
+2025-04-19 19:59:47,383 - INFO - Extracted data for restaurant: Gà rán và Mì Ý - Jollibee - Cộng Hòa
+2025-04-19 19:59:48,944 - INFO - Extracted data for restaurant: Cơm Tấm Hòa
+2025-04-19 19:59:50,161 - INFO - Extracted data for restaurant: Bếp Thuần Chay Âu Lạc - Trần Thị Trọng
+2025-04-19 19:59:52,055 - INFO - Extracted data for restaurant: Cơm Nắm I'm Hihi Quận 4
+2025-04-19 19:59:53,452 - INFO - Extracted data for restaurant: Uchi Sushi - TP Thủ Đức
+2025-04-19 19:59:54,733 - INFO - Saved data to data/cơm-tấm-phúc-lộc-thọ-590-quang-trung_20250419_195954.json
+2025-04-19 19:59:54,733 - INFO - Progress: 85/100 restaurants processed
+2025-04-19 19:59:54,733 - INFO - Saved data to data/phở-chí-phèo-đồng-đen_20250419_195954.json
+2025-04-19 19:59:54,734 - INFO - Progress: 86/100 restaurants processed
+2025-04-19 19:59:54,734 - INFO - Saved data to data/bánh-bò-thốt-nốt-nguyễn-sơn-giao-hàng-tận-nơi_20250419_195954.json
+2025-04-19 19:59:54,734 - INFO - Progress: 87/100 restaurants processed
+2025-04-19 19:59:54,734 - INFO - Saved data to data/the-dome-kaffe_20250419_195954.json
+2025-04-19 19:59:54,734 - INFO - Progress: 88/100 restaurants processed
+2025-04-19 19:59:54,734 - INFO - Saved data to data/gà-rán-popeyes-điện-biên-phủ_20250419_195954.json
+2025-04-19 19:59:54,734 - INFO - Progress: 89/100 restaurants processed
+2025-04-19 19:59:54,734 - INFO - Saved data to data/tí-đô-quán-trà-sữa-ăn-vặt_20250419_195954.json
+2025-04-19 19:59:54,734 - INFO - Progress: 90/100 restaurants processed
+2025-04-19 19:59:54,734 - INFO - Saved data to data/miến-phở-gà-43-mạc-đĩnh-chi-hồ-bá-kiện_20250419_195954.json
+2025-04-19 19:59:54,734 - INFO - Progress: 91/100 restaurants processed
+2025-04-19 19:59:54,734 - INFO - Saved data to data/gà-rán-và-mì-ý-jollibee-cộng-hòa_20250419_195954.json
+2025-04-19 19:59:54,734 - INFO - Progress: 92/100 restaurants processed
+2025-04-19 19:59:54,734 - INFO - Saved data to data/cơm-tâm-hoa_20250419_195954.json
+2025-04-19 19:59:54,735 - INFO - Progress: 93/100 restaurants processed
+2025-04-19 19:59:54,735 - INFO - Saved data to data/bếp-thuần-chay-âu-lạc-trần-thị-trọng_20250419_195954.json
+2025-04-19 19:59:54,735 - INFO - Progress: 94/100 restaurants processed
+2025-04-19 19:59:54,735 - INFO - Saved data to data/cơm-nắm-im-hihi-quận-4_20250419_195954.json
+2025-04-19 19:59:54,735 - INFO - Progress: 95/100 restaurants processed
+2025-04-19 19:59:54,735 - INFO - Saved data to data/uchi-sushi-tp-thủ-đức_20250419_195954.json
+2025-04-19 19:59:54,735 - INFO - Progress: 96/100 restaurants processed
+2025-04-19 19:59:54,735 - INFO - Waiting 1.32 seconds before next page...
+2025-04-19 19:59:56,061 - INFO - Fetching page 9
+2025-04-19 19:59:56,307 - INFO - Extracted data for restaurant: Bún Cá Châu Đốc Dì Huệ
+2025-04-19 19:59:58,282 - INFO - Extracted data for restaurant: Sonia's Bakery - Bánh Chuối Nướng Bơ Sữa - Shop Online
+2025-04-19 20:00:00,117 - INFO - Extracted data for restaurant: Som Tum Thai - Nguyễn Tri Phương
+2025-04-19 20:00:01,466 - INFO - Extracted data for restaurant: Một Góc Nhà - Mì Quảng & Món Cuốn
+2025-04-19 20:00:02,957 - INFO - Extracted data for restaurant: Dzãnh Coffe & Tea - Đặng Thúc Vịnh
+2025-04-19 20:00:04,325 - INFO - Extracted data for restaurant: Cô Điệp - Nem Nướng Nha Trang - Khánh Hội
+2025-04-19 20:00:06,301 - INFO - Extracted data for restaurant: Cơm Gà Dân Ký
+2025-04-19 20:00:07,760 - INFO - Extracted data for restaurant: Bánh Cuốn Thanh Trì Hà Nội
+2025-04-19 20:00:08,882 - INFO - Extracted data for restaurant: Mười Đoàn - Hủ Tiếu Nam Vang - Đặng Văn Bi
+2025-04-19 20:00:10,792 - INFO - Extracted data for restaurant: Cơm Tấm Chả Cua - Nguyễn Phi Khanh
+2025-04-19 20:00:12,571 - INFO - Extracted data for restaurant: Đắc Hòa - Heo Quay & Vịt Quay
+2025-04-19 20:00:13,646 - INFO - Extracted data for restaurant: Cô Hồng - Xôi Gà Xé
+2025-04-19 20:00:15,166 - INFO - Saved data to data/bún-cá-châu-đốc-dì-huệ_20250419_200015.json
+2025-04-19 20:00:15,166 - INFO - Progress: 97/100 restaurants processed
+2025-04-19 20:00:15,167 - INFO - Saved data to data/sonias-bakery-bánh-chuối-nướng-bơ-sữa-shop-online_20250419_200015.json
+2025-04-19 20:00:15,167 - INFO - Progress: 98/100 restaurants processed
+2025-04-19 20:00:15,168 - INFO - Saved data to data/som-tum-thai-nguyễn-tri-phương_20250419_200015.json
+2025-04-19 20:00:15,168 - INFO - Progress: 99/100 restaurants processed
+2025-04-19 20:00:15,169 - INFO - Saved data to data/một-góc-nhà-mì-quảng-món-cuốn_20250419_200015.json
+2025-04-19 20:00:15,169 - INFO - Progress: 100/100 restaurants processed
+2025-04-19 20:00:15,169 - INFO - Crawling completed. Processed 100 restaurants
