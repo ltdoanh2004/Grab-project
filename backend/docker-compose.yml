@@ -10,8 +10,8 @@ services:
       - DATABASE_HOST=mysql
       - DATABASE_PORT=3306
       - DATABASE_USER=root
-      - DATABASE_PASSWORD=password
-      - DATABASE_NAME=todo_db
+      - DATABASE_PASSWORD=88889999
+      - DATABASE_NAME=mydb
     depends_on:
       mysql:
         condition: service_healthy
@@ -21,9 +21,9 @@ services:
   mysql:
     image: mysql:latest
     environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=todo_db
-      - MYSQL_PASSWORD=mypassword
+      - MYSQL_ROOT_PASSWORD=88889999
+      - MYSQL_DATABASE=mydb
+      - MYSQL_PASSWORD=88889999
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
       interval: 5s
