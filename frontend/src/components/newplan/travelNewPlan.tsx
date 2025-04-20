@@ -2,6 +2,7 @@ import React from "react";
 import { DestinationStep } from "./travelPlanDestination";
 import { TimeStep } from "./travelPlanTime";
 import { PersonalStep } from "./travelPlanPersonal";
+import { PeopleBudgetStep } from "./travelPlanBasic";
 import { StepNavigation } from "./navbar";
 import { useTravelPlan } from "../../hooks/useTravelPlans";
 
@@ -9,6 +10,8 @@ export const TravelNewPlan: React.FC = () => {
   const {
     currentStep,
     selectedDestinationId,
+    budget,
+    handleBudgetChange,
     handleNextStep,
     handlePrevStep,
     handleDestinationSelect,
@@ -20,12 +23,14 @@ export const TravelNewPlan: React.FC = () => {
     travelTime,
     handleMonthChange,
     handleLengthChange,
+    people,
+    handlePeopleChange,
     isDestinationSelection,
   } = useTravelPlan();
 
   const renderStepContent = () => {
     switch (currentStep) {
-      case 0:
+      case 1:
         return (
           <TimeStep
             travelTime={travelTime}
@@ -37,7 +42,7 @@ export const TravelNewPlan: React.FC = () => {
             onPrev={handleBacktoMain}
           />
         );
-      case 1:
+      case 2:
         return (
           <PersonalStep
             selectedOptions={selectedOptions}
@@ -46,7 +51,17 @@ export const TravelNewPlan: React.FC = () => {
             onPrev={handlePrevStep}
           />
         );
-
+      case 0:
+        return (
+          <PeopleBudgetStep
+            budget={budget}
+            onBudgetChange={handleBudgetChange}
+            people={people}
+            onPeopleChange={handlePeopleChange}
+            onNext={handleNextStep}
+            onPrev={handlePrevStep}
+          />
+        );
       default:
         return null;
     }
@@ -64,24 +79,6 @@ export const TravelNewPlan: React.FC = () => {
         />
       ) : (
         <>
-          {/* <div className="p-4 border-b bg-blue-50">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <img
-                  src={selectedDestination?.imageUrl}
-                  alt={selectedDestination?.name}
-                  className="w-10 h-10 mr-3"
-                />
-                <Title level={4} className="m-0">
-                  {selectedDestination?.name}, {selectedDestination?.country}
-                </Title>
-              </div>
-              <Button type="link" onClick={handleBacktoMain}>
-                Thay đổi
-              </Button>
-            </div>
-          </div> */}
-
           <StepNavigation currentStep={currentStep} />
           {renderStepContent()}
         </>

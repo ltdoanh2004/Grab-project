@@ -22,12 +22,15 @@ export interface FlexibleTime {
 export type TravelTime = ExactTime | FlexibleTime;
 
 export interface Budget {
-  total: number;
-  accommodation: number;
-  food: number;
-  activities: number;
-  transportation: number;
-  other: number;
+  type: "$" | "$$" | "$$$" | "$$$$" | "$$$$$";
+  exactBudget?: number;
+}
+
+export interface NumOfPeople {
+  adults: number;
+  children: number;
+  infants: number;
+  pets: number;
 }
 
 export interface PersonalOption {

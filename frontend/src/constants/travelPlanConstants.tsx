@@ -129,3 +129,10 @@ export const PERSONAL_OPTIONS: PersonalOptions = {
     },
   ],
 };
+export const BUDGET_RANGES = {
+  $: { min: 0, max: 5000000, description: "Tiết kiệm" },
+  $$: { min: 5000000, max: 10000000, description: "Vừa phải" },
+  $$$: { min: 10000000, max: 20000000, description: "Thoải mái" },
+  $$$$: { min: 20000000, max: 50000000, description: "Sang trọng" },
+  $$$$$: { min: 50000000, max: Infinity, description: "Đẳng cấp" },
+};
