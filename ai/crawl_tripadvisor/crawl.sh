@@ -24,7 +24,7 @@ echo "Output will be saved to: $OUTPUT_FILE"
 echo "Using index: $NEW_INDEX"
 
 python patch.py \
-    --start-page 11 \
+    --start-page 51 \
     --max-pages 100 \
     --delay 5.0 \
     --save-interval 5 \

@@ -1,2 +1,4 @@
 ai/crawl_tripadvisor/data_attractions/
+ai/crawl_tripadvisor/checkpoints/
 ai/crawl_food/data/
+ai/crawl_hanoi_tourist/data/
