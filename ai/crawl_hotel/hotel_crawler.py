@@ -34,7 +34,7 @@ class HotelCrawler:
                 facilities.append(facility.text.strip())
                 
             # Get description
-            description = soup.find('div', {'data-testid': 'property-description'})
+            description = soup.find('div', {'class': 'abf093bdfe'})
             description_text = description.text.strip() if description else 'N/A'
             
             # Get room types
@@ -49,6 +49,8 @@ class HotelCrawler:
                         'price': room_price.text.strip()
                     })
             
+
+
             return {
                 'facilities': facilities,
                 'description': description_text,
@@ -170,7 +172,7 @@ def main():
     url = "https://www.booking.com/searchresults.vi.html?ss=H%C3%A0+N%E1%BB%99i"
     
     crawler = HotelCrawler()
-    hotels = crawler.get_hotel_data(url, max_pages=3)  # Crawl 3 pages by default
+    hotels = crawler.get_hotel_data(url, max_pages=1)  # Crawl 3 pages by default
     crawler.save_to_csv(hotels)
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 import requests
 import json
 
-API_KEY = 'AIzaSyD8vcgWfKnRu0gF8IE1XcUxqypSZCgrxc8'  # Sử dụng API key của bạn
+API_KEY = 'AIzaSyBPRDc8Sp3M_tlv0VYZOW2WIA6SCbBHYWM'  # Sử dụng API key của bạn
 PLACE_ID = 'ChIJ8T5rQm0rNTERKQeD0lD2nU8'  # Place ID của một nhà hàng cụ thể
 
 def test_place_details():
