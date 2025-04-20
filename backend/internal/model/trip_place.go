@@ -15,6 +15,6 @@ type TripPlace struct {
 	Notes          string     `gorm:"column:notes" json:"notes"`
 
 	// Associations
-	Trip  *Trip  `gorm:"foreignKey:TripID;constraint:OnDelete:CASCADE" json:"trip,omitempty"`
+	Trip  *Trip  `json:"trip,omitempty"`
 	Place *Place `gorm:"foreignKey:PlaceID" json:"place,omitempty"`
 }

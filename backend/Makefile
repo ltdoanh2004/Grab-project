@@ -13,10 +13,4 @@ createdb:
 dropdb:
 	docker exec -i grab-bootcamp-db mysql -uroot -p88889999 -e "DROP DATABASE ${DB_NAME};"
 
-migrateup:
-	migrate -path database/migrations -database "$(DB_URL)" -verbose up
-
-migratedown:
-	migrate -path database/migrations -database "$(DB_URL)" -verbose down
-
 .PHONY: server mysql createdb dropdb migrateup migratedown

@@ -13,6 +13,6 @@ type TripActivity struct {
 	Notes          string     `json:"notes"`
 
 	// Associations
-	Trip     *Trip     `gorm:"foreignKey:TripID;constraint:OnDelete:CASCADE" json:"trip,omitempty"`
+	Trip     *Trip     `json:"trip,omitempty"`
 	Activity *Activity `gorm:"foreignKey:ActivityID" json:"activity,omitempty"`
 }
