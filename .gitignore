@@ -3,3 +3,5 @@ ai/crawl_tripadvisor/checkpoints/
 ai/crawl_ggmaps/output/
 ai/crawl_food/data/
 ai/crawl_hanoi_tourist/data/
+ai/crawl_booking_web/data_booking/
+ai/crawl_booking_web/data_hotels/
