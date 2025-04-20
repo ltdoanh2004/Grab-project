@@ -15,7 +15,7 @@ type TripDestination struct {
 
 	// Associations
 	// Reference to the Trip (from the same package).
-	Trip *Trip `gorm:"foreignKey:TripID;constraint:OnDelete:CASCADE" json:"trip,omitempty"`
+	Trip *Trip `json:"trip,omitempty"`
 	// Reference to a destination (from the destination package).
 	Destination *Destination `gorm:"foreignKey:DestinationID" json:"destination,omitempty"`
 }

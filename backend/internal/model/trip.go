@@ -18,7 +18,7 @@ type Trip struct {
 
 	// Associations
 	// Each trip is created by a user.
-	User User `gorm: json:"user,omitempty"`
+	User User `json:"user,omitempty"`
 
 	// Other associations as slices.
 	Destinations   []TripDestination   `gorm:"foreignKey:TripID" json:"destinations,omitempty"`

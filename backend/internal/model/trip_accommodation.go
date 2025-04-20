@@ -15,6 +15,6 @@ type TripAccommodation struct {
 	Notes               string     `gorm:"column:notes" json:"notes"`
 
 	// Associations
-	Trip          *Trip          `gorm:"foreignKey:TripID;constraint:OnDelete:CASCADE" json:"trip,omitempty"`
-	Accommodation *Accommodation `gorm:"foreignKey:AccommodationID" json:"accommodation,omitempty"`
+	Trip          *Trip          `json:"trip,omitempty"`
+	Accommodation *Accommodation `json:"accommodation,omitempty"`
 }
