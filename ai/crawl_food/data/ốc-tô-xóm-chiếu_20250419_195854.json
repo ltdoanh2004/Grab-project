@@ -1,0 +1,46 @@
+{
+  "id": 15622,
+  "name": "Ốc Tô - Xóm Chiếu",
+  "address": "224B Xóm Chiếu, P. 15, Quận 4, TP. HCM",
+  "rating": 6.596,
+  "total_reviews": 339,
+  "total_pictures": 1282,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g2/15622/prof/s640x400/vn-11134513-7r98o-lstqgfavwjb874",
+  "url": "https://www.foody.vn/ho-chi-minh/oc-to-xom-chieu",
+  "location": {
+    "lat": 10.75423,
+    "lon": 106.7083
+  },
+  "reviews": [
+    {
+      "user": "Thiện Phúc Đặng Bá",
+      "rating": 1.0,
+      "comment": "khuyên thật các bạn nào thấy rẻ ăn chỗ này chỉ có rước bệnh vào người, mình ăn xong về bị tiêu chảy liên tục luôn, hỏi mới biết dân quận 4 xung quanh k ai ăn quán này hết do chỗ này hay làm ốc chết, ốc ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g867/8664306/avt/c100x100/thienphuc54-avatar-389-637835570131915312.jpg"
+    },
+    {
+      "user": "Chang",
+      "rating": 7.2,
+      "comment": "Ăn quen rồi. Giá trên đây mắc hơn mua ngoài&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g1048/10471047/avt/c100x100/vivvv-avatar-258-636618889145817949.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/oc-to-xom-chieu",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:39.555960"
+}

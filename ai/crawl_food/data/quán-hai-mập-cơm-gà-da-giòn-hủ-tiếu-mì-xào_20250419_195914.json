@@ -1,0 +1,46 @@
+{
+  "id": 694444,
+  "name": "Quán Hai Mập - Cơm Gà Da Giòn & Hủ Tiếu Mì Xào",
+  "address": "191 Phạm Phú Thứ, P. 4, Quận 6, TP. HCM",
+  "rating": 5.8,
+  "total_reviews": 7,
+  "total_pictures": 214,
+  "phone": "0909 615 825 - 01666 611 668",
+  "photo_url": "https://images.foody.vn/res/g70/694444/prof/s640x400/vn-11134513-7r98o-lsu1fa32agm14c",
+  "url": "https://www.foody.vn/ho-chi-minh/quan-hai-map-com-ga-da-gion-hu-tieu-mi-xao",
+  "location": {
+    "lat": 10.744536,
+    "lon": 106.643749
+  },
+  "reviews": [
+    {
+      "user": "Phong Nguyen",
+      "rating": 1.0,
+      "comment": "Oder 2 lần. \nLần đầu oder cơm sườn xào chua ngọt 40 ngàn. Giao tới ko có cơm.\nRút kinh ngiệm lần 2 oder phần cơm sườn xào chua ngọt 45 ngàn. Cũng không có cơm.\nQuán dẹp tiệm đi là vừa !!!! \nBán kiểu gì ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g78/777809/avt/c100x100/beauty-upload-api-foody-avatar-b4ff5916-6ebf-44e5-bb3d-6db49cfd6019-191024095910.jpg"
+    },
+    {
+      "user": "quỳnh  Vũ ",
+      "rating": 2.4,
+      "comment": "Các người xào nui như vậy cho khách ha.làm ăn kiểu gì vậy hả.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/quan-hai-map-com-ga-da-gion-hu-tieu-mi-xao",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:56.573803"
+}

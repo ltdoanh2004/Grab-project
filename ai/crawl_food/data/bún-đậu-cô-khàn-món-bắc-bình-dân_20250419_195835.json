@@ -1,0 +1,46 @@
+{
+  "id": 12158,
+  "name": "Bún Đậu Cô Khàn - Món Bắc Bình Dân",
+  "address": "102/26 Cống Quỳnh, P. Phạm Ngũ Lão, Quận 1, TP. HCM",
+  "rating": 5.868,
+  "total_reviews": 553,
+  "total_pictures": 1373,
+  "phone": "1900 2042 - (028) 3837 7309",
+  "photo_url": "https://images.foody.vn/res/g2/12158/prof/s640x400/vn-11134513-7r98o-lstqb7fyunk4d7",
+  "url": "https://www.foody.vn/ho-chi-minh/bun-dau-co-khan",
+  "location": {
+    "lat": 10.764935,
+    "lon": 106.691081
+  },
+  "reviews": [
+    {
+      "user": "Ty",
+      "rating": 1.0,
+      "comment": "Rủ bạn đi ăn cùng. Đồ ăn không ngon,giá cao nhưng phần đặc sắc nhất là đang ăn gặp cô người mẫu Trang Trần chủ quán giơ tay lên rồi gãi nách lấy gãi nách để dù tụi mình đàn ngồi đối diện và ăn??? Nhìn ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g836/8357466/avt/c100x100/vn-11134523-7ras8-m4nbq7mbe5y805"
+    },
+    {
+      "user": "foodee_63812265",
+      "rating": 1.2,
+      "comment": "Tôi bị đau bụng sau khi ăn. Tôi sẽ lấy mẫu gởi cho phòng thí nghiệm test thành phần trong món ăn. Quán nóng, ồn. Nhân viên không chuyên nghiệp.",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/bun-dau-co-khan",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:18.987331"
+}

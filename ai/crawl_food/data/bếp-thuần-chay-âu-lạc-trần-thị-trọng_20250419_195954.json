@@ -1,0 +1,46 @@
+{
+  "id": 1241530,
+  "name": "Bếp Thuần Chay Âu Lạc - Trần Thị Trọng",
+  "address": "16 Trần Thị Trọng, P. 15, Quận Tân Bình, TP. HCM",
+  "rating": 10.0,
+  "total_reviews": 50,
+  "total_pictures": 0,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g125/1241530/prof/s640x400/vn-11134513-7ra0g-m7nnfredkb751c",
+  "url": "https://www.foody.vn/ho-chi-minh/bep-thuan-chay-au-lac-tran-thi-trong",
+  "location": {
+    "lat": 10.8256216,
+    "lon": 106.6321673
+  },
+  "reviews": [
+    {
+      "user": "Xuan Tieu",
+      "rating": 10.0,
+      "comment": "Mình không theo đạo ăn chay nhưng lại mê quán này vì đồ ăn sạch, dễ ăn, tốt cho tiêu hóa.",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g5640/56392113/avt/c100x100/vn-11134523-7r98o-m077ljcarj4f14"
+    },
+    {
+      "user": "Đoàn Thảo Mai",
+      "rating": 10.0,
+      "comment": "Đặt 2 món mà lần nào cũng thấy hài lòng – bún mọc chay + sữa chua đá là combo ruột mỗi lần không biết ăn gì.",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g5640/56391532/avt/c100x100/vn-11134523-7r98o-m07449calqj305"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/bep-thuan-chay-au-lac-tran-thi-trong",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:50.161813"
+}

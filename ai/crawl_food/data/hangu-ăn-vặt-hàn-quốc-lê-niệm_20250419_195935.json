@@ -1,0 +1,46 @@
+{
+  "id": 983035,
+  "name": "Hangu - Ăn Vặt Hàn Quốc - Lê Niệm",
+  "address": "66 Lê Niệm, P. Phú Thạnh, Quận Tân Phú, TP. HCM",
+  "rating": 8.352,
+  "total_reviews": 52,
+  "total_pictures": 29,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g99/983035/prof/s640x400/vn-11134513-7r98o-lsu8yza0p5ll09",
+  "url": "https://www.foody.vn/ho-chi-minh/hangu-an-vat-han-quoc-le-niem",
+  "location": {
+    "lat": 10.7799634,
+    "lon": 106.6265409
+  },
+  "reviews": [
+    {
+      "user": "Tien ",
+      "rating": 4.4,
+      "comment": "đã từng ăn ở đay. đat ve nhà mua 4 mon đã chịu ship xa mình khong tiếc tiền mà thich an ở đay mà lan nao giao cung thieu món mua 2 giao 1 buc khong muon an nua. 2 lan roi. khong kiem tra khi giao khach ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    },
+    {
+      "user": "Trần Vũ Đăng Khoa",
+      "rating": 9.0,
+      "comment": "Mình order về 2 món gà chiên, 2 phần mì trộn và 1 lẩu. Quán làm nhanh, đóng gói hợp vệ sinh. Phần ăn mình thấy vừa miệng, không cần thêm nước tương hay tương ớt gì luôn. Gà chiên ngoài thì giòn bên trong ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g1763/17625369/avt/c100x100/foodee_20immown-avatar-789-637746507939222161.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/hangu-an-vat-han-quoc-le-niem",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:26.707590"
+}

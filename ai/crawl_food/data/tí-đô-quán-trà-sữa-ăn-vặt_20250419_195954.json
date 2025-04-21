@@ -1,0 +1,46 @@
+{
+  "id": 77594,
+  "name": "Tí Đô Quán - Trà Sữa & Ăn Vặt",
+  "address": "801/91B Xô Viết Nghệ Tĩnh, P. 26, Quận Bình Thạnh, TP. HCM",
+  "rating": 5.814,
+  "total_reviews": 89,
+  "total_pictures": 501,
+  "phone": "0989 023 554 - 0918 403 443",
+  "photo_url": "https://images.foody.vn/res/g8/77594/prof/s640x400/vn-11134513-7ras8-m163tcii8nejc3",
+  "url": "https://www.foody.vn/ho-chi-minh/ti-do-quan",
+  "location": {
+    "lat": 10.817301,
+    "lon": 106.714355
+  },
+  "reviews": [
+    {
+      "user": "Te Huỳnh",
+      "rating": 2.0,
+      "comment": "Mình mua rau câu phô mai trên now là 14k/phần. Nhưng khi mình trực tiếp ra quán mua. Thì bạn nhân viên tính mình 16k/phần. Khi tính tiền mình đã phân vân. Nhưng mình nghĩ mình nhớ nhầm. Về mở app now ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g1774/17733323/avt/c100x100/beauty-upload-api-foody-avatar-6083ea6c-33cc-4962-bfb2-177b43750c2d-191017185616.jpg"
+    },
+    {
+      "user": "Mai Mai",
+      "rating": 5.4,
+      "comment": "Ấn tượng đầu tiên là người giữ xe làm mình không thoải mái, thái độ khá thô lỗ. Quán có biển chỉ dẫn bãi giữ xe, mình chạy thẳng vào đó thì bị gọi giật ra, cách nói chuyện như kiểu giang hồ, bắt để ngoài ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/defaultavatar/s100/default-avatar-20130809-28.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/ti-do-quan",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:45.275436"
+}

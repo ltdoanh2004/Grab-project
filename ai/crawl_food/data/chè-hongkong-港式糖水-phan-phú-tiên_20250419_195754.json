@@ -1,0 +1,46 @@
+{
+  "id": 1000035093,
+  "name": "Chè HongKong - 港式糖水 - Phan Phú Tiên",
+  "address": "28 Phan Phú Tiên, P. 10, Quận 5, TP. HCM",
+  "rating": 7.242,
+  "total_reviews": 72,
+  "total_pictures": 152,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g100004/1000035093/prof/s640x400/vn-11134513-7ras8-m3j97krudu4c04",
+  "url": "https://www.foody.vn/ho-chi-minh/che-hongkong-%E6%B8%AF%E5%BC%8F%E7%B3%96%E6%B0%B4-phan-phu-tien",
+  "location": {
+    "lat": 10.7519883,
+    "lon": 106.6656522
+  },
+  "reviews": [
+    {
+      "user": "Anna Truong",
+      "rating": 5.0,
+      "comment": "H&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g2526/25251441/avt/c100x100/vn-11134523-7ras8-m2kooy0mjqbq73"
+    },
+    {
+      "user": "Trịnh Linh",
+      "rating": 6.8,
+      "comment": "Ok&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g160/1594930/avt/c100x100/vn-11134523-7r98o-lz7htrmqex5939"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/che-hongkong-港式糖水-phan-phu-tien",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:57:45.893063"
+}

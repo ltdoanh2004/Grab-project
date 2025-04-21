@@ -1,0 +1,46 @@
+{
+  "id": 1068467,
+  "name": "Bún Quậy Tâm Quán - Lê Văn Lương",
+  "address": "355 Lê Văn Lương, P. Tân Quy, Quận 7, TP. HCM",
+  "rating": 9.4,
+  "total_reviews": 4,
+  "total_pictures": 1,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g107/1068467/prof/s640x400/vn-11134513-7r98o-lttnf2v7rwul73",
+  "url": "https://www.foody.vn/ho-chi-minh/bun-quay-tam-quan-le-van-luong",
+  "location": {
+    "lat": 10.74123,
+    "lon": 106.7039
+  },
+  "reviews": [
+    {
+      "user": "Minh Minh",
+      "rating": 10.0,
+      "comment": "Mình vừa đặt 1 đơn qua now. Trong đó có món Bún Tôm - Bò, quán cho Bò nằm dưới, bún trên và trên cùng là tôm. Do vừa mở ra chưa thấy bò cũng chưa ăn mà mình đánh giá không có bò là lỗi của mình. Mình ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g22/212439/avt/c100x100/phamoanhsp-avatar-439-636896676067939166.jpg"
+    },
+    {
+      "user": "Tien Ktn",
+      "rating": 9.2,
+      "comment": "Quá ngon!!!&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/bun-quay-tam-quan-le-van-luong",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:58.039911"
+}

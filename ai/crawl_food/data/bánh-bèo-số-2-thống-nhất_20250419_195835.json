@@ -1,0 +1,46 @@
+{
+  "id": 166629,
+  "name": "Bánh Bèo Số 2 - Thống Nhất",
+  "address": "2 Thống Nhất, Quận Tân Phú, TP. HCM",
+  "rating": 6.3,
+  "total_reviews": 16,
+  "total_pictures": 40,
+  "phone": "0932 622 357",
+  "photo_url": "https://images.foody.vn/res/g17/166629/prof/s640x400/vn-11134513-7r98o-lstuze3gk7tl03",
+  "url": "https://www.foody.vn/ho-chi-minh/banh-beo-so-2-thong-nhat",
+  "location": {
+    "lat": 10.790388,
+    "lon": 106.6368
+  },
+  "reviews": [
+    {
+      "user": "uyen",
+      "rating": 5.0,
+      "comment": "Vừa mở hộp bún ra thấy nguyên xác con chuồn chuồn mà muốn ói. Quán càng ngày càng tệ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    },
+    {
+      "user": "BichLoan",
+      "rating": 1.0,
+      "comment": "Quá tam 3 bận.Sẽ không có lần tiếp theo( do mẹ mình thích bánh bèo và quán tương đối gần)…vốn dĩ ko thích đánh giá luôn, mà thấy cái quán làm ăn chán, từ tư cách chủ quán tới nhân viên, mình mua 3 lần, ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/banh-beo-so-2-thong-nhat",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": false,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:31.749248"
+}

@@ -1,0 +1,46 @@
+{
+  "id": 1190359,
+  "name": "Akiko Sushi - Nhà Hàng Nhật Bản - Phan Xích Long",
+  "address": "396-398 Phan Xích Long, P. 2, Quận Phú Nhuận, TP. HCM",
+  "rating": 8.198,
+  "total_reviews": 3,
+  "total_pictures": 13,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g120/1190359/prof/s640x400/vn-11134513-7ra0g-m7ufcy3o9n0m76",
+  "url": "https://www.foody.vn/ho-chi-minh/akiko-sushi-nha-hang-nhat-ban-phan-xich-long",
+  "location": {
+    "lat": 10.799817,
+    "lon": 106.685315
+  },
+  "reviews": [
+    {
+      "user": "Dinhnu baotram",
+      "rating": 9.8,
+      "comment": "Nhân viên phục vụ nhiệt tình, sashimi tươi, chắc chắn sẽ quay lại nhiều lần&nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g4676/46751998/avt/c100x100/vn-11134523-7ras8-m1duecia2q8o52"
+    },
+    {
+      "user": "Gia Bảo",
+      "rating": 9.8,
+      "comment": "Đồ ăn rất ngon, cách bày trí rất đẹp&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/akiko-sushi-nha-hang-nhat-ban-phan-xich-long",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:57:40.297403"
+}

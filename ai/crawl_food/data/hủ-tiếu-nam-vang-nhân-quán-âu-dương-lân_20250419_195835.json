@@ -1,0 +1,46 @@
+{
+  "id": 168864,
+  "name": "Hủ Tiếu Nam Vang Nhân Quán - Âu Dương Lân",
+  "address": "239 - 241 Âu Dương Lân, P. 2, Quận 8, TP. HCM",
+  "rating": 6.39,
+  "total_reviews": 20,
+  "total_pictures": 129,
+  "phone": "0908 519 901",
+  "photo_url": "https://images.foody.vn/res/g17/168864/prof/s640x400/vn-11134513-7r98o-lstv1r4g4tz8a9",
+  "url": "https://www.foody.vn/ho-chi-minh/hu-tieu-nam-vang-nhan-quan-au-duong-lan",
+  "location": {
+    "lat": 10.744031,
+    "lon": 106.684148
+  },
+  "reviews": [
+    {
+      "user": "Hoàng Quyên",
+      "rating": 8.2,
+      "comment": "Toppings rất nhiều và tươi, tôm to và giòn, sợi mì và hủ tiếu dai. Mình ăn mì khô nam vang trộn rất vừa. Nước dùng thơm xương và tỏi, nêm ngọt dễ ăn. Rau ăn kèm cũng tươi nữa. Nhân viên phục vụ cũng rất ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g55/540113/avt/c100x100/beauty-upload-api-foody-avatar-51d752ae-108f-4f17-a17d-1eaed83b684b-191122095734.jpg"
+    },
+    {
+      "user": "Quynh Le",
+      "rating": 6.0,
+      "comment": "Nghe đồn Nhân Quán ở đây là nhất hạng nhưng mà theo mình thì tuỳ vào khấu vị mỗi người thôi.\nKhông gian quán rất thoáng mát , rộng rãi và rất sạch sẽ. Chỗ giữ xe cũng rộng nên k sợ k đủ chỗ để. Bàn ngồi ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g1116/11152109/avt/c100x100/lequanghuy5964-avatar-536-636797580140415585.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/hu-tieu-nam-vang-nhan-quan-au-duong-lan",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:24.801539"
+}

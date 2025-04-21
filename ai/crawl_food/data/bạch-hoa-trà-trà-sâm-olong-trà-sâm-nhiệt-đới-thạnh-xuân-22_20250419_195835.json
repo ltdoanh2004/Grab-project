@@ -1,0 +1,46 @@
+{
+  "id": 942550,
+  "name": "Bạch Hoa Trà - Trà Sâm Olong & Trà Sâm Nhiệt Đới - Thạnh Xuân 22",
+  "address": "104/4 Thạnh Xuân 22, P. Thạnh Xuân, Quận 12, TP. HCM",
+  "rating": 8.1,
+  "total_reviews": 6,
+  "total_pictures": 0,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g95/942550/prof/s640x400/vn-11134513-7r98o-lsu83lea56844a",
+  "url": "https://www.foody.vn/ho-chi-minh/bach-hoa-tra-tra-sam-olong-tra-sam-nhiet-doi-thanh-xuan-22",
+  "location": {
+    "lat": 10.8704507,
+    "lon": 106.6708784
+  },
+  "reviews": [
+    {
+      "user": "Hiền Lương",
+      "rating": 5.0,
+      "comment": "trà thơm ngon,không quá ngọt,trái cây tươi,nên thử nha mọi ngườii&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g5743/57420340/avt/c100x100/vn-11134523-7ra0g-m8qcn350p3t315"
+    },
+    {
+      "user": "Trần hoàng phương Nhi",
+      "rating": 7.6,
+      "comment": "Ok&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/bach-hoa-tra-tra-sam-olong-tra-sam-nhiet-doi-thanh-xuan-22",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:17.490363"
+}

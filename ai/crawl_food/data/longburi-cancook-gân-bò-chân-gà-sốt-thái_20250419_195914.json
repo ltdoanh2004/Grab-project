@@ -1,0 +1,46 @@
+{
+  "id": 853349,
+  "name": "LongBuri Cancook - Gân Bò, Chân Gà Sốt Thái",
+  "address": "142/34 Thạnh Xuân 22, P. Thạnh Xuân, Quận 12, TP. HCM",
+  "rating": 9.174,
+  "total_reviews": 413,
+  "total_pictures": 1764,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g86/853349/prof/s640x400/vn-11134513-7r98o-lsu62ksqs1j8bd",
+  "url": "https://www.foody.vn/ho-chi-minh/hai-chuy-em-gan-bo-dam-coc-shop-online",
+  "location": {
+    "lat": 10.8747322,
+    "lon": 106.6691113
+  },
+  "reviews": [
+    {
+      "user": "Trần hoàng phương Nhi",
+      "rating": 10.0,
+      "comment": "chân giòn nước sốt đúng đỉnh kao&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    },
+    {
+      "user": "Myle",
+      "rating": 10.0,
+      "comment": "Ê quán này gân bò vs chân gà đỉnh nha , chân gà mập tươi giòn nha, gân bò giai gian giòn giòn thơm gu tui mấy kiểu sần sật giai giòn này … mới ăn lần đầu quán này kiểu dính gê, gân bò đỉnh nhất sài gòn ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/hai-chuy-em-gan-bo-dam-coc-shop-online",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:01.985187"
+}

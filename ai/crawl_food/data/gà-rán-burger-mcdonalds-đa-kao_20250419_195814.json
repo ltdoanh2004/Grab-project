@@ -1,0 +1,46 @@
+{
+  "id": 47293,
+  "name": "Gà Rán & Burger McDonald's Đa Kao",
+  "address": "2 - 6 Bis Điện Biên Phủ, Quận 1, TP. HCM",
+  "rating": 7.188,
+  "total_reviews": 627,
+  "total_pictures": 3321,
+  "phone": "(028) 38 202 202",
+  "photo_url": "https://images.foody.vn/res/g5/47293/prof/s640x400/vn-11134513-7ra0g-m8oh9oev857ybc",
+  "url": "https://www.foody.vn/ho-chi-minh/ga-ran-burger-mcdonald-s-da-kao",
+  "location": {
+    "lat": 10.792209,
+    "lon": 106.69901
+  },
+  "reviews": [
+    {
+      "user": "PHAN LE",
+      "rating": 5.2,
+      "comment": "Gà chiên còn sống, rất tanh. Khủng khiép&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g4568/45677789/avt/c100x100/vn-11134523-7ras8-m1jgiswsgczj11"
+    },
+    {
+      "user": "Thúy",
+      "rating": 5.0,
+      "comment": "Đã ăn qua rồi, ăn ok ạ&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g2789/27880329/avt/c100x100/foodee_jb6i0ihk-avatar-799-638312525538437150.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/ga-ran-burger-mcdonald-s-da-kao",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:02.453712"
+}

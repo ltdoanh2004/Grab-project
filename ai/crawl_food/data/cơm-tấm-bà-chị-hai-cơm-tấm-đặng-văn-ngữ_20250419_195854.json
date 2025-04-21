@@ -1,0 +1,46 @@
+{
+  "id": 1000050345,
+  "name": "Cơm Tấm Bà Chị Hai - Cơm Tấm - Đặng Văn Ngữ",
+  "address": "51 Đặng Văn Ngữ , P. 14 , Quận Phú Nhuận, TP. HCM",
+  "rating": 9.0,
+  "total_reviews": 2,
+  "total_pictures": 13,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g100006/1000050345/prof/s640x400/vn-11134259-7r98o-lwbxwfedxm1l5d",
+  "url": "https://www.foody.vn/ho-chi-minh/com-tam-ba-chi-hai-com-tam-dang-van-ngu",
+  "location": {
+    "lat": 10.7933181,
+    "lon": 106.6688137
+  },
+  "reviews": [
+    {
+      "user": "Đạt Nguyễn Thành",
+      "rating": 9.0,
+      "comment": "Recommend mọi người ăn nạc giòn. Thịt mềm rất ngon. Trứng lòng đào béo. Chả cũng ngon nữa.",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g160/1591660/avt/c100x100/nguyendat0817-avatar-393-636238081474978032.jpg"
+    },
+    {
+      "user": "B Mai Luu",
+      "rating": 9.0,
+      "comment": "Món tủ của quán là nạc giòn nhưng bạn phải đến trước 10h sáng may ra còn, đến trưa là hết. Nước mắm kẹo, ngon.\nTóp mỡ thì mình muốn nó giòn chứ rim mềm k khoái lắm.\nAnh chủ quán dễ thương, lịch sự.",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g36/359392/avt/c100x100/lbmai1410-avatar-294-637863548338176705.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/com-tam-ba-chi-hai-com-tam-dang-van-ngu",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:48.062036"
+}

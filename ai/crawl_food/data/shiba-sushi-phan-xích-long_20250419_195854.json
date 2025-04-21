@@ -1,0 +1,46 @@
+{
+  "id": 1128964,
+  "name": "Shiba Sushi - Phan Xích Long",
+  "address": "281 Phan Xích Long, P. 2, Quận Phú Nhuận, TP. HCM",
+  "rating": 9.868,
+  "total_reviews": 148,
+  "total_pictures": 1189,
+  "phone": "Đang cập nhật",
+  "photo_url": "https://images.foody.vn/res/g113/1128964/prof/s640x400/vn-11134259-7r98o-lwes0xtf8c0r07",
+  "url": "https://www.foody.vn/ho-chi-minh/shiba-sushi-phan-xich-long",
+  "location": {
+    "lat": 10.8002897,
+    "lon": 106.6847342
+  },
+  "reviews": [
+    {
+      "user": "foodee_8fiez0mx",
+      "rating": 10.0,
+      "comment": "🐟 𝐇𝐎̂𝐌 𝐍𝐀𝐘 𝐓𝐈𝐄̣̂𝐌 𝐂𝐎́: 𝐒𝐇𝐈𝐌𝐀 𝐀𝐉𝐈 – 𝐓𝐔̛𝐎̛𝐈 𝐍𝐆𝐎𝐍 𝐕𝐔̛̀𝐀 𝐕𝐄̂̀ \nAi mê sashimi chắc chắn không nên bỏ qua em này!\nVị ngọt thanh, thịt mềm mịn như lụa, Shima Aji (cá cam sọc) ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    },
+    {
+      "user": "Duy",
+      "rating": 10.0,
+      "comment": "PHÒNG VIP RIÊNG TƯ- KHÔNG PHỤ THU PHÍ cùng đặc quyền “SET UP TRANG TRÍ SINH NHẬT MIỄN PHÍ TẠI NHÀ HÀNG NHẬT BẢN SHIBA SUSHI 🎁\n\n🍁 Bạn muốn tổ chức tiệc sinh nhật, ngày lễ, ngày kỷ niệm, hay đơn giản ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/shiba-sushi-phan-xich-long",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:46.142852"
+}

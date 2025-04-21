@@ -1,0 +1,46 @@
+{
+  "id": 718518,
+  "name": "Cơm Gà Hai Nam - Phan Văn Trị",
+  "address": "377B Phan Văn Trị, P. 11, Quận Bình Thạnh, TP. HCM",
+  "rating": 3.672,
+  "total_reviews": 11,
+  "total_pictures": 9,
+  "phone": "0919 513 392",
+  "photo_url": "https://images.foody.vn/res/g72/718518/prof/s640x400/vn-11134513-7r98o-lsu2d6230amcba",
+  "url": "https://www.foody.vn/ho-chi-minh/com-ga-hai-nam-bach-dang",
+  "location": {
+    "lat": 10.8187129,
+    "lon": 106.6946794
+  },
+  "reviews": [
+    {
+      "user": "Hiền Lương",
+      "rating": 5.0,
+      "comment": "xôi dẻo,gà mềm,ngon,kèm rau nữa,mọi người nên thử nhaa&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g5743/57420340/avt/c100x100/vn-11134523-7ra0g-m8qcn350p3t315"
+    },
+    {
+      "user": "Trân",
+      "rating": 3.4,
+      "comment": "Mình order một phần cơm gà 50000. Khi mình nhận thì hơi ngạc nhiên khi không kèm theo phần canh. Đối với số tiền thì phần ăn không đủ no. Cơm nấu hơi bở. Điểm sáng là gà luộc ngon không bở.",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g1035/10342011/avt/c100x100/beauty-upload-api-foody-avatar-18341ad1-8030-4b35-a1fc-5547f38a4391-191018130417.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/com-ga-hai-nam-bach-dang",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:58:13.154801"
+}

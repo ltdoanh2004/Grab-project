@@ -1,0 +1,46 @@
+{
+  "id": 690193,
+  "name": "Gà Rán KFC - Tỉnh Lộ 10",
+  "address": "893B Tỉnh Lộ 10, P. Bình Trị Đông B, Quận Bình Tân, TP. HCM",
+  "rating": 5.618,
+  "total_reviews": 12,
+  "total_pictures": 27,
+  "phone": "0901 589 839",
+  "photo_url": "https://images.foody.vn/res/g70/690193/prof/s640x400/image-663141cf-220812162200.jpg",
+  "url": "https://www.foody.vn/ho-chi-minh/kfc-tinh-lo-10",
+  "location": {
+    "lat": 10.7569257,
+    "lon": 106.6059118
+  },
+  "reviews": [
+    {
+      "user": "Diệu Tấn",
+      "rating": 3.6,
+      "comment": "Thật sự cứ thấy mn phản ánh vụ gà bị sống mà ko tin, rốt cuộc chính bản thân t lại gặp phải! Lớp bột áo cực kì dày, cắn vào mùi bột sống bốc lên cả mũi. Còn gà thì nhạt thếch vô vị, ăn bở như chưa từng ...",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g2/16682/avt/c100x100/dieutan-avatar-569-636589086705287399.jpg"
+    },
+    {
+      "user": "foodee_594a4d19",
+      "rating": 4.2,
+      "comment": "15h30p mua cơm gà quay tiêu tại đây. Nhưng lấy thiếu . Cách phục vụ thì dỡ và có phần xem thường khách",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/default/s100/user-default-female.png"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/kfc-tinh-lo-10",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:09.933017"
+}

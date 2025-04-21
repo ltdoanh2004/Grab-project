@@ -1,0 +1,46 @@
+{
+  "id": 753721,
+  "name": "Bún Quậy Tâm Quán - Nguyễn Tri Phương",
+  "address": "210 Nguyễn Tri Phương, P. 4, Quận 10, TP. HCM",
+  "rating": 7.486,
+  "total_reviews": 79,
+  "total_pictures": 376,
+  "phone": "01689856780",
+  "photo_url": "https://images.foody.vn/res/g76/753721/prof/s640x400/vn-11134259-7r98o-lw9znha906ope3",
+  "url": "https://www.foody.vn/ho-chi-minh/bun-quay-tam-quan-nguyen-tri-phuong",
+  "location": {
+    "lat": 10.761022,
+    "lon": 106.6688549
+  },
+  "reviews": [
+    {
+      "user": "T4_ eattheworld",
+      "rating": 7.6,
+      "comment": "Vị ngon, nước chấm cũng ngon nha, ăn lạ lạ nè 👍🏻👍🏻👍🏻&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g60/590575/avt/c100x100/chillyt4-avatar-212-638097331971690763.jpg"
+    },
+    {
+      "user": "Le Tam",
+      "rating": 8.0,
+      "comment": "Hệ thống Bún Quậy Phú Quốc - TÂM QUÁN&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g1018/10174441/avt/c100x100/bunquaypq-avatar-572-637101237923471009.jpg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/bun-quay-tam-quan-nguyen-tri-phuong",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:33.828684"
+}

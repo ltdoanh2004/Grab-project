@@ -1,0 +1,46 @@
+{
+  "id": 67768,
+  "name": "Gà Rán Popeyes - Điện Biên Phủ",
+  "address": "58/13 Nguyễn Bỉnh Khiêm (Vòng Xoay Nguyễn Bỉnh Khiêm), P. Đa Kao, Quận 1, TP. HCM",
+  "rating": 6.914,
+  "total_reviews": 243,
+  "total_pictures": 1217,
+  "phone": "(028) 3820 0598",
+  "photo_url": "https://images.foody.vn/res/g7/67768/prof/s640x400/vn-11134513-7ra0g-m87l9nd8i91g7f",
+  "url": "https://www.foody.vn/ho-chi-minh/ga-ran-popeyes-dien-bien-phu",
+  "location": {
+    "lat": 10.792798,
+    "lon": 106.699255
+  },
+  "reviews": [
+    {
+      "user": "Nguyễn Đây Vi",
+      "rating": 1.0,
+      "comment": "Lấy đủ tiền !Mình đặt 5 miếng gà , 1 khoai tây chiên cỡ lớn : shop giao 3 miếng gà. , một khoai tây chiên cỡ vừa :) thất vọng quá 0901394228 vui lòng giải quyết vụ này",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g2426/24250582/avt/c100x100/foody-avatar-b60db0ef-32e5-4eb7--afe4e10e-210609175116.jpeg"
+    },
+    {
+      "user": "Petite Petite",
+      "rating": 1.8,
+      "comment": "viên không làm đúng yêu cầu khách . Không gọi cònirm. Mình note lấy má đui. Thì nhân viên lấy đùi , cánh (2 phần nhỏ xíu ) khi đó mình mua lẻ 2 miếng chứ không phải combo",
+      "date": null,
+      "user_avatar": "https://images.foody.vn/usr/g12/118987/avt/c100x100/foody-avatar-632c4d68-29e2-4fd3--50bbf0d0-220316204246.jpeg"
+    }
+  ],
+  "services": [
+    {
+      "name": "ShopeeFood",
+      "url": "https://www.deliverynow.vn/ho-chi-minh/ga-ran-popeyes-dien-bien-phu",
+      "type": 0
+    }
+  ],
+  "is_delivery": true,
+  "is_booking": false,
+  "is_opening": true,
+  "price_range": {
+    "min": null,
+    "max": null
+  },
+  "crawled_at": "2025-04-19T19:59:43.560049"
+}
