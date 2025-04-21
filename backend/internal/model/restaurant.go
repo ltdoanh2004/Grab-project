@@ -13,4 +13,6 @@ type Restaurant struct {
 	AvgRating         float64 `gorm:"column:avg_rating;type:decimal(3,1)" json:"avg_rating"`
 	OpeningHours      string  `gorm:"column:opening_hours" json:"opening_hours"`
 	ImageURL          string  `gorm:"column:image_url;size:255" json:"image_url"`
+
+	Foods []RestaurantFood `gorm:"foreignKey:RestaurantID;references:RestaurantID" json:"foods,omitempty"`
 }

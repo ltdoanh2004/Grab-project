@@ -13,4 +13,8 @@ createdb:
 dropdb:
 	docker exec -i grab-bootcamp-db mysql -uroot -p88889999 -e "DROP DATABASE ${DB_NAME};"
 
-.PHONY: server mysql createdb dropdb migrateup migratedown
+swag:
+	swag init -g cmd/main.go
+
+
+.PHONY: server mysql createdb dropdb swag

@@ -23,7 +23,7 @@ func NewAuthController(authService service.AuthService) *AuthController {
 }
 
 func (ac *AuthController) RegisterRoutes(router *gin.Engine) {
-	v1 := router.Group("/api")
+	v1 := router.Group("/api/v1")
 	{
 		todos := v1.Group("/auth")
 		{
@@ -33,7 +33,16 @@ func (ac *AuthController) RegisterRoutes(router *gin.Engine) {
 	}
 }
 
-// Register handles user registration requests.
+// Authentication godoc
+// @Summary User registration
+// @Description handles user registration requests
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param register body dto.RegisterRequest true "Register"
+// @Success 200 {object} model.Response{data=[]dto.TokenResponse}
+// @Failure 400 {object} model.Response
+// @Router /api/v1/auth/register [post]
 func (ac *AuthController) Register(ctx *gin.Context) {
 	var registerRequest dto.RegisterRequest
 
@@ -66,7 +75,16 @@ func (ac *AuthController) Register(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, model.NewResponse("Register successfully", tokenResponse))
 }
 
-// Login handles user login requests.
+// Login godoc
+// @Summary User login
+// @Description handles user login requests
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param login body dto.LoginRequest true "Login"
+// @Success 200 {object} model.Response{data=[]dto.TokenResponse}
+// @Failure 400 {object} model.Response
+// @Router /api/v1/auth/login [post]
 func (ac *AuthController) Login(ctx *gin.Context) {
 	var loginRequest dto.LoginRequest
 

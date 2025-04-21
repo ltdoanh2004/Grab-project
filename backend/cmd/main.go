@@ -42,6 +42,11 @@ import (
 // @tag.docs.url     http://example.com/docs/todos
 // @tag.docs.description Detailed information about todo operations
 
+// @tag.name         auth
+// @tag.description  Operations about login and register
+// @tag.docs.url     http://example.com/docs/auth
+// @tag.docs.description Detailed information about auth operations
+
 // @tag.name         health
 // @tag.description  API health check operations
 
