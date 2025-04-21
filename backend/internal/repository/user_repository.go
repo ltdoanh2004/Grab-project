@@ -9,6 +9,7 @@ import (
 // UserRepository defines data access methods for the User entity.
 type UserRepository interface {
 	GetByUsername(username string) (model.User, error)
+	Update(user *model.User) error
 	Create(user *model.User) error
 }
 
@@ -25,6 +26,11 @@ func NewUserRepository(db *gorm.DB) UserRepository {
 // Create saves a new user record.
 func (r *GormUserRepository) Create(user *model.User) error {
 	return r.DB.Create(user).Error
+}
+
+// Create saves a new user record.
+func (r *GormUserRepository) Update(user *model.User) error {
+	return r.DB.Save(user).Error
 }
 
 // GetByUsername searches for a user by username.
