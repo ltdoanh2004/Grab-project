@@ -9,20 +9,20 @@ import (
 
 // AccessClaims represents the JWT claims for the access token.
 type AccessClaims struct {
-	Username string `json:"username"`
+	UserID string `json:"username"`
 	jwt.StandardClaims
 }
 
 // RefreshClaims represents the JWT claims for the refresh token.
 type RefreshClaims struct {
-	Username string `json:"username"`
+	UserID string `json:"username"`
 	jwt.StandardClaims
 }
 
 // GenerateAccessToken creates a JWT access token.
-func GenerateAccessToken(username string) (string, error) {
+func GenerateAccessToken(userId string) (string, error) {
 	claims := AccessClaims{
-		Username: username,
+		UserID: userId,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(config.AppConfig.Token.AccessTokenTTL).Unix(),
 			IssuedAt:  time.Now().Unix(),
@@ -34,9 +34,9 @@ func GenerateAccessToken(username string) (string, error) {
 }
 
 // GenerateRefreshToken creates a JWT refresh token.
-func GenerateRefreshToken(username string) (string, error) {
+func GenerateRefreshToken(userId string) (string, error) {
 	claims := RefreshClaims{
-		Username: username,
+		UserID: userId,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(config.AppConfig.Token.RefreshTokenTTL).Unix(),
 			IssuedAt:  time.Now().Unix(),

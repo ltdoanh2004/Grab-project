@@ -2,7 +2,7 @@ package model
 
 // Place maps to the "places" table.
 type Place struct {
-	PlaceID          uint    `gorm:"column:place_id;primaryKey;autoIncrement" json:"place_id"`
+	PlaceID          string  `gorm:"type:char(36);column:place_id;primaryKey" json:"place_id"`
 	DestinationID    uint    `gorm:"column:destination_id" json:"destination_id"`
 	Name             string  `gorm:"column:name;size:100;not null" json:"name"`
 	PlaceType        string  `gorm:"column:place_type;size:50" json:"place_type"`

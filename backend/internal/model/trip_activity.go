@@ -4,7 +4,7 @@ import "time"
 
 // TripActivity associates an activity with a trip.
 type TripActivity struct {
-	TripActivityID uint       `gorm:"primaryKey;autoIncrement" json:"trip_activity_id"`
+	TripActivityID string     `gorm:"type:char(36);primaryKey" json:"trip_activity_id"`
 	TripID         uint       `gorm:"not null" json:"trip_id"`
 	ActivityID     uint       `gorm:"not null" json:"activity_id"`
 	ScheduledDate  *time.Time `json:"scheduled_date,omitempty"`

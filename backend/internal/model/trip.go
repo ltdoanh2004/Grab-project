@@ -2,12 +2,14 @@ package model
 
 import (
 	"time"
+
+	"github.com/google/uuid"
 )
 
 // Trip represents travel plans created by a user.
 type Trip struct {
-	TripID     uint      `gorm:"primaryKey;autoIncrement" json:"trip_id"`
-	UserID     uint      `gorm:"not null" json:"user_id"`
+	TripID     string    `gorm:"type:char(36);primaryKey" json:"trip_id"`
+	UserID     uuid.UUID `gorm:"not null" json:"user_id"`
 	TripName   string    `gorm:"size:100;not null" json:"trip_name"`
 	StartDate  time.Time `gorm:"not null" json:"start_date"`
 	EndDate    time.Time `gorm:"not null" json:"end_date"`
