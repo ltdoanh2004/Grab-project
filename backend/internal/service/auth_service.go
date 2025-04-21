@@ -7,13 +7,14 @@ import (
 	"skeleton-internship-backend/internal/repository"
 	"skeleton-internship-backend/internal/util"
 
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type AuthService interface {
 	Register(req dto.RegisterRequest) (*model.User, error)
 	Login(username string, password string) (accessToken string, refreshToken string, err error)
-	GenerateToken(username string) (accessToken string, refreshToken string, err error)
+	GenerateToken(userId string) (accessToken, refreshToken string, err error)
 	Refresh(tokenString string) (newAccessToken string, err error)
 }
 
@@ -34,6 +35,7 @@ func (s *authService) Register(req dto.RegisterRequest) (*model.User, error) {
 	}
 
 	var user = model.User{
+		UserID:    uuid.NewString(),
 		FirstName: req.FirstName,
 		LastName:  req.LastName,
 		Username:  req.Username,
@@ -67,20 +69,20 @@ func (s *authService) Login(username string, password string) (accessToken strin
 		return "", "", errors.New(err.Error())
 	}
 
-	accessToken, refreshToken, err = s.GenerateToken(user.Username)
+	accessToken, refreshToken, err = s.GenerateToken(user.UserID)
 	if err != nil {
 		return "", "", err
 	}
 	return accessToken, refreshToken, nil
 }
 
-func (s *authService) GenerateToken(username string) (accessToken string, refreshToken string, err error) {
-	accessToken, err = util.GenerateAccessToken(username)
+func (s *authService) GenerateToken(userId string) (accessToken string, refreshToken string, err error) {
+	accessToken, err = util.GenerateAccessToken(userId)
 	if err != nil {
 		return "", "", err
 	}
 
-	refreshToken, err = util.GenerateRefreshToken(username)
+	refreshToken, err = util.GenerateRefreshToken(userId)
 	if err != nil {
 		return "", "", err
 	}
@@ -95,6 +97,6 @@ func (s *authService) Refresh(tokenString string) (newAccessToken string, err er
 	}
 
 	// Optionally: check if token is blacklisted or revoked
-	newAccessToken, err = util.GenerateAccessToken(claims.Username)
+	newAccessToken, err = util.GenerateAccessToken(claims.UserID)
 	return newAccessToken, err
 }

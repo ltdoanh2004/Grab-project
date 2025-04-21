@@ -59,7 +59,7 @@ func (ac *AuthController) Register(ctx *gin.Context) {
 		return
 	}
 
-	accessToken, refreshToken, err := ac.authService.GenerateToken(user.Username)
+	accessToken, refreshToken, err := ac.authService.GenerateToken(user.UserID)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, model.NewResponse("Generate token failed: "+err.Error(), nil))
 		return

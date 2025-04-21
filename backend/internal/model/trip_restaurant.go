@@ -6,7 +6,7 @@ import (
 
 // TripRestaurant maps to the "trip_restaurants" table.
 type TripRestaurant struct {
-	TripRestaurantID uint       `gorm:"column:trip_restaurant_id;primaryKey;autoIncrement" json:"trip_restaurant_id"`
+	TripRestaurantID string     `gorm:"type:char(36);primaryKey" json:"trip_restaurant_id"`
 	TripID           uint       `gorm:"column:trip_id;not null" json:"trip_id"`
 	RestaurantID     uint       `gorm:"column:restaurant_id;not null" json:"restaurant_id"`
 	MealDate         *time.Time `gorm:"column:meal_date" json:"meal_date,omitempty"`

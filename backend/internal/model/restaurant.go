@@ -2,7 +2,7 @@ package model
 
 // Restaurant maps to the "restaurants" table.
 type Restaurant struct {
-	RestaurantID      uint    `gorm:"column:restaurant_id;primaryKey;autoIncrement" json:"restaurant_id"`
+	RestaurantID      string  `gorm:"type:char(36);primaryKey" json:"restaurant_id"`
 	DestinationID     uint    `gorm:"column:destination_id" json:"destination_id"` // FK referencing destinations table
 	Name              string  `gorm:"column:name;size:100;not null" json:"name"`
 	EstablishmentType string  `gorm:"column:establishment_type;size:50" json:"establishment_type"`

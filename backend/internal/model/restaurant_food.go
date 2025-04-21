@@ -2,7 +2,7 @@ package model
 
 // RestaurantFood maps to the "restaurant_foods" table.
 type RestaurantFood struct {
-	FoodID          uint    `gorm:"column:food_id;primaryKey;autoIncrement" json:"food_id"`
+	FoodID          string  `gorm:"type:char(36);primaryKey" json:"food_id"`
 	RestaurantID    uint    `gorm:"column:restaurant_id;not null" json:"restaurant_id"`
 	Name            string  `gorm:"column:name;size:100;not null" json:"name"`
 	Description     string  `gorm:"column:description" json:"description"`

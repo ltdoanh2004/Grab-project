@@ -6,7 +6,7 @@ import (
 
 // TripDestination links a trip with a destination.
 type TripDestination struct {
-	TripDestinationID uint       `gorm:"primaryKey;autoIncrement" json:"trip_destination_id"`
+	TripDestinationID string     `gorm:"type:char(36);primaryKey" json:"trip_destination_id"`
 	TripID            uint       `gorm:"not null" json:"trip_id"`
 	DestinationID     uint       `gorm:"not null" json:"destination_id"`
 	ArrivalDate       *time.Time `json:"arrival_date,omitempty"`
