@@ -11,7 +11,5 @@ type Activity struct {
 	Cost          float64 `gorm:"type:decimal(10,2)" json:"cost"`
 	ImageURL      string  `gorm:"size:255" json:"image_url"`
 
-	// Association: Activity belongs to a Destination.
-	// Note: if you need this relation in activity, import the same package,
-	// or simply store the DestinationID for lightweight operations.
+	ActivityCategory ActivityCategory `gorm:"foreignKey:CategoryID" json:"activity,omitempty"`
 }

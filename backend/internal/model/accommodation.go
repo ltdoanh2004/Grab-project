@@ -12,6 +12,4 @@ type Accommodation struct {
 	Description     string  `json:"description"`
 	Amenities       string  `json:"amenities"`
 	ImageURL        string  `gorm:"size:255" json:"image_url"`
-
-	// Association with Destination can be added if needed.
 }
