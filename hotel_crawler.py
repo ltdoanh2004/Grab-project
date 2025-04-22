@@ -210,7 +210,8 @@ class HotelCrawler:
                                     'facilities': hotel_details['facilities'],
                                     'description': hotel_details['description'],
                                     'images': hotel_details['images'],
-                                    'room_types': hotel_details['rooms']
+                                    'room_types': hotel_details['rooms'],
+                                    'elderly_friendly': True
                                 }
                                 
                                 all_hotels.append(hotel_data)
@@ -272,7 +273,7 @@ class HotelCrawler:
 
 def main():
     parser = argparse.ArgumentParser(description='Crawl hotel data from Booking.com')
-    parser.add_argument('--url', type=str, default="https://www.booking.com/searchresults.vi.html?aid=304142&label=gen173nr-1FCAQoggJCEHNlYXJjaF9ow6AgbuG7mWlIKlgEaPQBiAEBmAEquAEHyAEM2AEB6AEB-AEDiAIBqAIDuAKV75HABsACAdICJDJjNTc3NTFlLTBkZjctNGFiOC05MjlhLTk3ZTJlYzBhMmE2ZtgCBeACAQ&sid=7834fe4d42ec780609444a0dd3917e20&checkin=2025-04-22&checkout=2025-04-23&dest_id=-3714993&dest_type=city&srpvid=29061d4dc37a0049&",
+    parser.add_argument('--url', type=str, default="https://www.booking.com/searchresults.vi.html?label=gen173nr-1FCAQoggJCEHNlYXJjaF9ow6AgbuG7mWlIKlgEaPQBiAEBmAEquAEHyAEM2AEB6AEB-AEDiAIBqAIDuAKV75HABsACAdICJDJjNTc3NTFlLTBkZjctNGFiOC05MjlhLTk3ZTJlYzBhMmE2ZtgCBeACAQ&sid=6c193e0d423f51fd95f06510ec7cf6dd&aid=304142&checkin=2025-04-22&checkout=2025-04-23&dest_id=-3714993&dest_type=city&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&nflt=hotelfacility%3D185",
                         help='URL to crawl')
     parser.add_argument('--start-page', type=int, default=1,
                         help='Starting page number (default: 1)')

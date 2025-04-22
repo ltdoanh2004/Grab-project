@@ -5,3 +5,6 @@ ai/crawl_food/data/
 ai/crawl_hanoi_tourist/data/
 ai/crawl_booking_web/data_booking/
 ai/crawl_booking_web/data_hotels/
+ai/crawl_tripadvisor/data_all.json
+ai/crawl_tripadvisor/data_attractions/
+ai/crawl_tripadvisor/checkpoints/

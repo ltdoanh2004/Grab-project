@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Default values
-URL="https://www.booking.com/searchresults.vi.html?aid=304142&label=gen173nr-1FCAQoggJCEHNlYXJjaF9ow6AgbuG7mWlIKlgEaPQBiAEBmAEquAEHyAEM2AEB6AEB-AEDiAIBqAIDuAKV75HABsACAdICJDJjNTc3NTFlLTBkZjctNGFiOC05MjlhLTk3ZTJlYzBhMmE2ZtgCBeACAQ&sid=7834fe4d42ec780609444a0dd3917e20&checkin=2025-04-22&checkout=2025-04-23&dest_id=-3714993&dest_type=city&srpvid=29061d4dc37a0049&"
+URL="https://www.booking.com/attractions/searchresults/vn/hanoi.html?label=gen173nr-1FCAQoggJCEHNlYXJjaF9ow6AgbuG7mWlIKlgEaPQBiAEBmAEquAEHyAEM2AEB6AEB-AEDiAIBqAIDuAKV75HABsACAdICJDJjNTc3NTFlLTBkZjctNGFiOC05MjlhLTk3ZTJlYzBhMmE2ZtgCBeACAQ&aid=304142"
 START_PAGE=1
-END_PAGE=100
-OUTPUT="data_hotels"
-SAVE_MINS=30
-SAVE_HOTELS=50
+END_PAGE=5
+OUTPUT="data_attractions/attractions"
+SAVE_MINS=15
+SAVE_ATTRACTIONS=10
 DEBUG=false
 
 # Help function
@@ -15,18 +15,18 @@ show_help() {
     echo
     echo "Options:"
     echo "  -h, --help                Show this help message"
-    echo "  -u, --url URL            Set the URL to crawl (default: Booking.com Hanoi hotels)"
+    echo "  -u, --url URL            Set the URL to crawl (default: Booking.com Hanoi attractions)"
     echo "  -s, --start PAGE         Set the starting page number (default: 1)"
-    echo "  -e, --end PAGE           Set the ending page number (default: 100)"
-    echo "  -o, --output FILENAME    Set the output filename without extension (default: data_hotels)"
-    echo "  -t, --time MINUTES       Save checkpoint every N minutes (default: 30)"
-    echo "  -n, --number HOTELS      Save checkpoint every N hotels (default: 50)"
-    echo "  -d, --debug             Enable debug logging"
+    echo "  -e, --end PAGE           Set the ending page number (default: 5)"
+    echo "  -o, --output FILENAME    Set the output filename without extension (default: data_attractions/attractions)"
+    echo "  -t, --time MINUTES       Save checkpoint every N minutes (default: 15)"
+    echo "  -n, --number ATTRACTIONS Save checkpoint every N attractions (default: 10)"
+    echo "  -d, --debug              Enable debug logging"
     echo
     echo "Example:"
-    echo "  $0 --start 2 --end 4 --output hanoi_hotels"
-    echo "  $0 -s 1 -e 10 -o saigon_hotels -t 15 -n 25"
-    echo "  $0 -s 1 -e 50 --debug    # Run with debug logging"
+    echo "  $0 --start 1 --end 3 --output data_attractions/hanoi_attractions"
+    echo "  $0 -s 1 -e 10 -o data_attractions/top_attractions -t 10 -n 5"
+    echo "  $0 -s 1 -e 5 --debug     # Run with debug logging"
 }
 
 # Parse command line arguments
@@ -57,7 +57,7 @@ while [[ $# -gt 0 ]]; do
             shift 2
             ;;
         -n|--number)
-            SAVE_HOTELS="$2"
+            SAVE_ATTRACTIONS="$2"
             shift 2
             ;;
         -d|--debug)
@@ -73,8 +73,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Validate input
-if ! [[ "$START_PAGE" =~ ^[0-9]+$ ]] || ! [[ "$END_PAGE" =~ ^[0-9]+$ ]] || ! [[ "$SAVE_MINS" =~ ^[0-9]+$ ]] || ! [[ "$SAVE_HOTELS" =~ ^[0-9]+$ ]]; then
-    echo "Error: Start page, end page, save minutes and save hotels must be numbers"
+if ! [[ "$START_PAGE" =~ ^[0-9]+$ ]] || ! [[ "$END_PAGE" =~ ^[0-9]+$ ]] || ! [[ "$SAVE_MINS" =~ ^[0-9]+$ ]] || ! [[ "$SAVE_ATTRACTIONS" =~ ^[0-9]+$ ]]; then
+    echo "Error: Start page, end page, save minutes and save attractions must be numbers"
     exit 1
 fi
 
@@ -83,13 +83,13 @@ if [ "$START_PAGE" -gt "$END_PAGE" ]; then
     exit 1
 fi
 
-if [ "$SAVE_MINS" -lt 1 ] || [ "$SAVE_HOTELS" -lt 1 ]; then
+if [ "$SAVE_MINS" -lt 1 ] || [ "$SAVE_ATTRACTIONS" -lt 1 ]; then
     echo "Error: Save intervals must be positive numbers"
     exit 1
 fi
 
 # Create data directory if it doesn't exist
-DATA_DIR="data_hotels"
+DATA_DIR=$(dirname "$OUTPUT")
 mkdir -p "$DATA_DIR"
 
 # Run the crawler
@@ -97,20 +97,20 @@ echo "Starting crawler with following parameters:"
 echo "URL: $URL"
 echo "Start page: $START_PAGE"
 echo "End page: $END_PAGE"
-echo "Output: $DATA_DIR/${OUTPUT}"
+echo "Output: $OUTPUT"
 echo "Save every $SAVE_MINS minutes"
-echo "Save every $SAVE_HOTELS hotels"
+echo "Save every $SAVE_ATTRACTIONS attractions"
 [ "$DEBUG" = true ] && echo "Debug mode: enabled"
 echo
 
 # Build the command
-CMD="python hotel_crawler.py \
+CMD="python attraction_crawler.py \
     --url \"$URL\" \
     --start-page $START_PAGE \
     --end-page $END_PAGE \
-    --output \"$DATA_DIR/${OUTPUT}\" \
+    --output \"$OUTPUT\" \
     --save-interval-mins $SAVE_MINS \
-    --save-interval-hotels $SAVE_HOTELS"
+    --save-interval-attractions $SAVE_ATTRACTIONS"
 
 # Add debug flag if enabled
 [ "$DEBUG" = true ] && CMD="$CMD --debug"
@@ -123,8 +123,8 @@ if [ $? -eq 0 ]; then
     echo
     echo "Crawl completed successfully!"
     echo "Check output files in: $DATA_DIR/"
-    echo "- Final results: ${OUTPUT}_final.csv and ${OUTPUT}_final.json"
-    echo "- Checkpoints: ${OUTPUT}_page*_*.csv and ${OUTPUT}_page*_*.json"
+    echo "- Final results: $(basename $OUTPUT)_final.csv and $(basename $OUTPUT)_final.json"
+    echo "- Checkpoints: $(basename $OUTPUT)_page*_*.csv and $(basename $OUTPUT)_page*_*.json"
 else
     echo
     echo "Error: Crawl failed!"
