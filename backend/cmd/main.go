@@ -42,6 +42,11 @@ import (
 // @tag.docs.url     http://example.com/docs/todos
 // @tag.docs.description Detailed information about todo operations
 
+// @tag.name         auth
+// @tag.description  Operations about login and register
+// @tag.docs.url     http://example.com/docs/auth
+// @tag.docs.description Detailed information about auth operations
+
 // @tag.name         health
 // @tag.description  API health check operations
 
@@ -57,8 +62,11 @@ func main() {
 			database.NewDB,
 			NewGinEngine,
 			repository.NewRepository,
+			repository.NewUserRepository,
 			service.NewService,
+			service.NewAuthService,
 			controller.NewController,
+			controller.NewAuthController,
 		),
 		fx.Invoke(RegisterRoutes),
 	)
@@ -96,8 +104,11 @@ func RegisterRoutes(
 	router *gin.Engine,
 	cfg *config.Config,
 	controller *controller.Controller,
+	auth_controller *controller.AuthController,
 ) {
 	controller.RegisterRoutes(router)
+	auth_controller.RegisterRoutes(router)
+
 	logger.Init()
 
 	server := &http.Server{

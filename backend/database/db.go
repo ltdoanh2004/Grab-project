@@ -23,11 +23,46 @@ func NewDB(cfg *config.Config) (*gorm.DB, error) {
 		return nil, err
 	}
 
+	db.Migrator().DropTable(
+		&model.User{},
+		&model.Trip{},
+		&model.Destination{},
+		&model.ActivityCategory{},
+		&model.Activity{},
+		&model.Accommodation{},
+		&model.Place{},
+		&model.Restaurant{},
+		&model.RestaurantFood{},
+		&model.TripDestination{},
+		&model.TripActivity{},
+		&model.TripAccommodation{},
+		&model.TripPlace{},
+		&model.TripRestaurant{},
+	)
+
+	db.Exec("SET FOREIGN_KEY_CHECKS = 0;")
+
 	// Auto migrate the schema
-	err = db.AutoMigrate(&model.Todo{})
+	err = db.AutoMigrate(
+		&model.User{},
+		&model.Trip{},
+		&model.Destination{},
+		&model.ActivityCategory{},
+		&model.Activity{},
+		&model.Accommodation{},
+		&model.Place{},
+		&model.Restaurant{},
+		&model.RestaurantFood{},
+		&model.TripDestination{},
+		&model.TripActivity{},
+		&model.TripAccommodation{},
+		&model.TripPlace{},
+		&model.TripRestaurant{},
+	)
 	if err != nil {
 		return nil, err
 	}
+	db.Exec("SET FOREIGN_KEY_CHECKS = 1;")
 
 	return db, nil
 }

@@ -1,5 +1,25 @@
 basePath: /api/v1
 definitions:
+  dto.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.RegisterRequest:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
   dto.TodoCreate:
     description: Todo creation request body
     properties:
@@ -21,6 +41,15 @@ definitions:
         type: string
     required:
     - title
+    type: object
+  dto.TokenResponse:
+    properties:
+      access_token:
+        description: The access token, used for subsequent requests.
+        type: string
+      refresh_token:
+        description: Optional refresh token, used for obtaining new access tokens.
+        type: string
     type: object
   model.Response:
     properties:
@@ -76,6 +105,72 @@ info:
   title: Todo List API
   version: "1.0"
 paths:
+  /api/v1/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: handles user login requests
+      parameters:
+      - description: Login
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/dto.TokenResponse'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: User login
+      tags:
+      - auth
+  /api/v1/auth/register:
+    post:
+      consumes:
+      - application/json
+      description: handles user registration requests
+      parameters:
+      - description: Register
+        in: body
+        name: register
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/dto.TokenResponse'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: User registration
+      tags:
+      - auth
   /api/v1/todos:
     get:
       consumes:
@@ -268,5 +363,10 @@ tags:
     description: Detailed information about todo operations
     url: http://example.com/docs/todos
   name: todos
+- description: Operations about login and register
+  externalDocs:
+    description: Detailed information about auth operations
+    url: http://example.com/docs/auth
+  name: auth
 - description: API health check operations
   name: health
