@@ -3,8 +3,10 @@ import { DestinationStep } from "./travelPlanDestination";
 import { TimeStep } from "./travelPlanTime";
 import { PersonalStep } from "./travelPlanPersonal";
 import { PeopleBudgetStep } from "./travelPlanBasic";
+import { LoadingStep } from "./travelLoading";
 import { StepNavigation } from "./navbar";
 import { useTravelPlan } from "../../hooks/useTravelPlans";
+import { DESTINATIONS } from "../../constants/travelPlanConstants";
 
 export const TravelNewPlan: React.FC = () => {
   const {
@@ -28,8 +30,24 @@ export const TravelNewPlan: React.FC = () => {
     isDestinationSelection,
   } = useTravelPlan();
 
+  // Get destination name for display in loading screen
+  const selectedDestination =
+    DESTINATIONS.find((dest) => dest.id === selectedDestinationId)?.name ||
+    "điểm đến của bạn";
+
   const renderStepContent = () => {
     switch (currentStep) {
+      case 0:
+        return (
+          <PeopleBudgetStep
+            budget={budget}
+            onBudgetChange={handleBudgetChange}
+            people={people}
+            onPeopleChange={handlePeopleChange}
+            onNext={handleNextStep}
+            onPrev={handleBacktoMain}
+          />
+        );
       case 1:
         return (
           <TimeStep
@@ -39,7 +57,7 @@ export const TravelNewPlan: React.FC = () => {
             onMonthChange={handleMonthChange}
             onLengthChange={handleLengthChange}
             onNext={handleNextStep}
-            onPrev={handleBacktoMain}
+            onPrev={handlePrevStep}
           />
         );
       case 2:
@@ -51,15 +69,11 @@ export const TravelNewPlan: React.FC = () => {
             onPrev={handlePrevStep}
           />
         );
-      case 0:
+      case 3:
         return (
-          <PeopleBudgetStep
-            budget={budget}
-            onBudgetChange={handleBudgetChange}
-            people={people}
-            onPeopleChange={handlePeopleChange}
-            onNext={handleNextStep}
-            onPrev={handlePrevStep}
+          <LoadingStep
+            destination={selectedDestination}
+            onFinish={handleNextStep}
           />
         );
       default:
