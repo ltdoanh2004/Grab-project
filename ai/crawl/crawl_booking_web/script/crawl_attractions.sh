@@ -3,9 +3,9 @@
 # Default values
 URL="https://www.booking.com/attractions/searchresults/vn/hanoi.html?label=gen173nr-1FCAQoggJCEHNlYXJjaF9ow6AgbuG7mWlIKlgEaPQBiAEBmAEquAEHyAEM2AEB6AEB-AEDiAIBqAIDuAKV75HABsACAdICJDJjNTc3NTFlLTBkZjctNGFiOC05MjlhLTk3ZTJlYzBhMmE2ZtgCBeACAQ&aid=304142"
 START_PAGE=1
-END_PAGE=5
+END_PAGE=10000
 OUTPUT="data_attractions/attractions"
-SAVE_MINS=15
+SAVE_MINS=5
 SAVE_ATTRACTIONS=10
 DEBUG=false
 

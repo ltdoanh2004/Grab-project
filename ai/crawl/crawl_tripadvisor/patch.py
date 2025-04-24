@@ -115,22 +115,24 @@ class EnhancedAttractionsCrawler:
         
         logger.info(f"Starting crawl from page {start_page} with max_pages={max_pages}, max_attractions={max_attractions}")
         
+        # First, collect all listings
         while more and (page - start_page + 1) <= max_pages:
             logger.info(f"Crawling page {page}")
             lst, more = self.get_attraction_listings(page=page)
             logger.info(f"Found {len(lst)} attractions on page {page}")
             
+            if not lst:
+                logger.warning(f"No attractions found on page {page}, stopping listing collection")
+                break
+                
             all_listings.extend(lst)
             if max_attractions and len(all_listings) >= max_attractions:
                 logger.info(f"Reached max_attractions limit ({max_attractions})")
                 all_listings = all_listings[:max_attractions]
                 break
+                
             page += 1
             self._random_delay()
-
-            # Save periodically
-            if self._should_save() and detailed:
-                self.save_data(detailed, output_dir, location)
 
         if not all_listings:
             logger.warning("No attraction listings found.")

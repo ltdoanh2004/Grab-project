@@ -8,7 +8,8 @@ ai/crawl/crawl_booking_web/data_booking/
 ai/crawl/crawl_booking_web/data_hotels/
 ai/crawl/crawl_booking_web/data_attractions/
 ai/crawl/crawl_booking_web/data
-
+ai/crawl/crawl_booking_web/script/data_hotels/
+ai/crawl/crawl_booking_web/script/debug_html/
 ai/crawl/crawl_food/data/
 ai/crawl/crawl_food/merged_all.json
 ai/crawl/crawl_food/restaurant_or_local_foods_from_foody.json
