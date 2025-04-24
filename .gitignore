@@ -21,3 +21,6 @@ ai/model/data/
 
 # env
 ai/model/src/.env
+
+# checkpoint
+ai/model/src/checkpoint.json

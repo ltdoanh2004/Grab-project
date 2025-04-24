@@ -6,6 +6,8 @@ import os
 import argparse
 from tqdm import tqdm
 from pinecone import Pinecone
+import json
+from typing import List, Dict, Any
 
 # Get the directory where the script is located
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -36,26 +38,93 @@ class VectorDatabase:
         self.client = OpenAI(api_key=self.open_api_key)
         self.pinecone_api_key = PINECONE_API_KEY
         self.pc = Pinecone(api_key=self.pinecone_api_key)
+        self.checkpoint_file = os.path.join(SCRIPT_DIR, 'checkpoint.json')
+        self.max_tokens = 8000  # Slightly less than 8192 to be safe
 
     def process_room_type(self, room_type):
         if isinstance(room_type, list):  
             return ', '.join(room_type)
         return room_type
 
-    def get_openai_embeddings(self, text):
-        response = self.client.embeddings.create(
-            input=text,
-            model=self.name_model
-        )   
-        return response.data[0].embedding
+    def truncate_text(self, text: str) -> str:
+        """
+        Truncate text to fit within token limit
+        """
+        if len(text) <= self.max_tokens:
+            return text
+            
+        # Simple truncation - you might want to use a more sophisticated method
+        return text[:self.max_tokens]
 
-    def prepare_hotel_data(self, data=None):
+    def get_openai_embeddings(self, text: str) -> List[float]:
+        """
+        Get embeddings from OpenAI API with error handling
+        """
+        try:
+            # Truncate text if too long
+            text = self.truncate_text(text)
+            
+            response = self.client.embeddings.create(
+                input=text,
+                model=self.name_model
+            )   
+            return response.data[0].embedding
+        except Exception as e:
+            print(f"Error getting embeddings: {e}")
+            return None
+
+    def load_checkpoint(self) -> Dict[str, Any]:
+        """
+        Load checkpoint data if exists
+        """
+        if os.path.exists(self.checkpoint_file):
+            try:
+                with open(self.checkpoint_file, 'r') as f:
+                    checkpoint_data = json.load(f)
+                    print(f"Loaded checkpoint from {self.checkpoint_file}")
+                    print(f"Last processed index: {checkpoint_data['last_processed_index']}")
+                    print(f"Number of saved embeddings: {len(checkpoint_data['embeddings'])}")
+                    return checkpoint_data
+            except Exception as e:
+                print(f"Error loading checkpoint: {e}")
+                return {
+                    "last_processed_index": -1,
+                    "embeddings": {}
+                }
+        return {
+            "last_processed_index": -1,
+            "embeddings": {}
+        }
+
+    def save_checkpoint(self, checkpoint_data: Dict[str, Any]):
+        """
+        Save checkpoint data
+        """
+        try:
+            with open(self.checkpoint_file, 'w') as f:
+                json.dump(checkpoint_data, f)
+            print(f"Saved checkpoint to {self.checkpoint_file}")
+        except Exception as e:
+            print(f"Error saving checkpoint: {e}")
+
+    def prepare_hotel_embedding(self, data=None):
+        """
+        Prepare hotel embeddings with checkpoint support
+        """
+        # Load data
         if data is None:
             data = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'hotel_processed.csv')
             
         print("Loading and processing hotel data...")
         print(f"Loading data from: {data}")
         self.df = pd.read_csv(data)
+        
+        # Load checkpoint
+        checkpoint = self.load_checkpoint()
+        last_processed = checkpoint["last_processed_index"]
+        existing_embeddings = checkpoint["embeddings"]
+        
+        print(f"Resuming from index {last_processed + 1} out of {len(self.df)} total rows")
         
         print("Processing prices...")
         self.df['price'] = self.df['price'].replace({'VND': '', ',': '', '\xa0': '', r'\.': ''}, regex=True)
@@ -74,18 +143,40 @@ class VectorDatabase:
                                 {row['description']}
                                 Gía của nó là {row['price']}
                                 Điểm đánh giá của nó là {row['rating']}
-                                Có các loại phòng là {self.process_room_type(row['room_types'])}
                                 ''' for _, row in tqdm(self.df.iterrows(), total=len(self.df), desc="Creating contexts")]
-        return self.df
-
-    def prepare_hotel_embedding(self, data=None):
-        self.df = self.prepare_hotel_data(data)
 
         print("Generating embeddings...")
         embeddings = []
-        for text in tqdm(self.df['context'], desc="Generating embeddings", unit="hotel"):
-            embedding = self.get_openai_embeddings(text)
-            embeddings.append(embedding)
+        total_rows = len(self.df)
+        
+        # Initialize embeddings list with None values
+        embeddings = [None] * total_rows
+        
+        # Fill in existing embeddings
+        for idx, embedding in existing_embeddings.items():
+            embeddings[int(idx)] = embedding
+        
+        # Process remaining rows
+        for idx in tqdm(range(last_processed + 1, total_rows), desc="Generating embeddings"):
+            try:
+                # Generate new embedding
+                embedding = self.get_openai_embeddings(self.df.iloc[idx]['context'])
+                embeddings[idx] = embedding
+                
+                # Update checkpoint every 10 rows
+                if idx % 10 == 0:
+                    checkpoint["last_processed_index"] = idx
+                    checkpoint["embeddings"][str(idx)] = embedding
+                    self.save_checkpoint(checkpoint)
+                    print(f"Saved checkpoint at index {idx}")
+                    
+            except Exception as e:
+                print(f"Error processing row {idx}: {e}")
+                # Save checkpoint on error
+                checkpoint["last_processed_index"] = idx - 1
+                self.save_checkpoint(checkpoint)
+                print(f"Saved checkpoint after error at index {idx - 1}")
+                raise e
         
         self.df['context_embedding'] = embeddings
 
@@ -93,6 +184,11 @@ class VectorDatabase:
         output_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'hotel_processed_embedding.csv')
         print(f"Saving processed data to: {output_path}")
         self.df.to_csv(output_path, index=False)
+        
+        # Clear checkpoint after successful completion
+        if os.path.exists(self.checkpoint_file):
+            os.remove(self.checkpoint_file)
+            print("Cleared checkpoint after successful completion")
 
     def set_up_pinecone(self, index_name = 'hotel-recommendations'):
         if not hasattr(self, 'df') or 'context_embedding' not in self.df.columns:
