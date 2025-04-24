@@ -1,3 +1,4 @@
+# data
 ai/crawl/crawl_tripadvisor/data_attractions/
 ai/crawl/crawl_tripadvisor/checkpoints/
 ai/crawl/crawl_tripadvisor/data_all.json
@@ -17,3 +18,6 @@ ai/crawl/crawl_ggmaps/output/
 ai/crawl/crawl_hanoi_tourist/data/
 
 ai/model/data/
+
+# env
+ai/model/src/.env
