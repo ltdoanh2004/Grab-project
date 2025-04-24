@@ -2,12 +2,13 @@
 
 # Default values
 DEFAULT_URL="https://www.tripadvisor.com/Attraction_Review-g297704-d30373-Reviews-Hanoi_Old_Quarter-Hanoi_Ha_Noi.html"
-DEFAULT_START_PAGE=131
-DEFAULT_MAX_PAGES=150
+DEFAULT_START_PAGE=1
+DEFAULT_MAX_PAGES=1000
 DEFAULT_DELAY=5.0
 DEFAULT_SAVE_INTERVAL=5
 DEFAULT_THREADS=10
 DEFAULT_LOCATION="hanoi"
+DEFAULT_MAX_ATTRACTIONS=100000
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -40,6 +41,10 @@ while [[ $# -gt 0 ]]; do
             LOCATION="$2"
             shift 2
             ;;
+        --max-attractions)
+            MAX_ATTRACTIONS="$2"
+            shift 2
+            ;;
         *)
             echo "Unknown parameter: $1"
             exit 1
@@ -55,14 +60,16 @@ DELAY=${DELAY:-$DEFAULT_DELAY}
 SAVE_INTERVAL=${SAVE_INTERVAL:-$DEFAULT_SAVE_INTERVAL}
 THREADS=${THREADS:-$DEFAULT_THREADS}
 LOCATION=${LOCATION:-$DEFAULT_LOCATION}
+MAX_ATTRACTIONS=${MAX_ATTRACTIONS:-$DEFAULT_MAX_ATTRACTIONS}
 
 OUTPUT_DIR="data_attractions"
-mkdir -p "$OUTPUT_DIR"
+LOCATION_DIR="$OUTPUT_DIR/$LOCATION"
+mkdir -p "$LOCATION_DIR"
 
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 
 LAST_INDEX=0
-for file in "$OUTPUT_DIR"/"${LOCATION}"_attractions_*_index_*.json; do
+for file in "$LOCATION_DIR"/attractions_*_index_*.json; do
     if [ -f "$file" ]; then
         INDEX=$(echo "$file" | grep -o 'index_[0-9]*' | grep -o '[0-9]*')
         if [ -n "$INDEX" ] && [ "$INDEX" -gt "$LAST_INDEX" ]; then
@@ -73,16 +80,14 @@ done
 
 NEW_INDEX=$((LAST_INDEX + 1))
 
-OUTPUT_FILE="$OUTPUT_DIR/${LOCATION}_attractions_${TIMESTAMP}_index_${NEW_INDEX}.json"
-
 echo "Starting crawl at $TIMESTAMP"
-echo "Output will be saved to: $OUTPUT_FILE"
 echo "Using index: $NEW_INDEX"
 echo "Parameters:"
 echo "Location: $LOCATION"
 echo "URL: $URL"
 echo "Start Page: $START_PAGE"
 echo "Max Pages: $MAX_PAGES"
+echo "Max Attractions: $MAX_ATTRACTIONS"
 echo "Delay: $DELAY"
 echo "Save Interval: $SAVE_INTERVAL"
 echo "Threads: $THREADS"
@@ -91,10 +96,11 @@ python patch.py \
     --url "$URL" \
     --start-page "$START_PAGE" \
     --max-pages "$MAX_PAGES" \
+    --max-attractions "$MAX_ATTRACTIONS" \
     --delay "$DELAY" \
     --save-interval "$SAVE_INTERVAL" \
     --threads "$THREADS" \
-    --output "$OUTPUT_FILE"
+    --location "$LOCATION" \
+    --output-dir "$OUTPUT_DIR"
 
 echo "Crawl completed at $(date +"%Y-%m-%d %H:%M:%S")"
-echo "Data saved to: $OUTPUT_FILE"

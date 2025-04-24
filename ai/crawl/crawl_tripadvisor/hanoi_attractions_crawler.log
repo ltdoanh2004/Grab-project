@@ -59,3 +59,838 @@ Exception: Connection closed while reading from the driver
 2025-04-24 22:22:10,409 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d1845666-Reviews-Dalat_Flower_Park-Da_Lat_Lam_Dong_Province.html
 2025-04-24 22:22:10,480 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451017-Reviews-Linh_Phuoc_Pagoda-Da_Lat_Lam_Dong_Province.html#REVIEWS
 2025-04-24 22:22:11,037 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451017-Reviews-Linh_Phuoc_Pagoda-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:22:45,540 - INFO - Waiting for 7.87 seconds
+2025-04-24 22:22:45,734 - INFO - ✓ Linh Phuoc Pagoda
+2025-04-24 22:22:45,739 - INFO - Waiting for 9.58 seconds
+2025-04-24 22:22:45,793 - INFO - Waiting for 8.84 seconds
+2025-04-24 22:22:45,865 - INFO - ✓ Dalat Flower Park
+2025-04-24 22:22:45,900 - INFO - Waiting for 7.05 seconds
+2025-04-24 22:22:46,017 - INFO - Waiting for 7.47 seconds
+2025-04-24 22:22:46,065 - INFO - ✓ Crazy House
+2025-04-24 22:22:46,070 - INFO - Waiting for 7.46 seconds
+2025-04-24 22:22:46,104 - INFO - Waiting for 9.53 seconds
+2025-04-24 22:22:46,111 - INFO - ✓ Trúc Lâm Monastery of Da Lat
+2025-04-24 22:22:46,134 - INFO - Waiting for 8.76 seconds
+2025-04-24 22:22:46,136 - INFO - ✓ Valley of Love
+2025-04-24 22:22:46,515 - INFO - Waiting for 5.50 seconds
+2025-04-24 22:22:46,873 - INFO - Waiting for 7.97 seconds
+2025-04-24 22:22:52,020 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d15334345-Reviews-Da_Lat_Cable_Car_Robin_Hill-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:22:53,141 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451009-Reviews-Dalat_Market-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:22:53,532 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451022-Reviews-Xuan_Huong_Lake-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:22:53,581 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d25443916-Reviews-Charm_spa_massage_Da_l_t-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:22:53,598 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d25443916-Reviews-Charm_spa_massage_Da_l_t-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:22:54,853 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d15334345-Reviews-Da_Lat_Cable_Car_Robin_Hill-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:22:54,879 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451009-Reviews-Dalat_Market-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:22:54,903 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451014-Reviews-Dalat_Railway_Station_And_Museum-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:22:55,636 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451022-Reviews-Xuan_Huong_Lake-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:22:55,698 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451014-Reviews-Dalat_Railway_Station_And_Museum-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:23:13,954 - INFO - Waiting for 9.51 seconds
+2025-04-24 22:23:13,955 - INFO - ✓ Da Lat Cable Car - Robin Hill
+2025-04-24 22:23:17,441 - INFO - Waiting for 9.79 seconds
+2025-04-24 22:23:17,441 - INFO - ✓ Dalat Market
+2025-04-24 22:23:18,053 - INFO - Waiting for 9.76 seconds
+2025-04-24 22:23:18,053 - INFO - ✓ Dalat Railway Station And Museum
+2025-04-24 22:23:19,564 - INFO - Waiting for 9.60 seconds
+2025-04-24 22:23:19,570 - INFO - ✓ Xuan Huong Lake
+2025-04-24 22:23:19,741 - INFO - Waiting for 6.44 seconds
+2025-04-24 22:23:19,799 - INFO - Waiting for 6.44 seconds
+2025-04-24 22:23:19,818 - INFO - ✓ Charm spa massage Đà lạt
+2025-04-24 22:23:19,849 - INFO - Waiting for 6.24 seconds
+2025-04-24 22:23:19,980 - INFO - Waiting for 5.95 seconds
+2025-04-24 22:23:20,113 - INFO - Waiting for 5.35 seconds
+2025-04-24 22:23:20,422 - INFO - Waiting for 9.48 seconds
+2025-04-24 22:23:23,473 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d11443926-Reviews-Da_Lat_Night_Market-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:23:25,475 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d6960949-Reviews-Statue_Of_Golden_Buddha-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:23:25,943 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451013-Reviews-Bao_Dai_s_Palace_King_s_Palace_1_Dinh_1-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:23:26,173 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451013-Reviews-Bao_Dai_s_Palace_King_s_Palace_1_Dinh_1-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:23:26,236 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d6977911-Reviews-Lang_Biang_Trail-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:23:26,304 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d6977911-Reviews-Lang_Biang_Trail-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:23:27,234 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d11443926-Reviews-Da_Lat_Night_Market-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:23:27,857 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d9989857-Reviews-Tuyen_Lam_Lake-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:23:29,197 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d9989857-Reviews-Tuyen_Lam_Lake-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:23:30,025 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d6960949-Reviews-Statue_Of_Golden_Buddha-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:23:42,097 - INFO - Waiting for 7.79 seconds
+2025-04-24 22:23:42,097 - INFO - ✓ Da Lat Night Market
+2025-04-24 22:23:47,527 - INFO - Waiting for 9.97 seconds
+2025-04-24 22:23:47,527 - INFO - ✓ Bao Dai's Palace - King's Palace 1 (Dinh 1)
+2025-04-24 22:23:47,964 - INFO - Waiting for 9.37 seconds
+2025-04-24 22:23:48,458 - INFO - Waiting for 5.26 seconds
+2025-04-24 22:23:48,470 - INFO - ✓ Lang Biang Trail
+2025-04-24 22:23:48,643 - INFO - Waiting for 5.13 seconds
+2025-04-24 22:23:48,750 - INFO - Waiting for 6.81 seconds
+2025-04-24 22:23:48,750 - INFO - ✓ Statue Of Golden Buddha
+2025-04-24 22:23:49,306 - INFO - Waiting for 6.06 seconds
+2025-04-24 22:23:49,446 - INFO - Waiting for 9.35 seconds
+2025-04-24 22:23:49,447 - INFO - ✓ Tuyen Lam Lake
+2025-04-24 22:23:49,893 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d11611968-Reviews-Sculpture_Tunnel-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:23:49,955 - INFO - Waiting for 9.63 seconds
+2025-04-24 22:23:50,068 - INFO - Waiting for 6.37 seconds
+2025-04-24 22:23:53,739 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d14155384-Reviews-Cau_Dat_Tea_Hill-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:23:53,777 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d9989939-Reviews-Lam_Vien_Square-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:23:55,397 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d12051705-Reviews-XQ_Da_Lat_Art_House-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:23:55,604 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d9989939-Reviews-Lam_Vien_Square-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:23:56,451 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451019-Reviews-The_French_Quarter-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:23:57,347 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d14155384-Reviews-Cau_Dat_Tea_Hill-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:23:57,529 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d11611968-Reviews-Sculpture_Tunnel-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:23:58,811 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d12051705-Reviews-XQ_Da_Lat_Art_House-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:23:59,764 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451019-Reviews-The_French_Quarter-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:24:08,547 - INFO - Waiting for 5.30 seconds
+2025-04-24 22:24:08,547 - INFO - ✓ Sculpture Tunnel
+2025-04-24 22:24:11,274 - INFO - Waiting for 7.23 seconds
+2025-04-24 22:24:11,274 - INFO - ✓ Cau Dat Tea Hill
+2025-04-24 22:24:12,549 - INFO - Waiting for 9.59 seconds
+2025-04-24 22:24:12,549 - INFO - ✓ Lam Vien Square
+2025-04-24 22:24:13,862 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451020-Reviews-Thien_Vuong_Co_Sat_Pagoda-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:24:13,928 - INFO - Waiting for 5.56 seconds
+2025-04-24 22:24:13,928 - INFO - ✓ XQ Da Lat Art House
+2025-04-24 22:24:14,300 - INFO - Waiting for 6.87 seconds
+2025-04-24 22:24:14,659 - INFO - Waiting for 6.04 seconds
+2025-04-24 22:24:14,815 - INFO - Waiting for 8.29 seconds
+2025-04-24 22:24:14,815 - INFO - ✓ The French Quarter
+2025-04-24 22:24:15,533 - INFO - Waiting for 7.74 seconds
+2025-04-24 22:24:15,627 - INFO - Waiting for 6.98 seconds
+2025-04-24 22:24:15,633 - INFO - Waiting for 7.52 seconds
+2025-04-24 22:24:18,508 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451020-Reviews-Thien_Vuong_Co_Sat_Pagoda-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:24:19,489 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d3812786-Reviews-Linh_Son_Pagoda-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:24:20,730 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d8327098-Reviews-Da_Lat_King_Palace_I-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:24:21,181 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d8327098-Reviews-Da_Lat_King_Palace_I-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:24:22,146 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d3812786-Reviews-Linh_Son_Pagoda-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:24:22,637 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d12813336-Reviews-Trickland_3D_Museum-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:24:23,112 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d6983480-Reviews-Domaine_de_Marie_Church-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:24:23,184 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d12813336-Reviews-Trickland_3D_Museum-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:24:23,302 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d6983480-Reviews-Domaine_de_Marie_Church-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:24:30,814 - INFO - Waiting for 6.26 seconds
+2025-04-24 22:24:30,815 - INFO - ✓ Thien Vuong Co Sat Pagoda
+2025-04-24 22:24:31,358 - INFO - Waiting for 8.47 seconds
+2025-04-24 22:24:31,365 - INFO - ✓ Linh Son Pagoda
+2025-04-24 22:24:31,400 - INFO - Waiting for 7.45 seconds
+2025-04-24 22:24:32,860 - INFO - Waiting for 7.25 seconds
+2025-04-24 22:24:32,860 - INFO - ✓ Da Lat King Palace I
+2025-04-24 22:24:36,737 - INFO - Waiting for 5.56 seconds
+2025-04-24 22:24:37,033 - INFO - Waiting for 6.21 seconds
+2025-04-24 22:24:37,033 - INFO - ✓ Trickland 3D Museum
+2025-04-24 22:24:37,083 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d8042349-Reviews-Lam_Dong_Museum-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:24:37,593 - INFO - Waiting for 5.61 seconds
+2025-04-24 22:24:37,628 - INFO - Waiting for 9.80 seconds
+2025-04-24 22:24:37,628 - INFO - ✓ Domaine de Marie Church
+2025-04-24 22:24:38,444 - INFO - Waiting for 9.08 seconds
+2025-04-24 22:24:38,563 - INFO - Waiting for 8.92 seconds
+2025-04-24 22:24:38,863 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d7258249-Reviews-Dalat_Cathedral-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:24:39,844 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d8042349-Reviews-Lam_Dong_Museum-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:24:40,116 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d7258249-Reviews-Dalat_Cathedral-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:24:42,324 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451011-Reviews-Prenn_Falls-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:24:43,219 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451015-Reviews-Hang_Nga_Guest_House_and_Art_Gallery-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:24:43,249 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451011-Reviews-Prenn_Falls-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:24:47,442 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451015-Reviews-Hang_Nga_Guest_House_and_Art_Gallery-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:24:47,498 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d7276777-Reviews-Park_Prenn-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:24:47,558 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d7276777-Reviews-Park_Prenn-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:24:48,271 - INFO - Waiting for 5.03 seconds
+2025-04-24 22:24:48,272 - INFO - ✓ Lam Dong Museum
+2025-04-24 22:24:53,282 - INFO - Waiting for 9.96 seconds
+2025-04-24 22:24:53,307 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g189167-d271927-Reviews-Blandy_s_Wine_Lodge-Funchal_Madeira_Madeira_Islands.html
+2025-04-24 22:24:53,322 - INFO - Waiting for 6.13 seconds
+2025-04-24 22:24:53,329 - INFO - ✓ Dalat Cathedral
+2025-04-24 22:24:53,418 - INFO - Waiting for 9.04 seconds
+2025-04-24 22:24:54,860 - INFO - Waiting for 8.09 seconds
+2025-04-24 22:24:54,860 - INFO - ✓ Prenn Falls
+2025-04-24 22:24:58,270 - INFO - Waiting for 5.63 seconds
+2025-04-24 22:24:58,274 - INFO - Waiting for 7.34 seconds
+2025-04-24 22:24:58,274 - INFO - ✓ Hang Nga Guest House and Art Gallery
+2025-04-24 22:24:59,481 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1464940-d1848997-Reviews-St_Beatus_Hohlen_Swiss_Caves-Sundlauenen_Bernese_Oberland_Canton_of_Bern.html
+2025-04-24 22:25:01,135 - INFO - Waiting for 8.25 seconds
+2025-04-24 22:25:01,145 - INFO - Waiting for 7.72 seconds
+2025-04-24 22:25:01,145 - INFO - ✓ Park Prenn
+2025-04-24 22:25:01,165 - INFO - Waiting for 7.75 seconds
+2025-04-24 22:25:02,470 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g298278-d3734526-Reviews-KSL_City_Mall-Johor_Bahru_Johor_Bahru_District_Johor.html
+2025-04-24 22:25:02,951 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g186338-d19812949-Reviews-New_Years_Eve_Fireworks_London-London_England.html
+2025-04-24 22:25:03,268 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60713-d102779-Reviews-Pier_39-San_Francisco_California.html
+2025-04-24 22:25:03,914 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g776951-d3531273-Reviews-Edessa_Waterfalls-Edessa_Pella_Region_Central_Macedonia.html
+2025-04-24 22:25:05,681 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g28970-d143930-Reviews-United_States_Botanic_Garden-Washington_DC_District_of_Columbia.html
+2025-04-24 22:25:08,917 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g188590-d189384-Reviews-Vondelpark-Amsterdam_North_Holland_Province.html
+2025-04-24 22:25:08,923 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60956-d3265777-Reviews-Aquatica_San_Antonio-San_Antonio_Texas.html
+2025-04-24 22:25:09,432 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g189400-d11827483-Reviews-Lohan_Nightclub-Athens_Attica.html
+2025-04-24 22:25:20,854 - INFO - Waiting for 7.30 seconds
+2025-04-24 22:25:20,861 - INFO - ✓ Blandy's Wine Lodge
+2025-04-24 22:25:20,896 - INFO - Waiting for 5.45 seconds
+2025-04-24 22:25:20,896 - INFO - ✓ St. Beatus-Höhlen, Swiss Caves
+2025-04-24 22:25:23,341 - INFO - Waiting for 6.13 seconds
+2025-04-24 22:25:23,341 - INFO - ✓ KSL City Mall
+2025-04-24 22:25:24,994 - INFO - Waiting for 8.98 seconds
+2025-04-24 22:25:24,994 - INFO - ✓ Edessa Waterfalls
+2025-04-24 22:25:26,363 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g31352-d1877649-Reviews-Sedona_Stargazing-Sedona_Arizona.html
+2025-04-24 22:25:26,656 - INFO - Waiting for 8.26 seconds
+2025-04-24 22:25:26,662 - INFO - ✓ New Years Eve Fireworks London
+2025-04-24 22:25:26,821 - INFO - Waiting for 6.27 seconds
+2025-04-24 22:25:26,821 - INFO - ✓ Pier 39
+2025-04-24 22:25:27,411 - INFO - Waiting for 5.36 seconds
+2025-04-24 22:25:27,423 - INFO - ✓ Lohan Nightclub
+2025-04-24 22:25:27,497 - INFO - Waiting for 7.33 seconds
+2025-04-24 22:25:27,498 - INFO - ✓ Aquatica San Antonio
+2025-04-24 22:25:28,175 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g186338-d2140846-Reviews-British_Pullman_A_Belmond_Train_England-London_England.html
+2025-04-24 22:25:28,344 - INFO - Waiting for 8.06 seconds
+2025-04-24 22:25:28,350 - INFO - ✓ Vondelpark
+2025-04-24 22:25:28,399 - INFO - Waiting for 5.81 seconds
+2025-04-24 22:25:28,399 - INFO - ✓ United States Botanic Garden
+2025-04-24 22:25:29,474 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g59890-d12395731-Reviews-Kinstone-Fountain_City_Wisconsin.html
+2025-04-24 22:25:30,827 - INFO - Warm‑up OK – cookies stored
+2025-04-24 22:25:30,827 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293922-Activities-a_allAttractions.true-Da_Lat_Lam_Dong_Province-oa300.html
+2025-04-24 22:25:32,783 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g53449-d1672880-Reviews-Burgh_Bits_and_Bites_Food_Tours-Pittsburgh_Pennsylvania.html
+2025-04-24 22:25:32,939 - INFO - Found 68 attractions on page 11
+2025-04-24 22:25:32,944 - INFO - Waiting for 7.10 seconds
+2025-04-24 22:25:33,095 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g15663409-d5041815-Reviews-Southern_Michigan_Railroad-Clinton_Michigan.html
+2025-04-24 22:25:33,983 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g31171-d947798-Reviews-Old_Bisbee_Ghost_Tour-Bisbee_Arizona.html
+2025-04-24 22:25:34,223 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60621-d3633205-Reviews-Koloa_Zipline-Koloa_Kauai_Hawaii.html
+2025-04-24 22:25:34,831 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g42216-d1576322-Reviews-Bavarian_Belle_Riverboat-Frankenmuth_Michigan.html
+2025-04-24 22:25:34,942 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g255677-d1233650-Reviews-Oamaru_Blue_Penguin_Colony-Oamaru_Otago_Region_South_Island.html
+2025-04-24 22:25:36,517 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293732-d25055913-Reviews-Safari_Desert_Tours-Casablanca_Casablanca_Settat.html
+2025-04-24 22:25:40,041 - INFO - Waiting for 8.20 seconds
+2025-04-24 22:25:40,041 - INFO - Waiting for 7.37 seconds
+2025-04-24 22:25:40,041 - INFO - Waiting for 5.16 seconds
+2025-04-24 22:25:40,041 - INFO - Waiting for 6.50 seconds
+2025-04-24 22:25:40,041 - INFO - Waiting for 6.85 seconds
+2025-04-24 22:25:40,041 - INFO - Waiting for 6.83 seconds
+2025-04-24 22:25:40,041 - INFO - Waiting for 8.34 seconds
+2025-04-24 22:25:40,041 - INFO - Waiting for 9.36 seconds
+2025-04-24 22:25:40,042 - INFO - Waiting for 6.17 seconds
+2025-04-24 22:25:40,043 - INFO - Waiting for 5.41 seconds
+2025-04-24 22:25:40,478 - INFO - ✓ Sedona Stargazing
+2025-04-24 22:25:40,693 - INFO - ✓ Kinstone
+2025-04-24 22:25:40,698 - INFO - ✓ British Pullman, A Belmond Train, England
+2025-04-24 22:25:45,078 - INFO - ✓ Southern Michigan Railroad
+2025-04-24 22:25:45,129 - INFO - ✓ Burgh Bits and Bites Food Tours
+2025-04-24 22:25:45,210 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d12276591-Reviews-Dalat_LATOUR-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:25:45,456 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d24820358-Reviews-Vietnam_Motorcycletour_com-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:25:46,217 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d27162155-Reviews-B_o_Tang_Tra_Long_D_nh-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:25:46,319 - INFO - ✓ Old Bisbee Ghost Tour
+2025-04-24 22:25:46,552 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d12276591-Reviews-Dalat_LATOUR-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:25:46,751 - INFO - ✓ Koloa Zipline
+2025-04-24 22:25:46,883 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d19273845-Reviews-M_c_spa-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:25:46,902 - INFO - ✓ Bavarian Belle Riverboat
+2025-04-24 22:25:46,913 - INFO - ✓ Oamaru Blue Penguin Colony
+2025-04-24 22:25:46,931 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d19273845-Reviews-M_c_spa-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:25:47,317 - INFO - ✓ Safari Desert Tours
+2025-04-24 22:25:47,318 - INFO - Checkpoint saved: checkpoints/checkpoint_20250424_222547.json
+2025-04-24 22:25:47,318 - INFO - Found 50 unique attractions
+2025-04-24 22:25:47,319 - INFO - Saved 50 new items to data_attractions/dalat_attractions_20250424_222148_index_1.json (total: 50 items)
+2025-04-24 22:25:47,319 - INFO - Saved → data_attractions/dalat_attractions_20250424_222148_index_1.json
+2025-04-24 22:25:47,420 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d18936055-Reviews-Cu_Lan_Village_La_ng_Cu_La_n-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:25:48,250 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d27683084-Reviews-Da_Lat_Eco_Tours-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:25:48,407 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d20892964-Reviews-Ocha_Dalat-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:25:49,410 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d27162155-Reviews-B_o_Tang_Tra_Long_D_nh-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:25:55,832 - INFO - Waiting for 8.27 seconds
+2025-04-24 22:25:55,837 - INFO - ✓ Dalat LATOUR
+2025-04-24 22:25:55,867 - INFO - Waiting for 8.87 seconds
+2025-04-24 22:25:55,873 - INFO - ✓ Vietnam-Motorcycletour.com
+2025-04-24 22:25:55,938 - INFO - Waiting for 7.26 seconds
+2025-04-24 22:25:55,938 - INFO - ✓ Bảo Tàng Trà Long Đỉnh
+2025-04-24 22:25:57,039 - INFO - Waiting for 6.16 seconds
+2025-04-24 22:25:57,039 - INFO - ✓ Mộc spa
+2025-04-24 22:25:57,201 - INFO - Waiting for 6.35 seconds
+2025-04-24 22:25:57,202 - INFO - Waiting for 6.78 seconds
+2025-04-24 22:25:57,344 - INFO - Waiting for 5.39 seconds
+2025-04-24 22:25:57,344 - INFO - ✓ ocha Dalat
+2025-04-24 22:25:57,516 - INFO - Waiting for 5.35 seconds
+2025-04-24 22:25:57,522 - INFO - ✓ Cu Lan Village - Làng Cù Lần
+2025-04-24 22:25:57,527 - INFO - Waiting for 9.02 seconds
+2025-04-24 22:25:57,527 - INFO - ✓ Da Lat Eco Tours
+2025-04-24 22:25:58,126 - INFO - Waiting for 5.77 seconds
+2025-04-24 22:26:02,738 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d7073549-Reviews-Happy_Tour_Day_Tours-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:26:02,875 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d27080379-Reviews-Camping_Da_L_t-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:03,199 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d19219918-Reviews-Da_Lat_Muslim_Tours-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:26:03,204 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d24111206-Reviews-Peter_Easy_Riders_Vietnam-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:03,235 - INFO - Loaded checkpoint: checkpoints/checkpoint_20250424_222547.json
+2025-04-24 22:26:03,235 - INFO - Resumed from page 2
+2025-04-24 22:26:03,561 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d24111206-Reviews-Peter_Easy_Riders_Vietnam-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:26:03,902 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d32908153-Reviews-Vietnam_Easy_Rider-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:26:03,990 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d7073549-Reviews-Happy_Tour_Day_Tours-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:04,106 - INFO - Warm‑up OK – cookies stored
+2025-04-24 22:26:04,106 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293922-Activities-a_allAttractions.true-Da_Lat_Lam_Dong_Province-oa930.html
+2025-04-24 22:26:04,117 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d24820358-Reviews-Vietnam_Motorcycletour_com-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:26:04,748 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d19219918-Reviews-Da_Lat_Muslim_Tours-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:05,299 - INFO - Found 20 attractions on page 32
+2025-04-24 22:26:05,301 - INFO - Waiting for 5.45 seconds
+2025-04-24 22:26:06,582 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d32908153-Reviews-Vietnam_Easy_Rider-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:10,753 - INFO - Waiting for 5.37 seconds
+2025-04-24 22:26:10,754 - INFO - Waiting for 5.01 seconds
+2025-04-24 22:26:10,754 - INFO - Waiting for 6.30 seconds
+2025-04-24 22:26:10,754 - INFO - Waiting for 9.98 seconds
+2025-04-24 22:26:10,755 - INFO - Waiting for 8.89 seconds
+2025-04-24 22:26:10,755 - INFO - Waiting for 8.89 seconds
+2025-04-24 22:26:10,755 - INFO - Waiting for 7.18 seconds
+2025-04-24 22:26:10,755 - INFO - Waiting for 5.77 seconds
+2025-04-24 22:26:10,756 - INFO - Waiting for 6.19 seconds
+2025-04-24 22:26:10,756 - INFO - Waiting for 8.35 seconds
+2025-04-24 22:26:14,637 - INFO - Waiting for 5.82 seconds
+2025-04-24 22:26:14,637 - INFO - ✓ Happy Tour- Day Tours
+2025-04-24 22:26:14,850 - INFO - Waiting for 9.80 seconds
+2025-04-24 22:26:14,947 - INFO - Waiting for 8.10 seconds
+2025-04-24 22:26:14,947 - INFO - ✓ Camping Đà Lạt
+2025-04-24 22:26:15,057 - INFO - Waiting for 6.66 seconds
+2025-04-24 22:26:15,057 - INFO - ✓ Da Lat Muslim Tours
+2025-04-24 22:26:15,282 - INFO - Waiting for 7.98 seconds
+2025-04-24 22:26:15,307 - INFO - ✓ Vietnam Easy Rider
+2025-04-24 22:26:15,470 - INFO - Waiting for 5.96 seconds
+2025-04-24 22:26:15,514 - INFO - Waiting for 6.71 seconds
+2025-04-24 22:26:15,544 - INFO - ✓ Peter- Easy Riders Vietnam
+2025-04-24 22:26:15,550 - INFO - Waiting for 8.46 seconds
+2025-04-24 22:26:15,749 - INFO - Waiting for 5.81 seconds
+2025-04-24 22:26:15,767 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g33458-d10584202-Reviews-Paradise_Cove_Swimming_Hole-Guffey_Colorado.html
+2025-04-24 22:26:15,770 - INFO - Waiting for 8.62 seconds
+2025-04-24 22:26:16,126 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g51766-d12930494-Reviews-Boyd_Cave-Bend_Central_Oregon_Oregon.html
+2025-04-24 22:26:16,531 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g503866-d3781846-Reviews-Big_Space-Harpenden_Hertfordshire_England.html
+2025-04-24 22:26:16,948 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g50566-d8791595-Reviews-Ash_Cave-Logan_Ohio.html
+2025-04-24 22:26:17,036 - INFO - Loaded checkpoint: checkpoints/checkpoint_20250424_222547.json
+2025-04-24 22:26:17,036 - INFO - Resumed from page 2
+2025-04-24 22:26:17,065 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187323-d314008-Reviews-Zoo_Berlin-Berlin.html
+2025-04-24 22:26:17,857 - INFO - Warm‑up OK – cookies stored
+2025-04-24 22:26:17,857 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293922-Activities-a_allAttractions.true-Da_Lat_Lam_Dong_Province-oa1830.html
+2025-04-24 22:26:17,941 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g44926-d2482819-Reviews-Pythian_Castle-Springfield_Missouri.html
+2025-04-24 22:26:19,139 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1191572-d1371598-Reviews-CRETAquarium-Gournes_Crete.html
+2025-04-24 22:26:19,563 - INFO - Found 20 attractions on page 62
+2025-04-24 22:26:19,565 - INFO - Waiting for 5.82 seconds
+2025-04-24 22:26:19,649 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g47582-d2527894-Reviews-Tanger_Outlets_Deer_Park-Deer_Park_Long_Island_New_York.html
+2025-04-24 22:26:19,656 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g190432-d3166317-Reviews-Shopping_City_Seiersberg-Graz_Styria.html
+2025-04-24 22:26:20,460 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d11672703-Reviews-Dalat_Eagle_Tours-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:20,751 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g40693-d103813-Reviews-Gooch_s_Beach-Kennebunk_Kennebunks_Maine.html
+2025-04-24 22:26:21,445 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d20131598-Reviews-No_Love_Camp_Tuy_t_Tinh_Son_Trang-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:21,579 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d20263022-Reviews-VietNam_G_O-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:26:21,723 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d6158963-Reviews-Wild_Vietnam_Day_Tours-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:26:22,233 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d25929579-Reviews-Canyoning_Datanla_Waterfalls_Da_Lat-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:23,054 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d6158963-Reviews-Wild_Vietnam_Day_Tours-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:23,299 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d25446380-Reviews-Den_Di_Camping_Camping_and_hiking_tour_in_Da_Lat-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:24,030 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d20263022-Reviews-VietNam_G_O-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:24,388 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d17394355-Reviews-Da_Lat_motorcycle_private_tour-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:24,651 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d11672703-Reviews-Dalat_Eagle_Tours-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:26:25,388 - INFO - Waiting for 9.70 seconds
+2025-04-24 22:26:25,388 - INFO - Waiting for 8.33 seconds
+2025-04-24 22:26:25,388 - INFO - Waiting for 6.31 seconds
+2025-04-24 22:26:25,389 - INFO - Waiting for 7.42 seconds
+2025-04-24 22:26:25,389 - INFO - Waiting for 6.08 seconds
+2025-04-24 22:26:25,389 - INFO - Waiting for 9.14 seconds
+2025-04-24 22:26:25,389 - INFO - Waiting for 5.08 seconds
+2025-04-24 22:26:25,390 - INFO - Waiting for 8.59 seconds
+2025-04-24 22:26:25,390 - INFO - Waiting for 5.97 seconds
+2025-04-24 22:26:25,391 - INFO - Waiting for 9.21 seconds
+2025-04-24 22:26:30,467 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g274887-d277831-Reviews-Vajdahunyad_Castle-Budapest_Central_Hungary.html
+2025-04-24 22:26:31,362 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294009-d13223425-Reviews-Krossroads_Club-Doha.html
+2025-04-24 22:26:31,472 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187497-d591343-Reviews-Placa_d_Espanya-Barcelona_Catalonia.html
+2025-04-24 22:26:31,540 - INFO - Waiting for 6.63 seconds
+2025-04-24 22:26:31,540 - INFO - ✓ Canyoning Datanla Waterfalls – Da Lat
+2025-04-24 22:26:31,697 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g55559-d106292-Reviews-Lake_Buchanan-Burnet_Texas.html
+2025-04-24 22:26:32,115 - INFO - Waiting for 5.49 seconds
+2025-04-24 22:26:32,116 - INFO - ✓ Dalat Eagle Tours
+2025-04-24 22:26:32,558 - INFO - Waiting for 6.03 seconds
+2025-04-24 22:26:32,571 - INFO - ✓ No Love Camp - Tuyệt Tình Sơn Trang
+2025-04-24 22:26:32,582 - INFO - Waiting for 7.75 seconds
+2025-04-24 22:26:32,593 - INFO - ✓ Wild Vietnam Day Tours
+2025-04-24 22:26:32,638 - INFO - Waiting for 7.95 seconds
+2025-04-24 22:26:32,638 - INFO - ✓ VietNam G.O
+2025-04-24 22:26:32,919 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g39299-d142686-Reviews-MainStrasse_Village-Covington_Kentucky.html
+2025-04-24 22:26:33,019 - INFO - Waiting for 5.98 seconds
+2025-04-24 22:26:33,025 - INFO - ✓ Boyd Cave
+2025-04-24 22:26:33,101 - INFO - Waiting for 7.10 seconds
+2025-04-24 22:26:33,101 - INFO - ✓ Paradise Cove Swimming Hole
+2025-04-24 22:26:33,458 - INFO - Waiting for 5.02 seconds
+2025-04-24 22:26:33,477 - INFO - Waiting for 7.53 seconds
+2025-04-24 22:26:33,477 - INFO - ✓ Den Di Camping - Camping and hiking tour in Da Lat
+2025-04-24 22:26:33,787 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60763-d288031-Reviews-Chelsea_Market-New_York_City_New_York.html
+2025-04-24 22:26:33,988 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g298570-d10474278-Reviews-Pasar_Seni-Kuala_Lumpur_Wilayah_Persekutuan.html
+2025-04-24 22:26:34,400 - INFO - Waiting for 9.26 seconds
+2025-04-24 22:26:34,534 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1588192-d14971034-Reviews-Aragvi_River-Gudauri_Mtskheta_Mtianeti_Region.html
+2025-04-24 22:26:34,615 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g54994-d2209611-Reviews-Douglas_Lake-Dandridge_Tennessee.html
+2025-04-24 22:26:34,822 - INFO - Waiting for 9.72 seconds
+2025-04-24 22:26:35,115 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g41983-d12833553-Reviews-Jean_Klock_Park-Benton_Harbor_Berrien_County_Michigan.html
+2025-04-24 22:26:35,274 - INFO - Waiting for 5.94 seconds
+2025-04-24 22:26:35,274 - INFO - ✓ Da Lat motorcycle private tour
+2025-04-24 22:26:35,565 - INFO - Waiting for 5.34 seconds
+2025-04-24 22:26:35,565 - INFO - ✓ Ash Cave
+2025-04-24 22:26:37,607 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d26991110-Reviews-City_Sightseeing_Da_Lat_Hop_On_Hop_Off_Bus_Tour-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:38,175 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d17394355-Reviews-Da_Lat_motorcycle_private_tour-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:26:38,450 - INFO - Waiting for 9.82 seconds
+2025-04-24 22:26:38,450 - INFO - ✓ Big Space
+2025-04-24 22:26:38,497 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d17352157-Reviews-Dalat_Tigon_Road_Adventure-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:26:38,611 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d26991110-Reviews-City_Sightseeing_Da_Lat_Hop_On_Hop_Off_Bus_Tour-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:26:39,040 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g274707-d1852367-Reviews-Jazz_Boat-Prague_Bohemia.html
+2025-04-24 22:26:39,140 - INFO - Waiting for 7.44 seconds
+2025-04-24 22:26:39,145 - INFO - ✓ CRETAquarium
+2025-04-24 22:26:39,193 - INFO - Waiting for 6.56 seconds
+2025-04-24 22:26:39,193 - INFO - ✓ Pythian Castle
+2025-04-24 22:26:40,135 - INFO - Waiting for 7.07 seconds
+2025-04-24 22:26:40,152 - INFO - ✓ Tanger Outlets Deer Park
+2025-04-24 22:26:40,207 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187147-d6825442-Reviews-Secret_Food_Tours_Paris-Paris_Ile_de_France.html
+2025-04-24 22:26:40,387 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d28099823-Reviews-Balava_Chocolate_House-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:40,407 - INFO - Waiting for 6.03 seconds
+2025-04-24 22:26:40,414 - INFO - ✓ Gooch's Beach
+2025-04-24 22:26:40,427 - INFO - Waiting for 8.81 seconds
+2025-04-24 22:26:40,427 - INFO - ✓ Zoo Berlin
+2025-04-24 22:26:40,596 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d17352157-Reviews-Dalat_Tigon_Road_Adventure-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:40,905 - INFO - Waiting for 9.43 seconds
+2025-04-24 22:26:40,911 - INFO - ✓ Shopping City Seiersberg
+2025-04-24 22:26:40,918 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294201-d2263764-Reviews-Ramasside_Tours-Cairo_Cairo_Governorate.html
+2025-04-24 22:26:41,018 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d26874047-Reviews-Katyusha_Tour-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:41,237 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d20217931-Reviews-Vietnam_TravelMART-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:43,673 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d26874047-Reviews-Katyusha_Tour-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:26:44,543 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d27127574-Reviews-Da_Lat_Local_Tour-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:45,752 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187147-d10045434-Reviews-Little_Africa-Paris_Ile_de_France.html
+2025-04-24 22:26:46,457 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295371-d1857124-Reviews-Cruises_With_Karaka-Dubrovnik_Dubrovnik_Neretva_County_Dalmatia.html
+2025-04-24 22:26:46,591 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g154911-d6740082-Reviews-Lake_Minnewanka_Cruise-Banff_Banff_National_Park_Alberta.html
+2025-04-24 22:26:47,231 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g23902929-d19174969-Reviews-The_Lake_Phuket_Elephant_Home-Thep_Krasatti_Thalang_District_Phuket.html
+2025-04-24 22:26:48,279 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g32155-d298364-Reviews-Pacific_Southwest_Railway_Museum-Campo_California.html
+2025-04-24 22:26:48,326 - INFO - Waiting for 8.32 seconds
+2025-04-24 22:26:48,326 - INFO - ✓ City Sightseeing Da Lat Hop-On Hop-Off Bus Tour
+2025-04-24 22:26:49,040 - INFO - Waiting for 6.12 seconds
+2025-04-24 22:26:49,040 - INFO - ✓ Dalat Tigon Road Adventure
+2025-04-24 22:26:49,163 - INFO - Waiting for 6.32 seconds
+2025-04-24 22:26:49,237 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295370-d12484934-Reviews-Five_Islands_Tour-Split_Split_Dalmatia_County_Dalmatia.html
+2025-04-24 22:26:49,676 - INFO - Waiting for 9.09 seconds
+2025-04-24 22:26:50,362 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g186311-d1965694-Reviews-Canterbury_Ghost_Tour-Canterbury_Kent_England.html
+2025-04-24 22:26:50,517 - INFO - Waiting for 7.35 seconds
+2025-04-24 22:26:50,517 - INFO - ✓ Balava Chocolate House
+2025-04-24 22:26:50,724 - INFO - Waiting for 8.50 seconds
+2025-04-24 22:26:50,994 - INFO - Waiting for 9.84 seconds
+2025-04-24 22:26:50,994 - INFO - ✓ Vietnam TravelMART
+2025-04-24 22:26:51,133 - INFO - Waiting for 9.20 seconds
+2025-04-24 22:26:51,133 - INFO - ✓ Katyusha Tour
+2025-04-24 22:26:52,673 - INFO - Waiting for 5.39 seconds
+2025-04-24 22:26:52,815 - INFO - Waiting for 9.25 seconds
+2025-04-24 22:26:52,815 - INFO - ✓ Da Lat Local Tour
+2025-04-24 22:26:53,849 - INFO - ✓ Jazz Boat
+2025-04-24 22:26:55,161 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d27706387-Reviews-Du_l_ch_AGOTourist_Da_L_t-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:55,335 - INFO - ✓ Ramasside Tours
+2025-04-24 22:26:55,388 - INFO - ✓ Secret Food Tours Paris
+2025-04-24 22:26:55,484 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d23106861-Reviews-Pathfinder_Vietnam-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:55,686 - INFO - ✓ Little Africa
+2025-04-24 22:26:56,652 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d20217931-Reviews-Vietnam_TravelMART-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:26:57,874 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d12291615-Reviews-Cong_Ty_Du_Lich_Da_Lat_Trong_Toi-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:58,071 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g298555-d3361774-Reviews-TEEMALL-Guangzhou_Guangdong.html
+2025-04-24 22:26:58,772 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d27466457-Reviews-Viewfinder_house-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:26:58,787 - INFO - ✓ Lake Minnewanka Cruise
+2025-04-24 22:26:59,050 - INFO - ✓ The Lake Phuket Elephant Home
+2025-04-24 22:26:59,226 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d12291615-Reviews-Cong_Ty_Du_Lich_Da_Lat_Trong_Toi-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:27:00,237 - INFO - ✓ Five Islands Tour
+2025-04-24 22:27:00,333 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d24837729-Reviews-6_Day_Tour_Ho_Chi_Minh_Da_Lat_Hoi_An_and_Da_Nang-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:27:00,340 - INFO - ✓ Pacific Southwest Railway Museum
+2025-04-24 22:27:00,474 - INFO - ✓ Cruises With Karaka
+2025-04-24 22:27:00,752 - INFO - Waiting for 5.59 seconds
+2025-04-24 22:27:00,752 - INFO - ✓ Douglas Lake
+2025-04-24 22:27:00,838 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d24837729-Reviews-6_Day_Tour_Ho_Chi_Minh_Da_Lat_Hoi_An_and_Da_Nang-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:27:01,178 - INFO - Waiting for 5.34 seconds
+2025-04-24 22:27:01,178 - INFO - ✓ MainStrasse Village
+2025-04-24 22:27:01,274 - INFO - ✓ Canterbury Ghost Tour
+2025-04-24 22:27:01,275 - INFO - Checkpoint saved: checkpoints/checkpoint_20250424_222701.json
+2025-04-24 22:27:01,275 - INFO - Found 20 unique attractions
+2025-04-24 22:27:01,276 - INFO - Saved 20 new items to data_attractions/dalat_attractions_20250424_222603_index_2.json (total: 20 items)
+2025-04-24 22:27:01,276 - INFO - Saved → data_attractions/dalat_attractions_20250424_222603_index_2.json
+2025-04-24 22:27:01,608 - INFO - Waiting for 6.00 seconds
+2025-04-24 22:27:01,608 - INFO - ✓ Lake Buchanan
+2025-04-24 22:27:02,084 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g150807-d152698-Reviews-Playa_Tortugas-Cancun_Yucatan_Peninsula.html
+2025-04-24 22:27:02,300 - INFO - Waiting for 9.79 seconds
+2025-04-24 22:27:02,305 - INFO - ✓ Vajdahunyad Castle
+2025-04-24 22:27:02,768 - INFO - Waiting for 6.62 seconds
+2025-04-24 22:27:02,779 - INFO - ✓ Aragvi River
+2025-04-24 22:27:02,839 - INFO - Waiting for 7.42 seconds
+2025-04-24 22:27:02,851 - INFO - ✓ Jean Klock Park
+2025-04-24 22:27:03,890 - INFO - Waiting for 8.16 seconds
+2025-04-24 22:27:03,890 - INFO - ✓ Pathfinder Vietnam
+2025-04-24 22:27:03,973 - INFO - Waiting for 6.84 seconds
+2025-04-24 22:27:03,974 - INFO - ✓ Du lịch AGOTourist Đà Lạt
+2025-04-24 22:27:03,990 - INFO - Waiting for 7.06 seconds
+2025-04-24 22:27:04,002 - INFO - ✓ Pasar Seni
+2025-04-24 22:27:04,277 - INFO - Waiting for 6.95 seconds
+2025-04-24 22:27:04,289 - INFO - ✓ Chelsea Market
+2025-04-24 22:27:04,295 - INFO - Waiting for 5.59 seconds
+2025-04-24 22:27:04,325 - INFO - ✓ Plaça d'Espanya
+2025-04-24 22:27:04,438 - INFO - Waiting for 8.93 seconds
+2025-04-24 22:27:04,438 - INFO - ✓ Krossroads Club
+2025-04-24 22:27:06,036 - INFO - Waiting for 7.78 seconds
+2025-04-24 22:27:06,350 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187888-d2339928-Reviews-Etna_Tribe-Catania_Province_of_Catania_Sicily.html
+2025-04-24 22:27:06,524 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1137831-d12910191-Reviews-Lembongan_Snorkeling_Trips-Nusa_Lembongan_Bali.html
+2025-04-24 22:27:07,614 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g14134311-d20248091-Reviews-Seisuke_Knife_Kappabashi-Asakusa_Taito_Tokyo_Tokyo_Prefecture_Kanto.html
+2025-04-24 22:27:08,273 - INFO - Waiting for 6.67 seconds
+2025-04-24 22:27:08,273 - INFO - ✓ Cong Ty Du Lich Da Lat Trong Toi
+2025-04-24 22:27:08,496 - INFO - Waiting for 7.92 seconds
+2025-04-24 22:27:08,496 - INFO - ✓ Viewfinder house
+2025-04-24 22:27:09,346 - INFO - Waiting for 8.42 seconds
+2025-04-24 22:27:09,346 - INFO - ✓ 6-Day Tour Ho Chi Minh, Da Lat, Hoi An and Da Nang
+2025-04-24 22:27:09,418 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g34678-d1868296-Reviews-Ybor_City_Historic_Walking_Tours-Tampa_Florida.html
+2025-04-24 22:27:09,467 - INFO - Waiting for 5.18 seconds
+2025-04-24 22:27:09,780 - INFO - Waiting for 8.95 seconds
+2025-04-24 22:27:09,947 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g2538506-d12384595-Reviews-Nusa_Penida_Driver_Tour-Nusa_Penida_Bali.html
+2025-04-24 22:27:10,250 - INFO - Waiting for 9.99 seconds
+2025-04-24 22:27:10,250 - INFO - ✓ TEEMALL
+2025-04-24 22:27:10,303 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g51048-d2290857-Reviews-M_V_Sandpiper_Cruises-Toledo_Ohio.html
+2025-04-24 22:27:10,818 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60827-d10161535-Reviews-Plumb_Beach-Brooklyn_New_York.html
+2025-04-24 22:27:11,097 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g150793-d19719311-Reviews-La_Dulce_Vista-Puerto_Vallarta.html
+2025-04-24 22:27:11,269 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g297921-d10838828-Reviews-Chang_Puak_Camp-Hat_Yai_Songkhla_Province.html
+2025-04-24 22:27:12,052 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g2209381-d2332594-Reviews-Wli_Waterfalls-Afegame_Volta_Region.html
+2025-04-24 22:27:12,138 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g44160-d6728597-Reviews-Parakeet_Pete_s_Waterfront_Zipline-Branson_Missouri.html
+2025-04-24 22:27:13,419 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60826-d255215-Reviews-Riverboat_Discovery-Fairbanks_Alaska.html
+2025-04-24 22:27:13,823 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g309246-d586525-Reviews-Playa_Hermosa-Playa_Hermosa_Province_of_Guanacaste.html
+2025-04-24 22:27:14,651 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1190777-d3410198-Reviews-Levan-Liznjan_Istria.html
+2025-04-24 22:27:14,945 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g55774-d281313-Reviews-Kickapoo_Lucky_Eagle_Casino-Eagle_Pass_Texas.html
+2025-04-24 22:27:15,096 - INFO - Waiting for 7.32 seconds
+2025-04-24 22:27:15,096 - INFO - ✓ Playa Tortugas
+2025-04-24 22:27:16,430 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1224250-d2723942-Reviews-Dang_Massage-Choeng_Thale_Thalang_District_Phuket.html
+2025-04-24 22:27:17,771 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g3676471-d261431-Reviews-Golden_Circle_Route-South_Region.html
+2025-04-24 22:27:18,652 - INFO - ✓ Etna Tribe
+2025-04-24 22:27:18,737 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g45963-d8388404-Reviews-Drai_s_Nightclub-Las_Vegas_Nevada.html
+2025-04-24 22:27:18,943 - INFO - ✓ Seisuke Knife Kappabashi
+2025-04-24 22:27:19,083 - INFO - ✓ Lembongan Snorkeling Trips
+2025-04-24 22:27:20,097 - INFO - ✓ Ybor City Historic Walking Tours
+2025-04-24 22:27:20,255 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60878-d9455962-Reviews-Leavenworth_Snow_Train-Seattle_Washington.html
+2025-04-24 22:27:21,402 - INFO - ✓ M/V Sandpiper Cruises
+2025-04-24 22:27:22,422 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293920-d25130326-Reviews-Bukit_Elephant_Park-Phuket.html
+2025-04-24 22:27:24,745 - INFO - ✓ Nusa Penida Driver Tour
+2025-04-24 22:27:25,083 - INFO - ✓ Parakeet Pete's Waterfront Zipline
+2025-04-24 22:27:25,116 - INFO - ✓ La Dulce Vista
+2025-04-24 22:27:25,326 - INFO - ✓ Chang Puak Camp
+2025-04-24 22:27:25,592 - INFO - ✓ Riverboat Discovery
+2025-04-24 22:27:25,593 - INFO - Checkpoint saved: checkpoints/checkpoint_20250424_222725.json
+2025-04-24 22:27:25,593 - INFO - Found 20 unique attractions
+2025-04-24 22:27:25,595 - INFO - Saved 20 new items to data_attractions/dalat_attractions_20250424_222616_index_2.json (total: 20 items)
+2025-04-24 22:27:25,595 - INFO - Saved → data_attractions/dalat_attractions_20250424_222616_index_2.json
+2025-04-24 22:27:25,938 - INFO - Waiting for 8.91 seconds
+2025-04-24 22:27:25,944 - INFO - ✓ Plumb Beach
+2025-04-24 22:27:25,995 - INFO - Waiting for 6.48 seconds
+2025-04-24 22:27:25,995 - INFO - ✓ Wli Waterfalls
+2025-04-24 22:27:27,092 - INFO - Waiting for 8.44 seconds
+2025-04-24 22:27:27,092 - INFO - ✓ Playa Hermosa
+2025-04-24 22:27:28,324 - INFO - Waiting for 5.40 seconds
+2025-04-24 22:27:28,324 - INFO - ✓ Kickapoo Lucky Eagle Casino
+2025-04-24 22:27:28,592 - INFO - Waiting for 9.14 seconds
+2025-04-24 22:27:28,592 - INFO - ✓ Levan
+2025-04-24 22:27:31,368 - INFO - Waiting for 5.97 seconds
+2025-04-24 22:27:31,368 - INFO - ✓ Dang Massage
+2025-04-24 22:27:31,660 - INFO - Waiting for 6.45 seconds
+2025-04-24 22:27:31,660 - INFO - ✓ Golden Circle Route
+2025-04-24 22:27:31,815 - INFO - Waiting for 8.81 seconds
+2025-04-24 22:27:31,815 - INFO - ✓ Leavenworth Snow Train
+2025-04-24 22:27:32,480 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295370-d3136933-Reviews-Tower_Pub_Crawl_Split-Split_Split_Dalmatia_County_Dalmatia.html
+2025-04-24 22:27:32,643 - INFO - ✓ Drai's Nightclub
+2025-04-24 22:27:32,821 - INFO - ✓ Bukit Elephant Park
+2025-04-24 22:27:33,725 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g291963-d23791192-Reviews-Ragga_Sailing_Adventures-Caye_Caulker_Belize_Cayes.html
+2025-04-24 22:27:34,862 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g57030-d23160112-Reviews-ROAM_Outdoor_Adventure_Co-Kanab_Utah.html
+2025-04-24 22:27:35,545 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294305-d2012772-Reviews-Free_Walking_Tour_of_Santiago-Santiago_Santiago_Metropolitan_Region.html
+2025-04-24 22:27:37,346 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g674784-d15014373-Reviews-Happy_Train_Malta-Birgu_Vittoriosa_Island_of_Malta.html
+2025-04-24 22:27:37,733 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187510-d651127-Reviews-Dolphin_Adventure-Gibraltar.html
+2025-04-24 22:27:38,118 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g297390-d12279607-Reviews-Siem_Reap_Scooter_Rental-Siem_Reap_Siem_Reap_Province.html
+2025-04-24 22:27:40,630 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g35805-d667579-Reviews-Chicago_s_First_Lady_Cruises-Chicago_Illinois.html
+2025-04-24 22:27:43,440 - INFO - ✓ Tower Pub Crawl Split
+2025-04-24 22:27:43,611 - INFO - ✓ Ragga Sailing Adventures
+2025-04-24 22:27:44,235 - INFO - ✓ ROAM Outdoor Adventure Co
+2025-04-24 22:27:45,310 - INFO - ✓ Free Walking Tour of Santiago
+2025-04-24 22:27:48,320 - INFO - ✓ Happy Train Malta
+2025-04-24 22:27:48,547 - INFO - ✓ Dolphin Adventure
+2025-04-24 22:27:48,724 - INFO - ✓ Siem Reap Scooter Rental
+2025-04-24 22:27:49,542 - INFO - ✓ Chicago’s First Lady Cruises
+2025-04-24 22:27:49,543 - INFO - Checkpoint saved: checkpoints/checkpoint_20250424_222749.json
+2025-04-24 22:27:49,543 - INFO - Found 50 unique attractions
+2025-04-24 22:27:49,544 - INFO - Saved 50 new items to data_attractions/dalat_attractions_20250424_222529_index_1.json (total: 50 items)
+2025-04-24 22:27:49,544 - INFO - Saved → data_attractions/dalat_attractions_20250424_222529_index_1.json
+2025-04-24 22:32:40,835 - INFO - Loaded checkpoint: checkpoints/checkpoint_20250424_222749.json
+2025-04-24 22:32:40,835 - INFO - Resumed from page 12
+2025-04-24 22:32:41,795 - INFO - Warm‑up OK – cookies stored
+2025-04-24 22:32:41,796 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293922-Activities-a_allAttractions.true-Da_Lat_Lam_Dong_Province-oa3300.html
+2025-04-24 22:32:43,106 - INFO - Found 20 attractions on page 111
+2025-04-24 22:32:43,108 - INFO - Waiting for 6.34 seconds
+2025-04-24 22:32:49,451 - INFO - Waiting for 7.82 seconds
+2025-04-24 22:32:49,452 - INFO - Waiting for 6.53 seconds
+2025-04-24 22:32:49,453 - INFO - Waiting for 9.73 seconds
+2025-04-24 22:32:49,453 - INFO - Waiting for 6.59 seconds
+2025-04-24 22:32:49,453 - INFO - Waiting for 7.52 seconds
+2025-04-24 22:32:49,454 - INFO - Waiting for 9.88 seconds
+2025-04-24 22:32:49,454 - INFO - Waiting for 5.98 seconds
+2025-04-24 22:32:49,454 - INFO - Waiting for 9.42 seconds
+2025-04-24 22:32:49,454 - INFO - Waiting for 5.09 seconds
+2025-04-24 22:32:49,454 - INFO - Waiting for 7.12 seconds
+2025-04-24 22:32:54,551 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g801295-d12676629-Reviews-Filikuri_Beach-Himare_Vlore_County.html
+2025-04-24 22:32:55,443 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g3953984-d23092807-Reviews-Azerbaijani_Beach-Madinat_Ash_Shamal.html
+2025-04-24 22:32:55,986 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g57589-d23648031-Reviews-King_Spa-Chantilly_Fairfax_County_Virginia.html
+2025-04-24 22:32:56,053 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g58476-d8471947-Reviews-John_s_Beachcombing_Museum-Forks_Clallam_County_Washington.html
+2025-04-24 22:32:56,577 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60745-d26300892-Reviews-Chase_Sapphire_Lounge-Boston_Massachusetts.html
+2025-04-24 22:32:56,983 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g155032-d9607798-Reviews-Montreal_Metro-Montreal_Quebec.html
+2025-04-24 22:32:57,285 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g189167-d27541044-Reviews-Funchal_Cable_Car-Funchal_Madeira_Madeira_Islands.html
+2025-04-24 22:32:58,878 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g148424-d148070-Reviews-Long_Island-Long_Island_Out_Islands_Bahamas.html
+2025-04-24 22:32:59,216 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295370-d4299371-Reviews-Froggyland-Split_Split_Dalmatia_County_Dalmatia.html
+2025-04-24 22:32:59,346 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g36897-d15539273-Reviews-Home_Alone_House-Winnetka_Illinois.html
+2025-04-24 22:33:18,615 - INFO - Waiting for 5.68 seconds
+2025-04-24 22:33:18,622 - INFO - ✓ Filikuri Beach
+2025-04-24 22:33:18,692 - INFO - Waiting for 8.18 seconds
+2025-04-24 22:33:18,692 - INFO - ✓ King Spa
+2025-04-24 22:33:19,831 - INFO - Waiting for 5.15 seconds
+2025-04-24 22:33:19,919 - INFO - Waiting for 9.89 seconds
+2025-04-24 22:33:19,962 - INFO - ✓ Azerbaijani Beach
+2025-04-24 22:33:20,009 - INFO - Waiting for 6.02 seconds
+2025-04-24 22:33:20,034 - INFO - ✓ Long Island
+2025-04-24 22:33:20,095 - INFO - ✓ Home Alone House
+2025-04-24 22:33:20,237 - INFO - Waiting for 7.44 seconds
+2025-04-24 22:33:20,262 - INFO - ✓ John's Beachcombing Museum
+2025-04-24 22:33:20,639 - INFO - Waiting for 6.51 seconds
+2025-04-24 22:33:20,656 - INFO - ✓ Chase Sapphire Lounge
+2025-04-24 22:33:20,807 - INFO - Waiting for 6.53 seconds
+2025-04-24 22:33:20,818 - INFO - ✓ Funchal Cable Car
+2025-04-24 22:33:20,822 - INFO - Waiting for 7.72 seconds
+2025-04-24 22:33:20,850 - INFO - ✓ Montreal Metro
+2025-04-24 22:33:20,858 - INFO - Waiting for 8.30 seconds
+2025-04-24 22:33:20,859 - INFO - ✓ Froggyland
+2025-04-24 22:33:21,066 - INFO - Loaded checkpoint: checkpoints/checkpoint_20250424_222749.json
+2025-04-24 22:33:21,066 - INFO - Resumed from page 12
+2025-04-24 22:33:22,080 - INFO - Warm‑up OK – cookies stored
+2025-04-24 22:33:22,081 - INFO - Loaded checkpoint: checkpoints/checkpoint_20250424_222749.json
+2025-04-24 22:33:22,081 - INFO - Resumed from page 12
+2025-04-24 22:33:22,081 - INFO - Resumed crawling from page 12 with 50 attractions
+2025-04-24 22:33:22,081 - WARNING - No attraction listings found.
+2025-04-24 22:33:22,083 - INFO - Saved 50 new items to data_attractions/dalat_attractions_20250424_223320_index_3.json (total: 50 items)
+2025-04-24 22:33:22,084 - INFO - Saved → data_attractions/dalat_attractions_20250424_223320_index_3.json
+2025-04-24 22:33:24,317 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295424-d8837269-Reviews-Nemo_WaterSports_Dubai_Jet_Ski_Flyboard-Dubai_Emirate_of_Dubai.html
+2025-04-24 22:33:25,051 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g190384-d3317996-Reviews-Wave_Dancer_Boat_Trips-Paphos_Paphos_District.html
+2025-04-24 22:33:26,108 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g31352-d629020-Reviews-Red_Rock_Balloons-Sedona_Arizona.html
+2025-04-24 22:33:26,876 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g41601-d2227903-Reviews-Cranberry_Bog_Tours-Harwich_Cape_Cod_Massachusetts.html
+2025-04-24 22:33:27,340 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295424-d1898899-Reviews-Sheikh_Mohammed_Centre_for_Cultural_Understanding-Dubai_Emirate_of_Dubai.html
+2025-04-24 22:33:27,375 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g186345-d2300151-Reviews-Dracula_Experience-Whitby_Scarborough_District_North_Yorkshire_England.html
+2025-04-24 22:33:27,718 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g188590-d7362975-Reviews-Amsterdam_Red_Light_District_Tours-Amsterdam_North_Holland_Province.html
+2025-04-24 22:33:28,588 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g317059-d9786050-Reviews-Simien_Mountain_Trekking_and_Tours-Gonder_Amhara_Region.html
+2025-04-24 22:33:29,167 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60910-d17696110-Reviews-Natchez_Pilgrimage_Tours-Natchez_Mississippi.html
+2025-04-24 22:33:29,951 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295415-d9594112-Reviews-Sa_Sa_Sunset_Cruise-Luang_Prabang_Luang_Prabang_Province.html
+2025-04-24 22:33:43,505 - INFO - ✓ Nemo WaterSports Dubai Jet Ski & Flyboard
+2025-04-24 22:33:43,739 - INFO - ✓ Red Rock Balloons
+2025-04-24 22:33:44,243 - INFO - ✓ Wave Dancer Boat Trips
+2025-04-24 22:33:44,247 - INFO - ✓ Sheikh Mohammed Centre for Cultural Understanding
+2025-04-24 22:33:44,874 - INFO - ✓ Amsterdam Red Light District Tours
+2025-04-24 22:33:45,072 - INFO - ✓ Dracula Experience
+2025-04-24 22:33:45,101 - INFO - ✓ Cranberry Bog Tours
+2025-04-24 22:33:45,151 - INFO - ✓ Natchez Pilgrimage Tours
+2025-04-24 22:33:45,214 - INFO - ✓ Simien Mountain Trekking and Tours
+2025-04-24 22:33:45,269 - INFO - ✓ Sa Sa Sunset Cruise
+2025-04-24 22:33:45,270 - INFO - Checkpoint saved: checkpoints/checkpoint_20250424_223345.json
+2025-04-24 22:33:45,271 - INFO - Found 20 unique attractions
+2025-04-24 22:33:45,271 - INFO - Saved 20 new items to data_attractions/dalat_attractions_20250424_223240_index_3.json (total: 20 items)
+2025-04-24 22:33:45,271 - INFO - Saved → data_attractions/dalat_attractions_20250424_223240_index_3.json
+2025-04-24 22:33:49,588 - INFO - Loaded checkpoint: checkpoints/checkpoint_20250424_223345.json
+2025-04-24 22:33:49,588 - INFO - Resumed from page 112
+2025-04-24 22:33:50,439 - INFO - Warm‑up OK – cookies stored
+2025-04-24 22:33:50,439 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293922-Activities-a_allAttractions.true-Da_Lat_Lam_Dong_Province-oa2070.html
+2025-04-24 22:33:52,213 - INFO - Found 20 attractions on page 70
+2025-04-24 22:33:52,215 - INFO - Waiting for 6.70 seconds
+2025-04-24 22:33:58,915 - INFO - Waiting for 6.79 seconds
+2025-04-24 22:33:58,915 - INFO - Waiting for 7.85 seconds
+2025-04-24 22:33:58,916 - INFO - Waiting for 8.53 seconds
+2025-04-24 22:33:58,916 - INFO - Waiting for 6.72 seconds
+2025-04-24 22:33:58,917 - INFO - Waiting for 5.49 seconds
+2025-04-24 22:33:58,917 - INFO - Waiting for 7.67 seconds
+2025-04-24 22:33:58,917 - INFO - Waiting for 9.33 seconds
+2025-04-24 22:33:58,917 - INFO - Waiting for 7.93 seconds
+2025-04-24 22:33:58,917 - INFO - Waiting for 9.14 seconds
+2025-04-24 22:33:58,918 - INFO - Waiting for 7.48 seconds
+2025-04-24 22:34:04,413 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295424-d12982407-Reviews-Souk_Al_Seef_By_Dubai_Retail-Dubai_Emirate_of_Dubai.html
+2025-04-24 22:34:05,633 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60634-d3385223-Reviews-Kapalua_Coastal_Trail-Lahaina_Maui_Hawaii.html
+2025-04-24 22:34:05,713 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295419-d319513-Reviews-Al_Rahma_Mosque-Jeddah_Makkah_Province.html
+2025-04-24 22:34:06,405 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g29313-d1743116-Reviews-Pokagon_State_Park-Angola_Indiana.html
+2025-04-24 22:34:06,675 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60880-d633464-Reviews-Chilkoot_Charlie_s-Anchorage_Alaska.html
+2025-04-24 22:34:06,776 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g189158-d13419036-Reviews-LX_Market-Lisbon_Lisbon_District_Central_Portugal.html
+2025-04-24 22:34:06,959 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g47431-d7011536-Reviews-Chittenango_Falls_State_Park-Cazenovia_New_York.html
+2025-04-24 22:34:07,494 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g154945-d219337-Reviews-Inner_Harbour-Victoria_Victoria_Capital_Regional_District_Vancouver_Island_British.html
+2025-04-24 22:34:08,057 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g45963-d1154965-Reviews-The_Deuce-Las_Vegas_Nevada.html
+2025-04-24 22:34:08,287 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294458-d554993-Reviews-Piaka_Unirii-Bucharest.html
+2025-04-24 22:34:25,297 - INFO - Loaded checkpoint: checkpoints/checkpoint_20250424_223345.json
+2025-04-24 22:34:25,297 - INFO - Resumed from page 112
+2025-04-24 22:34:26,166 - INFO - Warm‑up OK – cookies stored
+2025-04-24 22:34:26,166 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293922-Activities-a_allAttractions.true-Da_Lat_Lam_Dong_Province-oa3300.html
+2025-04-24 22:34:27,421 - INFO - Found 20 attractions on page 111
+2025-04-24 22:34:27,423 - INFO - Waiting for 7.58 seconds
+2025-04-24 22:34:30,825 - INFO - Waiting for 5.45 seconds
+2025-04-24 22:34:30,831 - INFO - ✓ Souk Al Seef By Dubai Retail
+2025-04-24 22:34:31,096 - INFO - Waiting for 6.78 seconds
+2025-04-24 22:34:31,103 - INFO - ✓ Al Rahma Mosque
+2025-04-24 22:34:31,280 - INFO - Waiting for 9.16 seconds
+2025-04-24 22:34:31,280 - INFO - ✓ Chittenango Falls State Park
+2025-04-24 22:34:31,629 - INFO - Waiting for 8.83 seconds
+2025-04-24 22:34:31,629 - INFO - ✓ LX Market
+2025-04-24 22:34:33,578 - INFO - Waiting for 9.12 seconds
+2025-04-24 22:34:33,590 - INFO - ✓ Pokagon State Park
+2025-04-24 22:34:33,863 - INFO - Waiting for 7.97 seconds
+2025-04-24 22:34:33,868 - INFO - ✓ Chilkoot Charlie's
+2025-04-24 22:34:33,926 - INFO - Waiting for 8.06 seconds
+2025-04-24 22:34:33,950 - INFO - ✓ Piața Unirii
+2025-04-24 22:34:34,227 - INFO - Waiting for 8.13 seconds
+2025-04-24 22:34:34,247 - INFO - ✓ The Deuce
+2025-04-24 22:34:34,277 - INFO - Waiting for 6.53 seconds
+2025-04-24 22:34:34,282 - INFO - ✓ Inner Harbour
+2025-04-24 22:34:34,283 - INFO - Waiting for 7.43 seconds
+2025-04-24 22:34:34,284 - INFO - ✓ Kapalua Coastal Trail
+2025-04-24 22:34:35,003 - INFO - Waiting for 5.32 seconds
+2025-04-24 22:34:35,003 - INFO - Waiting for 8.08 seconds
+2025-04-24 22:34:35,004 - INFO - Waiting for 6.70 seconds
+2025-04-24 22:34:35,004 - INFO - Waiting for 9.94 seconds
+2025-04-24 22:34:35,004 - INFO - Waiting for 7.88 seconds
+2025-04-24 22:34:35,005 - INFO - Waiting for 8.53 seconds
+2025-04-24 22:34:35,005 - INFO - Waiting for 6.20 seconds
+2025-04-24 22:34:35,005 - INFO - Waiting for 6.42 seconds
+2025-04-24 22:34:35,005 - INFO - Waiting for 8.63 seconds
+2025-04-24 22:34:35,005 - INFO - Waiting for 6.67 seconds
+2025-04-24 22:34:36,282 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295424-d19647202-Reviews-Sonara_Camp-Dubai_Emirate_of_Dubai.html
+2025-04-24 22:34:37,919 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g41850-d17630673-Reviews-Berkshire_Botanical_Garden-Stockbridge_Massachusetts.html
+2025-04-24 22:34:40,324 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g189167-d27541044-Reviews-Funchal_Cable_Car-Funchal_Madeira_Madeira_Islands.html
+2025-04-24 22:34:40,450 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g304554-d7660311-Reviews-Nilambari_Open_Deck_Bus-Mumbai_Maharashtra.html
+2025-04-24 22:34:40,469 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294009-d23733783-Reviews-Doha_Transit_and_Tours-Doha.html
+2025-04-24 22:34:40,815 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g482884-d1601514-Reviews-The_Safari_Blue-Zanzibar_Island_Zanzibar_Archipelago.html
+2025-04-24 22:34:41,204 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g3953984-d23092807-Reviews-Azerbaijani_Beach-Madinat_Ash_Shamal.html
+2025-04-24 22:34:41,429 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g148424-d148070-Reviews-Long_Island-Long_Island_Out_Islands_Bahamas.html
+2025-04-24 22:34:41,673 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60745-d26300892-Reviews-Chase_Sapphire_Lounge-Boston_Massachusetts.html
+2025-04-24 22:34:41,714 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295370-d4299371-Reviews-Froggyland-Split_Split_Dalmatia_County_Dalmatia.html
+2025-04-24 22:34:41,718 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g52206-d1169752-Reviews-Abe_s_Buggy_Rides-Bird_in_Hand_Lancaster_County_Pennsylvania.html
+2025-04-24 22:34:41,903 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g737051-d2037977-Reviews-Blue_Swimmer_Adventures-Cat_Ba_Hai_Phong.html
+2025-04-24 22:34:42,061 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294201-d4064603-Reviews-Egypt_Tour_Guide_Mina_Samir-Cairo_Cairo_Governorate.html
+2025-04-24 22:34:42,405 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g52819-d669698-Reviews-Hershey_Trolley_Works-Hershey_Pennsylvania.html
+2025-04-24 22:34:42,734 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293918-d4020022-Reviews-Full_Moon_Party-Ko_Samui_Surat_Thani_Province.html
+2025-04-24 22:34:42,926 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g155032-d9607798-Reviews-Montreal_Metro-Montreal_Quebec.html
+2025-04-24 22:34:43,094 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g57589-d23648031-Reviews-King_Spa-Chantilly_Fairfax_County_Virginia.html
+2025-04-24 22:34:43,546 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g36897-d15539273-Reviews-Home_Alone_House-Winnetka_Illinois.html
+2025-04-24 22:34:43,660 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g801295-d12676629-Reviews-Filikuri_Beach-Himare_Vlore_County.html
+2025-04-24 22:34:44,961 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g58476-d8471947-Reviews-John_s_Beachcombing_Museum-Forks_Clallam_County_Washington.html
+2025-04-24 22:34:53,916 - INFO - ✓ Berkshire Botanical Garden
+2025-04-24 22:34:53,961 - INFO - ✓ Sonara Camp
+2025-04-24 22:34:56,737 - INFO - ✓ Doha Transit and Tours
+2025-04-24 22:34:59,479 - INFO - ✓ Abe's Buggy Rides
+2025-04-24 22:35:00,270 - INFO - ✓ Blue Swimmer Adventures
+2025-04-24 22:35:00,271 - INFO - ✓ The Safari Blue
+2025-04-24 22:35:00,618 - INFO - ✓ Hershey Trolley Works
+2025-04-24 22:35:00,742 - INFO - ✓ Nilambari Open Deck Bus
+2025-04-24 22:35:01,023 - INFO - ✓ Egypt Tour Guide - Mina Samir
+2025-04-24 22:35:01,158 - INFO - ✓ Full Moon Party
+2025-04-24 22:35:01,160 - INFO - Checkpoint saved: checkpoints/checkpoint_20250424_223501.json
+2025-04-24 22:35:01,160 - INFO - Found 20 unique attractions
+2025-04-24 22:35:01,160 - INFO - Saved 20 new items to data_attractions/dalat_attractions_20250424_223349_index_4.json (total: 20 items)
+2025-04-24 22:35:01,160 - INFO - Saved → data_attractions/dalat_attractions_20250424_223349_index_4.json
+2025-04-24 22:35:05,416 - INFO - Waiting for 8.95 seconds
+2025-04-24 22:35:05,757 - INFO - Waiting for 7.12 seconds
+2025-04-24 22:35:06,142 - INFO - Waiting for 6.27 seconds
+2025-04-24 22:35:06,538 - INFO - Waiting for 6.37 seconds
+2025-04-24 22:35:06,843 - INFO - Waiting for 7.28 seconds
+2025-04-24 22:35:06,847 - INFO - Waiting for 9.06 seconds
+2025-04-24 22:35:07,104 - INFO - Waiting for 5.51 seconds
+2025-04-24 22:35:07,389 - INFO - Waiting for 7.69 seconds
+2025-04-24 22:35:07,861 - INFO - Waiting for 5.11 seconds
+2025-04-24 22:35:08,010 - INFO - Waiting for 7.98 seconds
+2025-04-24 22:35:12,412 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g190384-d3317996-Reviews-Wave_Dancer_Boat_Trips-Paphos_Paphos_District.html
+2025-04-24 22:35:12,625 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295424-d1898899-Reviews-Sheikh_Mohammed_Centre_for_Cultural_Understanding-Dubai_Emirate_of_Dubai.html
+2025-04-24 22:35:12,894 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g41601-d2227903-Reviews-Cranberry_Bog_Tours-Harwich_Cape_Cod_Massachusetts.html
+2025-04-24 22:35:12,928 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295415-d9594112-Reviews-Sa_Sa_Sunset_Cruise-Luang_Prabang_Luang_Prabang_Province.html
+2025-04-24 22:35:12,982 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g317059-d9786050-Reviews-Simien_Mountain_Trekking_and_Tours-Gonder_Amhara_Region.html
+2025-04-24 22:35:14,174 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g31352-d629020-Reviews-Red_Rock_Balloons-Sedona_Arizona.html
+2025-04-24 22:35:14,403 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295424-d8837269-Reviews-Nemo_WaterSports_Dubai_Jet_Ski_Flyboard-Dubai_Emirate_of_Dubai.html
+2025-04-24 22:35:15,154 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g186345-d2300151-Reviews-Dracula_Experience-Whitby_Scarborough_District_North_Yorkshire_England.html
+2025-04-24 22:35:15,948 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g188590-d7362975-Reviews-Amsterdam_Red_Light_District_Tours-Amsterdam_North_Holland_Province.html
+2025-04-24 22:35:16,031 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60910-d17696110-Reviews-Natchez_Pilgrimage_Tours-Natchez_Mississippi.html
+2025-04-24 22:35:34,312 - INFO - Checkpoint saved: checkpoints/checkpoint_20250424_223534.json
+2025-04-24 22:35:34,312 - INFO - Found 0 unique attractions
+2025-04-24 22:35:34,312 - WARNING - No data to save
+2025-04-24 22:35:34,313 - INFO - Saved → data_attractions/dalat_attractions_20250424_223425_index_4.json
+2025-04-24 22:36:13,197 - INFO - Loaded checkpoint: checkpoints/checkpoint_20250424_223534.json
+2025-04-24 22:36:13,197 - INFO - Resumed from page 112
+2025-04-24 22:36:14,002 - INFO - Warm‑up OK – cookies stored
+2025-04-24 22:36:14,003 - INFO - Loaded checkpoint: checkpoints/checkpoint_20250424_223534.json
+2025-04-24 22:36:14,003 - INFO - Resumed from page 112
+2025-04-24 22:36:14,003 - INFO - Resumed crawling from page 112 with 0 attractions
+2025-04-24 22:36:14,003 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293922-Activities-a_allAttractions.true-Da_Lat_Lam_Dong_Province-oa3330.html
+2025-04-24 22:36:15,439 - INFO - Found 20 attractions on page 112
+2025-04-24 22:36:15,442 - INFO - Waiting for 6.07 seconds
+2025-04-24 22:36:21,519 - INFO - Waiting for 5.62 seconds
+2025-04-24 22:36:21,520 - INFO - Waiting for 8.93 seconds
+2025-04-24 22:36:21,521 - INFO - Waiting for 5.34 seconds
+2025-04-24 22:36:21,521 - INFO - Waiting for 8.77 seconds
+2025-04-24 22:36:21,522 - INFO - Waiting for 9.91 seconds
+2025-04-24 22:36:21,522 - INFO - Waiting for 6.02 seconds
+2025-04-24 22:36:21,522 - INFO - Waiting for 7.82 seconds
+2025-04-24 22:36:21,523 - INFO - Waiting for 7.34 seconds
+2025-04-24 22:36:21,523 - INFO - Waiting for 7.19 seconds
+2025-04-24 22:36:21,523 - INFO - Waiting for 9.93 seconds
+2025-04-24 22:36:26,871 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g274958-d11889173-Reviews-Tallink_Silja_Line-Tallinn_Harju_County.html
+2025-04-24 22:36:27,149 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g50207-d638635-Reviews-House_From_A_Christmas_Story-Cleveland_Ohio.html
+2025-04-24 22:36:27,545 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g29166-d263669-Reviews-Bean_Point-Anna_Maria_Anna_Maria_Island_Florida.html
+2025-04-24 22:36:28,715 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187309-d12232500-Reviews-FlixBus-Munich_Upper_Bavaria_Bavaria.html
+2025-04-24 22:36:28,865 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g46712-d11969962-Reviews-Catch_Air-Paramus_New_Jersey.html
+2025-04-24 22:36:29,404 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g678774-d6424373-Reviews-St_Mary_s_Monastery-Vlore_Vlore_County.html
+2025-04-24 22:36:30,307 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294458-d318268-Reviews-Stavropoleos_Monastery-Bucharest.html
+2025-04-24 22:36:30,529 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g3862484-d3838530-Reviews-Nanny_Falls-Moore_Town_Portland_Parish_Jamaica.html
+2025-04-24 22:36:31,455 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g580265-d4875458-Reviews-Serra_da_Estrela-Serra_da_Estrela_Guarda_District_Central_Portugal.html
+2025-04-24 22:36:31,466 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g41948-d7142157-Reviews-Horn_Pond-Woburn_Massachusetts.html
+2025-04-24 22:36:58,308 - INFO - Waiting for 7.94 seconds
+2025-04-24 22:36:58,363 - INFO - Waiting for 6.38 seconds
+2025-04-24 22:36:58,407 - INFO - ✓ Catch Air
+2025-04-24 22:36:58,468 - INFO - Waiting for 7.76 seconds
+2025-04-24 22:36:58,653 - INFO - ✓ Nanny Falls
+2025-04-24 22:36:58,790 - INFO - ✓ St. Mary's Monastery
+2025-04-24 22:36:59,058 - INFO - Waiting for 5.33 seconds
+2025-04-24 22:36:59,063 - INFO - ✓ Horn Pond
+2025-04-24 22:36:59,158 - INFO - Waiting for 5.46 seconds
+2025-04-24 22:36:59,200 - INFO - ✓ Bean Point
+2025-04-24 22:36:59,351 - INFO - Waiting for 9.75 seconds
+2025-04-24 22:36:59,364 - INFO - ✓ FlixBus
+2025-04-24 22:36:59,379 - INFO - Waiting for 6.84 seconds
+2025-04-24 22:36:59,405 - INFO - Waiting for 6.62 seconds
+2025-04-24 22:36:59,412 - INFO - ✓ Serra da Estrela
+2025-04-24 22:36:59,450 - INFO - ✓ House From A Christmas Story
+2025-04-24 22:36:59,507 - INFO - Waiting for 7.80 seconds
+2025-04-24 22:36:59,508 - INFO - ✓ Stavropoleos Monastery
+2025-04-24 22:36:59,997 - INFO - Waiting for 8.38 seconds
+2025-04-24 22:36:59,997 - INFO - ✓ Tallink Silja Line
+2025-04-24 22:37:04,473 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60645-d526141-Reviews-Hawaiian_Railway-Ewa_Beach_Oahu_Hawaii.html
+2025-04-24 22:37:04,693 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g34543-d3314209-Reviews-Panhandle_Helicopter-Panama_City_Beach_Florida.html
+2025-04-24 22:37:04,941 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g150809-d7191000-Reviews-Reef_Explorer_Semi_Sub_by_Cozumel_Tours-Cozumel_Yucatan_Peninsula.html
+2025-04-24 22:37:06,064 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g298171-d319908-Reviews-Hakone_Sightseeing_Cruise-Hakone_machi_Ashigarashimo_gun_Kanagawa_Prefecture_Kanto.html
+2025-04-24 22:37:06,263 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187871-d12699740-Reviews-Free_Tour_Verona-Verona_Province_of_Verona_Veneto.html
+2025-04-24 22:37:06,360 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295424-d24937588-Reviews-Pacific_Adventures-Dubai_Emirate_of_Dubai.html
+2025-04-24 22:37:06,485 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g298564-d7053826-Reviews-Taiko_Center_Kyoto_Studio-Kyoto_Kyoto_Prefecture_Kinki.html
+2025-04-24 22:37:07,406 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1019671-d1367869-Reviews-Fuji_Safari_Park-Susono_Shizuoka_Prefecture_Tokai_Chubu.html
+2025-04-24 22:37:08,417 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g150771-d8066271-Reviews-Dive_in_la_Paz-La_Paz_Baja_California.html
+2025-04-24 22:37:09,149 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g309293-d9842216-Reviews-Costa_Rican_Vacations-San_Jose_San_Jose_Metro_Province_of_San_Jose.html
+2025-04-24 22:37:21,908 - INFO - ✓ Reef Explorer Semi Sub by Cozumel Tours
+2025-04-24 22:37:22,667 - INFO - ✓ Hawaiian Railway
+2025-04-24 22:37:23,614 - INFO - ✓ Free Tour Verona
+2025-04-24 22:37:23,765 - INFO - ✓ Panhandle Helicopter
+2025-04-24 22:37:23,812 - INFO - ✓ Taiko Center Kyoto Studio
+2025-04-24 22:37:23,941 - INFO - ✓ Dive in la Paz
+2025-04-24 22:37:23,968 - INFO - ✓ Fuji Safari Park
+2025-04-24 22:37:23,987 - INFO - ✓ Hakone Sightseeing Cruise
+2025-04-24 22:37:24,011 - INFO - ✓ Pacific Adventures
+2025-04-24 22:37:24,236 - INFO - ✓ Costa Rican Vacations
+2025-04-24 22:37:24,237 - INFO - Checkpoint saved: checkpoints/checkpoint_20250424_223724.json
+2025-04-24 22:37:24,237 - INFO - Found 20 unique attractions
+2025-04-24 22:37:24,238 - INFO - Saved 20 new items to data_attractions/dalat_attractions_20250424_223612_index_5.json (total: 20 items)
+2025-04-24 22:37:24,238 - INFO - Saved → data_attractions/dalat_attractions_20250424_223612_index_5.json
+2025-04-24 22:41:32,210 - INFO - Loaded checkpoint: checkpoints/checkpoint_20250424_223724.json
+2025-04-24 22:41:32,210 - INFO - Resumed from page 113
+2025-04-24 22:41:32,909 - INFO - Warm‑up OK – cookies stored
+2025-04-24 22:41:32,909 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g311304-Activities-a_allAttractions.true-Sapa_Lao_Cai_Province-oa3900.html
+2025-04-24 22:41:34,669 - INFO - Found 20 attractions on page 131
+2025-04-24 22:41:34,671 - INFO - Waiting for 8.53 seconds
+2025-04-24 22:42:22,708 - INFO - Loaded checkpoint: checkpoints/checkpoint_20250424_223724.json
+2025-04-24 22:42:22,709 - INFO - Resumed from page 113
+2025-04-24 22:42:23,617 - INFO - Warm‑up OK – cookies stored
+2025-04-24 22:42:23,618 - INFO - Loaded checkpoint: checkpoints/checkpoint_20250424_223724.json
+2025-04-24 22:42:23,618 - INFO - Resumed from page 113
+2025-04-24 22:42:23,618 - INFO - Resumed crawling from page 113 with 20 attractions
+2025-04-24 22:42:23,618 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g311304-Activities-a_allAttractions.true-Sapa_Lao_Cai_Province-oa3360.html
+2025-04-24 22:42:25,441 - INFO - Found 20 attractions on page 113
+2025-04-24 22:42:25,443 - INFO - Waiting for 6.67 seconds
+2025-04-24 22:42:32,120 - INFO - Waiting for 5.24 seconds
+2025-04-24 22:42:32,120 - INFO - Waiting for 8.45 seconds
+2025-04-24 22:42:32,121 - INFO - Waiting for 5.46 seconds
+2025-04-24 22:42:32,121 - INFO - Waiting for 8.06 seconds
+2025-04-24 22:42:32,122 - INFO - Waiting for 9.88 seconds
+2025-04-24 22:42:32,122 - INFO - Waiting for 9.69 seconds
+2025-04-24 22:42:32,122 - INFO - Waiting for 6.32 seconds
+2025-04-24 22:42:32,122 - INFO - Waiting for 8.32 seconds
+2025-04-24 22:42:32,123 - INFO - Waiting for 8.47 seconds
+2025-04-24 22:42:32,123 - INFO - Waiting for 6.97 seconds
+2025-04-24 22:42:37,366 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g44085-d3514268-Reviews-Buccaneer_State_Park-Waveland_Mississippi.html
+2025-04-24 22:42:37,587 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60403-d1566227-Reviews-Chula_Vista_Resort_Water_Parks-Wisconsin_Dells_Wisconsin.html
+2025-04-24 22:42:38,449 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g664176-d2302225-Reviews-Orrido_di_Bellano-Bellano_Lake_Como_Lombardy.html
+2025-04-24 22:42:39,102 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g212091-d1580894-Reviews-Sean_s_Bar-Athlone_County_Westmeath.html
+2025-04-24 22:42:40,189 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g35805-d126353-Reviews-Chicago_Children_s_Museum-Chicago_Illinois.html
+2025-04-24 22:42:40,456 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g150793-d23186362-Reviews-Playa_Conchas_Chinas-Puerto_Vallarta.html
+2025-04-24 22:42:40,584 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g45963-d553190-Reviews-Coyote_Ugly_Saloon_Las_Vegas-Las_Vegas_Nevada.html
+2025-04-24 22:42:40,603 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g34439-d143766-Reviews-Collins_Avenue-Miami_Beach_Florida.html
+2025-04-24 22:42:41,880 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295414-d551282-Reviews-Safari_Park-Karachi_Sindh_Province.html
+2025-04-24 22:42:42,029 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g50226-d183839-Reviews-Short_North_Arts_District-Columbus_Ohio.html
