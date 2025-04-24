@@ -67,6 +67,10 @@ export const TravelNewPlan: React.FC = () => {
             onAddOption={handleAddOption}
             onNext={handleNextStep}
             onPrev={handlePrevStep}
+            destination={selectedDestination}
+            budget={budget}
+            people={people}
+            travelTime={travelTime}
           />
         );
       case 3:

@@ -1,6 +1,21 @@
 import React from "react";
-import { Collapse, Timeline, Card, Tag, Typography, Rate } from "antd";
-import { RightOutlined, EnvironmentOutlined } from "@ant-design/icons";
+import {
+  Collapse,
+  Timeline,
+  Card,
+  Tag,
+  Typography,
+  Rate,
+  Button,
+  Tooltip,
+} from "antd";
+import {
+  RightOutlined,
+  EnvironmentOutlined,
+  DeleteOutlined,
+  SwapOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { TravelDay, TravelActivity } from "../../../types/travelPlan";
 
 const { Title, Text } = Typography;
@@ -11,6 +26,9 @@ interface TravelDayTimelineProps {
   getActivityIcon: (type: TravelActivity["type"]) => React.ReactNode;
   activityTypeColors: Record<TravelActivity["type"], string>;
   onActivityClick: (activity: TravelActivity) => void;
+  isEditMode?: boolean;
+  onReplaceActivity?: (day: TravelDay, activity: TravelActivity) => void;
+  onDeleteActivity?: (day: TravelDay, activity: TravelActivity) => void;
 }
 
 export const TravelDayTimeline: React.FC<TravelDayTimelineProps> = ({
@@ -18,6 +36,9 @@ export const TravelDayTimeline: React.FC<TravelDayTimelineProps> = ({
   getActivityIcon,
   activityTypeColors,
   onActivityClick,
+  isEditMode = false,
+  onReplaceActivity,
+  onDeleteActivity,
 }) => {
   return (
     <Timeline className="ml-4 mt-4">
@@ -28,9 +49,9 @@ export const TravelDayTimeline: React.FC<TravelDayTimelineProps> = ({
           color={activityTypeColors[activity.type]}
         >
           <Card
-            hoverable
+            hoverable={!isEditMode}
             className="mb-4"
-            onClick={() => onActivityClick(activity)}
+            onClick={isEditMode ? undefined : () => onActivityClick(activity)}
           >
             <div className="flex">
               <div className="w-20 h-20 mr-4 overflow-hidden rounded">
@@ -58,13 +79,43 @@ export const TravelDayTimeline: React.FC<TravelDayTimelineProps> = ({
                     </Text>
                   </div>
                   <div className="flex items-center">
-                    <Rate
-                      value={activity.rating}
-                      disabled
-                      allowHalf
-                      className="text-xs"
-                    />
-                    <RightOutlined className="ml-2 text-gray-400" />
+                    {isEditMode ? (
+                      <div className="flex space-x-2">
+                        <Tooltip title="Thay thế bằng gợi ý từ AI">
+                          <Button
+                            type="primary"
+                            icon={<SwapOutlined />}
+                            size="small"
+                            className="!bg-blue-500"
+                            onClick={() =>
+                              onReplaceActivity &&
+                              onReplaceActivity(day, activity)
+                            }
+                          />
+                        </Tooltip>
+                        <Tooltip title="Xóa hoạt động">
+                          <Button
+                            danger
+                            icon={<DeleteOutlined />}
+                            size="small"
+                            onClick={() =>
+                              onDeleteActivity &&
+                              onDeleteActivity(day, activity)
+                            }
+                          />
+                        </Tooltip>
+                      </div>
+                    ) : (
+                      <>
+                        <Rate
+                          value={activity.rating}
+                          disabled
+                          allowHalf
+                          className="text-xs"
+                        />
+                        <RightOutlined className="ml-2 text-gray-400" />
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -82,6 +133,10 @@ interface TravelItineraryProps {
   getActivityIcon: (type: TravelActivity["type"]) => React.ReactNode;
   activityTypeColors: Record<TravelActivity["type"], string>;
   onActivityClick: (activity: TravelActivity) => void;
+  isEditMode?: boolean;
+  onReplaceActivity?: (day: TravelDay, activity: TravelActivity) => void;
+  onDeleteActivity?: (day: TravelDay, activity: TravelActivity) => void;
+  onAddActivity?: (day: TravelDay) => void;
 }
 
 export const TravelItinerary: React.FC<TravelItineraryProps> = ({
@@ -90,6 +145,10 @@ export const TravelItinerary: React.FC<TravelItineraryProps> = ({
   getActivityIcon,
   activityTypeColors,
   onActivityClick,
+  isEditMode = false,
+  onReplaceActivity,
+  onDeleteActivity,
+  onAddActivity,
 }) => {
   return (
     <Collapse
@@ -115,12 +174,31 @@ export const TravelItinerary: React.FC<TravelItineraryProps> = ({
               </div>
             </div>
           }
+          extra={
+            isEditMode && (
+              <Tooltip title="Thêm hoạt động mới" placement="left">
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  size="small"
+                  className="!bg-green-500"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onAddActivity && onAddActivity(day);
+                  }}
+                />
+              </Tooltip>
+            )
+          }
         >
           <TravelDayTimeline
             day={day}
             getActivityIcon={getActivityIcon}
             activityTypeColors={activityTypeColors}
             onActivityClick={onActivityClick}
+            isEditMode={isEditMode}
+            onReplaceActivity={onReplaceActivity}
+            onDeleteActivity={onDeleteActivity}
           />
         </Panel>
       ))}
