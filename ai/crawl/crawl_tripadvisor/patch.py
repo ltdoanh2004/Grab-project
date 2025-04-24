@@ -1001,6 +1001,8 @@ class EnhancedAttractionsCrawler:
 # ----------------------------- CLI ----------------------------- #
 def main():
     parser = argparse.ArgumentParser(description='TripAdvisor Hanoi Attractions Crawler (patched)')
+    parser.add_argument('--url', type=str, default='https://www.tripadvisor.com/Attraction_Review-g297704-d30373-Reviews-Hanoi_Old_Quarter-Hanoi_Ha_Noi.html',
+                      help='URL to crawl')
     parser.add_argument('--max-pages', type=int, default=3,
                       help='Maximum number of pages to crawl')
     parser.add_argument('--start-page', type=int, default=1,
@@ -1020,6 +1022,7 @@ def main():
     args = parser.parse_args()
 
     crawler = EnhancedAttractionsCrawler(
+        base_url = args.url,
         delay=args.delay,
         custom_type=args.custom_type,
         save_interval=args.save_interval

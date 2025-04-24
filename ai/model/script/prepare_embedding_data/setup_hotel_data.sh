@@ -8,5 +8,5 @@ PROJECT_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
 cd "$PROJECT_ROOT"
 
 # Run the vector database setup
-python3 src/vector_database.py --prepare-data
+# python3 src/vector_database.py --prepare-data
 python3 src/vector_database.py --setup-pinecone

@@ -1,0 +1,61 @@
+2025-04-24 22:19:41,275 - INFO - Warm‑up OK – cookies stored
+2025-04-24 22:19:41,276 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293922-Activities-a_allAttractions.true-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:19:43,881 - INFO - Found 80 attractions on page 1
+2025-04-24 22:19:43,890 - INFO - Waiting for 9.57 seconds
+2025-04-24 22:19:53,468 - INFO - Waiting for 6.24 seconds
+2025-04-24 22:19:53,468 - INFO - Waiting for 8.97 seconds
+2025-04-24 22:19:53,469 - INFO - Waiting for 8.82 seconds
+2025-04-24 22:19:53,469 - INFO - Waiting for 6.68 seconds
+2025-04-24 22:19:53,469 - INFO - Waiting for 7.88 seconds
+2025-04-24 22:19:53,470 - INFO - Waiting for 7.69 seconds
+2025-04-24 22:19:53,470 - INFO - Waiting for 7.55 seconds
+2025-04-24 22:19:53,471 - INFO - Waiting for 6.52 seconds
+2025-04-24 22:19:53,471 - INFO - Waiting for 8.52 seconds
+2025-04-24 22:19:53,471 - INFO - Waiting for 7.21 seconds
+2025-04-24 22:19:59,712 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451017-Reviews-Linh_Phuoc_Pagoda-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:19:59,999 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451012-Reviews-Valley_of_Love-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:20:00,159 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d5503688-Reviews-Crazy_House-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:20:00,690 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d1845666-Reviews-Dalat_Flower_Park-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:20:01,023 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451012-Reviews-Valley_of_Love-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:20:01,169 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451021-Reviews-Truc_Lam_Monastery_of_Da_Lat-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:20:01,369 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451021-Reviews-Truc_Lam_Monastery_of_Da_Lat-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:20:02,028 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d1845666-Reviews-Dalat_Flower_Park-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:20:02,303 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d5503688-Reviews-Crazy_House-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:20:02,438 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451017-Reviews-Linh_Phuoc_Pagoda-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:20:32,574 - INFO - Waiting for 7.36 seconds
+2025-04-24 22:20:32,651 - INFO - Waiting for 7.38 seconds
+2025-04-24 22:20:32,663 - INFO - Waiting for 8.05 seconds
+2025-04-24 22:20:32,858 - INFO - Waiting for 8.47 seconds
+2025-04-24 22:20:33,063 - INFO - Waiting for 5.21 seconds
+2025-04-24 22:20:33,181 - INFO - Waiting for 9.92 seconds
+2025-04-24 22:20:33,205 - INFO - Waiting for 8.29 seconds
+2025-04-24 22:20:33,318 - INFO - Waiting for 7.23 seconds
+2025-04-24 22:20:33,350 - INFO - Waiting for 7.85 seconds
+2025-04-24 22:20:33,360 - INFO - Waiting for 9.18 seconds
+2025-04-24 22:20:33,405 - ERROR - Future exception was never retrieved
+future: <Future finished exception=Exception('Connection closed while reading from the driver')>
+Exception: Connection closed while reading from the driver
+2025-04-24 22:21:49,673 - INFO - Warm‑up OK – cookies stored
+2025-04-24 22:21:49,673 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293922-Activities-a_allAttractions.true-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:21:52,234 - INFO - Found 80 attractions on page 1
+2025-04-24 22:21:52,240 - INFO - Waiting for 9.00 seconds
+2025-04-24 22:22:01,242 - INFO - Waiting for 9.79 seconds
+2025-04-24 22:22:01,243 - INFO - Waiting for 9.08 seconds
+2025-04-24 22:22:01,243 - INFO - Waiting for 7.90 seconds
+2025-04-24 22:22:01,244 - INFO - Waiting for 7.44 seconds
+2025-04-24 22:22:01,244 - INFO - Waiting for 6.11 seconds
+2025-04-24 22:22:01,244 - INFO - Waiting for 5.95 seconds
+2025-04-24 22:22:01,244 - INFO - Waiting for 7.64 seconds
+2025-04-24 22:22:01,245 - INFO - Waiting for 8.75 seconds
+2025-04-24 22:22:01,245 - INFO - Waiting for 9.05 seconds
+2025-04-24 22:22:01,245 - INFO - Waiting for 6.01 seconds
+2025-04-24 22:22:07,202 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451021-Reviews-Truc_Lam_Monastery_of_Da_Lat-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:22:07,261 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d1845666-Reviews-Dalat_Flower_Park-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:22:07,357 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451021-Reviews-Truc_Lam_Monastery_of_Da_Lat-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:22:08,687 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d5503688-Reviews-Crazy_House-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:22:08,894 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451012-Reviews-Valley_of_Love-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:22:09,168 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d5503688-Reviews-Crazy_House-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:22:10,018 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451012-Reviews-Valley_of_Love-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:22:10,409 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d1845666-Reviews-Dalat_Flower_Park-Da_Lat_Lam_Dong_Province.html
+2025-04-24 22:22:10,480 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451017-Reviews-Linh_Phuoc_Pagoda-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-24 22:22:11,037 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451017-Reviews-Linh_Phuoc_Pagoda-Da_Lat_Lam_Dong_Province.html

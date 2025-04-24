@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import os
 import argparse
 from tqdm import tqdm
-from pinecone import Pinecone
+from pinecone import Pinecone, ServerlessSpec
 import json
 from typing import List, Dict, Any
 
@@ -119,6 +119,12 @@ class VectorDatabase:
         print(f"Loading data from: {data}")
         self.df = pd.read_csv(data)
         
+        # Replace NaN values with empty strings for text columns
+        text_columns = ['name', 'description', 'room_types']
+        for col in text_columns:
+            if col in self.df.columns:
+                self.df[col] = self.df[col].fillna('')
+        
         # Load checkpoint
         checkpoint = self.load_checkpoint()
         last_processed = checkpoint["last_processed_index"]
@@ -183,6 +189,11 @@ class VectorDatabase:
         # Save to the same directory as the input file
         output_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'hotel_processed_embedding.csv')
         print(f"Saving processed data to: {output_path}")
+        
+        # Convert embeddings to string representation before saving
+        self.df['context_embedding'] = self.df['context_embedding'].apply(
+            lambda x: str(x) if x is not None else None
+        )
         self.df.to_csv(output_path, index=False)
         
         # Clear checkpoint after successful completion
@@ -191,48 +202,102 @@ class VectorDatabase:
             print("Cleared checkpoint after successful completion")
 
     def set_up_pinecone(self, index_name = 'hotel-recommendations'):
-        if not hasattr(self, 'df') or 'context_embedding' not in self.df.columns:
-            raise ValueError("DataFrame not prepared or missing embeddings. Please run prepare_hotel_embedding first.")
-            
+        """
+        Set up Pinecone index connection
+        
+        Args:
+            index_name (str): Name of the index
+        """
         self.index_name = index_name
-        if index_name not in self.pc.list_indexes().names():
+        existing_indexes = self.pc.list_indexes()
+        
+        # Check if index exists
+        if index_name not in [index.name for index in existing_indexes]:
             print(f"Creating new index: {index_name}")
             self.pc.create_index(
                 name=index_name,
                 dimension=self.dimension,
-                metric=self.metric
+                metric=self.metric,
+                spec=ServerlessSpec(
+                    cloud="aws",
+                    region="us-east-1"
+                )
             )
         
         self.index = self.pc.Index(index_name)
+        print(f"Connected to Pinecone index: {index_name}")
+        return True
+
+    def load_data_to_pinecone(self):
+        """
+        Load and insert data into Pinecone index
+        """
+        if not self.index:
+            raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
+            
+        # Check if index already has data
+        index_stats = self.index.describe_index_stats()
+        has_data = index_stats['total_vector_count'] > 0
         
+        if has_data:
+            print(f"Index {self.index_name} already contains data. Skipping data insertion.")
+            return True
+            
+        # Load data from CSV
+        self.df = pd.read_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'hotel_processed_embedding.csv'))
+        text_columns = ['name', 'description', 'room_types']
+        for col in text_columns:
+            if col in self.df.columns:
+                self.df[col] = self.df[col].fillna('')
+                
+        if not hasattr(self, 'df') or 'context_embedding' not in self.df.columns:
+            raise ValueError("DataFrame not prepared or missing embeddings. Please run prepare_hotel_embedding first.")
+            
+        # Convert string embeddings to lists
+        print("Converting embeddings to lists...")
+        self.df['context_embedding'] = self.df['context_embedding'].apply(
+            lambda x: eval(x) if isinstance(x, str) else x
+        )
+            
         print("Inserting data into Pinecone...")
         vectors_to_upsert = []
         
         for idx, row in tqdm(self.df.iterrows(), total=len(self.df), desc="Preparing vectors"):
-            metadata = {
-                "id": row["index"],
-                "name": row["name"],
-                "price": row["price"],
-                "rating": row["rating"],
-                "description": row["description"]
-            }
-            
-            vectors_to_upsert.append({
-                "id": str(row["index"]),
-                "values": row["context_embedding"],
-                "metadata": metadata
-            })
-            
-            # Upsert in batches of 100
-            if len(vectors_to_upsert) >= 100:
-                self.index.upsert(vectors=vectors_to_upsert)
-                vectors_to_upsert = []
+            try:
+                metadata = {
+                    "id": row["index"],
+                    "name": row["name"],
+                    "price": row["price"],
+                    "rating": row["rating"],
+                    "description": row["description"]
+                }
+                
+                # Ensure embedding is a list
+                embedding = row["context_embedding"]
+                if embedding is None:
+                    continue
+                    
+                vectors_to_upsert.append({
+                    "id": str(row["index"]),
+                    "values": embedding,
+                    "metadata": metadata
+                })
+                
+                # Upsert in batches of 100
+                if len(vectors_to_upsert) >= 100:
+                    self.index.upsert(vectors=vectors_to_upsert)
+                    vectors_to_upsert = []
+                    
+            except Exception as e:
+                print(f"Error processing row {idx}: {e}")
+                continue
         
         # Upsert remaining vectors
         if vectors_to_upsert:
             self.index.upsert(vectors=vectors_to_upsert)
         
-        print(f"Successfully inserted {len(self.df)} vectors into Pinecone index: {index_name}")
+        print(f"Successfully inserted {len(self.df)} vectors into Pinecone index: {self.index_name}")
+        return True
 
     def query(self, query_text, top_k=5, include_metadata=True):
         """
@@ -394,6 +459,7 @@ def main():
     parser = argparse.ArgumentParser(description='Vector Database for Hotel Recommendations')
     parser.add_argument('--prepare-data', action='store_true', help='Prepare and process hotel data')
     parser.add_argument('--setup-pinecone', action='store_true', help='Setup Pinecone database')
+    parser.add_argument('--insert-data', action='store_true', help='Insert data into Pinecone (only works with --setup-pinecone)')
     parser.add_argument('--query', type=str, help='Query text to search for similar hotels')
     parser.add_argument('--top-k', type=int, default=5, help='Number of results to return')
     args = parser.parse_args()
@@ -404,9 +470,16 @@ def main():
         vector_db.prepare_hotel_embedding()
     
     if args.setup_pinecone:
-        vector_db.set_up_pinecone()
+        vector_db.set_up_pinecone(insert_data=args.insert_data)
         
     if args.query:
+        # Check if Pinecone is set up, if not, set it up first
+        if not vector_db.index:
+            print("Pinecone index not initialized. Setting up now...")
+            if not vector_db.set_up_pinecone():
+                print("Failed to setup Pinecone. Please run prepare_hotel_embedding first.")
+                return
+            
         hotel_ids, results = vector_db.query(args.query, top_k=args.top_k)
         print("Hotel IDs:")
         for hotel_id in hotel_ids:
