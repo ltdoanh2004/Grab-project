@@ -141,6 +141,7 @@ class VectorDatabase:
     def query(self, query_text, top_k=5, include_metadata=True):
         """
         Query the database for similar hotels based on text input
+        Returns a tuple of (ids, full_results)
         """
         if not self.index:
             raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
@@ -155,8 +156,11 @@ class VectorDatabase:
             include_metadata=include_metadata
         )
         
-        return results
-    
+        # Extract IDs
+        ids = [match['id'] for match in results['matches']]
+        
+        return ids, results
+
     def get_hotel_by_id(self, hotel_id):
         """
         Retrieve a specific hotel by its ID
@@ -283,6 +287,13 @@ class VectorDatabase:
             print(f"Error searching by rating: {e}")
             return None
 
+    def get_hotel_ids(self, query_text, top_k=5):
+        """
+        Get hotel IDs from query results
+        """
+        results = self.query(query_text, top_k=top_k)
+        return [match['id'] for match in results['matches']]
+
 def main():
     parser = argparse.ArgumentParser(description='Vector Database for Hotel Recommendations')
     parser.add_argument('--prepare-data', action='store_true', help='Prepare and process hotel data')
@@ -300,7 +311,11 @@ def main():
         vector_db.set_up_pinecone()
         
     if args.query:
-        results = vector_db.query(args.query, top_k=args.top_k)
+        hotel_ids, results = vector_db.query(args.query, top_k=args.top_k)
+        print("Hotel IDs:")
+        for hotel_id in hotel_ids:
+            print(hotel_id)
+        print("\nFull results:")
         for match in results['matches']:
             print(f"Hotel: {match['metadata']['name']}")
             print(f"Price: {match['metadata']['price']}")
