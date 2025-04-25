@@ -12,7 +12,7 @@ type TripRepository interface {
 	Create(trip *model.Trip) error
 	Update(trip *model.Trip) error
 	Delete(tripID string) error
-	GetByUserID(userID uint) ([]model.Trip, error)
+	GetByUserID(userID string) ([]model.Trip, error)
 	GetAll() ([]model.Trip, error)
 	GetWithAssociations(tripID string) (model.Trip, error)
 	GetAllWithAssociations() ([]model.Trip, error)
@@ -53,7 +53,7 @@ func (r *GormTripRepository) Delete(tripID string) error {
 }
 
 // GetByUserID retrieves all Trip records associated with a specific UserID.
-func (r *GormTripRepository) GetByUserID(userID uint) ([]model.Trip, error) {
+func (r *GormTripRepository) GetByUserID(userID string) ([]model.Trip, error) {
 	var trips []model.Trip
 	if err := r.DB.Where("user_id = ?", userID).Find(&trips).Error; err != nil {
 		return nil, err

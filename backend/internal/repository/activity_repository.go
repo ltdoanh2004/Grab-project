@@ -8,14 +8,14 @@ import (
 
 // ActivityRepository defines data access methods for the Activity entity.
 type ActivityRepository interface {
-	GetByID(activityID uint) (model.Activity, error)
+	GetByID(activityID string) (model.Activity, error)
 	Create(activity *model.Activity) error
 	Update(activity *model.Activity) error
-	Delete(activityID uint) error
-	GetByDestinationID(destinationID uint) ([]model.Activity, error)
-	GetByCategoryID(categoryID uint) ([]model.Activity, error)
+	Delete(activityID string) error
+	GetByDestinationID(destinationID string) ([]model.Activity, error)
+	GetByCategoryID(categoryID string) ([]model.Activity, error)
 	GetAll() ([]model.Activity, error)
-	GetWithCategory(activityID uint) (model.Activity, error)
+	GetWithCategory(activityID string) (model.Activity, error)
 	GetAllWithCategory() ([]model.Activity, error)
 }
 
@@ -35,7 +35,7 @@ func (r *GormActivityRepository) Create(activity *model.Activity) error {
 }
 
 // GetByID retrieves an Activity by its ID.
-func (r *GormActivityRepository) GetByID(activityID uint) (model.Activity, error) {
+func (r *GormActivityRepository) GetByID(activityID string) (model.Activity, error) {
 	var activity model.Activity
 	if err := r.DB.First(&activity, activityID).Error; err != nil {
 		return activity, err
@@ -49,12 +49,12 @@ func (r *GormActivityRepository) Update(activity *model.Activity) error {
 }
 
 // Delete removes an Activity record by its ID.
-func (r *GormActivityRepository) Delete(activityID uint) error {
+func (r *GormActivityRepository) Delete(activityID string) error {
 	return r.DB.Delete(&model.Activity{}, activityID).Error
 }
 
 // GetByDestinationID retrieves all Activity records associated with a specific DestinationID.
-func (r *GormActivityRepository) GetByDestinationID(destinationID uint) ([]model.Activity, error) {
+func (r *GormActivityRepository) GetByDestinationID(destinationID string) ([]model.Activity, error) {
 	var activities []model.Activity
 	if err := r.DB.Where("destination_id = ?", destinationID).Find(&activities).Error; err != nil {
 		return nil, err
@@ -63,7 +63,7 @@ func (r *GormActivityRepository) GetByDestinationID(destinationID uint) ([]model
 }
 
 // GetByCategoryID retrieves all Activity records associated with a specific CategoryID.
-func (r *GormActivityRepository) GetByCategoryID(categoryID uint) ([]model.Activity, error) {
+func (r *GormActivityRepository) GetByCategoryID(categoryID string) ([]model.Activity, error) {
 	var activities []model.Activity
 	if err := r.DB.Where("category_id = ?", categoryID).Find(&activities).Error; err != nil {
 		return nil, err
@@ -81,7 +81,7 @@ func (r *GormActivityRepository) GetAll() ([]model.Activity, error) {
 }
 
 // GetWithCategory retrieves an Activity by its ID with associated category.
-func (r *GormActivityRepository) GetWithCategory(activityID uint) (model.Activity, error) {
+func (r *GormActivityRepository) GetWithCategory(activityID string) (model.Activity, error) {
 	var activity model.Activity
 	if err := r.DB.Preload("ActivityCategory").First(&activity, activityID).Error; err != nil {
 		return activity, err

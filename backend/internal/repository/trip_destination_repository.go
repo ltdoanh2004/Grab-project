@@ -8,11 +8,11 @@ import (
 
 // TripDestinationRepository defines data access methods for the TripDestination entity.
 type TripDestinationRepository interface {
-	GetByID(tripDestinationID uint) (model.TripDestination, error)
+	GetByID(tripDestinationID string) (model.TripDestination, error)
 	Create(tripDestination *model.TripDestination) error
 	Update(tripDestination *model.TripDestination) error
-	Delete(tripDestinationID uint) error
-	GetByTripID(tripID uint) ([]model.TripDestination, error)
+	Delete(tripDestinationID string) error
+	GetByTripID(tripID string) ([]model.TripDestination, error)
 }
 
 // GormTripDestinationRepository implements TripDestinationRepository using GORM.
@@ -31,7 +31,7 @@ func (r *GormTripDestinationRepository) Create(tripDestination *model.TripDestin
 }
 
 // GetByID retrieves a TripDestination by its ID.
-func (r *GormTripDestinationRepository) GetByID(tripDestinationID uint) (model.TripDestination, error) {
+func (r *GormTripDestinationRepository) GetByID(tripDestinationID string) (model.TripDestination, error) {
 	var tripDestination model.TripDestination
 	if err := r.DB.First(&tripDestination, tripDestinationID).Error; err != nil {
 		return tripDestination, err
@@ -45,12 +45,12 @@ func (r *GormTripDestinationRepository) Update(tripDestination *model.TripDestin
 }
 
 // Delete removes a TripDestination record by its ID.
-func (r *GormTripDestinationRepository) Delete(tripDestinationID uint) error {
+func (r *GormTripDestinationRepository) Delete(tripDestinationID string) error {
 	return r.DB.Delete(&model.TripDestination{}, tripDestinationID).Error
 }
 
 // GetByTripID retrieves all TripDestination records associated with a specific TripID.
-func (r *GormTripDestinationRepository) GetByTripID(tripID uint) ([]model.TripDestination, error) {
+func (r *GormTripDestinationRepository) GetByTripID(tripID string) ([]model.TripDestination, error) {
 	var tripDestinations []model.TripDestination
 	if err := r.DB.Where("trip_id = ?", tripID).Find(&tripDestinations).Error; err != nil {
 		return nil, err

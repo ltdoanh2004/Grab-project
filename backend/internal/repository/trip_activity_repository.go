@@ -8,11 +8,11 @@ import (
 
 // TripActivityRepository defines data access methods for the TripActivity entity.
 type TripActivityRepository interface {
-	GetByID(tripActivityID uint) (model.TripActivity, error)
+	GetByID(tripActivityID string) (model.TripActivity, error)
 	Create(tripActivity *model.TripActivity) error
 	Update(tripActivity *model.TripActivity) error
-	Delete(tripActivityID uint) error
-	GetByTripID(tripID uint) ([]model.TripActivity, error)
+	Delete(tripActivityID string) error
+	GetByTripID(tripID string) ([]model.TripActivity, error)
 }
 
 // GormTripActivityRepository implements TripActivityRepository using GORM.
@@ -31,7 +31,7 @@ func (r *GormTripActivityRepository) Create(tripActivity *model.TripActivity) er
 }
 
 // GetByID retrieves a TripActivity by its ID.
-func (r *GormTripActivityRepository) GetByID(tripActivityID uint) (model.TripActivity, error) {
+func (r *GormTripActivityRepository) GetByID(tripActivityID string) (model.TripActivity, error) {
 	var tripActivity model.TripActivity
 	if err := r.DB.First(&tripActivity, tripActivityID).Error; err != nil {
 		return tripActivity, err
@@ -45,12 +45,12 @@ func (r *GormTripActivityRepository) Update(tripActivity *model.TripActivity) er
 }
 
 // Delete removes a TripActivity record by its ID.
-func (r *GormTripActivityRepository) Delete(tripActivityID uint) error {
+func (r *GormTripActivityRepository) Delete(tripActivityID string) error {
 	return r.DB.Delete(&model.TripActivity{}, tripActivityID).Error
 }
 
 // GetByTripID retrieves all TripActivity records associated with a specific TripID.
-func (r *GormTripActivityRepository) GetByTripID(tripID uint) ([]model.TripActivity, error) {
+func (r *GormTripActivityRepository) GetByTripID(tripID string) ([]model.TripActivity, error) {
 	var tripActivities []model.TripActivity
 	if err := r.DB.Where("trip_id = ?", tripID).Find(&tripActivities).Error; err != nil {
 		return nil, err

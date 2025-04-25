@@ -8,10 +8,10 @@ import (
 
 // ActivityCategoryRepository defines data access methods for the ActivityCategory entity.
 type ActivityCategoryRepository interface {
-	GetByID(categoryID uint) (model.ActivityCategory, error)
+	GetByID(categoryID string) (model.ActivityCategory, error)
 	Create(category *model.ActivityCategory) error
 	Update(category *model.ActivityCategory) error
-	Delete(categoryID uint) error
+	Delete(categoryID string) error
 	GetAll() ([]model.ActivityCategory, error)
 }
 
@@ -31,7 +31,7 @@ func (r *GormActivityCategoryRepository) Create(category *model.ActivityCategory
 }
 
 // GetByID retrieves an ActivityCategory by its ID.
-func (r *GormActivityCategoryRepository) GetByID(categoryID uint) (model.ActivityCategory, error) {
+func (r *GormActivityCategoryRepository) GetByID(categoryID string) (model.ActivityCategory, error) {
 	var category model.ActivityCategory
 	if err := r.DB.First(&category, categoryID).Error; err != nil {
 		return category, err
@@ -45,7 +45,7 @@ func (r *GormActivityCategoryRepository) Update(category *model.ActivityCategory
 }
 
 // Delete removes an ActivityCategory record by its ID.
-func (r *GormActivityCategoryRepository) Delete(categoryID uint) error {
+func (r *GormActivityCategoryRepository) Delete(categoryID string) error {
 	return r.DB.Delete(&model.ActivityCategory{}, categoryID).Error
 }
 

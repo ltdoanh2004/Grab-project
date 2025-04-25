@@ -8,11 +8,11 @@ import (
 
 // AccommodationRepository defines data access methods for the Accommodation entity.
 type AccommodationRepository interface {
-	GetByID(accommodationID uint) (model.Accommodation, error)
+	GetByID(accommodationID string) (model.Accommodation, error)
 	Create(accommodation *model.Accommodation) error
 	Update(accommodation *model.Accommodation) error
-	Delete(accommodationID uint) error
-	GetByDestinationID(destinationID uint) ([]model.Accommodation, error)
+	Delete(accommodationID string) error
+	GetByDestinationID(destinationID string) ([]model.Accommodation, error)
 	GetAll() ([]model.Accommodation, error)
 }
 
@@ -32,7 +32,7 @@ func (r *GormAccommodationRepository) Create(accommodation *model.Accommodation)
 }
 
 // GetByID retrieves an Accommodation by its ID.
-func (r *GormAccommodationRepository) GetByID(accommodationID uint) (model.Accommodation, error) {
+func (r *GormAccommodationRepository) GetByID(accommodationID string) (model.Accommodation, error) {
 	var accommodation model.Accommodation
 	if err := r.DB.First(&accommodation, accommodationID).Error; err != nil {
 		return accommodation, err
@@ -46,12 +46,12 @@ func (r *GormAccommodationRepository) Update(accommodation *model.Accommodation)
 }
 
 // Delete removes an Accommodation record by its ID.
-func (r *GormAccommodationRepository) Delete(accommodationID uint) error {
+func (r *GormAccommodationRepository) Delete(accommodationID string) error {
 	return r.DB.Delete(&model.Accommodation{}, accommodationID).Error
 }
 
 // GetByDestinationID retrieves all Accommodation records associated with a specific DestinationID.
-func (r *GormAccommodationRepository) GetByDestinationID(destinationID uint) ([]model.Accommodation, error) {
+func (r *GormAccommodationRepository) GetByDestinationID(destinationID string) ([]model.Accommodation, error) {
 	var accommodations []model.Accommodation
 	if err := r.DB.Where("destination_id = ?", destinationID).Find(&accommodations).Error; err != nil {
 		return nil, err

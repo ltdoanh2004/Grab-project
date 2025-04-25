@@ -8,10 +8,10 @@ import (
 
 // DestinationRepository defines data access methods for the Destination entity.
 type DestinationRepository interface {
-	GetByID(destinationID uint) (model.Destination, error)
+	GetByID(destinationID string) (model.Destination, error)
 	Create(destination *model.Destination) error
 	Update(destination *model.Destination) error
-	Delete(destinationID uint) error
+	Delete(destinationID string) error
 	GetAll() ([]model.Destination, error)
 }
 
@@ -31,7 +31,7 @@ func (r *GormDestinationRepository) Create(destination *model.Destination) error
 }
 
 // GetByID retrieves a Destination by its ID.
-func (r *GormDestinationRepository) GetByID(destinationID uint) (model.Destination, error) {
+func (r *GormDestinationRepository) GetByID(destinationID string) (model.Destination, error) {
 	var destination model.Destination
 	if err := r.DB.First(&destination, destinationID).Error; err != nil {
 		return destination, err
@@ -45,7 +45,7 @@ func (r *GormDestinationRepository) Update(destination *model.Destination) error
 }
 
 // Delete removes a Destination record by its ID.
-func (r *GormDestinationRepository) Delete(destinationID uint) error {
+func (r *GormDestinationRepository) Delete(destinationID string) error {
 	return r.DB.Delete(&model.Destination{}, destinationID).Error
 }
 

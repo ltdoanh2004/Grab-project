@@ -8,13 +8,13 @@ import (
 
 // RestaurantRepository defines data access methods for the Restaurant entity.
 type RestaurantRepository interface {
-	GetByID(restaurantID uint) (model.Restaurant, error)
+	GetByID(restaurantID string) (model.Restaurant, error)
 	Create(restaurant *model.Restaurant) error
 	Update(restaurant *model.Restaurant) error
-	Delete(restaurantID uint) error
-	GetByDestinationID(destinationID uint) ([]model.Restaurant, error)
+	Delete(restaurantID string) error
+	GetByDestinationID(destinationID string) ([]model.Restaurant, error)
 	GetAll() ([]model.Restaurant, error)
-	GetWithFoods(restaurantID uint) (model.Restaurant, error)
+	GetWithFoods(restaurantID string) (model.Restaurant, error)
 	GetAllWithFoods() ([]model.Restaurant, error)
 }
 
@@ -34,7 +34,7 @@ func (r *GormRestaurantRepository) Create(restaurant *model.Restaurant) error {
 }
 
 // GetByID retrieves a Restaurant by its ID.
-func (r *GormRestaurantRepository) GetByID(restaurantID uint) (model.Restaurant, error) {
+func (r *GormRestaurantRepository) GetByID(restaurantID string) (model.Restaurant, error) {
 	var restaurant model.Restaurant
 	if err := r.DB.First(&restaurant, restaurantID).Error; err != nil {
 		return restaurant, err
@@ -48,12 +48,12 @@ func (r *GormRestaurantRepository) Update(restaurant *model.Restaurant) error {
 }
 
 // Delete removes a Restaurant record by its ID.
-func (r *GormRestaurantRepository) Delete(restaurantID uint) error {
+func (r *GormRestaurantRepository) Delete(restaurantID string) error {
 	return r.DB.Delete(&model.Restaurant{}, restaurantID).Error
 }
 
 // GetByDestinationID retrieves all Restaurant records associated with a specific DestinationID.
-func (r *GormRestaurantRepository) GetByDestinationID(destinationID uint) ([]model.Restaurant, error) {
+func (r *GormRestaurantRepository) GetByDestinationID(destinationID string) ([]model.Restaurant, error) {
 	var restaurants []model.Restaurant
 	if err := r.DB.Where("destination_id = ?", destinationID).Find(&restaurants).Error; err != nil {
 		return nil, err
@@ -71,7 +71,7 @@ func (r *GormRestaurantRepository) GetAll() ([]model.Restaurant, error) {
 }
 
 // GetWithFoods retrieves a Restaurant by its ID with associated foods.
-func (r *GormRestaurantRepository) GetWithFoods(restaurantID uint) (model.Restaurant, error) {
+func (r *GormRestaurantRepository) GetWithFoods(restaurantID string) (model.Restaurant, error) {
 	var restaurant model.Restaurant
 	if err := r.DB.Preload("Foods").First(&restaurant, restaurantID).Error; err != nil {
 		return restaurant, err
