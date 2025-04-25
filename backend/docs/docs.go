@@ -701,7 +701,33 @@ const docTemplate = `{
             }
         },
         "dto.TravelPreference": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "activities": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "budget": {
+                    "type": "string"
+                },
+                "duration_days": {
+                    "type": "integer"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "season": {
+                    "type": "string"
+                },
+                "travel_style": {
+                    "type": "string"
+                }
+            }
         },
         "model.Accommodation": {
             "type": "object",
@@ -756,11 +782,13 @@ const docTemplate = `{
                 "description": {
                     "type": "string"
                 },
+                "destination": {
+                    "$ref": "#/definitions/model.Destination"
+                },
                 "destination_id": {
                     "type": "string"
                 },
                 "duration": {
-                    "description": "Duration in minutes",
                     "type": "integer"
                 },
                 "image_url": {
@@ -768,12 +796,24 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                },
+                "place": {
+                    "$ref": "#/definitions/model.Place"
+                },
+                "place_id": {
+                    "type": "string"
                 }
             }
         },
         "model.ActivityCategory": {
             "type": "object",
             "properties": {
+                "activities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Activity"
+                    }
+                },
                 "category_id": {
                     "type": "string"
                 },
@@ -782,6 +822,103 @@ const docTemplate = `{
                 },
                 "description": {
                     "type": "string"
+                }
+            }
+        },
+        "model.Destination": {
+            "type": "object",
+            "properties": {
+                "accommodations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Accommodation"
+                    }
+                },
+                "activities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Activity"
+                    }
+                },
+                "best_season": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "climate": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "image_url": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "places": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Place"
+                    }
+                },
+                "restaurants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Restaurant"
+                    }
+                }
+            }
+        },
+        "model.Place": {
+            "type": "object",
+            "properties": {
+                "activities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Activity"
+                    }
+                },
+                "address": {
+                    "type": "string"
+                },
+                "avg_visit_duration": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "destination": {
+                    "$ref": "#/definitions/model.Destination"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "entrance_fee": {
+                    "type": "number"
+                },
+                "image_url": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "opening_hours": {
+                    "type": "string"
+                },
+                "place_id": {
+                    "type": "string"
+                },
+                "place_type": {
+                    "type": "string"
+                },
+                "popularity_score": {
+                    "type": "number"
                 }
             }
         },
@@ -808,6 +945,9 @@ const docTemplate = `{
                 },
                 "description": {
                     "type": "string"
+                },
+                "destination": {
+                    "$ref": "#/definitions/model.Destination"
                 },
                 "destination_id": {
                     "description": "FK referencing destinations table",
@@ -874,6 +1014,9 @@ const docTemplate = `{
                 },
                 "price": {
                     "type": "number"
+                },
+                "restaurant": {
+                    "$ref": "#/definitions/model.Restaurant"
                 },
                 "restaurant_id": {
                     "type": "string"

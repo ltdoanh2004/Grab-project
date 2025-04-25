@@ -73,6 +73,23 @@ definitions:
         type: string
     type: object
   dto.TravelPreference:
+    properties:
+      activities:
+        items:
+          type: string
+        type: array
+      budget:
+        type: string
+      duration_days:
+        type: integer
+      limit:
+        type: integer
+      location:
+        type: string
+      season:
+        type: string
+      travel_style:
+        type: string
     type: object
   model.Accommodation:
     properties:
@@ -109,24 +126,97 @@ definitions:
         type: number
       description:
         type: string
+      destination:
+        $ref: '#/definitions/model.Destination'
       destination_id:
         type: string
       duration:
-        description: Duration in minutes
         type: integer
       image_url:
         type: string
       name:
         type: string
+      place:
+        $ref: '#/definitions/model.Place'
+      place_id:
+        type: string
     type: object
   model.ActivityCategory:
     properties:
+      activities:
+        items:
+          $ref: '#/definitions/model.Activity'
+        type: array
       category_id:
         type: string
       category_name:
         type: string
       description:
         type: string
+    type: object
+  model.Destination:
+    properties:
+      accommodations:
+        items:
+          $ref: '#/definitions/model.Accommodation'
+        type: array
+      activities:
+        items:
+          $ref: '#/definitions/model.Activity'
+        type: array
+      best_season:
+        type: string
+      city:
+        type: string
+      climate:
+        type: string
+      description:
+        type: string
+      destination_id:
+        type: string
+      image_url:
+        type: string
+      name:
+        type: string
+      places:
+        items:
+          $ref: '#/definitions/model.Place'
+        type: array
+      restaurants:
+        items:
+          $ref: '#/definitions/model.Restaurant'
+        type: array
+    type: object
+  model.Place:
+    properties:
+      activities:
+        items:
+          $ref: '#/definitions/model.Activity'
+        type: array
+      address:
+        type: string
+      avg_visit_duration:
+        type: integer
+      description:
+        type: string
+      destination:
+        $ref: '#/definitions/model.Destination'
+      destination_id:
+        type: string
+      entrance_fee:
+        type: number
+      image_url:
+        type: string
+      name:
+        type: string
+      opening_hours:
+        type: string
+      place_id:
+        type: string
+      place_type:
+        type: string
+      popularity_score:
+        type: number
     type: object
   model.Response:
     properties:
@@ -144,6 +234,8 @@ definitions:
         type: string
       description:
         type: string
+      destination:
+        $ref: '#/definitions/model.Destination'
       destination_id:
         description: FK referencing destinations table
         type: string
@@ -188,6 +280,8 @@ definitions:
         type: number
       price:
         type: number
+      restaurant:
+        $ref: '#/definitions/model.Restaurant'
       restaurant_id:
         type: string
     type: object
