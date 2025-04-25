@@ -38,16 +38,23 @@ INSERT INTO places (place_id, destination_id, name, place_type, description, add
 ('place_000004', 'dest_000004', 'Terme di Diocleziano', 'Spa', 'Ancient Roman baths', 'Viale Enrico de Nicola, 79, 00185 Roma RM, Italy', 8.00, 90, '9AM-7:30PM', 4.6, 'terme_di_diocleziano.jpg'),
 ('place_000005', 'dest_000005', 'Sydney Opera House', 'Theater', 'Multi-venue performing arts centre', 'Bennelong Point, Sydney NSW 2000, Australia', 0.00, 60, '9AM-5PM', 4.9, 'sydney_opera_house.jpg');
 
+-- Insert mock data into the activity_categories table
+INSERT INTO activity_categories (category_id, category_name, description) VALUES
+('cat_000001', 'Sightseeing', 'Tourist attractions and landmark visits'),
+('cat_000002', 'Cultural', 'Local cultural experiences and traditional activities'),
+('cat_000003', 'Adventure', 'Outdoor and physical activities'),
+('cat_000004', 'Wellness', 'Spa, relaxation, and health activities'),
+('cat_000005', 'Entertainment', 'Shows, performances, and leisure activities');
+
 -- Insert mock data into the activities table
-INSERT INTO activities (activity_id, destination_id, name, description, place_id, duration, cost, image_url) VALUES
-('act_000001', 'dest_000001', 'Eiffel Tower Visit', 'Visit the Eiffel Tower', 'place_000001', 60, 30.00, 'eiffel.jpg'),
-('act_000002', 'dest_000002', 'Sushi Making Class', 'Learn to make sushi', 'place_000002', 120, 50.00, 'sushi.jpg'),
-('act_000003', 'dest_000003', 'Central Park Bike Tour', 'Explore Central Park by bike', 'place_000003', 90, 25.00, 'centralpark.jpg'),
-('act_000004', 'dest_000004', 'Spa Day', 'Relax at a Roman spa', 'place_000004', 180, 75.00, 'spa.jpg'),
-('act_000005', 'dest_000005', 'Opera House Tour', 'Tour the Sydney Opera House', 'place_000005', 45, 40.00, 'operahouse.jpg');
+INSERT INTO activities (activity_id, destination_id, category_id, name, description, place_id, duration, cost, image_url) VALUES
+('act_000001', 'dest_000001', 'cat_000001', 'Eiffel Tower Visit', 'Visit the Eiffel Tower', 'place_000001', 60, 30.00, 'eiffel.jpg'),
+('act_000002', 'dest_000002', 'cat_000002', 'Sushi Making Class', 'Learn to make sushi', 'place_000002', 120, 50.00, 'sushi.jpg'),
+('act_000003', 'dest_000003', 'cat_000003', 'Central Park Bike Tour', 'Explore Central Park by bike', 'place_000003', 90, 25.00, 'centralpark.jpg'),
+('act_000004', 'dest_000004', 'cat_000004', 'Spa Day', 'Relax at a Roman spa', 'place_000004', 180, 75.00, 'spa.jpg'),
+('act_000005', 'dest_000005', 'cat_000005', 'Opera House Tour', 'Tour the Sydney Opera House', 'place_000005', 45, 40.00, 'operahouse.jpg');
 
-
--- Insert mock data into the trip_activities table
+-- Insert mock data into the trip_activities tabled, name, description, place_id, duration, cost, image_url) VALUES
 INSERT INTO trip_activities (trip_activity_id, trip_destination_id, activity_id, scheduled_date, start_time, end_time, notes) VALUES
 ('tact_000001', 'tdest_000001', 'act_000001', '2024-07-02', '2024-07-02 10:00:00', '2024-07-02 11:00:00', 'Bring your camera'),
 ('tact_000002', 'tdest_000002', 'act_000002', '2024-12-21', '2024-12-21 14:00:00', '2024-12-21 16:00:00', 'Wear comfortable shoes'),
@@ -55,7 +62,7 @@ INSERT INTO trip_activities (trip_activity_id, trip_destination_id, activity_id,
 ('tact_000004', 'tdest_000004', 'act_000004', '2024-09-17', '2024-09-17 15:00:00', '2024-09-17 18:00:00', 'Book in advance'),
 ('tact_000005', 'tdest_000005', 'act_000005', '2024-06-02', '2024-06-02 10:30:00', '2024-06-02 11:15:00', 'Check show timings');
 
--- Insert mock data into the accommodations table
+-- Insert mock data into the accommodations tablee
 INSERT INTO accommodations (accommodation_id, destination_id, name, type, address, booking_link, star_rating, description, amenities, image_url) VALUES
 ('hotel_000001', 'dest_000001', 'Hotel Plaza Athenee', 'hotel', '25 Avenue Montaigne, 75008 Paris, France', 'hotelplaza.com', 5.0, 'Luxury hotel in Paris', 'Pool, Spa, Restaurant', 'plaza_athenee.jpg'),
 ('hotel_000002', 'dest_000002', 'Park Hyatt Tokyo', 'hotel', '3-7-1-2 Nishi-Shinjuku, Shinjuku-Ku, Tokyo, Japan', 'parkhyatt.com', 5.0, 'Luxury hotel in Tokyo', 'Pool, Spa, Restaurant', 'park_hyatt_tokyo.jpg'),
@@ -71,13 +78,13 @@ INSERT INTO trip_accommodations (trip_accommodation_id, trip_destination_id, acc
 ('tacc_000004', 'tdest_000004', 'hotel_000004', '2024-09-15', '2024-09-20', 2200.00, 'Close to Spanish Steps'),
 ('tacc_000005', 'tdest_000005', 'hotel_000005', '2024-06-01', '2024-06-03', 2500.00, 'Harbour view');
 
--- Insert mock data into the restaurants table
+-- Insert mock data into the restaurants tablens table
 INSERT INTO restaurants (restaurant_id, destination_id, name, establishment_type, cuisine_type, description, address, price_range, avg_rating, opening_hours, image_url) VALUES
-('rest_000001', 'dest_000001', 'Le Jules Verne', 'Fine Dining', 'French', 'Michelin-starred restaurant in the Eiffel Tower', 'Avenue Gustave Eiffel, 75007 Paris, France', '$$$$$', 4.8, '12PM-2PM, 7PM-10PM', 'jules_verne.jpg'),
-('rest_000002', 'dest_000002', 'Sushi Saito', 'Sushi Restaurant', 'Japanese', 'One of the best sushi restaurants in the world', '1-9-15 Akasaka, Minato, Tokyo 107-0052, Japan', '$$$$$', 4.9, '11:30AM-2:30PM, 5PM-11PM', 'sushi_saito.jpg'),
-('rest_000003', 'dest_000003', 'Per Se', 'Fine Dining', 'American', 'Three-Michelin-starred restaurant', '10 Columbus Circle, New York, NY 10019, USA', '$$$$$', 4.7, '5:30PM-10PM', 'per_se.jpg'),
-('rest_000004', 'dest_000004', 'La Pergola', 'Fine Dining', 'Italian', 'Rome Cavalieri', 'Via Alberto Cadlolo, 101, 00136 Roma RM, Italy', '$$$$$', 4.9, '7:30PM-11:30PM', 'la_pergola.jpg'),
-('rest_000005', 'dest_000005', 'Quay', 'Fine Dining', 'Australian', 'World-renowned waterfront fine dining restaurant', 'Upper Level Overseas Passenger Terminal, The Rocks NSW 2000, Australia', '$$$$$', 4.8, '12PM-2:30PM, 6PM-10PM', 'quay.jpg');
+    ('rest_000001', 'dest_000001', 'Le Jules Verne', 'Fine Dining', 'French', 'Michelin-starred restaurant in the Eiffel Tower', 'Avenue Gustave Eiffel, 75007 Paris, France', '$$$$$', 4.8, '12PM-2PM, 7PM-10PM', 'jules_verne.jpg'),
+    ('rest_000002', 'dest_000002', 'Sushi Saito', 'Sushi Restaurant', 'Japanese', 'One of the best sushi restaurants in the world', '1-9-15 Akasaka, Minato, Tokyo 107-0052, Japan', '$$$$$', 4.9, '11:30AM-2:30PM, 5PM-11PM', 'sushi_saito.jpg'),
+    ('rest_000003', 'dest_000003', 'Per Se', 'Fine Dining', 'American', 'Three-Michelin-starred restaurant', '10 Columbus Circle, New York, NY 10019, USA', '$$$$$', 4.7, '5:30PM-10PM', 'per_se.jpg'),
+    ('rest_000004', 'dest_000004', 'La Pergola', 'Fine Dining', 'Italian', 'Rome Cavalieri', 'Via Alberto Cadlolo, 101, 00136 Roma RM, Italy', '$$$$$', 4.9, '7:30PM-11:30PM', 'la_pergola.jpg'),
+    ('rest_000005', 'dest_000005', 'Quay', 'Fine Dining', 'Australian', 'Quay restaurant description', 'Upper Level Overseas Passenger Terminal, The Rocks NSW 2000, Australia', '$$$$$', 4.8, '12PM-2:30PM, 6PM-10PM', 'quay.jpg');
 
 -- Insert mock data into the restaurant_foods table
 INSERT INTO restaurant_foods (food_id, restaurant_id, name, description, food_type, cuisine, is_vegetarian, is_vegan, is_specialty, price, popularity_score, image_url) VALUES

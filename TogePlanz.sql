@@ -1,5 +1,5 @@
 CREATE TABLE `users` (
-  `user_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `user_id` CHAR(36) PRIMARY KEY,
   `username` VARCHAR(50) UNIQUE NOT NULL,
   `email` VARCHAR(100) UNIQUE NOT NULL,
   `password` VARCHAR(255) NOT NULL,
@@ -9,14 +9,14 @@ CREATE TABLE `users` (
 
 CREATE TABLE `user_history` (
   `history_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `user_id` INT NOT NULL,
-  `trip_id` INT NOT NULL,
+  `user_id` CHAR(36) NOT NULL,
+  `trip_id` CHAR(36) NOT NULL,
   `created_at` TIMESTAMP DEFAULT (CURRENT_TIMESTAMP)
 );
 
 CREATE TABLE `trips` (
-  `trip_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `user_id` INT NOT NULL,
+  `trip_id` CHAR(36) PRIMARY KEY,
+  `user_id` CHAR(36) NOT NULL,
   `trip_name` VARCHAR(100) NOT NULL,
   `start_date` DATE NOT NULL,
   `end_date` DATE NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE `trips` (
 );
 
 CREATE TABLE `destinations` (
-  `destination_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `destination_id` CHAR(36) PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   `city` VARCHAR(100),
   `description` TEXT,
@@ -37,35 +37,35 @@ CREATE TABLE `destinations` (
 );
 
 CREATE TABLE `trip_destinations` (
-  `trip_destination_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `trip_id` INT NOT NULL,
-  `destination_id` INT NOT NULL,
+  `trip_destination_id` CHAR(36) PRIMARY KEY,
+  `trip_id` CHAR(36) NOT NULL,
+  `destination_id` CHAR(36) NOT NULL,
   `arrival_date` DATE,
   `departure_date` DATE,
   `order_num` INT NOT NULL
 );
 
 CREATE TABLE `activity_categories` (
-  `category_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `category_id` CHAR(36) PRIMARY KEY,
   `category_name` VARCHAR(50) NOT NULL,
   `description` TEXT
 );
 
 CREATE TABLE `activities` (
-  `activity_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `destination_id` INT,
-  `category_id` INT,
+  `activity_id` CHAR(36) PRIMARY KEY,
+  `destination_id` CHAR(36),
+  `category_id` CHAR(36),
   `name` VARCHAR(100) NOT NULL,
   `description` TEXT,
-  `place_id` INT AUTO_INCREMENT,
+  `place_id` CHAR(36),
   `duration` INT,
   `cost` DECIMAL(10,2),
   `image_url` VARCHAR(255)
 );
 
 CREATE TABLE `places` (
-  `place_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `destination_id` INT,
+  `place_id` CHAR(36) PRIMARY KEY,
+  `destination_id` CHAR(36),
   `name` VARCHAR(100) NOT NULL,
   `place_type` VARCHAR(50),
   `description` TEXT,
@@ -78,9 +78,9 @@ CREATE TABLE `places` (
 );
 
 CREATE TABLE `trip_activities` (
-  `trip_activity_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `trip_destination_id` INT NOT NULL,
-  `activity_id` INT NOT NULL,
+  `trip_activity_id` CHAR(36) PRIMARY KEY,
+  `trip_destination_id` CHAR(36) NOT NULL,
+  `activity_id` CHAR(36) NOT NULL,
   `scheduled_date` DATE,
   `start_time` TIME,
   `end_time` TIME,
@@ -88,8 +88,8 @@ CREATE TABLE `trip_activities` (
 );
 
 CREATE TABLE `accommodations` (
-  `accommodation_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `destination_id` INT,
+  `accommodation_id` CHAR(36) PRIMARY KEY,
+  `destination_id` CHAR(36),
   `name` VARCHAR(100) NOT NULL,
   `type` ENUM ('hotel', 'hostel', 'apartment', 'resort', 'other'),
   `address` TEXT,
@@ -101,9 +101,9 @@ CREATE TABLE `accommodations` (
 );
 
 CREATE TABLE `trip_accommodations` (
-  `trip_accommodation_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `trip_destination_id` INT NOT NULL,
-  `accommodation_id` INT NOT NULL,
+  `trip_accommodation_id` CHAR(36) PRIMARY KEY,
+  `trip_destination_id` CHAR(36) NOT NULL,
+  `accommodation_id` CHAR(36) NOT NULL,
   `check_in_date` DATE,
   `check_out_date` DATE,
   `cost` DECIMAL(10,2),
@@ -111,8 +111,8 @@ CREATE TABLE `trip_accommodations` (
 );
 
 CREATE TABLE `restaurants` (
-  `restaurant_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `destination_id` INT,
+  `restaurant_id` CHAR(36) PRIMARY KEY,
+  `destination_id` CHAR(36),
   `name` VARCHAR(100) NOT NULL,
   `establishment_type` VARCHAR(50),
   `cuisine_type` VARCHAR(100),
@@ -125,8 +125,8 @@ CREATE TABLE `restaurants` (
 );
 
 CREATE TABLE `restaurant_foods` (
-  `food_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `restaurant_id` INT NOT NULL,
+  `food_id` CHAR(36) PRIMARY KEY,
+  `restaurant_id` CHAR(36) NOT NULL,
   `name` VARCHAR(100) NOT NULL,
   `description` TEXT,
   `food_type` VARCHAR(50),
@@ -140,9 +140,9 @@ CREATE TABLE `restaurant_foods` (
 );
 
 CREATE TABLE `trip_restaurants` (
-  `trip_restaurant_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `trip_destination_id` INT NOT NULL,
-  `restaurant_id` INT NOT NULL,
+  `trip_restaurant_id` CHAR(36) PRIMARY KEY,
+  `trip_destination_id` CHAR(36) NOT NULL,
+  `restaurant_id` CHAR(36) NOT NULL,
   `meal_date` DATE,
   `start_time` TIME,
   `end_time` TIME,
@@ -152,10 +152,10 @@ CREATE TABLE `trip_restaurants` (
 
 CREATE TABLE `ai_suggested` (
   `suggestion_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `trip_id` INT NOT NULL,
+  `trip_id` CHAR(36) NOT NULL,
   `suggestion_type` ENUM ('activity', 'restaurant') NOT NULL,
-  `activity_id` INT,
-  `restaurant_id` INT,
+  `activity_id` CHAR(36),
+  `restaurant_id` CHAR(36),
   `suggested_date` DATE,
   `suggested_time` TIME,
   `reason` TEXT,

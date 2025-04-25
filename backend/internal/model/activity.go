@@ -11,7 +11,7 @@ type Activity struct {
 	ImageURL      string  `gorm:"size:255" json:"image_url"`
 	PlaceID       string  `gorm:"type:char(36)" json:"place_id"`
 
-	Place            *Place            `json:"place,omitempty"`
-	ActivityCategory *ActivityCategory `gorm:"foreignKey:CategoryID" json:"activity_category,omitempty"`
-	Destination      *Destination      `json:"destination,omitempty"`
+	Place       *Place            `json:"place,omitempty"`
+	Category    *ActivityCategory `json:"category,omitempty"`
+	Destination *Destination      `json:"destination,omitempty"`
 }
