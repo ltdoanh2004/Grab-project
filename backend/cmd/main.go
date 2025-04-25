@@ -50,6 +50,16 @@ import (
 // @tag.name         health
 // @tag.description  API health check operations
 
+// @tag.name         suggest
+// @tag.description  Operations about travel suggestions
+// @tag.docs.url     http://example.com/docs/suggest
+// @tag.docs.description Detailed information about suggestion operations
+
+// @tag.name         suggestionType
+// @tag.description  Operations about travel suggestion types (hotel, restaurant, landmark)
+// @tag.docs.url     http://example.com/docs/suggestionType
+// @tag.docs.description Detailed information about suggestion type operations
+
 // @securityDefinitions.apikey Bearer
 // @in header
 // @name Authorization
@@ -63,10 +73,15 @@ func main() {
 			NewGinEngine,
 			repository.NewRepository,
 			repository.NewUserRepository,
+			repository.NewActivityRepository,      // Add this
+			repository.NewRestaurantRepository,    // Add this
+			repository.NewAccommodationRepository, // Add this
 			service.NewService,
 			service.NewAuthService,
 			controller.NewController,
 			controller.NewAuthController,
+			service.NewSuggestService,
+			controller.NewSuggestController,
 		),
 		fx.Invoke(RegisterRoutes),
 	)
@@ -105,9 +120,11 @@ func RegisterRoutes(
 	cfg *config.Config,
 	controller *controller.Controller,
 	auth_controller *controller.AuthController,
+	suggest_controller *controller.SuggestController, // Add this
 ) {
 	controller.RegisterRoutes(router)
 	auth_controller.RegisterRoutes(router)
+	suggest_controller.RegisterRoutes(router)
 
 	logger.Init()
 

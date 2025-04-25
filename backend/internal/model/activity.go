@@ -11,5 +11,5 @@ type Activity struct {
 	Cost          float64 `gorm:"type:decimal(10,2)" json:"cost"`
 	ImageURL      string  `gorm:"size:255" json:"image_url"`
 
-	ActivityCategory ActivityCategory `gorm:"foreignKey:CategoryID" json:"activity,omitempty"`
+	ActivityCategory ActivityCategory `gorm:"foreignKey:CategoryID" json:"category,omitempty"`
 }
