@@ -8,7 +8,12 @@ interface StepNavigationProps {
 export const StepNavigation: React.FC<StepNavigationProps> = ({
   currentStep,
 }) => {
-  const steps = ["Thời gian", "Tùy chọn cá nhân", "Chỉnh sửa kế hoạch"];
+  const steps = [
+    "thon tin chuyến đi",
+    "Thời gian",
+    "Tùy chọn cá nhân",
+    "Chỉnh sửa kế hoạch",
+  ];
 
   const progressPercentage = ((currentStep + 1) / steps.length) * 100;
 

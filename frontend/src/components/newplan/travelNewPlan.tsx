@@ -2,13 +2,18 @@ import React from "react";
 import { DestinationStep } from "./travelPlanDestination";
 import { TimeStep } from "./travelPlanTime";
 import { PersonalStep } from "./travelPlanPersonal";
+import { PeopleBudgetStep } from "./travelPlanBasic";
+import { LoadingStep } from "./travelLoading";
 import { StepNavigation } from "./navbar";
 import { useTravelPlan } from "../../hooks/useTravelPlans";
+import { DESTINATIONS } from "../../constants/travelPlanConstants";
 
 export const TravelNewPlan: React.FC = () => {
   const {
     currentStep,
     selectedDestinationId,
+    budget,
+    handleBudgetChange,
     handleNextStep,
     handlePrevStep,
     handleDestinationSelect,
@@ -20,12 +25,30 @@ export const TravelNewPlan: React.FC = () => {
     travelTime,
     handleMonthChange,
     handleLengthChange,
+    people,
+    handlePeopleChange,
     isDestinationSelection,
   } = useTravelPlan();
+
+  // Get destination name for display in loading screen
+  const selectedDestination =
+    DESTINATIONS.find((dest) => dest.id === selectedDestinationId)?.name ||
+    "điểm đến của bạn";
 
   const renderStepContent = () => {
     switch (currentStep) {
       case 0:
+        return (
+          <PeopleBudgetStep
+            budget={budget}
+            onBudgetChange={handleBudgetChange}
+            people={people}
+            onPeopleChange={handlePeopleChange}
+            onNext={handleNextStep}
+            onPrev={handleBacktoMain}
+          />
+        );
+      case 1:
         return (
           <TimeStep
             travelTime={travelTime}
@@ -34,19 +57,29 @@ export const TravelNewPlan: React.FC = () => {
             onMonthChange={handleMonthChange}
             onLengthChange={handleLengthChange}
             onNext={handleNextStep}
-            onPrev={handleBacktoMain}
+            onPrev={handlePrevStep}
           />
         );
-      case 1:
+      case 2:
         return (
           <PersonalStep
             selectedOptions={selectedOptions}
             onAddOption={handleAddOption}
             onNext={handleNextStep}
             onPrev={handlePrevStep}
+            destination={selectedDestination}
+            budget={budget}
+            people={people}
+            travelTime={travelTime}
           />
         );
-
+      case 3:
+        return (
+          <LoadingStep
+            destination={selectedDestination}
+            onFinish={handleNextStep}
+          />
+        );
       default:
         return null;
     }
@@ -64,24 +97,6 @@ export const TravelNewPlan: React.FC = () => {
         />
       ) : (
         <>
-          {/* <div className="p-4 border-b bg-blue-50">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <img
-                  src={selectedDestination?.imageUrl}
-                  alt={selectedDestination?.name}
-                  className="w-10 h-10 mr-3"
-                />
-                <Title level={4} className="m-0">
-                  {selectedDestination?.name}, {selectedDestination?.country}
-                </Title>
-              </div>
-              <Button type="link" onClick={handleBacktoMain}>
-                Thay đổi
-              </Button>
-            </div>
-          </div> */}
-
           <StepNavigation currentStep={currentStep} />
           {renderStepContent()}
         </>

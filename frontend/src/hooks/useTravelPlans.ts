@@ -1,114 +1,167 @@
-import { useState } from "react";
-import { TravelTime, PersonalOption } from "../types/travelPlan";
+import { useState, useCallback } from "react";
+import {
+  TravelTime,
+  PersonalOption,
+  Budget,
+  NumOfPeople,
+} from "../types/travelPlan";
+import { BUDGET_RANGES } from "../constants/travelPlanConstants";
 
 export const useTravelPlan = () => {
+  //step magnage
   const [currentStep, setCurrentStep] = useState<number>(-1);
+
+  //destination
   const [selectedDestinationId, setSelectedDestinationId] = useState<
     string | null
   >(null);
 
+  const handleDestinationSelect = useCallback((destId: string) => {
+    setSelectedDestinationId(destId);
+  }, []);
+
+  //bdget & People
+  const [budget, setBudget] = useState<Budget>({
+    type: "$$",
+    exactBudget: 5000000,
+  });
+
+  const [people, setPeople] = useState<NumOfPeople>({
+    adults: 2,
+    children: 0,
+    infants: 0,
+    pets: 0,
+  });
+
+  const handleBudgetChange = useCallback((newBudget: Budget) => {
+    setBudget(newBudget);
+  }, []);
+
+  const handlePeopleChange = useCallback((newPeople: NumOfPeople) => {
+    setPeople(newPeople);
+  }, []);
+
+  //time
   const [travelTime, setTravelTime] = useState<TravelTime>({
     type: "exact",
     startDate: new Date(),
     endDate: new Date(),
   });
+
+  const handleTimeType = useCallback(
+    (type: "exact" | "flexible") => {
+      if (type === "exact" && travelTime.type !== "exact") {
+        setTravelTime({
+          type: "exact",
+          startDate: new Date(),
+          endDate: new Date(),
+        });
+      } else if (type === "flexible" && travelTime.type !== "flexible") {
+        setTravelTime({
+          type: "flexible",
+          month: 0,
+          length: 0,
+        });
+      }
+    },
+    [travelTime.type]
+  );
+
+  const handleDateChange = useCallback(
+    (dates: any) => {
+      if (dates && travelTime.type === "exact") {
+        setTravelTime({
+          ...travelTime,
+          startDate: dates[0] ? dates[0].toDate() : new Date(),
+          endDate: dates[1] ? dates[1].toDate() : null,
+        });
+      }
+    },
+    [travelTime]
+  );
+
+  const handleMonthChange = useCallback(
+    (month: number) => {
+      if (travelTime.type === "flexible") {
+        setTravelTime({
+          ...travelTime,
+          month,
+        });
+      }
+    },
+    [travelTime]
+  );
+
+  const handleLengthChange = useCallback(
+    (days: number) => {
+      if (travelTime.type === "flexible") {
+        setTravelTime({
+          ...travelTime,
+          length: days,
+        });
+      }
+    },
+    [travelTime]
+  );
+
+  // Options
   const [selectedOptions, setSelectedOptions] = useState<PersonalOption[]>([]);
 
-  const handleTimeType = (type: "exact" | "flexible") => {
-    if (type === "exact" && travelTime.type !== "exact") {
-      setTravelTime({
-        type: "exact",
-        startDate: new Date(),
-        endDate: new Date(),
-      });
-    } else if (type === "flexible" && travelTime.type !== "flexible") {
-      setTravelTime({
-        type: "flexible",
-        month: 0,
-        length: 0,
-      });
-    }
-  };
-
-  const handleDateChange = (dates: any) => {
-    if (dates && travelTime.type === "exact") {
-      setTravelTime({
-        ...travelTime,
-        startDate: dates[0] ? dates[0].toDate() : new Date(),
-        endDate: dates[1] ? dates[1].toDate() : null,
-      });
-    }
-  };
-
-  const handleMonthChange = (month: number) => {
-    if (travelTime.type === "flexible") {
-      setTravelTime({
-        ...travelTime,
-        month,
-      });
-    }
-  };
-
-  const handleLengthChange = (days: number) => {
-    if (travelTime.type === "flexible") {
-      setTravelTime({
-        ...travelTime,
-        length: days,
-      });
-    }
-  };
-
-  const handleNextStep = () => {
-    setCurrentStep(currentStep + 1);
-  };
-
-  const handlePrevStep = () => {
-    setCurrentStep(currentStep - 1);
-  };
-
-  const handleDestinationSelect = (destId: string) => {
-    setSelectedDestinationId(destId);
-  };
-
-  const handleStartPlan = () => {
-    setCurrentStep(0);
-  };
-
-  const handleBacktoMain = () => {
-    setCurrentStep(-1);
-  };
-
-  const handleAddOption = (option: PersonalOption) => {
-    const optionExists = selectedOptions.some(
-      (item) => item.type === option.type && item.name === option.name
-    );
-
-    if (optionExists) {
-      setSelectedOptions(
-        selectedOptions.filter(
-          (item) => !(item.type === option.type && item.name === option.name)
-        )
+  const handleAddOption = useCallback(
+    (option: PersonalOption) => {
+      const optionExists = selectedOptions.some(
+        (item) => item.type === option.type && item.name === option.name
       );
-    } else {
-      setSelectedOptions([...selectedOptions, option]);
-    }
-  };
+
+      if (optionExists) {
+        setSelectedOptions(
+          selectedOptions.filter(
+            (item) => !(item.type === option.type && item.name === option.name)
+          )
+        );
+      } else {
+        setSelectedOptions([...selectedOptions, option]);
+      }
+    },
+    [selectedOptions]
+  );
+
+  // fỏnav
+  const handleNextStep = useCallback(() => {
+    setCurrentStep(currentStep + 1);
+  }, [currentStep]);
+
+  const handlePrevStep = useCallback(() => {
+    setCurrentStep(currentStep - 1);
+  }, [currentStep]);
+
+  const handleStartPlan = useCallback(() => {
+    setCurrentStep(0);
+  }, []);
+
+  const handleBacktoMain = useCallback(() => {
+    setCurrentStep(-1);
+  }, []);
 
   return {
     currentStep,
-    selectedDestinationId,
-    travelTime,
     handleNextStep,
     handlePrevStep,
-    handleDestinationSelect,
-    handleTimeType,
     handleStartPlan,
     handleBacktoMain,
+    isDestinationSelection: currentStep === -1,
+    selectedDestinationId,
+    handleDestinationSelect,
+    budget,
+    handleBudgetChange,
+    people,
+    handlePeopleChange,
+    travelTime,
+    handleTimeType,
     handleDateChange,
     handleMonthChange,
-    handleAddOption,
-    selectedOptions,
     handleLengthChange,
-    isDestinationSelection: currentStep === -1,
+    selectedOptions,
+    handleAddOption,
   };
 };
