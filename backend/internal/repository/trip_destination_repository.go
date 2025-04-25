@@ -57,3 +57,21 @@ func (r *GormTripDestinationRepository) GetByTripID(tripID uint) ([]model.TripDe
 	}
 	return tripDestinations, nil
 }
+
+// GetWithAssociations retrieves all Trip records with associated records.
+func (r *GormTripDestinationRepository) GetWithAssociations(tripDestinationID string) (model.TripDestination, error) {
+	var tripDestination model.TripDestination
+	if err := r.DB.Preload("Activities").Preload("Accommodations").Preload("Restaurants").First(&tripDestination, tripDestinationID).Error; err != nil {
+		return tripDestination, err
+	}
+	return tripDestination, nil
+}
+
+// GetAllWithAssociations retrieves all Trip records with associated records.
+func (r *GormTripDestinationRepository) GetAllWithAssociations() ([]model.TripDestination, error) {
+	var tripDestinations []model.TripDestination
+	if err := r.DB.Preload("Activities").Preload("Accommodations").Preload("Restaurants").Find(&tripDestinations).Error; err != nil {
+		return nil, err
+	}
+	return tripDestinations, nil
+}

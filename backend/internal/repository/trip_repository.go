@@ -8,13 +8,13 @@ import (
 
 // TripRepository defines data access methods for the Trip entity.
 type TripRepository interface {
-	GetByID(tripID uint) (model.Trip, error)
+	GetByID(tripID string) (model.Trip, error)
 	Create(trip *model.Trip) error
 	Update(trip *model.Trip) error
-	Delete(tripID uint) error
+	Delete(tripID string) error
 	GetByUserID(userID uint) ([]model.Trip, error)
 	GetAll() ([]model.Trip, error)
-	GetWithAssociations(tripID uint) (model.Trip, error)
+	GetWithAssociations(tripID string) (model.Trip, error)
 	GetAllWithAssociations() ([]model.Trip, error)
 }
 
@@ -34,7 +34,7 @@ func (r *GormTripRepository) Create(trip *model.Trip) error {
 }
 
 // GetByID retrieves a Trip by its ID.
-func (r *GormTripRepository) GetByID(tripID uint) (model.Trip, error) {
+func (r *GormTripRepository) GetByID(tripID string) (model.Trip, error) {
 	var trip model.Trip
 	if err := r.DB.First(&trip, tripID).Error; err != nil {
 		return trip, err
@@ -48,7 +48,7 @@ func (r *GormTripRepository) Update(trip *model.Trip) error {
 }
 
 // Delete removes a Trip record by its ID.
-func (r *GormTripRepository) Delete(tripID uint) error {
+func (r *GormTripRepository) Delete(tripID string) error {
 	return r.DB.Delete(&model.Trip{}, tripID).Error
 }
 
@@ -71,9 +71,9 @@ func (r *GormTripRepository) GetAll() ([]model.Trip, error) {
 }
 
 // GetWithAssociations retrieves a Trip by its ID with associated records.
-func (r *GormTripRepository) GetWithAssociations(tripID uint) (model.Trip, error) {
+func (r *GormTripRepository) GetWithAssociations(tripID string) (model.Trip, error) {
 	var trip model.Trip
-	if err := r.DB.Preload("Destinations").Preload("Activities").Preload("Accommodations").Preload("Places").Preload("Restaurants").First(&trip, tripID).Error; err != nil {
+	if err := r.DB.Preload("Destinations").First(&trip, tripID).Error; err != nil {
 		return trip, err
 	}
 	return trip, nil
@@ -82,7 +82,7 @@ func (r *GormTripRepository) GetWithAssociations(tripID uint) (model.Trip, error
 // GetAllWithAssociations retrieves all Trip records with associated records.
 func (r *GormTripRepository) GetAllWithAssociations() ([]model.Trip, error) {
 	var trips []model.Trip
-	if err := r.DB.Preload("Destinations").Preload("Activities").Preload("Accommodations").Preload("Places").Preload("Restaurants").Find(&trips).Error; err != nil {
+	if err := r.DB.Preload("Destinations").Find(&trips).Error; err != nil {
 		return nil, err
 	}
 	return trips, nil
