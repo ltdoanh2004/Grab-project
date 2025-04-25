@@ -47,13 +47,13 @@ func (sc *SuggestController) RegisterRoutes(router *gin.Engine) {
 func (sc *SuggestController) SuggestAccommodations(ctx *gin.Context) {
 	travelPreference := &dto.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
-		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input", nil))
+		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input: "+err.Error(), nil))
 		return
 	}
 
 	suggestion, err := sc.suggestSerivce.SuggestAccommodations(travelPreference)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get accommodation suggestions", nil))
+		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get accommodation suggestions: "+err.Error(), nil))
 		return
 	}
 	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
@@ -73,13 +73,13 @@ func (sc *SuggestController) SuggestAccommodations(ctx *gin.Context) {
 func (sc *SuggestController) SuggestActivities(ctx *gin.Context) {
 	travelPreference := &dto.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
-		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input", nil))
+		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input: "+err.Error(), nil))
 		return
 	}
 
 	suggestion, err := sc.suggestSerivce.SuggestActivities(travelPreference)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get activity suggestions", nil))
+		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get activity suggestions: "+err.Error(), nil))
 		return
 	}
 	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
@@ -99,13 +99,13 @@ func (sc *SuggestController) SuggestActivities(ctx *gin.Context) {
 func (sc *SuggestController) SuggestRestaurants(ctx *gin.Context) {
 	travelPreference := &dto.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
-		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input", nil))
+		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input: "+err.Error(), nil))
 		return
 	}
 
 	suggestion, err := sc.suggestSerivce.SuggestRestaurants(travelPreference)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get restaurant suggestions", nil))
+		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get restaurant suggestions: "+err.Error(), nil))
 		return
 	}
 	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))

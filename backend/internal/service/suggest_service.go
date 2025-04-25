@@ -75,8 +75,40 @@ func (ss *suggestService) callAISuggestion(endpoint string, travelPreference *dt
 	return &rsp, nil
 }
 
+func (ss *suggestService) mockCallAPI(endpoint string, travelPreference *dto.TravelPreference) (*dto.TravelSuggestionResponse, error) {
+	fmt.Println("Mock API call to:", endpoint)
+	fmt.Println("Travel Preference:", travelPreference)
+
+	return &dto.TravelSuggestionResponse{
+		IDs: []string{"1", "2", "3"},
+	}, nil
+}
+
 func getURL(host, port, endpoint string) string {
 	return fmt.Sprintf("http://%s:%s%s", host, port, endpoint)
+}
+
+func (ss *suggestService) SuggestAccommodations(travelPreference *dto.TravelPreference) (*dto.AccommodationSuggestion, error) {
+	rsp, err := ss.mockCallAPI(
+		getURL(config.AppConfig.AI.Host,
+			config.AppConfig.AI.Port,
+			"/suggest/accommodations",
+		),
+		travelPreference,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	var suggestion dto.AccommodationSuggestion
+	for i := range rsp.IDs {
+		accommodation, err := ss.AccommodationRepository.GetByID(rsp.IDs[i])
+		if err != nil {
+			return nil, fmt.Errorf("failed to fetch accommodation with ID %s: %w", rsp.IDs[i], err)
+		}
+		suggestion.Accommodations = append(suggestion.Accommodations, accommodation)
+	}
+	return &suggestion, nil
 }
 
 func (ss *suggestService) SuggestActivities(travelPreference *dto.TravelPreference) (*dto.ActivitiesSuggestion, error) {
@@ -121,29 +153,6 @@ func (ss *suggestService) SuggestRestaurants(travelPreference *dto.TravelPrefere
 			return nil, fmt.Errorf("failed to fetch restaurant with ID %s: %w", rsp.IDs[i], err)
 		}
 		suggestion.Restaurants = append(suggestion.Restaurants, restaurant)
-	}
-	return &suggestion, nil
-}
-
-func (ss *suggestService) SuggestAccommodations(travelPreference *dto.TravelPreference) (*dto.AccommodationSuggestion, error) {
-	rsp, err := ss.callAISuggestion(
-		getURL(config.AppConfig.AI.Host,
-			config.AppConfig.AI.Port,
-			"/suggest/accommodations",
-		),
-		travelPreference,
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	var suggestion dto.AccommodationSuggestion
-	for i := range rsp.IDs {
-		accommodation, err := ss.AccommodationRepository.GetByID(rsp.IDs[i])
-		if err != nil {
-			return nil, fmt.Errorf("failed to fetch accommodation with ID %s: %w", rsp.IDs[i], err)
-		}
-		suggestion.Accommodations = append(suggestion.Accommodations, accommodation)
 	}
 	return &suggestion, nil
 }
