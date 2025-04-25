@@ -1,0 +1,158 @@
+2025-04-25 00:15:30,252 - INFO - Starting crawl from page 1 with max_pages=10000000, max_attractions=100000
+2025-04-25 00:15:30,252 - INFO - Crawling page 1
+2025-04-25 00:15:30,252 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293922-Activities-a_allAttractions.true-Da_Lat_Lam_Dong_Province.html
+2025-04-25 00:15:30,645 - ERROR - Error fetching URL https://www.tripadvisor.com/Attractions-g293922-Activities-a_allAttractions.true-Da_Lat_Lam_Dong_Province.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Attractions-g293922-Activities-a_allAttractions.true-Da_Lat_Lam_Dong_Province.html
+2025-04-25 00:15:30,645 - INFO - Retrying after 30 seconds...
+2025-04-25 08:09:09,560 - INFO - Starting crawl from page 1 with max_pages=10000000, max_attractions=100000
+2025-04-25 08:09:09,560 - INFO - Crawling page 1
+2025-04-25 08:09:09,560 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293922-Activities-a_allAttractions.true-Da_Lat_Lam_Dong_Province.html
+2025-04-25 08:09:12,561 - INFO - Found 80 attractions on page 1
+2025-04-25 08:09:12,569 - INFO - Found 80 attractions on page 1
+2025-04-25 08:09:12,570 - INFO - Waiting for 7.92 seconds
+2025-04-25 08:09:20,498 - INFO - Starting to crawl details for 80 attractions
+2025-04-25 08:09:20,498 - INFO - Waiting for 7.26 seconds
+2025-04-25 08:09:20,499 - INFO - Waiting for 8.21 seconds
+2025-04-25 08:09:20,499 - INFO - Waiting for 6.84 seconds
+2025-04-25 08:09:20,499 - INFO - Waiting for 5.30 seconds
+2025-04-25 08:09:20,499 - INFO - Waiting for 8.89 seconds
+2025-04-25 08:09:20,499 - INFO - Waiting for 5.62 seconds
+2025-04-25 08:09:20,499 - INFO - Waiting for 9.58 seconds
+2025-04-25 08:09:20,499 - INFO - Waiting for 8.40 seconds
+2025-04-25 08:09:20,499 - INFO - Waiting for 9.37 seconds
+2025-04-25 08:09:20,500 - INFO - Waiting for 9.34 seconds
+2025-04-25 08:09:20,558 - INFO - Starting crawl from page 1 with max_pages=1000, max_attractions=100000
+2025-04-25 08:09:20,558 - INFO - Crawling page 1
+2025-04-25 08:09:20,558 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g311304-Activities-a_allAttractions.true-Sapa_Lao_Cai_Province.html
+2025-04-25 08:09:22,373 - INFO - Found 80 attractions on page 1
+2025-04-25 08:09:22,382 - INFO - Found 80 attractions on page 1
+2025-04-25 08:09:22,382 - INFO - Waiting for 7.30 seconds
+2025-04-25 08:09:23,385 - INFO - Starting crawl from page 1 with max_pages=1000, max_attractions=100000
+2025-04-25 08:09:23,385 - INFO - Crawling page 1
+2025-04-25 08:09:23,385 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293928-Activities-oa0-Nha_Trang_Khanh_Hoa_Province.html
+2025-04-25 08:09:25,674 - INFO - Found 80 attractions on page 1
+2025-04-25 08:09:25,680 - INFO - Found 80 attractions on page 1
+2025-04-25 08:09:25,680 - INFO - Waiting for 9.52 seconds
+2025-04-25 08:09:25,805 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d5503688-Reviews-Crazy_House-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-25 08:09:26,127 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451021-Reviews-Truc_Lam_Monastery_of_Da_Lat-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-25 08:09:26,480 - INFO - Starting crawl from page 1 with max_pages=1000, max_attractions=100000
+2025-04-25 08:09:26,480 - INFO - Crawling page 1
+2025-04-25 08:09:26,480 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293925-Activities-a_allAttractions.true-Ho_Chi_Minh_City.html
+2025-04-25 08:09:27,335 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d5503688-Reviews-Crazy_House-Da_Lat_Lam_Dong_Province.html
+2025-04-25 08:09:27,835 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451017-Reviews-Linh_Phuoc_Pagoda-Da_Lat_Lam_Dong_Province.html
+2025-04-25 08:09:28,315 - INFO - Found 80 attractions on page 1
+2025-04-25 08:09:28,325 - INFO - Found 80 attractions on page 1
+2025-04-25 08:09:28,325 - INFO - Waiting for 6.00 seconds
+2025-04-25 08:09:28,837 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451017-Reviews-Linh_Phuoc_Pagoda-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-25 08:09:28,912 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451012-Reviews-Valley_of_Love-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-25 08:09:29,402 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451021-Reviews-Truc_Lam_Monastery_of_Da_Lat-Da_Lat_Lam_Dong_Province.html
+2025-04-25 08:09:29,661 - INFO - Starting crawl from page 1 with max_pages=1000, max_attractions=100000
+2025-04-25 08:09:29,661 - INFO - Crawling page 1
+2025-04-25 08:09:29,661 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293926-Activities-c42-Hue_Thua_Thien_Hue_Province.html
+2025-04-25 08:09:29,683 - INFO - Starting to crawl details for 80 attractions
+2025-04-25 08:09:29,684 - INFO - Waiting for 5.90 seconds
+2025-04-25 08:09:29,684 - INFO - Waiting for 5.53 seconds
+2025-04-25 08:09:29,684 - INFO - Waiting for 7.99 seconds
+2025-04-25 08:09:29,684 - INFO - Waiting for 8.75 seconds
+2025-04-25 08:09:29,684 - INFO - Waiting for 5.70 seconds
+2025-04-25 08:09:29,685 - INFO - Waiting for 5.87 seconds
+2025-04-25 08:09:29,685 - INFO - Waiting for 7.18 seconds
+2025-04-25 08:09:29,685 - INFO - Waiting for 5.97 seconds
+2025-04-25 08:09:29,685 - INFO - Waiting for 8.80 seconds
+2025-04-25 08:09:29,685 - INFO - Waiting for 8.72 seconds
+2025-04-25 08:09:29,848 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d1845666-Reviews-Dalat_Flower_Park-Da_Lat_Lam_Dong_Province.html#REVIEWS
+2025-04-25 08:09:29,878 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d1845666-Reviews-Dalat_Flower_Park-Da_Lat_Lam_Dong_Province.html
+2025-04-25 08:09:30,096 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293922-d451012-Reviews-Valley_of_Love-Da_Lat_Lam_Dong_Province.html
+2025-04-25 08:09:31,637 - INFO - Found 20 attractions on page 1
+2025-04-25 08:09:31,645 - INFO - Found 20 attractions on page 1
+2025-04-25 08:09:31,645 - INFO - Waiting for 7.24 seconds
+2025-04-25 08:09:34,322 - INFO - Starting to crawl details for 80 attractions
+2025-04-25 08:09:34,322 - INFO - Waiting for 8.97 seconds
+2025-04-25 08:09:34,322 - INFO - Waiting for 9.98 seconds
+2025-04-25 08:09:34,322 - INFO - Waiting for 5.05 seconds
+2025-04-25 08:09:34,322 - INFO - Waiting for 9.56 seconds
+2025-04-25 08:09:34,322 - INFO - Waiting for 6.46 seconds
+2025-04-25 08:09:34,323 - INFO - Waiting for 8.49 seconds
+2025-04-25 08:09:34,323 - INFO - Waiting for 8.32 seconds
+2025-04-25 08:09:34,323 - INFO - Waiting for 6.12 seconds
+2025-04-25 08:09:34,323 - INFO - Waiting for 8.74 seconds
+2025-04-25 08:09:34,323 - INFO - Waiting for 9.76 seconds
+2025-04-25 08:09:35,197 - INFO - Crawling page 2
+2025-04-25 08:09:35,197 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293928-Activities-oa30-Nha_Trang_Khanh_Hoa_Province.html
+2025-04-25 08:09:35,216 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g311304-d1452026-Reviews-Fansipan_Hiking_Trips-Sapa_Lao_Cai_Province.html#REVIEWS
+2025-04-25 08:09:35,390 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g311304-d9861921-Reviews-Sun_World_Fansipan_Legend-Sapa_Lao_Cai_Province.html
+2025-04-25 08:09:35,556 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g311304-d9861921-Reviews-Sun_World_Fansipan_Legend-Sapa_Lao_Cai_Province.html#REVIEWS
+2025-04-25 08:09:35,581 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g311304-d1452026-Reviews-Fansipan_Hiking_Trips-Sapa_Lao_Cai_Province.html
+2025-04-25 08:09:35,662 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g311304-d11900026-Reviews-Cat_Cat_village-Sapa_Lao_Cai_Province.html#REVIEWS
+2025-04-25 08:09:36,871 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g311304-d11900026-Reviews-Cat_Cat_village-Sapa_Lao_Cai_Province.html
+2025-04-25 08:09:36,875 - INFO - Found 80 attractions on page 2
+2025-04-25 08:09:36,881 - INFO - Found 80 attractions on page 2
+2025-04-25 08:09:36,881 - INFO - Waiting for 5.35 seconds
+2025-04-25 08:09:37,681 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g311304-d4909270-Reviews-Muong_Hoa_Valley-Sapa_Lao_Cai_Province.html
+2025-04-25 08:09:38,436 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g311304-d6963743-Reviews-Ham_Rong_Mountain-Sapa_Lao_Cai_Province.html#REVIEWS
+2025-04-25 08:09:38,893 - INFO - Crawling page 2
+2025-04-25 08:09:38,893 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293926-Activities-c42-Hue_Thua_Thien_Hue_Province-oa30.html
+2025-04-25 08:09:38,448 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g311304-d4909270-Reviews-Muong_Hoa_Valley-Sapa_Lao_Cai_Province.html#REVIEWS
+2025-04-25 08:09:38,567 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g311304-d6963743-Reviews-Ham_Rong_Mountain-Sapa_Lao_Cai_Province.html
+2025-04-25 08:09:39,376 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293925-d311103-Reviews-War_Remnants_Museum-Ho_Chi_Minh_City.html
+2025-04-25 08:09:40,442 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293925-d5505885-Reviews-Bui_Vien_Street-Ho_Chi_Minh_City.html#REVIEWS
+2025-04-25 08:09:40,792 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293925-d311089-Reviews-Central_Post_Office-Ho_Chi_Minh_City.html
+2025-04-25 08:09:42,239 - INFO - Crawling page 3
+2025-04-25 08:09:42,239 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293928-Activities-oa60-Nha_Trang_Khanh_Hoa_Province.html
+2025-04-25 08:09:42,652 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293925-d5505885-Reviews-Bui_Vien_Street-Ho_Chi_Minh_City.html
+2025-04-25 08:09:42,810 - INFO - Found 20 attractions on page 2
+2025-04-25 08:09:42,818 - INFO - Found 20 attractions on page 2
+2025-04-25 08:09:42,818 - INFO - Waiting for 9.71 seconds
+2025-04-25 08:09:42,823 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293925-d311089-Reviews-Central_Post_Office-Ho_Chi_Minh_City.html#REVIEWS
+2025-04-25 08:09:43,082 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293925-d2037764-Reviews-Bitexco_Financial_Tower-Ho_Chi_Minh_City.html
+2025-04-25 08:09:43,301 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293925-d2005826-Reviews-Cu_Chi_Tunnels-Ho_Chi_Minh_City.html
+2025-04-25 08:09:43,893 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293925-d311103-Reviews-War_Remnants_Museum-Ho_Chi_Minh_City.html#REVIEWS
+2025-04-25 08:09:44,144 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293925-d2037764-Reviews-Bitexco_Financial_Tower-Ho_Chi_Minh_City.html#REVIEWS
+2025-04-25 08:09:44,527 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293925-d2005826-Reviews-Cu_Chi_Tunnels-Ho_Chi_Minh_City.html#REVIEWS
+2025-04-25 08:09:44,994 - INFO - Found 80 attractions on page 3
+2025-04-25 08:09:44,999 - INFO - Found 80 attractions on page 3
+2025-04-25 08:09:44,999 - INFO - Waiting for 6.57 seconds
+2025-04-25 08:09:51,568 - INFO - Crawling page 4
+2025-04-25 08:09:51,569 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293928-Activities-oa90-Nha_Trang_Khanh_Hoa_Province.html
+2025-04-25 08:09:52,535 - INFO - Crawling page 3
+2025-04-25 08:09:52,535 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293926-Activities-c42-Hue_Thua_Thien_Hue_Province-oa60.html
+2025-04-25 08:09:54,310 - INFO - Found 79 attractions on page 4
+2025-04-25 08:09:54,315 - INFO - Found 79 attractions on page 4
+2025-04-25 08:09:54,315 - INFO - Waiting for 7.94 seconds
+2025-04-25 08:09:54,978 - INFO - Found 20 attractions on page 3
+2025-04-25 08:09:54,986 - INFO - Found 20 attractions on page 3
+2025-04-25 08:09:54,986 - INFO - Waiting for 7.04 seconds
+2025-04-25 08:10:02,030 - INFO - Crawling page 4
+2025-04-25 08:10:02,035 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293926-Activities-c42-Hue_Thua_Thien_Hue_Province-oa90.html
+2025-04-25 08:10:02,262 - INFO - Crawling page 5
+2025-04-25 08:10:02,262 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293928-Activities-oa120-Nha_Trang_Khanh_Hoa_Province.html
+2025-04-25 08:10:04,061 - INFO - Found 78 attractions on page 5
+2025-04-25 08:10:04,067 - INFO - Found 78 attractions on page 5
+2025-04-25 08:10:04,067 - INFO - Waiting for 5.42 seconds
+2025-04-25 08:10:05,772 - INFO - Found 20 attractions on page 4
+2025-04-25 08:10:05,779 - INFO - Found 20 attractions on page 4
+2025-04-25 08:10:05,779 - INFO - Waiting for 9.57 seconds
+2025-04-25 08:10:07,535 - INFO - Waiting for 9.63 seconds
+2025-04-25 08:10:07,535 - INFO - ✓ Valley of Love
+2025-04-25 08:10:09,492 - INFO - Crawling page 6
+2025-04-25 08:10:09,493 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g293928-Activities-oa150-Nha_Trang_Khanh_Hoa_Province.html
+2025-04-25 08:10:10,671 - INFO - Waiting for 8.79 seconds
+2025-04-25 08:10:10,689 - INFO - Skipping duplicate: Valley of Love
+2025-04-25 08:10:11,377 - INFO - Waiting for 8.22 seconds
+2025-04-25 08:10:11,447 - INFO - ✓ Dalat Flower Park
+2025-04-25 08:10:11,502 - INFO - Waiting for 7.39 seconds
+2025-04-25 08:10:11,550 - INFO - ✓ Linh Phuoc Pagoda
+2025-04-25 08:10:11,656 - INFO - Waiting for 5.38 seconds
+2025-04-25 08:10:11,666 - INFO - Waiting for 7.52 seconds
+2025-04-25 08:10:11,690 - INFO - ✓ Trúc Lâm Monastery of Da Lat
+2025-04-25 08:10:11,723 - INFO - Waiting for 9.40 seconds
+2025-04-25 08:10:11,822 - INFO - Waiting for 9.27 seconds
+2025-04-25 08:10:11,822 - INFO - Skipping duplicate: Linh Phuoc Pagoda
+2025-04-25 08:10:11,885 - INFO - Waiting for 7.38 seconds
+2025-04-25 08:10:11,904 - INFO - Skipping duplicate: Trúc Lâm Monastery of Da Lat
+2025-04-25 08:10:11,929 - INFO - Skipping duplicate: Dalat Flower Park
+2025-04-25 08:10:11,935 - INFO - ✓ Crazy House
+2025-04-25 08:10:11,970 - INFO - Waiting for 9.06 seconds
+2025-04-25 08:10:11,971 - INFO - Skipping duplicate: Crazy House
+2025-04-25 08:10:12,405 - INFO - Found 80 attractions on page 6
+2025-04-25 08:10:12,411 - INFO - Found 80 attractions on page 6
+2025-04-25 08:10:12,411 - INFO - Waiting for 5.33 seconds

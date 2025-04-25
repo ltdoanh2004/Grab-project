@@ -5,7 +5,7 @@ URL="https://www.booking.com/searchresults.vi.html?aid=304142&label=gen173nr-1FC
 START_PAGE=1
 END_PAGE=100
 OUTPUT="data_hotels"
-SAVE_MINS=30
+SAVE_MINS=10
 SAVE_HOTELS=50
 DEBUG=false
 
@@ -104,7 +104,7 @@ echo "Save every $SAVE_HOTELS hotels"
 echo
 
 # Build the command
-CMD="python hotel_crawler.py \
+CMD="python /Users/doa_ai/Developer/Grab-project/ai/crawl/crawl_booking_web/hotel_crawler.py \
     --url \"$URL\" \
     --start-page $START_PAGE \
     --end-page $END_PAGE \

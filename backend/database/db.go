@@ -36,7 +36,6 @@ func NewDB(cfg *config.Config) (*gorm.DB, error) {
 		&model.TripDestination{},
 		&model.TripActivity{},
 		&model.TripAccommodation{},
-		&model.TripPlace{},
 		&model.TripRestaurant{},
 	)
 
@@ -56,7 +55,6 @@ func NewDB(cfg *config.Config) (*gorm.DB, error) {
 		&model.TripDestination{},
 		&model.TripActivity{},
 		&model.TripAccommodation{},
-		&model.TripPlace{},
 		&model.TripRestaurant{},
 	)
 	if err != nil {

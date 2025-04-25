@@ -1,5 +1,19 @@
 basePath: /api/v1
 definitions:
+  dto.AccommodationSuggestion:
+    properties:
+      hotels:
+        items:
+          $ref: '#/definitions/model.Accommodation'
+        type: array
+    type: object
+  dto.ActivitiesSuggestion:
+    properties:
+      activities:
+        items:
+          $ref: '#/definitions/model.Activity'
+        type: array
+    type: object
   dto.LoginRequest:
     properties:
       password:
@@ -19,6 +33,13 @@ definitions:
         type: string
       username:
         type: string
+    type: object
+  dto.RestaurantSuggestion:
+    properties:
+      restaurants:
+        items:
+          $ref: '#/definitions/model.Restaurant'
+        type: array
     type: object
   dto.TodoCreate:
     description: Todo creation request body
@@ -51,10 +72,123 @@ definitions:
         description: Optional refresh token, used for obtaining new access tokens.
         type: string
     type: object
+  dto.TravelPreference:
+    type: object
+  model.Accommodation:
+    properties:
+      accommodation_id:
+        type: string
+      address:
+        type: string
+      amenities:
+        type: string
+      booking_link:
+        type: string
+      description:
+        type: string
+      destination_id:
+        type: string
+      image_url:
+        type: string
+      name:
+        type: string
+      star_rating:
+        type: number
+      type:
+        type: string
+    type: object
+  model.Activity:
+    properties:
+      activity_id:
+        type: string
+      category:
+        $ref: '#/definitions/model.ActivityCategory'
+      category_id:
+        type: string
+      cost:
+        type: number
+      description:
+        type: string
+      destination_id:
+        type: string
+      duration:
+        description: Duration in minutes
+        type: integer
+      image_url:
+        type: string
+      name:
+        type: string
+    type: object
+  model.ActivityCategory:
+    properties:
+      category_id:
+        type: string
+      category_name:
+        type: string
+      description:
+        type: string
+    type: object
   model.Response:
     properties:
       data: {}
       message:
+        type: string
+    type: object
+  model.Restaurant:
+    properties:
+      address:
+        type: string
+      avg_rating:
+        type: number
+      cuisine_type:
+        type: string
+      description:
+        type: string
+      destination_id:
+        description: FK referencing destinations table
+        type: string
+      establishment_type:
+        type: string
+      foods:
+        items:
+          $ref: '#/definitions/model.RestaurantFood'
+        type: array
+      image_url:
+        type: string
+      name:
+        type: string
+      opening_hours:
+        type: string
+      price_range:
+        type: string
+      restaurant_id:
+        type: string
+    type: object
+  model.RestaurantFood:
+    properties:
+      cuisine:
+        type: string
+      description:
+        type: string
+      food_id:
+        type: string
+      food_type:
+        type: string
+      image_url:
+        type: string
+      is_specialty:
+        type: boolean
+      is_vegan:
+        type: boolean
+      is_vegetarian:
+        type: boolean
+      name:
+        type: string
+      popularity_score:
+        type: number
+      price:
+        type: number
+      restaurant_id:
         type: string
     type: object
   model.Todo:
@@ -171,6 +305,111 @@ paths:
       summary: User registration
       tags:
       - auth
+  /api/v1/suggest/accommodations:
+    get:
+      consumes:
+      - application/json
+      description: Get accommodation suggestions based on travel preferences
+      parameters:
+      - description: Travel Preferences
+        in: body
+        name: preference
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TravelPreference'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.AccommodationSuggestion'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Suggest accommodations
+      tags:
+      - suggest
+  /api/v1/suggest/activities:
+    get:
+      consumes:
+      - application/json
+      description: Get activity suggestions based on travel preferences
+      parameters:
+      - description: Travel Preferences
+        in: body
+        name: preference
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TravelPreference'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ActivitiesSuggestion'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Suggest activities
+      tags:
+      - suggest
+  /api/v1/suggest/restaurants:
+    get:
+      consumes:
+      - application/json
+      description: Get restaurant suggestions based on travel preferences
+      parameters:
+      - description: Travel Preferences
+        in: body
+        name: preference
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TravelPreference'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.RestaurantSuggestion'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Suggest restaurants
+      tags:
+      - suggest
   /api/v1/todos:
     get:
       consumes:
@@ -370,3 +609,13 @@ tags:
   name: auth
 - description: API health check operations
   name: health
+- description: Operations about travel suggestions
+  externalDocs:
+    description: Detailed information about suggestion operations
+    url: http://example.com/docs/suggest
+  name: suggest
+- description: Operations about travel suggestion types (hotel, restaurant, landmark)
+  externalDocs:
+    description: Detailed information about suggestion type operations
+    url: http://example.com/docs/suggestionType
+  name: suggestionType

@@ -3,7 +3,7 @@ package model
 // Accommodation represents a place for lodging at a destination.
 type Accommodation struct {
 	AccommodationID string  `gorm:"type:char(36);primaryKey" json:"accommodation_id"`
-	DestinationID   uint    `json:"destination_id"`
+	DestinationID   string  `gorm:"type:char(36);" json:"destination_id"`
 	Name            string  `gorm:"size:100;not null" json:"name"`
 	Type            string  `gorm:"type:enum('hotel','hostel','apartment','resort','other')"`
 	Address         string  `json:"address"`
