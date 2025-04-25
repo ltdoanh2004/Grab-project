@@ -3,6 +3,13 @@ package dto
 import "skeleton-internship-backend/internal/model"
 
 type TravelPreference struct {
+	Location     string   `json:"location"`
+	TravelStyle  string   `json:"travel_style"`
+	Activities   []string `json:"activities"`
+	Budget       string   `json:"budget"`
+	DurationDays int      `json:"duration_days"`
+	Season       string   `json:"season"`
+	Limit        int      `json:"limit"`
 }
 
 type TravelSuggestionResponse struct {
