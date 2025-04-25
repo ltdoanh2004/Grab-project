@@ -13,4 +13,7 @@ type Place struct {
 	OpeningHours     string  `gorm:"column:opening_hours" json:"opening_hours"`
 	PopularityScore  float64 `gorm:"column:popularity_score;type:decimal(3,1)" json:"popularity_score"`
 	ImageURL         string  `gorm:"column:image_url;size:255" json:"image_url"`
+
+	Destination *Destination `json:"destination,omitempty"`
+	Activities  []Activity   `gorm:"foreignKey:PlaceID" json:"activities,omitempty"`
 }

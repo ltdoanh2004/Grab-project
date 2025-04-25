@@ -9,6 +9,6 @@ type User struct {
 	FirstName string `gorm:"size:50" json:"first_name"`
 	LastName  string `gorm:"size:50" json:"last_name"`
 
-	// One-to-many relationship: User has many Trips.
-	Trips []Trip `gorm:"foreignKey:UserID;references:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"trips,omitempty"`
+	// Relationships
+	Trips []Trip `gorm:"foreignKey:UserID;references:UserID" json:"trips,omitempty"`
 }

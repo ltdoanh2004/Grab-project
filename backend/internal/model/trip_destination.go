@@ -4,7 +4,6 @@ import (
 	"time"
 )
 
-// TripDestination links a trip with a destination.
 type TripDestination struct {
 	TripDestinationID string     `gorm:"type:char(36);primaryKey" json:"trip_destination_id"`
 	TripID            string     `gorm:"type:char(36);not null" json:"trip_id"`
@@ -15,9 +14,8 @@ type TripDestination struct {
 
 	// Associations
 	// Reference to the Trip (from the same package).
-	Trip *Trip `json:"trip,omitempty"`
-	// Reference to a destination (from the destination package).
-	Destination *Destination `gorm:"foreignKey:DestinationID" json:"destination,omitempty"`
+	Trip        *Trip        `json:"trip,omitempty"`
+	Destination *Destination `json:"destination,omitempty"`
 
 	// Other associations as slices.
 	Activities     []TripActivity      `gorm:"foreignKey:TripDestinationID" json:"activities,omitempty"`

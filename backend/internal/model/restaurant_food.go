@@ -14,4 +14,6 @@ type RestaurantFood struct {
 	Price           float64 `gorm:"column:price;type:decimal(10,2)" json:"price"`
 	PopularityScore float64 `gorm:"column:popularity_score;type:decimal(3,1)" json:"popularity_score"`
 	ImageURL        string  `gorm:"column:image_url;size:255" json:"image_url"`
+
+	Restaurant *Restaurant `json:"restaurant,omitempty"`
 }

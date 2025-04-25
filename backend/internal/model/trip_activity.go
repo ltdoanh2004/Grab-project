@@ -12,8 +12,7 @@ type TripActivity struct {
 	EndTime           *time.Time `gorm:"column:end_time" json:"end_time,omitempty"`
 	Notes             string     `json:"notes"`
 
-	// Associations
+	// Update associations
 	TripDestination *TripDestination `json:"trip_destination,omitempty"`
-	Activity        *Activity        `gorm:"foreignKey:ActivityID" json:"activity,omitempty"`
-	Place           *Place           `gorm:"foreignKey:PlaceID" json:"place,omitempty"`
+	Activity        *Activity        `json:"activity,omitempty"`
 }

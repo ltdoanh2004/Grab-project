@@ -17,6 +17,6 @@ type Trip struct {
 	UpdatedAt  time.Time `gorm:"autoUpdateTime" json:"updated_at"`
 
 	// Associations
-	// Each trip is created by a user.
-	User User `json:"user,omitempty"`
+	User             *User             `json:"user,omitempty"`
+	TripDestinations []TripDestination `gorm:"foreignKey:TripID" json:"trip_destinations,omitempty"`
 }

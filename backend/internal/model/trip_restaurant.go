@@ -17,5 +17,5 @@ type TripRestaurant struct {
 
 	// Associations: Each TripRestaurant is linked to a Trip (from this package) and a Restaurant from the destination package.
 	TripDestination *TripDestination `json:"trip_destination,omitempty"`
-	Restaurant      *Restaurant      `gorm:"foreignKey:RestaurantID" json:"restaurant,omitempty"`
+	Restaurant      *Restaurant      `json:"restaurant,omitempty"`
 }
