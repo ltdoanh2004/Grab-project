@@ -1,3 +1,4 @@
+# data
 ai/crawl/crawl_tripadvisor/data_attractions/
 ai/crawl/crawl_tripadvisor/checkpoints/
 ai/crawl/crawl_tripadvisor/data_all.json
@@ -7,13 +8,21 @@ ai/crawl/crawl_booking_web/data_booking/
 ai/crawl/crawl_booking_web/data_hotels/
 ai/crawl/crawl_booking_web/data_attractions/
 ai/crawl/crawl_booking_web/data
+ai/crawl/crawl_booking_web/script/data_hotels/
+ai/crawl/crawl_booking_web/script/debug_html/
 
 ai/crawl/crawl_food/data/
 ai/crawl/crawl_food/merged_all.json
 ai/crawl/crawl_food/restaurant_or_local_foods_from_foody.json
-
+ai/crawl/crawl_food/logs/
 ai/crawl/crawl_ggmaps/output/
 
 ai/crawl/crawl_hanoi_tourist/data/
 
 ai/model/data/
+
+# env
+ai/model/src/.env
+
+# checkpoint
+ai/model/src/checkpoint.json
