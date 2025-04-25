@@ -35,8 +35,8 @@ func (r *GormPlaceRepository) Create(place *model.Place) error {
 // GetByID retrieves a Place by its ID.
 func (r *GormPlaceRepository) GetByID(placeID string) (model.Place, error) {
 	var place model.Place
-	if err := r.DB.First(&place, placeID).Error; err != nil {
-		return place, err
+	if err := r.DB.First(&place, "place_id = ?", placeID).Error; err != nil {
+		return model.Place{}, err
 	}
 	return place, nil
 }

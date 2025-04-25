@@ -37,8 +37,8 @@ func (r *GormTripRestaurantRepository) Create(tripRestaurant *model.TripRestaura
 // GetByID retrieves a TripRestaurant by its ID.
 func (r *GormTripRestaurantRepository) GetByID(tripRestaurantID string) (model.TripRestaurant, error) {
 	var tripRestaurant model.TripRestaurant
-	if err := r.DB.First(&tripRestaurant, tripRestaurantID).Error; err != nil {
-		return tripRestaurant, err
+	if err := r.DB.First(&tripRestaurant, "trip_restaurant_id = ?", tripRestaurantID).Error; err != nil {
+		return model.TripRestaurant{}, err
 	}
 	return tripRestaurant, nil
 }

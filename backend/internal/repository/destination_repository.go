@@ -33,8 +33,8 @@ func (r *GormDestinationRepository) Create(destination *model.Destination) error
 // GetByID retrieves a Destination by its ID.
 func (r *GormDestinationRepository) GetByID(destinationID string) (model.Destination, error) {
 	var destination model.Destination
-	if err := r.DB.First(&destination, destinationID).Error; err != nil {
-		return destination, err
+	if err := r.DB.First(&destination, "destination_id = ?", destinationID).Error; err != nil {
+		return model.Destination{}, err
 	}
 	return destination, nil
 }

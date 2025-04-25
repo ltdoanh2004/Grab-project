@@ -33,8 +33,8 @@ func (r *GormActivityCategoryRepository) Create(category *model.ActivityCategory
 // GetByID retrieves an ActivityCategory by its ID.
 func (r *GormActivityCategoryRepository) GetByID(categoryID string) (model.ActivityCategory, error) {
 	var category model.ActivityCategory
-	if err := r.DB.First(&category, categoryID).Error; err != nil {
-		return category, err
+	if err := r.DB.First(&category, "category_id = ?", categoryID).Error; err != nil {
+		return model.ActivityCategory{}, err
 	}
 	return category, nil
 }

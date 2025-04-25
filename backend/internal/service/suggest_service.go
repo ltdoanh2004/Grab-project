@@ -80,7 +80,7 @@ func (ss *suggestService) mockCallAPI(endpoint string, travelPreference *dto.Tra
 	fmt.Println("Travel Preference:", travelPreference)
 
 	return &dto.TravelSuggestionResponse{
-		IDs: []string{"1", "2", "3"},
+		IDs: []string{"hotel_000001", "hotel_000002", "hotel_000003"},
 	}, nil
 }
 

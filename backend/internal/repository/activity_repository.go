@@ -37,8 +37,8 @@ func (r *GormActivityRepository) Create(activity *model.Activity) error {
 // GetByID retrieves an Activity by its ID.
 func (r *GormActivityRepository) GetByID(activityID string) (model.Activity, error) {
 	var activity model.Activity
-	if err := r.DB.First(&activity, activityID).Error; err != nil {
-		return activity, err
+	if err := r.DB.First(&activity, "activity_id = ?", activityID).Error; err != nil {
+		return model.Activity{}, err
 	}
 	return activity, nil
 }

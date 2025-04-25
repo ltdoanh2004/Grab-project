@@ -36,8 +36,8 @@ func (r *GormTripRepository) Create(trip *model.Trip) error {
 // GetByID retrieves a Trip by its ID.
 func (r *GormTripRepository) GetByID(tripID string) (model.Trip, error) {
 	var trip model.Trip
-	if err := r.DB.First(&trip, tripID).Error; err != nil {
-		return trip, err
+	if err := r.DB.First(&trip, "trip_id = ?", tripID).Error; err != nil {
+		return model.Trip{}, err
 	}
 	return trip, nil
 }

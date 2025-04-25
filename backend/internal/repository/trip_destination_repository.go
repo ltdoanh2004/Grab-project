@@ -33,8 +33,8 @@ func (r *GormTripDestinationRepository) Create(tripDestination *model.TripDestin
 // GetByID retrieves a TripDestination by its ID.
 func (r *GormTripDestinationRepository) GetByID(tripDestinationID string) (model.TripDestination, error) {
 	var tripDestination model.TripDestination
-	if err := r.DB.First(&tripDestination, tripDestinationID).Error; err != nil {
-		return tripDestination, err
+	if err := r.DB.First(&tripDestination, "trip_destination_id = ?", tripDestinationID).Error; err != nil {
+		return model.TripDestination{}, err
 	}
 	return tripDestination, nil
 }
