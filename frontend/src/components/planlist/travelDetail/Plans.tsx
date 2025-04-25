@@ -114,8 +114,7 @@ const ActivityItem: React.FC<ActivityItemProps> = ({
     [index, activity.id, day.day, isEditMode]
   );
 
-  // Implement drop target
-  const [{ isOver }, drop] = useDrop(
+  const [{ isOver }, drop] = useDrop<DragItem, void, { isOver: boolean }>(
     () => ({
       accept: ItemTypes.ACTIVITY,
       collect: (monitor) => ({
@@ -130,20 +129,16 @@ const ActivityItem: React.FC<ActivityItemProps> = ({
         const hoverIndex = index;
         const dragDayId = item.dayId;
 
-        // Don't replace items with themselves
         if (dragIndex === hoverIndex && dragDayId === day.day) {
           return;
         }
 
-        // Only handle items from the same day
         if (dragDayId !== day.day) {
           return;
         }
 
-        // Call the move function with the new indices
         moveActivity(dragIndex, hoverIndex, day.day);
 
-        // Note: we're mutating the monitor item here!
         item.index = hoverIndex;
       },
       canDrop: () => isEditMode,
@@ -151,7 +146,6 @@ const ActivityItem: React.FC<ActivityItemProps> = ({
     [index, day.day, isEditMode, moveActivity]
   );
 
-  // Initialize the ref with both drag and drop
   drag(drop(ref));
 
   const cardClickHandler = isEditMode
