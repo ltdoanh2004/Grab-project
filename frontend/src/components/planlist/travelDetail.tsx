@@ -61,7 +61,6 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
 
   const toggleEditMode = () => {
     setIsEditMode(!isEditMode);
-    // Exit any open modals when toggling edit mode
     setShowAISuggestions(false);
     setActivitySearchModalVisible(false);
   };
@@ -74,49 +73,40 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
 
   const handleSelectAISuggestion = (newActivity: TravelActivity) => {
     if (currentDay && activityToReplace) {
-      // Clone the travel detail to avoid direct state mutation
       const updatedTravelDetail = { ...travelDetail };
 
-      // Find the day index
       const dayIndex = updatedTravelDetail.days.findIndex(
         (d) => d.day === currentDay.day
       );
 
       if (dayIndex !== -1) {
-        // Find the activity index within that day
         const activityIndex = updatedTravelDetail.days[
           dayIndex
         ].activities.findIndex((a) => a.id === activityToReplace.id);
 
         if (activityIndex !== -1) {
-          // Replace the activity with the new AI suggestion
-          // Preserve the original ID to maintain references
           updatedTravelDetail.days[dayIndex].activities[activityIndex] = {
             ...newActivity,
             id: activityToReplace.id,
-            time: activityToReplace.time, // Preserve the original time slot
+            time: activityToReplace.time,
           };
 
           setTravelDetail(updatedTravelDetail);
         }
       }
 
-      // Close the AI suggestions modal
       setShowAISuggestions(false);
     }
   };
 
   const handleDeleteActivity = (day: TravelDay, activity: TravelActivity) => {
-    // Clone the travel detail to avoid direct state mutation
     const updatedTravelDetail = { ...travelDetail };
 
-    // Find the day index
     const dayIndex = updatedTravelDetail.days.findIndex(
       (d) => d.day === day.day
     );
 
     if (dayIndex !== -1) {
-      // Filter out the activity to delete
       updatedTravelDetail.days[dayIndex].activities = updatedTravelDetail.days[
         dayIndex
       ].activities.filter((a) => a.id !== activity.id);
@@ -125,18 +115,107 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
     }
   };
 
+  const handleUpdateActivityTime = (
+    day: TravelDay,
+    activity: TravelActivity,
+    newTime: string
+  ) => {
+    const updatedTravelDetail = { ...travelDetail };
+
+    const dayIndex = updatedTravelDetail.days.findIndex(
+      (d) => d.day === day.day
+    );
+
+    if (dayIndex !== -1) {
+      const activityIndex = updatedTravelDetail.days[
+        dayIndex
+      ].activities.findIndex((a) => a.id === activity.id);
+
+      if (activityIndex !== -1) {
+        updatedTravelDetail.days[dayIndex].activities[activityIndex].time =
+          newTime;
+        setTravelDetail(updatedTravelDetail);
+      }
+    }
+  };
+
+  const handleMoveActivity = (
+    dayId: number,
+    fromIndex: number,
+    toIndex: number
+  ) => {
+    try {
+      // Log what we're trying to do to help debug
+      console.log(
+        `Moving in day ${dayId} from index ${fromIndex} to ${toIndex}`
+      );
+
+      // Make a safe copy of the travel detail
+      const updatedTravelDetail = {
+        ...travelDetail,
+        days: travelDetail.days.map((day) => ({
+          ...day,
+          activities: [...day.activities],
+        })),
+      };
+
+      const dayIndex = updatedTravelDetail.days.findIndex(
+        (d) => d.day === dayId
+      );
+
+      if (dayIndex !== -1) {
+        const activities = updatedTravelDetail.days[dayIndex].activities;
+
+        const sourceActivity = { ...activities[fromIndex] };
+        const targetActivity = { ...activities[toIndex] };
+
+        const sourceTime = sourceActivity.time;
+
+        updatedTravelDetail.days[dayIndex].activities.splice(fromIndex, 1);
+        updatedTravelDetail.days[dayIndex].activities.splice(
+          toIndex,
+          0,
+          sourceActivity
+        );
+
+        const sortedTimes = activities
+          .map((activity) => activity.time)
+          .sort((a, b) => {
+            // Extract start times and convert to minutes for comparison
+            const aStart = a.split(" - ")[0];
+            const bStart = b.split(" - ")[0];
+            const aHours = parseInt(aStart.split(":")[0]);
+            const aMinutes = parseInt(aStart.split(":")[1]);
+            const bHours = parseInt(bStart.split(":")[0]);
+            const bMinutes = parseInt(bStart.split(":")[1]);
+
+            return aHours * 60 + aMinutes - (bHours * 60 + bMinutes);
+          });
+
+        updatedTravelDetail.days[dayIndex].activities.forEach(
+          (activity, index) => {
+            activity.time = sortedTimes[index];
+          }
+        );
+
+        // Update the state
+        setTravelDetail(updatedTravelDetail);
+        console.log("Timeline updated successfully with reordered times");
+      }
+    } catch (error) {
+      console.error("Error in handleMoveActivity:", error);
+    }
+  };
   const openAddActivityModal = (day: TravelDay) => {
     setDayForNewActivity(day);
     setActivitySearchModalVisible(true);
   };
 
   const handleAddCustomActivity = (searchValue: string) => {
-    // In a real app, this would search an API for activities matching the search term
-    // For now, we'll create a mock activity
     if (dayForNewActivity && searchValue.trim()) {
       const newActivity: TravelActivity = {
         id: `custom-${Date.now()}`,
-        time: "12:00 - 14:00", // Default time, could be made customizable
+        time: "12:00 - 14:00",
         type: "attraction",
         name: searchValue,
         location: "Địa điểm tùy chỉnh",
@@ -147,16 +226,13 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
         price: "Chưa có thông tin",
       };
 
-      // Clone the travel detail to avoid direct state mutation
       const updatedTravelDetail = { ...travelDetail };
 
-      // Find the day index
       const dayIndex = updatedTravelDetail.days.findIndex(
         (d) => d.day === dayForNewActivity.day
       );
 
       if (dayIndex !== -1) {
-        // Add the new activity
         updatedTravelDetail.days[dayIndex].activities.push(newActivity);
         setTravelDetail(updatedTravelDetail);
       }
@@ -209,7 +285,9 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
                   isEditMode={isEditMode}
                   onReplaceActivity={handleReplaceActivity}
                   onDeleteActivity={handleDeleteActivity}
+                  onUpdateActivityTime={handleUpdateActivityTime}
                   onAddActivity={openAddActivityModal}
+                  onMoveActivity={handleMoveActivity}
                 />
               ),
             },
