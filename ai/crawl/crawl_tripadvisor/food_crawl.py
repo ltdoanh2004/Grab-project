@@ -191,14 +191,10 @@ class RestaurantCrawler:
             # Save visited URLs
             self.save_visited_urls()
 
-            # Remove old files after successful merge
-            for old_file in json_files:
-                old_path = os.path.join(date_dir, old_file)
-                try:
-                    os.remove(old_path)
-                    logger.info(f"Removed old file after merge: {old_file}")
-                except Exception as e:
-                    logger.error(f"Error removing old file {old_file}: {str(e)}")
+            # KEEP OLD FILES - DON'T REMOVE THEM
+            # Instead, keep track of how many files we have
+            if len(json_files) > 10:  # If we have more than 10 files, log a warning
+                logger.warning(f"Directory {date_dir} has {len(json_files)} JSON files. Consider manual cleanup.")
 
             # Cleanup old date directories (keep last 7 days)
             self._cleanup_old_dates(location_dir)
@@ -282,18 +278,32 @@ class RestaurantCrawler:
     def get_restaurant_listings(self, url=None, page=1):
         """Get restaurant listings from a page"""
         current_url = url or self.base_url
+        original_url = current_url
+
         if page > 1:
             if "oa" in current_url:
                 current_url = re.sub(r'oa\d+', f'oa{(page-1)*30}', current_url)
             else:
                 # For restaurant pages, adjust URL pagination format if needed
                 if "FindRestaurants" in current_url:
+                    # For FindRestaurants, we need to add the 'o=' parameter for pagination
+                    # This appears to be the correct offset parameter for TripAdvisor restaurants
                     if "o=" in current_url:
                         current_url = re.sub(r'o=\d+', f'o={(page-1)*30}', current_url)
                     else:
                         current_url = f"{current_url}&o={(page-1)*30}"
+                        
+                    # Add additional pagination parameters if missing
+                    if "itags=" not in current_url:
+                        current_url += "&itags=10591"
+                    if "sortOrder=" not in current_url:
+                        current_url += "&sortOrder=relevance"
                 else:
                     current_url = current_url.replace('.html', f'-oa{(page-1)*30}.html')
+        
+        # Print detailed debug information about pagination
+        logger.info(f"Original URL: {original_url}")
+        logger.info(f"Paginated URL for page {page}: {current_url}")
 
         soup = self.get_soup(current_url)
         if not soup:
@@ -324,9 +334,29 @@ class RestaurantCrawler:
 
         logger.info(f"Found {len(restaurants)} restaurants on page {page}")
         
-        # Check for next page button
-        has_next_page = bool(soup.select_one('a[href*="o="][aria-label*="Next"]') or 
-                            soup.select_one('a[href*="oa"][aria-label*="Next"]'))
+        # Check for next page button and print debug info
+        next_page_link = soup.select_one('a[href*="o="][aria-label*="Next"]') or soup.select_one('a[href*="oa"][aria-label*="Next"]')
+        has_next_page = bool(next_page_link)
+        
+        if has_next_page and next_page_link:
+            next_href = next_page_link.get('href', '')
+            if not next_href.startswith('http'):
+                next_href = urljoin("https://www.tripadvisor.com", next_href)
+            logger.info(f"Next page link found: {next_href}")
+        else:
+            # Look for pagination indicators even if Next button is not found
+            pagination_elems = soup.select('a.pageNum')
+            if pagination_elems:
+                logger.info(f"Found pagination elements: {len(pagination_elems)} page numbers")
+                last_page = max([int(a.get_text(strip=True)) for a in pagination_elems if a.get_text(strip=True).isdigit()], default=0)
+                logger.info(f"Last page number: {last_page}")
+                has_next_page = page < last_page
+            else:
+                logger.info("No pagination elements found")
+            
+            if not has_next_page:
+                logger.info("No next page link found - reached the end of pagination")
+        
         return restaurants, has_next_page
 
     def _extract_clean_address(self, soup):
@@ -995,7 +1025,7 @@ class RestaurantCrawler:
             
         return details
 
-    def crawl_restaurants(self, max_pages=3, max_restaurants=None, threads=4, start_page=1, output_dir="data_restaurants", location="hcmc"):
+    def crawl_restaurants(self, max_pages=3, max_restaurants=None, threads=4, start_page=1, output_dir="data_restaurants", location="hcmc", ignore_duplicates=False):
         """Crawl restaurants and extract details"""
         all_listings, page, more = [], start_page, True
         detailed = []
@@ -1012,21 +1042,44 @@ class RestaurantCrawler:
                 logger.warning(f"No restaurants found on page {page}, stopping listing collection")
                 break
                 
+            # Print all URLs before filtering to help with debugging
+            if len(lst) < 10:
+                logger.info(f"URLs found on page {page}:")
+                for idx, item in enumerate(lst):
+                    logger.info(f"  {idx+1}. {item['name']} - {item['url']}")
+            else:
+                logger.info(f"First 5 URLs found on page {page}:")
+                for idx, item in enumerate(lst[:5]):
+                    logger.info(f"  {idx+1}. {item['name']} - {item['url']}")
+                
             # Filter out already visited URLs
-            lst = [item for item in lst if item["url"] not in self.visited_urls]
-            logger.info(f"Found {len(lst)} new restaurants after filtering visited URLs")
+            new_listings = [item for item in lst if item["url"] not in self.visited_urls]
+            logger.info(f"Found {len(new_listings)} new restaurants after filtering visited URLs")
             
-            all_listings.extend(lst)
+            # Check if we should continue despite duplicates
+            if not new_listings and not ignore_duplicates:
+                logger.warning("No new restaurant listings found.")
+                break
+            elif not new_listings and ignore_duplicates:
+                logger.info("All restaurants on this page were duplicates, but continuing due to --ignore-duplicates flag")
+                page += 1
+                self._random_delay()
+                continue
+            
+            all_listings.extend(new_listings)
             if max_restaurants and len(all_listings) >= max_restaurants:
                 logger.info(f"Reached max_restaurants limit ({max_restaurants})")
                 all_listings = all_listings[:max_restaurants]
                 break
-                
+            
             page += 1
             self._random_delay()
 
-        if not all_listings:
+        if not all_listings and not ignore_duplicates:
             logger.warning("No new restaurant listings found.")
+            return detailed
+        elif not all_listings and ignore_duplicates:
+            logger.info("Finished crawling, but all restaurants were duplicates. Returning empty results.")
             return detailed
 
         logger.info(f"Starting to crawl details for {len(all_listings)} restaurants")
@@ -1076,6 +1129,8 @@ def main():
                       help='Location name for organizing files')
     parser.add_argument('--save-interval', type=int, default=15,
                       help='Minutes between periodic saves (default: 15)')
+    parser.add_argument('--ignore-duplicates', action='store_true',
+                      help='Continue crawling even when all results are duplicates')
     args = parser.parse_args()
 
     crawler = RestaurantCrawler(
@@ -1090,7 +1145,8 @@ def main():
         max_restaurants=args.max_restaurants,
         threads=args.threads,
         output_dir=args.output_dir,
-        location=args.location
+        location=args.location,
+        ignore_duplicates=args.ignore_duplicates
     )
 
 if __name__ == "__main__":

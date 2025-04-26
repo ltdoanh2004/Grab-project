@@ -17,7 +17,7 @@ show_help() {
     echo "  -l, --location LOC       Location name (default: hcmc)"
     echo "  -d, --delay SEC         Delay between requests (default: 4.0)"
     echo "  -t, --threads NUM       Number of threads (default: 4)"
-    echo "  -m, --max-pages NUM     Maximum pages to crawl (default: 100000)"
+    echo "  -m, --max-pages NUM     Maximum pages per crawl session (default: 100000)"
     echo "  -s, --save-interval MIN Save interval in minutes (default: 15)"
     echo "  -p, --start-page NUM    Start from page number (default: 1)"
     echo "  -r, --reset            Reset crawl (delete tracking files)"
@@ -89,6 +89,19 @@ if [ -z "$URL" ]; then
     exit 1
 fi
 
+# Convert FindRestaurants URL to standard format if needed
+if [[ "$URL" == *"FindRestaurants"* ]]; then
+    if [[ "$URL" == *"geo=293925"* ]]; then
+        echo "Converting FindRestaurants URL to standard format for Ho Chi Minh City"
+        URL="https://www.tripadvisor.com/Restaurants-g293925-Ho_Chi_Minh_City.html"
+    elif [[ "$URL" == *"geo=293924"* ]]; then
+        echo "Converting FindRestaurants URL to standard format for Hanoi"
+        URL="https://www.tripadvisor.com/Restaurants-g293924-Hanoi.html"
+    else
+        echo "Warning: FindRestaurants URL detected but couldn't determine city. Pagination might not work correctly."
+    fi
+fi
+
 # Setup directories and files
 STATE_FILE="$OUTPUT_DIR/crawler_state.json"
 LAST_PAGE_FILE="$OUTPUT_DIR/last_page.txt"
@@ -120,19 +133,6 @@ log_message() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
 }
 
-# Function to cleanup old files
-cleanup_old_files() {
-    # Keep only the latest 3 JSON files for each date
-    for date_dir in "$OUTPUT_DIR"/*; do
-        if [ -d "$date_dir" ]; then
-            cd "$date_dir" || continue
-            # List files by modification time and keep only the latest 3
-            ls -t *.json 2>/dev/null | tail -n +4 | xargs rm -f 2>/dev/null
-            cd - > /dev/null
-        fi
-    done
-}
-
 # Main crawling loop
 log_message "Starting crawler with URL: $URL"
 log_message "Output directory: $OUTPUT_DIR"
@@ -143,32 +143,25 @@ log_message "Threads: $THREADS"
 while true; do
     log_message "Starting crawl from page $CURRENT_PAGE"
     
-    # Run the crawler
+    # Run the crawler with max_pages=1 to crawl one page at a time
     python3 food_crawl.py \
         --url "$URL" \
-        --max-pages "$MAX_PAGES" \
+        --max-pages 1 \
         --start-page "$CURRENT_PAGE" \
         --delay "$DELAY" \
         --threads "$THREADS" \
         --output-dir "$OUTPUT_DIR" \
         --location "$LOCATION" \
-        --save-interval "$SAVE_INTERVAL"
+        --save-interval "$SAVE_INTERVAL" \
+        --ignore-duplicates
 
-    # Check if crawler completed successfully
-    if [ $? -eq 0 ]; then
-        # Update last crawled page
-        CURRENT_PAGE=$((CURRENT_PAGE + MAX_PAGES))
-        echo "$CURRENT_PAGE" > "$LAST_PAGE_FILE"
-        log_message "Successfully completed crawl up to page $CURRENT_PAGE"
-        
-        # Cleanup old files
-        cleanup_old_files
-        
-        # Optional: Add a delay between crawl sessions
-        log_message "Waiting 5 minutes before next crawl session..."
-        sleep 300
-    else
-        log_message "Crawler failed. Retrying in 10 minutes..."
-        sleep 600
-    fi
+    # Always consider the crawl successful and continue
+    # Increment page number by 1
+    CURRENT_PAGE=$((CURRENT_PAGE + 1))
+    echo "$CURRENT_PAGE" > "$LAST_PAGE_FILE"
+    log_message "Completed crawl of page $((CURRENT_PAGE - 1))"
+    
+    # Optional: Add a small delay between pages
+    log_message "Waiting 5 seconds before next page..."
+    sleep 5
 done 
