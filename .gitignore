@@ -8,7 +8,7 @@ ai/crawl/crawl_tripadvisor/data_restaurants/
 ai/crawl/crawl_booking_web/data_booking/
 ai/crawl/crawl_booking_web/data_hotels/
 ai/crawl/crawl_booking_web/data_attractions/
-ai/crawl/crawl_booking_web/data
+ai/crawl/crawl_booking_web/data/
 ai/crawl/crawl_booking_web/script/data_hotels/
 ai/crawl/crawl_booking_web/script/debug_html/
 
@@ -29,3 +29,8 @@ ai/model/src/.env
 ai/model/src/checkpoint.json
 ai/model/src/data/
 ai/model/src/vector_database/checkpoint.json
+
+# pinecone
+ai/model/src/vector_database/pinecone_index.json
+ai/model/src/vector_database/pinecone_index.json.lock
+
