@@ -157,3 +157,411 @@
 2025-04-25 23:59:33,555 - INFO - ✓ Secret Garden Vietnamese Restaurant
 2025-04-25 23:59:33,556 - INFO - Saved 5 restaurants to data_restaurants/hcmc/restaurants_20250425_235933_index_0.json
 2025-04-25 23:59:33,556 - INFO - Found 5 unique restaurants
+2025-04-26 08:48:46,821 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=None
+2025-04-26 08:48:46,821 - INFO - Crawling page 1
+2025-04-26 08:48:46,821 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 08:48:49,234 - INFO - Found 34 restaurants on page 1
+2025-04-26 08:48:49,248 - INFO - Found 34 restaurants on page 1
+2025-04-26 08:48:49,248 - INFO - Waiting for 9.52 seconds
+2025-04-26 08:48:58,777 - INFO - Starting to crawl details for 34 restaurants
+2025-04-26 08:48:58,777 - INFO - Waiting for 9.00 seconds
+2025-04-26 08:48:58,778 - INFO - Waiting for 8.27 seconds
+2025-04-26 08:48:58,778 - INFO - Waiting for 7.66 seconds
+2025-04-26 08:48:58,778 - INFO - Waiting for 5.39 seconds
+2025-04-26 08:49:04,177 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d15046046-Reviews-Cloud_Nine_Sai_Gon_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 08:49:06,025 - INFO - Waiting for 9.89 seconds
+2025-04-26 08:49:06,025 - INFO - ✓ Cloud Nine Sai Gon Restaurant
+2025-04-26 08:49:06,447 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d10721705-Reviews-B_p_M_n-Ho_Chi_Minh_City.html
+2025-04-26 08:49:07,052 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d28052954-Reviews-H_i_S_n_Hoang_Gia_Cn_46_Ph_m_Van_Ngh-Ho_Chi_Minh_City.html
+2025-04-26 08:49:07,827 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12180159-Reviews-Cocotte-Ho_Chi_Minh_City.html
+2025-04-26 08:49:09,407 - INFO - Waiting for 8.11 seconds
+2025-04-26 08:49:09,414 - INFO - ✓ Hải Sản Hoàng Gia Cn 46 Phạm Văn Nghị
+2025-04-26 08:49:09,552 - INFO - Waiting for 5.42 seconds
+2025-04-26 08:49:09,552 - INFO - ✓ Bếp Mẹ ỉn
+2025-04-26 08:49:10,979 - INFO - Waiting for 5.71 seconds
+2025-04-26 08:49:10,979 - INFO - ✓ Cocotte
+2025-04-26 08:49:14,973 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12731224-Reviews-Charm_Bakery-Ho_Chi_Minh_City.html
+2025-04-26 08:49:15,921 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d17704147-Reviews-Secret_Garden_Vietnamese_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 08:49:16,703 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d17662928-Reviews-Banana_Mama_Rooftop_Kitchen-Ho_Chi_Minh_City.html
+2025-04-26 08:49:17,536 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d1717810-Reviews-Cuc_Gach_Quan-Ho_Chi_Minh_City.html
+2025-04-26 08:49:17,933 - INFO - Waiting for 7.39 seconds
+2025-04-26 08:49:17,940 - INFO - ✓ Charm Bakery
+2025-04-26 08:49:18,251 - INFO - Waiting for 5.95 seconds
+2025-04-26 08:49:18,251 - INFO - ✓ Secret Garden Vietnamese Restaurant
+2025-04-26 08:49:20,280 - INFO - Waiting for 9.39 seconds
+2025-04-26 08:49:20,286 - INFO - ✓ Banana Mama Rooftop & Kitchen
+2025-04-26 08:49:20,385 - INFO - Waiting for 6.01 seconds
+2025-04-26 08:49:20,385 - INFO - ✓ Cuc Gach Quan
+2025-04-26 08:49:24,206 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d8806032-Reviews-Social_Club_Rooftop_Bar-Ho_Chi_Minh_City.html
+2025-04-26 08:49:25,342 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d26794670-Reviews-Ph_Vi_t_Nam_Ph_m_H_ng_Thai-Ho_Chi_Minh_City.html
+2025-04-26 08:49:26,400 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d27843772-Reviews-Tung_s_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 08:49:27,811 - INFO - Waiting for 9.96 seconds
+2025-04-26 08:49:27,817 - INFO - ✓ Social Club Rooftop Bar
+2025-04-26 08:49:29,182 - INFO - Waiting for 8.56 seconds
+2025-04-26 08:49:29,188 - INFO - ✓ Phở Việt Nam - Phạm Hồng Thái
+2025-04-26 08:49:29,698 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d17115288-Reviews-Cafe_Marcel-Ho_Chi_Minh_City.html
+2025-04-26 08:49:29,713 - INFO - Waiting for 6.29 seconds
+2025-04-26 08:49:29,713 - INFO - ✓ Tung's Restaurant
+2025-04-26 08:49:31,509 - INFO - Waiting for 9.66 seconds
+2025-04-26 08:49:31,509 - INFO - ✓ Café Marcel
+2025-04-26 08:49:36,011 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d17806822-Reviews-Laang_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 08:49:37,765 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d27157928-Reviews-Palsaik_Korean_Bbq_Vietnam_Dong_Du-Ho_Chi_Minh_City.html
+2025-04-26 08:49:37,806 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d11827161-Reviews-Little_HaNoi_Egg_Coffee-Ho_Chi_Minh_City.html
+2025-04-26 08:49:38,645 - INFO - Waiting for 8.90 seconds
+2025-04-26 08:49:38,645 - INFO - ✓ Laang Restaurant
+2025-04-26 08:49:40,912 - INFO - Waiting for 9.73 seconds
+2025-04-26 08:49:40,919 - INFO - ✓ Palsaik Korean Bbq Vietnam - Đông Du
+2025-04-26 08:49:41,089 - INFO - Waiting for 5.77 seconds
+2025-04-26 08:49:41,090 - INFO - ✓ Little HaNoi Egg Coffee
+2025-04-26 08:49:41,174 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d1122894-Reviews-Skewers-Ho_Chi_Minh_City.html
+2025-04-26 08:49:43,006 - INFO - Waiting for 6.94 seconds
+2025-04-26 08:49:43,006 - INFO - ✓ Skewers
+2025-04-26 08:49:46,862 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d4232534-Reviews-The_Daun_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 08:49:47,554 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12910177-Reviews-Marcel_Calmette-Ho_Chi_Minh_City.html
+2025-04-26 08:49:49,972 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d2351312-Reviews-Ciao_Bella_District_1-Ho_Chi_Minh_City.html
+2025-04-26 08:49:50,063 - INFO - Waiting for 7.00 seconds
+2025-04-26 08:49:50,070 - INFO - ✓ The Daun Restaurant
+2025-04-26 08:49:50,232 - INFO - Waiting for 9.23 seconds
+2025-04-26 08:49:50,232 - INFO - ✓ Marcel - Calmette
+2025-04-26 08:49:50,664 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d1122867-Reviews-Carpaccio_Italian_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 08:49:52,220 - INFO - Waiting for 9.04 seconds
+2025-04-26 08:49:52,226 - INFO - ✓ Ciao Bella District 1
+2025-04-26 08:49:53,450 - INFO - Waiting for 8.50 seconds
+2025-04-26 08:49:53,450 - INFO - ✓ Carpaccio - Italian Restaurant
+2025-04-26 08:49:57,095 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d18206918-Reviews-Moo_Beef_Steak_109_Ly_Tu_Trong-Ho_Chi_Minh_City.html
+2025-04-26 08:49:59,473 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d1122944-Reviews-Tandoor-Ho_Chi_Minh_City.html
+2025-04-26 08:49:59,826 - INFO - Waiting for 5.22 seconds
+2025-04-26 08:49:59,826 - INFO - ✓ Moo Beef Steak - 109 Ly Tu Trong
+2025-04-26 08:50:01,299 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d25378127-Reviews-B_p_Cu_n_Sai_Gon-Ho_Chi_Minh_City.html
+2025-04-26 08:50:01,960 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d1742388-Reviews-Saigon_Cafe_Seafood_Buffet_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 08:50:02,246 - INFO - Waiting for 9.16 seconds
+2025-04-26 08:50:02,246 - INFO - ✓ Tandoor
+2025-04-26 08:50:04,633 - INFO - Waiting for 8.78 seconds
+2025-04-26 08:50:04,640 - INFO - ✓ Bếp Cuốn Sài Gòn
+2025-04-26 08:50:05,055 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d19354552-Reviews-P_ti_Saigon-Ho_Chi_Minh_City.html
+2025-04-26 08:50:05,381 - INFO - Waiting for 9.56 seconds
+2025-04-26 08:50:05,381 - INFO - ✓ Saigon Café - Seafood Buffet Restaurant
+2025-04-26 08:50:07,250 - INFO - Waiting for 5.08 seconds
+2025-04-26 08:50:07,250 - INFO - ✓ P'ti Saigon
+2025-04-26 08:50:11,415 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d6503569-Reviews-Quan_Nem_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 08:50:12,339 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d2200413-Reviews-Pizza_4P_s_Le_Thanh_Ton-Ho_Chi_Minh_City.html
+2025-04-26 08:50:13,308 - INFO - Waiting for 8.34 seconds
+2025-04-26 08:50:13,308 - INFO - ✓ Quan Nem Restaurant
+2025-04-26 08:50:13,432 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12926285-Reviews-Italiani_s_Pizza-Ho_Chi_Minh_City.html
+2025-04-26 08:50:14,953 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d13322323-Reviews-Rice_Field-Ho_Chi_Minh_City.html
+2025-04-26 08:50:16,219 - INFO - Waiting for 6.92 seconds
+2025-04-26 08:50:16,225 - INFO - ✓ Pizza 4P's Le Thanh Ton
+2025-04-26 08:50:16,853 - INFO - Waiting for 9.27 seconds
+2025-04-26 08:50:16,859 - INFO - ✓ Italiani's Pizza
+2025-04-26 08:50:17,437 - INFO - Waiting for 9.35 seconds
+2025-04-26 08:50:17,437 - INFO - ✓ Rice Field
+2025-04-26 08:50:21,655 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d7704159-Reviews-Pasteur_Street_Craft_Beer_Original_Taproom-Ho_Chi_Minh_City.html
+2025-04-26 08:50:23,160 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d28052069-Reviews-Hoang_s_Kitchen_Vietnamese_Cuisine_Vegan_Food-Ho_Chi_Minh_City.html
+2025-04-26 08:50:23,653 - INFO - Waiting for 9.22 seconds
+2025-04-26 08:50:23,653 - INFO - ✓ Pasteur Street Craft Beer - Original Taproom
+2025-04-26 08:50:25,245 - INFO - ✓ Hoang's Kitchen - Vietnamese Cuisine & Vegan Food
+2025-04-26 08:50:26,140 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d14956206-Reviews-Vo_Roof-Ho_Chi_Minh_City.html
+2025-04-26 08:50:26,789 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d7155150-Reviews-La_Fiesta-Ho_Chi_Minh_City.html
+2025-04-26 08:50:29,814 - INFO - ✓ Vo Roof
+2025-04-26 08:50:30,128 - INFO - ✓ La Fiesta
+2025-04-26 08:50:32,875 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d27144728-Reviews-Crystal_Jade_Palace_Le_Loi-Ho_Chi_Minh_City.html
+2025-04-26 08:50:35,350 - INFO - ✓ Crystal Jade Palace Le Loi
+2025-04-26 08:50:35,351 - INFO - Saved 34 restaurants to data_restaurants/hcmc/restaurants_20250426_085035_index_0.json
+2025-04-26 08:50:35,351 - INFO - Found 34 unique restaurants
+2025-04-26 09:06:41,230 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=1
+2025-04-26 09:06:41,230 - INFO - Crawling page 1
+2025-04-26 09:06:41,230 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:06:43,615 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:06:43,630 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:06:43,630 - INFO - Reached max_restaurants limit (1)
+2025-04-26 09:06:43,630 - INFO - Starting to crawl details for 1 restaurants
+2025-04-26 09:06:43,630 - INFO - Waiting for 5.85 seconds
+2025-04-26 09:06:49,482 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12180159-Reviews-Cocotte-Ho_Chi_Minh_City.html
+2025-04-26 09:06:52,259 - INFO - ✓ Cocotte
+2025-04-26 09:06:52,261 - INFO - Saved 1 restaurants to data_restaurants/hcmc/restaurants_20250426_090652_index_0.json
+2025-04-26 09:06:52,261 - INFO - Found 1 unique restaurants
+2025-04-26 09:10:53,889 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=2
+2025-04-26 09:10:53,889 - INFO - Crawling page 1
+2025-04-26 09:10:53,889 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:10:56,126 - INFO - Found 33 restaurants on page 1
+2025-04-26 09:10:56,141 - INFO - Found 33 restaurants on page 1
+2025-04-26 09:10:56,141 - INFO - Reached max_restaurants limit (2)
+2025-04-26 09:10:56,141 - INFO - Starting to crawl details for 2 restaurants
+2025-04-26 09:10:56,141 - INFO - Waiting for 7.05 seconds
+2025-04-26 09:10:56,142 - INFO - Waiting for 5.38 seconds
+2025-04-26 09:11:01,524 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d26794670-Reviews-Ph_Vi_t_Nam_Ph_m_H_ng_Thai-Ho_Chi_Minh_City.html
+2025-04-26 09:11:03,193 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d28052954-Reviews-H_i_S_n_Hoang_Gia_Cn_46_Ph_m_Van_Ngh-Ho_Chi_Minh_City.html
+2025-04-26 09:11:05,131 - ERROR - Expected a selector at position 0
+  line 1:
+
+^ – https://www.tripadvisor.com/Restaurant_Review-g293925-d26794670-Reviews-Ph_Vi_t_Nam_Ph_m_H_ng_Thai-Ho_Chi_Minh_City.html
+2025-04-26 09:11:06,922 - ERROR - Expected a selector at position 0
+  line 1:
+
+^ – https://www.tripadvisor.com/Restaurant_Review-g293925-d28052954-Reviews-H_i_S_n_Hoang_Gia_Cn_46_Ph_m_Van_Ngh-Ho_Chi_Minh_City.html
+2025-04-26 09:11:06,922 - WARNING - No data to save
+2025-04-26 09:11:06,922 - INFO - Found 0 unique restaurants
+2025-04-26 09:11:47,376 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=2
+2025-04-26 09:11:47,376 - INFO - Crawling page 1
+2025-04-26 09:11:47,376 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:11:51,929 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:11:51,943 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:11:51,943 - INFO - Reached max_restaurants limit (2)
+2025-04-26 09:11:51,943 - INFO - Starting to crawl details for 2 restaurants
+2025-04-26 09:11:51,944 - INFO - Waiting for 6.19 seconds
+2025-04-26 09:11:51,944 - INFO - Waiting for 6.35 seconds
+2025-04-26 09:11:58,141 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12180159-Reviews-Cocotte-Ho_Chi_Minh_City.html
+2025-04-26 09:11:58,292 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d28052954-Reviews-H_i_S_n_Hoang_Gia_Cn_46_Ph_m_Van_Ngh-Ho_Chi_Minh_City.html
+2025-04-26 09:12:09,617 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=2
+2025-04-26 09:12:09,617 - INFO - Crawling page 1
+2025-04-26 09:12:09,617 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:12:12,081 - INFO - Found 33 restaurants on page 1
+2025-04-26 09:12:12,097 - INFO - Found 33 restaurants on page 1
+2025-04-26 09:12:12,097 - INFO - Reached max_restaurants limit (2)
+2025-04-26 09:12:12,097 - INFO - Starting to crawl details for 2 restaurants
+2025-04-26 09:12:12,097 - INFO - Waiting for 8.22 seconds
+2025-04-26 09:12:20,320 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12180159-Reviews-Cocotte-Ho_Chi_Minh_City.html
+2025-04-26 09:12:23,290 - INFO - Waiting for 15.14 seconds
+2025-04-26 09:12:23,290 - ERROR - Expected a selector at position 0
+  line 1:
+
+^ – https://www.tripadvisor.com/Restaurant_Review-g293925-d12180159-Reviews-Cocotte-Ho_Chi_Minh_City.html
+2025-04-26 09:12:38,431 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d26794670-Reviews-Ph_Vi_t_Nam_Ph_m_H_ng_Thai-Ho_Chi_Minh_City.html
+2025-04-26 09:12:40,324 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=1
+2025-04-26 09:12:40,324 - INFO - Crawling page 1
+2025-04-26 09:12:40,324 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:12:43,058 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:12:43,073 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:12:43,073 - INFO - Reached max_restaurants limit (1)
+2025-04-26 09:12:43,073 - INFO - Starting to crawl details for 1 restaurants
+2025-04-26 09:12:43,073 - INFO - Waiting for 8.80 seconds
+2025-04-26 09:12:51,876 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d28052954-Reviews-H_i_S_n_Hoang_Gia_Cn_46_Ph_m_Van_Ngh-Ho_Chi_Minh_City.html
+2025-04-26 09:12:53,379 - ERROR - Expected a selector at position 0
+  line 1:
+
+^ – https://www.tripadvisor.com/Restaurant_Review-g293925-d28052954-Reviews-H_i_S_n_Hoang_Gia_Cn_46_Ph_m_Van_Ngh-Ho_Chi_Minh_City.html
+2025-04-26 09:12:53,379 - WARNING - No data to save
+2025-04-26 09:12:53,379 - INFO - Found 0 unique restaurants
+2025-04-26 09:13:54,963 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=1
+2025-04-26 09:13:54,963 - INFO - Crawling page 1
+2025-04-26 09:13:54,963 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:13:57,463 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:13:57,477 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:13:57,478 - INFO - Reached max_restaurants limit (1)
+2025-04-26 09:13:57,478 - INFO - Starting to crawl details for 1 restaurants
+2025-04-26 09:13:57,478 - INFO - Waiting for 9.02 seconds
+2025-04-26 09:14:06,502 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d28052954-Reviews-H_i_S_n_Hoang_Gia_Cn_46_Ph_m_Van_Ngh-Ho_Chi_Minh_City.html
+2025-04-26 09:14:08,564 - ERROR - Expected a selector at position 0
+  line 1:
+
+^ – https://www.tripadvisor.com/Restaurant_Review-g293925-d28052954-Reviews-H_i_S_n_Hoang_Gia_Cn_46_Ph_m_Van_Ngh-Ho_Chi_Minh_City.html
+2025-04-26 09:14:08,564 - WARNING - No data to save
+2025-04-26 09:14:08,564 - INFO - Found 0 unique restaurants
+2025-04-26 09:14:13,792 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=3
+2025-04-26 09:14:13,792 - INFO - Crawling page 1
+2025-04-26 09:14:13,793 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:14:15,962 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:14:15,976 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:14:15,977 - INFO - Reached max_restaurants limit (3)
+2025-04-26 09:14:15,977 - INFO - Starting to crawl details for 3 restaurants
+2025-04-26 09:14:15,977 - INFO - Waiting for 9.55 seconds
+2025-04-26 09:14:15,977 - INFO - Waiting for 5.23 seconds
+2025-04-26 09:14:15,977 - INFO - Waiting for 8.26 seconds
+2025-04-26 09:14:21,216 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12180159-Reviews-Cocotte-Ho_Chi_Minh_City.html
+2025-04-26 09:14:23,719 - ERROR - Expected a selector at position 0
+  line 1:
+
+^ – https://www.tripadvisor.com/Restaurant_Review-g293925-d12180159-Reviews-Cocotte-Ho_Chi_Minh_City.html
+2025-04-26 09:14:24,246 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d10721705-Reviews-B_p_M_n-Ho_Chi_Minh_City.html
+2025-04-26 09:14:25,530 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d26794670-Reviews-Ph_Vi_t_Nam_Ph_m_H_ng_Thai-Ho_Chi_Minh_City.html
+2025-04-26 09:14:27,972 - ERROR - Expected a selector at position 0
+  line 1:
+
+^ – https://www.tripadvisor.com/Restaurant_Review-g293925-d10721705-Reviews-B_p_M_n-Ho_Chi_Minh_City.html
+2025-04-26 09:14:28,482 - ERROR - Expected a selector at position 0
+  line 1:
+
+^ – https://www.tripadvisor.com/Restaurant_Review-g293925-d26794670-Reviews-Ph_Vi_t_Nam_Ph_m_H_ng_Thai-Ho_Chi_Minh_City.html
+2025-04-26 09:14:28,482 - WARNING - No data to save
+2025-04-26 09:14:28,482 - INFO - Found 0 unique restaurants
+2025-04-26 09:15:58,408 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=3
+2025-04-26 09:15:58,409 - INFO - Crawling page 1
+2025-04-26 09:15:58,409 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:16:00,513 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:16:00,528 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:16:00,528 - INFO - Reached max_restaurants limit (3)
+2025-04-26 09:16:00,528 - INFO - Starting to crawl details for 3 restaurants
+2025-04-26 09:16:00,528 - INFO - Waiting for 6.88 seconds
+2025-04-26 09:16:00,529 - INFO - Waiting for 8.57 seconds
+2025-04-26 09:16:00,529 - INFO - Waiting for 6.85 seconds
+2025-04-26 09:16:07,382 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d10721705-Reviews-B_p_M_n-Ho_Chi_Minh_City.html
+2025-04-26 09:16:07,412 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d28052954-Reviews-H_i_S_n_Hoang_Gia_Cn_46_Ph_m_Van_Ngh-Ho_Chi_Minh_City.html
+2025-04-26 09:16:09,133 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d26794670-Reviews-Ph_Vi_t_Nam_Ph_m_H_ng_Thai-Ho_Chi_Minh_City.html
+2025-04-26 09:16:09,448 - ERROR - Expected a selector at position 0
+  line 1:
+
+^ – https://www.tripadvisor.com/Restaurant_Review-g293925-d28052954-Reviews-H_i_S_n_Hoang_Gia_Cn_46_Ph_m_Van_Ngh-Ho_Chi_Minh_City.html
+2025-04-26 09:16:10,524 - ERROR - Expected a selector at position 0
+  line 1:
+
+^ – https://www.tripadvisor.com/Restaurant_Review-g293925-d10721705-Reviews-B_p_M_n-Ho_Chi_Minh_City.html
+2025-04-26 09:16:11,896 - ERROR - Expected a selector at position 0
+  line 1:
+
+^ – https://www.tripadvisor.com/Restaurant_Review-g293925-d26794670-Reviews-Ph_Vi_t_Nam_Ph_m_H_ng_Thai-Ho_Chi_Minh_City.html
+2025-04-26 09:16:11,896 - WARNING - No data to save
+2025-04-26 09:16:11,896 - INFO - Found 0 unique restaurants
+2025-04-26 09:17:13,995 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=1
+2025-04-26 09:17:13,995 - INFO - Crawling page 1
+2025-04-26 09:17:13,995 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:17:15,930 - INFO - Found 33 restaurants on page 1
+2025-04-26 09:17:15,945 - INFO - Found 33 restaurants on page 1
+2025-04-26 09:17:15,945 - INFO - Reached max_restaurants limit (1)
+2025-04-26 09:17:15,945 - INFO - Starting to crawl details for 1 restaurants
+2025-04-26 09:17:15,945 - INFO - Waiting for 8.90 seconds
+2025-04-26 09:17:24,852 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12180159-Reviews-Cocotte-Ho_Chi_Minh_City.html
+2025-04-26 09:17:27,481 - INFO - ✓ Cocotte
+2025-04-26 09:17:27,483 - INFO - Saved 1 restaurants to data_restaurants/hcmc/restaurants_20250426_091727_index_0.json
+2025-04-26 09:17:27,483 - INFO - Found 1 unique restaurants
+2025-04-26 09:25:46,966 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=1
+2025-04-26 09:25:46,966 - INFO - Crawling page 1
+2025-04-26 09:25:46,966 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:25:48,920 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:25:48,935 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:25:48,935 - INFO - Reached max_restaurants limit (1)
+2025-04-26 09:25:48,935 - INFO - Starting to crawl details for 1 restaurants
+2025-04-26 09:25:48,935 - INFO - Waiting for 7.46 seconds
+2025-04-26 09:25:56,397 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12180159-Reviews-Cocotte-Ho_Chi_Minh_City.html
+2025-04-26 09:25:59,200 - INFO - ✓ Cocotte
+2025-04-26 09:25:59,200 - INFO - Saved 1 restaurants to data_restaurants/hcmc/restaurants_20250426_092559_index_0.json
+2025-04-26 09:25:59,200 - INFO - Found 1 unique restaurants
+2025-04-26 09:27:37,136 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=1
+2025-04-26 09:27:37,136 - INFO - Crawling page 1
+2025-04-26 09:27:37,136 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:27:39,481 - INFO - Found 33 restaurants on page 1
+2025-04-26 09:27:39,495 - INFO - Found 33 restaurants on page 1
+2025-04-26 09:27:39,496 - INFO - Reached max_restaurants limit (1)
+2025-04-26 09:27:39,496 - INFO - Starting to crawl details for 1 restaurants
+2025-04-26 09:27:39,496 - INFO - Waiting for 7.56 seconds
+2025-04-26 09:27:47,061 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d26794670-Reviews-Ph_Vi_t_Nam_Ph_m_H_ng_Thai-Ho_Chi_Minh_City.html
+2025-04-26 09:27:49,599 - INFO - ✓ Phở Việt Nam - Phạm Hồng Thái
+2025-04-26 09:27:49,601 - INFO - Saved 1 restaurants to data_restaurants/hcmc/restaurants_20250426_092749_index_0.json
+2025-04-26 09:27:49,601 - INFO - Found 1 unique restaurants
+2025-04-26 09:31:23,361 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=1
+2025-04-26 09:31:23,361 - INFO - Crawling page 1
+2025-04-26 09:31:23,361 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:31:25,209 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:31:25,224 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:31:25,224 - INFO - Reached max_restaurants limit (1)
+2025-04-26 09:31:25,224 - INFO - Starting to crawl details for 1 restaurants
+2025-04-26 09:31:25,224 - INFO - Waiting for 8.77 seconds
+2025-04-26 09:31:34,000 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d26794670-Reviews-Ph_Vi_t_Nam_Ph_m_H_ng_Thai-Ho_Chi_Minh_City.html
+2025-04-26 09:31:36,805 - INFO - ✓ Phở Việt Nam - Phạm Hồng Thái
+2025-04-26 09:31:36,806 - INFO - Saved 1 restaurants to data_restaurants/hcmc/restaurants_20250426_093136_index_0.json
+2025-04-26 09:31:36,806 - INFO - Found 1 unique restaurants
+2025-04-26 09:33:57,086 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=1
+2025-04-26 09:33:57,086 - INFO - Crawling page 1
+2025-04-26 09:33:57,086 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:33:59,105 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:33:59,119 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:33:59,119 - INFO - Reached max_restaurants limit (1)
+2025-04-26 09:33:59,120 - INFO - Starting to crawl details for 1 restaurants
+2025-04-26 09:33:59,120 - INFO - Waiting for 9.06 seconds
+2025-04-26 09:34:08,187 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12180159-Reviews-Cocotte-Ho_Chi_Minh_City.html
+2025-04-26 09:34:11,183 - INFO - ✓ Cocotte
+2025-04-26 09:34:11,184 - INFO - Saved 1 restaurants to data_restaurants/hcmc/restaurants_20250426_093411_index_0.json
+2025-04-26 09:34:11,184 - INFO - Found 1 unique restaurants
+2025-04-26 09:34:51,833 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=10
+2025-04-26 09:34:51,833 - INFO - Crawling page 1
+2025-04-26 09:34:51,833 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:34:54,299 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:34:54,314 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:34:54,314 - INFO - Reached max_restaurants limit (10)
+2025-04-26 09:34:54,314 - INFO - Starting to crawl details for 10 restaurants
+2025-04-26 09:34:54,314 - INFO - Waiting for 6.22 seconds
+2025-04-26 09:34:54,314 - INFO - Waiting for 6.53 seconds
+2025-04-26 09:34:54,315 - INFO - Waiting for 5.65 seconds
+2025-04-26 09:34:54,315 - INFO - Waiting for 9.40 seconds
+2025-04-26 09:34:59,967 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d10721705-Reviews-B_p_M_n-Ho_Chi_Minh_City.html
+2025-04-26 09:35:00,535 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12180159-Reviews-Cocotte-Ho_Chi_Minh_City.html
+2025-04-26 09:35:00,854 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d26794670-Reviews-Ph_Vi_t_Nam_Ph_m_H_ng_Thai-Ho_Chi_Minh_City.html
+2025-04-26 09:35:03,750 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d15046046-Reviews-Cloud_Nine_Sai_Gon_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 09:35:04,422 - INFO - Waiting for 9.74 seconds
+2025-04-26 09:35:04,435 - INFO - ✓ Bếp Mẹ ỉn
+2025-04-26 09:35:05,184 - INFO - Waiting for 8.13 seconds
+2025-04-26 09:35:05,191 - INFO - ✓ Cocotte
+2025-04-26 09:35:05,587 - INFO - Waiting for 6.69 seconds
+2025-04-26 09:35:05,593 - INFO - ✓ Phở Việt Nam - Phạm Hồng Thái
+2025-04-26 09:35:06,209 - INFO - Waiting for 8.71 seconds
+2025-04-26 09:35:06,209 - INFO - ✓ Cloud Nine Sai Gon Restaurant
+2025-04-26 09:35:12,308 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12731224-Reviews-Charm_Bakery-Ho_Chi_Minh_City.html
+2025-04-26 09:35:13,329 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d1717810-Reviews-Cuc_Gach_Quan-Ho_Chi_Minh_City.html
+2025-04-26 09:35:14,209 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d17704147-Reviews-Secret_Garden_Vietnamese_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 09:35:14,919 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d25226949-Reviews-BIG_PIG_Bar_BBQ_Beer-Ho_Chi_Minh_City.html
+2025-04-26 09:35:15,680 - INFO - Waiting for 8.30 seconds
+2025-04-26 09:35:15,693 - INFO - ✓ Charm Bakery
+2025-04-26 09:35:16,028 - INFO - Waiting for 8.99 seconds
+2025-04-26 09:35:16,034 - INFO - ✓ Cuc Gach Quan
+2025-04-26 09:35:17,107 - INFO - ✓ Secret Garden Vietnamese Restaurant
+2025-04-26 09:35:17,979 - INFO - ✓ BIG PIG Bar - BBQ - Beer
+2025-04-26 09:35:24,013 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d17662928-Reviews-Banana_Mama_Rooftop_Kitchen-Ho_Chi_Minh_City.html
+2025-04-26 09:35:25,031 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d8806032-Reviews-Social_Club_Rooftop_Bar-Ho_Chi_Minh_City.html
+2025-04-26 09:35:27,827 - INFO - ✓ Banana Mama Rooftop & Kitchen
+2025-04-26 09:35:28,306 - INFO - ✓ Social Club Rooftop Bar
+2025-04-26 09:35:28,307 - INFO - Saved 10 restaurants to data_restaurants/hcmc/restaurants_20250426_093528_index_0.json
+2025-04-26 09:35:28,307 - INFO - Found 10 unique restaurants
+2025-04-26 09:38:42,187 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=10
+2025-04-26 09:38:42,188 - INFO - Crawling page 1
+2025-04-26 09:38:42,188 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:38:44,623 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:38:44,637 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:38:44,637 - INFO - Reached max_restaurants limit (10)
+2025-04-26 09:38:44,637 - INFO - Starting to crawl details for 10 restaurants
+2025-04-26 09:38:44,638 - INFO - Waiting for 9.52 seconds
+2025-04-26 09:38:44,638 - INFO - Waiting for 7.06 seconds
+2025-04-26 09:38:44,638 - INFO - Waiting for 8.29 seconds
+2025-04-26 09:38:44,638 - INFO - Waiting for 6.86 seconds
+2025-04-26 09:38:51,506 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d15046046-Reviews-Cloud_Nine_Sai_Gon_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 09:38:51,700 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d26794670-Reviews-Ph_Vi_t_Nam_Ph_m_H_ng_Thai-Ho_Chi_Minh_City.html
+2025-04-26 09:38:52,936 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d10721705-Reviews-B_p_M_n-Ho_Chi_Minh_City.html
+2025-04-26 09:38:54,168 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12180159-Reviews-Cocotte-Ho_Chi_Minh_City.html
+2025-04-26 09:38:54,373 - INFO - Waiting for 5.36 seconds
+2025-04-26 09:38:54,374 - INFO - ✓ Cloud Nine Sai Gon Restaurant
+2025-04-26 09:38:56,113 - INFO - Waiting for 5.12 seconds
+2025-04-26 09:38:56,119 - INFO - ✓ Phở Việt Nam - Phạm Hồng Thái
+2025-04-26 09:38:57,531 - INFO - Waiting for 6.24 seconds
+2025-04-26 09:38:57,538 - INFO - ✓ Bếp Mẹ ỉn
+2025-04-26 09:38:58,019 - INFO - Waiting for 9.42 seconds
+2025-04-26 09:38:58,019 - INFO - ✓ Cocotte
+2025-04-26 09:38:59,739 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d17704147-Reviews-Secret_Garden_Vietnamese_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 09:39:01,290 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d1717810-Reviews-Cuc_Gach_Quan-Ho_Chi_Minh_City.html
+2025-04-26 09:39:01,846 - INFO - Waiting for 6.51 seconds
+2025-04-26 09:39:01,846 - INFO - ✓ Secret Garden Vietnamese Restaurant
+2025-04-26 09:39:03,258 - INFO - Waiting for 9.87 seconds
+2025-04-26 09:39:03,259 - INFO - ✓ Cuc Gach Quan
+2025-04-26 09:39:03,782 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12731224-Reviews-Charm_Bakery-Ho_Chi_Minh_City.html
+2025-04-26 09:39:06,749 - INFO - ✓ Charm Bakery
+2025-04-26 09:39:07,440 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d27139808-Reviews-Cocotte_Sila-Ho_Chi_Minh_City.html
+2025-04-26 09:39:08,362 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d17662928-Reviews-Banana_Mama_Rooftop_Kitchen-Ho_Chi_Minh_City.html
+2025-04-26 09:39:09,413 - INFO - ✓ Cocotte Sila
+2025-04-26 09:39:11,257 - INFO - ✓ Banana Mama Rooftop & Kitchen
+2025-04-26 09:39:13,160 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d8806032-Reviews-Social_Club_Rooftop_Bar-Ho_Chi_Minh_City.html
+2025-04-26 09:39:16,112 - INFO - ✓ Social Club Rooftop Bar
+2025-04-26 09:39:16,114 - INFO - Saved 10 restaurants to data_restaurants/hcmc/restaurants_20250426_093916_index_0.json
+2025-04-26 09:39:16,114 - INFO - Found 10 unique restaurants
+2025-04-26 09:41:04,542 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=2
+2025-04-26 09:41:04,543 - INFO - Crawling page 1
+2025-04-26 09:41:04,543 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:41:06,408 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:41:06,423 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:41:06,423 - INFO - Reached max_restaurants limit (2)
+2025-04-26 09:41:06,423 - INFO - Starting to crawl details for 2 restaurants
+2025-04-26 09:41:06,424 - INFO - Waiting for 8.75 seconds
+2025-04-26 09:41:06,424 - INFO - Waiting for 8.44 seconds
+2025-04-26 09:41:14,869 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12180159-Reviews-Cocotte-Ho_Chi_Minh_City.html
+2025-04-26 09:41:15,177 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d26794670-Reviews-Ph_Vi_t_Nam_Ph_m_H_ng_Thai-Ho_Chi_Minh_City.html
+2025-04-26 09:41:18,720 - INFO - ✓ Cocotte
+2025-04-26 09:41:18,967 - ERROR - Error extracting media from reviews: not enough values to unpack (expected 2, got 1)
+2025-04-26 09:41:18,967 - INFO - ✓ Phở Việt Nam - Phạm Hồng Thái
+2025-04-26 09:41:18,968 - INFO - Saved 2 restaurants to data_restaurants/hcmc/restaurants_20250426_094118_index_0.json
+2025-04-26 09:41:18,968 - INFO - Found 2 unique restaurants

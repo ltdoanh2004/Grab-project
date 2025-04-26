@@ -206,7 +206,8 @@ class RestaurantCrawler:
             'div.XQaIe',
             'div.euDRl > a',
             'div[data-automation="WebPresentation_LocalizationMapCard"] div.euDRl',
-            'div[data-automation="WebPresentation_PoiLocationCard"] div.euDRl'
+            'div[data-automation="WebPresentation_PoiLocationCard"] div.euDRl',
+            'span[data-automation="restaurantsMapLinkOnName"]'
         ]
         
         for selector in address_selectors:
@@ -606,7 +607,8 @@ class RestaurantCrawler:
             'a.iUttq',
             'span.jqKwK',
             'a.UctQk',
-            'span.DJzgG'
+            'span.DJzgG',
+            'span.JguWG'
         ]
         for selector in reviews_selectors:
             reviews_elem = soup.select_one(selector)
@@ -614,9 +616,24 @@ class RestaurantCrawler:
                 text = reviews_elem.get_text(strip=True)
                 reviews_match = re.search(r'([\d,]+)\s*reviews?', text)
                 if reviews_match:
-                    details["reviews"] = reviews_match.group(1)
+                    details["num_reviews"] = reviews_match.group(1)
                     break
-        
+
+        # Extract summary reviews
+        reviews_selectors = [
+            'div.aaQZA div.biGQs._P.pZUbB.KxBGd',  # Main summary selector
+            'div.IGaaH._u._c div.biGQs._P.pZUbB.KxBGd',  # Full path with container
+            'div#GAI_REVIEWS div.aaQZA div.biGQs._P.pZUbB.KxBGd',  # With reviews container ID
+            'div.PcCsz.o div.aaQZA div.biGQs._P.pZUbB.KxBGd'  # Complete path
+        ]
+        for selector in reviews_selectors:
+            reviews_elem = soup.select_one(selector)
+            if reviews_elem:
+                text = reviews_elem.get_text(strip=True)
+                if text and len(text) > 50 and "reviews" in text.lower():  # Ensure it's a substantial review summary
+                    details["review_summary"] = text
+                    break
+
         # 10. Extract restaurant features/amenities
         feature_selectors = [
             'div[data-automation="restaurantDetailsCuisinesFeatures"] div.euDRl',
@@ -636,6 +653,187 @@ class RestaurantCrawler:
         if features:
             details["features"] = list(dict.fromkeys(features))[:5]  # Keep unique, limit to 5
             
+        # Add phone numbers
+        phones = []
+        try:
+            # First try to find phone numbers in contact information section
+            contact_selectors = [
+                'div[data-automation="restaurantContactCard"]',
+                'div.euDRl:contains("Phone")',
+                'div.czkFU:contains("Phone")',
+                'div.YnKZo:contains("Phone")'
+            ]
+            
+            for selector in contact_selectors:
+                if ':contains' in selector:
+                    base_selector = selector.split(':contains(')[0]
+                    elements = soup.select(base_selector)
+                    for elem in elements:
+                        if 'Phone' in elem.get_text():
+                            # Try to find phone number in text
+                            phone_text = elem.get_text(strip=True)
+                            phone_match = re.search(r'[\+\d][\d\s\-\(\)\.]{8,}', phone_text)
+                            if phone_match:
+                                phones.append(phone_match.group(0).strip())
+                                break
+                else:
+                    contact_elem = soup.select_one(selector)
+                    if contact_elem:
+                        # Look for phone links or spans
+                        phone_elements = contact_elem.select('a[href^="tel:"], span.biGQs._P.XWJSj.Wb')
+                        for phone_elem in phone_elements:
+                            if phone_elem.name == 'a' and phone_elem.has_attr('href'):
+                                phone = phone_elem['href'].replace('tel:', '')
+                                if phone and re.search(r'\d', phone):
+                                    phones.append(phone)
+                                    break
+                            else:
+                                phone = phone_elem.get_text(strip=True)
+                                if phone and re.search(r'\d', phone):
+                                    phones.append(phone)
+                                    break
+            
+            # If no phone found, try direct phone link
+            if not phones:
+                phone_links = soup.select('a[href^="tel:"]')
+                for link in phone_links:
+                    phone = link['href'].replace('tel:', '')
+                    if phone and re.search(r'\d', phone):
+                        phones.append(phone)
+                        break
+            
+            # Try to find phone numbers in any text that matches phone format
+            if not phones:
+                phone_pattern = re.compile(r'[\+\d][\d\s\-\(\)\.]{8,}')
+                for text in soup.stripped_strings:
+                    if 'phone' in text.lower() or 'tel' in text.lower():
+                        phone_match = phone_pattern.search(text)
+                        if phone_match:
+                            phones.append(phone_match.group(0).strip())
+                            break
+                            
+        except Exception as e:
+            logger.error(f"Error extracting phone numbers: {str(e)}")
+                        
+        if phones:
+            # Clean up the phone number
+            phone = phones[0]
+            phone = re.sub(r'\s+', ' ', phone)  # Normalize whitespace
+            phone = phone.strip()
+            details["phone"] = phone
+
+        # Extract example reviews
+        example_reviews = []
+        try:
+            # First try to find review containers
+            review_containers = soup.select('div[data-test-target="review-body"]')
+            
+            if review_containers:
+                for container in review_containers[:3]:  # Get up to 3 reviews
+                    review_text = None
+                    # Try different selectors for review text based on new structure
+                    text_selectors = [
+                        'span.JguWG',  # New main review text selector
+                        'div.biGQs._P.pZUbB.KxBGd',  # Alternative review text container
+                        'div.f1rGe._T.bgMZj span.JguWG',  # Full path to review text
+                        'div._T.FKffI div.f1rGe._T.bgMZj span.JguWG',  # Complete path
+                    ]
+                    
+                    for selector in text_selectors:
+                        review_elem = container.select_one(selector)
+                        if review_elem:
+                            review_text = review_elem.get_text(strip=True)
+                            if review_text:
+                                break
+                    
+                    if review_text and len(review_text) > 10:  # Ensure it's a substantial review
+                        example_reviews.append(review_text)
+            
+            # If no reviews found in containers, try direct selectors
+            if not example_reviews:
+                review_selectors = [
+                    'span.JguWG',  # Direct review text selector
+                    'div.biGQs._P.pZUbB.KxBGd span.JguWG',  # Alternative path
+                    'div[data-test-target="review-body"] span.JguWG',  # Full container path
+                    'div.f1rGe._T.bgMZj span.JguWG'  # Another alternative path
+                ]
+                
+                for selector in review_selectors:
+                    review_elements = soup.select(selector)
+                    for elem in review_elements[:5]:  # Get up to 3 reviews
+                        review_text = elem.get_text(strip=True)
+                        if review_text and len(review_text) > 10:
+                            example_reviews.append(review_text)
+                            if len(example_reviews) >= 3:
+                                break
+                    if len(example_reviews) >= 3:
+                        break
+            
+            # Clean up reviews
+            example_reviews = [
+                re.sub(r'\s+', ' ', review).strip()
+                for review in example_reviews
+                if review and len(review.strip()) > 10
+            ]
+            
+            # Remove duplicates while preserving order
+            example_reviews = list(dict.fromkeys(example_reviews))
+            
+        except Exception as e:
+            logger.error(f"Error extracting reviews: {str(e)}")
+        
+        if example_reviews:
+            details["example_reviews"] = example_reviews[:3]  # Ensure we only keep up to 3 reviews
+
+        # Extract media (images/videos) from reviews
+        try:
+            media_selectors = [
+                'div[data-section-signature="photo_viewer"] picture.NhWcC._R.mdkdE.afQPz.eXZKw source[srcset]',  # Image sources
+                'div[data-testid="carousel-with-strip"] picture source[srcset]',  # Carousel images
+                'div.SQIuW.wSSLS picture source[srcset]',  # Review images
+                'div.XKYCB.wSSLS picture source[srcset]',  # Alternative image structure
+                'div[data-test-target="review-body"] video source',  # Video sources
+                'div.reviewCard video source'  # Alternative video structure
+            ]
+            
+            media_urls = []
+            for selector in media_selectors:
+                media_elements = soup.select(selector)
+                for elem in media_elements:
+                    if elem.has_attr('srcset'):
+                        # Parse srcset to get the highest quality image
+                        srcset = elem['srcset']
+                        # Split srcset into URL-scale pairs
+                        pairs = [pair.strip().split(' ') for pair in srcset.split(',')]
+                        # Get URL with highest scale (2x if available)
+                        highest_quality_url = None
+                        for url, scale in pairs:
+                            if scale == '2x':
+                                highest_quality_url = url
+                                break
+                        if not highest_quality_url and pairs:
+                            highest_quality_url = pairs[-1][0]  # Take the last URL if no 2x
+                        
+                        if highest_quality_url:
+                            # Clean up the URL
+                            clean_url = highest_quality_url.strip()
+                            if clean_url not in media_urls:
+                                media_urls.append(clean_url)
+                    elif elem.has_attr('src'):
+                        # For video sources or single-URL images
+                        src_url = elem['src'].strip()
+                        if src_url not in media_urls:
+                            media_urls.append(src_url)
+
+            if media_urls:
+                details["media_urls"] = media_urls[:10]  # Limit to first 10 media items
+                # Set the first media as main_image if no main image exists
+                if "main_image" not in details and media_urls:
+                    details["main_image"] = media_urls[0]
+                    
+        except Exception as e:
+            logger.error(f"Error extracting media from reviews: {str(e)}")
+
         # Add to visited urls - only after successfully getting details
         self.visited_urls.add(restaurant_url)
         if details["name"]:
