@@ -26216,3 +26216,10 @@
 2025-04-26 23:41:59,881 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293924-d6890103-Reviews-The_Republic-Hanoi.html
 2025-04-26 23:42:00,160 - ERROR - Error fetching URL https://www.tripadvisor.com/Restaurant_Review-g293924-d6890103-Reviews-The_Republic-Hanoi.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Restaurant_Review-g293924-d6890103-Reviews-The_Republic-Hanoi.html
 2025-04-26 23:42:00,160 - INFO - Retrying after 60 seconds...
+2025-04-27 00:14:32,749 - INFO - Starting crawl from page 2 with max_pages=1, max_restaurants=None
+2025-04-27 00:14:32,750 - INFO - Crawling page 2
+2025-04-27 00:14:32,750 - INFO - Original URL: https://www.tripadvisor.com/Restaurants-g293925-Ho_Chi_Minh_City.html
+2025-04-27 00:14:32,750 - INFO - Paginated URL for page 2: https://www.tripadvisor.com/Restaurants-g293925-Ho_Chi_Minh_City-oa30.html
+2025-04-27 00:14:32,750 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurants-g293925-Ho_Chi_Minh_City-oa30.html
+2025-04-27 00:14:33,149 - ERROR - Error fetching URL https://www.tripadvisor.com/Restaurants-g293925-Ho_Chi_Minh_City-oa30.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Restaurants-g293925-Ho_Chi_Minh_City-oa30.html
+2025-04-27 00:14:33,149 - INFO - Retrying after 30 seconds...
