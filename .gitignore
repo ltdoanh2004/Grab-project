@@ -28,3 +28,4 @@ ai/model/src/.env
 # checkpoint
 ai/model/src/checkpoint.json
 ai/model/src/data/
+ai/model/src/vector_database/checkpoint.json
