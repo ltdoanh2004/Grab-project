@@ -21,9 +21,9 @@ import (
 	"skeleton-internship-backend/internal/service"
 )
 
-// @title           Todo List API
+// @title           Travel Planning API
 // @version         1.0
-// @description     A modern RESTful API for managing your todos efficiently. This API provides comprehensive endpoints for creating, reading, updating, and deleting todo items.
+// @description     A modern RESTful API for managing travel plans, including trips, destinations, accommodations, activities, and restaurants.
 // @termsOfService  http://swagger.io/terms/
 
 // @contact.name   API Support Team
@@ -60,6 +60,11 @@ import (
 // @tag.docs.url     http://example.com/docs/suggestionType
 // @tag.docs.description Detailed information about suggestion type operations
 
+// @tag.name         trip
+// @tag.description  Operations about trips and travel plans
+// @tag.docs.url     http://example.com/docs/trip
+// @tag.docs.description Detailed information about trip operations
+
 // @securityDefinitions.apikey Bearer
 // @in header
 // @name Authorization
@@ -76,10 +81,17 @@ func main() {
 			repository.NewActivityRepository,      // Add this
 			repository.NewRestaurantRepository,    // Add this
 			repository.NewAccommodationRepository, // Add this
+			repository.NewTripRepository,
+			repository.NewTripDestinationRepository,
+			repository.NewTripAccommodationRepository,
+			repository.NewTripActivityRepository,
+			repository.NewTripRestaurantRepository,
 			service.NewService,
 			service.NewAuthService,
+			service.NewTripService,
 			controller.NewController,
 			controller.NewAuthController,
+			controller.NewTripController,
 			service.NewSuggestService,
 			controller.NewSuggestController,
 		),
@@ -120,11 +132,13 @@ func RegisterRoutes(
 	cfg *config.Config,
 	controller *controller.Controller,
 	auth_controller *controller.AuthController,
-	suggest_controller *controller.SuggestController, // Add this
+	suggest_controller *controller.SuggestController,
+	trip_controller *controller.TripController,
 ) {
 	controller.RegisterRoutes(router)
 	auth_controller.RegisterRoutes(router)
 	suggest_controller.RegisterRoutes(router)
+	trip_controller.RegisterRoutes(router)
 
 	logger.Init()
 

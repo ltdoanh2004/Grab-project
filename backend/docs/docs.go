@@ -569,6 +569,172 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/trip/create": {
+            "post": {
+                "description": "Create a new trip with destinations, accommodations, activities, and restaurants",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "trip"
+                ],
+                "summary": "Create a new trip",
+                "parameters": [
+                    {
+                        "description": "Trip Details",
+                        "name": "trip",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateTripRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns trip ID",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/trip/save": {
+            "put": {
+                "description": "Update an existing trip with new details including destinations, accommodations, activities, and restaurants",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "trip"
+                ],
+                "summary": "Save changes to an existing trip",
+                "parameters": [
+                    {
+                        "description": "Trip Details",
+                        "name": "trip",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.TripDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trip updated successfully",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/trip/{id}": {
+            "get": {
+                "description": "Get complete trip details including destinations, accommodations, activities, and restaurants",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "trip"
+                ],
+                "summary": "Get trip details",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Trip ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trip details",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.TripDTO"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid trip ID",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Trip not found",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/health": {
             "get": {
                 "description": "get the status of server.",
@@ -679,6 +845,145 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "place_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CreateTripAccommodationRequest": {
+            "type": "object",
+            "properties": {
+                "accommodation_id": {
+                    "type": "string"
+                },
+                "check_in_date": {
+                    "type": "string"
+                },
+                "check_out_date": {
+                    "type": "string"
+                },
+                "cost": {
+                    "type": "number"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CreateTripActivityRequest": {
+            "type": "object",
+            "properties": {
+                "activity_id": {
+                    "type": "string"
+                },
+                "end_time": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "scheduled_date": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CreateTripDestinationRequest": {
+            "type": "object",
+            "properties": {
+                "accommodations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.CreateTripAccommodationRequest"
+                    }
+                },
+                "activities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.CreateTripActivityRequest"
+                    }
+                },
+                "arrival_date": {
+                    "type": "string"
+                },
+                "departure_date": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "order_num": {
+                    "type": "integer"
+                },
+                "restaurants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.CreateTripRestaurantRequest"
+                    }
+                },
+                "trip_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CreateTripRequest": {
+            "type": "object",
+            "properties": {
+                "budget": {
+                    "type": "number"
+                },
+                "end_date": {
+                    "type": "string"
+                },
+                "start_date": {
+                    "type": "string"
+                },
+                "trip_destinations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.CreateTripDestinationRequest"
+                    }
+                },
+                "trip_name": {
+                    "type": "string"
+                },
+                "trip_status": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CreateTripRestaurantRequest": {
+            "type": "object",
+            "properties": {
+                "end_time": {
+                    "type": "string"
+                },
+                "meal_date": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "reservation_info": {
+                    "type": "string"
+                },
+                "restaurant_id": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "trip_destination_id": {
                     "type": "string"
                 }
             }
@@ -834,6 +1139,160 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.TripAccommodationDTO": {
+            "type": "object",
+            "properties": {
+                "accommodation_id": {
+                    "type": "string"
+                },
+                "check_in_date": {
+                    "type": "string"
+                },
+                "check_out_date": {
+                    "type": "string"
+                },
+                "cost": {
+                    "type": "number"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "trip_accommodation_id": {
+                    "type": "string"
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.TripActivityDTO": {
+            "type": "object",
+            "properties": {
+                "activity_id": {
+                    "type": "string"
+                },
+                "end_time": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "scheduled_date": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "trip_activity_id": {
+                    "type": "string"
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.TripDTO": {
+            "type": "object",
+            "properties": {
+                "budget": {
+                    "type": "number"
+                },
+                "end_date": {
+                    "type": "string"
+                },
+                "start_date": {
+                    "type": "string"
+                },
+                "trip_destinations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.TripDestinationDTO"
+                    }
+                },
+                "trip_id": {
+                    "type": "string"
+                },
+                "trip_name": {
+                    "type": "string"
+                },
+                "trip_status": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.TripDestinationDTO": {
+            "type": "object",
+            "properties": {
+                "accommodations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.TripAccommodationDTO"
+                    }
+                },
+                "activities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.TripActivityDTO"
+                    }
+                },
+                "arrival_date": {
+                    "type": "string"
+                },
+                "departure_date": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "order_num": {
+                    "type": "integer"
+                },
+                "restaurants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.TripRestaurantDTO"
+                    }
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                },
+                "trip_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.TripRestaurantDTO": {
+            "type": "object",
+            "properties": {
+                "end_time": {
+                    "type": "string"
+                },
+                "meal_date": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "reservation_info": {
+                    "type": "string"
+                },
+                "restaurant_id": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                },
+                "trip_restaurant_id": {
+                    "type": "string"
+                }
+            }
+        },
         "model.Response": {
             "type": "object",
             "properties": {
@@ -929,6 +1388,14 @@ const docTemplate = `{
                 "description": "Detailed information about suggestion type operations",
                 "url": "http://example.com/docs/suggestionType"
             }
+        },
+        {
+            "description": "Operations about trips and travel plans",
+            "name": "trip",
+            "externalDocs": {
+                "description": "Detailed information about trip operations",
+                "url": "http://example.com/docs/trip"
+            }
         }
     ]
 }`
@@ -939,8 +1406,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8080",
 	BasePath:         "/api/v1",
 	Schemes:          []string{"http", "https"},
-	Title:            "Todo List API",
-	Description:      "A modern RESTful API for managing your todos efficiently. This API provides comprehensive endpoints for creating, reading, updating, and deleting todo items.",
+	Title:            "Travel Planning API",
+	Description:      "A modern RESTful API for managing travel plans, including trips, destinations, accommodations, activities, and restaurants.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

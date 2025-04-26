@@ -52,9 +52,9 @@ func (r *GormTripAccommodationRepository) Delete(tripAccommodationID string) err
 }
 
 // GetByTripID retrieves all TripAccommodation records associated with a specific TripID.
-func (r *GormTripAccommodationRepository) GetByTripID(tripID string) ([]model.TripAccommodation, error) {
+func (r *GormTripAccommodationRepository) GetByTripID(tripDestinationID string) ([]model.TripAccommodation, error) {
 	var tripAccommodations []model.TripAccommodation
-	if err := r.DB.Where("trip_id = ?", tripID).Find(&tripAccommodations).Error; err != nil {
+	if err := r.DB.Where("trip_destination_id = ?", tripDestinationID).Find(&tripAccommodations).Error; err != nil {
 		return nil, err
 	}
 	return tripAccommodations, nil
