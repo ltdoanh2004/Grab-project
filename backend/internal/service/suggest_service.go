@@ -13,8 +13,8 @@ import (
 
 type SuggestService interface {
 	SuggestActivities(travelPreference *dto.TravelPreference) (*dto.ActivitiesSuggestion, error)
-	SuggestRestaurants(travelPreference *dto.TravelPreference) (*dto.RestaurantSuggestion, error)
-	SuggestAccommodations(travelPreference *dto.TravelPreference) (*dto.AccommodationSuggestion, error)
+	SuggestRestaurants(travelPreference *dto.TravelPreference) (*dto.RestaurantsSuggestion, error)
+	SuggestAccommodations(travelPreference *dto.TravelPreference) (*dto.AccommodationsSuggestion, error)
 }
 
 type suggestService struct {
@@ -88,7 +88,7 @@ func getURL(host, port, endpoint string) string {
 	return fmt.Sprintf("http://%s:%s%s", host, port, endpoint)
 }
 
-func (ss *suggestService) SuggestAccommodations(travelPreference *dto.TravelPreference) (*dto.AccommodationSuggestion, error) {
+func (ss *suggestService) SuggestAccommodations(travelPreference *dto.TravelPreference) (*dto.AccommodationsSuggestion, error) {
 	rsp, err := ss.mockCallAPI(
 		getURL(config.AppConfig.AI.Host,
 			config.AppConfig.AI.Port,
@@ -100,13 +100,26 @@ func (ss *suggestService) SuggestAccommodations(travelPreference *dto.TravelPref
 		return nil, err
 	}
 
-	var suggestion dto.AccommodationSuggestion
+	var suggestion dto.AccommodationsSuggestion
 	for i := range rsp.IDs {
 		accommodation, err := ss.AccommodationRepository.GetByID(rsp.IDs[i])
 		if err != nil {
 			return nil, fmt.Errorf("failed to fetch accommodation with ID %s: %w", rsp.IDs[i], err)
 		}
-		suggestion.Accommodations = append(suggestion.Accommodations, accommodation)
+		suggestedAccommodation := dto.AccommodationSuggestion{
+			AccommodationID: accommodation.AccommodationID,
+			DestinationID:   accommodation.DestinationID,
+			Name:            accommodation.Name,
+			Type:            accommodation.Type,
+			Address:         accommodation.Address,
+			BookingLink:     accommodation.BookingLink,
+			StarRating:      accommodation.StarRating,
+			Description:     accommodation.Description,
+			Amenities:       accommodation.Amenities,
+			ImageURL:        accommodation.ImageURL,
+		}
+
+		suggestion.Accommodations = append(suggestion.Accommodations, suggestedAccommodation)
 	}
 	return &suggestion, nil
 }
@@ -129,12 +142,23 @@ func (ss *suggestService) SuggestActivities(travelPreference *dto.TravelPreferen
 		if err != nil {
 			return nil, fmt.Errorf("failed to fetch activity with ID %s: %w", rsp.IDs[i], err)
 		}
-		suggestion.Activities = append(suggestion.Activities, activity)
+		suggestedActivity := dto.ActivitySuggestion{
+			ActivityID:    activity.ActivityID,
+			DestinationID: activity.DestinationID,
+			CategoryID:    activity.CategoryID,
+			Name:          activity.Name,
+			Description:   activity.Description,
+			Duration:      activity.Duration,
+			Cost:          activity.Cost,
+			ImageURL:      activity.ImageURL,
+			PlaceID:       activity.PlaceID,
+		}
+		suggestion.Activities = append(suggestion.Activities, suggestedActivity)
 	}
 	return &suggestion, nil
 }
 
-func (ss *suggestService) SuggestRestaurants(travelPreference *dto.TravelPreference) (*dto.RestaurantSuggestion, error) {
+func (ss *suggestService) SuggestRestaurants(travelPreference *dto.TravelPreference) (*dto.RestaurantsSuggestion, error) {
 	rsp, err := ss.callAISuggestion(
 		getURL(config.AppConfig.AI.Host,
 			config.AppConfig.AI.Port,
@@ -146,13 +170,26 @@ func (ss *suggestService) SuggestRestaurants(travelPreference *dto.TravelPrefere
 		return nil, err
 	}
 
-	var suggestion dto.RestaurantSuggestion
+	var suggestion dto.RestaurantsSuggestion
 	for i := range rsp.IDs {
 		restaurant, err := ss.RestaurantRepository.GetByID(rsp.IDs[i])
 		if err != nil {
 			return nil, fmt.Errorf("failed to fetch restaurant with ID %s: %w", rsp.IDs[i], err)
 		}
-		suggestion.Restaurants = append(suggestion.Restaurants, restaurant)
+		suggestedRestaurant := dto.RestaurantSuggestion{
+			RestaurantID:      restaurant.RestaurantID,
+			DestinationID:     restaurant.DestinationID,
+			Name:              restaurant.Name,
+			EstablishmentType: restaurant.EstablishmentType,
+			CuisineType:       restaurant.CuisineType,
+			Description:       restaurant.Description,
+			Address:           restaurant.Address,
+			PriceRange:        restaurant.PriceRange,
+			AvgRating:         restaurant.AvgRating,
+			OpeningHours:      restaurant.OpeningHours,
+			ImageURL:          restaurant.ImageURL,
+		}
+		suggestion.Restaurants = append(suggestion.Restaurants, suggestedRestaurant)
 	}
 	return &suggestion, nil
 }
