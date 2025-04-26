@@ -109,9 +109,12 @@ class PlaceVectorDatabase(BaseVectorDatabase):
             os.remove(self.checkpoint_file)
             print("Cleared checkpoint after successful completion")
 
-    def load_data_to_pinecone(self):
+    def load_data_to_pinecone(self, incremental=True):
         """
         Load and insert data into Pinecone index
+        
+        Args:
+            incremental: If True, only insert new items and update changed ones
         """
         if not self.index:
             raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
@@ -120,8 +123,8 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         index_stats = self.index.describe_index_stats()
         has_data = index_stats['total_vector_count'] > 0
         
-        if has_data:
-            print(f"Index {self.index_name} already contains data. Skipping data insertion.")
+        if has_data and not incremental:
+            print(f"Index {self.index_name} already contains data. Use incremental=True to add or update data.")
             return True
             
         # Load data from CSV
@@ -134,6 +137,12 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         if not hasattr(self, 'df') or 'context_embedding' not in self.df.columns:
             raise ValueError("DataFrame not prepared or missing embeddings. Please run prepare_place_embedding first.")
             
+        # Use base class method for incremental updates if requested
+        if incremental:
+            # Convert string embeddings to lists if needed before passing to incremental method
+            return self.load_data_to_pinecone_incremental(df=self.df, id_field="index", batch_size=100)
+            
+        # Otherwise, continue with original full insertion method
         # Convert string embeddings to lists
         print("Converting embeddings to lists...")
         self.df['context_embedding'] = self.df['context_embedding'].apply(
@@ -307,6 +316,7 @@ def main():
     parser.add_argument('--prepare-data', action='store_true', help='Prepare and process place data')
     parser.add_argument('--setup-pinecone', action='store_true', help='Setup Pinecone database')
     parser.add_argument('--insert-data', action='store_true', help='Insert data into Pinecone')
+    parser.add_argument('--incremental', action='store_true', help='Use incremental update for data insertion')
     parser.add_argument('--query', type=str, help='Query text to search for similar places')
     parser.add_argument('--top-k', type=int, default=5, help='Number of results to return')
     args = parser.parse_args()
@@ -319,7 +329,7 @@ def main():
     if args.setup_pinecone:
         vector_db.set_up_pinecone()
         if args.insert_data:
-            vector_db.load_data_to_pinecone()
+            vector_db.load_data_to_pinecone(incremental=args.incremental)
         
     if args.query:
         # Check if Pinecone is set up, if not, set it up first

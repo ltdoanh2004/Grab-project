@@ -6,7 +6,7 @@ import os
 import json
 from tqdm import tqdm
 from pinecone import Pinecone, ServerlessSpec
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Set
 
 # Get the directory where the script is located
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -238,3 +238,125 @@ class BaseVectorDatabase:
         except Exception as e:
             print(f"Error fetching all items: {e}")
             return None 
+
+    def check_existing_items(self, id_field="index") -> Set[str]:
+        """
+        Check which items already exist in the Pinecone index
+        
+        Args:
+            id_field: The DataFrame column containing item IDs
+            
+        Returns:
+            A set of existing item IDs
+        """
+        if not self.index:
+            raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
+            
+        # Get stats to see if index has data
+        index_stats = self.index.describe_index_stats()
+        
+        if index_stats['total_vector_count'] == 0:
+            print(f"Index {self.index_name} is empty. No existing items.")
+            return set()
+            
+        # Fetch all existing IDs (up to limit)
+        try:
+            # We can't directly get all IDs, so we need to query with a dummy vector
+            # This is not ideal for large datasets, but works for moderate sizes
+            limit = 10000  # Adjust as needed
+            results = self.index.query(
+                vector=[0] * self.dimension,
+                top_k=limit,
+                include_metadata=False
+            )
+            
+            existing_ids = set(match['id'] for match in results['matches'])
+            print(f"Found {len(existing_ids)} existing items in the index.")
+            return existing_ids
+            
+        except Exception as e:
+            print(f"Error fetching existing items: {e}")
+            return set()
+        
+    def load_data_to_pinecone_incremental(self, df=None, id_field="index", batch_size=100):
+        """
+        Load data into Pinecone index with incremental update support
+        
+        Args:
+            df: DataFrame containing data (if None, uses self.df)
+            id_field: Column name containing unique IDs
+            batch_size: Size of batches for upsert operations
+            
+        Returns:
+            Boolean indicating success
+        """
+        if not self.index:
+            raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
+            
+        # Use provided DataFrame or instance DataFrame
+        dataframe = df if df is not None else self.df
+        
+        if dataframe is None:
+            raise ValueError("No DataFrame provided and no instance DataFrame available.")
+            
+        if 'context_embedding' not in dataframe.columns:
+            raise ValueError("DataFrame is missing 'context_embedding' column.")
+            
+        # Get existing IDs from Pinecone
+        existing_ids = self.check_existing_items()
+        
+        # Convert string embeddings to lists if needed
+        print("Processing embeddings...")
+        dataframe['context_embedding'] = dataframe['context_embedding'].apply(
+            lambda x: eval(x) if isinstance(x, str) else x
+        )
+        
+        # Count items for insertion and update
+        new_items = [str(id) for id in dataframe[id_field].astype(str) if str(id) not in existing_ids]
+        update_items = [str(id) for id in dataframe[id_field].astype(str) if str(id) in existing_ids]
+        
+        print(f"Found {len(new_items)} new items to insert and {len(update_items)} items to update.")
+        
+        if len(new_items) == 0 and len(update_items) == 0:
+            print("No new or updated items to process.")
+            return True
+            
+        # Prepare vectors for upsert
+        print("Preparing vectors...")
+        vectors_to_upsert = []
+        
+        for idx, row in tqdm(dataframe.iterrows(), total=len(dataframe), desc="Processing items"):
+            try:
+                # Skip if the embedding is None
+                if row["context_embedding"] is None:
+                    continue
+                    
+                # Create the vector object with metadata
+                # Note: Customize this part in subclasses if needed
+                item_id = str(row[id_field])
+                
+                # Create metadata dict from all columns except embedding
+                metadata = {col: row[col] for col in dataframe.columns 
+                           if col != 'context_embedding' and col in row}
+                
+                vectors_to_upsert.append({
+                    "id": item_id,
+                    "values": row["context_embedding"],
+                    "metadata": metadata
+                })
+                
+                # Upsert in batches
+                if len(vectors_to_upsert) >= batch_size:
+                    self.index.upsert(vectors=vectors_to_upsert)
+                    vectors_to_upsert = []
+                    
+            except Exception as e:
+                print(f"Error processing row {idx}: {e}")
+                continue
+        
+        # Upsert any remaining vectors
+        if vectors_to_upsert:
+            self.index.upsert(vectors=vectors_to_upsert)
+        
+        print(f"Successfully processed data into Pinecone index: {self.index_name}")
+        return True 
