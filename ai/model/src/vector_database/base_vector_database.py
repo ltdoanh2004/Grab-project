@@ -6,10 +6,11 @@ import os
 import json
 from tqdm import tqdm
 from pinecone import Pinecone, ServerlessSpec
-from typing import List, Dict, Any, Set
+from typing import List, Dict, Any, Set, Tuple
 
 # Get the directory where the script is located
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+SCRIPT_DIR = os.path.dirname(os.path.abspath(os.path.abspath(__file__)))
+print(f"SCRIPT_DIR: {SCRIPT_DIR}")
 ENV_PATH = os.path.join(SCRIPT_DIR, '.env')
 
 # Load environment variables from the correct path
@@ -360,3 +361,61 @@ class BaseVectorDatabase:
         
         print(f"Successfully processed data into Pinecone index: {self.index_name}")
         return True 
+
+    def find_missing_embeddings(self, new_df, existing_df=None, id_field="index"):
+        """
+        Compare new dataframe with existing dataframe to find rows that need embeddings
+        
+        Args:
+            new_df: DataFrame with new or updated data
+            existing_df: DataFrame with existing embedded data (if None, try to load from file)
+            id_field: Column name containing unique IDs
+            
+        Returns:
+            Tuple containing (rows_to_embed, existing_embedded_df)
+        """
+        # Make sure ID field exists in new dataframe
+        if id_field not in new_df.columns:
+            raise ValueError(f"ID field '{id_field}' not found in new dataframe")
+            
+        # If existing dataframe not provided, try to load from file
+        if existing_df is None:
+            # Try to find existing embedding file in the same directory
+            base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            filename = f"{self.index_name.replace('-', '_')}_processed_embedding.csv"
+            embedding_file = os.path.join(base_dir, 'data', filename)
+            
+            if os.path.exists(embedding_file):
+                print(f"Loading existing embeddings from {embedding_file}")
+                existing_df = pd.read_csv(embedding_file)
+            else:
+                print(f"No existing embedding file found at {embedding_file}")
+                # If no existing file, all rows need embeddings
+                return new_df, None
+                
+        # Verify existing dataframe has required columns
+        if id_field not in existing_df.columns or 'context_embedding' not in existing_df.columns:
+            print("Existing dataframe missing required columns")
+            return new_df, existing_df
+            
+        # Get IDs of rows with embeddings
+        existing_ids = set(existing_df[id_field].astype(str))
+        
+        # Find rows in new dataframe that don't have embeddings yet
+        new_ids = set(new_df[id_field].astype(str))
+        
+        # IDs that need embeddings (either new or updated)
+        missing_ids = new_ids - existing_ids
+        common_ids = new_ids.intersection(existing_ids)
+        
+        print(f"Found {len(missing_ids)} new items that need embeddings")
+        print(f"Found {len(common_ids)} items that already have embeddings")
+        
+        if len(missing_ids) == 0:
+            print("No new items to embed.")
+            return pd.DataFrame(), existing_df
+            
+        # Filter new_df to only include rows that need embeddings
+        rows_to_embed = new_df[new_df[id_field].astype(str).isin(missing_ids)].copy()
+        
+        return rows_to_embed, existing_df 

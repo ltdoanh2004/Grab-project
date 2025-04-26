@@ -10,9 +10,13 @@ class PlaceVectorDatabase(BaseVectorDatabase):
     def __init__(self):
         super().__init__(index_name="place-recommendations")
 
-    def prepare_place_embedding(self, data=None):
+    def prepare_place_embedding(self, data=None, incremental=True):
         """
         Prepare place embeddings with checkpoint support
+        
+        Args:
+            data: Path to place_processed.csv file (default: None)
+            incremental: If True, only generate embeddings for new items (default: True)
         """
         # Load data
         if data is None:
@@ -20,36 +24,56 @@ class PlaceVectorDatabase(BaseVectorDatabase):
             
         print("Loading and processing place data...")
         print(f"Loading data from: {data}")
-        self.df = pd.read_csv(data)
+        raw_df = pd.read_csv(data)
         
         # Replace NaN values with empty strings for text columns
         text_columns = ['name', 'description', 'categories', 'location', 'opening_hours']
         for col in text_columns:
-            if col in self.df.columns:
-                self.df[col] = self.df[col].fillna('')
+            if col in raw_df.columns:
+                raw_df[col] = raw_df[col].fillna('')
         
-        # Load checkpoint
-        checkpoint = self.load_checkpoint()
-        last_processed = checkpoint["last_processed_index"]
-        existing_embeddings = checkpoint["embeddings"]
-        
-        print(f"Resuming from index {last_processed + 1} out of {len(self.df)} total rows")
-        
+        # Basic processing on raw dataframe
         print("Processing entrance fees...")
-        if 'entrance_fee' in self.df.columns:
-            self.df['entrance_fee'] = self.df['entrance_fee'].fillna(0)
-            self.df['entrance_fee'] = self.df['entrance_fee'].astype(float)
+        if 'entrance_fee' in raw_df.columns:
+            raw_df['entrance_fee'] = raw_df['entrance_fee'].fillna(0)
+            raw_df['entrance_fee'] = raw_df['entrance_fee'].astype(float)
         
         print("Processing ratings...")
-        if 'rating' in self.df.columns:
-            self.df['rating'].fillna(self.df['rating'].mean(), inplace=True)
-            self.df['rating'] = self.df['rating'].astype(float)
+        if 'rating' in raw_df.columns:
+            raw_df['rating'].fillna(raw_df['rating'].mean(), inplace=True)
+            raw_df['rating'] = raw_df['rating'].astype(float)
 
         print("Generating indices...")
-        self.df['index'] = ['place_' + str(i).zfill(5) for i in range(1, len(self.df) + 1)]
-
-        print("Creating context strings...")
-        self.df['context'] = [f'''
+        if 'index' not in raw_df.columns:
+            raw_df['index'] = ['place_' + str(i).zfill(5) for i in range(1, len(raw_df) + 1)]
+        
+        # Try to find existing embeddings file if we're doing incremental processing
+        existing_df = None
+        rows_to_embed = raw_df
+        
+        if incremental:
+            # Check for existing embedding file
+            embedding_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
+                                         'data', 'place_processed_embedding.csv')
+            
+            if os.path.exists(embedding_file):
+                print(f"Found existing embedding file: {embedding_file}")
+                existing_df = pd.read_csv(embedding_file)
+                
+                # Use base class method to find missing embeddings
+                rows_to_embed, existing_df = self.find_missing_embeddings(
+                    new_df=raw_df,
+                    existing_df=existing_df,
+                    id_field="index"
+                )
+                
+                if len(rows_to_embed) == 0:
+                    print("No new rows to embed. Using existing embeddings.")
+                    self.df = existing_df
+                    return
+        
+        print(f"Creating context strings for {len(rows_to_embed)} items...")
+        rows_to_embed['context'] = [f'''
                                 Đây là mô tả của địa điểm:
                                 {row['description']}
                                 Danh mục của nó là {row.get('categories', '')}
@@ -57,24 +81,33 @@ class PlaceVectorDatabase(BaseVectorDatabase):
                                 Giờ mở cửa: {row.get('opening_hours', '')}
                                 Phí vào cửa: {row.get('entrance_fee', '0')}
                                 Điểm đánh giá của nó là {row.get('rating', '')}
-                                ''' for _, row in tqdm(self.df.iterrows(), total=len(self.df), desc="Creating contexts")]
+                                ''' for _, row in tqdm(rows_to_embed.iterrows(), total=len(rows_to_embed), desc="Creating contexts")]
 
+        # Load checkpoint
+        checkpoint = self.load_checkpoint()
+        last_processed = checkpoint["last_processed_index"]
+        existing_embeddings = checkpoint["embeddings"]
+        
+        print(f"Resuming from index {last_processed + 1} out of {len(rows_to_embed)} total rows")
+        
         print("Generating embeddings...")
         embeddings = []
-        total_rows = len(self.df)
+        total_rows = len(rows_to_embed)
         
         # Initialize embeddings list with None values
         embeddings = [None] * total_rows
         
-        # Fill in existing embeddings
+        # Fill in existing embeddings from checkpoint
         for idx, embedding in existing_embeddings.items():
-            embeddings[int(idx)] = embedding
+            idx = int(idx)
+            if idx < len(embeddings):
+                embeddings[idx] = embedding
         
         # Process remaining rows
         for idx in tqdm(range(last_processed + 1, total_rows), desc="Generating embeddings"):
             try:
                 # Generate new embedding
-                embedding = self.get_openai_embeddings(self.df.iloc[idx]['context'])
+                embedding = self.get_openai_embeddings(rows_to_embed.iloc[idx]['context'])
                 embeddings[idx] = embedding
                 
                 # Update checkpoint every 10 rows
@@ -92,22 +125,38 @@ class PlaceVectorDatabase(BaseVectorDatabase):
                 print(f"Saved checkpoint after error at index {idx - 1}")
                 raise e
         
-        self.df['context_embedding'] = embeddings
+        rows_to_embed['context_embedding'] = embeddings
+        
+        # Combine with existing data if doing incremental processing
+        final_df = rows_to_embed.copy()
+        
+        if incremental and existing_df is not None:
+            # Create a combined dataframe: new embeddings + existing embeddings
+            # Filter out any rows from existing_df that might conflict with new_df by index
+            existing_indices = set(rows_to_embed['index'].astype(str))
+            filtered_existing_df = existing_df[~existing_df['index'].astype(str).isin(existing_indices)]
+            
+            # Concatenate the filtered existing data with the new data
+            final_df = pd.concat([filtered_existing_df, rows_to_embed], ignore_index=True)
+            print(f"Combined {len(rows_to_embed)} new embeddings with {len(filtered_existing_df)} existing embeddings")
 
         # Save to the same directory as the input file
         output_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'place_processed_embedding.csv')
         print(f"Saving processed data to: {output_path}")
         
         # Convert embeddings to string representation before saving
-        self.df['context_embedding'] = self.df['context_embedding'].apply(
+        final_df['context_embedding'] = final_df['context_embedding'].apply(
             lambda x: str(x) if x is not None else None
         )
-        self.df.to_csv(output_path, index=False)
+        final_df.to_csv(output_path, index=False)
         
         # Clear checkpoint after successful completion
         if os.path.exists(self.checkpoint_file):
             os.remove(self.checkpoint_file)
             print("Cleared checkpoint after successful completion")
+            
+        # Set the dataframe on the instance for further use
+        self.df = final_df
 
     def load_data_to_pinecone(self, incremental=True):
         """
@@ -314,6 +363,7 @@ class PlaceVectorDatabase(BaseVectorDatabase):
 def main():
     parser = argparse.ArgumentParser(description='Vector Database for Place Recommendations')
     parser.add_argument('--prepare-data', action='store_true', help='Prepare and process place data')
+    parser.add_argument('--no-incremental', action='store_true', help='Reprocess all data even if embeddings exist')
     parser.add_argument('--setup-pinecone', action='store_true', help='Setup Pinecone database')
     parser.add_argument('--insert-data', action='store_true', help='Insert data into Pinecone')
     parser.add_argument('--incremental', action='store_true', help='Use incremental update for data insertion')
@@ -324,7 +374,7 @@ def main():
     vector_db = PlaceVectorDatabase()
     
     if args.prepare_data:
-        vector_db.prepare_place_embedding()
+        vector_db.prepare_place_embedding(incremental=not args.no_incremental)
     
     if args.setup_pinecone:
         vector_db.set_up_pinecone()
