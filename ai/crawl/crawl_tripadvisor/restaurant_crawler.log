@@ -565,3 +565,134 @@
 2025-04-26 09:41:18,967 - INFO - ✓ Phở Việt Nam - Phạm Hồng Thái
 2025-04-26 09:41:18,968 - INFO - Saved 2 restaurants to data_restaurants/hcmc/restaurants_20250426_094118_index_0.json
 2025-04-26 09:41:18,968 - INFO - Found 2 unique restaurants
+2025-04-26 09:46:26,904 - INFO - Starting crawl from page 1 with max_pages=50, max_restaurants=None
+2025-04-26 09:46:26,905 - INFO - Crawling page 1
+2025-04-26 09:46:26,905 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:46:29,733 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:46:29,749 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:46:29,749 - INFO - Waiting for 6.15 seconds
+2025-04-26 09:46:50,553 - INFO - Starting crawl from page 1 with max_pages=50, max_restaurants=None
+2025-04-26 09:46:50,553 - INFO - Crawling page 1
+2025-04-26 09:46:50,553 - INFO - Fetching URL: https://www.tripadvisor.com/FindRestaurants?geo=293925&establishmentTypes=10591%2C11776%2C16548%2C16556%2C21908%2C9900%2C9901%2C9909&broadened=false
+2025-04-26 09:46:52,456 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:46:52,471 - INFO - Found 34 restaurants on page 1
+2025-04-26 09:46:52,471 - INFO - Waiting for 4.28 seconds
+2025-04-26 09:46:56,752 - INFO - Starting to crawl details for 34 restaurants
+2025-04-26 09:46:56,753 - INFO - Waiting for 7.89 seconds
+2025-04-26 09:46:56,754 - INFO - Waiting for 4.15 seconds
+2025-04-26 09:46:56,755 - INFO - Waiting for 5.50 seconds
+2025-04-26 09:46:56,755 - INFO - Waiting for 7.41 seconds
+2025-04-26 09:47:00,910 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d26794670-Reviews-Ph_Vi_t_Nam_Ph_m_H_ng_Thai-Ho_Chi_Minh_City.html
+2025-04-26 09:47:02,273 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d10721705-Reviews-B_p_M_n-Ho_Chi_Minh_City.html
+2025-04-26 09:47:03,534 - ERROR - Error extracting media from reviews: not enough values to unpack (expected 2, got 1)
+2025-04-26 09:47:03,546 - INFO - Waiting for 6.14 seconds
+2025-04-26 09:47:03,546 - INFO - ✓ Phở Việt Nam - Phạm Hồng Thái
+2025-04-26 09:47:04,213 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d15046046-Reviews-Cloud_Nine_Sai_Gon_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 09:47:04,648 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d28052954-Reviews-H_i_S_n_Hoang_Gia_Cn_46_Ph_m_Van_Ngh-Ho_Chi_Minh_City.html
+2025-04-26 09:47:04,967 - ERROR - Error extracting media from reviews: not enough values to unpack (expected 2, got 1)
+2025-04-26 09:47:04,967 - INFO - Waiting for 4.61 seconds
+2025-04-26 09:47:04,967 - INFO - ✓ Bếp Mẹ ỉn
+2025-04-26 09:47:08,003 - INFO - Waiting for 4.63 seconds
+2025-04-26 09:47:08,009 - INFO - ✓ Hải Sản Hoàng Gia Cn 46 Phạm Văn Nghị
+2025-04-26 09:47:08,046 - INFO - Waiting for 4.41 seconds
+2025-04-26 09:47:08,046 - INFO - ✓ Cloud Nine Sai Gon Restaurant
+2025-04-26 09:47:09,585 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d1717810-Reviews-Cuc_Gach_Quan-Ho_Chi_Minh_City.html
+2025-04-26 09:47:09,694 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d17704147-Reviews-Secret_Garden_Vietnamese_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 09:47:11,904 - INFO - Waiting for 7.99 seconds
+2025-04-26 09:47:11,910 - INFO - ✓ Cuc Gach Quan
+2025-04-26 09:47:12,463 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d32849001-Reviews-Ph_Phat_Tai-Ho_Chi_Minh_City.html
+2025-04-26 09:47:12,545 - ERROR - Error extracting media from reviews: not enough values to unpack (expected 2, got 1)
+2025-04-26 09:47:12,546 - INFO - Waiting for 5.62 seconds
+2025-04-26 09:47:12,546 - INFO - ✓ Secret Garden Vietnamese Restaurant
+2025-04-26 09:47:12,666 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12731224-Reviews-Charm_Bakery-Ho_Chi_Minh_City.html
+2025-04-26 09:47:16,070 - ERROR - Error extracting media from reviews: not enough values to unpack (expected 2, got 1)
+2025-04-26 09:47:16,083 - INFO - Waiting for 5.60 seconds
+2025-04-26 09:47:16,083 - INFO - ✓ Phở Phát Tài
+2025-04-26 09:47:16,220 - INFO - Waiting for 5.09 seconds
+2025-04-26 09:47:16,220 - INFO - ✓ Charm Bakery
+2025-04-26 09:47:18,171 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d8806032-Reviews-Social_Club_Rooftop_Bar-Ho_Chi_Minh_City.html
+2025-04-26 09:47:19,929 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d17662928-Reviews-Banana_Mama_Rooftop_Kitchen-Ho_Chi_Minh_City.html
+2025-04-26 09:47:20,773 - INFO - Waiting for 4.77 seconds
+2025-04-26 09:47:20,773 - INFO - ✓ Social Club Rooftop Bar
+2025-04-26 09:47:21,309 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d27843772-Reviews-Tung_s_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 09:47:21,724 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d17115288-Reviews-Cafe_Marcel-Ho_Chi_Minh_City.html
+2025-04-26 09:47:23,381 - INFO - Waiting for 4.15 seconds
+2025-04-26 09:47:23,418 - INFO - ✓ Banana Mama Rooftop & Kitchen
+2025-04-26 09:47:25,119 - ERROR - Error extracting media from reviews: not enough values to unpack (expected 2, got 1)
+2025-04-26 09:47:25,131 - INFO - Waiting for 7.82 seconds
+2025-04-26 09:47:25,131 - INFO - ✓ Café Marcel
+2025-04-26 09:47:25,243 - ERROR - Error extracting media from reviews: not enough values to unpack (expected 2, got 1)
+2025-04-26 09:47:25,243 - INFO - Waiting for 6.74 seconds
+2025-04-26 09:47:25,243 - INFO - ✓ Tung's Restaurant
+2025-04-26 09:47:25,543 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d11827161-Reviews-Little_HaNoi_Egg_Coffee-Ho_Chi_Minh_City.html
+2025-04-26 09:47:27,578 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d27157928-Reviews-Palsaik_Korean_Bbq_Vietnam_Dong_Du-Ho_Chi_Minh_City.html
+2025-04-26 09:47:28,151 - INFO - Waiting for 5.05 seconds
+2025-04-26 09:47:28,151 - INFO - ✓ Little HaNoi Egg Coffee
+2025-04-26 09:47:29,552 - INFO - Waiting for 7.92 seconds
+2025-04-26 09:47:29,552 - INFO - ✓ Palsaik Korean Bbq Vietnam - Đông Du
+2025-04-26 09:47:31,985 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d1122894-Reviews-Skewers-Ho_Chi_Minh_City.html
+2025-04-26 09:47:32,954 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d17806822-Reviews-Laang_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 09:47:33,210 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12910177-Reviews-Marcel_Calmette-Ho_Chi_Minh_City.html
+2025-04-26 09:47:33,869 - INFO - Waiting for 5.18 seconds
+2025-04-26 09:47:33,869 - INFO - ✓ Skewers
+2025-04-26 09:47:36,402 - INFO - Waiting for 4.56 seconds
+2025-04-26 09:47:36,408 - INFO - ✓ Laang Restaurant
+2025-04-26 09:47:36,441 - INFO - Waiting for 5.71 seconds
+2025-04-26 09:47:36,441 - INFO - ✓ Marcel - Calmette
+2025-04-26 09:47:37,474 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d27138077-Reviews-Mayonaka_Sushi-Ho_Chi_Minh_City.html
+2025-04-26 09:47:39,091 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d4232534-Reviews-The_Daun_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 09:47:40,189 - INFO - Waiting for 5.38 seconds
+2025-04-26 09:47:40,189 - INFO - ✓ Mayonaka Sushi
+2025-04-26 09:47:41,000 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d2351312-Reviews-Ciao_Bella_District_1-Ho_Chi_Minh_City.html
+2025-04-26 09:47:41,744 - ERROR - Error extracting media from reviews: not enough values to unpack (expected 2, got 1)
+2025-04-26 09:47:41,744 - INFO - Waiting for 6.02 seconds
+2025-04-26 09:47:41,744 - INFO - ✓ The Daun Restaurant
+2025-04-26 09:47:42,161 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d18206918-Reviews-Moo_Beef_Steak_109_Ly_Tu_Trong-Ho_Chi_Minh_City.html
+2025-04-26 09:47:42,833 - INFO - Waiting for 4.68 seconds
+2025-04-26 09:47:42,833 - INFO - ✓ Ciao Bella District 1
+2025-04-26 09:47:45,261 - INFO - Waiting for 6.38 seconds
+2025-04-26 09:47:45,261 - INFO - ✓ Moo Beef Steak - 109 Ly Tu Trong
+2025-04-26 09:47:45,577 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d1122944-Reviews-Tandoor-Ho_Chi_Minh_City.html
+2025-04-26 09:47:47,527 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d1742388-Reviews-Saigon_Cafe_Seafood_Buffet_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 09:47:47,794 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d25378127-Reviews-B_p_Cu_n_Sai_Gon-Ho_Chi_Minh_City.html
+2025-04-26 09:47:48,781 - INFO - Waiting for 5.77 seconds
+2025-04-26 09:47:48,781 - INFO - ✓ Tandoor
+2025-04-26 09:47:51,681 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d19354552-Reviews-P_ti_Saigon-Ho_Chi_Minh_City.html
+2025-04-26 09:47:51,718 - ERROR - Error extracting media from reviews: not enough values to unpack (expected 2, got 1)
+2025-04-26 09:47:51,725 - INFO - Waiting for 7.59 seconds
+2025-04-26 09:47:51,730 - INFO - ✓ Bếp Cuốn Sài Gòn
+2025-04-26 09:47:51,921 - ERROR - Error extracting media from reviews: not enough values to unpack (expected 2, got 1)
+2025-04-26 09:47:51,921 - INFO - Waiting for 4.38 seconds
+2025-04-26 09:47:51,922 - INFO - ✓ Saigon Café - Seafood Buffet Restaurant
+2025-04-26 09:47:53,814 - ERROR - Error extracting media from reviews: not enough values to unpack (expected 2, got 1)
+2025-04-26 09:47:53,815 - INFO - Waiting for 4.04 seconds
+2025-04-26 09:47:53,815 - INFO - ✓ P'ti Saigon
+2025-04-26 09:47:54,554 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d6503569-Reviews-Quan_Nem_Restaurant-Ho_Chi_Minh_City.html
+2025-04-26 09:47:56,236 - ERROR - Error extracting media from reviews: not enough values to unpack (expected 2, got 1)
+2025-04-26 09:47:56,236 - INFO - Waiting for 6.03 seconds
+2025-04-26 09:47:56,236 - INFO - ✓ Quan Nem Restaurant
+2025-04-26 09:47:56,302 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d13322323-Reviews-Rice_Field-Ho_Chi_Minh_City.html
+2025-04-26 09:47:57,869 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d2200413-Reviews-Pizza_4P_s_Le_Thanh_Ton-Ho_Chi_Minh_City.html
+2025-04-26 09:47:58,316 - ERROR - Error extracting media from reviews: not enough values to unpack (expected 2, got 1)
+2025-04-26 09:47:58,316 - INFO - Waiting for 6.16 seconds
+2025-04-26 09:47:58,316 - INFO - ✓ Rice Field
+2025-04-26 09:47:59,333 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12926285-Reviews-Italiani_s_Pizza-Ho_Chi_Minh_City.html
+2025-04-26 09:48:02,154 - INFO - Waiting for 5.42 seconds
+2025-04-26 09:48:02,161 - INFO - ✓ Pizza 4P's Le Thanh Ton
+2025-04-26 09:48:02,273 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d7704159-Reviews-Pasteur_Street_Craft_Beer_Original_Taproom-Ho_Chi_Minh_City.html
+2025-04-26 09:48:02,718 - INFO - Waiting for 4.81 seconds
+2025-04-26 09:48:02,718 - INFO - ✓ Italiani's Pizza
+2025-04-26 09:48:04,490 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d28052069-Reviews-Hoang_s_Kitchen_Vietnamese_Cuisine_Vegan_Food-Ho_Chi_Minh_City.html
+2025-04-26 09:48:04,565 - INFO - Waiting for 4.51 seconds
+2025-04-26 09:48:04,565 - INFO - ✓ Pasteur Street Craft Beer - Original Taproom
+2025-04-26 09:48:06,782 - ERROR - Error extracting media from reviews: not enough values to unpack (expected 2, got 1)
+2025-04-26 09:48:06,782 - INFO - ✓ Hoang's Kitchen - Vietnamese Cuisine & Vegan Food
+2025-04-26 09:48:07,532 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d7155150-Reviews-La_Fiesta-Ho_Chi_Minh_City.html
+2025-04-26 09:48:07,596 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d14956206-Reviews-Vo_Roof-Ho_Chi_Minh_City.html
+2025-04-26 09:48:09,125 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293925-d12180159-Reviews-Cocotte-Ho_Chi_Minh_City.html
+2025-04-26 09:48:12,284 - INFO - ✓ La Fiesta
+2025-04-26 09:48:12,895 - ERROR - Error extracting media from reviews: not enough values to unpack (expected 2, got 1)
+2025-04-26 09:48:12,921 - INFO - ✓ Vo Roof
+2025-04-26 09:48:13,319 - INFO - ✓ Cocotte
+2025-04-26 09:48:13,322 - INFO - Saved 34 restaurants to data_restaurants/hcmc/20250426/restaurants_0948.json
+2025-04-26 09:48:13,322 - INFO - Found 34 unique restaurants

@@ -69,35 +69,43 @@ class RestaurantCrawler:
         return minutes_since_last_save >= self.save_interval
 
     def save_data(self, data, output_dir, location):
-        """Save data to a file with timestamp"""
+        """Save data to file with date-based organization"""
         if not data:
             logger.warning("No data to save")
             return
 
-        location_dir = os.path.join(output_dir, location)
-        os.makedirs(location_dir, exist_ok=True)
-
-        index = 0
-        while True:
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            filename = os.path.join(location_dir, f'restaurants_{timestamp}_index_{index}.json')
-            if not os.path.exists(filename):
-                break
-            index += 1
-
         try:
+            # Create location and date-specific directory
+            current_date = datetime.now().strftime('%Y%m%d')
+            location_dir = os.path.join(output_dir, location)
+            date_dir = os.path.join(location_dir, current_date)
+            os.makedirs(date_dir, exist_ok=True)
+
+            # Create filename with timestamp
+            timestamp = datetime.now().strftime('%H%M')
+            filename = os.path.join(date_dir, f'restaurants_{timestamp}.json')
+
+            # Save data
             with open(filename, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
             logger.info(f"Saved {len(data)} restaurants to {filename}")
             self.last_save_time = time.time()
+
+            # Cleanup old files in the date directory
+            json_files = sorted([f for f in os.listdir(date_dir) if f.endswith('.json')], reverse=True)
+            # Keep only the latest 3 files
+            for old_file in json_files[3:]:
+                os.remove(os.path.join(date_dir, old_file))
+                logger.info(f"Removed old file: {old_file}")
+
         except Exception as e:
-            logger.error(f"Error saving data to {filename}: {str(e)}")
-            # Create error backup
-            error_backup = f"error_backup_{int(time.time())}.json"
+            logger.error(f"Error saving data: {str(e)}")
+            # Create error backup with timestamp
+            error_file = os.path.join(output_dir, f"error_backup_{int(time.time())}.json")
             try:
-                with open(error_backup, 'w', encoding='utf-8') as f:
+                with open(error_file, 'w', encoding='utf-8') as f:
                     json.dump(data, f, indent=2, ensure_ascii=False)
-                logger.info(f"Created error backup at {error_backup}")
+                logger.info(f"Created error backup at {error_file}")
             except Exception as backup_error:
                 logger.error(f"Failed to create error backup: {str(backup_error)}")
 
