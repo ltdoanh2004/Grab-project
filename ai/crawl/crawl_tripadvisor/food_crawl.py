@@ -938,24 +938,41 @@ class RestaurantCrawler:
                 media_elements = soup.select(selector)
                 for elem in media_elements:
                     if elem.has_attr('srcset'):
-                        # Parse srcset to get the highest quality image
-                        srcset = elem['srcset']
-                        # Split srcset into URL-scale pairs
-                        pairs = [pair.strip().split(' ') for pair in srcset.split(',')]
-                        # Get URL with highest scale (2x if available)
-                        highest_quality_url = None
-                        for url, scale in pairs:
-                            if scale == '2x':
-                                highest_quality_url = url
-                                break
-                        if not highest_quality_url and pairs:
-                            highest_quality_url = pairs[-1][0]  # Take the last URL if no 2x
-                        
-                        if highest_quality_url:
-                            # Clean up the URL
-                            clean_url = highest_quality_url.strip()
-                            if clean_url not in media_urls:
-                                media_urls.append(clean_url)
+                        try:
+                            # Parse srcset to get the highest quality image
+                            srcset = elem['srcset']
+                            # Split srcset into URL-scale pairs
+                            pairs = []
+                            for pair in srcset.split(','):
+                                parts = pair.strip().split()
+                                if len(parts) >= 2:  # Only add if we have both URL and scale
+                                    pairs.append((parts[0], parts[1]))
+                                elif len(parts) == 1:  # If we only have URL, assume scale 1x
+                                    pairs.append((parts[0], '1x'))
+                            
+                            # Get URL with highest scale (2x if available)
+                            highest_quality_url = None
+                            for url, scale in pairs:
+                                if scale == '2x':
+                                    highest_quality_url = url
+                                    break
+                            if not highest_quality_url and pairs:
+                                highest_quality_url = pairs[-1][0]  # Take the last URL if no 2x
+                            
+                            if highest_quality_url:
+                                # Clean up the URL
+                                clean_url = highest_quality_url.strip()
+                                if clean_url not in media_urls:
+                                    media_urls.append(clean_url)
+                        except Exception as e:
+                            logger.error(f"Error parsing srcset: {str(e)}")
+                            # Try to get the first URL if srcset parsing fails
+                            try:
+                                first_url = elem['srcset'].split(',')[0].strip().split()[0]
+                                if first_url and first_url not in media_urls:
+                                    media_urls.append(first_url)
+                            except:
+                                pass
                     elif elem.has_attr('src'):
                         # For video sources or single-URL images
                         src_url = elem['src'].strip()
