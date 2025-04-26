@@ -311,6 +311,7 @@ class RestaurantCrawler:
 
         restaurants = []
         local_seen = set()  # Track inside this call only
+        url_counter = {}    # Count duplicate URLs in this page
 
         selectors = [
             'a[data-automation="restaurantTitleLink"]',  # Primary restaurant link selector
@@ -319,6 +320,20 @@ class RestaurantCrawler:
             'a[href^="/Restaurant_Review"]'
         ]
 
+        # First count all URLs to detect duplicates within the same page
+        all_links = []
+        for sel in selectors:
+            all_links.extend(soup.select(sel))
+            
+        for a in all_links:
+            href = a.get('href')
+            if not href:
+                continue
+            if not href.startswith('http'):
+                href = urljoin("https://www.tripadvisor.com", href)
+            url_counter[href] = url_counter.get(href, 0) + 1
+        
+        # Now extract valid restaurants and log duplicates
         for sel in selectors:
             for a in soup.select(sel):
                 href = a.get('href')
@@ -329,10 +344,27 @@ class RestaurantCrawler:
                     href = urljoin("https://www.tripadvisor.com", href)
                 if href in local_seen:
                     continue
+                    
                 local_seen.add(href)
                 restaurants.append({"name": name, "url": href})
 
-        logger.info(f"Found {len(restaurants)} restaurants on page {page}")
+        # Log information about duplicates
+        duplicate_urls = [url for url, count in url_counter.items() if count > 1]
+        if duplicate_urls:
+            logger.info(f"Found {len(duplicate_urls)} URLs that appear multiple times on this page")
+            if len(duplicate_urls) < 5:
+                for url in duplicate_urls:
+                    logger.info(f"  Duplicate URL: {url} (appears {url_counter[url]} times)")
+            else:
+                logger.info(f"  First duplicate: {duplicate_urls[0]} (appears {url_counter[duplicate_urls[0]]} times)")
+        
+        # Print the number of unique restaurants found
+        logger.info(f"Found {len(restaurants)} unique restaurants on page {page} (from {len(all_links)} total links)")
+        
+        # Count visited restaurants in the current batch
+        already_visited = [item for item in restaurants if item["url"] in self.visited_urls]
+        if already_visited:
+            logger.info(f"{len(already_visited)} of these restaurants have been visited before")
         
         # Check for next page button and print debug info
         next_page_link = soup.select_one('a[href*="o="][aria-label*="Next"]') or soup.select_one('a[href*="oa"][aria-label*="Next"]')

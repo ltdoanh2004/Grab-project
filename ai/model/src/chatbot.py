@@ -1,8 +1,8 @@
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
-from vector_database import VectorDatabase
-from backend_api import BackendAPI
+from ai.model.src.vector_database.hotel_vector_database import VectorDatabase
+from ai.model.src.api.backend_api import BackendAPI
 from typing import List, Dict, Any, Optional
 
 # Load environment variables

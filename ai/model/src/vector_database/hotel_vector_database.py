@@ -9,6 +9,8 @@ from pinecone import Pinecone, ServerlessSpec
 import json
 from typing import List, Dict, Any
 
+from .base_vector_database import BaseVectorDatabase
+
 # Get the directory where the script is located
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ENV_PATH = os.path.join(SCRIPT_DIR, '.env')
@@ -27,15 +29,13 @@ print(f"Loading environment variables from: {ENV_PATH}")
 print(f"OPEN_API_KEY exists: {bool(OPEN_API_KEY)}")
 print(f"PINECONE_API_KEY exists: {bool(PINECONE_API_KEY)}")
 
-class VectorDatabase:
+class HotelVectorDatabase(BaseVectorDatabase):
     def __init__(self):
-        self.index = None
+        super().__init__(index_name="hotel-recommendations")
         self.dimension = 1536
         self.metric = "cosine"
-        self.index_name = "hotel-recommendations"
-        self.open_api_key = OPEN_API_KEY
         self.name_model = "text-embedding-3-small"
-        self.client = OpenAI(api_key=self.open_api_key)
+        self.client = OpenAI(api_key=OPEN_API_KEY)
         self.pinecone_api_key = PINECONE_API_KEY
         self.pc = Pinecone(api_key=self.pinecone_api_key)
         self.checkpoint_file = os.path.join(SCRIPT_DIR, 'checkpoint.json')
@@ -326,95 +326,48 @@ class VectorDatabase:
         """
         Retrieve a specific hotel by its ID
         """
-        if not self.index:
-            raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
-            
-        try:
-            result = self.index.fetch(ids=[str(hotel_id)])
-            return result
-        except Exception as e:
-            print(f"Error fetching hotel: {e}")
-            return None
+        return self.get_item_by_id(hotel_id)
     
     def update_hotel(self, hotel_id, new_data):
         """
         Update a hotel's information in the database
         """
-        if not self.index:
-            raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
-            
-        # Get current hotel data
-        current_data = self.get_hotel_by_id(hotel_id)
-        if not current_data:
-            raise ValueError(f"Hotel with ID {hotel_id} not found")
-            
-        # Update metadata
-        metadata = current_data['vectors'][str(hotel_id)]['metadata']
-        metadata.update(new_data)
-        
-        # Generate new context and embedding if description or other key fields changed
-        if any(key in new_data for key in ['description', 'price', 'rating', 'room_types']):
-            context = f'''
+        def generate_hotel_context(metadata):
+            """Generate context for hotel embedding"""
+            return f'''
                 Đây là mô tả của khách sạn:
                 {metadata['description']}
                 Gía của nó là {metadata['price']}
                 Điểm đánh giá của nó là {metadata['rating']}
                 Có các loại phòng là {self.process_room_type(metadata.get('room_types', ''))}
             '''
-            new_embedding = self.get_openai_embeddings(context)
-        else:
-            new_embedding = current_data['vectors'][str(hotel_id)]['values']
         
-        # Update in Pinecone
-        self.index.upsert(
-            vectors=[{
-                "id": str(hotel_id),
-                "values": new_embedding,
-                "metadata": metadata
-            }]
+        # Check if we need to generate new context and embedding
+        needs_new_context = any(key in new_data for key in ['description', 'price', 'rating', 'room_types'])
+        
+        # Use the base class update_item method with our custom context generator
+        return self.update_item(
+            hotel_id, 
+            new_data, 
+            generate_context_func=generate_hotel_context if needs_new_context else None
         )
-        
-        return True
     
     def delete_hotel(self, hotel_id):
         """
         Delete a hotel from the database
         """
-        if not self.index:
-            raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
-            
-        try:
-            self.index.delete(ids=[str(hotel_id)])
-            return True
-        except Exception as e:
-            print(f"Error deleting hotel: {e}")
-            return False
+        return self.delete_item(hotel_id)
     
     def get_all_hotels(self, limit=1000):
         """
         Get all hotels in the database (with pagination)
         """
-        if not self.index:
-            raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
-            
-        try:
-            result = self.index.query(
-                vector=[0] * self.dimension,  # Dummy vector
-                top_k=limit,
-                include_metadata=True
-            )
-            return result
-        except Exception as e:
-            print(f"Error fetching all hotels: {e}")
-            return None
+        return self.get_all_items(limit)
     
     def search_by_price_range(self, min_price, max_price, top_k=5):
         """
         Search for hotels within a specific price range
         """
-        if not self.index:
-            raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
-            
         try:
             # Get all hotels and filter by price range
             all_hotels = self.get_all_hotels()
@@ -432,9 +385,6 @@ class VectorDatabase:
         """
         Search for hotels with minimum rating
         """
-        if not self.index:
-            raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
-            
         try:
             # Get all hotels and filter by rating
             all_hotels = self.get_all_hotels()
@@ -452,25 +402,27 @@ class VectorDatabase:
         """
         Get hotel IDs from query results
         """
-        results = self.query(query_text, top_k=top_k)
-        return [match['id'] for match in results['matches']]
+        ids, _ = self.query(query_text, top_k=top_k)
+        return ids
 
 def main():
     parser = argparse.ArgumentParser(description='Vector Database for Hotel Recommendations')
     parser.add_argument('--prepare-data', action='store_true', help='Prepare and process hotel data')
     parser.add_argument('--setup-pinecone', action='store_true', help='Setup Pinecone database')
-    parser.add_argument('--insert-data', action='store_true', help='Insert data into Pinecone (only works with --setup-pinecone)')
+    parser.add_argument('--insert-data', action='store_true', help='Insert data into Pinecone')
     parser.add_argument('--query', type=str, help='Query text to search for similar hotels')
     parser.add_argument('--top-k', type=int, default=5, help='Number of results to return')
     args = parser.parse_args()
 
-    vector_db = VectorDatabase()
+    vector_db = HotelVectorDatabase()
     
     if args.prepare_data:
         vector_db.prepare_hotel_embedding()
     
     if args.setup_pinecone:
-        vector_db.set_up_pinecone(insert_data=args.insert_data)
+        vector_db.set_up_pinecone()
+        if args.insert_data:
+            vector_db.load_data_to_pinecone()
         
     if args.query:
         # Check if Pinecone is set up, if not, set it up first

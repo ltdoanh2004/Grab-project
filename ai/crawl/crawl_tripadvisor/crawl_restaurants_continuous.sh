@@ -21,15 +21,18 @@ show_help() {
     echo "  -s, --save-interval MIN Save interval in minutes (default: 15)"
     echo "  -p, --start-page NUM    Start from page number (default: 1)"
     echo "  -r, --reset            Reset crawl (delete tracking files)"
+    echo "  -u, --use-standard     Force use standard URL format (better pagination)"
     echo "  -h, --help             Show this help message"
     echo
     echo "Example:"
     echo "  $0 \"https://www.tripadvisor.com/Restaurants-g293925-Ho_Chi_Minh_City.html\""
     echo "  $0 -l hanoi -d 5 \"https://www.tripadvisor.com/Restaurants-g293924-Hanoi.html\""
+    echo "  $0 -l danang -u \"https://www.tripadvisor.com/FindRestaurants?geo=293926&establishmentTypes=10591%2C11776%2C16556%2C9900%2C9901%2C9909&broadened=false\""
 }
 
 # Parse command line arguments
 RESET=false
+USE_STANDARD_URL=false
 URL=""
 
 while [[ $# -gt 0 ]]; do
@@ -66,6 +69,10 @@ while [[ $# -gt 0 ]]; do
             RESET=true
             shift
             ;;
+        -u|--use-standard)
+            USE_STANDARD_URL=true
+            shift
+            ;;
         -h|--help)
             show_help
             exit 0
@@ -90,17 +97,26 @@ if [ -z "$URL" ]; then
 fi
 
 # Convert FindRestaurants URL to standard format if needed
-if [[ "$URL" == *"FindRestaurants"* ]]; then
-    if [[ "$URL" == *"geo=293925"* ]]; then
-        echo "Converting FindRestaurants URL to standard format for Ho Chi Minh City"
+if [ "$USE_STANDARD_URL" = true ] || [[ "$URL" == *"FindRestaurants"* ]]; then
+    if [[ "$URL" == *"geo=293925"* ]] || [[ "$LOCATION" == "hcmc" ]]; then
+        echo "Converting to standard URL format for Ho Chi Minh City"
         URL="https://www.tripadvisor.com/Restaurants-g293925-Ho_Chi_Minh_City.html"
-    elif [[ "$URL" == *"geo=293924"* ]]; then
-        echo "Converting FindRestaurants URL to standard format for Hanoi"
+    elif [[ "$URL" == *"geo=293924"* ]] || [[ "$LOCATION" == "hanoi" ]]; then
+        echo "Converting to standard URL format for Hanoi"
         URL="https://www.tripadvisor.com/Restaurants-g293924-Hanoi.html"
+    elif [[ "$URL" == *"geo=293926"* ]] || [[ "$LOCATION" == "danang" ]]; then
+        echo "Converting to standard URL format for Da Nang"
+        URL="https://www.tripadvisor.com/Restaurants-g293926-Da_Nang.html"
     else
         echo "Warning: FindRestaurants URL detected but couldn't determine city. Pagination might not work correctly."
+        echo "Consider using one of these URLs instead:"
+        echo "  - Ho Chi Minh City: https://www.tripadvisor.com/Restaurants-g293925-Ho_Chi_Minh_City.html"
+        echo "  - Hanoi: https://www.tripadvisor.com/Restaurants-g293924-Hanoi.html"
+        echo "  - Da Nang: https://www.tripadvisor.com/Restaurants-g293926-Da_Nang.html"
     fi
 fi
+
+echo "Using URL: $URL"
 
 # Setup directories and files
 STATE_FILE="$OUTPUT_DIR/crawler_state.json"
