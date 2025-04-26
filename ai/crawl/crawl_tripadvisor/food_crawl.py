@@ -51,11 +51,33 @@ class RestaurantCrawler:
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
             'Referer': 'https://www.tripadvisor.com/'
         }
-        self.visited_urls = set()
+        self.visited_urls = self.load_visited_urls()
         self.visited_restaurants = set()
         self.custom_type = custom_type
         self.session = requests.Session()
         self.session.headers.update(self.headers)
+        self.master_data = self.load_master_data()
+
+    def load_visited_urls(self):
+        """Load previously visited URLs from file"""
+        visited_file = "visited_urls.json"
+        try:
+            if os.path.exists(visited_file):
+                with open(visited_file, 'r', encoding='utf-8') as f:
+                    return set(json.load(f))
+        except Exception as e:
+            logger.error(f"Error loading visited URLs: {str(e)}")
+        return set()
+
+    def save_visited_urls(self):
+        """Save visited URLs to file"""
+        visited_file = "visited_urls.json"
+        try:
+            with open(visited_file, 'w', encoding='utf-8') as f:
+                json.dump(list(self.visited_urls), f, indent=2)
+            logger.info(f"Saved {len(self.visited_urls)} visited URLs")
+        except Exception as e:
+            logger.error(f"Error saving visited URLs: {str(e)}")
 
     def _random_delay(self):
         """Add a random delay between requests to avoid being blocked"""
@@ -68,35 +90,118 @@ class RestaurantCrawler:
         minutes_since_last_save = (time.time() - self.last_save_time) / 60
         return minutes_since_last_save >= self.save_interval
 
+    def load_master_data(self):
+        """Load all previously crawled restaurants from master file"""
+        master_file = "all_restaurants.json"
+        try:
+            if os.path.exists(master_file):
+                with open(master_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    logger.info(f"Loaded {len(data)} restaurants from master file")
+                    return data
+        except Exception as e:
+            logger.error(f"Error loading master data: {str(e)}")
+        return []
+
+    def save_master_data(self, new_data):
+        """Save all restaurants to master file, avoiding duplicates"""
+        master_file = "all_restaurants.json"
+        try:
+            # Merge new data with existing master data
+            all_data = self.master_data + new_data
+            
+            # Remove duplicates based on URL while keeping the newest data
+            url_to_data = {}
+            for item in all_data:
+                url_to_data[item['url']] = item
+            
+            unique_data = list(url_to_data.values())
+            
+            # Save to master file
+            with open(master_file, 'w', encoding='utf-8') as f:
+                json.dump(unique_data, f, indent=2, ensure_ascii=False)
+            
+            # Update master data in memory
+            self.master_data = unique_data
+            
+            logger.info(f"Saved {len(unique_data)} restaurants to master file")
+            
+            # Create a backup of master file
+            backup_file = f"all_restaurants_backup_{datetime.now().strftime('%Y%m%d_%H%M')}.json"
+            with open(backup_file, 'w', encoding='utf-8') as f:
+                json.dump(unique_data, f, indent=2, ensure_ascii=False)
+            
+            # Keep only the last 5 backups
+            backup_files = sorted([f for f in os.listdir('.') if f.startswith('all_restaurants_backup_')])
+            for old_backup in backup_files[:-5]:
+                os.remove(old_backup)
+                
+        except Exception as e:
+            logger.error(f"Error saving master data: {str(e)}")
+
     def save_data(self, data, output_dir, location):
-        """Save data to file with date-based organization"""
+        """Save data to file with date-based organization and master file"""
         if not data:
             logger.warning("No data to save")
             return
 
         try:
+            # Save to master file first
+            self.save_master_data(data)
+
             # Create location and date-specific directory
             current_date = datetime.now().strftime('%Y%m%d')
             location_dir = os.path.join(output_dir, location)
             date_dir = os.path.join(location_dir, current_date)
             os.makedirs(date_dir, exist_ok=True)
 
-            # Create filename with timestamp
+            # Get existing data from today's files
+            existing_data = []
+            json_files = [f for f in os.listdir(date_dir) if f.endswith('.json')]
+            for json_file in json_files:
+                try:
+                    with open(os.path.join(date_dir, json_file), 'r', encoding='utf-8') as f:
+                        file_data = json.load(f)
+                        if isinstance(file_data, list):
+                            existing_data.extend(file_data)
+                except Exception as e:
+                    logger.error(f"Error reading file {json_file}: {str(e)}")
+
+            # Merge new data with existing data
+            all_data = existing_data + data
+            
+            # Remove duplicates based on URL
+            seen_urls = set()
+            unique_data = []
+            for item in all_data:
+                if item['url'] not in seen_urls:
+                    seen_urls.add(item['url'])
+                    unique_data.append(item)
+
+            # Create new filename with timestamp
             timestamp = datetime.now().strftime('%H%M')
             filename = os.path.join(date_dir, f'restaurants_{timestamp}.json')
 
-            # Save data
+            # Save merged data
             with open(filename, 'w', encoding='utf-8') as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
-            logger.info(f"Saved {len(data)} restaurants to {filename}")
+                json.dump(unique_data, f, indent=2, ensure_ascii=False)
+            logger.info(f"Saved {len(unique_data)} restaurants to {filename}")
             self.last_save_time = time.time()
 
-            # Cleanup old files in the date directory
-            json_files = sorted([f for f in os.listdir(date_dir) if f.endswith('.json')], reverse=True)
-            # Keep only the latest 3 files
-            for old_file in json_files[3:]:
-                os.remove(os.path.join(date_dir, old_file))
-                logger.info(f"Removed old file: {old_file}")
+            # Save visited URLs
+            self.save_visited_urls()
+
+            # Remove old files after successful merge
+            for old_file in json_files:
+                old_path = os.path.join(date_dir, old_file)
+                try:
+                    os.remove(old_path)
+                    logger.info(f"Removed old file after merge: {old_file}")
+                except Exception as e:
+                    logger.error(f"Error removing old file {old_file}: {str(e)}")
+
+            # Cleanup old date directories (keep last 7 days)
+            self._cleanup_old_dates(location_dir)
 
         except Exception as e:
             logger.error(f"Error saving data: {str(e)}")
@@ -108,6 +213,30 @@ class RestaurantCrawler:
                 logger.info(f"Created error backup at {error_file}")
             except Exception as backup_error:
                 logger.error(f"Failed to create error backup: {str(backup_error)}")
+
+    def _cleanup_old_dates(self, location_dir):
+        """Cleanup old date directories, keeping only the last 7 days"""
+        try:
+            # Get all date directories
+            date_dirs = [d for d in os.listdir(location_dir) 
+                        if os.path.isdir(os.path.join(location_dir, d)) 
+                        and d.isdigit() and len(d) == 8]
+            
+            # Sort by date (newest first)
+            date_dirs.sort(reverse=True)
+            
+            # Remove directories older than 7 days
+            for old_dir in date_dirs[7:]:
+                old_path = os.path.join(location_dir, old_dir)
+                try:
+                    import shutil
+                    shutil.rmtree(old_path)
+                    logger.info(f"Removed old date directory: {old_dir}")
+                except Exception as e:
+                    logger.error(f"Error removing directory {old_dir}: {str(e)}")
+                    
+        except Exception as e:
+            logger.error(f"Error during date directory cleanup: {str(e)}")
 
     def get_soup(self, url, retries=3):
         """Get BeautifulSoup object from URL with retries"""
@@ -866,6 +995,10 @@ class RestaurantCrawler:
                 logger.warning(f"No restaurants found on page {page}, stopping listing collection")
                 break
                 
+            # Filter out already visited URLs
+            lst = [item for item in lst if item["url"] not in self.visited_urls]
+            logger.info(f"Found {len(lst)} new restaurants after filtering visited URLs")
+            
             all_listings.extend(lst)
             if max_restaurants and len(all_listings) >= max_restaurants:
                 logger.info(f"Reached max_restaurants limit ({max_restaurants})")
@@ -876,7 +1009,7 @@ class RestaurantCrawler:
             self._random_delay()
 
         if not all_listings:
-            logger.warning("No restaurant listings found.")
+            logger.warning("No new restaurant listings found.")
             return detailed
 
         logger.info(f"Starting to crawl details for {len(all_listings)} restaurants")
