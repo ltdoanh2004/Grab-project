@@ -20,17 +20,36 @@ ai/crawl/crawl_ggmaps/output/
 
 ai/crawl/crawl_hanoi_tourist/data/
 
+# Ignore all data files
 ai/model/data/
+ai/model/src/data/
 
 # env
 ai/model/src/.env
 
-# checkpoint
+# checkpoint files
 ai/model/src/checkpoint.json
-ai/model/src/data/
 ai/model/src/vector_database/checkpoint.json
+ai/model/src/vector_database/*_checkpoint.json
+
+# embedding and processed files (large files)
+*_embedding.csv
+*_processed.csv
+*_processed_embedding.csv
+ai/model/src/data/hotel_processed.csv
+ai/model/src/data/hotel_processed_embedding.csv
+ai/model/src/data/fnb_processed.csv
+ai/model/src/data/fnb_processed_embedding.csv
+ai/model/src/data/place_processed.csv
+ai/model/src/data/place_processed_embedding.csv
 
 # pinecone
 ai/model/src/vector_database/pinecone_index.json
 ai/model/src/vector_database/pinecone_index.json.lock
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
 
