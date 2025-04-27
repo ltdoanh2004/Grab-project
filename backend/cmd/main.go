@@ -86,6 +86,8 @@ func main() {
 			repository.NewTripAccommodationRepository,
 			repository.NewTripActivityRepository,
 			repository.NewTripRestaurantRepository,
+			repository.NewImageRepository,
+			repository.NewRoomTypeRepository,
 			service.NewService,
 			service.NewAuthService,
 			service.NewTripService,
@@ -135,6 +137,7 @@ func RegisterRoutes(
 	auth_controller *controller.AuthController,
 	suggest_controller *controller.SuggestController,
 	trip_controller *controller.TripController,
+	insertDataService service.InsertDataService,
 ) {
 	controller.RegisterRoutes(router)
 	auth_controller.RegisterRoutes(router)
@@ -151,6 +154,13 @@ func RegisterRoutes(
 	lifecycle.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			log.Info().Msgf("Starting server on port %s", cfg.Server.Port)
+
+			err := insertDataService.InsertHotelData("../data/hotel_processed.csv")
+			if err != nil {
+				log.Fatal().Err(err).Msg("Failed to import data from CSV")
+				return err
+			}
+
 			go func() {
 				if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 					log.Fatal().Err(err).Msg("Failed to start server")

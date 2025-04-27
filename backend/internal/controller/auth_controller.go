@@ -12,18 +12,15 @@ import (
 
 // AuthController handles authentication-related HTTP requests.
 type AuthController struct {
-	authService       service.AuthService
-	insertDataService service.InsertDataService
+	authService service.AuthService
 }
 
 // NewAuthController creates a new instance of AuthController.
 func NewAuthController(
 	authService service.AuthService,
-	insertDataService service.InsertDataService,
 ) *AuthController {
 	return &AuthController{
-		authService:       authService,
-		insertDataService: insertDataService,
+		authService: authService,
 	}
 }
 
