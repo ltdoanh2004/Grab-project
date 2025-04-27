@@ -16,6 +16,7 @@ type Accommodation struct {
 	RoomInfo        string  `json:"room_info"`
 	Unit            string  `json:"unit"`
 
+	// Update relationship definitions
 	Images    []Image    `gorm:"foreignKey:AccommodationID" json:"images"`
 	RoomTypes []RoomType `gorm:"foreignKey:AccommodationID" json:"room_types"`
 }

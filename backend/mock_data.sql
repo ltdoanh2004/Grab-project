@@ -62,13 +62,29 @@ INSERT INTO trip_activities (trip_activity_id, trip_destination_id, activity_id,
 ('tact_000004', 'tdest_000004', 'act_000004', '2024-09-17', '2024-09-17 15:00:00', '2024-09-17 18:00:00', 'Book in advance'),
 ('tact_000005', 'tdest_000005', 'act_000005', '2024-06-02', '2024-06-02 10:30:00', '2024-06-02 11:15:00', 'Check show timings');
 
--- Insert mock data into the accommodations tablee
-INSERT INTO accommodations (accommodation_id, destination_id, name, type, address, booking_link, star_rating, description, amenities, image_url) VALUES
-('hotel_000001', 'dest_000001', 'Hotel Plaza Athenee', 'hotel', '25 Avenue Montaigne, 75008 Paris, France', 'hotelplaza.com', 5.0, 'Luxury hotel in Paris', 'Pool, Spa, Restaurant', 'plaza_athenee.jpg'),
-('hotel_000002', 'dest_000002', 'Park Hyatt Tokyo', 'hotel', '3-7-1-2 Nishi-Shinjuku, Shinjuku-Ku, Tokyo, Japan', 'parkhyatt.com', 5.0, 'Luxury hotel in Tokyo', 'Pool, Spa, Restaurant', 'park_hyatt_tokyo.jpg'),
-('hotel_000003', 'dest_000003', 'The Ritz-Carlton New York', 'hotel', '50 Central Park S, New York, NY 10019, USA', 'ritzcarlton.com', 5.0, 'Luxury hotel in New York', 'Pool, Spa, Restaurant', 'ritz_newyork.jpg'),
-('hotel_000004', 'dest_000004', 'Hotel de Russie', 'hotel', 'Via del Babuino, 9, 00187 Roma RM, Italy', 'roccofortehotels.com', 5.0, 'Luxury hotel in Rome', 'Garden, Spa, Restaurant', 'hotel_de_russie.jpg'),
-('hotel_000005', 'dest_000005', 'Park Hyatt Sydney', 'hotel', '7 Hickson Rd, The Rocks NSW 2000, Australia', 'hyatt.com', 5.0, 'Luxury hotel in Sydney', 'Pool, Spa, Restaurant', 'park_hyatt_sydney.jpg');
+-- Insert mock data into the accommodations table
+INSERT INTO accommodations (accommodation_id, destination_id, name, link, price, tax_info, rating, location, description, city, elderly_friendly, room_info, unit) VALUES
+('hotel_000001', 'dest_000001', 'Hotel Plaza Athenee', 'hotelplaza.com', 500.00, 'Tax included', 5.0, '25 Avenue Montaigne, 75008 Paris', 'Luxury hotel in Paris', 'Paris', true, '100 rooms available', 'EUR'),
+('hotel_000002', 'dest_000002', 'Park Hyatt Tokyo', 'parkhyatt.com', 600.00, 'Tax: 10%', 5.0, '3-7-1-2 Nishi-Shinjuku', 'Luxury hotel in Tokyo', 'Tokyo', true, '150 rooms available', 'JPY'),
+('hotel_000003', 'dest_000003', 'The Ritz-Carlton', 'ritzcarlton.com', 800.00, 'Tax: 8.875%', 5.0, '50 Central Park South', 'Luxury hotel in New York', 'New York', true, '200 rooms available', 'USD'),
+('hotel_000004', 'dest_000004', 'Hotel de Russie', 'hotelderussie.com', 450.00, 'Tax included', 4.8, 'Via del Babuino, 9', 'Luxury hotel in Rome', 'Rome', true, '80 rooms available', 'EUR'),
+('hotel_000005', 'dest_000005', 'Park Hyatt Sydney', 'hyattsydney.com', 700.00, 'Tax: 10% GST', 4.9, '7 Hickson Road', 'Luxury hotel in Sydney', 'Sydney', true, '120 rooms available', 'AUD');
+
+-- Insert mock data into the images table
+INSERT INTO images (image_id, accommodation_id, url, alt) VALUES
+('img_000001', 'hotel_000001', 'plaza_athenee_1.jpg', 'Hotel Plaza Athenee Exterior'),
+('img_000002', 'hotel_000001', 'plaza_athenee_2.jpg', 'Hotel Plaza Athenee Room'),
+('img_000003', 'hotel_000002', 'park_hyatt_tokyo_1.jpg', 'Park Hyatt Tokyo Exterior'),
+('img_000004', 'hotel_000002', 'park_hyatt_tokyo_2.jpg', 'Park Hyatt Tokyo Room'),
+('img_000005', 'hotel_000003', 'ritz_carlton_1.jpg', 'Ritz Carlton Exterior');
+
+-- Insert mock data into the room_types table
+INSERT INTO room_types (room_type_id, accommodation_id, name, bed_type, price, taxes_and_fees, occupancy, conditions) VALUES
+('room_000001', 'hotel_000001', 'Deluxe Room', 'King', '500', 'Tax included', '2', 'Free cancellation 24h before check-in'),
+('room_000002', 'hotel_000001', 'Suite', 'King', '800', 'Tax included', '2-3', 'Free cancellation 48h before check-in'),
+('room_000003', 'hotel_000002', 'Park Suite', 'King', '1000', '10% tax', '2', 'Non-refundable'),
+('room_000004', 'hotel_000003', 'Executive Suite', 'King', '1200', '8.875% tax', '2-4', 'Free cancellation 72h before check-in'),
+('room_000005', 'hotel_000004', 'Classic Room', 'Queen', '450', 'Tax included', '2', 'Free cancellation 24h before check-in');
 
 -- Insert mock data into the trip_accommodations table
 INSERT INTO trip_accommodations (trip_accommodation_id, trip_destination_id, accommodation_id, check_in_date, check_out_date, cost, notes) VALUES
