@@ -26223,3 +26223,86 @@
 2025-04-27 00:14:32,750 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurants-g293925-Ho_Chi_Minh_City-oa30.html
 2025-04-27 00:14:33,149 - ERROR - Error fetching URL https://www.tripadvisor.com/Restaurants-g293925-Ho_Chi_Minh_City-oa30.html: 403 Client Error: Forbidden for url: https://www.tripadvisor.com/Restaurants-g293925-Ho_Chi_Minh_City-oa30.html
 2025-04-27 00:14:33,149 - INFO - Retrying after 30 seconds...
+2025-04-27 12:52:48,831 - INFO - Starting crawl from page 2 with max_pages=1, max_restaurants=None
+2025-04-27 12:52:48,831 - INFO - Crawling page 2
+2025-04-27 12:52:48,831 - INFO - Original URL: https://www.tripadvisor.com/Restaurants-g293926-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:52:48,831 - INFO - Paginated URL for page 2: https://www.tripadvisor.com/Restaurants-g293926-Hue_Thua_Thien_Hue_Province-oa30.html
+2025-04-27 12:52:48,831 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurants-g293926-Hue_Thua_Thien_Hue_Province-oa30.html
+2025-04-27 12:52:50,880 - INFO - Found 33 URLs that appear multiple times on this page
+2025-04-27 12:52:50,880 - INFO -   First duplicate: https://www.tripadvisor.com/Restaurant_Review-g293926-d28118958-Reviews-Pizz_a_Restaurant_Italian_Cuisine-Hue_Thua_Thien_Hue_Province.html (appears 2 times)
+2025-04-27 12:52:50,880 - INFO - Found 33 unique restaurants on page 2 (from 99 total links)
+2025-04-27 12:52:50,890 - INFO - Next page link found: https://www.tripadvisor.com/Restaurants-g293926-oa60-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:52:50,890 - INFO - Found 33 restaurants on page 2
+2025-04-27 12:52:50,890 - INFO - First 5 URLs found on page 2:
+2025-04-27 12:52:50,890 - INFO -   1. Pizz.á Restaurant - Italian Cuisine - https://www.tripadvisor.com/Restaurant_Review-g293926-d28118958-Reviews-Pizz_a_Restaurant_Italian_Cuisine-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:52:50,890 - INFO -   2. Dmz Bar & Restaurant - https://www.tripadvisor.com/Restaurant_Review-g293926-d1738361-Reviews-Dmz_Bar_Restaurant-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:52:50,890 - INFO -   3. 31.Family Home Cafe & Restaurant - https://www.tripadvisor.com/Restaurant_Review-g293926-d2012139-Reviews-Family_Home_Cafe_Restaurant-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:52:50,890 - INFO -   4. 32.Elegant Restaurant - https://www.tripadvisor.com/Restaurant_Review-g293926-d7192741-Reviews-Elegant_Restaurant-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:52:50,890 - INFO -   5. 33.Shino Sushi 2 - Japanese Restaurant - Hue - https://www.tripadvisor.com/Restaurant_Review-g293926-d19102669-Reviews-Shino_Sushi_2_Japanese_Restaurant_Hue-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:52:50,891 - INFO - Found 33 new restaurants after filtering visited URLs
+2025-04-27 12:52:50,891 - INFO - Waiting for 5.62 seconds
+2025-04-27 12:52:56,515 - INFO - Starting to crawl details for 33 restaurants
+2025-04-27 12:52:56,516 - INFO - Waiting for 6.39 seconds
+2025-04-27 12:52:56,516 - INFO - Waiting for 5.74 seconds
+2025-04-27 12:52:56,517 - INFO - Waiting for 5.76 seconds
+2025-04-27 12:52:56,517 - INFO - Waiting for 5.70 seconds
+2025-04-27 12:53:02,221 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d7192741-Reviews-Elegant_Restaurant-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:02,255 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d1738361-Reviews-Dmz_Bar_Restaurant-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:02,280 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d2012139-Reviews-Family_Home_Cafe_Restaurant-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:02,913 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d28118958-Reviews-Pizz_a_Restaurant_Italian_Cuisine-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:07,208 - INFO - Waiting for 7.07 seconds
+2025-04-27 12:53:07,227 - INFO - ✓ Elegant Restaurant
+2025-04-27 12:53:07,562 - INFO - Waiting for 6.02 seconds
+2025-04-27 12:53:07,574 - INFO - ✓ Family Home Cafe & Restaurant
+2025-04-27 12:53:07,774 - INFO - Waiting for 6.78 seconds
+2025-04-27 12:53:07,781 - INFO - ✓ Dmz Bar & Restaurant
+2025-04-27 12:53:07,984 - INFO - Waiting for 7.85 seconds
+2025-04-27 12:53:07,984 - INFO - ✓ Pizz.á Restaurant - Italian Cuisine
+2025-04-27 12:53:13,612 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d27488427-Reviews-Huong_Ng_Restaurant-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:14,320 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d19102669-Reviews-Shino_Sushi_2_Japanese_Restaurant_Hue-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:14,581 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d1371993-Reviews-La_Boulangerie_Francaise-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:15,846 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d33026771-Reviews-H_Com_N_u_L_i_Hu-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:16,396 - INFO - Waiting for 7.25 seconds
+2025-04-27 12:53:16,478 - INFO - ✓ Hương Ngự Restaurant
+2025-04-27 12:53:17,929 - INFO - Waiting for 6.27 seconds
+2025-04-27 12:53:17,941 - INFO - ✓ Hạ - Cơm Nấu Lối Huế
+2025-04-27 12:53:18,360 - INFO - Waiting for 7.24 seconds
+2025-04-27 12:53:18,366 - INFO - ✓ La Boulangerie Francaise
+2025-04-27 12:53:18,402 - INFO - Waiting for 5.01 seconds
+2025-04-27 12:53:18,402 - INFO - ✓ Shino Sushi 2 - Japanese Restaurant - Hue
+2025-04-27 12:53:23,414 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d12832825-Reviews-Ta_Vet-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:23,732 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d1600092-Reviews-Le_Parfum-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:24,231 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d25392101-Reviews-Vietnammese_Restaurant_Fastfood22-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:25,078 - INFO - Waiting for 5.02 seconds
+2025-04-27 12:53:25,084 - INFO - ✓ Ta Vet
+2025-04-27 12:53:25,617 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d1121818-Reviews-Y_Thao_Garden-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:25,673 - INFO - Waiting for 5.80 seconds
+2025-04-27 12:53:25,679 - INFO - ✓ Le Parfum
+2025-04-27 12:53:26,859 - INFO - Waiting for 6.92 seconds
+2025-04-27 12:53:26,859 - INFO - ✓ Vietnammese Restaurant & Fastfood22
+2025-04-27 12:53:27,198 - INFO - Waiting for 5.86 seconds
+2025-04-27 12:53:27,198 - INFO - ✓ Y Thao Garden
+2025-04-27 12:53:30,129 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d8285487-Reviews-Ganesh_Indian_Restaurant-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:31,497 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d4829631-Reviews-Tha_Om_Garden_House-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:32,001 - INFO - Waiting for 6.48 seconds
+2025-04-27 12:53:32,001 - INFO - ✓ Ganesh Indian Restaurant
+2025-04-27 12:53:33,071 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d8327395-Reviews-Shiva_Shakti_Indian_Restaurant-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:33,325 - INFO - Waiting for 6.58 seconds
+2025-04-27 12:53:33,325 - INFO - ✓ Tha Om Garden House
+2025-04-27 12:53:33,818 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d27539193-Reviews-Le_Soleil_De_Hu-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:35,297 - INFO - Waiting for 7.01 seconds
+2025-04-27 12:53:35,303 - INFO - ✓ Shiva Shakti Indian Restaurant
+2025-04-27 12:53:35,667 - INFO - Waiting for 6.45 seconds
+2025-04-27 12:53:35,667 - INFO - ✓ Le Soleil De Huế
+2025-04-27 12:53:38,482 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d1909247-Reviews-Little_Italy_Restaurant-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:39,916 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d1122506-Reviews-HotTuna_Restaurant-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:40,760 - INFO - Waiting for 5.50 seconds
+2025-04-27 12:53:40,760 - INFO - ✓ Little Italy Restaurant
+2025-04-27 12:53:42,126 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d1604153-Reviews-L_c_Thi_n_Restaurant-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:42,239 - INFO - Waiting for 7.61 seconds
+2025-04-27 12:53:42,239 - INFO - ✓ HotTuna Restaurant
+2025-04-27 12:53:42,326 - INFO - Fetching URL: https://www.tripadvisor.com/Restaurant_Review-g293926-d26768478-Reviews-Chez_Mais-Hue_Thua_Thien_Hue_Province.html
+2025-04-27 12:53:44,633 - INFO - Waiting for 4.52 seconds
+2025-04-27 12:53:44,639 - INFO - ✓ Chez Maïs
+2025-04-27 12:53:44,661 - INFO - Waiting for 5.87 seconds
+2025-04-27 12:53:44,661 - INFO - ✓ Lạc Thiện Restaurant
