@@ -5,11 +5,17 @@ type Accommodation struct {
 	AccommodationID string  `gorm:"type:char(36);primaryKey" json:"accommodation_id"`
 	DestinationID   string  `gorm:"type:char(36);" json:"destination_id"`
 	Name            string  `gorm:"size:100;not null" json:"name"`
-	Type            string  `gorm:"type:enum('hotel','hostel','apartment','resort','other')"`
-	Address         string  `json:"address"`
-	BookingLink     string  `gorm:"size:100" json:"booking_link"`
-	StarRating      float64 `gorm:"type:decimal(3,1)" json:"star_rating"`
+	Link            string  `gorm:"size:255" json:"link"`
+	Price           float64 `gorm:"type:decimal(10,2)" json:"price"`
+	TaxInfo         string  `json:"tax_info"`
+	Rating          float64 `gorm:"type:decimal(3,1)" json:"rating"`
+	Location        string  `json:"location"`
 	Description     string  `json:"description"`
-	Amenities       string  `json:"amenities"`
-	ImageURL        string  `gorm:"size:255" json:"image_url"`
+	City            string  `json:"city"`
+	ElderlyFriendly bool    `json:"elderly_friendly"`
+	RoomInfo        string  `json:"room_info"`
+	Unit            string  `json:"unit"`
+
+	Images    []Image    `gorm:"foreignKey:AccommodationID" json:"images"`
+	RoomTypes []RoomType `gorm:"foreignKey:AccommodationID" json:"room_types"`
 }

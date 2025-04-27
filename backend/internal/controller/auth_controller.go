@@ -12,13 +12,18 @@ import (
 
 // AuthController handles authentication-related HTTP requests.
 type AuthController struct {
-	authService service.AuthService
+	authService       service.AuthService
+	insertDataService service.InsertDataService
 }
 
 // NewAuthController creates a new instance of AuthController.
-func NewAuthController(authService service.AuthService) *AuthController {
+func NewAuthController(
+	authService service.AuthService,
+	insertDataService service.InsertDataService,
+) *AuthController {
 	return &AuthController{
-		authService: authService,
+		authService:       authService,
+		insertDataService: insertDataService,
 	}
 }
 
@@ -45,6 +50,7 @@ func (ac *AuthController) RegisterRoutes(router *gin.Engine) {
 // @Router /api/v1/auth/register [post]
 func (ac *AuthController) Register(ctx *gin.Context) {
 	var registerRequest dto.RegisterRequest
+	// ac.insertDataService.ReadCSV("../data/hotel_processed.csv")
 
 	// Bind the JSON payload to the RegisterRequest struct.
 	if err := ctx.ShouldBindJSON(&registerRequest); err != nil {

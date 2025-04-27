@@ -1,5 +1,7 @@
 package dto
 
+import "skeleton-internship-backend/internal/model"
+
 type TravelPreference struct {
 	Location     string   `json:"location"`
 	TravelStyle  string   `json:"travel_style"`
@@ -47,17 +49,23 @@ type RestaurantsSuggestion struct {
 }
 
 type AccommodationSuggestion struct {
-	AccommodationID string  `json:"accommodation_id"`
-	DestinationID   string  `json:"destination_id"`
-	Name            string  `json:"name"`
-	Type            string  `json:"type"`
-	Address         string  `json:"address"`
-	BookingLink     string  `json:"booking_link"`
-	StarRating      float64 `json:"star_rating"`
-	Description     string  `json:"description"`
-	Amenities       string  `json:"amenities"`
-	ImageURL        string  `json:"image_url"`
+	AccommodationID string           `json:"accommodation_id"`
+	DestinationID   string           `json:"destination_id"`
+	Name            string           `json:"name"`
+	Location        string           `json:"location"`
+	City            string           `json:"city"`
+	Price           float64          `json:"price"`
+	Rating          float64          `json:"rating"`
+	Description     string           `json:"description"`
+	Link            string           `json:"booking_link"`
+	Images          []model.Image    `json:"image_url"`
+	RoomTypes       []model.RoomType `json:"room_types"`
+	RoomInfo        string           `json:"room_info"`
+	Unit            string           `json:"unit"`
+	TaxInfo         string           `json:"tax_info"`
+	ElderlyFriendly bool             `json:"elderly_friendly"`
 }
+
 type AccommodationsSuggestion struct {
 	Accommodations []AccommodationSuggestion `json:"accommodations"`
 }

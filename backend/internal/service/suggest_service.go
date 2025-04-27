@@ -102,7 +102,7 @@ func (ss *suggestService) SuggestAccommodations(travelPreference *dto.TravelPref
 
 	var suggestion dto.AccommodationsSuggestion
 	for i := range rsp.IDs {
-		accommodation, err := ss.AccommodationRepository.GetByID(rsp.IDs[i])
+		accommodation, err := ss.AccommodationRepository.GetByIDWithAssociations(rsp.IDs[i])
 		if err != nil {
 			return nil, fmt.Errorf("failed to fetch accommodation with ID %s: %w", rsp.IDs[i], err)
 		}
@@ -110,13 +110,18 @@ func (ss *suggestService) SuggestAccommodations(travelPreference *dto.TravelPref
 			AccommodationID: accommodation.AccommodationID,
 			DestinationID:   accommodation.DestinationID,
 			Name:            accommodation.Name,
-			Type:            accommodation.Type,
-			Address:         accommodation.Address,
-			BookingLink:     accommodation.BookingLink,
-			StarRating:      accommodation.StarRating,
+			Location:        accommodation.Location,
+			City:            accommodation.City,
+			Price:           accommodation.Price,
+			Rating:          accommodation.Rating,
 			Description:     accommodation.Description,
-			Amenities:       accommodation.Amenities,
-			ImageURL:        accommodation.ImageURL,
+			Link:            accommodation.Link,
+			Images:          accommodation.Images,
+			RoomTypes:       accommodation.RoomTypes,
+			RoomInfo:        accommodation.RoomInfo,
+			Unit:            accommodation.Unit,
+			TaxInfo:         accommodation.TaxInfo,
+			ElderlyFriendly: accommodation.ElderlyFriendly,
 		}
 
 		suggestion.Accommodations = append(suggestion.Accommodations, suggestedAccommodation)

@@ -94,6 +94,7 @@ func main() {
 			controller.NewTripController,
 			service.NewSuggestService,
 			controller.NewSuggestController,
+			service.NewInsertDataService,
 		),
 		fx.Invoke(RegisterRoutes),
 	)
