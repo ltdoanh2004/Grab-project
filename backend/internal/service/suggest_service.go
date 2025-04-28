@@ -80,7 +80,7 @@ func (ss *suggestService) mockCallAPI(endpoint string, travelPreference *dto.Tra
 	fmt.Println("Travel Preference:", travelPreference)
 
 	return &dto.TravelSuggestionResponse{
-		IDs: []string{"hotel_000001", "hotel_000002", "hotel_000003"},
+		IDs: []string{"act_000001", "act_000002", "act_000003"},
 	}, nil
 }
 
@@ -89,7 +89,7 @@ func getURL(host, port, endpoint string) string {
 }
 
 func (ss *suggestService) SuggestAccommodations(travelPreference *dto.TravelPreference) (*dto.AccommodationsSuggestion, error) {
-	rsp, err := ss.mockCallAPI(
+	rsp, err := ss.callAISuggestion(
 		getURL(config.AppConfig.AI.Host,
 			config.AppConfig.AI.Port,
 			"/suggest/accommodations",
@@ -130,7 +130,7 @@ func (ss *suggestService) SuggestAccommodations(travelPreference *dto.TravelPref
 }
 
 func (ss *suggestService) SuggestPlaces(travelPreference *dto.TravelPreference) (*dto.PlacesSuggestion, error) {
-	rsp, err := ss.callAISuggestion(
+	rsp, err := ss.mockCallAPI(
 		getURL(config.AppConfig.AI.Host,
 			config.AppConfig.AI.Port,
 			"/suggest/places",
