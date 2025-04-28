@@ -30,31 +30,13 @@ INSERT INTO trip_destinations (trip_destination_id, trip_id, destination_id, arr
 ('tdest_000004', 'trip_000004', 'dest_000004', '2024-09-15', '2024-09-20', 1),
 ('tdest_000005', 'trip_000005', 'dest_000005', '2024-06-01', '2024-06-03', 1);
 
--- Insert mock data into the activity_categories table
-INSERT INTO place_categories (category_id, category_name, description) VALUES
-('cat_000001', 'Sightseeing', 'Tourist attractions and landmark visits'),
-('cat_000002', 'Cultural', 'Local cultural experiences and traditional activities'),
-('cat_000003', 'Adventure', 'Outdoor and physical activities'),
-('cat_000004', 'Wellness', 'Spa, relaxation, and health activities'),
-('cat_000005', 'Entertainment', 'Shows, performances, and leisure activities');
-
--- Update places insert statement (removed categories column)
-INSERT INTO places (place_id, destination_id, name, url, address, duration, type, image_urls, main_image, price, rating, description, opening_hours, reviews) VALUES
-('act_000001', 'hanoi', 'Eiffel Tower', 'https://eiffel-tower.com', 'Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France', '2-3 hours', 'Landmark', '["eiffel1.jpg", "eiffel2.jpg"]', 'eiffel_main.jpg', '€26.80', 4.7, 'Iconic iron lattice tower', '9:00 AM - 12:00 AM', '["Great view!", "Must visit"]'),
-('act_000002', 'dest_000002', 'Tokyo Sushi Academy', 'https://sushiacademy.jp', '8-4-7 Ginza, Chuo, Tokyo 104-0061, Japan', '2 hours', 'School', '["sushi1.jpg", "sushi2.jpg"]', 'sushi_main.jpg', '¥5000', 4.5, 'Sushi making school', '10:00 AM - 8:00 PM', '["Amazing experience"]'),
-('act_000003', 'dest_000003', 'Central Park', 'https://centralpark.com', 'New York, NY, USA', '2-3 hours', 'Park', '["park1.jpg", "park2.jpg"]', 'centralpark_main.jpg', 'Free', 4.8, 'Urban park in Manhattan', '6:00 AM - 1:00 AM', '["Beautiful park"]'),
-('act_000004', 'dest_000004', 'Terme di Diocleziano', 'https://terme.it', 'Viale Enrico de Nicola, 79, 00185 Roma RM, Italy', '1.5 hours', 'Spa', '["terme1.jpg", "terme2.jpg"]', 'terme_main.jpg', '€8.00', 4.6, 'Ancient Roman baths', '9:00 AM - 7:30 PM', '["Relaxing experience"]'),
-('act_000005', 'dest_000005', 'Sydney Opera House', 'https://sydneyoperahouse.com', 'Bennelong Point, Sydney NSW 2000, Australia', '1 hour', 'Theater', '["opera1.jpg", "opera2.jpg"]', 'opera_main.jpg', 'Free', 4.9, 'Multi-venue performing arts centre', '9:00 AM - 5:00 PM', '["Architectural marvel"]');
-
--- Add place_category_places relationships
-INSERT INTO place_category_places (place_id, category_id) VALUES
-('act_000001', 'cat_000001'), -- Eiffel Tower - Sightseeing
-('act_000001', 'cat_000002'), -- Eiffel Tower - Cultural
-('act_000002', 'cat_000002'), -- Tokyo Sushi Academy - Cultural
-('act_000003', 'cat_000003'), -- Central Park - Adventure
-('act_000004', 'cat_000004'), -- Terme di Diocleziano - Wellness
-('act_000005', 'cat_000005'), -- Sydney Opera House - Entertainment
-('act_000005', 'cat_000002'); -- Sydney Opera House - Cultural
+-- Update places insert statement with categories as string
+INSERT INTO places (place_id, destination_id, name, url, address, duration, type, categories, image_urls, main_image, price, rating, description, opening_hours, reviews) VALUES
+('act_000001', 'hanoi', 'Eiffel Tower', 'https://eiffel-tower.com', 'Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France', '2-3 hours', 'Landmark', '["Sightseeing", "Cultural"]', '["eiffel1.jpg", "eiffel2.jpg"]', 'eiffel_main.jpg', '€26.80', 4.7, 'Iconic iron lattice tower', '9:00 AM - 12:00 AM', '["Great view!", "Must visit"]'),
+('act_000002', 'dest_000002', 'Tokyo Sushi Academy', 'https://sushiacademy.jp', '8-4-7 Ginza, Chuo, Tokyo 104-0061, Japan', '2 hours', 'School', '["Cultural"]', '["sushi1.jpg", "sushi2.jpg"]', 'sushi_main.jpg', '¥5000', 4.5, 'Sushi making school', '10:00 AM - 8:00 PM', '["Amazing experience"]'),
+('act_000003', 'dest_000003', 'Central Park', 'https://centralpark.com', 'New York, NY, USA', '2-3 hours', 'Park', '["Adventure"]', '["park1.jpg", "park2.jpg"]', 'centralpark_main.jpg', 'Free', 4.8, 'Urban park in Manhattan', '6:00 AM - 1:00 AM', '["Beautiful park"]'),
+('act_000004', 'dest_000004', 'Terme di Diocleziano', 'https://terme.it', 'Viale Enrico de Nicola, 79, 00185 Roma RM, Italy', '1.5 hours', 'Spa', '["Wellness"]', '["terme1.jpg", "terme2.jpg"]', 'terme_main.jpg', '€8.00', 4.6, 'Ancient Roman baths', '9:00 AM - 7:30 PM', '["Relaxing experience"]'),
+('act_000005', 'dest_000005', 'Sydney Opera House', 'https://sydneyoperahouse.com', 'Bennelong Point, Sydney NSW 2000, Australia', '1 hour', 'Theater', '["Entertainment", "Cultural"]', '["opera1.jpg", "opera2.jpg"]', 'opera_main.jpg', 'Free', 4.9, 'Multi-venue performing arts centre', '9:00 AM - 5:00 PM', '["Architectural marvel"]');
 
 -- Rename trip_activities to trip_places and update its structure
 INSERT INTO trip_places (trip_place_id, trip_destination_id, place_id, scheduled_date, start_time, end_time, notes) VALUES
@@ -64,29 +46,23 @@ INSERT INTO trip_places (trip_place_id, trip_destination_id, place_id, scheduled
 ('tact_000004', 'tdest_000004', 'act_000004', '2024-09-17', '2024-09-17 15:00:00', '2024-09-17 18:00:00', 'Book in advance'),
 ('tact_000005', 'tdest_000005', 'act_000005', '2024-06-02', '2024-06-02 10:30:00', '2024-06-02 11:15:00', 'Check show timings');
 
--- Insert mock data into the accommodations table
-INSERT INTO accommodations (accommodation_id, destination_id, name, link, price, tax_info, rating, location, description, city, elderly_friendly, room_info, unit) VALUES
-('accom_000001', 'hanoi', 'Hotel Plaza Athenee', 'hotelplaza.com', 500.00, 'Tax included', 5.0, '25 Avenue Montaigne, 75008 Paris', 'Luxury hotel in Paris', 'Paris', true, '100 rooms available', 'EUR'),
-('accom_000002', 'dest_000002', 'Park Hyatt Tokyo', 'parkhyatt.com', 600.00, 'Tax: 10%', 5.0, '3-7-1-2 Nishi-Shinjuku', 'Luxury hotel in Tokyo', 'Tokyo', true, '150 rooms available', 'JPY'),
-('accom_000003', 'dest_000003', 'The Ritz-Carlton', 'ritzcarlton.com', 800.00, 'Tax: 8.875%', 5.0, '50 Central Park South', 'Luxury hotel in New York', 'New York', true, '200 rooms available', 'USD'),
-('accom_000004', 'dest_000004', 'Hotel de Russie', 'hotelderussie.com', 450.00, 'Tax included', 4.8, 'Via del Babuino, 9', 'Luxury hotel in Rome', 'Rome', true, '80 rooms available', 'EUR'),
-('accom_000005', 'dest_000005', 'Park Hyatt Sydney', 'hyattsydney.com', 700.00, 'Tax: 10% GST', 4.9, '7 Hickson Road', 'Luxury hotel in Sydney', 'Sydney', true, '120 rooms available', 'AUD');
-
--- Insert mock data into the images table
-INSERT INTO images (image_id, accommodation_id, url, alt) VALUES
-('img_000001', 'accom_000001', 'plaza_athenee_1.jpg', 'Hotel Plaza Athenee Exterior'),
-('img_000002', 'accom_000001', 'plaza_athenee_2.jpg', 'Hotel Plaza Athenee Room'),
-('img_000003', 'accom_000002', 'park_hyatt_tokyo_1.jpg', 'Park Hyatt Tokyo Exterior'),
-('img_000004', 'accom_000002', 'park_hyatt_tokyo_2.jpg', 'Park Hyatt Tokyo Room'),
-('img_000005', 'accom_000003', 'ritz_carlton_1.jpg', 'Ritz Carlton Exterior');
-
--- Insert mock data into the room_types table
-INSERT INTO room_types (room_type_id, accommodation_id, name, bed_type, price, taxes_and_fees, occupancy, conditions) VALUES
-('room_000001', 'accom_000001', 'Deluxe Room', 'King', '500', 'Tax included', '2', 'Free cancellation 24h before check-in'),
-('room_000002', 'accom_000001', 'Suite', 'King', '800', 'Tax included', '2-3', 'Free cancellation 48h before check-in'),
-('room_000003', 'accom_000002', 'Park Suite', 'King', '1000', '10% tax', '2', 'Non-refundable'),
-('room_000004', 'accom_000003', 'Executive Suite', 'King', '1200', '8.875% tax', '2-4', 'Free cancellation 72h before check-in'),
-('room_000005', 'accom_000004', 'Classic Room', 'Queen', '450', 'Tax included', '2', 'Free cancellation 24h before check-in');
+-- Update accommodations with images and room_types as JSON
+INSERT INTO accommodations (accommodation_id, destination_id, name, link, price, tax_info, rating, location, description, city, elderly_friendly, room_info, unit, images, room_types) VALUES
+('accom_000001', 'hanoi', 'Hotel Plaza Athenee', 'hotelplaza.com', 500.00, 'Tax included', 5.0, '25 Avenue Montaigne, 75008 Paris', 'Luxury hotel in Paris', 'Paris', true, '100 rooms available', 'EUR',
+    '[{"url": "plaza_athenee_1.jpg", "alt": "Hotel Plaza Athenee Exterior"}, {"url": "plaza_athenee_2.jpg", "alt": "Hotel Plaza Athenee Room"}]',
+    '[{"name": "Deluxe Room", "bed_type": "King", "price": "500", "taxes_and_fees": "Tax included", "occupancy": "2", "conditions": "Free cancellation 24h before check-in"}]'),
+('accom_000002', 'dest_000002', 'Park Hyatt Tokyo', 'parkhyatt.com', 600.00, 'Tax: 10%', 5.0, '3-7-1-2 Nishi-Shinjuku', 'Luxury hotel in Tokyo', 'Tokyo', true, '150 rooms available', 'JPY',
+    '[{"url": "park_hyatt_tokyo_1.jpg", "alt": "Park Hyatt Tokyo Exterior"}, {"url": "park_hyatt_tokyo_2.jpg", "alt": "Park Hyatt Tokyo Room"}]',
+    '[{"name": "Park Suite", "bed_type": "King", "price": "1000", "taxes_and_fees": "10% tax", "occupancy": "2", "conditions": "Non-refundable"}]'),
+('accom_000003', 'dest_000003', 'The Ritz-Carlton', 'ritzcarlton.com', 800.00, 'Tax: 8.875%', 5.0, '50 Central Park South', 'Luxury hotel in New York', 'New York', true, '200 rooms available', 'USD',
+    '[{"url": "ritz_carlton_1.jpg", "alt": "Ritz Carlton Exterior"}]',
+    '[{"name": "Executive Suite", "bed_type": "King", "price": "1200", "taxes_and_fees": "8.875% tax", "occupancy": "2-4", "conditions": "Free cancellation 72h before check-in"}]'),
+('accom_000004', 'dest_000004', 'Hotel de Russie', 'hotelderussie.com', 450.00, 'Tax included', 4.8, 'Via del Babuino, 9', 'Luxury hotel in Rome', 'Rome', true, '80 rooms available', 'EUR',
+    '[{"url": "hotel_de_russie_1.jpg", "alt": "Hotel de Russie Exterior"}]',
+    '[{"name": "Classic Room", "bed_type": "Queen", "price": "450", "taxes_and_fees": "Tax included", "occupancy": "2", "conditions": "Free cancellation 24h before check-in"}]'),
+('accom_000005', 'dest_000005', 'Park Hyatt Sydney', 'hyattsydney.com', 700.00, 'Tax: 10% GST', 4.9, '7 Hickson Road', 'Luxury hotel in Sydney', 'Sydney', true, '120 rooms available', 'AUD',
+    '[{"url": "park_hyatt_sydney_1.jpg", "alt": "Park Hyatt Sydney Exterior"}]',
+    '[{"name": "Harbour View Room", "bed_type": "King", "price": "700", "taxes_and_fees": "10% GST", "occupancy": "2", "conditions": "Free cancellation 24h before check-in"}]');
 
 -- Insert mock data into the trip_accommodations table
 INSERT INTO trip_accommodations (trip_accommodation_id, trip_destination_id, accommodation_id, check_in_date, check_out_date, cost, notes) VALUES
