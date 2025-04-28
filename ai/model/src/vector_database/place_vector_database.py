@@ -94,7 +94,7 @@ class PlaceVectorDatabase(BaseVectorDatabase):
                 rows_to_embed, existing_df = self.find_missing_embeddings(
                     new_df=raw_df,
                     existing_df=existing_df,
-                    id_field="index"
+                    id_field="place_id"
                 )
                 
                 if len(rows_to_embed) == 0:
@@ -165,8 +165,8 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         if incremental and existing_df is not None:
             # Create a combined dataframe: new embeddings + existing embeddings
             # Filter out any rows from existing_df that might conflict with new_df by index
-            existing_indices = set(rows_to_embed['index'].astype(str))
-            filtered_existing_df = existing_df[~existing_df['index'].astype(str).isin(existing_indices)]
+            existing_indices = set(rows_to_embed['place_id'].astype(str))
+            filtered_existing_df = existing_df[~existing_df['place_id'].astype(str).isin(existing_indices)]
             
             # Concatenate the filtered existing data with the new data
             final_df = pd.concat([filtered_existing_df, rows_to_embed], ignore_index=True)
@@ -258,12 +258,12 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         for idx, row in tqdm(self.df.iterrows(), total=len(self.df), desc="Preparing vectors"):
             try:
                 metadata = {
-                    "id": row["index"],
+                    "id": row["place_id"],
                     "name": row["name"],
                     "categories": row.get("categories", ""),
                     "location": row.get("location", ""),
                     "opening_hours": row.get("opening_hours", ""),
-                    "entrance_fee": row.get("entrance_fee", 0),
+                    "price": row.get("price", 0),
                     "rating": row.get("rating", 0),
                     "description": row["description"]
                 }
@@ -274,7 +274,7 @@ class PlaceVectorDatabase(BaseVectorDatabase):
                     continue
                     
                 vectors_to_upsert.append({
-                    "id": str(row["index"]),
+                    "id": str(row["place_id"]),
                     "values": embedding,
                     "metadata": metadata
                 })

@@ -144,10 +144,6 @@ class HotelVectorDatabase(BaseVectorDatabase):
         raw_df['rating'].fillna(raw_df['rating'].mean(), inplace=True)
         raw_df['rating'] = raw_df['rating'].astype(float)
 
-        print("Generating indices...")
-        if 'index' not in raw_df.columns:
-            raw_df['index'] = ['hotel_' + str(i).zfill(6) for i in range(1, len(raw_df) + 1)]
-        
         # Try to find existing embeddings file if we're doing incremental processing
         existing_df = None
         rows_to_embed = raw_df
@@ -175,10 +171,14 @@ class HotelVectorDatabase(BaseVectorDatabase):
         
         print(f"Creating context strings for {len(rows_to_embed)} items...")
         rows_to_embed['context'] = [f'''
+                                Đây là tên của khách sạn: {row['name']}
                                Đây là mô tả của khách sạn:
                                {row['description']}
                                Gía của nó là {row['price']}
                                Điểm đánh giá của nó là {row['rating']}
+                               Có các loại phòng là {self.process_room_type(row.get('room_types', ''))}
+                                Có hỗ trợ người già/khuyết tật: {row['elderly_friendly']}
+                                Địa điểm/Thành phố của nó là {row['location']}
                                ''' for _, row in tqdm(rows_to_embed.iterrows(), total=len(rows_to_embed), desc="Creating contexts")]
 
         # Load checkpoint
@@ -231,8 +231,8 @@ class HotelVectorDatabase(BaseVectorDatabase):
         if incremental and existing_df is not None:
             # Create a combined dataframe: new embeddings + existing embeddings
             # Filter out any rows from existing_df that might conflict with new_df by index
-            existing_indices = set(rows_to_embed['index'].astype(str))
-            filtered_existing_df = existing_df[~existing_df['index'].astype(str).isin(existing_indices)]
+            existing_indices = set(rows_to_embed["hotel_id"].astype(str))
+            filtered_existing_df = existing_df[~existing_df["hotel_id"].astype(str).isin(existing_indices)]
             
             # Concatenate the filtered existing data with the new data
             final_df = pd.concat([filtered_existing_df, rows_to_embed], ignore_index=True)
@@ -354,7 +354,7 @@ class HotelVectorDatabase(BaseVectorDatabase):
             raise ValueError("DataFrame not prepared or missing embeddings. Please run prepare_hotel_embedding first.")
             
         if incremental:
-            return self.load_data_to_pinecone_incremental(df=self.df, id_field="index", batch_size=100)
+            return self.load_data_to_pinecone_incremental(df=self.df, id_field="hotel_id", batch_size=100)
             
         print("Converting embeddings to lists...")
         self.df['context_embedding'] = self.df['context_embedding'].apply(
@@ -367,7 +367,7 @@ class HotelVectorDatabase(BaseVectorDatabase):
         for idx, row in tqdm(self.df.iterrows(), total=len(self.df), desc="Preparing vectors"):
             try:
                 metadata = {
-                    "id": row["index"],
+                    "id": row["hotel_id"],
                     "name": row["name"],
                     "price": row["price"],
                     "rating": row["rating"],
@@ -379,7 +379,7 @@ class HotelVectorDatabase(BaseVectorDatabase):
                     continue
                     
                 vectors_to_upsert.append({
-                    "id": str(row["index"]),
+                    "id": str(row["hotel_id"]),
                     "values": embedding,
                     "metadata": metadata
                 })
