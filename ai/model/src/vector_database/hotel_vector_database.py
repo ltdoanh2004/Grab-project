@@ -301,8 +301,50 @@ class HotelVectorDatabase(BaseVectorDatabase):
             print(f"Index {self.index_name} already contains data. Use incremental=True to add or update data.")
             return True
             
+        # Define embedding file path
+        embedding_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
+                                     'data', 'hotel_processed_embedding.csv')
+            
+        # Check if embedding file exists
+        if not os.path.exists(embedding_file):
+            print(f"Embedding file not found at: {embedding_file}")
+            print("Creating embeddings first...")
+            
+            # Check if data directory exists
+            data_dir = os.path.dirname(embedding_file)
+            if not os.path.exists(data_dir):
+                print(f"Creating data directory: {data_dir}")
+                os.makedirs(data_dir, exist_ok=True)
+            
+            # Check if checkpoint exists
+            if os.path.exists(self.checkpoint_file):
+                print(f"Found existing checkpoint at: {self.checkpoint_file}")
+                checkpoint_data = self.load_checkpoint()
+                if checkpoint_data and checkpoint_data.get("last_processed_index", -1) >= 0:
+                    user_input = input("Do you want to continue from the last checkpoint? (y/n): ")
+                    if user_input.lower() == 'y':
+                        print("Continuing from checkpoint...")
+                        self.prepare_hotel_embedding(incremental=True)
+                    else:
+                        print("Starting fresh...")
+                        if os.path.exists(self.checkpoint_file):
+                            os.remove(self.checkpoint_file)
+                        self.prepare_hotel_embedding(incremental=False)
+                else:
+                    print("Invalid checkpoint data. Starting fresh...")
+                    if os.path.exists(self.checkpoint_file):
+                        os.remove(self.checkpoint_file)
+                    self.prepare_hotel_embedding(incremental=False)
+            else:
+                print("No checkpoint found. Starting fresh...")
+                self.prepare_hotel_embedding(incremental=False)
+            
+            if not os.path.exists(embedding_file):
+                raise ValueError(f"Failed to create embedding file at {embedding_file}")
+        
         # Load data from CSV
-        self.df = pd.read_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'hotel_processed_embedding.csv'))
+        print(f"Loading embeddings from: {embedding_file}")
+        self.df = pd.read_csv(embedding_file)
         text_columns = ['name', 'description', 'room_types']
         for col in text_columns:
             if col in self.df.columns:
