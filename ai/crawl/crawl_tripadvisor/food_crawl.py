@@ -51,11 +51,33 @@ class RestaurantCrawler:
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
             'Referer': 'https://www.tripadvisor.com/'
         }
-        self.visited_urls = set()
+        self.visited_urls = self.load_visited_urls()
         self.visited_restaurants = set()
         self.custom_type = custom_type
         self.session = requests.Session()
         self.session.headers.update(self.headers)
+        self.master_data = self.load_master_data()
+
+    def load_visited_urls(self):
+        """Load previously visited URLs from file"""
+        visited_file = "visited_urls.json"
+        try:
+            if os.path.exists(visited_file):
+                with open(visited_file, 'r', encoding='utf-8') as f:
+                    return set(json.load(f))
+        except Exception as e:
+            logger.error(f"Error loading visited URLs: {str(e)}")
+        return set()
+
+    def save_visited_urls(self):
+        """Save visited URLs to file"""
+        visited_file = "visited_urls.json"
+        try:
+            with open(visited_file, 'w', encoding='utf-8') as f:
+                json.dump(list(self.visited_urls), f, indent=2)
+            logger.info(f"Saved {len(self.visited_urls)} visited URLs")
+        except Exception as e:
+            logger.error(f"Error saving visited URLs: {str(e)}")
 
     def _random_delay(self):
         """Add a random delay between requests to avoid being blocked"""
@@ -68,38 +90,149 @@ class RestaurantCrawler:
         minutes_since_last_save = (time.time() - self.last_save_time) / 60
         return minutes_since_last_save >= self.save_interval
 
+    def load_master_data(self):
+        """Load all previously crawled restaurants from master file"""
+        master_file = "all_restaurants.json"
+        try:
+            if os.path.exists(master_file):
+                with open(master_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    logger.info(f"Loaded {len(data)} restaurants from master file")
+                    return data
+        except Exception as e:
+            logger.error(f"Error loading master data: {str(e)}")
+        return []
+
+    def save_master_data(self, new_data):
+        """Save all restaurants to master file, avoiding duplicates"""
+        master_file = "all_restaurants.json"
+        try:
+            # Merge new data with existing master data
+            all_data = self.master_data + new_data
+            
+            # Remove duplicates based on URL while keeping the newest data
+            url_to_data = {}
+            for item in all_data:
+                url_to_data[item['url']] = item
+            
+            unique_data = list(url_to_data.values())
+            
+            # Save to master file
+            with open(master_file, 'w', encoding='utf-8') as f:
+                json.dump(unique_data, f, indent=2, ensure_ascii=False)
+            
+            # Update master data in memory
+            self.master_data = unique_data
+            
+            logger.info(f"Saved {len(unique_data)} restaurants to master file")
+            
+            # Create a backup of master file
+            backup_file = f"all_restaurants_backup_{datetime.now().strftime('%Y%m%d_%H%M')}.json"
+            with open(backup_file, 'w', encoding='utf-8') as f:
+                json.dump(unique_data, f, indent=2, ensure_ascii=False)
+            
+            # Keep only the last 5 backups
+            backup_files = sorted([f for f in os.listdir('.') if f.startswith('all_restaurants_backup_')])
+            for old_backup in backup_files[:-5]:
+                os.remove(old_backup)
+                
+        except Exception as e:
+            logger.error(f"Error saving master data: {str(e)}")
+
     def save_data(self, data, output_dir, location):
-        """Save data to a file with timestamp"""
+        """Save data to file with date-based organization and master file"""
         if not data:
             logger.warning("No data to save")
             return
 
-        location_dir = os.path.join(output_dir, location)
-        os.makedirs(location_dir, exist_ok=True)
-
-        index = 0
-        while True:
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            filename = os.path.join(location_dir, f'restaurants_{timestamp}_index_{index}.json')
-            if not os.path.exists(filename):
-                break
-            index += 1
-
         try:
+            # Save to master file first
+            self.save_master_data(data)
+
+            # Create location and date-specific directory
+            current_date = datetime.now().strftime('%Y%m%d')
+            location_dir = os.path.join(output_dir, location)
+            date_dir = os.path.join(location_dir, current_date)
+            os.makedirs(date_dir, exist_ok=True)
+
+            # Get existing data from today's files
+            existing_data = []
+            json_files = [f for f in os.listdir(date_dir) if f.endswith('.json')]
+            for json_file in json_files:
+                try:
+                    with open(os.path.join(date_dir, json_file), 'r', encoding='utf-8') as f:
+                        file_data = json.load(f)
+                        if isinstance(file_data, list):
+                            existing_data.extend(file_data)
+                except Exception as e:
+                    logger.error(f"Error reading file {json_file}: {str(e)}")
+
+            # Merge new data with existing data
+            all_data = existing_data + data
+            
+            # Remove duplicates based on URL
+            seen_urls = set()
+            unique_data = []
+            for item in all_data:
+                if item['url'] not in seen_urls:
+                    seen_urls.add(item['url'])
+                    unique_data.append(item)
+
+            # Create new filename with timestamp
+            timestamp = datetime.now().strftime('%H%M')
+            filename = os.path.join(date_dir, f'restaurants_{timestamp}.json')
+
+            # Save merged data
             with open(filename, 'w', encoding='utf-8') as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
-            logger.info(f"Saved {len(data)} restaurants to {filename}")
+                json.dump(unique_data, f, indent=2, ensure_ascii=False)
+            logger.info(f"Saved {len(unique_data)} restaurants to {filename}")
             self.last_save_time = time.time()
+
+            # Save visited URLs
+            self.save_visited_urls()
+
+            # KEEP OLD FILES - DON'T REMOVE THEM
+            # Instead, keep track of how many files we have
+            if len(json_files) > 10:  # If we have more than 10 files, log a warning
+                logger.warning(f"Directory {date_dir} has {len(json_files)} JSON files. Consider manual cleanup.")
+
+            # Cleanup old date directories (keep last 7 days)
+            self._cleanup_old_dates(location_dir)
+
         except Exception as e:
-            logger.error(f"Error saving data to {filename}: {str(e)}")
-            # Create error backup
-            error_backup = f"error_backup_{int(time.time())}.json"
+            logger.error(f"Error saving data: {str(e)}")
+            # Create error backup with timestamp
+            error_file = os.path.join(output_dir, f"error_backup_{int(time.time())}.json")
             try:
-                with open(error_backup, 'w', encoding='utf-8') as f:
+                with open(error_file, 'w', encoding='utf-8') as f:
                     json.dump(data, f, indent=2, ensure_ascii=False)
-                logger.info(f"Created error backup at {error_backup}")
+                logger.info(f"Created error backup at {error_file}")
             except Exception as backup_error:
                 logger.error(f"Failed to create error backup: {str(backup_error)}")
+
+    def _cleanup_old_dates(self, location_dir):
+        """Cleanup old date directories, keeping only the last 7 days"""
+        try:
+            # Get all date directories
+            date_dirs = [d for d in os.listdir(location_dir) 
+                        if os.path.isdir(os.path.join(location_dir, d)) 
+                        and d.isdigit() and len(d) == 8]
+            
+            # Sort by date (newest first)
+            date_dirs.sort(reverse=True)
+            
+            # Remove directories older than 7 days
+            for old_dir in date_dirs[7:]:
+                old_path = os.path.join(location_dir, old_dir)
+                try:
+                    import shutil
+                    shutil.rmtree(old_path)
+                    logger.info(f"Removed old date directory: {old_dir}")
+                except Exception as e:
+                    logger.error(f"Error removing directory {old_dir}: {str(e)}")
+                    
+        except Exception as e:
+            logger.error(f"Error during date directory cleanup: {str(e)}")
 
     def get_soup(self, url, retries=3):
         """Get BeautifulSoup object from URL with retries"""
@@ -145,18 +278,32 @@ class RestaurantCrawler:
     def get_restaurant_listings(self, url=None, page=1):
         """Get restaurant listings from a page"""
         current_url = url or self.base_url
+        original_url = current_url
+
         if page > 1:
             if "oa" in current_url:
                 current_url = re.sub(r'oa\d+', f'oa{(page-1)*30}', current_url)
             else:
                 # For restaurant pages, adjust URL pagination format if needed
                 if "FindRestaurants" in current_url:
+                    # For FindRestaurants, we need to add the 'o=' parameter for pagination
+                    # This appears to be the correct offset parameter for TripAdvisor restaurants
                     if "o=" in current_url:
                         current_url = re.sub(r'o=\d+', f'o={(page-1)*30}', current_url)
                     else:
                         current_url = f"{current_url}&o={(page-1)*30}"
+                        
+                    # Add additional pagination parameters if missing
+                    if "itags=" not in current_url:
+                        current_url += "&itags=10591"
+                    if "sortOrder=" not in current_url:
+                        current_url += "&sortOrder=relevance"
                 else:
                     current_url = current_url.replace('.html', f'-oa{(page-1)*30}.html')
+        
+        # Print detailed debug information about pagination
+        logger.info(f"Original URL: {original_url}")
+        logger.info(f"Paginated URL for page {page}: {current_url}")
 
         soup = self.get_soup(current_url)
         if not soup:
@@ -164,6 +311,7 @@ class RestaurantCrawler:
 
         restaurants = []
         local_seen = set()  # Track inside this call only
+        url_counter = {}    # Count duplicate URLs in this page
 
         selectors = [
             'a[data-automation="restaurantTitleLink"]',  # Primary restaurant link selector
@@ -172,6 +320,20 @@ class RestaurantCrawler:
             'a[href^="/Restaurant_Review"]'
         ]
 
+        # First count all URLs to detect duplicates within the same page
+        all_links = []
+        for sel in selectors:
+            all_links.extend(soup.select(sel))
+            
+        for a in all_links:
+            href = a.get('href')
+            if not href:
+                continue
+            if not href.startswith('http'):
+                href = urljoin("https://www.tripadvisor.com", href)
+            url_counter[href] = url_counter.get(href, 0) + 1
+        
+        # Now extract valid restaurants and log duplicates
         for sel in selectors:
             for a in soup.select(sel):
                 href = a.get('href')
@@ -182,14 +344,51 @@ class RestaurantCrawler:
                     href = urljoin("https://www.tripadvisor.com", href)
                 if href in local_seen:
                     continue
+                    
                 local_seen.add(href)
                 restaurants.append({"name": name, "url": href})
 
-        logger.info(f"Found {len(restaurants)} restaurants on page {page}")
+        # Log information about duplicates
+        duplicate_urls = [url for url, count in url_counter.items() if count > 1]
+        if duplicate_urls:
+            logger.info(f"Found {len(duplicate_urls)} URLs that appear multiple times on this page")
+            if len(duplicate_urls) < 5:
+                for url in duplicate_urls:
+                    logger.info(f"  Duplicate URL: {url} (appears {url_counter[url]} times)")
+            else:
+                logger.info(f"  First duplicate: {duplicate_urls[0]} (appears {url_counter[duplicate_urls[0]]} times)")
         
-        # Check for next page button
-        has_next_page = bool(soup.select_one('a[href*="o="][aria-label*="Next"]') or 
-                            soup.select_one('a[href*="oa"][aria-label*="Next"]'))
+        # Print the number of unique restaurants found
+        logger.info(f"Found {len(restaurants)} unique restaurants on page {page} (from {len(all_links)} total links)")
+        
+        # Count visited restaurants in the current batch
+        already_visited = [item for item in restaurants if item["url"] in self.visited_urls]
+        if already_visited:
+            logger.info(f"{len(already_visited)} of these restaurants have been visited before")
+        
+        # Check for next page button and print debug info
+        next_page_link = soup.select_one('a[href*="o="][aria-label*="Next"]') or soup.select_one('a[href*="oa"][aria-label*="Next"]')
+        has_next_page = bool(next_page_link)
+        
+        if has_next_page and next_page_link:
+            next_href = next_page_link.get('href', '')
+            if not next_href.startswith('http'):
+                next_href = urljoin("https://www.tripadvisor.com", next_href)
+            logger.info(f"Next page link found: {next_href}")
+        else:
+            # Look for pagination indicators even if Next button is not found
+            pagination_elems = soup.select('a.pageNum')
+            if pagination_elems:
+                logger.info(f"Found pagination elements: {len(pagination_elems)} page numbers")
+                last_page = max([int(a.get_text(strip=True)) for a in pagination_elems if a.get_text(strip=True).isdigit()], default=0)
+                logger.info(f"Last page number: {last_page}")
+                has_next_page = page < last_page
+            else:
+                logger.info("No pagination elements found")
+            
+            if not has_next_page:
+                logger.info("No next page link found - reached the end of pagination")
+        
         return restaurants, has_next_page
 
     def _extract_clean_address(self, soup):
@@ -206,7 +405,8 @@ class RestaurantCrawler:
             'div.XQaIe',
             'div.euDRl > a',
             'div[data-automation="WebPresentation_LocalizationMapCard"] div.euDRl',
-            'div[data-automation="WebPresentation_PoiLocationCard"] div.euDRl'
+            'div[data-automation="WebPresentation_PoiLocationCard"] div.euDRl',
+            'span[data-automation="restaurantsMapLinkOnName"]'
         ]
         
         for selector in address_selectors:
@@ -606,7 +806,8 @@ class RestaurantCrawler:
             'a.iUttq',
             'span.jqKwK',
             'a.UctQk',
-            'span.DJzgG'
+            'span.DJzgG',
+            'span.JguWG'
         ]
         for selector in reviews_selectors:
             reviews_elem = soup.select_one(selector)
@@ -614,9 +815,24 @@ class RestaurantCrawler:
                 text = reviews_elem.get_text(strip=True)
                 reviews_match = re.search(r'([\d,]+)\s*reviews?', text)
                 if reviews_match:
-                    details["reviews"] = reviews_match.group(1)
+                    details["num_reviews"] = reviews_match.group(1)
                     break
-        
+
+        # Extract summary reviews
+        reviews_selectors = [
+            'div.aaQZA div.biGQs._P.pZUbB.KxBGd',  # Main summary selector
+            'div.IGaaH._u._c div.biGQs._P.pZUbB.KxBGd',  # Full path with container
+            'div#GAI_REVIEWS div.aaQZA div.biGQs._P.pZUbB.KxBGd',  # With reviews container ID
+            'div.PcCsz.o div.aaQZA div.biGQs._P.pZUbB.KxBGd'  # Complete path
+        ]
+        for selector in reviews_selectors:
+            reviews_elem = soup.select_one(selector)
+            if reviews_elem:
+                text = reviews_elem.get_text(strip=True)
+                if text and len(text) > 50 and "reviews" in text.lower():  # Ensure it's a substantial review summary
+                    details["review_summary"] = text
+                    break
+
         # 10. Extract restaurant features/amenities
         feature_selectors = [
             'div[data-automation="restaurantDetailsCuisinesFeatures"] div.euDRl',
@@ -636,6 +852,204 @@ class RestaurantCrawler:
         if features:
             details["features"] = list(dict.fromkeys(features))[:5]  # Keep unique, limit to 5
             
+        # Add phone numbers
+        phones = []
+        try:
+            # First try to find phone numbers in contact information section
+            contact_selectors = [
+                'div[data-automation="restaurantContactCard"]',
+                'div.euDRl:contains("Phone")',
+                'div.czkFU:contains("Phone")',
+                'div.YnKZo:contains("Phone")'
+            ]
+            
+            for selector in contact_selectors:
+                if ':contains' in selector:
+                    base_selector = selector.split(':contains(')[0]
+                    elements = soup.select(base_selector)
+                    for elem in elements:
+                        if 'Phone' in elem.get_text():
+                            # Try to find phone number in text
+                            phone_text = elem.get_text(strip=True)
+                            phone_match = re.search(r'[\+\d][\d\s\-\(\)\.]{8,}', phone_text)
+                            if phone_match:
+                                phones.append(phone_match.group(0).strip())
+                                break
+                else:
+                    contact_elem = soup.select_one(selector)
+                    if contact_elem:
+                        # Look for phone links or spans
+                        phone_elements = contact_elem.select('a[href^="tel:"], span.biGQs._P.XWJSj.Wb')
+                        for phone_elem in phone_elements:
+                            if phone_elem.name == 'a' and phone_elem.has_attr('href'):
+                                phone = phone_elem['href'].replace('tel:', '')
+                                if phone and re.search(r'\d', phone):
+                                    phones.append(phone)
+                                    break
+                            else:
+                                phone = phone_elem.get_text(strip=True)
+                                if phone and re.search(r'\d', phone):
+                                    phones.append(phone)
+                                    break
+            
+            # If no phone found, try direct phone link
+            if not phones:
+                phone_links = soup.select('a[href^="tel:"]')
+                for link in phone_links:
+                    phone = link['href'].replace('tel:', '')
+                    if phone and re.search(r'\d', phone):
+                        phones.append(phone)
+                        break
+            
+            # Try to find phone numbers in any text that matches phone format
+            if not phones:
+                phone_pattern = re.compile(r'[\+\d][\d\s\-\(\)\.]{8,}')
+                for text in soup.stripped_strings:
+                    if 'phone' in text.lower() or 'tel' in text.lower():
+                        phone_match = phone_pattern.search(text)
+                        if phone_match:
+                            phones.append(phone_match.group(0).strip())
+                            break
+                            
+        except Exception as e:
+            logger.error(f"Error extracting phone numbers: {str(e)}")
+                        
+        if phones:
+            # Clean up the phone number
+            phone = phones[0]
+            phone = re.sub(r'\s+', ' ', phone)  # Normalize whitespace
+            phone = phone.strip()
+            details["phone"] = phone
+
+        # Extract example reviews
+        example_reviews = []
+        try:
+            # First try to find review containers
+            review_containers = soup.select('div[data-test-target="review-body"]')
+            
+            if review_containers:
+                for container in review_containers[:3]:  # Get up to 3 reviews
+                    review_text = None
+                    # Try different selectors for review text based on new structure
+                    text_selectors = [
+                        'span.JguWG',  # New main review text selector
+                        'div.biGQs._P.pZUbB.KxBGd',  # Alternative review text container
+                        'div.f1rGe._T.bgMZj span.JguWG',  # Full path to review text
+                        'div._T.FKffI div.f1rGe._T.bgMZj span.JguWG',  # Complete path
+                    ]
+                    
+                    for selector in text_selectors:
+                        review_elem = container.select_one(selector)
+                        if review_elem:
+                            review_text = review_elem.get_text(strip=True)
+                            if review_text:
+                                break
+                    
+                    if review_text and len(review_text) > 10:  # Ensure it's a substantial review
+                        example_reviews.append(review_text)
+            
+            # If no reviews found in containers, try direct selectors
+            if not example_reviews:
+                review_selectors = [
+                    'span.JguWG',  # Direct review text selector
+                    'div.biGQs._P.pZUbB.KxBGd span.JguWG',  # Alternative path
+                    'div[data-test-target="review-body"] span.JguWG',  # Full container path
+                    'div.f1rGe._T.bgMZj span.JguWG'  # Another alternative path
+                ]
+                
+                for selector in review_selectors:
+                    review_elements = soup.select(selector)
+                    for elem in review_elements[:5]:  # Get up to 3 reviews
+                        review_text = elem.get_text(strip=True)
+                        if review_text and len(review_text) > 10:
+                            example_reviews.append(review_text)
+                            if len(example_reviews) >= 3:
+                                break
+                    if len(example_reviews) >= 3:
+                        break
+            
+            # Clean up reviews
+            example_reviews = [
+                re.sub(r'\s+', ' ', review).strip()
+                for review in example_reviews
+                if review and len(review.strip()) > 10
+            ]
+            
+            # Remove duplicates while preserving order
+            example_reviews = list(dict.fromkeys(example_reviews))
+            
+        except Exception as e:
+            logger.error(f"Error extracting reviews: {str(e)}")
+        
+        if example_reviews:
+            details["example_reviews"] = example_reviews[:3]  # Ensure we only keep up to 3 reviews
+
+        # Extract media (images/videos) from reviews
+        try:
+            media_selectors = [
+                'div[data-section-signature="photo_viewer"] picture.NhWcC._R.mdkdE.afQPz.eXZKw source[srcset]',  # Image sources
+                'div[data-testid="carousel-with-strip"] picture source[srcset]',  # Carousel images
+                'div.SQIuW.wSSLS picture source[srcset]',  # Review images
+                'div.XKYCB.wSSLS picture source[srcset]',  # Alternative image structure
+                'div[data-test-target="review-body"] video source',  # Video sources
+                'div.reviewCard video source'  # Alternative video structure
+            ]
+            
+            media_urls = []
+            for selector in media_selectors:
+                media_elements = soup.select(selector)
+                for elem in media_elements:
+                    if elem.has_attr('srcset'):
+                        try:
+                            # Parse srcset to get the highest quality image
+                            srcset = elem['srcset']
+                            # Split srcset into URL-scale pairs
+                            pairs = []
+                            for pair in srcset.split(','):
+                                parts = pair.strip().split()
+                                if len(parts) >= 2:  # Only add if we have both URL and scale
+                                    pairs.append((parts[0], parts[1]))
+                                elif len(parts) == 1:  # If we only have URL, assume scale 1x
+                                    pairs.append((parts[0], '1x'))
+                            
+                            # Get URL with highest scale (2x if available)
+                            highest_quality_url = None
+                            for url, scale in pairs:
+                                if scale == '2x':
+                                    highest_quality_url = url
+                                    break
+                            if not highest_quality_url and pairs:
+                                highest_quality_url = pairs[-1][0]  # Take the last URL if no 2x
+                            
+                            if highest_quality_url:
+                                # Clean up the URL
+                                clean_url = highest_quality_url.strip()
+                                if clean_url not in media_urls:
+                                    media_urls.append(clean_url)
+                        except Exception as e:
+                            logger.error(f"Error parsing srcset: {str(e)}")
+                            # Try to get the first URL if srcset parsing fails
+                            try:
+                                first_url = elem['srcset'].split(',')[0].strip().split()[0]
+                                if first_url and first_url not in media_urls:
+                                    media_urls.append(first_url)
+                            except:
+                                pass
+                    elif elem.has_attr('src'):
+                        # For video sources or single-URL images
+                        src_url = elem['src'].strip()
+                        if src_url not in media_urls:
+                            media_urls.append(src_url)
+
+            if media_urls:
+                details["media_urls"] = media_urls[:10]  # Limit to first 10 media items
+                # Set the first media as main_image if no main image exists
+                if "main_image" not in details and media_urls:
+                    details["main_image"] = media_urls[0]
+                    
+        except Exception as e:
+            logger.error(f"Error extracting media from reviews: {str(e)}")
+
         # Add to visited urls - only after successfully getting details
         self.visited_urls.add(restaurant_url)
         if details["name"]:
@@ -643,7 +1057,7 @@ class RestaurantCrawler:
             
         return details
 
-    def crawl_restaurants(self, max_pages=3, max_restaurants=None, threads=4, start_page=1, output_dir="data_restaurants", location="hcmc"):
+    def crawl_restaurants(self, max_pages=3, max_restaurants=None, threads=4, start_page=1, output_dir="data_restaurants", location="hcmc", ignore_duplicates=False):
         """Crawl restaurants and extract details"""
         all_listings, page, more = [], start_page, True
         detailed = []
@@ -660,17 +1074,44 @@ class RestaurantCrawler:
                 logger.warning(f"No restaurants found on page {page}, stopping listing collection")
                 break
                 
-            all_listings.extend(lst)
+            # Print all URLs before filtering to help with debugging
+            if len(lst) < 10:
+                logger.info(f"URLs found on page {page}:")
+                for idx, item in enumerate(lst):
+                    logger.info(f"  {idx+1}. {item['name']} - {item['url']}")
+            else:
+                logger.info(f"First 5 URLs found on page {page}:")
+                for idx, item in enumerate(lst[:5]):
+                    logger.info(f"  {idx+1}. {item['name']} - {item['url']}")
+                
+            # Filter out already visited URLs
+            new_listings = [item for item in lst if item["url"] not in self.visited_urls]
+            logger.info(f"Found {len(new_listings)} new restaurants after filtering visited URLs")
+            
+            # Check if we should continue despite duplicates
+            if not new_listings and not ignore_duplicates:
+                logger.warning("No new restaurant listings found.")
+                break
+            elif not new_listings and ignore_duplicates:
+                logger.info("All restaurants on this page were duplicates, but continuing due to --ignore-duplicates flag")
+                page += 1
+                self._random_delay()
+                continue
+            
+            all_listings.extend(new_listings)
             if max_restaurants and len(all_listings) >= max_restaurants:
                 logger.info(f"Reached max_restaurants limit ({max_restaurants})")
                 all_listings = all_listings[:max_restaurants]
                 break
-                
+            
             page += 1
             self._random_delay()
 
-        if not all_listings:
-            logger.warning("No restaurant listings found.")
+        if not all_listings and not ignore_duplicates:
+            logger.warning("No new restaurant listings found.")
+            return detailed
+        elif not all_listings and ignore_duplicates:
+            logger.info("Finished crawling, but all restaurants were duplicates. Returning empty results.")
             return detailed
 
         logger.info(f"Starting to crawl details for {len(all_listings)} restaurants")
@@ -720,6 +1161,8 @@ def main():
                       help='Location name for organizing files')
     parser.add_argument('--save-interval', type=int, default=15,
                       help='Minutes between periodic saves (default: 15)')
+    parser.add_argument('--ignore-duplicates', action='store_true',
+                      help='Continue crawling even when all results are duplicates')
     args = parser.parse_args()
 
     crawler = RestaurantCrawler(
@@ -734,7 +1177,8 @@ def main():
         max_restaurants=args.max_restaurants,
         threads=args.threads,
         output_dir=args.output_dir,
-        location=args.location
+        location=args.location,
+        ignore_duplicates=args.ignore_duplicates
     )
 
 if __name__ == "__main__":
