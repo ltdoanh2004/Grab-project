@@ -71,12 +71,12 @@ func (s *insertDataService) mapRecordToAccommodation(record map[string]string) (
 		return nil, err
 	}
 
-	var images util.ImageArray
+	var images model.ImageArray
 	if err := json.Unmarshal([]byte(record["images"]), &images); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal images: %w", err)
 	}
 
-	var roomTypes util.RoomTypeArray
+	var roomTypes model.RoomTypeArray
 	if err := json.Unmarshal([]byte(record["room_types"]), &roomTypes); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal room types: %w", err)
 	}

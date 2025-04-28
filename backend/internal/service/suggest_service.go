@@ -75,7 +75,16 @@ func (ss *suggestService) callAISuggestion(endpoint string, travelPreference *dt
 	return &rsp, nil
 }
 
-func (ss *suggestService) mockCallAPI(endpoint string, travelPreference *dto.TravelPreference) (*dto.TravelSuggestionResponse, error) {
+func (ss *suggestService) mockCallSuggestAccommodationAPI(endpoint string, travelPreference *dto.TravelPreference) (*dto.TravelSuggestionResponse, error) {
+	fmt.Println("Mock API call to:", endpoint)
+	fmt.Println("Travel Preference:", travelPreference)
+
+	return &dto.TravelSuggestionResponse{
+		IDs: []string{"accom_000001", "accom_000002", "accom_000003"},
+	}, nil
+}
+
+func (ss *suggestService) mockCallSuggestPlaceAPI(endpoint string, travelPreference *dto.TravelPreference) (*dto.TravelSuggestionResponse, error) {
 	fmt.Println("Mock API call to:", endpoint)
 	fmt.Println("Travel Preference:", travelPreference)
 
@@ -84,12 +93,21 @@ func (ss *suggestService) mockCallAPI(endpoint string, travelPreference *dto.Tra
 	}, nil
 }
 
+func (ss *suggestService) mockCallSuggestRestaurantAPI(endpoint string, travelPreference *dto.TravelPreference) (*dto.TravelSuggestionResponse, error) {
+	fmt.Println("Mock API call to:", endpoint)
+	fmt.Println("Travel Preference:", travelPreference)
+
+	return &dto.TravelSuggestionResponse{
+		IDs: []string{"rest_000001", "rest_000002"},
+	}, nil
+}
+
 func getURL(host, port, endpoint string) string {
 	return fmt.Sprintf("http://%s:%s%s", host, port, endpoint)
 }
 
 func (ss *suggestService) SuggestAccommodations(travelPreference *dto.TravelPreference) (*dto.AccommodationsSuggestion, error) {
-	rsp, err := ss.callAISuggestion(
+	rsp, err := ss.mockCallSuggestAccommodationAPI(
 		getURL(config.AppConfig.AI.Host,
 			config.AppConfig.AI.Port,
 			"/suggest/accommodations",
@@ -102,7 +120,7 @@ func (ss *suggestService) SuggestAccommodations(travelPreference *dto.TravelPref
 
 	var suggestion dto.AccommodationsSuggestion
 	for i := range rsp.IDs {
-		accommodation, err := ss.AccommodationRepository.GetByIDWithAssociations(rsp.IDs[i])
+		accommodation, err := ss.AccommodationRepository.GetByID(rsp.IDs[i])
 		if err != nil {
 			return nil, fmt.Errorf("failed to fetch accommodation with ID %s: %w", rsp.IDs[i], err)
 		}
@@ -130,7 +148,7 @@ func (ss *suggestService) SuggestAccommodations(travelPreference *dto.TravelPref
 }
 
 func (ss *suggestService) SuggestPlaces(travelPreference *dto.TravelPreference) (*dto.PlacesSuggestion, error) {
-	rsp, err := ss.mockCallAPI(
+	rsp, err := ss.mockCallSuggestPlaceAPI(
 		getURL(config.AppConfig.AI.Host,
 			config.AppConfig.AI.Port,
 			"/suggest/places",
@@ -156,7 +174,7 @@ func (ss *suggestService) SuggestPlaces(travelPreference *dto.TravelPreference) 
 			Duration:      place.Duration,
 			Type:          place.Type,
 			Categories:    place.Categories,
-			ImageURLs:     place.ImageURLs,
+			Images:        place.Images,
 			MainImage:     place.MainImage,
 			Price:         place.Price,
 			Rating:        place.Rating,
@@ -170,7 +188,7 @@ func (ss *suggestService) SuggestPlaces(travelPreference *dto.TravelPreference) 
 }
 
 func (ss *suggestService) SuggestRestaurants(travelPreference *dto.TravelPreference) (*dto.RestaurantsSuggestion, error) {
-	rsp, err := ss.callAISuggestion(
+	rsp, err := ss.mockCallSuggestRestaurantAPI(
 		getURL(config.AppConfig.AI.Host,
 			config.AppConfig.AI.Port,
 			"/suggest/restaurants",
@@ -188,17 +206,29 @@ func (ss *suggestService) SuggestRestaurants(travelPreference *dto.TravelPrefere
 			return nil, fmt.Errorf("failed to fetch restaurant with ID %s: %w", rsp.IDs[i], err)
 		}
 		suggestedRestaurant := dto.RestaurantSuggestion{
-			RestaurantID:      restaurant.RestaurantID,
-			DestinationID:     restaurant.DestinationID,
-			Name:              restaurant.Name,
-			EstablishmentType: restaurant.EstablishmentType,
-			CuisineType:       restaurant.CuisineType,
-			Description:       restaurant.Description,
-			Address:           restaurant.Address,
-			PriceRange:        restaurant.PriceRange,
-			AvgRating:         restaurant.AvgRating,
-			OpeningHours:      restaurant.OpeningHours,
-			ImageURL:          restaurant.ImageURL,
+			RestaurantID:   restaurant.RestaurantID,
+			DestinationID:  restaurant.DestinationID,
+			Name:           restaurant.Name,
+			Address:        restaurant.Address,
+			Rating:         restaurant.Rating,
+			Phone:          restaurant.Phone,
+			PhotoURL:       restaurant.PhotoURL,
+			URL:            restaurant.URL,
+			Location:       restaurant.Location,
+			Reviews:        restaurant.Reviews,
+			Services:       restaurant.Services,
+			IsDelivery:     restaurant.IsDelivery,
+			IsBooking:      restaurant.IsBooking,
+			IsOpening:      restaurant.IsOpening,
+			PriceRange:     restaurant.PriceRange,
+			Description:    restaurant.Description,
+			Cuisines:       restaurant.Cuisines,
+			NumReviews:     restaurant.NumReviews,
+			ExampleReviews: restaurant.ExampleReviews,
+			MediaURLs:      restaurant.MediaURLs,
+			MainImage:      restaurant.MainImage,
+			OpeningHours:   restaurant.OpeningHours,
+			ReviewSummary:  restaurant.ReviewSummary,
 		}
 		suggestion.Restaurants = append(suggestion.Restaurants, suggestedRestaurant)
 	}

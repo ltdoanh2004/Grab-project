@@ -14,7 +14,6 @@ type AccommodationRepository interface {
 	Delete(accommodationID string) error
 	GetByDestinationID(destinationID string) ([]model.Accommodation, error)
 	GetAll() ([]model.Accommodation, error)
-	GetByIDWithAssociations(accommodationID string) (model.Accommodation, error)
 }
 
 // GormAccommodationRepository implements AccommodationRepository using GORM.
@@ -67,12 +66,4 @@ func (r *GormAccommodationRepository) GetAll() ([]model.Accommodation, error) {
 		return nil, err
 	}
 	return accommodations, nil
-}
-
-func (r *GormAccommodationRepository) GetByIDWithAssociations(accommodationID string) (model.Accommodation, error) {
-	var accommodation model.Accommodation
-	if err := r.DB.Preload("RoomTypes").Preload("Images").First(&accommodation, "accommodation_id = ?", accommodationID).Error; err != nil {
-		return model.Accommodation{}, err
-	}
-	return accommodation, nil
 }

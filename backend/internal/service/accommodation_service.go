@@ -10,7 +10,6 @@ import (
 type AccommodationService interface {
 	CreateAccommodation(accommodation *model.Accommodation) (string, error)
 	GetByID(id string) (model.Accommodation, error)
-	GetByIDWithAssociations(id string) (model.Accommodation, error)
 }
 
 type accommodationService struct {
@@ -48,8 +47,4 @@ func (s *accommodationService) CreateAccommodation(accommodation *model.Accommod
 
 func (s *accommodationService) GetByID(id string) (model.Accommodation, error) {
 	return s.accommodationRepo.GetByID(id)
-}
-
-func (s *accommodationService) GetByIDWithAssociations(id string) (model.Accommodation, error) {
-	return s.accommodationRepo.GetByIDWithAssociations(id)
 }

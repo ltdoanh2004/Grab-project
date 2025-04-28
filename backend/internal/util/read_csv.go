@@ -31,9 +31,6 @@ func ReadCSV(filePath string) ([]map[string]string, error) {
 			value = strings.ReplaceAll(value, "'", "\"")
 			value = strings.ReplaceAll(value, "\\xa0", " ")
 			recordMap[header[i]] = value
-			if i == 0 {
-				recordMap["hotel_id"] = value
-			}
 		}
 		records = append(records, recordMap)
 	}

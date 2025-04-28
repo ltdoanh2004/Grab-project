@@ -31,7 +31,7 @@ INSERT INTO trip_destinations (trip_destination_id, trip_id, destination_id, arr
 ('tdest_000005', 'trip_000005', 'dest_000005', '2024-06-01', '2024-06-03', 1);
 
 -- Update places insert statement with categories as string
-INSERT INTO places (place_id, destination_id, name, url, address, duration, type, categories, image_urls, main_image, price, rating, description, opening_hours, reviews) VALUES
+INSERT INTO places (place_id, destination_id, name, url, address, duration, type, categories, images, main_image, price, rating, description, opening_hours, reviews) VALUES
 ('act_000001', 'hanoi', 'Eiffel Tower', 'https://eiffel-tower.com', 'Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France', '2-3 hours', 'Landmark', '["Sightseeing", "Cultural"]', '[{"url": "eiffel1.jpg", "alt": "Eiffel Tower View 1"}, {"url": "eiffel2.jpg", "alt": "Eiffel Tower View 2"}]', 'eiffel_main.jpg', '€26.80', 4.7, 'Iconic iron lattice tower', '9:00 AM - 12:00 AM', '["Great view!", "Must visit"]'),
 ('act_000002', 'dest_000002', 'Tokyo Sushi Academy', 'https://sushiacademy.jp', '8-4-7 Ginza, Chuo, Tokyo 104-0061, Japan', '2 hours', 'School', '["Cultural"]', '[{"url": "sushi1.jpg", "alt": "Sushi Making Class"}, {"url": "sushi2.jpg", "alt": "Fresh Sushi"}]', 'sushi_main.jpg', '¥5000', 4.5, 'Sushi making school', '10:00 AM - 8:00 PM', '["Amazing experience"]'),
 ('act_000003', 'dest_000003', 'Central Park', 'https://centralpark.com', 'New York, NY, USA', '2-3 hours', 'Park', '["Adventure"]', '[{"url": "park1.jpg", "alt": "Central Park Lake"}, {"url": "park2.jpg", "alt": "Central Park in Fall"}]', 'centralpark_main.jpg', 'Free', 4.8, 'Urban park in Manhattan', '6:00 AM - 1:00 AM', '["Beautiful park"]'),
@@ -72,26 +72,42 @@ INSERT INTO trip_accommodations (trip_accommodation_id, trip_destination_id, acc
 ('tacc_000004', 'tdest_000004', 'accom_000004', '2024-09-15', '2024-09-20', 2200.00, 'Close to Spanish Steps'),
 ('tacc_000005', 'tdest_000005', 'accom_000005', '2024-06-01', '2024-06-03', 2500.00, 'Harbour view');
 
--- Insert mock data into the restaurants tablens table
-INSERT INTO restaurants (restaurant_id, destination_id, name, establishment_type, cuisine_type, description, address, price_range, avg_rating, opening_hours, image_url) VALUES
-    ('rest_000001', 'hanoi', 'Le Jules Verne', 'Fine Dining', 'French', 'Michelin-starred restaurant in the Eiffel Tower', 'Avenue Gustave Eiffel, 75007 Paris, France', '$$$$$', 4.8, '12PM-2PM, 7PM-10PM', 'jules_verne.jpg'),
-    ('rest_000002', 'dest_000002', 'Sushi Saito', 'Sushi Restaurant', 'Japanese', 'One of the best sushi restaurants in the world', '1-9-15 Akasaka, Minato, Tokyo 107-0052, Japan', '$$$$$', 4.9, '11:30AM-2:30PM, 5PM-11PM', 'sushi_saito.jpg'),
-    ('rest_000003', 'dest_000003', 'Per Se', 'Fine Dining', 'American', 'Three-Michelin-starred restaurant', '10 Columbus Circle, New York, NY 10019, USA', '$$$$$', 4.7, '5:30PM-10PM', 'per_se.jpg'),
-    ('rest_000004', 'dest_000004', 'La Pergola', 'Fine Dining', 'Italian', 'Rome Cavalieri', 'Via Alberto Cadlolo, 101, 00136 Roma RM, Italy', '$$$$$', 4.9, '7:30PM-11:30PM', 'la_pergola.jpg'),
-    ('rest_000005', 'dest_000005', 'Quay', 'Fine Dining', 'Australian', 'Quay restaurant description', 'Upper Level Overseas Passenger Terminal, The Rocks NSW 2000, Australia', '$$$$$', 4.8, '12PM-2:30PM, 6PM-10PM', 'quay.jpg');
+-- Update restaurants table structure and data
+INSERT INTO restaurants (restaurant_id, destination_id, name, address, rating, phone, photo_url, url, location, reviews, services, 
+    is_delivery, is_booking, is_opening, price_range, description, cuisines, num_reviews, example_reviews, media_urls, main_image, 
+    opening_hours, review_summary) VALUES
+('rest_000001', 'hanoi', 'Le Jules Verne', 'Avenue Gustave Eiffel, 75007 Paris, France', 4.8, '+33 1 45 55 61 44', 
+    'jules_verne_photo.jpg', 'https://www.lejulesverne-paris.com', 
+    '{"lat": 48.8584, "lon": 2.2945}',
+    '["Exceptional dining experience", "Breathtaking view of Paris"]',
+    '["Reservation", "Fine Dining", "Wine Pairing"]',
+    false, true, true, '$$$$$', 
+    'Michelin-starred restaurant in the Eiffel Tower offering contemporary French cuisine',
+    'French Contemporary', 1200,
+    'Outstanding service and exceptional food with spectacular views of Paris',
+    '["jules_verne1.jpg", "jules_verne2.jpg", "jules_verne3.jpg"]',
+    'jules_verne_main.jpg',
+    '12PM-2PM, 7PM-10PM',
+    'Excellent service, spectacular views, and outstanding French cuisine'),
 
--- Insert mock data into the restaurant_foods table
-INSERT INTO restaurant_foods (food_id, restaurant_id, name, description, food_type, cuisine, is_vegetarian, is_vegan, is_specialty, price, popularity_score, image_url) VALUES
-('food_000001', 'rest_000001', 'Foie Gras', 'Duck liver pate', 'Appetizer', 'French', false, false, true, 60.00, 4.6, 'foie_gras.jpg'),
-('food_000002', 'rest_000002', 'Omakase', 'Chef''s choice sushi', 'Main Course', 'Japanese', false, false, true, 300.00, 4.9, 'omakase.jpg'),
-('food_000003', 'rest_000003', 'Oysters and Pearls', 'Signature dish', 'Appetizer', 'American', false, false, true, 75.00, 4.7, 'oysters_and_pearls.jpg'),
-('food_000004', 'rest_000004', 'Fagottelli Carbonara', 'Modern take on classic dish', 'Main Course', 'Italian', false, false, true, 90.00, 4.8, 'fagottelli_carbonara.jpg'),
-('food_000005', 'rest_000005', 'Snow Egg', 'Signature dessert', 'Dessert', 'Australian', false, false, true, 45.00, 4.9, 'snow_egg.jpg');
+('rest_000002', 'dest_000002', 'Sushi Saito', '1-9-15 Akasaka, Minato, Tokyo 107-0052, Japan', 4.9, '+81 3-3589-4412',
+    'sushi_saito_photo.jpg', 'https://sushi-saito.com',
+    '{"lat": 35.6673, "lon": 139.7299}',
+    '["Best sushi in Tokyo", "Incredible omakase experience"]',
+    '["Reservation Only", "Omakase", "Counter Seating"]',
+    false, true, true, '$$$$$',
+    'One of the most acclaimed sushi restaurants in Tokyo',
+    'Japanese, Sushi', 800,
+    'World-class sushi experience with exceptional attention to detail',
+    '["saito1.jpg", "saito2.jpg", "saito3.jpg"]',
+    'sushi_saito_main.jpg',
+    '11:30AM-2PM, 5PM-11PM',
+    'Exceptional sushi craftsmanship in an intimate setting');
 
 -- Insert mock data into the trip_restaurants table
 INSERT INTO trip_restaurants (trip_restaurant_id, trip_destination_id, restaurant_id, meal_date, start_time, end_time, reservation_info, notes) VALUES
 ('trest_000001', 'thanoi', 'rest_000001', '2024-07-03', '2024-07-03 19:00:00', '2024-07-03 21:00:00', 'Reserved under John Doe', 'Confirm reservation 24 hours prior'),
 ('trest_000002', 'tdest_000002', 'rest_000002', '2024-12-22', '2024-12-22 18:00:00', '2024-12-22 20:00:00', 'Reserved under Jane Smith', 'Request a private room'),
-('trest_000003', 'tdest_000003', 'rest_000003', '2025-03-13', '2025-03-13 20:00:00', '2025-03-13 22:00:00', 'Reserved under Alice Wonder', 'Mention dietary restrictions'),
-('trest_000004', 'tdest_000004', 'rest_000004', '2024-09-18', '2024-09-18 20:30:00', '2024-09-18 22:30:00', 'Reserved under Bob Builder', 'Anniversary dinner'),
-('trest_000005', 'tdest_000005', 'rest_000005', '2024-06-02', '2024-06-02 19:30:00', '2024-06-02 21:30:00', 'Reserved under Eve Engineer', 'Business meeting');
+('trest_000003', 'tdest_000003', 'rest_000001', '2025-03-13', '2025-03-13 20:00:00', '2025-03-13 22:00:00', 'Reserved under Alice Wonder', 'Mention dietary restrictions'),
+('trest_000004', 'tdest_000004', 'rest_000002', '2024-09-18', '2024-09-18 20:30:00', '2024-09-18 22:30:00', 'Reserved under Bob Builder', 'Anniversary dinner'),
+('trest_000005', 'tdest_000005', 'rest_000001', '2024-06-02', '2024-06-02 19:30:00', '2024-06-02 21:30:00', 'Reserved under Eve Engineer', 'Business meeting');

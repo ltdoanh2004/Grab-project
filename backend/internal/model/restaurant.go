@@ -2,18 +2,27 @@ package model
 
 // Restaurant maps to the "restaurants" table.
 type Restaurant struct {
-	RestaurantID      string  `gorm:"type:char(36);primaryKey" json:"restaurant_id"`
-	DestinationID     string  `gorm:"type:char(36);column:destination_id" json:"destination_id"` // FK referencing destinations table
-	Name              string  `gorm:"column:name;size:100;not null" json:"name"`
-	EstablishmentType string  `gorm:"column:establishment_type;size:50" json:"establishment_type"`
-	CuisineType       string  `gorm:"column:cuisine_type;size:100" json:"cuisine_type"`
-	Description       string  `gorm:"column:description" json:"description"`
-	Address           string  `gorm:"column:address" json:"address"`
-	PriceRange        string  `gorm:"column:price_range;type:enum('$','$$','$$$','$$$$','$$$$$')" json:"price_range"`
-	AvgRating         float64 `gorm:"column:avg_rating;type:decimal(3,1)" json:"avg_rating"`
-	OpeningHours      string  `gorm:"column:opening_hours" json:"opening_hours"`
-	ImageURL          string  `gorm:"column:image_url;size:255" json:"image_url"`
-
-	Destination     *Destination     `json:"destination,omitempty"`
-	RestaurantFoods []RestaurantFood `gorm:"foreignKey:RestaurantID" json:"foods,omitempty"`
+	RestaurantID   string      `gorm:"type:char(36);primaryKey" json:"restaurant_id"`
+	DestinationID  string      `gorm:"type:char(36);" json:"destination_id"`
+	Name           string      `json:"name"`
+	Address        string      `json:"address"`
+	Rating         float64     `json:"rating"`
+	Phone          string      `json:"phone"`
+	PhotoURL       string      `json:"photo_url"`
+	URL            string      `json:"url"`
+	Location       Location    `json:"location"`
+	Reviews        StringArray `gorm:"type:json" json:"reviews"`
+	Services       StringArray `gorm:"type:json" json:"services"`
+	IsDelivery     bool        `json:"is_delivery"`
+	IsBooking      bool        `json:"is_booking"`
+	IsOpening      bool        `json:"is_opening"`
+	PriceRange     string      `json:"price_range"`
+	Description    string      `json:"description"`
+	Cuisines       string      `json:"cuisines"`
+	NumReviews     int         `json:"num_reviews"`
+	ExampleReviews string      `json:"example_reviews"`
+	MediaURLs      string      `json:"media_urls"`
+	MainImage      string      `json:"main_image"`
+	OpeningHours   string      `json:"opening_hours"`
+	ReviewSummary  string      `json:"review_summary"`
 }

@@ -15,17 +15,14 @@ type RestaurantService interface {
 }
 
 type restaurantService struct {
-	restaurantRepo     repository.RestaurantRepository
-	restaurantFoodRepo repository.RestaurantFoodRepository
+	restaurantRepo repository.RestaurantRepository
 }
 
 func NewRestaurantService(
 	restaurantRepo repository.RestaurantRepository,
-	restaurantFoodRepo repository.RestaurantFoodRepository,
 ) RestaurantService {
 	return &restaurantService{
-		restaurantRepo:     restaurantRepo,
-		restaurantFoodRepo: restaurantFoodRepo,
+		restaurantRepo: restaurantRepo,
 	}
 }
 
@@ -40,16 +37,6 @@ func (s *restaurantService) CreateRestaurant(restaurant *model.Restaurant) (stri
 	if err := tx.Create(restaurant).Error; err != nil {
 		tx.Rollback()
 		return "", err
-	}
-
-	// Process foods
-	for i := range restaurant.RestaurantFoods {
-		restaurant.RestaurantFoods[i].FoodID = uuid.New().String()
-		restaurant.RestaurantFoods[i].RestaurantID = restaurant.RestaurantID
-		if err := tx.Create(&restaurant.RestaurantFoods[i]).Error; err != nil {
-			tx.Rollback()
-			return "", err
-		}
 	}
 
 	// Commit transaction
