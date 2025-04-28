@@ -12,13 +12,12 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ENV_PATH = os.path.join(SCRIPT_DIR, '.env')
 load_dotenv(ENV_PATH)
 
-class TravellingChatbot:
+class TravelModel:
     def __init__(self):
         self.hotel_db = HotelVectorDatabase()
         self.place_db = PlaceVectorDatabase()
         self.fnb_db = FnBVectorDatabase()
         self.openai_client = OpenAI(api_key=os.getenv("OPEN_API_KEY"))
-        self.backend_api = BackendAPI()
         self.model = "gpt-3.5-turbo"
         self.current_db = None
         
@@ -43,171 +42,103 @@ class TravellingChatbot:
             print(f"Error setting up database: {e}")
             return False
             
-    def query_hotels(self, query_text: str, top_k: int = 5) -> List[Dict[str, Any]]:
+    def query_hotels(self, query_text: str, top_k: int = 5) -> List[str]:
         """
-        Query hotels based on text input
+        Query hotels based on text input and return hotel IDs
         """
         if not self.current_db or not isinstance(self.current_db, HotelVectorDatabase):
             raise ValueError("Hotel database is not set up. Please call setup_database('hotels') first.")
             
         # Get hotel IDs from vector database
-        hotel_ids = self.current_db.get_hotel_ids(query_text, top_k=top_k)
-        
-        # Get detailed hotel information from backend
-        result = self.backend_api.get_location_details(hotel_ids, "hotels")
-        if result["status"] == "success":
-            return result["data"]
-        else:
-            raise ValueError(f"Error getting hotel details: {result['error']}")
+        return self.current_db.get_hotel_ids(query_text, top_k=top_k)
     
-    def query_places(self, query_text: str, top_k: int = 5) -> List[Dict[str, Any]]:
+    def query_places(self, query_text: str, top_k: int = 5) -> List[str]:
         """
-        Query places based on text input
+        Query places based on text input and return place IDs
         """
         if not self.current_db or not isinstance(self.current_db, PlaceVectorDatabase):
             raise ValueError("Place database is not set up. Please call setup_database('places') first.")
             
         # Get place IDs from vector database
-        place_ids = self.current_db.get_place_ids(query_text, top_k=top_k)
-        
-        # Get detailed place information from backend
-        result = self.backend_api.get_location_details(place_ids, "places")
-        if result["status"] == "success":
-            return result["data"]
-        else:
-            raise ValueError(f"Error getting place details: {result['error']}")
+        return self.current_db.get_place_ids(query_text, top_k=top_k)
     
-    def query_fnb(self, query_text: str, top_k: int = 5) -> List[Dict[str, Any]]:
+    def query_fnb(self, query_text: str, top_k: int = 5) -> List[str]:
         """
-        Query FnB based on text input
+        Query FnB based on text input and return FnB IDs
         """
         if not self.current_db or not isinstance(self.current_db, FnBVectorDatabase):
             raise ValueError("FnB database is not set up. Please call setup_database('fnb') first.")
             
         # Get FnB IDs from vector database
-        fnb_ids = self.current_db.get_fnb_ids(query_text, top_k=top_k)
-        
-        # Get detailed FnB information from backend
-        result = self.backend_api.get_location_details(fnb_ids, "fnb")
-        if result["status"] == "success":
-            return result["data"]
-        else:
-            raise ValueError(f"Error getting FnB details: {result['error']}")
+        return self.current_db.get_fnb_ids(query_text, top_k=top_k)
     
-    def search_by_price_range(self, min_price: float, max_price: float, top_k: int = 5) -> List[Dict[str, Any]]:
+    def search_by_price_range(self, min_price: float, max_price: float, top_k: int = 5) -> List[str]:
         """
-        Search by price range
+        Search by price range and return IDs
         """
         if not self.current_db:
             raise ValueError("No database is set up. Please call setup_database first.")
             
         if isinstance(self.current_db, HotelVectorDatabase):
             results = self.current_db.search_by_price_range(min_price, max_price, top_k)
-            ids = [result["id"] for result in results["matches"]]
-            result_type = "hotels"
         elif isinstance(self.current_db, PlaceVectorDatabase):
             results = self.current_db.search_by_entrance_fee(max_price, top_k)
-            ids = [result["id"] for result in results["matches"]]
-            result_type = "places"
         elif isinstance(self.current_db, FnBVectorDatabase):
             results = self.current_db.search_by_price_range(f"{min_price}-{max_price}", top_k)
-            ids = [result["id"] for result in results["matches"]]
-            result_type = "fnb"
         else:
             raise ValueError("Unsupported database type")
             
-        # Get detailed information from backend
-        result = self.backend_api.get_location_details(ids, result_type)
-        if result["status"] == "success":
-            return result["data"]
-        else:
-            raise ValueError(f"Error getting details: {result['error']}")
+        return [result["id"] for result in results["matches"]]
     
-    def search_by_rating(self, min_rating: float, top_k: int = 5) -> List[Dict[str, Any]]:
+    def search_by_rating(self, min_rating: float, top_k: int = 5) -> List[str]:
         """
-        Search by minimum rating
+        Search by minimum rating and return IDs
         """
         if not self.current_db:
             raise ValueError("No database is set up. Please call setup_database first.")
             
         results = self.current_db.search_by_rating(min_rating, top_k)
-        ids = [result["id"] for result in results["matches"]]
-        
-        # Determine result type based on current database
-        if isinstance(self.current_db, HotelVectorDatabase):
-            result_type = "hotels"
-        elif isinstance(self.current_db, PlaceVectorDatabase):
-            result_type = "places"
-        elif isinstance(self.current_db, FnBVectorDatabase):
-            result_type = "fnb"
-        else:
-            raise ValueError("Unsupported database type")
-            
-        result = self.backend_api.get_location_details(ids, result_type)
-        if result["status"] == "success":
-            return result["data"]
-        else:
-            raise ValueError(f"Error getting details: {result['error']}")
+        return [result["id"] for result in results["matches"]]
     
-    def search_by_category(self, category: str, top_k: int = 5) -> List[Dict[str, Any]]:
+    def search_by_category(self, category: str, top_k: int = 5) -> List[str]:
         """
-        Search by category
+        Search by category and return IDs
         """
         if not self.current_db:
             raise ValueError("No database is set up. Please call setup_database first.")
             
         if isinstance(self.current_db, PlaceVectorDatabase):
             results = self.current_db.search_by_category(category, top_k)
-            ids = [result["id"] for result in results["matches"]]
-            result_type = "places"
         elif isinstance(self.current_db, FnBVectorDatabase):
             results = self.current_db.search_by_category(category, top_k)
-            ids = [result["id"] for result in results["matches"]]
-            result_type = "fnb"
         else:
             raise ValueError("Category search is only supported for places and FnB")
             
-        result = self.backend_api.get_location_details(ids, result_type)
-        if result["status"] == "success":
-            return result["data"]
-        else:
-            raise ValueError(f"Error getting details: {result['error']}")
+        return [result["id"] for result in results["matches"]]
     
-    def search_by_location(self, location: str, top_k: int = 5) -> List[Dict[str, Any]]:
+    def search_by_location(self, location: str, top_k: int = 5) -> List[str]:
         """
-        Search by location
+        Search by location and return IDs
         """
         if not self.current_db or not isinstance(self.current_db, PlaceVectorDatabase):
             raise ValueError("Location search is only supported for places. Please call setup_database('places') first.")
             
         results = self.current_db.search_by_location(location, top_k)
-        ids = [result["id"] for result in results["matches"]]
-        
-        result = self.backend_api.get_location_details(ids, "places")
-        if result["status"] == "success":
-            return result["data"]
-        else:
-            raise ValueError(f"Error getting place details: {result['error']}")
+        return [result["id"] for result in results["matches"]]
     
-    def search_by_menu_item(self, item_name: str, top_k: int = 5) -> List[Dict[str, Any]]:
+    def search_by_menu_item(self, item_name: str, top_k: int = 5) -> List[str]:
         """
-        Search FnB by menu item
+        Search FnB by menu item and return IDs
         """
         if not self.current_db or not isinstance(self.current_db, FnBVectorDatabase):
             raise ValueError("Menu item search is only supported for FnB. Please call setup_database('fnb') first.")
             
         results = self.current_db.search_by_menu_item(item_name, top_k)
-        ids = [result["id"] for result in results["matches"]]
-        
-        result = self.backend_api.get_location_details(ids, "fnb")
-        if result["status"] == "success":
-            return result["data"]
-        else:
-            raise ValueError(f"Error getting FnB details: {result['error']}")
+        return [result["id"] for result in results["matches"]]
     
     def get_available_functions(self) -> List[Dict[str, Any]]:
         """
-        Define available functions for the chatbot
+        Define available functions for the model
         """
         return [
             {
@@ -385,12 +316,57 @@ class TravellingChatbot:
     
     def process_query(self, user_query: str) -> Dict[str, Any]:
         """
-        Process user query using function calling
+        Process user query using function calling and return IDs
         """
         try:
-            # Initial chat completion to determine which function to call
+            # Initial chat completion to determine which functions to call
             messages = [
-                {"role": "system", "content": "You are a helpful travel assistant. Use the available functions to help users find hotels, places, and food & beverage options."},
+                {
+                    "role": "system", 
+                    "content": """You are an expert travel assistant specialized in Vietnam tourism. Your goal is to help users find the best accommodations, activities, and restaurants based on their preferences.
+
+When processing a query:
+1. First, analyze the user's request to understand their needs:
+   - Type of travel (leisure, business, family, etc.)
+   - Budget range
+   - Duration of stay
+   - Location preferences
+   - Activities of interest
+   - Travel style (luxury, budget, adventure, etc.)
+   - Season of travel
+
+2. Then, call the appropriate functions in this order:
+   a. First, call setup_database for each type needed (hotels, places, fnb)
+   b. Then, call the corresponding query functions with detailed context
+   c. For each query, include relevant filters (price range, rating, category, etc.)
+
+3. For each function call:
+   - Create a detailed context that captures all relevant information
+   - Set appropriate top_k value (default 10 for comprehensive results)
+   - Include specific filters when applicable
+
+4. Return results in a structured format with:
+   - Function name
+   - Type of result (hotels, places, fnb)
+   - Arguments used
+   - List of IDs
+
+Example context for query_hotels:
+"Looking for hotels in Da Nang for a family vacation:
+- Budget: medium (2-4 million VND/night)
+- Duration: 5 days
+- Activities: beach, swimming, family-friendly
+- Season: summer
+- Travel style: family with kids
+- Requirements: pool, kids club, beach access"
+
+Remember to:
+- Always call setup_database first
+- Use multiple functions when needed
+- Include all relevant filters
+- Create detailed, specific contexts
+- Return top 10 results for each query"""
+                },
                 {"role": "user", "content": user_query}
             ]
             
@@ -403,71 +379,100 @@ class TravellingChatbot:
             
             response_message = response.choices[0].message
             
-            # If the model decided to call a function
+            # If the model decided to call functions
             if response_message.function_call:
                 function_name = response_message.function_call.name
                 function_args = eval(response_message.function_call.arguments)
                 
-                # Call the appropriate function
+                # Handle setup_database separately
                 if function_name == "setup_database":
                     result = self.setup_database(**function_args)
                     return {
                         "status": "success",
                         "response": f"Database {function_args['db_type']} setup {'successful' if result else 'failed'}"
                     }
-                elif function_name == "query_hotels":
-                    results = self.query_hotels(**function_args)
-                elif function_name == "query_places":
-                    results = self.query_places(**function_args)
-                elif function_name == "query_fnb":
-                    results = self.query_fnb(**function_args)
-                elif function_name == "search_by_price_range":
-                    results = self.search_by_price_range(**function_args)
-                elif function_name == "search_by_rating":
-                    results = self.search_by_rating(**function_args)
-                elif function_name == "search_by_category":
-                    results = self.search_by_category(**function_args)
-                elif function_name == "search_by_location":
-                    results = self.search_by_location(**function_args)
-                elif function_name == "search_by_menu_item":
-                    results = self.search_by_menu_item(**function_args)
-                else:
-                    raise ValueError(f"Unknown function: {function_name}")
                 
-                # Prepare context for final response
-                context = f"Based on the following information, please provide a helpful response to the user's query: {user_query}\n\n"
-                for item in results:
-                    context += f"Name: {item['name']}\n"
-                    context += f"Description: {item['description']}\n"
-                    if 'price' in item:
-                        context += f"Price: {item['price']}\n"
-                    if 'rating' in item:
-                        context += f"Rating: {item['rating']}\n"
-                    if 'categories' in item:
-                        context += f"Categories: {item['categories']}\n"
-                    if 'location' in item:
-                        context += f"Location: {item['location']}\n"
-                    if 'menu_items' in item:
-                        context += f"Menu Items: {item['menu_items']}\n"
-                    context += "\n"
-                
-                # Get final response from the model
-                messages.append(response_message)
-                messages.append({
-                    "role": "function",
-                    "name": function_name,
-                    "content": context
-                })
-                
-                final_response = self.openai_client.chat.completions.create(
-                    model=self.model,
-                    messages=messages
-                )
-                
-                return {
+                # Initialize results dictionary
+                results = {
                     "status": "success",
-                    "response": final_response.choices[0].message.content
+                    "functions": []
                 }
+                
+                # Handle multiple function calls
+                if isinstance(function_name, list):
+                    for i, name in enumerate(function_name):
+                        args = function_args[i] if isinstance(function_args, list) else function_args
+                        
+                        if name == "query_hotels":
+                            ids = self.query_hotels(**args)
+                            type = "hotels"
+                        elif name == "query_places":
+                            ids = self.query_places(**args)
+                            type = "places"
+                        elif name == "query_fnb":
+                            ids = self.query_fnb(**args)
+                            type = "fnb"
+                        elif name == "search_by_price_range":
+                            ids = self.search_by_price_range(**args)
+                            type = "hotels"
+                        elif name == "search_by_rating":
+                            ids = self.search_by_rating(**args)
+                            type = "hotels"
+                        elif name == "search_by_category":
+                            ids = self.search_by_category(**args)
+                            type = "places"
+                        elif name == "search_by_location":
+                            ids = self.search_by_location(**args)
+                            type = "places"
+                        elif name == "search_by_menu_item":
+                            ids = self.search_by_menu_item(**args)
+                            type = "fnb"
+                        else:
+                            raise ValueError(f"Unknown function: {name}")
+                        
+                        results["functions"].append({
+                            "name": name,
+                            "type": type,
+                            "args": args,
+                            "ids": ids
+                        })
+                else:
+                    # Single function call
+                    if function_name == "query_hotels":
+                        ids = self.query_hotels(**function_args)
+                        type = "hotels"
+                    elif function_name == "query_places":
+                        ids = self.query_places(**function_args)
+                        type = "places"
+                    elif function_name == "query_fnb":
+                        ids = self.query_fnb(**function_args)
+                        type = "fnb"
+                    elif function_name == "search_by_price_range":
+                        ids = self.search_by_price_range(**function_args)
+                        type = "hotels"
+                    elif function_name == "search_by_rating":
+                        ids = self.search_by_rating(**function_args)
+                        type = "hotels"
+                    elif function_name == "search_by_category":
+                        ids = self.search_by_category(**function_args)
+                        type = "places"
+                    elif function_name == "search_by_location":
+                        ids = self.search_by_location(**function_args)
+                        type = "places"
+                    elif function_name == "search_by_menu_item":
+                        ids = self.search_by_menu_item(**function_args)
+                        type = "fnb"
+                    else:
+                        raise ValueError(f"Unknown function: {function_name}")
+                    
+                    results["functions"].append({
+                        "name": function_name,
+                        "type": type,
+                        "args": function_args,
+                        "ids": ids
+                    })
+                
+                return results
             
             # If no function was called, return the direct response
             return {

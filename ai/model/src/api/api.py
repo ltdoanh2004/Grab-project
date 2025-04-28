@@ -1,10 +1,11 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from chatbot import HotelChatbot
+from typing import List, Optional
+from ai.model.src.travel_model import TravelModel
 import uvicorn
 
-app = FastAPI(title="Hotel Recommendation Chatbot API")
-chatbot = HotelChatbot()
+app = FastAPI(title="Travel Recommendation API")
+model = TravelModel()
 
 class QueryRequest(BaseModel):
     query: str
@@ -14,16 +15,141 @@ class QueryResponse(BaseModel):
     response: str | None = None
     error: str | None = None
 
+class SuggestRequest(BaseModel):
+    activities: List[str]
+    budget: str
+    duration_days: int
+    limit: int
+    location: str
+    season: str
+    travel_style: str
+
+class SuggestResponse(BaseModel):
+    status: str
+    ids: List[str] | None = None
+    error: str | None = None
+
 @app.post("/chat", response_model=QueryResponse)
 async def chat(request: QueryRequest):
     """
-    Endpoint to handle hotel recommendation queries
+    Endpoint to handle general travel queries
     """
     try:
-        result = chatbot.process_query(request.query)
+        result = model.process_query(request.query)
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/suggest/accommodations", response_model=SuggestResponse)
+async def suggest_accommodations(request: SuggestRequest):
+    """
+    Endpoint to suggest accommodations based on various criteria
+    """
+    try:
+        # Setup hotel database
+        model.setup_database("hotels")
+        
+        # Create context from request
+        context = f"""
+        Looking for accommodations with:
+        - Activities: {', '.join(request.activities)}
+        - Budget: {request.budget}
+        - Duration: {request.duration_days} days
+        - Location: {request.location}
+        - Season: {request.season}
+        - Travel Style: {request.travel_style}
+        """
+        
+        # Query hotels
+        hotel_ids = model.query_hotels(
+            query_text=context,
+            top_k=request.limit
+        )
+        
+        return {
+            "status": "success",
+            "ids": hotel_ids
+        }
+        
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }
+
+@app.post("/suggest/activities", response_model=SuggestResponse)
+async def suggest_activities(request: SuggestRequest):
+    """
+    Endpoint to suggest activities based on various criteria
+    """
+    try:
+        # Setup place database
+        model.setup_database("places")
+        
+        # Create context from request
+        context = f"""
+        Looking for activities with:
+        - Activities: {', '.join(request.activities)}
+        - Budget: {request.budget}
+        - Duration: {request.duration_days} days
+        - Location: {request.location}
+        - Season: {request.season}
+        - Travel Style: {request.travel_style}
+        """
+        
+        # Query places
+        place_ids = model.query_places(
+            query_text=context,
+            top_k=request.limit
+        )
+        
+        return {
+            "status": "success",
+            "ids": place_ids
+        }
+        
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }
+
+@app.post("/suggest/restaurants", response_model=SuggestResponse)
+async def suggest_restaurants(request: SuggestRequest):
+    """
+    Endpoint to suggest restaurants based on various criteria
+    """
+    try:
+        # Setup FnB database
+        model.setup_database("fnb")
+        
+        # Create context from request
+        context = f"""
+        Looking for restaurants with:
+        - Activities: {', '.join(request.activities)}
+        - Budget: {request.budget}
+        - Duration: {request.duration_days} days
+        - Location: {request.location}
+        - Season: {request.season}
+        - Travel Style: {request.travel_style}
+        """
+        
+        # Query FnB
+        fnb_ids = model.query_fnb(
+            query_text=context,
+            top_k=request.limit
+        )
+        
+        return {
+            "status": "success",
+            "ids": fnb_ids
+        }
+        
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000) 
