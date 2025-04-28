@@ -1,14 +1,22 @@
 import argparse
 from tqdm import tqdm
 import os
+import sys
 import pandas as pd
 from typing import Dict, Any
 
-from .base_vector_database import BaseVectorDatabase
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+try:
+    from .base_vector_database import BaseVectorDatabase
+except ImportError:
+    from vector_database.base_vector_database import BaseVectorDatabase
 
 class FnBVectorDatabase(BaseVectorDatabase):
     def __init__(self):
         super().__init__(index_name="fnb-recommendations")
+        # Override checkpoint file path to be specific for FnB
+        self.checkpoint_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fnb_checkpoint.json')
 
     def prepare_fnb_embedding(self, data=None, incremental=True):
         """
@@ -21,18 +29,46 @@ class FnBVectorDatabase(BaseVectorDatabase):
         # Load data
         if data is None:
             data = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'fnb_processed.csv')
+        
+        # Check if data file exists    
+        if not os.path.exists(data):
+            # Create example data if file doesn't exist
+            print(f"Data file not found at: {data}")
+            print("Creating example data file...")
+            
+            # Check if data directory exists
+            data_dir = os.path.dirname(data)
+            if not os.path.exists(data_dir):
+                print(f"Creating data directory: {data_dir}")
+                os.makedirs(data_dir, exist_ok=True)
+                
+            # Create a small example dataset
+            example_data = pd.DataFrame({
+                'name': ['Phở Bát Đàn', 'Bún chả Hàng Mành', 'Cà phê Giảng'],
+                'description': [
+                    'Quán phở nổi tiếng tại Hà Nội với nước dùng đậm đà.',
+                    'Quán bún chả truyền thống nổi tiếng với nước chấm thơm ngon.',
+                    'Quán cà phê nổi tiếng với món cà phê trứng độc đáo.'
+                ],
+                'categories': ['Phở', 'Bún chả', 'Cà phê'],
+                'price_range': ['50,000-80,000 VND', '40,000-70,000 VND', '25,000-45,000 VND'],
+                'rating': [4.7, 4.5, 4.6],
+                'menu_items': ['Phở bò, Phở gà, Phở nạm', 'Bún chả, Nem rán, Chả cuốn', 'Cà phê trứng, Cà phê đen, Cà phê sữa']
+            })
+            
+            # Save example data
+            example_data.to_csv(data, index=False)
+            print(f"Created example data file at: {data}")
             
         print("Loading and processing FnB data...")
         print(f"Loading data from: {data}")
         raw_df = pd.read_csv(data)
         
-        # Replace NaN values with empty strings for text columns
         text_columns = ['name', 'description', 'categories', 'menu_items']
         for col in text_columns:
             if col in raw_df.columns:
                 raw_df[col] = raw_df[col].fillna('')
         
-        # Basic processing on raw dataframe
         print("Processing prices...")
         if 'price_range' in raw_df.columns:
             raw_df['price_range'] = raw_df['price_range'].fillna('')
@@ -46,7 +82,6 @@ class FnBVectorDatabase(BaseVectorDatabase):
         if 'index' not in raw_df.columns:
             raw_df['index'] = ['fnb_' + str(i).zfill(5) for i in range(1, len(raw_df) + 1)]
         
-        # Try to find existing embeddings file if we're doing incremental processing
         existing_df = None
         rows_to_embed = raw_df
         
@@ -174,8 +209,30 @@ class FnBVectorDatabase(BaseVectorDatabase):
             print(f"Index {self.index_name} already contains data. Use incremental=True to add or update data.")
             return True
             
+        # Define embedding file path
+        embedding_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
+                                     'data', 'fnb_processed_embedding.csv')
+            
+        # Check if embedding file exists
+        if not os.path.exists(embedding_file):
+            print(f"Embedding file not found at: {embedding_file}")
+            print("Creating embeddings first...")
+            
+            # Check if data directory exists
+            data_dir = os.path.dirname(embedding_file)
+            if not os.path.exists(data_dir):
+                print(f"Creating data directory: {data_dir}")
+                os.makedirs(data_dir, exist_ok=True)
+                
+            # Create embeddings from raw data
+            self.prepare_fnb_embedding(incremental=False)
+            
+            if not os.path.exists(embedding_file):
+                raise ValueError(f"Failed to create embedding file at {embedding_file}")
+        
         # Load data from CSV
-        self.df = pd.read_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'fnb_processed_embedding.csv'))
+        print(f"Loading embeddings from: {embedding_file}")
+        self.df = pd.read_csv(embedding_file)
         text_columns = ['name', 'description', 'categories', 'menu_items']
         for col in text_columns:
             if col in self.df.columns:
