@@ -44,7 +44,7 @@ class HotelVectorDatabase(BaseVectorDatabase):
         self.client = OpenAI(api_key=OPEN_API_KEY)
         self.pinecone_api_key = PINECONE_API_KEY
         self.pc = Pinecone(api_key=self.pinecone_api_key)
-        self.checkpoint_file = os.path.join(SCRIPT_DIR, 'checkpoint.json')
+        self.checkpoint_file = os.path.join(SCRIPT_DIR, 'hotel_checkpoint.json')
         self.max_tokens = 8000  # Slightly less than 8192 to be safe
 
     def process_room_type(self, room_type):

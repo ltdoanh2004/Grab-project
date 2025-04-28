@@ -75,12 +75,12 @@ class FnBVectorDatabase(BaseVectorDatabase):
         
         print("Processing ratings...")
         if 'rating' in raw_df.columns:
-            raw_df['rating'].fillna(raw_df['rating'].mean(), inplace=True)
+            raw_df['rating'].fillna(raw_df[ơ'rating'].mean(), inplace=True)
             raw_df['rating'] = raw_df['rating'].astype(float)
 
         print("Generating indices...")
         if 'index' not in raw_df.columns:
-            raw_df['index'] = ['fnb_' + str(i).zfill(5) for i in range(1, len(raw_df) + 1)]
+            raw_df['index'] = ['fnb_' + str(i).zfill(6) for i in range(1, len(raw_df) + 1)]
         
         existing_df = None
         rows_to_embed = raw_df
