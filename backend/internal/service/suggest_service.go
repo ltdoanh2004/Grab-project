@@ -12,24 +12,24 @@ import (
 )
 
 type SuggestService interface {
-	SuggestActivities(travelPreference *dto.TravelPreference) (*dto.ActivitiesSuggestion, error)
+	SuggestPlaces(travelPreference *dto.TravelPreference) (*dto.PlacesSuggestion, error)
 	SuggestRestaurants(travelPreference *dto.TravelPreference) (*dto.RestaurantsSuggestion, error)
 	SuggestAccommodations(travelPreference *dto.TravelPreference) (*dto.AccommodationsSuggestion, error)
 }
 
 type suggestService struct {
-	ActivityRepository      repository.ActivityRepository
+	PlaceRepository         repository.PlaceRepository
 	RestaurantRepository    repository.RestaurantRepository
 	AccommodationRepository repository.AccommodationRepository
 }
 
 func NewSuggestService(
-	activityRepo repository.ActivityRepository,
+	placeRepo repository.PlaceRepository,
 	restaurantRepo repository.RestaurantRepository,
 	accommodationRepo repository.AccommodationRepository,
 ) SuggestService {
 	return &suggestService{
-		ActivityRepository:      activityRepo,
+		PlaceRepository:         placeRepo,
 		RestaurantRepository:    restaurantRepo,
 		AccommodationRepository: accommodationRepo,
 	}
@@ -129,11 +129,11 @@ func (ss *suggestService) SuggestAccommodations(travelPreference *dto.TravelPref
 	return &suggestion, nil
 }
 
-func (ss *suggestService) SuggestActivities(travelPreference *dto.TravelPreference) (*dto.ActivitiesSuggestion, error) {
+func (ss *suggestService) SuggestPlaces(travelPreference *dto.TravelPreference) (*dto.PlacesSuggestion, error) {
 	rsp, err := ss.callAISuggestion(
 		getURL(config.AppConfig.AI.Host,
 			config.AppConfig.AI.Port,
-			"/suggest/activities",
+			"/suggest/places",
 		),
 		travelPreference,
 	)
@@ -141,24 +141,30 @@ func (ss *suggestService) SuggestActivities(travelPreference *dto.TravelPreferen
 		return nil, err
 	}
 
-	var suggestion dto.ActivitiesSuggestion
+	var suggestion dto.PlacesSuggestion
 	for i := range rsp.IDs {
-		activity, err := ss.ActivityRepository.GetByID(rsp.IDs[i])
+		place, err := ss.PlaceRepository.GetByID(rsp.IDs[i])
 		if err != nil {
-			return nil, fmt.Errorf("failed to fetch activity with ID %s: %w", rsp.IDs[i], err)
+			return nil, fmt.Errorf("failed to fetch place with ID %s: %w", rsp.IDs[i], err)
 		}
-		suggestedActivity := dto.ActivitySuggestion{
-			ActivityID:    activity.ActivityID,
-			DestinationID: activity.DestinationID,
-			CategoryID:    activity.CategoryID,
-			Name:          activity.Name,
-			Description:   activity.Description,
-			Duration:      activity.Duration,
-			Cost:          activity.Cost,
-			ImageURL:      activity.ImageURL,
-			PlaceID:       activity.PlaceID,
+		suggestedPlace := dto.PlaceSuggestion{
+			PlaceID:       place.PlaceID,
+			DestinationID: place.DestinationID,
+			Name:          place.Name,
+			URL:           place.URL,
+			Address:       place.Address,
+			Duration:      place.Duration,
+			Type:          place.Type,
+			Categories:    place.Categories,
+			ImageURLs:     place.ImageURLs,
+			MainImage:     place.MainImage,
+			Price:         place.Price,
+			Rating:        place.Rating,
+			Description:   place.Description,
+			OpeningHours:  place.OpeningHours,
+			Reviews:       place.Reviews,
 		}
-		suggestion.Activities = append(suggestion.Activities, suggestedActivity)
+		suggestion.Places = append(suggestion.Places, suggestedPlace)
 	}
 	return &suggestion, nil
 }

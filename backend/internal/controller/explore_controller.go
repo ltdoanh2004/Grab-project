@@ -7,18 +7,18 @@ import (
 )
 
 type ExploreController struct {
-	activityRepository      repository.ActivityRepository
+	placeRepository         repository.PlaceRepository
 	restaurantRepository    repository.RestaurantRepository
 	accommodationRepository repository.AccommodationRepository
 }
 
 func NewExploreController(
-	activityRepo repository.ActivityRepository,
+	placeRepo repository.PlaceRepository,
 	restaurantRepo repository.RestaurantRepository,
 	accommodationRepo repository.AccommodationRepository,
 ) *ExploreController {
 	return &ExploreController{
-		activityRepository:      activityRepo,
+		placeRepository:         placeRepo,
 		restaurantRepository:    restaurantRepo,
 		accommodationRepository: accommodationRepo,
 	}
@@ -29,21 +29,21 @@ func (ec *ExploreController) RegisterRoutes(router *gin.Engine) {
 	{
 		explore := v1.Group("/explore")
 		{
-			explore.POST("/activity", ec.getActivityByID)
+			explore.POST("/place", ec.getPlaceByID)
 			explore.POST("/restaurant", ec.getRestaurantByID)
 			explore.POST("/accommodation", ec.getAccommodationByID)
 		}
 	}
 }
 
-func (ec *ExploreController) getActivityByID(ctx *gin.Context) {
+func (ec *ExploreController) getPlaceByID(ctx *gin.Context) {
 	id := ctx.Param("id")
-	activity, err := ec.activityRepository.GetByID(id)
+	place, err := ec.placeRepository.GetByID(id)
 	if err != nil {
-		ctx.JSON(500, gin.H{"error": "Failed to get activity"})
+		ctx.JSON(500, gin.H{"error": "Failed to get place"})
 		return
 	}
-	ctx.JSON(200, activity)
+	ctx.JSON(200, place)
 }
 
 func (ec *ExploreController) getRestaurantByID(ctx *gin.Context) {

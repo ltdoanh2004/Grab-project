@@ -18,7 +18,7 @@ type tripService struct {
 	tripRepository              repository.TripRepository
 	tripDestinationRepository   repository.TripDestinationRepository
 	tripAccommodationRepository repository.TripAccommodationRepository
-	tripActivityRepository      repository.TripActivityRepository
+	tripPlaceRepository         repository.TripPlaceRepository
 	tripRestaurantRepository    repository.TripRestaurantRepository
 }
 
@@ -26,14 +26,14 @@ func NewTripService(
 	tripRepo repository.TripRepository,
 	tripDestinationRepo repository.TripDestinationRepository,
 	accommodationRepo repository.TripAccommodationRepository,
-	activityRepo repository.TripActivityRepository,
+	placeRepo repository.TripPlaceRepository,
 	restaurantRepo repository.TripRestaurantRepository,
 ) TripService {
 	return &tripService{
 		tripRepository:              tripRepo,
 		tripDestinationRepository:   tripDestinationRepo,
 		tripAccommodationRepository: accommodationRepo,
-		tripActivityRepository:      activityRepo,
+		tripPlaceRepository:         placeRepo,
 		tripRestaurantRepository:    restaurantRepo,
 	}
 }
@@ -90,18 +90,18 @@ func (ts *tripService) CreateTrip(trip *dto.CreateTripRequest) (string, error) {
 			}
 		}
 
-		// Process activities
-		for _, act := range destReq.Activities {
-			tripAct := &model.TripActivity{
-				TripActivityID:    uuid.New().String(),
+		// Process places
+		for _, act := range destReq.Places {
+			tripAct := &model.TripPlace{
+				TripPlaceID:       uuid.New().String(),
 				TripDestinationID: destID,
-				ActivityID:        act.ActivityID,
+				PlaceID:           act.PlaceID,
 				ScheduledDate:     act.ScheduledDate,
 				StartTime:         act.StartTime,
 				EndTime:           act.EndTime,
 				Notes:             act.Notes,
 			}
-			if err := ts.tripActivityRepository.Create(tripAct); err != nil {
+			if err := ts.tripPlaceRepository.Create(tripAct); err != nil {
 				return "", err
 			}
 		}
@@ -201,24 +201,24 @@ func (ts *tripService) SaveTrip(trip *dto.TripDTO) error {
 			}
 		}
 
-		// Update activities
-		for _, act := range destDTO.Activities {
-			tripAct := &model.TripActivity{
-				TripActivityID:    act.TripActivityID,
+		// Update places
+		for _, act := range destDTO.Places {
+			tripAct := &model.TripPlace{
+				TripPlaceID:       act.TripPlaceID,
 				TripDestinationID: destDTO.TripDestinationID,
-				ActivityID:        act.ActivityID,
+				PlaceID:           act.PlaceID,
 				ScheduledDate:     act.ScheduledDate,
 				StartTime:         act.StartTime,
 				EndTime:           act.EndTime,
 				Notes:             act.Notes,
 			}
 
-			if act.TripActivityID != "" {
-				if err := ts.tripActivityRepository.Update(tripAct); err != nil {
+			if act.TripPlaceID != "" {
+				if err := ts.tripPlaceRepository.Update(tripAct); err != nil {
 					return err
 				}
 			} else {
-				if err := ts.tripActivityRepository.Create(tripAct); err != nil {
+				if err := ts.tripPlaceRepository.Create(tripAct); err != nil {
 					return err
 				}
 			}
@@ -304,17 +304,17 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTO, error) {
 			})
 		}
 
-		// Get activities for this destination
-		activities, err := ts.tripActivityRepository.GetByTripID(dest.TripDestinationID)
+		// Get places for this destination
+		places, err := ts.tripPlaceRepository.GetByTripID(dest.TripDestinationID)
 		if err != nil {
 			return nil, err
 		}
 
-		for _, act := range activities {
-			destDTO.Activities = append(destDTO.Activities, dto.TripActivityDTO{
-				TripActivityID:    act.TripActivityID,
+		for _, act := range places {
+			destDTO.Places = append(destDTO.Places, dto.TripPlaceDTO{
+				TripPlaceID:       act.TripPlaceID,
 				TripDestinationID: act.TripDestinationID,
-				ActivityID:        act.ActivityID,
+				PlaceID:           act.PlaceID,
 				ScheduledDate:     act.ScheduledDate,
 				StartTime:         act.StartTime,
 				EndTime:           act.EndTime,

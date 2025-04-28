@@ -30,16 +30,8 @@ INSERT INTO trip_destinations (trip_destination_id, trip_id, destination_id, arr
 ('tdest_000004', 'trip_000004', 'dest_000004', '2024-09-15', '2024-09-20', 1),
 ('tdest_000005', 'trip_000005', 'dest_000005', '2024-06-01', '2024-06-03', 1);
 
--- Insert mock data into the places table
-INSERT INTO places (place_id, destination_id, name, place_type, description, address, entrance_fee, avg_visit_duration, opening_hours, popularity_score, image_url) VALUES
-('place_000001', 'hanoi', 'Eiffel Tower', 'Landmark', 'Iconic iron lattice tower', 'Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France', 26.80, 60, '9AM-12AM', 4.7, 'eiffel.jpg'),
-('place_000002', 'dest_000002', 'Tokyo Sushi Academy', 'School', 'Sushi making school', '8-4-7 Ginza, Chuo, Tokyo 104-0061, Japan', 0.00, 120, '10AM-8PM', 4.5, 'sushi_academy.jpg'),
-('place_000003', 'dest_000003', 'Central Park', 'Park', 'Urban park in Manhattan', 'New York, NY, USA', 0.00, 120, '6AM-1AM', 4.8, 'central_park.jpg'),
-('place_000004', 'dest_000004', 'Terme di Diocleziano', 'Spa', 'Ancient Roman baths', 'Viale Enrico de Nicola, 79, 00185 Roma RM, Italy', 8.00, 90, '9AM-7:30PM', 4.6, 'terme_di_diocleziano.jpg'),
-('place_000005', 'dest_000005', 'Sydney Opera House', 'Theater', 'Multi-venue performing arts centre', 'Bennelong Point, Sydney NSW 2000, Australia', 0.00, 60, '9AM-5PM', 4.9, 'sydney_opera_house.jpg');
-
 -- Insert mock data into the activity_categories table
-INSERT INTO activity_categories (category_id, category_name, description) VALUES
+INSERT INTO place_categories (category_id, category_name, description) VALUES
 ('cat_000001', 'Sightseeing', 'Tourist attractions and landmark visits'),
 ('cat_000002', 'Cultural', 'Local cultural experiences and traditional activities'),
 ('cat_000003', 'Adventure', 'Outdoor and physical activities'),
@@ -47,15 +39,15 @@ INSERT INTO activity_categories (category_id, category_name, description) VALUES
 ('cat_000005', 'Entertainment', 'Shows, performances, and leisure activities');
 
 -- Insert mock data into the activities table
-INSERT INTO activities (activity_id, destination_id, category_id, name, description, place_id, duration, cost, image_url) VALUES
-('act_000001', 'hanoi', 'cat_000001', 'Eiffel Tower Visit', 'Visit the Eiffel Tower', 'place_000001', 60, 30.00, 'eiffel.jpg'),
-('act_000002', 'dest_000002', 'cat_000002', 'Sushi Making Class', 'Learn to make sushi', 'place_000002', 120, 50.00, 'sushi.jpg'),
-('act_000003', 'dest_000003', 'cat_000003', 'Central Park Bike Tour', 'Explore Central Park by bike', 'place_000003', 90, 25.00, 'centralpark.jpg'),
-('act_000004', 'dest_000004', 'cat_000004', 'Spa Day', 'Relax at a Roman spa', 'place_000004', 180, 75.00, 'spa.jpg'),
-('act_000005', 'dest_000005', 'cat_000005', 'Opera House Tour', 'Tour the Sydney Opera House', 'place_000005', 45, 40.00, 'operahouse.jpg');
+INSERT INTO places (place_id, destination_id, name, url, address, duration, type, categories, image_urls, main_image, price, rating, description, opening_hours, reviews) VALUES
+('act_000001', 'hanoi', 'Eiffel Tower', 'https://eiffel-tower.com', 'Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France', '2-3 hours', 'Landmark', '["Sightseeing", "Cultural"]', '["eiffel1.jpg", "eiffel2.jpg"]', 'eiffel_main.jpg', '€26.80', 4.7, 'Iconic iron lattice tower', '9:00 AM - 12:00 AM', '["Great view!", "Must visit"]'),
+('act_000002', 'dest_000002', 'Tokyo Sushi Academy', 'https://sushiacademy.jp', '8-4-7 Ginza, Chuo, Tokyo 104-0061, Japan', '2 hours', 'School', '["Cultural", "Food"]', '["sushi1.jpg", "sushi2.jpg"]', 'sushi_main.jpg', '¥5000', 4.5, 'Sushi making school', '10:00 AM - 8:00 PM', '["Amazing experience"]'),
+('act_000003', 'dest_000003', 'Central Park', 'https://centralpark.com', 'New York, NY, USA', '2-3 hours', 'Park', '["Outdoor", "Nature"]', '["park1.jpg", "park2.jpg"]', 'centralpark_main.jpg', 'Free', 4.8, 'Urban park in Manhattan', '6:00 AM - 1:00 AM', '["Beautiful park"]'),
+('act_000004', 'dest_000004', 'Terme di Diocleziano', 'https://terme.it', 'Viale Enrico de Nicola, 79, 00185 Roma RM, Italy', '1.5 hours', 'Spa', '["Wellness", "Historical"]', '["terme1.jpg", "terme2.jpg"]', 'terme_main.jpg', '€8.00', 4.6, 'Ancient Roman baths', '9:00 AM - 7:30 PM', '["Relaxing experience"]'),
+('act_000005', 'dest_000005', 'Sydney Opera House', 'https://sydneyoperahouse.com', 'Bennelong Point, Sydney NSW 2000, Australia', '1 hour', 'Theater', '["Entertainment", "Cultural"]', '["opera1.jpg", "opera2.jpg"]', 'opera_main.jpg', 'Free', 4.9, 'Multi-venue performing arts centre', '9:00 AM - 5:00 PM', '["Architectural marvel"]');
 
--- Insert mock data into the trip_activities tabled, name, description, place_id, duration, cost, image_url) VALUES
-INSERT INTO trip_activities (trip_activity_id, trip_destination_id, activity_id, scheduled_date, start_time, end_time, notes) VALUES
+-- Rename trip_activities to trip_places and update its structure
+INSERT INTO trip_places (trip_place_id, trip_destination_id, place_id, scheduled_date, start_time, end_time, notes) VALUES
 ('tact_000001', 'thanoi', 'act_000001', '2024-07-02', '2024-07-02 10:00:00', '2024-07-02 11:00:00', 'Bring your camera'),
 ('tact_000002', 'tdest_000002', 'act_000002', '2024-12-21', '2024-12-21 14:00:00', '2024-12-21 16:00:00', 'Wear comfortable shoes'),
 ('tact_000003', 'tdest_000003', 'act_000003', '2025-03-12', '2025-03-12 11:00:00', '2025-03-12 12:30:00', 'Rent a bike near the park'),

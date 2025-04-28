@@ -7,35 +7,35 @@ import (
 	"github.com/google/uuid"
 )
 
-type ActivityService interface {
-	CreateActivity(activity *model.Activity) (string, error)
-	GetByID(id string) (model.Activity, error)
-	GetWithCategory(id string) (model.Activity, error)
-	GetByDestinationID(destinationID string) ([]model.Activity, error)
-	GetByCategoryID(categoryID string) ([]model.Activity, error)
+type PlaceService interface {
+	CreatePlace(place *model.Place) (string, error)
+	GetByID(id string) (model.Place, error)
+	GetWithCategory(id string) (model.Place, error)
+	GetByDestinationID(destinationID string) ([]model.Place, error)
+	GetByCategoryID(categoryID string) ([]model.Place, error)
 }
 
-type activityService struct {
-	activityRepo repository.ActivityRepository
+type placeService struct {
+	placeRepo repository.PlaceRepository
 }
 
-func NewActivityService(
-	activityRepo repository.ActivityRepository,
-) ActivityService {
-	return &activityService{
-		activityRepo: activityRepo,
+func NewPlaceService(
+	placeRepo repository.PlaceRepository,
+) PlaceService {
+	return &placeService{
+		placeRepo: placeRepo,
 	}
 }
 
-func (s *activityService) CreateActivity(activity *model.Activity) (string, error) {
-	// Generate UUID for activity
-	activity.ActivityID = uuid.New().String()
+func (s *placeService) CreatePlace(place *model.Place) (string, error) {
+	// Generate UUID for place
+	place.PlaceID = uuid.New().String()
 
 	// Begin transaction
-	tx := s.activityRepo.(*repository.GormActivityRepository).DB.Begin()
+	tx := s.placeRepo.(*repository.GormPlaceRepository).DB.Begin()
 
-	// Create activity
-	if err := tx.Create(activity).Error; err != nil {
+	// Create place
+	if err := tx.Create(place).Error; err != nil {
 		tx.Rollback()
 		return "", err
 	}
@@ -44,21 +44,21 @@ func (s *activityService) CreateActivity(activity *model.Activity) (string, erro
 	if err := tx.Commit().Error; err != nil {
 		return "", err
 	}
-	return activity.ActivityID, nil
+	return place.PlaceID, nil
 }
 
-func (s *activityService) GetByID(id string) (model.Activity, error) {
-	return s.activityRepo.GetByID(id)
+func (s *placeService) GetByID(id string) (model.Place, error) {
+	return s.placeRepo.GetByID(id)
 }
 
-func (s *activityService) GetWithCategory(id string) (model.Activity, error) {
-	return s.activityRepo.GetWithCategory(id)
+func (s *placeService) GetWithCategory(id string) (model.Place, error) {
+	return s.placeRepo.GetWithCategory(id)
 }
 
-func (s *activityService) GetByDestinationID(destinationID string) ([]model.Activity, error) {
-	return s.activityRepo.GetByDestinationID(destinationID)
+func (s *placeService) GetByDestinationID(destinationID string) ([]model.Place, error) {
+	return s.placeRepo.GetByDestinationID(destinationID)
 }
 
-func (s *activityService) GetByCategoryID(categoryID string) ([]model.Activity, error) {
-	return s.activityRepo.GetByCategoryID(categoryID)
+func (s *placeService) GetByCategoryID(categoryID string) ([]model.Place, error) {
+	return s.placeRepo.GetByCategoryID(categoryID)
 }

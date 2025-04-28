@@ -27,7 +27,7 @@ func (sc *SuggestController) RegisterRoutes(router *gin.Engine) {
 		suggestion := v1.Group("/suggest")
 		{
 			suggestion.GET("/accommodations", sc.SuggestAccommodations)
-			suggestion.GET("/activities", sc.SuggestActivities)
+			suggestion.GET("/places", sc.SuggestPlaces)
 			suggestion.GET("/restaurants", sc.SuggestRestaurants)
 		}
 	}
@@ -59,25 +59,25 @@ func (sc *SuggestController) SuggestAccommodations(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
 }
 
-// SuggestActivities godoc
-// @Summary Suggest activities
+// SuggestPlaces godoc
+// @Summary Suggest places
 // @Description Get activity suggestions based on travel preferences
 // @Tags suggest
 // @Accept json
 // @Produce json
 // @Param preference body dto.TravelPreference true "Travel Preferences"
-// @Success 200 {object} model.Response{data=dto.ActivitiesSuggestion}
+// @Success 200 {object} model.Response{data=dto.PlacesSuggestion}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/v1/suggest/activities [get]
-func (sc *SuggestController) SuggestActivities(ctx *gin.Context) {
+// @Router /api/v1/suggest/places [get]
+func (sc *SuggestController) SuggestPlaces(ctx *gin.Context) {
 	travelPreference := &dto.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
 		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input: "+err.Error(), nil))
 		return
 	}
 
-	suggestion, err := sc.suggestSerivce.SuggestActivities(travelPreference)
+	suggestion, err := sc.suggestSerivce.SuggestPlaces(travelPreference)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get activity suggestions: "+err.Error(), nil))
 		return

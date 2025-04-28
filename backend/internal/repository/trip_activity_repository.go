@@ -6,52 +6,52 @@ import (
 	"gorm.io/gorm"
 )
 
-// TripActivityRepository defines data access methods for the TripActivity entity.
-type TripActivityRepository interface {
-	GetByID(tripActivityID string) (model.TripActivity, error)
-	Create(tripActivity *model.TripActivity) error
-	Update(tripActivity *model.TripActivity) error
-	Delete(tripActivityID string) error
-	GetByTripID(tripID string) ([]model.TripActivity, error)
+// TripPlaceRepository defines data access methods for the TripPlace entity.
+type TripPlaceRepository interface {
+	GetByID(tripPlaceID string) (model.TripPlace, error)
+	Create(tripPlace *model.TripPlace) error
+	Update(tripPlace *model.TripPlace) error
+	Delete(tripPlaceID string) error
+	GetByTripID(tripID string) ([]model.TripPlace, error)
 }
 
-// GormTripActivityRepository implements TripActivityRepository using GORM.
-type GormTripActivityRepository struct {
+// GormTripPlaceRepository implements TripPlaceRepository using GORM.
+type GormTripPlaceRepository struct {
 	DB *gorm.DB
 }
 
-// NewTripActivityRepository returns a new GORM-based TripActivity repository.
-func NewTripActivityRepository(db *gorm.DB) TripActivityRepository {
-	return &GormTripActivityRepository{DB: db}
+// NewTripPlaceRepository returns a new GORM-based TripPlace repository.
+func NewTripPlaceRepository(db *gorm.DB) TripPlaceRepository {
+	return &GormTripPlaceRepository{DB: db}
 }
 
-// Create saves a new TripActivity record.
-func (r *GormTripActivityRepository) Create(tripActivity *model.TripActivity) error {
-	return r.DB.Create(tripActivity).Error
+// Create saves a new TripPlace record.
+func (r *GormTripPlaceRepository) Create(tripPlace *model.TripPlace) error {
+	return r.DB.Create(tripPlace).Error
 }
 
-// GetByID retrieves a TripActivity by its ID.
-func (r *GormTripActivityRepository) GetByID(tripActivityID string) (model.TripActivity, error) {
-	var tripActivity model.TripActivity
-	if err := r.DB.First(&tripActivity, "trip_activity_id = ?", tripActivityID).Error; err != nil {
-		return model.TripActivity{}, err
+// GetByID retrieves a TripPlace by its ID.
+func (r *GormTripPlaceRepository) GetByID(tripPlaceID string) (model.TripPlace, error) {
+	var tripPlace model.TripPlace
+	if err := r.DB.First(&tripPlace, "trip_place_id = ?", tripPlaceID).Error; err != nil {
+		return model.TripPlace{}, err
 	}
-	return tripActivity, nil
+	return tripPlace, nil
 }
 
-// Update modifies an existing TripActivity record.
-func (r *GormTripActivityRepository) Update(tripActivity *model.TripActivity) error {
-	return r.DB.Save(tripActivity).Error
+// Update modifies an existing TripPlace record.
+func (r *GormTripPlaceRepository) Update(tripPlace *model.TripPlace) error {
+	return r.DB.Save(tripPlace).Error
 }
 
-// Delete removes a TripActivity record by its ID.
-func (r *GormTripActivityRepository) Delete(tripActivityID string) error {
-	return r.DB.Delete(&model.TripActivity{}, tripActivityID).Error
+// Delete removes a TripPlace record by its ID.
+func (r *GormTripPlaceRepository) Delete(tripPlaceID string) error {
+	return r.DB.Delete(&model.TripPlace{}, tripPlaceID).Error
 }
 
-// GetByTripID retrieves all TripActivity records associated with a specific TripID.
-func (r *GormTripActivityRepository) GetByTripID(tripDestinationID string) ([]model.TripActivity, error) {
-	var tripActivities []model.TripActivity
+// GetByTripID retrieves all TripPlace records associated with a specific TripID.
+func (r *GormTripPlaceRepository) GetByTripID(tripDestinationID string) ([]model.TripPlace, error) {
+	var tripActivities []model.TripPlace
 	if err := r.DB.Where("trip_destination_id = ?", tripDestinationID).Find(&tripActivities).Error; err != nil {
 		return nil, err
 	}

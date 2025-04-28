@@ -9,7 +9,6 @@ type Destination struct {
 	BestSeason    string `gorm:"size:100" json:"best_season"`
 	ImageURL      string `gorm:"size:255" json:"image_url"`
 
-	Activities     []Activity      `gorm:"foreignKey:DestinationID" json:"activities,omitempty"`
 	Places         []Place         `gorm:"foreignKey:DestinationID" json:"places,omitempty"`
 	Accommodations []Accommodation `gorm:"foreignKey:DestinationID" json:"accommodations,omitempty"`
 	Restaurants    []Restaurant    `gorm:"foreignKey:DestinationID" json:"restaurants,omitempty"`

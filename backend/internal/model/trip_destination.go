@@ -18,7 +18,7 @@ type TripDestination struct {
 	Destination *Destination `json:"destination,omitempty"`
 
 	// Other associations as slices.
-	Activities     []TripActivity      `gorm:"foreignKey:TripDestinationID" json:"activities,omitempty"`
-	Accommodations []TripAccommodation `gorm:"foreignKey:TripDestinationID" json:"accommodations,omitempty"`
-	Restaurants    []TripRestaurant    `gorm:"foreignKey:TripDestinationID" json:"restaurants,omitempty"`
+	Places         []TripPlace         `gorm:"foreignKey:TripDestinationID" json:"trip_places,omitempty"`
+	Accommodations []TripAccommodation `gorm:"foreignKey:TripDestinationID" json:"trip_accommodations,omitempty"`
+	Restaurants    []TripRestaurant    `gorm:"foreignKey:TripDestinationID" json:"trip_restaurants,omitempty"`
 }

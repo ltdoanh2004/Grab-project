@@ -23,7 +23,7 @@ import (
 
 // @title           Travel Planning API
 // @version         1.0
-// @description     A modern RESTful API for managing travel plans, including trips, destinations, accommodations, activities, and restaurants.
+// @description     A modern RESTful API for managing travel plans, including trips, destinations, accommodations, places, and restaurants.
 // @termsOfService  http://swagger.io/terms/
 
 // @contact.name   API Support Team
@@ -78,13 +78,13 @@ func main() {
 			NewGinEngine,
 			repository.NewRepository,
 			repository.NewUserRepository,
-			repository.NewActivityRepository,      // Add this
+			repository.NewPlaceRepository,         // Add this
 			repository.NewRestaurantRepository,    // Add this
 			repository.NewAccommodationRepository, // Add this
 			repository.NewTripRepository,
 			repository.NewTripDestinationRepository,
 			repository.NewTripAccommodationRepository,
-			repository.NewTripActivityRepository,
+			repository.NewTripPlaceRepository,
 			repository.NewTripRestaurantRepository,
 			repository.NewImageRepository,
 			repository.NewRoomTypeRepository,
@@ -155,11 +155,11 @@ func RegisterRoutes(
 		OnStart: func(ctx context.Context) error {
 			log.Info().Msgf("Starting server on port %s", cfg.Server.Port)
 
-			err := insertDataService.InsertHotelData("../data/hotel_processed.csv")
-			if err != nil {
-				log.Fatal().Err(err).Msg("Failed to import data from CSV")
-				return err
-			}
+			// err := insertDataService.InsertHotelData("../data/hotel_processed.csv")
+			// if err != nil {
+			// 	log.Fatal().Err(err).Msg("Failed to import data from CSV")
+			// 	return err
+			// }
 
 			go func() {
 				if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {

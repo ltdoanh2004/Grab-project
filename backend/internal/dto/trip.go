@@ -4,9 +4,9 @@ import (
 	"time"
 )
 
-type CreateTripActivityRequest struct {
+type CreateTripPlaceRequest struct {
 	TripDestinationID string     `json:"trip_destination_id"`
-	ActivityID        string     `json:"activity_id"`
+	PlaceID           string     `json:"place_id"`
 	ScheduledDate     *time.Time `json:"scheduled_date,omitempty"`
 	StartTime         *time.Time `json:"start_time,omitempty"`
 	EndTime           *time.Time `json:"end_time,omitempty"`
@@ -39,7 +39,7 @@ type CreateTripDestinationRequest struct {
 	DepartureDate *time.Time `json:"departure_date,omitempty"`
 	OrderNum      int        `json:"order_num"`
 
-	Activities     []CreateTripActivityRequest      `json:"activities,omitempty"`
+	Places         []CreateTripPlaceRequest         `json:"places,omitempty"`
 	Accommodations []CreateTripAccommodationRequest `json:"accommodations,omitempty"`
 	Restaurants    []CreateTripRestaurantRequest    `json:"restaurants,omitempty"`
 }
@@ -73,15 +73,15 @@ type TripDestinationDTO struct {
 	DepartureDate     *time.Time `json:"departure_date,omitempty"`
 	OrderNum          int        `json:"order_num"`
 
-	Activities     []TripActivityDTO      `json:"activities,omitempty"`
+	Places         []TripPlaceDTO         `json:"places,omitempty"`
 	Accommodations []TripAccommodationDTO `json:"accommodations,omitempty"`
 	Restaurants    []TripRestaurantDTO    `json:"restaurants,omitempty"`
 }
 
-type TripActivityDTO struct {
-	TripActivityID    string     `json:"trip_activity_id"`
+type TripPlaceDTO struct {
+	TripPlaceID       string     `json:"trip_place_id"`
 	TripDestinationID string     `json:"trip_destination_id"`
-	ActivityID        string     `json:"activity_id"`
+	PlaceID           string     `json:"place_id"`
 	ScheduledDate     *time.Time `json:"scheduled_date,omitempty"`
 	StartTime         *time.Time `json:"start_time,omitempty"`
 	EndTime           *time.Time `json:"end_time,omitempty"`
