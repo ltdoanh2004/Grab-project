@@ -4,6 +4,7 @@ ai/crawl/crawl_tripadvisor/checkpoints/
 ai/crawl/crawl_tripadvisor/data_all.json
 ai/crawl/crawl_tripadvisor/checkpoints/
 ai/crawl/crawl_tripadvisor/data_restaurants/
+ai/crawl/crawl_tripadvisor/visited_urls.json
 
 ai/crawl/crawl_booking_web/data_booking/
 ai/crawl/crawl_booking_web/data_hotels/
@@ -31,6 +32,9 @@ ai/model/src/.env
 ai/model/src/checkpoint.json
 ai/model/src/vector_database/checkpoint.json
 ai/model/src/vector_database/*_checkpoint.json
+ai/model/src/vector_database/place_checkpoint.json
+ai/model/src/vector_database/fnb_checkpoint.json
+ai/model/src/vector_database/hotel_checkpoint.json
 
 # embedding and processed files (large files)
 *_embedding.csv

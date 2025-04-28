@@ -1,14 +1,24 @@
 import argparse
 from tqdm import tqdm
 import os
+import sys
 import pandas as pd
 from typing import Dict, Any
 
-from .base_vector_database import BaseVectorDatabase
+# Add parent directory to path for direct execution
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+try:
+    from .base_vector_database import BaseVectorDatabase
+except ImportError:
+    # When run directly, use absolute import
+    from vector_database.base_vector_database import BaseVectorDatabase
 
 class PlaceVectorDatabase(BaseVectorDatabase):
     def __init__(self):
         super().__init__(index_name="place-recommendations")
+        # Override checkpoint file path to be specific for places
+        self.checkpoint_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'place_checkpoint.json')
 
     def prepare_place_embedding(self, data=None, incremental=True):
         """
@@ -21,6 +31,37 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         # Load data
         if data is None:
             data = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'place_processed.csv')
+        
+        # Check if data file exists    
+        if not os.path.exists(data):
+            # Create example data if file doesn't exist
+            print(f"Data file not found at: {data}")
+            print("Creating example data file...")
+            
+            # Check if data directory exists
+            data_dir = os.path.dirname(data)
+            if not os.path.exists(data_dir):
+                print(f"Creating data directory: {data_dir}")
+                os.makedirs(data_dir, exist_ok=True)
+                
+            # Create a small example dataset
+            example_data = pd.DataFrame({
+                'name': ['Lăng Chủ tịch Hồ Chí Minh', 'Văn Miếu Quốc Tử Giám', 'Hồ Gươm'],
+                'description': [
+                    'Di tích lịch sử quan trọng của Việt Nam.',
+                    'Trường đại học đầu tiên của Việt Nam, được xây dựng từ năm 1070.',
+                    'Hồ nước nằm ở trung tâm Hà Nội, còn được gọi là Hồ Hoàn Kiếm.'
+                ],
+                'categories': ['Di tích lịch sử', 'Di tích văn hóa', 'Danh lam thắng cảnh'],
+                'location': ['Phường Hàng Bài, Quận Hoàn Kiếm, Hà Nội', 'Phường Văn Miếu, Quận Đống Đa, Hà Nội', 'Quận Hoàn Kiếm, Hà Nội'],
+                'opening_hours': ['8:00 - 17:00', '8:00 - 17:30', 'Cả ngày'],
+                'entrance_fee': [0, 30000, 0],
+                'rating': [4.8, 4.6, 4.7]
+            })
+            
+            # Save example data
+            example_data.to_csv(data, index=False)
+            print(f"Created example data file at: {data}")
             
         print("Loading and processing place data...")
         print(f"Loading data from: {data}")
@@ -175,9 +216,31 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         if has_data and not incremental:
             print(f"Index {self.index_name} already contains data. Use incremental=True to add or update data.")
             return True
+        
+        # Define embedding file path
+        embedding_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
+                                     'data', 'place_processed_embedding.csv')
+            
+        # Check if embedding file exists
+        if not os.path.exists(embedding_file):
+            print(f"Embedding file not found at: {embedding_file}")
+            print("Creating embeddings first...")
+            
+            # Check if data directory exists
+            data_dir = os.path.dirname(embedding_file)
+            if not os.path.exists(data_dir):
+                print(f"Creating data directory: {data_dir}")
+                os.makedirs(data_dir, exist_ok=True)
+                
+            # Create embeddings from raw data
+            self.prepare_place_embedding(incremental=False)
+            
+            if not os.path.exists(embedding_file):
+                raise ValueError(f"Failed to create embedding file at {embedding_file}")
             
         # Load data from CSV
-        self.df = pd.read_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'place_processed_embedding.csv'))
+        print(f"Loading embeddings from: {embedding_file}")
+        self.df = pd.read_csv(embedding_file)
         text_columns = ['name', 'description', 'categories', 'location', 'opening_hours']
         for col in text_columns:
             if col in self.df.columns:

@@ -3,13 +3,19 @@ from openai import OpenAI
 import pandas as pd
 from dotenv import load_dotenv
 import os
+import sys
 import argparse
 from tqdm import tqdm
 from pinecone import Pinecone, ServerlessSpec
 import json
 from typing import List, Dict, Any
 
-from .base_vector_database import BaseVectorDatabase
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+try:
+    from .base_vector_database import BaseVectorDatabase
+except ImportError:
+    from vector_database.base_vector_database import BaseVectorDatabase
 
 # Get the directory where the script is located
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -140,7 +146,7 @@ class HotelVectorDatabase(BaseVectorDatabase):
 
         print("Generating indices...")
         if 'index' not in raw_df.columns:
-            raw_df['index'] = ['hotel_' + str(i).zfill(5) for i in range(1, len(raw_df) + 1)]
+            raw_df['index'] = ['hotel_' + str(i).zfill(6) for i in range(1, len(raw_df) + 1)]
         
         # Try to find existing embeddings file if we're doing incremental processing
         existing_df = None

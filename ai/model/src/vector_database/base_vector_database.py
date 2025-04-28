@@ -3,6 +3,7 @@ from openai import OpenAI
 import pandas as pd
 from dotenv import load_dotenv
 import os
+import sys
 import json
 from tqdm import tqdm
 from pinecone import Pinecone, ServerlessSpec
