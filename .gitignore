@@ -4,11 +4,12 @@ ai/crawl/crawl_tripadvisor/checkpoints/
 ai/crawl/crawl_tripadvisor/data_all.json
 ai/crawl/crawl_tripadvisor/checkpoints/
 ai/crawl/crawl_tripadvisor/data_restaurants/
+ai/crawl/crawl_tripadvisor/visited_urls.json
 
 ai/crawl/crawl_booking_web/data_booking/
 ai/crawl/crawl_booking_web/data_hotels/
 ai/crawl/crawl_booking_web/data_attractions/
-ai/crawl/crawl_booking_web/data
+ai/crawl/crawl_booking_web/data/
 ai/crawl/crawl_booking_web/script/data_hotels/
 ai/crawl/crawl_booking_web/script/debug_html/
 
@@ -20,10 +21,39 @@ ai/crawl/crawl_ggmaps/output/
 
 ai/crawl/crawl_hanoi_tourist/data/
 
+# Ignore all data files
 ai/model/data/
+ai/model/src/data/
 
 # env
 ai/model/src/.env
 
-# checkpoint
+# checkpoint files
 ai/model/src/checkpoint.json
+ai/model/src/vector_database/checkpoint.json
+ai/model/src/vector_database/*_checkpoint.json
+ai/model/src/vector_database/place_checkpoint.json
+ai/model/src/vector_database/fnb_checkpoint.json
+ai/model/src/vector_database/hotel_checkpoint.json
+
+# embedding and processed files (large files)
+*_embedding.csv
+*_processed.csv
+*_processed_embedding.csv
+ai/model/src/data/hotel_processed.csv
+ai/model/src/data/hotel_processed_embedding.csv
+ai/model/src/data/fnb_processed.csv
+ai/model/src/data/fnb_processed_embedding.csv
+ai/model/src/data/place_processed.csv
+ai/model/src/data/place_processed_embedding.csv
+
+# pinecone
+ai/model/src/vector_database/pinecone_index.json
+ai/model/src/vector_database/pinecone_index.json.lock
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
