@@ -1,5 +1,7 @@
 package model
 
+import "skeleton-internship-backend/internal/util"
+
 // Accommodation represents a place for lodging at a destination.
 type Accommodation struct {
 	AccommodationID string  `gorm:"type:char(36);primaryKey" json:"accommodation_id"`
@@ -17,6 +19,6 @@ type Accommodation struct {
 	Unit            string  `json:"unit"`
 
 	// Update relationship definitions
-	Images    []Image    `gorm:"foreignKey:AccommodationID" json:"images"`
-	RoomTypes []RoomType `gorm:"foreignKey:AccommodationID" json:"room_types"`
+	Images    util.ImageArray    `json:"images"`
+	RoomTypes util.RoomTypeArray `json:"room_types"`
 }

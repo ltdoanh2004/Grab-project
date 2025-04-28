@@ -86,8 +86,6 @@ func main() {
 			repository.NewTripAccommodationRepository,
 			repository.NewTripPlaceRepository,
 			repository.NewTripRestaurantRepository,
-			repository.NewImageRepository,
-			repository.NewRoomTypeRepository,
 			service.NewService,
 			service.NewAuthService,
 			service.NewTripService,

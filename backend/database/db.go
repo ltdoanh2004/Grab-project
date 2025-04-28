@@ -28,8 +28,6 @@ func NewDB(cfg *config.Config) (*gorm.DB, error) {
 		&model.Trip{},
 		&model.Destination{},
 		&model.Place{},
-		&model.PlaceCategory{},
-		&model.PlaceCategoryPlace{},
 		&model.Accommodation{},
 		&model.Restaurant{},
 		&model.RestaurantFood{},
@@ -37,8 +35,6 @@ func NewDB(cfg *config.Config) (*gorm.DB, error) {
 		&model.TripPlace{},
 		&model.TripAccommodation{},
 		&model.TripRestaurant{},
-		&model.Image{},
-		&model.RoomType{},
 	)
 
 	db.Exec("SET FOREIGN_KEY_CHECKS = 0;")
@@ -48,9 +44,7 @@ func NewDB(cfg *config.Config) (*gorm.DB, error) {
 		&model.User{},
 		&model.Trip{},
 		&model.Destination{},
-		&model.PlaceCategory{},
 		&model.Place{},
-		&model.PlaceCategoryPlace{},
 		&model.Accommodation{},
 		&model.Restaurant{},
 		&model.RestaurantFood{},
@@ -58,8 +52,6 @@ func NewDB(cfg *config.Config) (*gorm.DB, error) {
 		&model.TripPlace{},
 		&model.TripAccommodation{},
 		&model.TripRestaurant{},
-		&model.Image{},
-		&model.RoomType{},
 	)
 	if err != nil {
 		return nil, err

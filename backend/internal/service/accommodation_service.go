@@ -15,19 +15,13 @@ type AccommodationService interface {
 
 type accommodationService struct {
 	accommodationRepo repository.AccommodationRepository
-	imageRepo         repository.ImageRepository
-	roomTypeRepo      repository.RoomTypeRepository
 }
 
 func NewAccommodationService(
 	accommodationRepo repository.AccommodationRepository,
-	imageRepo repository.ImageRepository,
-	roomTypeRepo repository.RoomTypeRepository,
 ) AccommodationService {
 	return &accommodationService{
 		accommodationRepo: accommodationRepo,
-		imageRepo:         imageRepo,
-		roomTypeRepo:      roomTypeRepo,
 	}
 }
 
@@ -42,26 +36,6 @@ func (s *accommodationService) CreateAccommodation(accommodation *model.Accommod
 	if err := tx.Create(accommodation).Error; err != nil {
 		tx.Rollback()
 		return "", err
-	}
-
-	// Process images
-	for i := range accommodation.Images {
-		accommodation.Images[i].ImageID = uuid.New().String()
-		accommodation.Images[i].AccommodationID = accommodation.AccommodationID
-		if err := tx.Create(&accommodation.Images[i]).Error; err != nil {
-			tx.Rollback()
-			return "", err
-		}
-	}
-
-	// Process room types
-	for i := range accommodation.RoomTypes {
-		accommodation.RoomTypes[i].RoomTypeID = uuid.New().String()
-		accommodation.RoomTypes[i].AccommodationID = accommodation.AccommodationID
-		if err := tx.Create(&accommodation.RoomTypes[i]).Error; err != nil {
-			tx.Rollback()
-			return "", err
-		}
 	}
 
 	// Commit transaction
