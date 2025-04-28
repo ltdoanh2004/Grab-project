@@ -1,30 +1,36 @@
 import React, { useState } from "react";
-import { Button, Card, Tabs, Modal, Input } from "antd";
+import {
+  Button,
+  Card,
+  Tabs,
+  Modal,
+  Input,
+  message,
+  Tooltip,
+  Spin,
+  notification,
+  Result,
+} from "antd";
 import {
   ArrowLeftOutlined,
   EditOutlined,
   SaveOutlined,
-  PlusOutlined,
+  ShareAltOutlined,
+  CheckCircleFilled,
 } from "@ant-design/icons";
 import {
-  MOCK_TRAVEL_DETAIL,
   formatDate,
   ACTIVITY_TYPE_COLORS,
   ACTIVITY_TYPE_TEXT,
-  getActivityIcon,
   formatCurrency,
   calculateDurationDays,
   getStatusTag,
 } from "../../constants/travelPlanConstants";
-import {
-  TravelActivity,
-  TravelDetailData,
-  TravelDay,
-} from "../../types/travelPlan";
 import { ActivityModal } from "./travelDetail/ActivityDetail";
 import { TravelHeader } from "./travelDetail/Header";
 import { TravelItinerary } from "./travelDetail/Plans";
 import { AIActivitySuggestions } from "./travelDetail/AISuggestions";
+import { useTravelDetail } from "../../hooks/useTravelDetail";
 
 const { Search } = Input;
 
@@ -37,225 +43,124 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
   travelId,
   onBack,
 }) => {
-  const [travelDetail, setTravelDetail] =
-    useState<TravelDetailData>(MOCK_TRAVEL_DETAIL);
-  const [activeTab, setActiveTab] = useState<string>("itinerary");
-  const [activityModalVisible, setActivityModalVisible] = useState(false);
-  const [selectedActivity, setSelectedActivity] =
-    useState<TravelActivity | null>(null);
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [showAISuggestions, setShowAISuggestions] = useState(false);
-  const [currentDay, setCurrentDay] = useState<TravelDay | null>(null);
-  const [activityToReplace, setActivityToReplace] =
-    useState<TravelActivity | null>(null);
-  const [activitySearchModalVisible, setActivitySearchModalVisible] =
-    useState(false);
-  const [dayForNewActivity, setDayForNewActivity] = useState<TravelDay | null>(
-    null
-  );
+  const {
+    travelDetail,
+    loading,
+    notFound,
+    activeTab,
+    setActiveTab,
+    activityModalVisible,
+    setActivityModalVisible,
+    selectedActivity,
+    isEditMode,
+    toggleEditMode,
+    showAISuggestions,
+    setShowAISuggestions,
+    currentDay,
+    activityToReplace,
+    activitySearchModalVisible,
+    setActivitySearchModalVisible,
+    dayForNewActivity,
+    showActivityDetail,
+    handleReplaceActivity,
+    handleSelectAISuggestion,
+    handleDeleteActivity,
+    handleUpdateActivityTime,
+    handleMoveActivity,
+    openAddActivityModal,
+    handleAddCustomActivity,
+  } = useTravelDetail(travelId);
 
-  const showActivityDetail = (activity: TravelActivity) => {
-    setSelectedActivity(activity);
-    setActivityModalVisible(true);
-  };
+  const [showCopyNotification, setShowCopyNotification] = useState(false);
 
-  const toggleEditMode = () => {
-    setIsEditMode(!isEditMode);
-    setShowAISuggestions(false);
-    setActivitySearchModalVisible(false);
-  };
-
-  const handleReplaceActivity = (day: TravelDay, activity: TravelActivity) => {
-    setCurrentDay(day);
-    setActivityToReplace(activity);
-    setShowAISuggestions(true);
-  };
-
-  const handleSelectAISuggestion = (newActivity: TravelActivity) => {
-    if (currentDay && activityToReplace) {
-      const updatedTravelDetail = { ...travelDetail };
-
-      const dayIndex = updatedTravelDetail.days.findIndex(
-        (d) => d.day === currentDay.day
-      );
-
-      if (dayIndex !== -1) {
-        const activityIndex = updatedTravelDetail.days[
-          dayIndex
-        ].activities.findIndex((a) => a.id === activityToReplace.id);
-
-        if (activityIndex !== -1) {
-          updatedTravelDetail.days[dayIndex].activities[activityIndex] = {
-            ...newActivity,
-            id: activityToReplace.id,
-            time: activityToReplace.time,
-          };
-
-          setTravelDetail(updatedTravelDetail);
-        }
-      }
-
-      setShowAISuggestions(false);
-    }
-  };
-
-  const handleDeleteActivity = (day: TravelDay, activity: TravelActivity) => {
-    const updatedTravelDetail = { ...travelDetail };
-
-    const dayIndex = updatedTravelDetail.days.findIndex(
-      (d) => d.day === day.day
-    );
-
-    if (dayIndex !== -1) {
-      updatedTravelDetail.days[dayIndex].activities = updatedTravelDetail.days[
-        dayIndex
-      ].activities.filter((a) => a.id !== activity.id);
-
-      setTravelDetail(updatedTravelDetail);
-    }
-  };
-
-  const handleUpdateActivityTime = (
-    day: TravelDay,
-    activity: TravelActivity,
-    newTime: string
-  ) => {
-    const updatedTravelDetail = { ...travelDetail };
-
-    const dayIndex = updatedTravelDetail.days.findIndex(
-      (d) => d.day === day.day
-    );
-
-    if (dayIndex !== -1) {
-      const activityIndex = updatedTravelDetail.days[
-        dayIndex
-      ].activities.findIndex((a) => a.id === activity.id);
-
-      if (activityIndex !== -1) {
-        updatedTravelDetail.days[dayIndex].activities[activityIndex].time =
-          newTime;
-        setTravelDetail(updatedTravelDetail);
-      }
-    }
-  };
-
-  const handleMoveActivity = (
-    dayId: number,
-    fromIndex: number,
-    toIndex: number
-  ) => {
+  const handleShare = async () => {
+    if (!travelDetail) return;
+    const shareUrl = `${window.location.origin}/trips/${travelDetail.id}`;
     try {
-      // Log what we're trying to do to help debug
-      console.log(
-        `Moving in day ${dayId} from index ${fromIndex} to ${toIndex}`
-      );
+      await navigator.clipboard.writeText(shareUrl);
 
-      // Make a safe copy of the travel detail
-      const updatedTravelDetail = {
-        ...travelDetail,
-        days: travelDetail.days.map((day) => ({
-          ...day,
-          activities: [...day.activities],
-        })),
-      };
+      setShowCopyNotification(true);
+      setTimeout(() => {
+        setShowCopyNotification(false);
+      }, 3000);
 
-      const dayIndex = updatedTravelDetail.days.findIndex(
-        (d) => d.day === dayId
-      );
-
-      if (dayIndex !== -1) {
-        const activities = updatedTravelDetail.days[dayIndex].activities;
-
-        const sourceActivity = { ...activities[fromIndex] };
-        const targetActivity = { ...activities[toIndex] };
-
-        const sourceTime = sourceActivity.time;
-
-        updatedTravelDetail.days[dayIndex].activities.splice(fromIndex, 1);
-        updatedTravelDetail.days[dayIndex].activities.splice(
-          toIndex,
-          0,
-          sourceActivity
-        );
-
-        const sortedTimes = activities
-          .map((activity) => activity.time)
-          .sort((a, b) => {
-            // Extract start times and convert to minutes for comparison
-            const aStart = a.split(" - ")[0];
-            const bStart = b.split(" - ")[0];
-            const aHours = parseInt(aStart.split(":")[0]);
-            const aMinutes = parseInt(aStart.split(":")[1]);
-            const bHours = parseInt(bStart.split(":")[0]);
-            const bMinutes = parseInt(bStart.split(":")[1]);
-
-            return aHours * 60 + aMinutes - (bHours * 60 + bMinutes);
-          });
-
-        updatedTravelDetail.days[dayIndex].activities.forEach(
-          (activity, index) => {
-            activity.time = sortedTimes[index];
-          }
-        );
-
-        // Update the state
-        setTravelDetail(updatedTravelDetail);
-        console.log("Timeline updated successfully with reordered times");
-      }
-    } catch (error) {
-      console.error("Error in handleMoveActivity:", error);
+      message.success("Đã copy đường dẫn lịch trình");
+    } catch {
+      message.error("Không thể sao chép liên kết.");
     }
   };
-  const openAddActivityModal = (day: TravelDay) => {
-    setDayForNewActivity(day);
-    setActivitySearchModalVisible(true);
-  };
 
-  const handleAddCustomActivity = (searchValue: string) => {
-    if (dayForNewActivity && searchValue.trim()) {
-      const newActivity: TravelActivity = {
-        id: `custom-${Date.now()}`,
-        time: "12:00 - 14:00",
-        type: "attraction",
-        name: searchValue,
-        location: "Địa điểm tùy chỉnh",
-        description: "Hoạt động do người dùng tự thêm",
-        imageUrl:
-          "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
-        rating: 5,
-        price: "Chưa có thông tin",
-      };
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <Spin size="large" />
+      </div>
+    );
+  }
 
-      const updatedTravelDetail = { ...travelDetail };
-
-      const dayIndex = updatedTravelDetail.days.findIndex(
-        (d) => d.day === dayForNewActivity.day
-      );
-
-      if (dayIndex !== -1) {
-        updatedTravelDetail.days[dayIndex].activities.push(newActivity);
-        setTravelDetail(updatedTravelDetail);
-      }
-
-      setActivitySearchModalVisible(false);
-    }
-  };
+  if (notFound || !travelDetail) {
+    return (
+      <Result
+        status="404"
+        title="Không tìm thấy kế hoạch"
+        subTitle="Kế hoạch du lịch này không tồn tại hoặc đã bị xóa."
+        extra={
+          <Button type="primary" onClick={onBack}>
+            Quay lại danh sách
+          </Button>
+        }
+      />
+    );
+  }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8 relative">
+      {/* Custom Notification */}
+      {showCopyNotification && (
+        <div
+          style={{
+            position: "fixed",
+            top: "16px",
+            right: "16px",
+            backgroundColor: "#52c41a",
+            color: "white",
+            padding: "10px 16px",
+            borderRadius: "4px",
+            boxShadow:
+              "0 3px 6px -4px rgba(0,0,0,.12), 0 6px 16px 0 rgba(0,0,0,.08)",
+            display: "flex",
+            alignItems: "center",
+            zIndex: 9999,
+          }}
+        >
+          <CheckCircleFilled style={{ marginRight: 8 }} />
+          Đã copy đường dẫn lịch trình
+        </div>
+      )}
+
       <div className="flex justify-between items-center mb-4">
         <Button icon={<ArrowLeftOutlined />} onClick={onBack} type="text">
           Quay lại danh sách kế hoạch
         </Button>
-
-        <Button
-          type="primary"
-          icon={isEditMode ? <SaveOutlined /> : <EditOutlined />}
-          onClick={toggleEditMode}
-          className="!bg-black"
-        >
-          {isEditMode ? "Lưu thay đổi" : "Chỉnh sửa lịch trình"}
-        </Button>
+        <div className="flex gap-2">
+          <Tooltip title="Chia sẻ kế hoạch">
+            <Button
+              icon={<ShareAltOutlined />}
+              onClick={handleShare}
+              className="!rounded-full"
+            >
+              Chia sẻ
+            </Button>
+          </Tooltip>
+          <Button
+            type="primary"
+            icon={isEditMode ? <SaveOutlined /> : <EditOutlined />}
+            onClick={toggleEditMode}
+            className="!bg-black"
+          >
+            {isEditMode ? "Lưu thay đổi" : "Chỉnh sửa lịch trình"}
+          </Button>
+        </div>
       </div>
 
       <TravelHeader
@@ -279,7 +184,6 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
                 <TravelItinerary
                   days={travelDetail.days}
                   formatDate={formatDate}
-                  getActivityIcon={getActivityIcon}
                   activityTypeColors={ACTIVITY_TYPE_COLORS}
                   onActivityClick={showActivityDetail}
                   isEditMode={isEditMode}
