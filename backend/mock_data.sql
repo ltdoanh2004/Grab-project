@@ -38,13 +38,23 @@ INSERT INTO place_categories (category_id, category_name, description) VALUES
 ('cat_000004', 'Wellness', 'Spa, relaxation, and health activities'),
 ('cat_000005', 'Entertainment', 'Shows, performances, and leisure activities');
 
--- Insert mock data into the activities table
-INSERT INTO places (place_id, destination_id, name, url, address, duration, type, categories, image_urls, main_image, price, rating, description, opening_hours, reviews) VALUES
-('act_000001', 'hanoi', 'Eiffel Tower', 'https://eiffel-tower.com', 'Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France', '2-3 hours', 'Landmark', '["Sightseeing", "Cultural"]', '["eiffel1.jpg", "eiffel2.jpg"]', 'eiffel_main.jpg', '€26.80', 4.7, 'Iconic iron lattice tower', '9:00 AM - 12:00 AM', '["Great view!", "Must visit"]'),
-('act_000002', 'dest_000002', 'Tokyo Sushi Academy', 'https://sushiacademy.jp', '8-4-7 Ginza, Chuo, Tokyo 104-0061, Japan', '2 hours', 'School', '["Cultural", "Food"]', '["sushi1.jpg", "sushi2.jpg"]', 'sushi_main.jpg', '¥5000', 4.5, 'Sushi making school', '10:00 AM - 8:00 PM', '["Amazing experience"]'),
-('act_000003', 'dest_000003', 'Central Park', 'https://centralpark.com', 'New York, NY, USA', '2-3 hours', 'Park', '["Outdoor", "Nature"]', '["park1.jpg", "park2.jpg"]', 'centralpark_main.jpg', 'Free', 4.8, 'Urban park in Manhattan', '6:00 AM - 1:00 AM', '["Beautiful park"]'),
-('act_000004', 'dest_000004', 'Terme di Diocleziano', 'https://terme.it', 'Viale Enrico de Nicola, 79, 00185 Roma RM, Italy', '1.5 hours', 'Spa', '["Wellness", "Historical"]', '["terme1.jpg", "terme2.jpg"]', 'terme_main.jpg', '€8.00', 4.6, 'Ancient Roman baths', '9:00 AM - 7:30 PM', '["Relaxing experience"]'),
-('act_000005', 'dest_000005', 'Sydney Opera House', 'https://sydneyoperahouse.com', 'Bennelong Point, Sydney NSW 2000, Australia', '1 hour', 'Theater', '["Entertainment", "Cultural"]', '["opera1.jpg", "opera2.jpg"]', 'opera_main.jpg', 'Free', 4.9, 'Multi-venue performing arts centre', '9:00 AM - 5:00 PM', '["Architectural marvel"]');
+-- Update places insert statement (removed categories column)
+INSERT INTO places (place_id, destination_id, name, url, address, duration, type, image_urls, main_image, price, rating, description, opening_hours, reviews) VALUES
+('act_000001', 'hanoi', 'Eiffel Tower', 'https://eiffel-tower.com', 'Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France', '2-3 hours', 'Landmark', '["eiffel1.jpg", "eiffel2.jpg"]', 'eiffel_main.jpg', '€26.80', 4.7, 'Iconic iron lattice tower', '9:00 AM - 12:00 AM', '["Great view!", "Must visit"]'),
+('act_000002', 'dest_000002', 'Tokyo Sushi Academy', 'https://sushiacademy.jp', '8-4-7 Ginza, Chuo, Tokyo 104-0061, Japan', '2 hours', 'School', '["sushi1.jpg", "sushi2.jpg"]', 'sushi_main.jpg', '¥5000', 4.5, 'Sushi making school', '10:00 AM - 8:00 PM', '["Amazing experience"]'),
+('act_000003', 'dest_000003', 'Central Park', 'https://centralpark.com', 'New York, NY, USA', '2-3 hours', 'Park', '["park1.jpg", "park2.jpg"]', 'centralpark_main.jpg', 'Free', 4.8, 'Urban park in Manhattan', '6:00 AM - 1:00 AM', '["Beautiful park"]'),
+('act_000004', 'dest_000004', 'Terme di Diocleziano', 'https://terme.it', 'Viale Enrico de Nicola, 79, 00185 Roma RM, Italy', '1.5 hours', 'Spa', '["terme1.jpg", "terme2.jpg"]', 'terme_main.jpg', '€8.00', 4.6, 'Ancient Roman baths', '9:00 AM - 7:30 PM', '["Relaxing experience"]'),
+('act_000005', 'dest_000005', 'Sydney Opera House', 'https://sydneyoperahouse.com', 'Bennelong Point, Sydney NSW 2000, Australia', '1 hour', 'Theater', '["opera1.jpg", "opera2.jpg"]', 'opera_main.jpg', 'Free', 4.9, 'Multi-venue performing arts centre', '9:00 AM - 5:00 PM', '["Architectural marvel"]');
+
+-- Add place_category_places relationships
+INSERT INTO place_category_places (place_id, category_id) VALUES
+('act_000001', 'cat_000001'), -- Eiffel Tower - Sightseeing
+('act_000001', 'cat_000002'), -- Eiffel Tower - Cultural
+('act_000002', 'cat_000002'), -- Tokyo Sushi Academy - Cultural
+('act_000003', 'cat_000003'), -- Central Park - Adventure
+('act_000004', 'cat_000004'), -- Terme di Diocleziano - Wellness
+('act_000005', 'cat_000005'), -- Sydney Opera House - Entertainment
+('act_000005', 'cat_000002'); -- Sydney Opera House - Cultural
 
 -- Rename trip_activities to trip_places and update its structure
 INSERT INTO trip_places (trip_place_id, trip_destination_id, place_id, scheduled_date, start_time, end_time, notes) VALUES

@@ -143,7 +143,7 @@ func (ss *suggestService) SuggestPlaces(travelPreference *dto.TravelPreference) 
 
 	var suggestion dto.PlacesSuggestion
 	for i := range rsp.IDs {
-		place, err := ss.PlaceRepository.GetByID(rsp.IDs[i])
+		place, err := ss.PlaceRepository.GetWithCategory(rsp.IDs[i])
 		if err != nil {
 			return nil, fmt.Errorf("failed to fetch place with ID %s: %w", rsp.IDs[i], err)
 		}

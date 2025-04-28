@@ -1,19 +1,22 @@
 package model
 
-// // Place maps to the "places" table.
-// type Place struct {
-// 	PlaceID          string  `gorm:"type:char(36);column:place_id;primaryKey" json:"place_id"`
-// 	DestinationID    string  `gorm:"column:destination_id" json:"destination_id"`
-// 	Name             string  `gorm:"column:name;size:100;not null" json:"name"`
-// 	PlaceType        string  `gorm:"column:place_type;size:50" json:"place_type"`
-// 	Description      string  `gorm:"column:description" json:"description"`
-// 	Address          string  `gorm:"column:address" json:"address"`
-// 	EntranceFee      float64 `gorm:"column:entrance_fee;type:decimal(10,2)" json:"entrance_fee"`
-// 	AvgVisitDuration int     `gorm:"column:avg_visit_duration" json:"avg_visit_duration"`
-// 	OpeningHours     string  `gorm:"column:opening_hours" json:"opening_hours"`
-// 	PopularityScore  float64 `gorm:"column:popularity_score;type:decimal(3,1)" json:"popularity_score"`
-// 	ImageURL         string  `gorm:"column:image_url;size:255" json:"image_url"`
+import "skeleton-internship-backend/internal/util"
 
-// 	Destination *Destination `json:"destination,omitempty"`
-// 	Activities  []Activity   `gorm:"foreignKey:PlaceID" json:"activities,omitempty"`
-// }
+type Place struct {
+	PlaceID       string           `gorm:"type:char(36);primaryKey" json:"place_id"`
+	DestinationID string           `gorm:"type:char(36)" json:"destination_id"`
+	Name          string           `gorm:"size:100;not null" json:"name"`
+	URL           string           `gorm:"size:255" json:"url"`
+	Address       string           `gorm:"size:255" json:"address"`
+	Duration      string           `gorm:"size:50" json:"duration"`
+	Type          string           `gorm:"size:50" json:"type"`
+	ImageURLs     util.StringArray `gorm:"type:json" json:"image_urls"`
+	MainImage     string           `gorm:"size:255" json:"main_image"`
+	Price         string           `gorm:"size:20" json:"price"`
+	Rating        float64          `json:"rating"`
+	Description   string           `gorm:"type:text" json:"description"`
+	OpeningHours  string           `gorm:"type:text" json:"opening_hours"`
+	Reviews       util.StringArray `gorm:"type:json" json:"reviews"`
+
+	Categories []PlaceCategory `gorm:"many2many:place_category_places;joinForeignKey:place_id;JoinReferences:category_id" json:"categories"`
+}

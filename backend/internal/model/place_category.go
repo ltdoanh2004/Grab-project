@@ -5,5 +5,5 @@ type PlaceCategory struct {
 	CategoryName string `gorm:"size:50;not null" json:"category_name"`
 	Description  string `json:"description"`
 
-	// Places []Place `gorm:"foreignKey:CategoryID" json:"places,omitempty"`
+	Places []Place `gorm:"many2many:place_category_places;joinForeignKey:category_id;JoinReferences:place_id" json:"places,omitempty"`
 }
