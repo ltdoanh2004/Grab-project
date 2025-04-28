@@ -32,19 +32,15 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         if data is None:
             data = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'place_processed.csv')
         
-        # Check if data file exists    
         if not os.path.exists(data):
-            # Create example data if file doesn't exist
             print(f"Data file not found at: {data}")
             print("Creating example data file...")
             
-            # Check if data directory exists
             data_dir = os.path.dirname(data)
             if not os.path.exists(data_dir):
                 print(f"Creating data directory: {data_dir}")
                 os.makedirs(data_dir, exist_ok=True)
                 
-            # Create a small example dataset
             example_data = pd.DataFrame({
                 'name': ['Lăng Chủ tịch Hồ Chí Minh', 'Văn Miếu Quốc Tử Giám', 'Hồ Gươm'],
                 'description': [
@@ -59,7 +55,6 @@ class PlaceVectorDatabase(BaseVectorDatabase):
                 'rating': [4.8, 4.6, 4.7]
             })
             
-            # Save example data
             example_data.to_csv(data, index=False)
             print(f"Created example data file at: {data}")
             
@@ -67,27 +62,21 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         print(f"Loading data from: {data}")
         raw_df = pd.read_csv(data)
         
-        # Replace NaN values with empty strings for text columns
-        text_columns = ['name', 'description', 'categories', 'location', 'opening_hours']
+        text_columns = ['name', 'address', 'duration', 'price', 'description', 'opening_hours', 'reviews']
         for col in text_columns:
             if col in raw_df.columns:
                 raw_df[col] = raw_df[col].fillna('')
         
-        # Basic processing on raw dataframe
-        print("Processing entrance fees...")
-        if 'entrance_fee' in raw_df.columns:
-            raw_df['entrance_fee'] = raw_df['entrance_fee'].fillna(0)
-            raw_df['entrance_fee'] = raw_df['entrance_fee'].astype(float)
+
         
         print("Processing ratings...")
         if 'rating' in raw_df.columns:
             raw_df['rating'].fillna(raw_df['rating'].mean(), inplace=True)
+            raw_df['rating'] = raw_df['rating'] * 2
             raw_df['rating'] = raw_df['rating'].astype(float)
 
-        print("Generating indices...")
-        if 'index' not in raw_df.columns:
-            raw_df['index'] = ['place_' + str(i).zfill(5) for i in range(1, len(raw_df) + 1)]
-        
+
+
         # Try to find existing embeddings file if we're doing incremental processing
         existing_df = None
         rows_to_embed = raw_df
@@ -117,11 +106,13 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         rows_to_embed['context'] = [f'''
                                 Đây là mô tả của địa điểm:
                                 {row['description']}
-                                Danh mục của nó là {row.get('categories', '')}
-                                Địa chỉ của nó là {row.get('location', '')}
+                                Tên của nó là{row.get('name', '')}
+                                Địa chỉ của nó là {row.get('address', '')}
+                                Tỉnh của nó là {row.get('city', '')}
                                 Giờ mở cửa: {row.get('opening_hours', '')}
-                                Phí vào cửa: {row.get('entrance_fee', '0')}
+                                Giá/Phí vào cửa: {row.get('price', '0')}
                                 Điểm đánh giá của nó là {row.get('rating', '')}
+                                Các thể loại của nó là {row.get('categories', '')}
                                 ''' for _, row in tqdm(rows_to_embed.iterrows(), total=len(rows_to_embed), desc="Creating contexts")]
 
         # Load checkpoint
