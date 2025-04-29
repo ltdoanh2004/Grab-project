@@ -32,6 +32,11 @@ func (s *insertDataService) InsertPlaceData(filePath string) error {
 }
 
 func (s *insertDataService) mapRecordToPlace(record map[string]string) (*model.Place, error) {
+	price, err := strconv.ParseFloat(record["price"], 64)
+	if err != nil {
+		return nil, err
+	}
+
 	rating, err := strconv.ParseFloat(record["rating"], 64)
 	if err != nil {
 		return nil, err
@@ -58,7 +63,7 @@ func (s *insertDataService) mapRecordToPlace(record map[string]string) (*model.P
 		Categories:    record["categories"],
 		Images:        images,
 		MainImage:     record["main_image"],
-		Price:         record["price"],
+		Price:         price,
 		Rating:        rating,
 		Description:   record["description"],
 		OpeningHours:  record["opening_hours"],
