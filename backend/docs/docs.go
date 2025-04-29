@@ -192,6 +192,64 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/suggest/all": {
+            "get": {
+                "description": "Get comprehensive suggestions based on travel preferences for accommodations, places, and restaurants",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "suggest"
+                ],
+                "summary": "Suggest all suggestions",
+                "parameters": [
+                    {
+                        "description": "Travel Preferences",
+                        "name": "preference",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.TravelPreference"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.TripSuggestionRequest"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/suggest/places": {
             "get": {
                 "description": "Get activity suggestions based on travel preferences",
@@ -1072,7 +1130,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "price": {
-                    "type": "string"
+                    "type": "number"
                 },
                 "rating": {
                     "type": "number"
@@ -1084,6 +1142,9 @@ const docTemplate = `{
                     }
                 },
                 "type": {
+                    "type": "string"
+                },
+                "unit": {
                     "type": "string"
                 },
                 "url": {
@@ -1137,9 +1198,6 @@ const docTemplate = `{
                 "destination_id": {
                     "type": "string"
                 },
-                "example_reviews": {
-                    "type": "string"
-                },
                 "is_booking": {
                     "type": "boolean"
                 },
@@ -1152,17 +1210,8 @@ const docTemplate = `{
                 "location": {
                     "$ref": "#/definitions/model.Location"
                 },
-                "main_image": {
-                    "type": "string"
-                },
-                "media_urls": {
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
-                },
-                "num_reviews": {
-                    "type": "integer"
                 },
                 "opening_hours": {
                     "type": "string"
@@ -1174,15 +1223,12 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "price_range": {
-                    "type": "string"
+                    "$ref": "#/definitions/model.PriceRange"
                 },
                 "rating": {
                     "type": "number"
                 },
                 "restaurant_id": {
-                    "type": "string"
-                },
-                "review_summary": {
                     "type": "string"
                 },
                 "reviews": {
@@ -1194,7 +1240,7 @@ const docTemplate = `{
                 "services": {
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "$ref": "#/definitions/model.Service"
                     }
                 },
                 "url": {
@@ -1474,6 +1520,17 @@ const docTemplate = `{
                 }
             }
         },
+        "model.PriceRange": {
+            "type": "object",
+            "properties": {
+                "max_price": {
+                    "type": "integer"
+                },
+                "min_price": {
+                    "type": "integer"
+                }
+            }
+        },
         "model.Response": {
             "type": "object",
             "properties": {
@@ -1502,6 +1559,20 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "tax_and_fee": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Service": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "url": {
                     "type": "string"
                 }
             }
