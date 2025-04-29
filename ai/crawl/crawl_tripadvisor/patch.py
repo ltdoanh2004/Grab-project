@@ -261,7 +261,35 @@ class EnhancedAttractionsCrawler:
                 attractions.append({"name": name, "url": href})
 
         logger.info(f"Found {len(attractions)} attractions on page {page}")
-        has_next_page = bool(soup.select_one('a[href*="oa"][aria-label*="Next"]'))
+        
+        # Check for next page using multiple methods
+        next_page_selectors = [
+            'a[href*="oa"][aria-label*="Next"]',
+            'a[href*="oa"][aria-label*="next"]',
+            'a[href*="oa"][class*="next"]',
+            'a[href*="oa"][class*="Next"]',
+            'a[href*="oa"]:contains("Next")',
+            'a[href*="oa"]:contains("next")'
+        ]
+        
+        has_next_page = False
+        for selector in next_page_selectors:
+            next_link = soup.select_one(selector)
+            if next_link:
+                has_next_page = True
+                logger.info(f"Found next page link using selector: {selector}")
+                break
+                
+        # Alternative check - look for pagination numbers
+        if not has_next_page:
+            pagination = soup.select('a[href*="oa"]')
+            if pagination:
+                page_numbers = [int(re.search(r'oa(\d+)', a.get('href', '')).group(1)) for a in pagination if re.search(r'oa(\d+)', a.get('href', ''))]
+                if page_numbers and max(page_numbers) > (page-1)*30:
+                    has_next_page = True
+                    logger.info(f"Found next page through pagination numbers")
+                    
+        logger.info(f"Has next page: {has_next_page}")
         return attractions, has_next_page
 
     # -------------------- DETAILS PAGE (unchanged) -------------------- #
