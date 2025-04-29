@@ -1,4 +1,4 @@
-DB_URL=mysql://root:88889999@tcp(localhost:3306)/mydb
+DB_URL=mysql://root:88889999@tcp(localhost:3306)/mydb?charset=utf8mb4&parseTime=True&loc=Local
 DB_NAME=mydb
 
 server:
@@ -17,6 +17,6 @@ swag:
 	swag init -g cmd/main.go
 
 mockdata:
-	docker exec -i grab-bootcamp-db mysql -uroot -p88889999 ${DB_NAME} < mock_data.sql
+	docker exec -i grab-bootcamp-db mysql -uroot -p88889999 ${DB_NAME} < mockdata/mock_data.sql
 
 .PHONY: server mysql createdb dropdb swag mockdata
