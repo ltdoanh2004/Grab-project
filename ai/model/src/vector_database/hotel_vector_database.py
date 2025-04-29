@@ -138,11 +138,12 @@ class HotelVectorDatabase(BaseVectorDatabase):
         # Basic processing on raw dataframe
         print("Processing prices...")
         raw_df['price'] = raw_df['price'].replace({'VND': '', ',': '', '\xa0': '', r'\.': ''}, regex=True)
-        raw_df['price'] = raw_df['price'].astype(float)
+        raw_df['price'] = pd.to_numeric(raw_df['price'], errors='coerce')
+        raw_df['price'] = raw_df['price'].fillna(0)
 
         print("Processing ratings...")
-        raw_df['rating'].fillna(raw_df['rating'].mean(), inplace=True)
-        raw_df['rating'] = raw_df['rating'].astype(float)
+        raw_df['rating'] = pd.to_numeric(raw_df['rating'], errors='coerce')
+        raw_df['rating'] = raw_df['rating'].fillna(raw_df['rating'].mean())
 
         # Try to find existing embeddings file if we're doing incremental processing
         existing_df = None
@@ -161,7 +162,7 @@ class HotelVectorDatabase(BaseVectorDatabase):
                 rows_to_embed, existing_df = self.find_missing_embeddings(
                     new_df=raw_df,
                     existing_df=existing_df,
-                    id_field="index"
+                    id_field="hotel_id"
                 )
                 
                 if len(rows_to_embed) == 0:
@@ -206,7 +207,8 @@ class HotelVectorDatabase(BaseVectorDatabase):
             try:
                 # Generate new embedding
                 embedding = self.get_openai_embeddings(rows_to_embed.iloc[idx]['context'])
-                embeddings[idx] = embedding
+                if embedding is not None:  # Only add if embedding is not None
+                    embeddings[idx] = embedding
                 
                 # Update checkpoint every 10 rows
                 if idx % 10 == 0:
@@ -221,7 +223,12 @@ class HotelVectorDatabase(BaseVectorDatabase):
                 checkpoint["last_processed_index"] = idx - 1
                 self.save_checkpoint(checkpoint)
                 print(f"Saved checkpoint after error at index {idx - 1}")
-                raise e
+                continue  # Continue with next row instead of raising error
+        
+        # Filter out None embeddings
+        valid_indices = [i for i, emb in enumerate(embeddings) if emb is not None]
+        rows_to_embed = rows_to_embed.iloc[valid_indices]
+        embeddings = [emb for emb in embeddings if emb is not None]
         
         rows_to_embed['context_embedding'] = embeddings
         
@@ -345,7 +352,7 @@ class HotelVectorDatabase(BaseVectorDatabase):
         # Load data from CSV
         print(f"Loading embeddings from: {embedding_file}")
         self.df = pd.read_csv(embedding_file)
-        text_columns = ['name', 'description', 'room_types']
+        text_columns = ['name', 'description', 'room_types', 'price', 'rating']
         for col in text_columns:
             if col in self.df.columns:
                 self.df[col] = self.df[col].fillna('')
@@ -358,7 +365,7 @@ class HotelVectorDatabase(BaseVectorDatabase):
             
         print("Converting embeddings to lists...")
         self.df['context_embedding'] = self.df['context_embedding'].apply(
-            lambda x: eval(x) if isinstance(x, str) else x
+            lambda x: eval(x) if isinstance(x, str) and x != 'None' else None
         )
             
         print("Inserting data into Pinecone...")
@@ -366,6 +373,10 @@ class HotelVectorDatabase(BaseVectorDatabase):
         
         for idx, row in tqdm(self.df.iterrows(), total=len(self.df), desc="Preparing vectors"):
             try:
+                # Skip rows with None embeddings
+                if row["context_embedding"] is None:
+                    continue
+                    
                 metadata = {
                     "id": row["hotel_id"],
                     "name": row["name"],

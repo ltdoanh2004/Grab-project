@@ -1,0 +1,1358 @@
+2025-04-29 11:55:26,841 - INFO - Starting crawl from page 1 with max_pages=1000, max_attractions=100000
+2025-04-29 11:55:26,841 - INFO - Crawling page 1
+2025-04-29 11:55:26,841 - INFO - Fetching URL: https://www.tripadvisor.com/Tourism-g303945-Ninh_Binh_Ninh_Binh_Province-Vacations.html
+2025-04-29 11:55:28,663 - INFO - Found 8 attractions on page 1
+2025-04-29 11:55:28,668 - INFO - Found 8 attractions on page 1
+2025-04-29 11:55:28,668 - INFO - Waiting for 8.64 seconds
+2025-04-29 11:55:37,308 - INFO - Starting to crawl details for 8 attractions
+2025-04-29 11:55:37,310 - INFO - Waiting for 7.40 seconds
+2025-04-29 11:55:37,310 - INFO - Waiting for 6.46 seconds
+2025-04-29 11:55:37,311 - INFO - Waiting for 6.73 seconds
+2025-04-29 11:55:37,311 - INFO - Waiting for 9.75 seconds
+2025-04-29 11:55:37,312 - INFO - Waiting for 7.82 seconds
+2025-04-29 11:55:37,313 - INFO - Waiting for 6.98 seconds
+2025-04-29 11:55:37,312 - INFO - Waiting for 9.26 seconds
+2025-04-29 11:55:37,313 - INFO - Waiting for 8.37 seconds
+2025-04-29 11:55:43,772 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d5321519-Reviews-Mua_Caves-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:55:44,042 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d2044218-Reviews-Van_Long_Nature_Reserve-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:55:44,298 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12965796-Reviews-Hoa_Lu_Ancient_Capital-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:55:44,718 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d2484803-Reviews-Trang_An_Grottoes-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:55:45,136 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13646473-Reviews-Tuy_t_Tinh_C_c-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:55:45,704 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d18670578-Reviews-Bear_Sanctuary_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:55:46,575 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d3597971-Reviews-Phat_Diem_Cathedral-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:55:47,082 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d5570345-Reviews-Bich_Dong_Pagoda-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:56:07,726 - INFO - ✓ Hoa Lư Ancient Capital
+2025-04-29 11:56:09,585 - INFO - ✓ Phat Diem Cathedral
+2025-04-29 11:56:09,839 - INFO - ✓ Tuyệt Tình Cốc
+2025-04-29 11:56:10,236 - INFO - ✓ Bich Dong Pagoda
+2025-04-29 11:56:10,298 - INFO - ✓ Bear Sanctuary Ninh Binh
+2025-04-29 11:56:10,434 - INFO - ✓ Trang An Grottoes
+2025-04-29 11:56:10,503 - INFO - ✓ Van Long Nature Reserve
+2025-04-29 11:56:10,570 - INFO - ✓ Mua Caves
+2025-04-29 11:56:10,570 - INFO - Saved 8 attractions to data_attractions/ninhbinh/attractions_20250429_115610_index_0.json
+2025-04-29 11:56:10,570 - INFO - Found 8 unique attractions
+2025-04-29 11:56:42,395 - INFO - Starting crawl from page 1 with max_pages=1000, max_attractions=100000
+2025-04-29 11:56:42,395 - INFO - Crawling page 1
+2025-04-29 11:56:42,395 - INFO - Fetching URL: https://www.tripadvisor.com/Tourism-g303945-Ninh_Binh_Ninh_Binh_Province-Vacations.html
+2025-04-29 11:56:43,846 - INFO - Found 8 attractions on page 1
+2025-04-29 11:56:43,851 - INFO - Found 8 attractions on page 1
+2025-04-29 11:56:43,851 - INFO - Waiting for 8.90 seconds
+2025-04-29 11:56:52,756 - INFO - Starting to crawl details for 8 attractions
+2025-04-29 11:56:52,757 - INFO - Waiting for 7.31 seconds
+2025-04-29 11:56:52,757 - INFO - Waiting for 5.55 seconds
+2025-04-29 11:56:52,758 - INFO - Waiting for 6.32 seconds
+2025-04-29 11:56:52,758 - INFO - Waiting for 5.77 seconds
+2025-04-29 11:56:52,759 - INFO - Waiting for 7.07 seconds
+2025-04-29 11:56:52,759 - INFO - Waiting for 5.50 seconds
+2025-04-29 11:56:52,760 - INFO - Waiting for 8.51 seconds
+2025-04-29 11:56:52,760 - INFO - Waiting for 5.70 seconds
+2025-04-29 11:56:58,262 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d3597971-Reviews-Phat_Diem_Cathedral-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:56:58,313 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d5321519-Reviews-Mua_Caves-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:56:58,467 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d18670578-Reviews-Bear_Sanctuary_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:56:58,530 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d5570345-Reviews-Bich_Dong_Pagoda-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:56:59,082 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d2044218-Reviews-Van_Long_Nature_Reserve-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:56:59,845 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13646473-Reviews-Tuy_t_Tinh_C_c-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:57:00,082 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d2484803-Reviews-Trang_An_Grottoes-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:57:01,292 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12965796-Reviews-Hoa_Lu_Ancient_Capital-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:57:20,643 - INFO - ✓ Phat Diem Cathedral
+2025-04-29 11:57:22,534 - INFO - ✓ Hoa Lư Ancient Capital
+2025-04-29 11:57:22,570 - INFO - ✓ Tuyệt Tình Cốc
+2025-04-29 11:57:22,669 - INFO - ✓ Van Long Nature Reserve
+2025-04-29 11:57:22,782 - INFO - ✓ Bear Sanctuary Ninh Binh
+2025-04-29 11:57:22,927 - INFO - ✓ Trang An Grottoes
+2025-04-29 11:57:22,928 - INFO - ✓ Bich Dong Pagoda
+2025-04-29 11:57:23,352 - INFO - ✓ Mua Caves
+2025-04-29 11:57:23,353 - INFO - Saved 8 attractions to data_attractions/ninhbinh/attractions_20250429_115723_index_0.json
+2025-04-29 11:57:23,353 - INFO - Found 8 unique attractions
+2025-04-29 11:58:31,549 - INFO - Starting crawl from page 1 with max_pages=1000, max_attractions=100000
+2025-04-29 11:58:31,549 - INFO - Crawling page 1
+2025-04-29 11:58:31,549 - INFO - Fetching URL: https://www.tripadvisor.com/Tourism-g303945-Ninh_Binh_Ninh_Binh_Province-Vacations.html
+2025-04-29 11:58:33,117 - INFO - Found 8 attractions on page 1
+2025-04-29 11:58:33,157 - INFO - Has next page: False
+2025-04-29 11:58:33,157 - INFO - Found 8 attractions on page 1
+2025-04-29 11:58:33,157 - INFO - Waiting for 7.06 seconds
+2025-04-29 11:58:40,218 - INFO - Starting to crawl details for 8 attractions
+2025-04-29 11:58:40,220 - INFO - Waiting for 6.93 seconds
+2025-04-29 11:58:40,220 - INFO - Waiting for 6.79 seconds
+2025-04-29 11:58:40,221 - INFO - Waiting for 6.75 seconds
+2025-04-29 11:58:40,221 - INFO - Waiting for 8.30 seconds
+2025-04-29 11:58:40,221 - INFO - Waiting for 9.05 seconds
+2025-04-29 11:58:40,221 - INFO - Waiting for 9.90 seconds
+2025-04-29 11:58:40,222 - INFO - Waiting for 8.65 seconds
+2025-04-29 11:58:40,222 - INFO - Waiting for 5.79 seconds
+2025-04-29 11:58:46,012 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d18670578-Reviews-Bear_Sanctuary_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:58:46,975 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d2044218-Reviews-Van_Long_Nature_Reserve-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:58:47,018 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d5321519-Reviews-Mua_Caves-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:58:47,156 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d2484803-Reviews-Trang_An_Grottoes-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:58:48,523 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d5570345-Reviews-Bich_Dong_Pagoda-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:58:48,884 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12965796-Reviews-Hoa_Lu_Ancient_Capital-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:58:49,279 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13646473-Reviews-Tuy_t_Tinh_C_c-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:58:50,220 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d3597971-Reviews-Phat_Diem_Cathedral-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 11:59:11,175 - INFO - ✓ Phat Diem Cathedral
+2025-04-29 11:59:12,364 - INFO - ✓ Hoa Lư Ancient Capital
+2025-04-29 11:59:12,706 - INFO - ✓ Bear Sanctuary Ninh Binh
+2025-04-29 11:59:12,755 - INFO - ✓ Tuyệt Tình Cốc
+2025-04-29 11:59:12,890 - INFO - ✓ Van Long Nature Reserve
+2025-04-29 11:59:13,074 - INFO - ✓ Trang An Grottoes
+2025-04-29 11:59:13,086 - INFO - ✓ Mua Caves
+2025-04-29 11:59:13,123 - INFO - ✓ Bich Dong Pagoda
+2025-04-29 11:59:13,124 - INFO - Saved 8 attractions to data_attractions/ninhbinh/attractions_20250429_115913_index_0.json
+2025-04-29 11:59:13,124 - INFO - Found 8 unique attractions
+2025-04-29 12:00:15,385 - INFO - Starting crawl from page 1 with max_pages=1000, max_attractions=100000
+2025-04-29 12:00:15,386 - INFO - Crawling page 1
+2025-04-29 12:00:15,386 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:00:18,821 - INFO - Found 60 attractions on page 1
+2025-04-29 12:00:18,948 - INFO - Found next page through pagination numbers
+2025-04-29 12:00:18,949 - INFO - Has next page: True
+2025-04-29 12:00:18,949 - INFO - Found 60 attractions on page 1
+2025-04-29 12:00:18,949 - INFO - Waiting for 9.33 seconds
+2025-04-29 12:00:28,283 - INFO - Crawling page 2
+2025-04-29 12:00:28,284 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-Ninh_Binh_Ninh_Binh_Province-oa30.html
+2025-04-29 12:00:30,439 - INFO - Found 78 attractions on page 2
+2025-04-29 12:00:30,445 - INFO - Found next page link using selector: a[href*="oa"][aria-label*="Next"]
+2025-04-29 12:00:30,445 - INFO - Has next page: True
+2025-04-29 12:00:30,445 - INFO - Found 78 attractions on page 2
+2025-04-29 12:00:30,445 - INFO - Waiting for 5.59 seconds
+2025-04-29 12:00:36,033 - INFO - Crawling page 3
+2025-04-29 12:00:36,034 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-Ninh_Binh_Ninh_Binh_Province-oa60.html
+2025-04-29 12:00:38,070 - INFO - Found 68 attractions on page 3
+2025-04-29 12:00:38,075 - INFO - Found next page link using selector: a[href*="oa"][aria-label*="Next"]
+2025-04-29 12:00:38,075 - INFO - Has next page: True
+2025-04-29 12:00:38,075 - INFO - Found 68 attractions on page 3
+2025-04-29 12:00:38,075 - INFO - Waiting for 8.74 seconds
+2025-04-29 12:00:46,821 - INFO - Crawling page 4
+2025-04-29 12:00:46,821 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-Ninh_Binh_Ninh_Binh_Province-oa90.html
+2025-04-29 12:00:49,963 - INFO - Found 76 attractions on page 4
+2025-04-29 12:00:49,968 - INFO - Found next page link using selector: a[href*="oa"][aria-label*="Next"]
+2025-04-29 12:00:49,969 - INFO - Has next page: True
+2025-04-29 12:00:49,969 - INFO - Found 76 attractions on page 4
+2025-04-29 12:00:49,969 - INFO - Waiting for 9.61 seconds
+2025-04-29 12:00:59,579 - INFO - Crawling page 5
+2025-04-29 12:00:59,580 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-Ninh_Binh_Ninh_Binh_Province-oa120.html
+2025-04-29 12:01:01,679 - INFO - Found 79 attractions on page 5
+2025-04-29 12:01:01,684 - INFO - Found next page link using selector: a[href*="oa"][aria-label*="Next"]
+2025-04-29 12:01:01,684 - INFO - Has next page: True
+2025-04-29 12:01:01,684 - INFO - Found 79 attractions on page 5
+2025-04-29 12:01:01,684 - INFO - Waiting for 5.43 seconds
+2025-04-29 12:01:07,115 - INFO - Crawling page 6
+2025-04-29 12:01:07,117 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-Ninh_Binh_Ninh_Binh_Province-oa150.html
+2025-04-29 12:01:08,933 - INFO - Found 59 attractions on page 6
+2025-04-29 12:01:08,937 - INFO - Found next page link using selector: a[href*="oa"][aria-label*="Next"]
+2025-04-29 12:01:08,937 - INFO - Has next page: True
+2025-04-29 12:01:08,937 - INFO - Found 59 attractions on page 6
+2025-04-29 12:01:08,937 - INFO - Waiting for 9.82 seconds
+2025-04-29 12:01:18,760 - INFO - Crawling page 7
+2025-04-29 12:01:18,761 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-Ninh_Binh_Ninh_Binh_Province-oa180.html
+2025-04-29 12:01:20,634 - INFO - Found 51 attractions on page 7
+2025-04-29 12:01:20,638 - INFO - Found next page link using selector: a[href*="oa"][aria-label*="Next"]
+2025-04-29 12:01:20,638 - INFO - Has next page: True
+2025-04-29 12:01:20,638 - INFO - Found 51 attractions on page 7
+2025-04-29 12:01:20,639 - INFO - Waiting for 9.90 seconds
+2025-04-29 12:01:30,542 - INFO - Crawling page 8
+2025-04-29 12:01:30,543 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-Ninh_Binh_Ninh_Binh_Province-oa210.html
+2025-04-29 12:01:34,614 - INFO - Found 50 attractions on page 8
+2025-04-29 12:01:34,626 - INFO - Found next page link using selector: a[href*="oa"][aria-label*="Next"]
+2025-04-29 12:01:34,627 - INFO - Has next page: True
+2025-04-29 12:01:34,627 - INFO - Found 50 attractions on page 8
+2025-04-29 12:01:34,627 - INFO - Waiting for 5.40 seconds
+2025-04-29 12:01:40,036 - INFO - Crawling page 9
+2025-04-29 12:01:40,037 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-Ninh_Binh_Ninh_Binh_Province-oa240.html
+2025-04-29 12:02:00,171 - INFO - Starting crawl from page 1 with max_pages=1000, max_attractions=100000
+2025-04-29 12:02:00,171 - INFO - Crawling page 1
+2025-04-29 12:02:00,171 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-oa0-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:02:02,123 - INFO - Found 77 attractions on page 1
+2025-04-29 12:02:02,129 - INFO - Found next page link using selector: a[href*="oa"][aria-label*="Next"]
+2025-04-29 12:02:02,129 - INFO - Has next page: True
+2025-04-29 12:02:02,129 - INFO - Found 77 attractions on page 1
+2025-04-29 12:02:02,129 - INFO - Waiting for 6.68 seconds
+2025-04-29 12:02:08,814 - INFO - Crawling page 2
+2025-04-29 12:02:08,815 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-oa30-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:02:10,488 - INFO - Found 78 attractions on page 2
+2025-04-29 12:02:10,494 - INFO - Found next page link using selector: a[href*="oa"][aria-label*="Next"]
+2025-04-29 12:02:10,494 - INFO - Has next page: True
+2025-04-29 12:02:10,494 - INFO - Found 78 attractions on page 2
+2025-04-29 12:02:10,494 - INFO - Waiting for 6.66 seconds
+2025-04-29 12:02:17,161 - INFO - Crawling page 3
+2025-04-29 12:02:17,163 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-oa60-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:02:18,905 - INFO - Found 68 attractions on page 3
+2025-04-29 12:02:18,909 - INFO - Found next page link using selector: a[href*="oa"][aria-label*="Next"]
+2025-04-29 12:02:18,909 - INFO - Has next page: True
+2025-04-29 12:02:18,909 - INFO - Found 68 attractions on page 3
+2025-04-29 12:02:18,909 - INFO - Waiting for 9.76 seconds
+2025-04-29 12:02:28,671 - INFO - Crawling page 4
+2025-04-29 12:02:28,673 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-oa90-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:02:31,356 - INFO - Found 76 attractions on page 4
+2025-04-29 12:02:31,361 - INFO - Found next page link using selector: a[href*="oa"][aria-label*="Next"]
+2025-04-29 12:02:31,361 - INFO - Has next page: True
+2025-04-29 12:02:31,361 - INFO - Found 76 attractions on page 4
+2025-04-29 12:02:31,361 - INFO - Waiting for 6.91 seconds
+2025-04-29 12:02:38,277 - INFO - Crawling page 5
+2025-04-29 12:02:38,277 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-oa120-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:02:39,954 - INFO - Found 79 attractions on page 5
+2025-04-29 12:02:39,959 - INFO - Found next page link using selector: a[href*="oa"][aria-label*="Next"]
+2025-04-29 12:02:39,959 - INFO - Has next page: True
+2025-04-29 12:02:39,959 - INFO - Found 79 attractions on page 5
+2025-04-29 12:02:39,959 - INFO - Waiting for 9.65 seconds
+2025-04-29 12:02:49,611 - INFO - Crawling page 6
+2025-04-29 12:02:49,612 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-oa150-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:02:51,115 - INFO - Found 59 attractions on page 6
+2025-04-29 12:02:51,120 - INFO - Found next page link using selector: a[href*="oa"][aria-label*="Next"]
+2025-04-29 12:02:51,120 - INFO - Has next page: True
+2025-04-29 12:02:51,121 - INFO - Found 59 attractions on page 6
+2025-04-29 12:02:51,121 - INFO - Waiting for 6.78 seconds
+2025-04-29 12:02:57,902 - INFO - Crawling page 7
+2025-04-29 12:02:57,903 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-oa180-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:02:59,379 - INFO - Found 51 attractions on page 7
+2025-04-29 12:02:59,383 - INFO - Found next page link using selector: a[href*="oa"][aria-label*="Next"]
+2025-04-29 12:02:59,383 - INFO - Has next page: True
+2025-04-29 12:02:59,383 - INFO - Found 51 attractions on page 7
+2025-04-29 12:02:59,383 - INFO - Waiting for 7.81 seconds
+2025-04-29 12:03:07,199 - INFO - Crawling page 8
+2025-04-29 12:03:07,200 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-oa210-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:08,739 - INFO - Found 50 attractions on page 8
+2025-04-29 12:03:08,743 - INFO - Found next page link using selector: a[href*="oa"][aria-label*="Next"]
+2025-04-29 12:03:08,743 - INFO - Has next page: True
+2025-04-29 12:03:08,744 - INFO - Found 50 attractions on page 8
+2025-04-29 12:03:08,744 - INFO - Waiting for 7.49 seconds
+2025-04-29 12:03:16,236 - INFO - Crawling page 9
+2025-04-29 12:03:16,237 - INFO - Fetching URL: https://www.tripadvisor.com/Attractions-g303945-Activities-oa240-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:17,246 - INFO - Found 27 attractions on page 9
+2025-04-29 12:03:17,268 - INFO - Has next page: False
+2025-04-29 12:03:17,268 - INFO - Found 27 attractions on page 9
+2025-04-29 12:03:17,268 - INFO - Waiting for 8.03 seconds
+2025-04-29 12:03:25,301 - INFO - Starting to crawl details for 565 attractions
+2025-04-29 12:03:25,302 - INFO - Waiting for 7.91 seconds
+2025-04-29 12:03:25,302 - INFO - Waiting for 8.76 seconds
+2025-04-29 12:03:25,303 - INFO - Waiting for 6.45 seconds
+2025-04-29 12:03:25,303 - INFO - Waiting for 6.13 seconds
+2025-04-29 12:03:25,303 - INFO - Waiting for 6.47 seconds
+2025-04-29 12:03:25,303 - INFO - Waiting for 8.52 seconds
+2025-04-29 12:03:25,304 - INFO - Waiting for 6.60 seconds
+2025-04-29 12:03:25,304 - INFO - Waiting for 8.09 seconds
+2025-04-29 12:03:25,304 - INFO - Waiting for 6.41 seconds
+2025-04-29 12:03:25,304 - INFO - Waiting for 7.59 seconds
+2025-04-29 12:03:25,304 - INFO - Waiting for 5.39 seconds
+2025-04-29 12:03:25,304 - INFO - Waiting for 8.42 seconds
+2025-04-29 12:03:25,305 - INFO - Waiting for 9.90 seconds
+2025-04-29 12:03:25,305 - INFO - Waiting for 7.90 seconds
+2025-04-29 12:03:25,305 - INFO - Waiting for 8.97 seconds
+2025-04-29 12:03:25,305 - INFO - Waiting for 5.27 seconds
+2025-04-29 12:03:25,305 - INFO - Waiting for 7.23 seconds
+2025-04-29 12:03:25,305 - INFO - Waiting for 8.56 seconds
+2025-04-29 12:03:25,305 - INFO - Waiting for 5.92 seconds
+2025-04-29 12:03:25,306 - INFO - Waiting for 8.01 seconds
+2025-04-29 12:03:25,306 - INFO - Waiting for 5.94 seconds
+2025-04-29 12:03:25,306 - INFO - Waiting for 7.15 seconds
+2025-04-29 12:03:25,306 - INFO - Waiting for 9.42 seconds
+2025-04-29 12:03:25,306 - INFO - Waiting for 8.65 seconds
+2025-04-29 12:03:25,306 - INFO - Waiting for 5.32 seconds
+2025-04-29 12:03:25,307 - INFO - Waiting for 5.77 seconds
+2025-04-29 12:03:25,307 - INFO - Waiting for 8.00 seconds
+2025-04-29 12:03:25,307 - INFO - Waiting for 9.67 seconds
+2025-04-29 12:03:25,307 - INFO - Waiting for 7.84 seconds
+2025-04-29 12:03:25,307 - INFO - Waiting for 6.39 seconds
+2025-04-29 12:03:25,307 - INFO - Waiting for 6.07 seconds
+2025-04-29 12:03:25,308 - INFO - Waiting for 9.74 seconds
+2025-04-29 12:03:25,308 - INFO - Waiting for 7.95 seconds
+2025-04-29 12:03:25,308 - INFO - Waiting for 8.39 seconds
+2025-04-29 12:03:25,308 - INFO - Waiting for 5.40 seconds
+2025-04-29 12:03:25,309 - INFO - Waiting for 6.19 seconds
+2025-04-29 12:03:25,309 - INFO - Waiting for 9.53 seconds
+2025-04-29 12:03:25,309 - INFO - Waiting for 6.16 seconds
+2025-04-29 12:03:25,310 - INFO - Waiting for 7.86 seconds
+2025-04-29 12:03:25,310 - INFO - Waiting for 9.04 seconds
+2025-04-29 12:03:25,310 - INFO - Waiting for 6.09 seconds
+2025-04-29 12:03:25,310 - INFO - Waiting for 6.10 seconds
+2025-04-29 12:03:25,310 - INFO - Waiting for 8.75 seconds
+2025-04-29 12:03:25,311 - INFO - Waiting for 6.44 seconds
+2025-04-29 12:03:25,311 - INFO - Waiting for 7.11 seconds
+2025-04-29 12:03:25,314 - INFO - Waiting for 8.41 seconds
+2025-04-29 12:03:25,311 - INFO - Waiting for 5.33 seconds
+2025-04-29 12:03:25,311 - INFO - Waiting for 9.54 seconds
+2025-04-29 12:03:25,311 - INFO - Waiting for 7.58 seconds
+2025-04-29 12:03:25,312 - INFO - Waiting for 7.43 seconds
+2025-04-29 12:03:25,312 - INFO - Waiting for 6.35 seconds
+2025-04-29 12:03:25,312 - INFO - Waiting for 6.11 seconds
+2025-04-29 12:03:25,312 - INFO - Waiting for 6.09 seconds
+2025-04-29 12:03:25,312 - INFO - Waiting for 7.45 seconds
+2025-04-29 12:03:25,313 - INFO - Waiting for 6.61 seconds
+2025-04-29 12:03:25,313 - INFO - Waiting for 6.66 seconds
+2025-04-29 12:03:25,313 - INFO - Waiting for 7.38 seconds
+2025-04-29 12:03:25,313 - INFO - Waiting for 8.94 seconds
+2025-04-29 12:03:25,311 - INFO - Waiting for 5.29 seconds
+2025-04-29 12:03:25,314 - INFO - Waiting for 5.96 seconds
+2025-04-29 12:03:25,314 - INFO - Waiting for 5.82 seconds
+2025-04-29 12:03:25,314 - INFO - Waiting for 9.88 seconds
+2025-04-29 12:03:25,315 - INFO - Waiting for 8.00 seconds
+2025-04-29 12:03:25,315 - INFO - Waiting for 6.60 seconds
+2025-04-29 12:03:25,315 - INFO - Waiting for 6.89 seconds
+2025-04-29 12:03:25,315 - INFO - Waiting for 5.06 seconds
+2025-04-29 12:03:25,315 - INFO - Waiting for 5.53 seconds
+2025-04-29 12:03:25,316 - INFO - Waiting for 6.63 seconds
+2025-04-29 12:03:25,316 - INFO - Waiting for 6.79 seconds
+2025-04-29 12:03:25,316 - INFO - Waiting for 9.82 seconds
+2025-04-29 12:03:25,316 - INFO - Waiting for 5.19 seconds
+2025-04-29 12:03:25,317 - INFO - Waiting for 7.92 seconds
+2025-04-29 12:03:25,317 - INFO - Waiting for 9.85 seconds
+2025-04-29 12:03:25,317 - INFO - Waiting for 8.09 seconds
+2025-04-29 12:03:25,317 - INFO - Waiting for 9.16 seconds
+2025-04-29 12:03:25,317 - INFO - Waiting for 7.67 seconds
+2025-04-29 12:03:25,318 - INFO - Waiting for 6.67 seconds
+2025-04-29 12:03:25,318 - INFO - Waiting for 7.73 seconds
+2025-04-29 12:03:25,318 - INFO - Waiting for 8.83 seconds
+2025-04-29 12:03:25,318 - INFO - Waiting for 5.02 seconds
+2025-04-29 12:03:25,318 - INFO - Waiting for 8.10 seconds
+2025-04-29 12:03:25,318 - INFO - Waiting for 7.84 seconds
+2025-04-29 12:03:25,319 - INFO - Waiting for 8.11 seconds
+2025-04-29 12:03:25,319 - INFO - Waiting for 5.19 seconds
+2025-04-29 12:03:25,319 - INFO - Waiting for 6.15 seconds
+2025-04-29 12:03:25,319 - INFO - Waiting for 9.57 seconds
+2025-04-29 12:03:25,319 - INFO - Waiting for 6.03 seconds
+2025-04-29 12:03:25,319 - INFO - Waiting for 6.35 seconds
+2025-04-29 12:03:25,319 - INFO - Waiting for 6.76 seconds
+2025-04-29 12:03:25,319 - INFO - Waiting for 8.49 seconds
+2025-04-29 12:03:25,319 - INFO - Waiting for 9.48 seconds
+2025-04-29 12:03:25,320 - INFO - Waiting for 8.82 seconds
+2025-04-29 12:03:25,320 - INFO - Waiting for 8.44 seconds
+2025-04-29 12:03:25,320 - INFO - Waiting for 5.16 seconds
+2025-04-29 12:03:25,320 - INFO - Waiting for 7.59 seconds
+2025-04-29 12:03:25,320 - INFO - Waiting for 9.61 seconds
+2025-04-29 12:03:25,320 - INFO - Waiting for 8.78 seconds
+2025-04-29 12:03:25,320 - INFO - Waiting for 6.18 seconds
+2025-04-29 12:03:25,320 - INFO - Waiting for 7.22 seconds
+2025-04-29 12:03:25,320 - INFO - Waiting for 9.52 seconds
+2025-04-29 12:03:25,320 - INFO - Waiting for 9.69 seconds
+2025-04-29 12:03:25,320 - INFO - Waiting for 5.19 seconds
+2025-04-29 12:03:25,321 - INFO - Waiting for 5.31 seconds
+2025-04-29 12:03:25,321 - INFO - Waiting for 7.33 seconds
+2025-04-29 12:03:25,321 - INFO - Waiting for 6.43 seconds
+2025-04-29 12:03:25,321 - INFO - Waiting for 9.69 seconds
+2025-04-29 12:03:25,321 - INFO - Waiting for 7.33 seconds
+2025-04-29 12:03:25,321 - INFO - Waiting for 8.37 seconds
+2025-04-29 12:03:25,321 - INFO - Waiting for 9.48 seconds
+2025-04-29 12:03:25,321 - INFO - Waiting for 9.16 seconds
+2025-04-29 12:03:25,321 - INFO - Waiting for 8.77 seconds
+2025-04-29 12:03:25,321 - INFO - Waiting for 7.98 seconds
+2025-04-29 12:03:25,321 - INFO - Waiting for 9.49 seconds
+2025-04-29 12:03:25,322 - INFO - Waiting for 7.00 seconds
+2025-04-29 12:03:25,322 - INFO - Waiting for 5.58 seconds
+2025-04-29 12:03:25,322 - INFO - Waiting for 5.12 seconds
+2025-04-29 12:03:25,322 - INFO - Waiting for 5.87 seconds
+2025-04-29 12:03:25,322 - INFO - Waiting for 9.80 seconds
+2025-04-29 12:03:25,322 - INFO - Waiting for 5.06 seconds
+2025-04-29 12:03:25,322 - INFO - Waiting for 6.88 seconds
+2025-04-29 12:03:25,322 - INFO - Waiting for 6.39 seconds
+2025-04-29 12:03:25,323 - INFO - Waiting for 6.73 seconds
+2025-04-29 12:03:25,323 - INFO - Waiting for 7.00 seconds
+2025-04-29 12:03:25,323 - INFO - Waiting for 6.20 seconds
+2025-04-29 12:03:25,323 - INFO - Waiting for 5.26 seconds
+2025-04-29 12:03:25,323 - INFO - Waiting for 5.21 seconds
+2025-04-29 12:03:25,323 - INFO - Waiting for 8.53 seconds
+2025-04-29 12:03:25,323 - INFO - Waiting for 8.30 seconds
+2025-04-29 12:03:25,323 - INFO - Waiting for 5.02 seconds
+2025-04-29 12:03:25,323 - INFO - Waiting for 5.46 seconds
+2025-04-29 12:03:25,323 - INFO - Waiting for 9.93 seconds
+2025-04-29 12:03:25,324 - INFO - Waiting for 6.82 seconds
+2025-04-29 12:03:25,324 - INFO - Waiting for 8.20 seconds
+2025-04-29 12:03:25,324 - INFO - Waiting for 9.42 seconds
+2025-04-29 12:03:25,324 - INFO - Waiting for 5.63 seconds
+2025-04-29 12:03:25,324 - INFO - Waiting for 7.42 seconds
+2025-04-29 12:03:25,324 - INFO - Waiting for 5.90 seconds
+2025-04-29 12:03:25,324 - INFO - Waiting for 7.52 seconds
+2025-04-29 12:03:25,324 - INFO - Waiting for 9.38 seconds
+2025-04-29 12:03:25,324 - INFO - Waiting for 9.53 seconds
+2025-04-29 12:03:25,324 - INFO - Waiting for 8.76 seconds
+2025-04-29 12:03:25,324 - INFO - Waiting for 7.57 seconds
+2025-04-29 12:03:25,325 - INFO - Waiting for 6.67 seconds
+2025-04-29 12:03:25,325 - INFO - Waiting for 7.66 seconds
+2025-04-29 12:03:25,325 - INFO - Waiting for 5.02 seconds
+2025-04-29 12:03:25,325 - INFO - Waiting for 9.03 seconds
+2025-04-29 12:03:25,325 - INFO - Waiting for 9.53 seconds
+2025-04-29 12:03:25,325 - INFO - Waiting for 8.03 seconds
+2025-04-29 12:03:25,325 - INFO - Waiting for 6.03 seconds
+2025-04-29 12:03:25,325 - INFO - Waiting for 8.48 seconds
+2025-04-29 12:03:25,325 - INFO - Waiting for 6.46 seconds
+2025-04-29 12:03:25,325 - INFO - Waiting for 5.02 seconds
+2025-04-29 12:03:25,325 - INFO - Waiting for 8.36 seconds
+2025-04-29 12:03:25,325 - INFO - Waiting for 7.99 seconds
+2025-04-29 12:03:25,326 - INFO - Waiting for 6.35 seconds
+2025-04-29 12:03:25,326 - INFO - Waiting for 8.29 seconds
+2025-04-29 12:03:25,326 - INFO - Waiting for 5.11 seconds
+2025-04-29 12:03:25,326 - INFO - Waiting for 6.68 seconds
+2025-04-29 12:03:25,326 - INFO - Waiting for 9.18 seconds
+2025-04-29 12:03:25,326 - INFO - Waiting for 5.24 seconds
+2025-04-29 12:03:25,326 - INFO - Waiting for 9.96 seconds
+2025-04-29 12:03:25,326 - INFO - Waiting for 7.04 seconds
+2025-04-29 12:03:25,326 - INFO - Waiting for 6.17 seconds
+2025-04-29 12:03:25,326 - INFO - Waiting for 9.82 seconds
+2025-04-29 12:03:25,326 - INFO - Waiting for 6.06 seconds
+2025-04-29 12:03:25,326 - INFO - Waiting for 5.91 seconds
+2025-04-29 12:03:25,327 - INFO - Waiting for 6.97 seconds
+2025-04-29 12:03:25,327 - INFO - Waiting for 7.18 seconds
+2025-04-29 12:03:25,327 - INFO - Waiting for 5.64 seconds
+2025-04-29 12:03:25,327 - INFO - Waiting for 5.81 seconds
+2025-04-29 12:03:25,327 - INFO - Waiting for 8.21 seconds
+2025-04-29 12:03:25,327 - INFO - Waiting for 7.85 seconds
+2025-04-29 12:03:25,327 - INFO - Waiting for 9.74 seconds
+2025-04-29 12:03:25,327 - INFO - Waiting for 7.39 seconds
+2025-04-29 12:03:25,327 - INFO - Waiting for 7.30 seconds
+2025-04-29 12:03:25,328 - INFO - Waiting for 7.96 seconds
+2025-04-29 12:03:25,328 - INFO - Waiting for 5.67 seconds
+2025-04-29 12:03:25,328 - INFO - Waiting for 9.96 seconds
+2025-04-29 12:03:25,328 - INFO - Waiting for 6.63 seconds
+2025-04-29 12:03:25,328 - INFO - Waiting for 9.37 seconds
+2025-04-29 12:03:25,328 - INFO - Waiting for 5.65 seconds
+2025-04-29 12:03:25,328 - INFO - Waiting for 8.00 seconds
+2025-04-29 12:03:25,328 - INFO - Waiting for 6.52 seconds
+2025-04-29 12:03:25,328 - INFO - Waiting for 6.98 seconds
+2025-04-29 12:03:25,328 - INFO - Waiting for 7.03 seconds
+2025-04-29 12:03:25,328 - INFO - Waiting for 5.98 seconds
+2025-04-29 12:03:25,329 - INFO - Waiting for 7.03 seconds
+2025-04-29 12:03:25,329 - INFO - Waiting for 6.20 seconds
+2025-04-29 12:03:25,329 - INFO - Waiting for 7.98 seconds
+2025-04-29 12:03:25,329 - INFO - Waiting for 7.42 seconds
+2025-04-29 12:03:25,329 - INFO - Waiting for 7.83 seconds
+2025-04-29 12:03:25,329 - INFO - Waiting for 8.96 seconds
+2025-04-29 12:03:25,329 - INFO - Waiting for 8.27 seconds
+2025-04-29 12:03:25,329 - INFO - Waiting for 9.83 seconds
+2025-04-29 12:03:25,330 - INFO - Waiting for 5.59 seconds
+2025-04-29 12:03:25,330 - INFO - Waiting for 8.52 seconds
+2025-04-29 12:03:25,330 - INFO - Waiting for 5.85 seconds
+2025-04-29 12:03:25,330 - INFO - Waiting for 8.82 seconds
+2025-04-29 12:03:25,330 - INFO - Waiting for 7.22 seconds
+2025-04-29 12:03:25,330 - INFO - Waiting for 8.74 seconds
+2025-04-29 12:03:25,330 - INFO - Waiting for 5.73 seconds
+2025-04-29 12:03:25,330 - INFO - Waiting for 7.34 seconds
+2025-04-29 12:03:25,330 - INFO - Waiting for 5.81 seconds
+2025-04-29 12:03:25,330 - INFO - Waiting for 9.88 seconds
+2025-04-29 12:03:25,331 - INFO - Waiting for 9.01 seconds
+2025-04-29 12:03:25,331 - INFO - Waiting for 8.71 seconds
+2025-04-29 12:03:25,331 - INFO - Waiting for 8.69 seconds
+2025-04-29 12:03:25,331 - INFO - Waiting for 6.05 seconds
+2025-04-29 12:03:25,331 - INFO - Waiting for 9.07 seconds
+2025-04-29 12:03:25,331 - INFO - Waiting for 9.40 seconds
+2025-04-29 12:03:25,331 - INFO - Waiting for 8.09 seconds
+2025-04-29 12:03:25,331 - INFO - Waiting for 5.55 seconds
+2025-04-29 12:03:25,331 - INFO - Waiting for 8.58 seconds
+2025-04-29 12:03:25,331 - INFO - Waiting for 9.97 seconds
+2025-04-29 12:03:25,332 - INFO - Waiting for 9.02 seconds
+2025-04-29 12:03:25,332 - INFO - Waiting for 9.01 seconds
+2025-04-29 12:03:25,332 - INFO - Waiting for 6.90 seconds
+2025-04-29 12:03:25,332 - INFO - Waiting for 9.69 seconds
+2025-04-29 12:03:25,332 - INFO - Waiting for 8.73 seconds
+2025-04-29 12:03:25,332 - INFO - Waiting for 6.49 seconds
+2025-04-29 12:03:25,332 - INFO - Waiting for 9.19 seconds
+2025-04-29 12:03:25,332 - INFO - Waiting for 6.75 seconds
+2025-04-29 12:03:25,332 - INFO - Waiting for 9.69 seconds
+2025-04-29 12:03:25,332 - INFO - Waiting for 5.71 seconds
+2025-04-29 12:03:25,332 - INFO - Waiting for 7.65 seconds
+2025-04-29 12:03:25,332 - INFO - Waiting for 5.46 seconds
+2025-04-29 12:03:25,333 - INFO - Waiting for 9.27 seconds
+2025-04-29 12:03:25,333 - INFO - Waiting for 5.01 seconds
+2025-04-29 12:03:25,333 - INFO - Waiting for 5.12 seconds
+2025-04-29 12:03:25,333 - INFO - Waiting for 6.55 seconds
+2025-04-29 12:03:25,333 - INFO - Waiting for 5.68 seconds
+2025-04-29 12:03:25,333 - INFO - Waiting for 8.80 seconds
+2025-04-29 12:03:25,333 - INFO - Waiting for 7.44 seconds
+2025-04-29 12:03:25,333 - INFO - Waiting for 6.26 seconds
+2025-04-29 12:03:25,333 - INFO - Waiting for 7.58 seconds
+2025-04-29 12:03:25,333 - INFO - Waiting for 6.11 seconds
+2025-04-29 12:03:25,333 - INFO - Waiting for 9.92 seconds
+2025-04-29 12:03:25,333 - INFO - Waiting for 9.52 seconds
+2025-04-29 12:03:25,334 - INFO - Waiting for 6.69 seconds
+2025-04-29 12:03:25,334 - INFO - Waiting for 6.52 seconds
+2025-04-29 12:03:25,334 - INFO - Waiting for 6.68 seconds
+2025-04-29 12:03:25,334 - INFO - Waiting for 5.90 seconds
+2025-04-29 12:03:25,334 - INFO - Waiting for 8.74 seconds
+2025-04-29 12:03:25,334 - INFO - Waiting for 6.84 seconds
+2025-04-29 12:03:25,334 - INFO - Waiting for 9.48 seconds
+2025-04-29 12:03:25,334 - INFO - Waiting for 6.43 seconds
+2025-04-29 12:03:25,334 - INFO - Waiting for 6.56 seconds
+2025-04-29 12:03:25,334 - INFO - Waiting for 9.76 seconds
+2025-04-29 12:03:25,334 - INFO - Waiting for 9.73 seconds
+2025-04-29 12:03:25,334 - INFO - Waiting for 6.83 seconds
+2025-04-29 12:03:25,334 - INFO - Waiting for 7.70 seconds
+2025-04-29 12:03:25,335 - INFO - Waiting for 8.01 seconds
+2025-04-29 12:03:25,335 - INFO - Waiting for 9.01 seconds
+2025-04-29 12:03:25,335 - INFO - Waiting for 7.47 seconds
+2025-04-29 12:03:25,335 - INFO - Waiting for 6.03 seconds
+2025-04-29 12:03:25,335 - INFO - Waiting for 6.95 seconds
+2025-04-29 12:03:25,335 - INFO - Waiting for 8.13 seconds
+2025-04-29 12:03:25,335 - INFO - Waiting for 7.40 seconds
+2025-04-29 12:03:25,335 - INFO - Waiting for 6.75 seconds
+2025-04-29 12:03:25,335 - INFO - Waiting for 6.58 seconds
+2025-04-29 12:03:25,335 - INFO - Waiting for 5.34 seconds
+2025-04-29 12:03:25,335 - INFO - Waiting for 6.50 seconds
+2025-04-29 12:03:25,335 - INFO - Waiting for 6.66 seconds
+2025-04-29 12:03:25,336 - INFO - Waiting for 9.56 seconds
+2025-04-29 12:03:25,336 - INFO - Waiting for 7.33 seconds
+2025-04-29 12:03:25,336 - INFO - Waiting for 5.14 seconds
+2025-04-29 12:03:25,336 - INFO - Waiting for 7.64 seconds
+2025-04-29 12:03:25,336 - INFO - Waiting for 5.73 seconds
+2025-04-29 12:03:25,336 - INFO - Waiting for 8.60 seconds
+2025-04-29 12:03:25,336 - INFO - Waiting for 9.93 seconds
+2025-04-29 12:03:25,336 - INFO - Waiting for 8.77 seconds
+2025-04-29 12:03:25,336 - INFO - Waiting for 7.76 seconds
+2025-04-29 12:03:25,336 - INFO - Waiting for 8.87 seconds
+2025-04-29 12:03:25,336 - INFO - Waiting for 7.50 seconds
+2025-04-29 12:03:25,337 - INFO - Waiting for 6.41 seconds
+2025-04-29 12:03:25,337 - INFO - Waiting for 8.21 seconds
+2025-04-29 12:03:25,337 - INFO - Waiting for 7.56 seconds
+2025-04-29 12:03:25,337 - INFO - Waiting for 5.99 seconds
+2025-04-29 12:03:25,337 - INFO - Waiting for 6.04 seconds
+2025-04-29 12:03:25,337 - INFO - Waiting for 5.64 seconds
+2025-04-29 12:03:25,337 - INFO - Waiting for 6.59 seconds
+2025-04-29 12:03:25,337 - INFO - Waiting for 7.89 seconds
+2025-04-29 12:03:25,337 - INFO - Waiting for 6.88 seconds
+2025-04-29 12:03:25,337 - INFO - Waiting for 5.96 seconds
+2025-04-29 12:03:25,337 - INFO - Waiting for 9.78 seconds
+2025-04-29 12:03:25,338 - INFO - Waiting for 9.52 seconds
+2025-04-29 12:03:25,338 - INFO - Waiting for 7.09 seconds
+2025-04-29 12:03:25,338 - INFO - Waiting for 9.22 seconds
+2025-04-29 12:03:25,338 - INFO - Waiting for 6.02 seconds
+2025-04-29 12:03:25,338 - INFO - Waiting for 9.29 seconds
+2025-04-29 12:03:25,338 - INFO - Waiting for 6.62 seconds
+2025-04-29 12:03:25,338 - INFO - Waiting for 9.98 seconds
+2025-04-29 12:03:25,338 - INFO - Waiting for 8.99 seconds
+2025-04-29 12:03:25,338 - INFO - Waiting for 8.26 seconds
+2025-04-29 12:03:25,338 - INFO - Waiting for 7.60 seconds
+2025-04-29 12:03:25,338 - INFO - Waiting for 9.46 seconds
+2025-04-29 12:03:25,338 - INFO - Waiting for 7.16 seconds
+2025-04-29 12:03:25,339 - INFO - Waiting for 8.30 seconds
+2025-04-29 12:03:25,339 - INFO - Waiting for 9.18 seconds
+2025-04-29 12:03:25,339 - INFO - Waiting for 5.39 seconds
+2025-04-29 12:03:25,339 - INFO - Waiting for 9.16 seconds
+2025-04-29 12:03:25,339 - INFO - Waiting for 9.95 seconds
+2025-04-29 12:03:25,339 - INFO - Waiting for 5.68 seconds
+2025-04-29 12:03:25,339 - INFO - Waiting for 5.97 seconds
+2025-04-29 12:03:25,339 - INFO - Waiting for 8.25 seconds
+2025-04-29 12:03:25,339 - INFO - Waiting for 6.20 seconds
+2025-04-29 12:03:25,339 - INFO - Waiting for 6.99 seconds
+2025-04-29 12:03:25,339 - INFO - Waiting for 9.12 seconds
+2025-04-29 12:03:25,339 - INFO - Waiting for 7.45 seconds
+2025-04-29 12:03:25,340 - INFO - Waiting for 6.61 seconds
+2025-04-29 12:03:25,340 - INFO - Waiting for 9.42 seconds
+2025-04-29 12:03:25,340 - INFO - Waiting for 5.02 seconds
+2025-04-29 12:03:25,340 - INFO - Waiting for 7.46 seconds
+2025-04-29 12:03:25,340 - INFO - Waiting for 5.15 seconds
+2025-04-29 12:03:25,340 - INFO - Waiting for 6.62 seconds
+2025-04-29 12:03:25,340 - INFO - Waiting for 7.86 seconds
+2025-04-29 12:03:25,340 - INFO - Waiting for 5.15 seconds
+2025-04-29 12:03:25,340 - INFO - Waiting for 7.10 seconds
+2025-04-29 12:03:25,340 - INFO - Waiting for 8.09 seconds
+2025-04-29 12:03:25,340 - INFO - Waiting for 6.35 seconds
+2025-04-29 12:03:25,340 - INFO - Waiting for 5.33 seconds
+2025-04-29 12:03:25,341 - INFO - Waiting for 8.73 seconds
+2025-04-29 12:03:25,341 - INFO - Waiting for 6.34 seconds
+2025-04-29 12:03:25,341 - INFO - Waiting for 5.01 seconds
+2025-04-29 12:03:25,341 - INFO - Waiting for 8.83 seconds
+2025-04-29 12:03:25,341 - INFO - Waiting for 6.29 seconds
+2025-04-29 12:03:25,341 - INFO - Waiting for 7.64 seconds
+2025-04-29 12:03:25,341 - INFO - Waiting for 9.01 seconds
+2025-04-29 12:03:25,341 - INFO - Waiting for 8.69 seconds
+2025-04-29 12:03:25,341 - INFO - Waiting for 7.06 seconds
+2025-04-29 12:03:25,341 - INFO - Waiting for 8.17 seconds
+2025-04-29 12:03:25,341 - INFO - Waiting for 5.93 seconds
+2025-04-29 12:03:25,341 - INFO - Waiting for 7.06 seconds
+2025-04-29 12:03:25,342 - INFO - Waiting for 6.39 seconds
+2025-04-29 12:03:25,342 - INFO - Waiting for 7.06 seconds
+2025-04-29 12:03:25,342 - INFO - Waiting for 9.19 seconds
+2025-04-29 12:03:25,342 - INFO - Waiting for 9.81 seconds
+2025-04-29 12:03:25,342 - INFO - Waiting for 9.06 seconds
+2025-04-29 12:03:25,342 - INFO - Waiting for 8.83 seconds
+2025-04-29 12:03:25,342 - INFO - Waiting for 5.75 seconds
+2025-04-29 12:03:25,342 - INFO - Waiting for 9.60 seconds
+2025-04-29 12:03:25,342 - INFO - Waiting for 8.58 seconds
+2025-04-29 12:03:25,342 - INFO - Waiting for 9.48 seconds
+2025-04-29 12:03:25,343 - INFO - Waiting for 7.26 seconds
+2025-04-29 12:03:25,343 - INFO - Waiting for 5.11 seconds
+2025-04-29 12:03:25,343 - INFO - Waiting for 8.16 seconds
+2025-04-29 12:03:25,343 - INFO - Waiting for 9.78 seconds
+2025-04-29 12:03:25,343 - INFO - Waiting for 6.41 seconds
+2025-04-29 12:03:25,343 - INFO - Waiting for 5.44 seconds
+2025-04-29 12:03:25,343 - INFO - Waiting for 7.93 seconds
+2025-04-29 12:03:25,343 - INFO - Waiting for 6.06 seconds
+2025-04-29 12:03:25,343 - INFO - Waiting for 7.81 seconds
+2025-04-29 12:03:25,343 - INFO - Waiting for 8.71 seconds
+2025-04-29 12:03:25,343 - INFO - Waiting for 6.80 seconds
+2025-04-29 12:03:25,343 - INFO - Waiting for 6.43 seconds
+2025-04-29 12:03:25,344 - INFO - Waiting for 5.31 seconds
+2025-04-29 12:03:25,344 - INFO - Waiting for 7.33 seconds
+2025-04-29 12:03:25,344 - INFO - Waiting for 6.61 seconds
+2025-04-29 12:03:25,344 - INFO - Waiting for 8.90 seconds
+2025-04-29 12:03:25,344 - INFO - Waiting for 8.87 seconds
+2025-04-29 12:03:25,344 - INFO - Waiting for 7.66 seconds
+2025-04-29 12:03:25,344 - INFO - Waiting for 7.11 seconds
+2025-04-29 12:03:25,344 - INFO - Waiting for 5.59 seconds
+2025-04-29 12:03:25,344 - INFO - Waiting for 9.92 seconds
+2025-04-29 12:03:25,344 - INFO - Waiting for 5.57 seconds
+2025-04-29 12:03:25,344 - INFO - Waiting for 8.39 seconds
+2025-04-29 12:03:25,344 - INFO - Waiting for 7.22 seconds
+2025-04-29 12:03:25,344 - INFO - Waiting for 9.92 seconds
+2025-04-29 12:03:25,345 - INFO - Waiting for 8.88 seconds
+2025-04-29 12:03:25,345 - INFO - Waiting for 8.73 seconds
+2025-04-29 12:03:25,345 - INFO - Waiting for 8.54 seconds
+2025-04-29 12:03:25,345 - INFO - Waiting for 8.20 seconds
+2025-04-29 12:03:25,345 - INFO - Waiting for 8.90 seconds
+2025-04-29 12:03:25,345 - INFO - Waiting for 9.43 seconds
+2025-04-29 12:03:25,345 - INFO - Waiting for 7.80 seconds
+2025-04-29 12:03:25,345 - INFO - Waiting for 6.36 seconds
+2025-04-29 12:03:25,345 - INFO - Waiting for 8.19 seconds
+2025-04-29 12:03:25,345 - INFO - Waiting for 8.01 seconds
+2025-04-29 12:03:25,345 - INFO - Waiting for 6.83 seconds
+2025-04-29 12:03:25,345 - INFO - Waiting for 7.95 seconds
+2025-04-29 12:03:25,345 - INFO - Waiting for 6.33 seconds
+2025-04-29 12:03:25,346 - INFO - Waiting for 7.46 seconds
+2025-04-29 12:03:25,346 - INFO - Waiting for 6.15 seconds
+2025-04-29 12:03:25,346 - INFO - Waiting for 7.83 seconds
+2025-04-29 12:03:25,346 - INFO - Waiting for 7.64 seconds
+2025-04-29 12:03:25,346 - INFO - Waiting for 8.86 seconds
+2025-04-29 12:03:25,346 - INFO - Waiting for 7.39 seconds
+2025-04-29 12:03:25,346 - INFO - Waiting for 8.74 seconds
+2025-04-29 12:03:25,346 - INFO - Waiting for 9.37 seconds
+2025-04-29 12:03:25,346 - INFO - Waiting for 7.72 seconds
+2025-04-29 12:03:25,347 - INFO - Waiting for 8.98 seconds
+2025-04-29 12:03:25,347 - INFO - Waiting for 9.48 seconds
+2025-04-29 12:03:25,347 - INFO - Waiting for 5.96 seconds
+2025-04-29 12:03:25,347 - INFO - Waiting for 8.32 seconds
+2025-04-29 12:03:25,347 - INFO - Waiting for 6.19 seconds
+2025-04-29 12:03:25,347 - INFO - Waiting for 5.81 seconds
+2025-04-29 12:03:25,347 - INFO - Waiting for 6.74 seconds
+2025-04-29 12:03:25,347 - INFO - Waiting for 9.27 seconds
+2025-04-29 12:03:25,347 - INFO - Waiting for 9.80 seconds
+2025-04-29 12:03:25,347 - INFO - Waiting for 7.40 seconds
+2025-04-29 12:03:25,347 - INFO - Waiting for 7.52 seconds
+2025-04-29 12:03:25,348 - INFO - Waiting for 7.51 seconds
+2025-04-29 12:03:25,348 - INFO - Waiting for 7.92 seconds
+2025-04-29 12:03:25,348 - INFO - Waiting for 5.26 seconds
+2025-04-29 12:03:25,348 - INFO - Waiting for 6.97 seconds
+2025-04-29 12:03:25,348 - INFO - Waiting for 7.41 seconds
+2025-04-29 12:03:25,348 - INFO - Waiting for 9.13 seconds
+2025-04-29 12:03:25,348 - INFO - Waiting for 7.89 seconds
+2025-04-29 12:03:25,348 - INFO - Waiting for 9.40 seconds
+2025-04-29 12:03:25,348 - INFO - Waiting for 6.76 seconds
+2025-04-29 12:03:25,348 - INFO - Waiting for 8.12 seconds
+2025-04-29 12:03:25,348 - INFO - Waiting for 8.44 seconds
+2025-04-29 12:03:25,348 - INFO - Waiting for 7.97 seconds
+2025-04-29 12:03:25,349 - INFO - Waiting for 9.68 seconds
+2025-04-29 12:03:25,349 - INFO - Waiting for 5.32 seconds
+2025-04-29 12:03:25,349 - INFO - Waiting for 8.45 seconds
+2025-04-29 12:03:25,349 - INFO - Waiting for 5.95 seconds
+2025-04-29 12:03:25,349 - INFO - Waiting for 7.01 seconds
+2025-04-29 12:03:25,349 - INFO - Waiting for 9.93 seconds
+2025-04-29 12:03:25,349 - INFO - Waiting for 9.97 seconds
+2025-04-29 12:03:25,349 - INFO - Waiting for 8.06 seconds
+2025-04-29 12:03:25,349 - INFO - Waiting for 5.51 seconds
+2025-04-29 12:03:25,349 - INFO - Waiting for 5.09 seconds
+2025-04-29 12:03:25,349 - INFO - Waiting for 8.61 seconds
+2025-04-29 12:03:25,349 - INFO - Waiting for 7.85 seconds
+2025-04-29 12:03:25,349 - INFO - Waiting for 8.50 seconds
+2025-04-29 12:03:25,350 - INFO - Waiting for 7.74 seconds
+2025-04-29 12:03:25,350 - INFO - Waiting for 6.84 seconds
+2025-04-29 12:03:25,350 - INFO - Waiting for 6.37 seconds
+2025-04-29 12:03:25,350 - INFO - Waiting for 9.02 seconds
+2025-04-29 12:03:25,350 - INFO - Waiting for 6.41 seconds
+2025-04-29 12:03:25,350 - INFO - Waiting for 5.94 seconds
+2025-04-29 12:03:25,350 - INFO - Waiting for 5.03 seconds
+2025-04-29 12:03:25,350 - INFO - Waiting for 9.88 seconds
+2025-04-29 12:03:25,350 - INFO - Waiting for 8.67 seconds
+2025-04-29 12:03:25,350 - INFO - Waiting for 5.84 seconds
+2025-04-29 12:03:25,350 - INFO - Waiting for 7.09 seconds
+2025-04-29 12:03:25,350 - INFO - Waiting for 9.32 seconds
+2025-04-29 12:03:25,351 - INFO - Waiting for 7.68 seconds
+2025-04-29 12:03:25,351 - INFO - Waiting for 9.23 seconds
+2025-04-29 12:03:25,351 - INFO - Waiting for 9.41 seconds
+2025-04-29 12:03:25,351 - INFO - Waiting for 6.23 seconds
+2025-04-29 12:03:25,351 - INFO - Waiting for 8.99 seconds
+2025-04-29 12:03:25,351 - INFO - Waiting for 7.41 seconds
+2025-04-29 12:03:25,351 - INFO - Waiting for 6.12 seconds
+2025-04-29 12:03:25,351 - INFO - Waiting for 5.52 seconds
+2025-04-29 12:03:25,351 - INFO - Waiting for 9.28 seconds
+2025-04-29 12:03:25,351 - INFO - Waiting for 8.35 seconds
+2025-04-29 12:03:25,351 - INFO - Waiting for 8.86 seconds
+2025-04-29 12:03:25,351 - INFO - Waiting for 6.70 seconds
+2025-04-29 12:03:25,352 - INFO - Waiting for 5.14 seconds
+2025-04-29 12:03:25,352 - INFO - Waiting for 7.32 seconds
+2025-04-29 12:03:25,352 - INFO - Waiting for 7.72 seconds
+2025-04-29 12:03:25,352 - INFO - Waiting for 5.10 seconds
+2025-04-29 12:03:25,352 - INFO - Waiting for 6.20 seconds
+2025-04-29 12:03:25,352 - INFO - Waiting for 6.35 seconds
+2025-04-29 12:03:25,352 - INFO - Waiting for 7.08 seconds
+2025-04-29 12:03:25,352 - INFO - Waiting for 6.61 seconds
+2025-04-29 12:03:25,352 - INFO - Waiting for 5.99 seconds
+2025-04-29 12:03:25,352 - INFO - Waiting for 6.22 seconds
+2025-04-29 12:03:25,352 - INFO - Waiting for 8.97 seconds
+2025-04-29 12:03:25,353 - INFO - Waiting for 6.31 seconds
+2025-04-29 12:03:25,353 - INFO - Waiting for 7.86 seconds
+2025-04-29 12:03:25,353 - INFO - Waiting for 9.11 seconds
+2025-04-29 12:03:25,353 - INFO - Waiting for 6.01 seconds
+2025-04-29 12:03:25,353 - INFO - Waiting for 9.13 seconds
+2025-04-29 12:03:25,353 - INFO - Waiting for 5.23 seconds
+2025-04-29 12:03:25,353 - INFO - Waiting for 10.00 seconds
+2025-04-29 12:03:25,353 - INFO - Waiting for 8.77 seconds
+2025-04-29 12:03:25,353 - INFO - Waiting for 5.60 seconds
+2025-04-29 12:03:25,353 - INFO - Waiting for 6.31 seconds
+2025-04-29 12:03:25,353 - INFO - Waiting for 7.41 seconds
+2025-04-29 12:03:25,353 - INFO - Waiting for 6.05 seconds
+2025-04-29 12:03:25,354 - INFO - Waiting for 5.55 seconds
+2025-04-29 12:03:25,354 - INFO - Waiting for 7.70 seconds
+2025-04-29 12:03:25,354 - INFO - Waiting for 8.11 seconds
+2025-04-29 12:03:25,354 - INFO - Waiting for 6.26 seconds
+2025-04-29 12:03:25,354 - INFO - Waiting for 9.11 seconds
+2025-04-29 12:03:25,354 - INFO - Waiting for 5.76 seconds
+2025-04-29 12:03:25,354 - INFO - Waiting for 6.40 seconds
+2025-04-29 12:03:25,354 - INFO - Waiting for 6.28 seconds
+2025-04-29 12:03:25,354 - INFO - Waiting for 6.66 seconds
+2025-04-29 12:03:25,354 - INFO - Waiting for 6.53 seconds
+2025-04-29 12:03:25,354 - INFO - Waiting for 9.86 seconds
+2025-04-29 12:03:25,354 - INFO - Waiting for 9.05 seconds
+2025-04-29 12:03:25,355 - INFO - Waiting for 9.28 seconds
+2025-04-29 12:03:25,355 - INFO - Waiting for 5.78 seconds
+2025-04-29 12:03:25,355 - INFO - Waiting for 8.06 seconds
+2025-04-29 12:03:25,355 - INFO - Waiting for 5.87 seconds
+2025-04-29 12:03:25,355 - INFO - Waiting for 8.64 seconds
+2025-04-29 12:03:25,355 - INFO - Waiting for 5.77 seconds
+2025-04-29 12:03:25,355 - INFO - Waiting for 7.94 seconds
+2025-04-29 12:03:25,355 - INFO - Waiting for 9.21 seconds
+2025-04-29 12:03:25,355 - INFO - Waiting for 9.11 seconds
+2025-04-29 12:03:25,355 - INFO - Waiting for 7.62 seconds
+2025-04-29 12:03:25,355 - INFO - Waiting for 7.73 seconds
+2025-04-29 12:03:25,355 - INFO - Waiting for 6.23 seconds
+2025-04-29 12:03:25,356 - INFO - Waiting for 8.37 seconds
+2025-04-29 12:03:25,356 - INFO - Waiting for 8.59 seconds
+2025-04-29 12:03:25,356 - INFO - Waiting for 5.11 seconds
+2025-04-29 12:03:25,356 - INFO - Waiting for 7.55 seconds
+2025-04-29 12:03:25,356 - INFO - Waiting for 5.61 seconds
+2025-04-29 12:03:25,356 - INFO - Waiting for 5.24 seconds
+2025-04-29 12:03:25,356 - INFO - Waiting for 5.38 seconds
+2025-04-29 12:03:25,356 - INFO - Waiting for 9.26 seconds
+2025-04-29 12:03:25,356 - INFO - Waiting for 7.48 seconds
+2025-04-29 12:03:25,356 - INFO - Waiting for 6.92 seconds
+2025-04-29 12:03:25,356 - INFO - Waiting for 8.74 seconds
+2025-04-29 12:03:25,356 - INFO - Waiting for 8.42 seconds
+2025-04-29 12:03:25,357 - INFO - Waiting for 8.69 seconds
+2025-04-29 12:03:25,357 - INFO - Waiting for 8.95 seconds
+2025-04-29 12:03:25,357 - INFO - Waiting for 5.17 seconds
+2025-04-29 12:03:25,357 - INFO - Waiting for 6.58 seconds
+2025-04-29 12:03:25,357 - INFO - Waiting for 5.53 seconds
+2025-04-29 12:03:25,357 - INFO - Waiting for 5.00 seconds
+2025-04-29 12:03:25,357 - INFO - Waiting for 7.06 seconds
+2025-04-29 12:03:25,357 - INFO - Waiting for 6.23 seconds
+2025-04-29 12:03:25,357 - INFO - Waiting for 9.13 seconds
+2025-04-29 12:03:25,357 - INFO - Waiting for 5.68 seconds
+2025-04-29 12:03:25,357 - INFO - Waiting for 8.72 seconds
+2025-04-29 12:03:25,358 - INFO - Waiting for 7.05 seconds
+2025-04-29 12:03:25,358 - INFO - Waiting for 5.58 seconds
+2025-04-29 12:03:25,358 - INFO - Waiting for 7.75 seconds
+2025-04-29 12:03:25,358 - INFO - Waiting for 9.61 seconds
+2025-04-29 12:03:25,358 - INFO - Waiting for 6.42 seconds
+2025-04-29 12:03:25,358 - INFO - Waiting for 7.28 seconds
+2025-04-29 12:03:25,358 - INFO - Waiting for 9.91 seconds
+2025-04-29 12:03:25,358 - INFO - Waiting for 8.22 seconds
+2025-04-29 12:03:25,358 - INFO - Waiting for 5.42 seconds
+2025-04-29 12:03:25,358 - INFO - Waiting for 6.80 seconds
+2025-04-29 12:03:25,359 - INFO - Waiting for 6.14 seconds
+2025-04-29 12:03:25,359 - INFO - Waiting for 9.42 seconds
+2025-04-29 12:03:25,359 - INFO - Waiting for 9.43 seconds
+2025-04-29 12:03:25,359 - INFO - Waiting for 7.21 seconds
+2025-04-29 12:03:25,359 - INFO - Waiting for 9.24 seconds
+2025-04-29 12:03:25,359 - INFO - Waiting for 6.86 seconds
+2025-04-29 12:03:25,359 - INFO - Waiting for 7.59 seconds
+2025-04-29 12:03:25,359 - INFO - Waiting for 9.75 seconds
+2025-04-29 12:03:25,359 - INFO - Waiting for 6.10 seconds
+2025-04-29 12:03:25,359 - INFO - Waiting for 5.46 seconds
+2025-04-29 12:03:25,359 - INFO - Waiting for 8.60 seconds
+2025-04-29 12:03:25,359 - INFO - Waiting for 8.70 seconds
+2025-04-29 12:03:25,360 - INFO - Waiting for 9.25 seconds
+2025-04-29 12:03:25,360 - INFO - Waiting for 5.17 seconds
+2025-04-29 12:03:25,360 - INFO - Waiting for 8.75 seconds
+2025-04-29 12:03:25,360 - INFO - Waiting for 9.29 seconds
+2025-04-29 12:03:25,360 - INFO - Waiting for 6.73 seconds
+2025-04-29 12:03:25,360 - INFO - Waiting for 7.83 seconds
+2025-04-29 12:03:25,360 - INFO - Waiting for 5.35 seconds
+2025-04-29 12:03:25,360 - INFO - Waiting for 6.56 seconds
+2025-04-29 12:03:25,360 - INFO - Waiting for 6.13 seconds
+2025-04-29 12:03:25,360 - INFO - Waiting for 6.14 seconds
+2025-04-29 12:03:25,360 - INFO - Waiting for 5.25 seconds
+2025-04-29 12:03:25,360 - INFO - Waiting for 5.84 seconds
+2025-04-29 12:03:25,361 - INFO - Waiting for 7.98 seconds
+2025-04-29 12:03:25,361 - INFO - Waiting for 8.63 seconds
+2025-04-29 12:03:25,361 - INFO - Waiting for 8.35 seconds
+2025-04-29 12:03:25,361 - INFO - Waiting for 5.25 seconds
+2025-04-29 12:03:25,361 - INFO - Waiting for 5.55 seconds
+2025-04-29 12:03:25,361 - INFO - Waiting for 9.13 seconds
+2025-04-29 12:03:25,361 - INFO - Waiting for 8.89 seconds
+2025-04-29 12:03:25,361 - INFO - Waiting for 6.27 seconds
+2025-04-29 12:03:25,361 - INFO - Waiting for 8.04 seconds
+2025-04-29 12:03:25,361 - INFO - Waiting for 9.29 seconds
+2025-04-29 12:03:25,361 - INFO - Waiting for 9.21 seconds
+2025-04-29 12:03:30,339 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d11629340-Reviews-Sakura_Handmade_Shop-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,345 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g277814-d8291177-Reviews-Skocjan_Caves-Divaca_Slovenian_Littoral_Region.html
+2025-04-29 12:03:30,346 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26267864-Reviews-Ninh_Binh_Jeep_Tours_Ninh_Binh_Vespa_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,347 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25446602-Reviews-Ninh_Binh_Discovery-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,350 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187791-d17430698-Reviews-Cafe_de_Anatolia-Rome_Lazio.html
+2025-04-29 12:03:30,359 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12001773-Reviews-Ninh_Binh_Daily_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,359 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13086260-Reviews-Chookie_s_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,367 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d33003391-Reviews-Aclass_Tours_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,380 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g58491-d7158324-Reviews-Taidnapam_Park-Glenoma_Washington.html
+2025-04-29 12:03:30,384 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17511795-Reviews-Motorbike_Rental_Train_Station-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,384 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303944-d19458640-Reviews-Orchid_Premium_Cruises-Hai_Phong.html
+2025-04-29 12:03:30,439 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19413578-Reviews-Sen_s_house-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,440 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60827-d116390-Reviews-Brighton_Beach-Brooklyn_New_York.html
+2025-04-29 12:03:30,446 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25395904-Reviews-Sense_Spa_Tam_Coc-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,455 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27995911-Reviews-TripBestie_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,461 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13809448-Reviews-Tam_Coc_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,461 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27724730-Reviews-Red_Gecko_Travel_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,471 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25418681-Reviews-Vietnam_Cycling-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,483 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d18378871-Reviews-Le_Pont_Adventure-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,486 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26999973-Reviews-Tam_Coc_Greenland_Spa_Massage_Nail-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,497 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d16850417-Reviews-Limousine_Trang_An-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,497 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26220677-Reviews-Tam_coc_happy_homestay-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,499 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d11966389-Reviews-Hoalutamcoc_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,509 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g58476-d2080931-Reviews-Twilight_Tours_in_Forks-Forks_Clallam_County_Washington.html
+2025-04-29 12:03:30,513 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13530367-Reviews-Huong_Sen_Ninh_Binh_Massage-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,517 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25227081-Reviews-Ninh_Binh_Private_Car-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,536 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32610736-Reviews-Authentic_Travel_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,538 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25172955-Reviews-Vitality_Spa-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,538 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27116531-Reviews-Vietnam_Grouptour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,568 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13563276-Reviews-Ninh_Binh_Getaway-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,586 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13646473-Reviews-Tuy_t_Tinh_C_c-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,588 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17721367-Reviews-Tr_n_Th_Nhung-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,589 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25361069-Reviews-M_art_craft-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,601 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d23959338-Reviews-Vietnam_Tour_365-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,607 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12231699-Reviews-Unicorn_Mountain-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,611 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60623-d2482828-Reviews-Koloa_Rum_Company-Lihue_Kauai_Hawaii.html
+2025-04-29 12:03:30,613 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1064230-d7225749-Reviews-Turibus_Alicante-Alicante_Costa_Blanca_Province_of_Alicante_Valencian_Community.html
+2025-04-29 12:03:30,613 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27123597-Reviews-Local_Tours_Sapa_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,634 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d8290208-Reviews-Rong_Market_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,637 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25227081-Reviews-Ninh_Binh_Private_Car-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,647 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12921239-Reviews-Ma_Tien_Cave-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,660 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d33059366-Reviews-Easyrider_And_Private_Car_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,670 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28114891-Reviews-Phong_Nha_Locals_Service-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,670 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25023162-Reviews-Ninh_Binh_Private_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,680 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d5828577-Reviews-Star_Travel_Thien_Ha_Cave_Tour-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,704 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d8779716-Reviews-Cuc_Phuong_National_Park-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,717 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g49215-d3595451-Reviews-Cullasaja_Falls-Highlands_North_Carolina.html
+2025-04-29 12:03:30,718 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13550190-Reviews-Khu_Du_Lich_Sinh_Thai_Trang_An_Co-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,730 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19467605-Reviews-Ninh_Binh_Local_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,746 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25130419-Reviews-Ninh_Binh_ValleyHomestay-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,782 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g13808853-d12212513-Reviews-Taipei_Sightseeing_Bus_Hop_On_Hop_Off-Zhongzheng_District_Taipei.html
+2025-04-29 12:03:30,782 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28648045-Reviews-Motorbike_Ninh_Binh_Cuong_Hue-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,785 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26366535-Reviews-Ninh_Binh_tour_off_the_beaten_track-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,800 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d14067698-Reviews-Good_Morning_Ninh_Binh_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,821 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32907916-Reviews-VNOrange_Tour_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,856 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g189449-d630372-Reviews-Kritinia_Castle-Rhodes_Dodecanese_South_Aegean.html
+2025-04-29 12:03:30,856 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g35805-d10244750-Reviews-Huntington_Bank_Pavilion_at_Northerly_Island-Chicago_Illinois.html
+2025-04-29 12:03:30,879 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27937126-Reviews-Authentic_Travel_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,886 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g32655-d547175-Reviews-The_Grove-Los_Angeles_California.html
+2025-04-29 12:03:30,891 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32997384-Reviews-Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,903 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d16675765-Reviews-Win_Win_Travel-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,910 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60842-d1674832-Reviews-Gatlinburg_Scenic_Overlook-Gatlinburg_Tennessee.html
+2025-04-29 12:03:30,911 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187323-d1924724-Reviews-Berliner_Unterwelten-Berlin.html
+2025-04-29 12:03:30,917 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25372253-Reviews-Ninh_Binh_FootPrint_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,922 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g14129735-d12154764-Reviews-Tantra_Tokyo_Burlesque_Show_Club-Roppongi_Minato_Tokyo_Tokyo_Prefecture_Kanto.html
+2025-04-29 12:03:30,944 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g32737-d146192-Reviews-17_Mile_Drive-Monterey_Monterey_County_California.html
+2025-04-29 12:03:30,944 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g37339-d6981261-Reviews-Gasthof_Amish_Village-Montgomery_Indiana.html
+2025-04-29 12:03:30,959 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17483942-Reviews-Authentic_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,959 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g50664-d2709233-Reviews-Holmes_County_Trail-Millersburg_Ohio.html
+2025-04-29 12:03:30,971 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d11556188-Reviews-Trang_An_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:30,976 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27659076-Reviews-Ninh_Binh_Excurson_Luxury_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,984 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12962515-Reviews-Tommy_s_Travel_Service_in_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:30,984 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g50916-d133975-Reviews-Stricker_s_Grove-Ross_Butler_County_Ohio.html
+2025-04-29 12:03:31,001 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27734524-Reviews-House_Spa_Tam_Coc-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,018 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d33043410-Reviews-Tam_Coc_Julimi_Spa_And_Nail_Salon-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,025 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25194035-Reviews-Mike_s_Travel_Agency-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,046 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g642170-d12659491-Reviews-Piperi_Beach-Naoussa_Paros_Cyclades_South_Aegean.html
+2025-04-29 12:03:31,046 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32994788-Reviews-Ninh_Binh_Private_Car_Service-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,069 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d30727390-Reviews-Xiao_Long_Ink-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,075 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17395538-Reviews-Khanh_An_Limousine-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,087 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d8290208-Reviews-Rong_Market_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,102 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d24950419-Reviews-Tours_and_Tourguide_in_Ninhbinh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,112 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g188049-d7605461-Reviews-Free_Walking_Tours_Basel-Basel.html
+2025-04-29 12:03:31,130 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27957043-Reviews-Vinadu_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,136 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1466925-d21264976-Reviews-Three_Pines_Tours-Knowlton_Lac_Brome_Quebec.html
+2025-04-29 12:03:31,136 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d30527232-Reviews-Tattoo_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,136 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g31323-d207623-Reviews-Heritage_Park_Zoo-Prescott_Arizona.html
+2025-04-29 12:03:31,138 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d18546599-Reviews-Ninh_Binh_Tourist_Center-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,164 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d8099378-Reviews-Hanoi_Exposed_Tours_Day_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,188 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26319593-Reviews-Fasinating_Ninh_Binh_tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,194 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g612473-d1997667-Reviews-Chukka_Eco_Adventure_Outpost_at_Good_Hope-Falmouth_Trelawny_Parish_Jamaica.html
+2025-04-29 12:03:31,196 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25395904-Reviews-Sense_Spa_Tam_Coc-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,201 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295414-d9594332-Reviews-Sindbad_Amusement_Park-Karachi_Sindh_Province.html
+2025-04-29 12:03:31,228 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27706760-Reviews-Du_Thuy_n_Lamia_Tour_Su_i_Nu_c_Nong_Tren_Dong_Song_Di_S_n-Ninh_Binh_Ninh_Binh_Pr.html
+2025-04-29 12:03:31,229 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d11094481-Reviews-Hoa_Lu_Temple-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,234 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g186338-d187574-Reviews-Heaven-London_England.html
+2025-04-29 12:03:31,234 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d4555568-Reviews-Cuc_Phuong_National_Park_Tour_Private_Day_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,240 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27786320-Reviews-Viet_Nam_Easy_Go_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,253 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d5858097-Reviews-Hoa_Lu_temples_of_the_Dinh_Le_Dynasties-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,272 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25931799-Reviews-Mr_khanh_travel_agency-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,276 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293960-d8027369-Reviews-Safa_Gold_Mall-Islamabad_Islamabad_Capital_Territory.html
+2025-04-29 12:03:31,291 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g274887-d13281763-Reviews-Budapest_River_Cruise-Budapest_Central_Hungary.html
+2025-04-29 12:03:31,299 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25129289-Reviews-Discover_travel_ninhbinh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,306 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g285724-d10751586-Reviews-Lauterbrunnen_Village-Lauterbrunnen_Jungfrau_Region_Bernese_Oberland_Canton_of_B.html
+2025-04-29 12:03:31,311 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12139996-Reviews-Ninh_Binh_Eco_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,311 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26827959-Reviews-Ninh_Binh_Private_And_Luxury_Small_Group_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,311 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28050720-Reviews-Tattoo_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,336 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17526300-Reviews-Chuong_Nguyen-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,348 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19296706-Reviews-TADY_NINH_BINH-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,354 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28826179-Reviews-Phoenix_Studio_Tattoo-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,354 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g274707-d10898476-Reviews-Free_Walking_Tour_Prague-Prague_Bohemia.html
+2025-04-29 12:03:31,365 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d31458762-Reviews-Classic_Tourist_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,367 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g274793-d3613186-Reviews-Kasprowy_Wierch_Cable_Car-Zakopane_Lesser_Poland_Province_Southern_Poland.html
+2025-04-29 12:03:31,374 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d20029325-Reviews-Authentic_NINH_BINH-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,386 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17526300-Reviews-Chuong_Nguyen-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,387 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32455624-Reviews-Tam_Coc_Museum-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,387 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1570011-d1627677-Reviews-Erawan_Museum-Samut_Prakan_Samut_Prakan_Province.html
+2025-04-29 12:03:31,393 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25243374-Reviews-Massage_Spa_Tamcoc_Pure_Vietnam-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,407 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28295279-Reviews-Ngoa_Long-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,428 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d21071032-Reviews-Di_san_Trang_An-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,428 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1925969-d4932230-Reviews-Seitan_Limania_Beach-Akrotiri_Chania_Prefecture_Crete.html
+2025-04-29 12:03:31,428 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d21071032-Reviews-Di_san_Trang_An-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,428 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25049439-Reviews-Ha_Trang_Booking_Office-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,430 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d11894049-Reviews-Nhat_Tru_Pagoda-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,443 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d5321519-Reviews-Mua_Caves-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,444 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d16820957-Reviews-Ninh_Binh_Motorcycle_Rental-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,468 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d31913843-Reviews-Tam_Coc_Holiday_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,477 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28002658-Reviews-Ninh_Binh_Daily_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,477 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d639613-Reviews-Kenh_Ga-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,477 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28101759-Reviews-Ninh_Binh_Transportation-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,498 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28055746-Reviews-Ninh_Binh_Heritage_Premium_Tour-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,500 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g298224-d1372626-Reviews-Makishi_Public_Market-Naha_Okinawa_Prefecture_Kyushu.html
+2025-04-29 12:03:31,501 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g155019-d16718576-Reviews-UTOvacation-Toronto_Ontario.html
+2025-04-29 12:03:31,502 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19652078-Reviews-Ninh_Binh_Adventure-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,504 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13550190-Reviews-Khu_Du_Lich_Sinh_Thai_Trang_An_Co-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,505 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g147284-d147641-Reviews-Boiling_Lake-Morne_Trois_Pitons_National_Park_Saint_Patrick_Parish_Dominica.html
+2025-04-29 12:03:31,505 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d18207029-Reviews-The_O_N_E_Lounge_Bar-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,531 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25361069-Reviews-M_art_craft-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,534 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d33062531-Reviews-Adam_Skincare_Spa-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,539 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26831323-Reviews-Mr_Bie-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,539 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26550573-Reviews-Hoa_Lu_Tam_Coc_Day_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,556 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28153120-Reviews-Joy_Tourist_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,576 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d29017806-Reviews-Local_tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,590 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d6224876-Reviews-Guest_House_Kim_Lien_Bicycle_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,591 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28106332-Reviews-Local_Tours_NINH_BINH-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,591 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d33021886-Reviews-Jake_s_Walks-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,592 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d29014518-Reviews-Cho_Thue_Xe_May_Ninh_Binh_Ng_c_Linh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,621 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187235-d1203371-Reviews-Port_Grimaud-Grimaud_French_Riviera_Cote_d_Azur_Provence_Alpes_Cote_d_Azur.html
+2025-04-29 12:03:31,632 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25178592-Reviews-Tam_C_c_Homestay-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,635 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g44160-d258075-Reviews-Branson_Scenic_Railway_Ozark_Zephyr-Branson_Missouri.html
+2025-04-29 12:03:31,639 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g297390-d17341863-Reviews-Bamboo_Sak_Yant-Siem_Reap_Siem_Reap_Province.html
+2025-04-29 12:03:31,664 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1501915-d548269-Reviews-Mljet_National_Park-Mljet_Island_Dubrovnik_Neretva_County_Dalmatia.html
+2025-04-29 12:03:31,670 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27726516-Reviews-Asia_Package_Travel_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,677 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28826179-Reviews-Phoenix_Studio_Tattoo-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,677 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d9996403-Reviews-TiNiWorld-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,677 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294316-d19624611-Reviews-Peru_Bucket_List-Lima_Lima_Region.html
+2025-04-29 12:03:31,677 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17582959-Reviews-Chuong_Nguyen-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,690 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26877436-Reviews-Ninh_Binh_Jeep_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,697 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25023162-Reviews-Ninh_Binh_Private_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,703 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27106668-Reviews-Snail_Hen_Farm-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,712 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19341128-Reviews-Ninh_Binh_Transport_Service-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,719 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d5570345-Reviews-Bich_Dong_Pagoda-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,720 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g32385-d262477-Reviews-Yosemite_Mountain_Sugar_Pine_Railroad-Fish_Camp_California.html
+2025-04-29 12:03:31,726 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g656921-d640393-Reviews-Spellbound-Te_Kuiti_Waitomo_District_Waikato_Region_North_Island.html
+2025-04-29 12:03:31,726 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28214279-Reviews-Vietnam_Explorer_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,740 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25177996-Reviews-Best_Price_Tour_Co_ltd-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,754 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17414803-Reviews-Kong_Skull_Island-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,754 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27014528-Reviews-David_s_Taylor_Travel_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,754 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25021439-Reviews-Lan_Tam_Coc_Handmade_Shop-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,760 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26366535-Reviews-Ninh_Binh_tour_off_the_beaten_track-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,766 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d5321519-Reviews-Mua_Caves-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,766 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g291962-d1367800-Reviews-White_Sands_Dive_Shop-San_Pedro_Ambergris_Caye_Belize_Cayes.html
+2025-04-29 12:03:31,766 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g186311-d1965694-Reviews-Canterbury_Ghost_Tour-Canterbury_Kent_England.html
+2025-04-29 12:03:31,773 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26932394-Reviews-Tam_Coc_trunztour_moto_taxi-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,777 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d33059366-Reviews-Easyrider_And_Private_Car_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,779 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d18670578-Reviews-Bear_Sanctuary_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,790 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293925-d8090785-Reviews-Russian_Market-Ho_Chi_Minh_City.html
+2025-04-29 12:03:31,790 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1777483-d13505864-Reviews-Captain_Komodo-Labuan_Bajo_Flores_East_Nusa_Tenggara.html
+2025-04-29 12:03:31,824 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294265-d7682657-Reviews-The_Royal_Albatross-Singapore.html
+2025-04-29 12:03:31,849 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26803839-Reviews-Top_Ninh_Binh_Tour_2025_2026_Authentic_Adventures_Vietnam-Ninh_Binh_Ninh_Binh_Pr.html
+2025-04-29 12:03:31,857 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28041322-Reviews-Hanoi_transfer_to_Tam_Coc_Ninh_Binh_Private_car-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,857 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19085323-Reviews-Ninh_Binh_Experiences-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,883 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13809448-Reviews-Tam_Coc_Travel-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,884 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g612474-d1406700-Reviews-Puerto_Rico_Bio_Bay_Tours_LLC-Fajardo_Puerto_Rico.html
+2025-04-29 12:03:31,908 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d2044218-Reviews-Van_Long_Nature_Reserve-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,909 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26932394-Reviews-Tam_Coc_trunztour_moto_taxi-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,923 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d5828577-Reviews-Star_Travel_Thien_Ha_Cave_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,924 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g46082-d145676-Reviews-Lake_Umbagog-Errol_New_Hampshire.html
+2025-04-29 12:03:31,926 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60662-d12286963-Reviews-Makapu_u_Point_Tide_Pools-Waimanalo_Oahu_Hawaii.html
+2025-04-29 12:03:31,940 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293919-d9986359-Reviews-Boyz_Town-Pattaya_Chonburi_Province.html
+2025-04-29 12:03:31,948 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32907942-Reviews-Authentic_Travel_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,955 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17463459-Reviews-Hoa_Lu_Tam_Coc_Original-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,956 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187323-d3515400-Reviews-Berliner_Spreepark-Berlin.html
+2025-04-29 12:03:31,956 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d33043769-Reviews-Hoa_Lu_Trang_An_Mua_Cave_Bich_Dong_Full_Day-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,969 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12131462-Reviews-Ninh_Binh_Pu_Luong_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,963 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d23780977-Reviews-M_c_Mien_Spa-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,969 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28204831-Reviews-Ninh_Binh_Full_Day_Tour_from_Hanoi_to_Thung_Nham_Hoa_Lu_Tam_Coc_Via_Boat_Bike-Ni.html
+2025-04-29 12:03:31,970 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g297983-d9797461-Reviews-Cappadocia_Bus-Goreme_Cappadocia.html
+2025-04-29 12:03:31,963 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d11966389-Reviews-Hoalutamcoc_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:31,979 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17762414-Reviews-Trang_An_Golf_and_Country_Club-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:31,994 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g291962-d1367800-Reviews-White_Sands_Dive_Shop-San_Pedro_Ambergris_Caye_Belize_Cayes.html
+2025-04-29 12:03:31,995 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26803839-Reviews-Top_Ninh_Binh_Tour_2025_2026_Authentic_Adventures_Vietnam-Ninh_Binh_Ninh_Binh_Pr.html#REVIEWS
+2025-04-29 12:03:32,002 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g274856-d27111114-Reviews-Warsaw_New_Year_s_Eve_Firework-Warsaw_Mazovia_Province_Central_Poland.html
+2025-04-29 12:03:32,008 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12827154-Reviews-Amazing_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,018 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19085323-Reviews-Ninh_Binh_Experiences-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,028 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d33040631-Reviews-Sen_1993_Massage_Body_Goi_Dau_Duong_Sinh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,029 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g147312-d2229191-Reviews-Mystic_Mountain-Ocho_Rios_Saint_Ann_Parish_Jamaica.html
+2025-04-29 12:03:32,058 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26432270-Reviews-Heart_Private_Training-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,067 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28233780-Reviews-Vietnam_Impresssive_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,089 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19139093-Reviews-Minh_Trang_Handmade-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,091 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d30706501-Reviews-MR_ALEX_S_NINH_BINH_HA_LONG_TOURS-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,098 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d8099378-Reviews-Hanoi_Exposed_Tours_Day_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,098 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294217-d2050640-Reviews-Hong_Kong_Sneakers_Street-Hong_Kong.html
+2025-04-29 12:03:32,098 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g57201-d1138261-Reviews-Spirit_of_Ethan_Allen-Burlington_Vermont.html
+2025-04-29 12:03:32,113 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26954189-Reviews-Ninh_Binh_Family_Homestay-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,115 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g189954-d10239380-Reviews-Elding_Whale_Watching_Akureyri-Akureyri_Northeast_Region.html
+2025-04-29 12:03:32,154 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28128005-Reviews-Dung_Beauty_Nail_Eyelash_G_i_D_u_Massage-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,154 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19605759-Reviews-Yoga_Phong_Nha-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,167 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293841-d15070988-Reviews-Airpals_Safaris_Tour_Uganda-Kampala_Central_Region.html
+2025-04-29 12:03:32,174 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19243560-Reviews-Ninh_Binh_Travel_Booking_Office-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,174 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d6363052-Reviews-Vic_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,187 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26447145-Reviews-Ninh_Binh_Open_Air_Jeep_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,196 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g190454-d2295927-Reviews-Vienna_Sightseeing_Tours-Vienna.html
+2025-04-29 12:03:32,206 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19341128-Reviews-Ninh_Binh_Transport_Service-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,213 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g34705-d1371184-Reviews-Caspersen_Beach-Venice_Florida.html
+2025-04-29 12:03:32,399 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28055746-Reviews-Ninh_Binh_Heritage_Premium_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,236 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g50566-d7382981-Reviews-Old_Man_s_Cave-Logan_Ohio.html
+2025-04-29 12:03:32,236 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g312822-d313778-Reviews-Train_to_the_Clouds-Salta_Province_of_Salta_Northern_Argentina.html
+2025-04-29 12:03:32,289 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d4573942-Reviews-Tam_Coc_Tours_Ninh_Binh_Private_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,297 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28654464-Reviews-ABC_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,348 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26432270-Reviews-Heart_Private_Training-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,348 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26550573-Reviews-Hoa_Lu_Tam_Coc_Day_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,313 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27786320-Reviews-Viet_Nam_Easy_Go_Travel-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,329 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32601417-Reviews-Bar_Maybach_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,356 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25302268-Reviews-Cuc_Phuong_Hiking_Daily_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,329 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d16675765-Reviews-Win_Win_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,373 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26008848-Reviews-Wellness_Spa-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,374 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d33062531-Reviews-Adam_Skincare_Spa-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,380 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293924-d19436273-Reviews-Chapa_Express_Train-Hanoi.html
+2025-04-29 12:03:32,402 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25177996-Reviews-Best_Price_Tour_Co_ltd-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,250 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g304551-d8124568-Reviews-Private_Driver_In_India-New_Delhi_National_Capital_Territory_of_Delhi.html
+2025-04-29 12:03:32,411 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27731565-Reviews-Ninh_Binh_Day_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,418 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g32847-d104111-Reviews-Palm_Springs_Aerial_Tramway-Palm_Springs_Greater_Palm_Springs_California.html
+2025-04-29 12:03:32,419 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32999848-Reviews-Daisy_Tourist_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,419 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25931799-Reviews-Mr_khanh_travel_agency-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,433 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294013-d16787413-Reviews-Qasr_Al_Watan-Abu_Dhabi_Emirate_of_Abu_Dhabi.html
+2025-04-29 12:03:32,433 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12231699-Reviews-Unicorn_Mountain-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,433 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d29553222-Reviews-Book_VNTour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,448 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d31912285-Reviews-Tam_Coc_Holiday_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,465 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g51604-d1379902-Reviews-Downstream_Casino_Resort-Quapaw_Oklahoma.html
+2025-04-29 12:03:32,465 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293890-d23779615-Reviews-Himalayan_Masters_Adventure_and_Travel_Company-Kathmandu_Kathmandu_Valley_Bagmat.html
+2025-04-29 12:03:32,474 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d5858097-Reviews-Hoa_Lu_temples_of_the_Dinh_Le_Dynasties-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,501 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g54260-d13009903-Reviews-BMW_Performance_Center-Greer_South_Carolina.html
+2025-04-29 12:03:32,509 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d11556188-Reviews-Trang_An_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,555 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d18207029-Reviews-The_O_N_E_Lounge_Bar-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,563 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d3597971-Reviews-Phat_Diem_Cathedral-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,564 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27931918-Reviews-Cong_Ty_C_Ph_n_Wingolf-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,571 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g262055-d669361-Reviews-Dolphin_Boat_Safari-Ayia_Napa_Famagusta_District.html
+2025-04-29 12:03:32,579 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295371-d3502333-Reviews-Cave_Bar_More-Dubrovnik_Dubrovnik_Neretva_County_Dalmatia.html
+2025-04-29 12:03:32,616 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27995911-Reviews-TripBestie_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,631 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27748157-Reviews-Coco_Spa_Foot_Body_Massage-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,651 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g48883-d8648133-Reviews-The_Westchester-White_Plains_New_York.html
+2025-04-29 12:03:32,658 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17391222-Reviews-Banh_mi_Hanoi-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,658 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25021439-Reviews-Lan_Tam_Coc_Handmade_Shop-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,676 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d18546599-Reviews-Ninh_Binh_Tourist_Center-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,676 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13990279-Reviews-Kim_House_Holiday-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,678 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27686983-Reviews-Full_Moon_Travel_Asia-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,686 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d33043769-Reviews-Hoa_Lu_Trang_An_Mua_Cave_Bich_Dong_Full_Day-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,701 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17762414-Reviews-Trang_An_Golf_and_Country_Club-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,743 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27697784-Reviews-Ninh_Binh_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,750 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d23924142-Reviews-Ba_Ngan_Art-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,751 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28482287-Reviews-Authentic_Travel_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,751 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d15637829-Reviews-Cho_Thue_Xe_May_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,751 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d30706501-Reviews-MR_ALEX_S_NINH_BINH_HA_LONG_TOURS-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,752 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g58648-d3915711-Reviews-Affordable_Mopeds-Ocean_Shores_Washington.html
+2025-04-29 12:03:32,756 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25549991-Reviews-Vietnam_Happy_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,764 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28651288-Reviews-Tam_Coc_Queen_s_Travel_In_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,783 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d23780977-Reviews-M_c_Mien_Spa-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,783 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26588827-Reviews-Magnolia_Responsible_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,784 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g2154325-d2359213-Reviews-Mallorca_Fashion_Outlet-Marratxi_Majorca_Balearic_Islands.html
+2025-04-29 12:03:32,791 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25370208-Reviews-Ninh_Binh_Bike_Tour-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,792 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d20988233-Reviews-Da_Viet_Art_And_Gemstone_Center-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,806 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13086260-Reviews-Chookie_s_Travel-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,806 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d20029325-Reviews-Authentic_NINH_BINH-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,821 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19652078-Reviews-Ninh_Binh_Adventure-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,848 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27014528-Reviews-David_s_Taylor_Travel_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,854 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25391074-Reviews-Opatrip_com_Bai_Dinh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,900 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1187644-d8385799-Reviews-Marmara_Beach-Loutro_Chania_Prefecture_Crete.html
+2025-04-29 12:03:32,855 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g189400-d13492914-Reviews-Kotsanas_Museum_of_Ancient_Greek_Technology-Athens_Attica.html
+2025-04-29 12:03:32,880 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28482287-Reviews-Authentic_Travel_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,862 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d15674685-Reviews-Tam_Sinh_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,907 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d23924142-Reviews-Ba_Ngan_Art-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,907 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12149934-Reviews-Tam_Coc_Son_Hanoi_Tour-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,914 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25388143-Reviews-Tam_Coc_Daisy_Massage_Foot_body-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,915 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d16820957-Reviews-Ninh_Binh_Motorcycle_Rental-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,931 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d5570345-Reviews-Bich_Dong_Pagoda-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,931 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27497350-Reviews-Bookvietnamtour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,938 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g309224-d6539830-Reviews-Wild_Rider-Alajuela_Province_of_Alajuela.html
+2025-04-29 12:03:32,972 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g188590-d12544100-Reviews-Pure_Boats-Amsterdam_North_Holland_Province.html
+2025-04-29 12:03:32,977 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32719432-Reviews-Rose_Tourist_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,984 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25178592-Reviews-Tam_C_c_Homestay-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,985 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d14067698-Reviews-Good_Morning_Ninh_Binh_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:32,985 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d18378871-Reviews-Le_Pont_Adventure-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:32,991 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g154911-d186806-Reviews-Vermilion_Lakes-Banff_Banff_National_Park_Alberta.html
+2025-04-29 12:03:33,005 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27939252-Reviews-Best_Ninh_Binh_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,013 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1465999-d1539303-Reviews-Deluang_Sari_Turtle_Conservation_Center-Tanjung_Benoa_Nusa_Dua_Peninsula_Bali.html
+2025-04-29 12:03:33,013 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60745-d2372297-Reviews-WeVenture_Boston-Boston_Massachusetts.html
+2025-04-29 12:03:33,039 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19243560-Reviews-Ninh_Binh_Travel_Booking_Office-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,039 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d23972985-Reviews-Arcady_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,060 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g143047-d145171-Reviews-Ruby_Beach-Olympic_National_Park_Washington.html
+2025-04-29 12:03:33,060 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17181234-Reviews-Cheap_Motorbike_Rental_in_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,075 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28235349-Reviews-Local_Tours_Around_Vietnam_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,076 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25024141-Reviews-Ninh_Binh_Group_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,094 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27760925-Reviews-May_Cafe_Bakery-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,094 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187514-d190547-Reviews-El_Rastro-Madrid.html
+2025-04-29 12:03:33,107 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d18964797-Reviews-Ninh_Binh_2_Days_1_Night_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,113 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295424-d3341296-Reviews-Armani_prive-Dubai_Emirate_of_Dubai.html
+2025-04-29 12:03:33,153 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g44062-d1887355-Reviews-Tunica_Queen_Riverboat-Tunica_Mississippi.html
+2025-04-29 12:03:33,153 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27106668-Reviews-Snail_Hen_Farm-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,159 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27992013-Reviews-Donald_Bar_Restaurant_Riverine-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,172 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25549991-Reviews-Vietnam_Happy_Travel-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,173 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12813476-Reviews-Dong_Thai_Lake-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,173 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d14776394-Reviews-Ninh_Binh_Transfers-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,184 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27939252-Reviews-Best_Ninh_Binh_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,197 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25169372-Reviews-Goatalic_Cocktail_Bar-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,197 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60653-d531862-Reviews-Byodo_in_Temple_Hawaii-Kaneohe_Oahu_Hawaii.html
+2025-04-29 12:03:33,209 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d16850417-Reviews-Limousine_Trang_An-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,211 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g188644-d196129-Reviews-Manneken_Pis-Brussels.html
+2025-04-29 12:03:33,224 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g50168-d199133-Reviews-Pro_Football_Hall_of_Fame-Canton_Ohio.html
+2025-04-29 12:03:33,225 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32848965-Reviews-Good_Morning_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,225 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d2484803-Reviews-Trang_An_Grottoes-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,228 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27410035-Reviews-Tam_Spa_Tam_Coc_massage_Nail-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,244 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27134871-Reviews-Local_Tours_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,244 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294201-d17171997-Reviews-Planet_Tours_Travel-Cairo_Cairo_Governorate.html
+2025-04-29 12:03:33,277 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12965796-Reviews-Hoa_Lu_Ancient_Capital-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,278 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d21298791-Reviews-Tam_Coc_Bamboo_Spa-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,284 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25049439-Reviews-Ha_Trang_Booking_Office-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,291 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27734524-Reviews-House_Spa_Tam_Coc-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,305 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17582959-Reviews-Chuong_Nguyen-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,305 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26857323-Reviews-Authentic_Hanoi_Travel_In_NINH_BINH-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,312 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17395897-Reviews-Store_86-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,312 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12376122-Reviews-Cho_Thue_Xe_May_tai_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,319 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28126339-Reviews-Ph_C_Hoa_Lu-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,319 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g59381-d17695930-Reviews-New_River_Atv-Oak_Hill_West_Virginia.html
+2025-04-29 12:03:33,319 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25398663-Reviews-Amazing_Travel_Corp-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,327 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d11094481-Reviews-Hoa_Lu_Temple-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,327 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g33364-d13166905-Reviews-Cosmo_s_Magic_Theater-Colorado_Springs_El_Paso_County_Colorado.html
+2025-04-29 12:03:33,334 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12962515-Reviews-Tommy_s_Travel_Service_in_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,364 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g189180-d10722418-Reviews-Portugal_Green_Walks-Porto_Porto_District_Northern_Portugal.html
+2025-04-29 12:03:33,364 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g31352-d255401-Reviews-Airport_Mesa-Sedona_Arizona.html
+2025-04-29 12:03:33,364 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d24171643-Reviews-Vietnam_Exploration_Booking-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,374 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g29121-d6459424-Reviews-Catalina_Island_Company-Avalon_Catalina_Island_California.html
+2025-04-29 12:03:33,397 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d2044218-Reviews-Van_Long_Nature_Reserve-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,410 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1190421-d4885446-Reviews-Rofos_Boat_Tours-Aliki_Paros_Cyclades_South_Aegean.html
+2025-04-29 12:03:33,411 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g189449-d630372-Reviews-Kritinia_Castle-Rhodes_Dodecanese_South_Aegean.html
+2025-04-29 12:03:33,417 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g35805-d538046-Reviews-Tall_Ship_Windy-Chicago_Illinois.html
+2025-04-29 12:03:33,418 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294201-d2430233-Reviews-Emo_Tours_Egypt-Cairo_Cairo_Governorate.html
+2025-04-29 12:03:33,418 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g30330-d4167776-Reviews-Cleo_s_Cocktail_Lounge-Appleton_Wisconsin.html
+2025-04-29 12:03:33,426 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d14776394-Reviews-Ninh_Binh_Transfers-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,433 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d31912285-Reviews-Tam_Coc_Holiday_Travel-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,448 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13530367-Reviews-Huong_Sen_Ninh_Binh_Massage-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,475 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g28970-d13089090-Reviews-Potomac_Water_Taxi-Washington_DC_District_of_Columbia.html
+2025-04-29 12:03:33,475 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d4573942-Reviews-Tam_Coc_Tours_Ninh_Binh_Private_Tour-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,482 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28104665-Reviews-Asia_Pearl_Travel_Ninh_Binh_Day_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,518 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27731565-Reviews-Ninh_Binh_Day_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,530 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32702094-Reviews-Tailored_Vietnam_By_Christine-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,537 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g2288643-d13482106-Reviews-Thrill_Valley-Yelagiri_Vellore_District_Tamil_Nadu.html
+2025-04-29 12:03:33,536 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28128005-Reviews-Dung_Beauty_Nail_Eyelash_G_i_D_u_Massage-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,552 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g255106-d12788507-Reviews-Kiwi_Experience-Auckland_Central_North_Island.html
+2025-04-29 12:03:33,552 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12149934-Reviews-Tam_Coc_Son_Hanoi_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,566 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d30527232-Reviews-Tattoo_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,599 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g190454-d1156190-Reviews-Twin_City_Liner-Vienna.html
+2025-04-29 12:03:34,351 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g255069-d13428016-Reviews-Reef_Encounter-Cairns_Cairns_Region_Queensland.html
+2025-04-29 12:03:33,600 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12139996-Reviews-Ninh_Binh_Eco_Travel-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,625 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19413578-Reviews-Sen_s_house-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,625 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25129183-Reviews-Ninh_Binh_Heritage_Full_Day_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,625 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26267864-Reviews-Ninh_Binh_Jeep_Tours_Ninh_Binh_Vespa_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,646 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g53449-d1672880-Reviews-Burgh_Bits_and_Bites_Food_Tours-Pittsburgh_Pennsylvania.html
+2025-04-29 12:03:33,671 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19620480-Reviews-AZ_Local_Trip_Ninh_Binh_Free_Itinerary_Planing-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,698 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26726689-Reviews-Tam_Coc_Moc_Huong_Spa-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,698 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g46140-d649469-Reviews-Alpine_Adventures_Outdoor_Recreation-Lincoln_New_Hampshire.html
+2025-04-29 12:03:33,705 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12965796-Reviews-Hoa_Lu_Ancient_Capital-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,711 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27971907-Reviews-Vietnam_Tour_Booking_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,717 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294207-d13455873-Reviews-Perfect_Safaris_Africa-Nairobi.html
+2025-04-29 12:03:33,724 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d8779716-Reviews-Cuc_Phuong_National_Park-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,731 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g274856-d12177270-Reviews-Smolna-Warsaw_Mazovia_Province_Central_Poland.html
+2025-04-29 12:03:33,731 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27861295-Reviews-Asia_Group_Tour_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,752 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g143039-d145137-Reviews-Fox_Island-Kenai_Fjords_National_Park_Alaska.html
+2025-04-29 12:03:33,767 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26999973-Reviews-Tam_Coc_Greenland_Spa_Massage_Nail-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,788 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32226520-Reviews-Tam_Coc_Holiday_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,802 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27939694-Reviews-Authentic_Travel_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,814 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d24884585-Reviews-The_Most_Amazing_Trang_An_Mua_Caves_Day_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,814 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19139093-Reviews-Minh_Trang_Handmade-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,832 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d18670578-Reviews-Bear_Sanctuary_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,833 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60954-d1478244-Reviews-Mahi_Mahi_Harbor_Cruises_Events-Salem_Massachusetts.html
+2025-04-29 12:03:33,853 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25372253-Reviews-Ninh_Binh_FootPrint_Travel-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,859 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g190454-d245461-Reviews-Musikverein-Vienna.html
+2025-04-29 12:03:33,859 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25172955-Reviews-Vitality_Spa-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,882 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d3597971-Reviews-Phat_Diem_Cathedral-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,896 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g147355-d6868144-Reviews-Original_Virgin_Canopy_Tour-Road_Town_Tortola_British_Virgin_Islands.html
+2025-04-29 12:03:33,910 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g58402-d11668711-Reviews-Cape_Flattery-Clallam_Bay_Washington.html
+2025-04-29 12:03:33,937 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25007152-Reviews-Ninh_Binh_Daily_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,948 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17395538-Reviews-Khanh_An_Limousine-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,948 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27951994-Reviews-Halong_Explorer_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,970 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d33000229-Reviews-Mr_Dat_Transport-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:33,976 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d8071591-Reviews-Thai_Vi_Temple-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:33,977 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g295371-d17813241-Reviews-Beach_Sulic-Dubrovnik_Dubrovnik_Neretva_County_Dalmatia.html
+2025-04-29 12:03:33,997 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g56593-d1023023-Reviews-Texas_State_Railroad-Rusk_Texas.html
+2025-04-29 12:03:34,014 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32695763-Reviews-Ninh_Binh_Adventure_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,033 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g308272-d324259-Reviews-Yu_Garden_Yuyuan-Shanghai.html
+2025-04-29 12:03:34,033 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d16879609-Reviews-NinhBinh_Tours_Booking-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,039 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293761-d19866058-Reviews-Cuckoo_Safaris-Victoria_Falls_Matabeleland_North_Province.html
+2025-04-29 12:03:34,051 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294201-d21704674-Reviews-Open_Air_Mall_Madinaty-Cairo_Cairo_Governorate.html
+2025-04-29 12:03:34,057 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27992013-Reviews-Donald_Bar_Restaurant_Riverine-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,058 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32707540-Reviews-Vietnam_Green_Tours_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,072 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d2484803-Reviews-Trang_An_Grottoes-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,072 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g28970-d4002397-Reviews-Old_Town_Trolley_Tours_Washington_Dc-Washington_DC_District_of_Columbia.html
+2025-04-29 12:03:34,072 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17414803-Reviews-Kong_Skull_Island-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,072 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26877436-Reviews-Ninh_Binh_Jeep_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,072 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d33061912-Reviews-Easyrider_And_Private_Car_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,102 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27001725-Reviews-FOY_Cocktail-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,072 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28651271-Reviews-Tattoo_Ninh_Binh_Hiep_Max-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,088 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g35316-d676893-Reviews-Toccoa_Falls-Toccoa_Georgia.html
+2025-04-29 12:03:34,088 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d4555568-Reviews-Cuc_Phuong_National_Park_Tour_Private_Day_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,088 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g32655-d552939-Reviews-OUE_Skyspace_LA-Los_Angeles_California.html
+2025-04-29 12:03:34,088 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g298566-d11726958-Reviews-Street_Kart_Osaka-Osaka_Osaka_Prefecture_Kinki.html
+2025-04-29 12:03:34,102 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27697784-Reviews-Ninh_Binh_Tour-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,103 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d33092971-Reviews-Tuan_Nguyen-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,103 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d30235367-Reviews-Nin_Bin_D_c_S_n_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,110 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27495638-Reviews-Limousine_Ninh_Binh_Travel-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,117 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27116531-Reviews-Vietnam_Grouptour-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,129 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g274725-d285043-Reviews-Westerplatte-Gdansk_Pomerania_Province_Northern_Poland.html
+2025-04-29 12:03:34,135 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25370208-Reviews-Ninh_Binh_Bike_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,150 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25282088-Reviews-Tam_coc_Cooking_Class_with_local_Chef-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,150 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17181234-Reviews-Cheap_Motorbike_Rental_in_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,170 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26319593-Reviews-Fasinating_Ninh_Binh_tour-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,261 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g33194-d2311496-Reviews-Black_Oak_Casino_Resort-Tuolumne_California.html
+2025-04-29 12:03:34,262 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g143057-d146519-Reviews-Zion_Mt_Carmel_Highway-Zion_National_Park_Utah.html
+2025-04-29 12:03:34,263 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12001773-Reviews-Ninh_Binh_Daily_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,263 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60722-d1167833-Reviews-Ghost_Tours_of_Harpers_Ferry-Harpers_Ferry_West_Virginia.html
+2025-04-29 12:03:34,263 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27926646-Reviews-Nam-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,263 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g45963-d4173939-Reviews-Michael_Jackson_ONE_by_Cirque_du_Soleil-Las_Vegas_Nevada.html
+2025-04-29 12:03:34,263 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d18856372-Reviews-Ninh_Binh_Tours_Original-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,264 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d23452698-Reviews-Limousine_Ha_Noi_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,264 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g52054-d2447272-Reviews-Rainbow_Trout_Farm-Sandy_Clackamas_County_Oregon.html
+2025-04-29 12:03:34,264 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d18964797-Reviews-Ninh_Binh_2_Days_1_Night_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,293 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13646473-Reviews-Tuy_t_Tinh_C_c-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,293 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27931905-Reviews-Cong_Ty_C_Ph_n_Wingolf-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,350 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g297930-d24104823-Reviews-Bangla_Sexy_9Bar-Patong_Kathu_Phuket.html
+2025-04-29 12:03:34,350 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303506-d311247-Reviews-Sugarloaf_Mountain-Rio_de_Janeiro_State_of_Rio_de_Janeiro.html
+2025-04-29 12:03:34,350 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32941607-Reviews-Hoa_Lu_City_Hotel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,351 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d24171643-Reviews-Vietnam_Exploration_Booking-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,351 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293974-d3531744-Reviews-TurYol-Istanbul.html
+2025-04-29 12:03:34,351 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28151401-Reviews-Authentic_NINH_BINH-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,351 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26947240-Reviews-Ninh_Binh_Trails_Tours_Bike_Tours_Hanoi-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,379 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293925-d1307686-Reviews-Vietnam_Bike_Tours-Ho_Chi_Minh_City.html
+2025-04-29 12:03:33,624 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g29171-d2500096-Reviews-King_s_Landing-Apopka_Florida.html
+2025-04-29 12:03:34,379 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294205-d21003338-Reviews-Hot_air_balloon_in_luxor-Luxor_Nile_River_Valley.html
+2025-04-29 12:03:34,379 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1022827-d8761782-Reviews-Yakult_Miki_Factory_Tour-Miki_Hyogo_Prefecture_Kinki.html
+2025-04-29 12:03:34,379 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d6224876-Reviews-Guest_House_Kim_Lien_Bicycle_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,379 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d16879609-Reviews-NinhBinh_Tours_Booking-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,408 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g52024-d102992-Reviews-Northwest_Nob_Hill-Portland_Oregon.html
+2025-04-29 12:03:34,408 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g46341-d3258728-Reviews-Ghosts_of_Cape_May_Trolley_Tour-Cape_May_Cape_May_County_New_Jersey.html
+2025-04-29 12:03:34,408 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d18856372-Reviews-Ninh_Binh_Tours_Original-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,439 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12813476-Reviews-Dong_Thai_Lake-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,470 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28118934-Reviews-Limousine_Ninh_Binh_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,470 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d20988233-Reviews-Da_Viet_Art_And_Gemstone_Center-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,471 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32701545-Reviews-Ninh_Binh_Day_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,499 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g42016-d12597119-Reviews-Jump_Island-Brighton_Michigan.html
+2025-04-29 12:03:34,499 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g2282455-d19731878-Reviews-Coral_Island_Pattaya-Ko_Lan_Chonburi_Province.html
+2025-04-29 12:03:34,499 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26874444-Reviews-Trip_Express-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,499 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d29013410-Reviews-Motorbike_Rental_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,499 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17583744-Reviews-Kim_Luu-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,499 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187443-d9999237-Reviews-Barcas_Plaza_Espana-Seville_Province_of_Seville_Andalucia.html
+2025-04-29 12:03:34,512 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27001725-Reviews-FOY_Cocktail-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,512 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d19467605-Reviews-Ninh_Binh_Local_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,518 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12827154-Reviews-Amazing_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,533 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26630851-Reviews-Tam_Coc_Eco_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,533 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g57072-d2140598-Reviews-Monument_Valley_Safari-Monument_Valley_Utah.html
+2025-04-29 12:03:34,544 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g34678-d9975361-Reviews-Pirate_Water_Taxi-Tampa_Florida.html
+2025-04-29 12:03:34,558 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g28970-d143930-Reviews-United_States_Botanic_Garden-Washington_DC_District_of_Columbia.html
+2025-04-29 12:03:34,586 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g147345-d14082468-Reviews-Uber_St_Lucia-Soufriere_Soufriere_Quarter_St_Lucia.html
+2025-04-29 12:03:34,587 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26792902-Reviews-Local_Tours_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,614 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60954-d1153506-Reviews-Schooner_FAME_of_Salem-Salem_Massachusetts.html
+2025-04-29 12:03:34,614 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27728732-Reviews-Tiger_Trail_Travel_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,615 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25446602-Reviews-Ninh_Binh_Discovery-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,615 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d33066231-Reviews-Elegance_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,643 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28055740-Reviews-Authentic_Travel_in_NINHBINH-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,643 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32842633-Reviews-Authentic_Ninh_Binh_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,655 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27674884-Reviews-Lamia_Cruise-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,667 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187791-d25276921-Reviews-Biga_Tours-Rome_Lazio.html
+2025-04-29 12:03:34,667 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g8634995-d2273349-Reviews-Pantokrator-Agios_Matheos_Corfu_Ionian_Islands.html
+2025-04-29 12:03:34,667 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g147320-d2691907-Reviews-La_Rumba_Party_Cruises-San_Juan_Puerto_Rico.html
+2025-04-29 12:03:34,668 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g147347-d1211485-Reviews-Golden_Eagle_Tour-Philipsburg_Sint_Maarten_St_Martin_St_Maarten.html
+2025-04-29 12:03:35,182 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60709-d1461840-Reviews-Acadian_Boat_Tours-Bar_Harbor_Mount_Desert_Island_Maine.html
+2025-04-29 12:03:34,702 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d14776391-Reviews-Dcar_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,718 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g309685-d312277-Reviews-Belvedere_Lookout-Moorea_Society_Islands.html
+2025-04-29 12:03:34,726 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25024141-Reviews-Ninh_Binh_Group_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,744 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d8071591-Reviews-Thai_Vi_Temple-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,744 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17483942-Reviews-Authentic_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,744 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g189970-d8413338-Reviews-Flybus_Airport_Transfer-Reykjavik_Capital_Region.html
+2025-04-29 12:03:34,762 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d24993700-Reviews-Du_lich_xanh_vi_t-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,769 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27466767-Reviews-Stunning_Local_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,783 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60713-d3171289-Reviews-Bay_Voyager-San_Francisco_California.html
+2025-04-29 12:03:34,783 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187147-d6131093-Reviews-Paris_Luxury_Boat_Private_Boat_Tours-Paris_Ile_de_France.html
+2025-04-29 12:03:34,795 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17463459-Reviews-Hoa_Lu_Tam_Coc_Original-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,796 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g298357-d10455708-Reviews-Sand_Waves_Namibia-Swakopmund_Erongo_Region.html
+2025-04-29 12:03:34,823 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d6363052-Reviews-Vic_Travel-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,824 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60763-d276253-Reviews-Circle_Line_Sightseeing_Cruises_Midtown-New_York_City_New_York.html
+2025-04-29 12:03:34,824 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25282088-Reviews-Tam_coc_Cooking_Class_with_local_Chef-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,824 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26726689-Reviews-Tam_Coc_Moc_Huong_Spa-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,836 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28151401-Reviews-Authentic_NINH_BINH-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,837 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17395897-Reviews-Store_86-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,854 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d639613-Reviews-Kenh_Ga-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,855 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25007152-Reviews-Ninh_Binh_Daily_Tours-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,855 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25442837-Reviews-La_Nha_spa-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,861 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26579916-Reviews-Ninh_Binh_Local_tour-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,861 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g54718-d145077-Reviews-Corn_Palace-Mitchell_South_Dakota.html
+2025-04-29 12:03:34,861 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12921239-Reviews-Ma_Tien_Cave-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,861 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1507054-d23793663-Reviews-Railay_Eco_Tour-Ao_Nang_Krabi_Province.html
+2025-04-29 12:03:34,868 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g46800-d6894838-Reviews-Gunnison_Beach-Sandy_Hook_New_Jersey.html
+2025-04-29 12:03:34,895 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27686983-Reviews-Full_Moon_Travel_Asia-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,895 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28101759-Reviews-Ninh_Binh_Transportation-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,941 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25388143-Reviews-Tam_Coc_Daisy_Massage_Foot_body-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:34,960 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d24950419-Reviews-Tours_and_Tourguide_in_Ninhbinh-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:35,004 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28126339-Reviews-Ph_C_Hoa_Lu-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:35,004 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g294458-d26068409-Reviews-Museum_of_Communism_Bucharest_Undeva_in_Comunism-Bucharest.html
+2025-04-29 12:03:35,017 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17391222-Reviews-Banh_mi_Hanoi-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:35,017 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25442837-Reviews-La_Nha_spa-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:35,034 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g31582-d2060451-Reviews-Underground_Eureka_Tour-Eureka_Springs_Arkansas.html
+2025-04-29 12:03:35,035 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g274887-d14051959-Reviews-Secret_Food_Tours_Budapest-Budapest_Central_Hungary.html
+2025-04-29 12:03:35,043 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28114891-Reviews-Phong_Nha_Locals_Service-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:35,076 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d15637829-Reviews-Cho_Thue_Xe_May_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:35,077 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32455624-Reviews-Tam_Coc_Museum-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:35,097 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d14080660-Reviews-Motorbike_Tours_Hanoi-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:35,104 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d14080660-Reviews-Motorbike_Tours_Hanoi-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:35,124 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g34179-d2049547-Reviews-Delray_Yacht_Cruises-Delray_Beach_Florida.html
+2025-04-29 12:03:35,124 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g2005201-d669526-Reviews-Nong_Nooch_Tropical_Botanical_Garden-Na_Chom_Thian_Sattahip_Chonburi_Province.html
+2025-04-29 12:03:35,125 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d32702094-Reviews-Tailored_Vietnam_By_Christine-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:35,125 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d17511795-Reviews-Motorbike_Rental_Train_Station-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:35,166 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25129183-Reviews-Ninh_Binh_Heritage_Full_Day_Tour-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:35,173 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25243374-Reviews-Massage_Spa_Tamcoc_Pure_Vietnam-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:35,173 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g297555-d2703878-Reviews-Dive_In_Sharm-Sharm_El_Sheikh_South_Sinai_Red_Sea_and_Sinai.html
+2025-04-29 12:03:35,182 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25165238-Reviews-Ninh_Binh_Tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:34,687 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28144095-Reviews-Truly_Ninh_Binh-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:35,190 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26630851-Reviews-Tam_Coc_Eco_Tour-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:35,203 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g274879-d2634362-Reviews-Radovljica_Old_Town-Radovljica_Upper_Carniola_Region.html
+2025-04-29 12:03:35,227 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27410035-Reviews-Tam_Spa_Tam_Coc_massage_Nail-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:35,228 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g187323-d191439-Reviews-Kreuzberg-Berlin.html
+2025-04-29 12:03:35,228 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g274887-d14001188-Reviews-Official_Castle_Shutlle_Bus_Budapest-Budapest_Central_Hungary.html
+2025-04-29 12:03:35,236 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g190502-d7715789-Reviews-Norled-Bergen_Hordaland_Western_Norway.html
+2025-04-29 12:03:35,264 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g44535-d266885-Reviews-Starlight_Theatre-Kansas_City_Missouri.html
+2025-04-29 12:03:35,264 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g31352-d1916434-Reviews-Seven_Canyons-Sedona_Arizona.html
+2025-04-29 12:03:35,278 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d27495638-Reviews-Limousine_Ninh_Binh_Travel-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:35,279 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d28648045-Reviews-Motorbike_Ninh_Binh_Cuong_Hue-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:35,279 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26579916-Reviews-Ninh_Binh_Local_tour-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:35,279 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g60491-d527163-Reviews-Granite_Hot_Springs_Pool-Jackson_Jackson_Hole_Wyoming.html
+2025-04-29 12:03:35,285 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g1060908-d320626-Reviews-Edo_Tokyo_Open_Air_Architectural_Museum-Koganei_Tokyo_Prefecture_Kanto.html
+2025-04-29 12:03:35,293 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d13563276-Reviews-Ninh_Binh_Getaway-Ninh_Binh_Ninh_Binh_Province.html#REVIEWS
+2025-04-29 12:03:35,293 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d25194035-Reviews-Mike_s_Travel_Agency-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:35,293 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d12131462-Reviews-Ninh_Binh_Pu_Luong_Tours-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:35,313 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g53360-d103902-Reviews-Herr_s_Snack_Factory_Tour_Gift_Shop-Nottingham_Pennsylvania.html
+2025-04-29 12:03:35,321 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g293733-d8124523-Reviews-Tour_From_Fes_To_Marrakech_Day_Tours-Fez_Fez_Meknes.html
+2025-04-29 12:03:35,322 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g41922-d2279461-Reviews-Inflatable_Park-West_Yarmouth_Yarmouth_Cape_Cod_Massachusetts.html
+2025-04-29 12:03:35,387 - INFO - Fetching URL: https://www.tripadvisor.com/Attraction_Review-g303945-d26856662-Reviews-AUTHENTIC_HAGIANG_NINH_BINH_TRAVEl-Ninh_Binh_Ninh_Binh_Province.html
+2025-04-29 12:03:50,584 - INFO - ✓ Chuong Nguyen
+2025-04-29 12:03:50,637 - INFO - ✓ Magnolia Responsible Travel
+2025-04-29 12:03:50,936 - INFO - ✓ Sakura Handmade Shop
+2025-04-29 12:03:51,319 - INFO - ✓ Dung Beauty - Nail Eyelash Gội Đầu Massage
+2025-04-29 12:04:02,669 - WARNING - Connection pool is full, discarding connection: www.tripadvisor.com. Connection pool size: 10
