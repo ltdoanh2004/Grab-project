@@ -5,8 +5,8 @@
     ],
     "swagger": "2.0",
     "info": {
-        "description": "A modern RESTful API for managing your todos efficiently. This API provides comprehensive endpoints for creating, reading, updating, and deleting todo items.",
-        "title": "Todo List API",
+        "description": "A modern RESTful API for managing travel plans, including trips, destinations, accommodations, activities, and restaurants.",
+        "title": "Travel Planning API",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "API Support Team",
@@ -125,6 +125,180 @@
                     },
                     "400": {
                         "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/suggest/accommodations": {
+            "get": {
+                "description": "Get accommodation suggestions based on travel preferences",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "suggest"
+                ],
+                "summary": "Suggest accommodations",
+                "parameters": [
+                    {
+                        "description": "Travel Preferences",
+                        "name": "preference",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.TravelPreference"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.AccommodationsSuggestion"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/suggest/activities": {
+            "get": {
+                "description": "Get activity suggestions based on travel preferences",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "suggest"
+                ],
+                "summary": "Suggest activities",
+                "parameters": [
+                    {
+                        "description": "Travel Preferences",
+                        "name": "preference",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.TravelPreference"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.ActivitiesSuggestion"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/suggest/restaurants": {
+            "get": {
+                "description": "Get restaurant suggestions based on travel preferences",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "suggest"
+                ],
+                "summary": "Suggest restaurants",
+                "parameters": [
+                    {
+                        "description": "Travel Preferences",
+                        "name": "preference",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.TravelPreference"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.RestaurantsSuggestion"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
                         "schema": {
                             "$ref": "#/definitions/model.Response"
                         }
@@ -393,6 +567,172 @@
                 }
             }
         },
+        "/api/v1/trip/create": {
+            "post": {
+                "description": "Create a new trip with destinations, accommodations, activities, and restaurants",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "trip"
+                ],
+                "summary": "Create a new trip",
+                "parameters": [
+                    {
+                        "description": "Trip Details",
+                        "name": "trip",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateTripRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns trip ID",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/trip/save": {
+            "put": {
+                "description": "Update an existing trip with new details including destinations, accommodations, activities, and restaurants",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "trip"
+                ],
+                "summary": "Save changes to an existing trip",
+                "parameters": [
+                    {
+                        "description": "Trip Details",
+                        "name": "trip",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.TripDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trip updated successfully",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/trip/{id}": {
+            "get": {
+                "description": "Get complete trip details including destinations, accommodations, activities, and restaurants",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "trip"
+                ],
+                "summary": "Get trip details",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Trip ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trip details",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.TripDTO"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid trip ID",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Trip not found",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/health": {
             "get": {
                 "description": "get the status of server.",
@@ -418,6 +758,234 @@
         }
     },
     "definitions": {
+        "dto.AccommodationSuggestion": {
+            "type": "object",
+            "properties": {
+                "accommodation_id": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "string"
+                },
+                "amenities": {
+                    "type": "string"
+                },
+                "booking_link": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "image_url": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "star_rating": {
+                    "type": "number"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.AccommodationsSuggestion": {
+            "type": "object",
+            "properties": {
+                "accommodations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.AccommodationSuggestion"
+                    }
+                }
+            }
+        },
+        "dto.ActivitiesSuggestion": {
+            "type": "object",
+            "properties": {
+                "activities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.ActivitySuggestion"
+                    }
+                }
+            }
+        },
+        "dto.ActivitySuggestion": {
+            "type": "object",
+            "properties": {
+                "activity_id": {
+                    "type": "string"
+                },
+                "category_id": {
+                    "type": "string"
+                },
+                "cost": {
+                    "type": "number"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "duration": {
+                    "type": "integer"
+                },
+                "image_url": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "place_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CreateTripAccommodationRequest": {
+            "type": "object",
+            "properties": {
+                "accommodation_id": {
+                    "type": "string"
+                },
+                "check_in_date": {
+                    "type": "string"
+                },
+                "check_out_date": {
+                    "type": "string"
+                },
+                "cost": {
+                    "type": "number"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CreateTripActivityRequest": {
+            "type": "object",
+            "properties": {
+                "activity_id": {
+                    "type": "string"
+                },
+                "end_time": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "scheduled_date": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CreateTripDestinationRequest": {
+            "type": "object",
+            "properties": {
+                "accommodations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.CreateTripAccommodationRequest"
+                    }
+                },
+                "activities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.CreateTripActivityRequest"
+                    }
+                },
+                "arrival_date": {
+                    "type": "string"
+                },
+                "departure_date": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "order_num": {
+                    "type": "integer"
+                },
+                "restaurants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.CreateTripRestaurantRequest"
+                    }
+                },
+                "trip_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CreateTripRequest": {
+            "type": "object",
+            "properties": {
+                "budget": {
+                    "type": "number"
+                },
+                "end_date": {
+                    "type": "string"
+                },
+                "start_date": {
+                    "type": "string"
+                },
+                "trip_destinations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.CreateTripDestinationRequest"
+                    }
+                },
+                "trip_name": {
+                    "type": "string"
+                },
+                "trip_status": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CreateTripRestaurantRequest": {
+            "type": "object",
+            "properties": {
+                "end_time": {
+                    "type": "string"
+                },
+                "meal_date": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "reservation_info": {
+                    "type": "string"
+                },
+                "restaurant_id": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                }
+            }
+        },
         "dto.LoginRequest": {
             "type": "object",
             "properties": {
@@ -446,6 +1014,55 @@
                 },
                 "username": {
                     "type": "string"
+                }
+            }
+        },
+        "dto.RestaurantSuggestion": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "avg_rating": {
+                    "type": "number"
+                },
+                "cuisine_type": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "establishment_type": {
+                    "type": "string"
+                },
+                "image_url": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "opening_hours": {
+                    "type": "string"
+                },
+                "price_range": {
+                    "type": "string"
+                },
+                "restaurant_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.RestaurantsSuggestion": {
+            "type": "object",
+            "properties": {
+                "restaurants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.RestaurantSuggestion"
+                    }
                 }
             }
         },
@@ -487,6 +1104,189 @@
                 },
                 "refresh_token": {
                     "description": "Optional refresh token, used for obtaining new access tokens.",
+                    "type": "string"
+                }
+            }
+        },
+        "dto.TravelPreference": {
+            "type": "object",
+            "properties": {
+                "activities": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "budget": {
+                    "type": "string"
+                },
+                "duration_days": {
+                    "type": "integer"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "season": {
+                    "type": "string"
+                },
+                "travel_style": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.TripAccommodationDTO": {
+            "type": "object",
+            "properties": {
+                "accommodation_id": {
+                    "type": "string"
+                },
+                "check_in_date": {
+                    "type": "string"
+                },
+                "check_out_date": {
+                    "type": "string"
+                },
+                "cost": {
+                    "type": "number"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "trip_accommodation_id": {
+                    "type": "string"
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.TripActivityDTO": {
+            "type": "object",
+            "properties": {
+                "activity_id": {
+                    "type": "string"
+                },
+                "end_time": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "scheduled_date": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "trip_activity_id": {
+                    "type": "string"
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.TripDTO": {
+            "type": "object",
+            "properties": {
+                "budget": {
+                    "type": "number"
+                },
+                "end_date": {
+                    "type": "string"
+                },
+                "start_date": {
+                    "type": "string"
+                },
+                "trip_destinations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.TripDestinationDTO"
+                    }
+                },
+                "trip_id": {
+                    "type": "string"
+                },
+                "trip_name": {
+                    "type": "string"
+                },
+                "trip_status": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.TripDestinationDTO": {
+            "type": "object",
+            "properties": {
+                "accommodations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.TripAccommodationDTO"
+                    }
+                },
+                "activities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.TripActivityDTO"
+                    }
+                },
+                "arrival_date": {
+                    "type": "string"
+                },
+                "departure_date": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "order_num": {
+                    "type": "integer"
+                },
+                "restaurants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.TripRestaurantDTO"
+                    }
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                },
+                "trip_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.TripRestaurantDTO": {
+            "type": "object",
+            "properties": {
+                "end_time": {
+                    "type": "string"
+                },
+                "meal_date": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "reservation_info": {
+                    "type": "string"
+                },
+                "restaurant_id": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                },
+                "trip_restaurant_id": {
                     "type": "string"
                 }
             }
@@ -570,6 +1370,30 @@
         {
             "description": "API health check operations",
             "name": "health"
+        },
+        {
+            "description": "Operations about travel suggestions",
+            "name": "suggest",
+            "externalDocs": {
+                "description": "Detailed information about suggestion operations",
+                "url": "http://example.com/docs/suggest"
+            }
+        },
+        {
+            "description": "Operations about travel suggestion types (hotel, restaurant, landmark)",
+            "name": "suggestionType",
+            "externalDocs": {
+                "description": "Detailed information about suggestion type operations",
+                "url": "http://example.com/docs/suggestionType"
+            }
+        },
+        {
+            "description": "Operations about trips and travel plans",
+            "name": "trip",
+            "externalDocs": {
+                "description": "Detailed information about trip operations",
+                "url": "http://example.com/docs/trip"
+            }
         }
     ]
 }

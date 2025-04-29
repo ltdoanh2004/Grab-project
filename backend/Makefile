@@ -16,5 +16,7 @@ dropdb:
 swag:
 	swag init -g cmd/main.go
 
+mockdata:
+	docker exec -i grab-bootcamp-db mysql -uroot -p88889999 ${DB_NAME} < mock_data.sql
 
-.PHONY: server mysql createdb dropdb swag
+.PHONY: server mysql createdb dropdb swag mockdata

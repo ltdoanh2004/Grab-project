@@ -1,20 +1,18 @@
 package model
 
-import (
-	"time"
-)
+import "time"
 
-// TripPlace maps to the "trip_places" table.
+// TripPlace associates an place with a trip.
 type TripPlace struct {
-	TripPlaceID    string     `gorm:"type:char(36);primaryKey" json:"trip_place_id"`
-	TripID         uint       `gorm:"column:trip_id;not null" json:"trip_id"`
-	PlaceID        uint       `gorm:"column:place_id;not null" json:"place_id"`
-	VisitDate      *time.Time `gorm:"column:visit_date" json:"visit_date,omitempty"`
-	VisitStartTime *string    `gorm:"column:visit_start_time" json:"visit_start_time,omitempty"`
-	VisitEndTime   *string    `gorm:"column:visit_end_time" json:"visit_end_time,omitempty"`
-	Notes          string     `gorm:"column:notes" json:"notes"`
+	TripPlaceID       string     `gorm:"type:char(36);primaryKey" json:"trip_place_id"`
+	TripDestinationID string     `gorm:"type:char(36);not null" json:"trip_destination_id"`
+	PlaceID           string     `gorm:"type:char(36);not null" json:"place_id"`
+	ScheduledDate     *time.Time `json:"scheduled_date,omitempty"`
+	StartTime         *time.Time `gorm:"column:start_time" json:"start_time,omitempty"`
+	EndTime           *time.Time `gorm:"column:end_time" json:"end_time,omitempty"`
+	Notes             string     `json:"notes"`
 
-	// Associations
-	Trip  *Trip  `json:"trip,omitempty"`
-	Place *Place `gorm:"foreignKey:PlaceID" json:"place,omitempty"`
+	// Update associations
+	TripDestination *TripDestination `json:"trip_destination,omitempty"`
+	Place           *Place           `json:"place,omitempty"`
 }

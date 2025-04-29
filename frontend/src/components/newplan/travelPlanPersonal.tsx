@@ -11,6 +11,10 @@ interface PersonalStepProps {
   onAddOption: (option: PersonalOption) => void;
   onNext?: () => void;
   onPrev?: () => void;
+  destination?: string;
+  budget?: any;
+  people?: any;
+  travelTime?: any;
 }
 
 export const PersonalStep: React.FC<PersonalStepProps> = ({
@@ -18,6 +22,10 @@ export const PersonalStep: React.FC<PersonalStepProps> = ({
   onAddOption,
   onNext,
   onPrev,
+  destination,
+  budget,
+  people,
+  travelTime,
 }) => {
   const isOptionSelected = (option: PersonalOption) => {
     return selectedOptions?.some(
@@ -32,6 +40,20 @@ export const PersonalStep: React.FC<PersonalStepProps> = ({
     ...PERSONAL_OPTIONS.transportation,
     ...PERSONAL_OPTIONS.accommodation,
   ];
+
+  const handleCreateItinerary = () => {
+    const userInput = {
+      destination,
+      budget,
+      people,
+      travelTime,
+      selectedOptions,
+    };
+
+    console.log("userInput:", JSON.stringify(userInput, null, 2));
+
+    if (onNext) onNext();
+  };
 
   return (
     <div className="p-8 font-inter">
@@ -72,9 +94,9 @@ export const PersonalStep: React.FC<PersonalStepProps> = ({
         <Button
           type="primary"
           className="!bg-black !rounded-full"
-          onClick={onNext}
+          onClick={handleCreateItinerary}
         >
-          Tiếp tục
+          Tạo lịch trình
         </Button>
       </div>
     </div>

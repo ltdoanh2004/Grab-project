@@ -12,6 +12,7 @@ type Config struct {
 	Server   ServerConfig   // Server-related configuration
 	Database DatabaseConfig // Database-related configuration
 	Token    TokenConfig    // Token-related configuration
+	AI       AIConfig       // AI service-related configuration
 }
 
 // ServerConfig holds server-specific configuration
@@ -26,6 +27,11 @@ type DatabaseConfig struct {
 	User     string // Database username
 	Password string // Database password
 	Name     string // Database name
+}
+
+type AIConfig struct {
+	Host string // AI service host address
+	Port string // AI service port
 }
 
 // TokenConfig holds token-related configuration
@@ -70,6 +76,10 @@ func NewConfig() (*Config, error) {
 	config.Token.RefreshTokenSecret = viper.GetString("REFRESH_TOKEN_SECRET")
 	config.Token.AccessTokenTTL = time.Minute * time.Duration(viper.GetUint("ACCESS_TOKEN_TTL"))
 	config.Token.RefreshTokenTTL = time.Hour * 24 * time.Duration(viper.GetUint("REFRESH_TOKEN_TTL"))
+
+	// Load AI configuration
+	config.AI.Host = viper.GetString("AI_HOST")
+	config.AI.Port = viper.GetString("AI_PORT")
 
 	// Log the loaded configuration
 	log.Info().Interface("config", config).Msg("Config loaded")

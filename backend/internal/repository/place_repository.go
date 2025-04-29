@@ -8,13 +8,15 @@ import (
 
 // PlaceRepository defines data access methods for the Place entity.
 type PlaceRepository interface {
-	GetByID(placeID uint) (model.Place, error)
+	GetByID(placeID string) (model.Place, error)
 	Create(place *model.Place) error
 	Update(place *model.Place) error
-	Delete(placeID uint) error
-	GetByDestinationID(destinationID uint) ([]model.Place, error)
+	Delete(placeID string) error
+	GetByDestinationID(destinationID string) ([]model.Place, error)
+	GetByCategoryID(categoryID string) ([]model.Place, error)
 	GetAll() ([]model.Place, error)
-	GetPopularPlaces(destinationID uint) ([]model.Place, error)
+	GetWithCategory(placeID string) (model.Place, error)
+	GetAllWithCategory() ([]model.Place, error)
 }
 
 // GormPlaceRepository implements PlaceRepository using GORM.
@@ -32,11 +34,11 @@ func (r *GormPlaceRepository) Create(place *model.Place) error {
 	return r.DB.Create(place).Error
 }
 
-// GetByID retrieves a Place by its ID.
-func (r *GormPlaceRepository) GetByID(placeID uint) (model.Place, error) {
+// GetByID retrieves an Place by its ID.
+func (r *GormPlaceRepository) GetByID(placeID string) (model.Place, error) {
 	var place model.Place
-	if err := r.DB.First(&place, placeID).Error; err != nil {
-		return place, err
+	if err := r.DB.First(&place, "place_id = ?", placeID).Error; err != nil {
+		return model.Place{}, err
 	}
 	return place, nil
 }
@@ -46,15 +48,26 @@ func (r *GormPlaceRepository) Update(place *model.Place) error {
 	return r.DB.Save(place).Error
 }
 
-// Delete removes a Place record by its ID.
-func (r *GormPlaceRepository) Delete(placeID uint) error {
+// Delete removes an Place record by its ID.
+func (r *GormPlaceRepository) Delete(placeID string) error {
 	return r.DB.Delete(&model.Place{}, placeID).Error
 }
 
 // GetByDestinationID retrieves all Place records associated with a specific DestinationID.
-func (r *GormPlaceRepository) GetByDestinationID(destinationID uint) ([]model.Place, error) {
+func (r *GormPlaceRepository) GetByDestinationID(destinationID string) ([]model.Place, error) {
 	var places []model.Place
 	if err := r.DB.Where("destination_id = ?", destinationID).Find(&places).Error; err != nil {
+		return nil, err
+	}
+	return places, nil
+}
+
+// GetByCategoryID retrieves all Place records associated with a specific CategoryID.
+func (r *GormPlaceRepository) GetByCategoryID(categoryID string) ([]model.Place, error) {
+	var places []model.Place
+	if err := r.DB.Joins("JOIN place_category_places ON places.place_id = place_category_places.place_id").
+		Where("place_category_places.category_id = ?", categoryID).
+		Find(&places).Error; err != nil {
 		return nil, err
 	}
 	return places, nil
@@ -69,10 +82,19 @@ func (r *GormPlaceRepository) GetAll() ([]model.Place, error) {
 	return places, nil
 }
 
-// GetPopularPlaces retrieves popular Place records associated with a specific DestinationID.
-func (r *GormPlaceRepository) GetPopularPlaces(destinationID uint) ([]model.Place, error) {
+// GetWithCategory retrieves a Place by its ID with associated categories.
+func (r *GormPlaceRepository) GetWithCategory(placeID string) (model.Place, error) {
+	var place model.Place
+	if err := r.DB.Preload("Categories").First(&place, "place_id = ?", placeID).Error; err != nil {
+		return place, err
+	}
+	return place, nil
+}
+
+// GetAllWithCategory retrieves all Place records with associated categories.
+func (r *GormPlaceRepository) GetAllWithCategory() ([]model.Place, error) {
 	var places []model.Place
-	if err := r.DB.Where("destination_id = ?", destinationID).Order("popularity_score desc").Find(&places).Error; err != nil {
+	if err := r.DB.Preload("Categories").Find(&places).Error; err != nil {
 		return nil, err
 	}
 	return places, nil
