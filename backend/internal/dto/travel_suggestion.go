@@ -40,29 +40,24 @@ type PlacesSuggestion struct {
 }
 
 type RestaurantSuggestion struct {
-	RestaurantID   string            `json:"restaurant_id"`
-	DestinationID  string            `json:"destination_id"`
-	Name           string            `json:"name"`
-	Address        string            `json:"address"`
-	Rating         float64           `json:"rating"`
-	Phone          string            `json:"phone"`
-	PhotoURL       string            `json:"photo_url"`
-	URL            string            `json:"url"`
-	Location       model.Location    `json:"location"`
-	Reviews        model.StringArray `json:"reviews"`
-	Services       model.StringArray `json:"services"`
-	IsDelivery     bool              `json:"is_delivery"`
-	IsBooking      bool              `json:"is_booking"`
-	IsOpening      bool              `json:"is_opening"`
-	PriceRange     string            `json:"price_range"`
-	Description    string            `json:"description"`
-	Cuisines       string            `json:"cuisines"`
-	NumReviews     int               `json:"num_reviews"`
-	ExampleReviews string            `json:"example_reviews"`
-	MediaURLs      string            `json:"media_urls"`
-	MainImage      string            `json:"main_image"`
-	OpeningHours   string            `json:"opening_hours"`
-	ReviewSummary  string            `json:"review_summary"`
+	RestaurantID  string             `json:"restaurant_id"`
+	DestinationID string             `json:"destination_id"`
+	Name          string             `json:"name"`
+	Address       string             `json:"address"`
+	Rating        float64            `json:"rating"`
+	Phone         string             `json:"phone"`
+	PhotoURL      string             `json:"photo_url"`
+	URL           string             `json:"url"`
+	Location      model.Location     `json:"location"`
+	Reviews       model.StringArray  `json:"reviews"`
+	Services      model.ServiceArray `json:"services"`
+	IsDelivery    bool               `json:"is_delivery"`
+	IsBooking     bool               `json:"is_booking"`
+	IsOpening     bool               `json:"is_opening"`
+	PriceRange    model.PriceRange   `json:"price_range"`
+	Description   string             `json:"description"`
+	Cuisines      string             `json:"cuisines"`
+	OpeningHours  string             `json:"opening_hours"`
 }
 
 type RestaurantsSuggestion struct {
