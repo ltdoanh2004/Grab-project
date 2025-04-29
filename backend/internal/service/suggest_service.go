@@ -52,7 +52,7 @@ func (ss *suggestService) callAISuggestion(endpoint string, travelPreference *dt
 		endpoint,
 	)
 
-	req, err := http.NewRequest("POST", aiURL, bytes.NewBuffer(reqBody))
+	req, err := http.NewRequest("GET", aiURL, bytes.NewBuffer(reqBody))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
