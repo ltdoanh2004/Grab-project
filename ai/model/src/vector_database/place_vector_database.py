@@ -397,6 +397,89 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         ids, _ = self.query(query_text, top_k=top_k)
         return ids
 
+    def update_metadata_from_csv(self, csv_path: str = None, batch_size: int = 100) -> bool:
+        """
+        Update metadata for all places from a CSV file
+        
+        Args:
+            csv_path: Path to the CSV file containing updated metadata
+                     Default: ../data/place_processed_embedding.csv
+            batch_size: Number of items to update in each batch
+            
+        Returns:
+            Boolean indicating success
+        """
+        if not self.index:
+            raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
+            
+        if csv_path is None:
+            csv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
+                                   'data', 'place_processed_embedding.csv')
+            
+        if not os.path.exists(csv_path):
+            raise ValueError(f"CSV file not found at: {csv_path}")
+            
+        print(f"Loading data from: {csv_path}")
+        df = pd.read_csv(csv_path)
+        
+        # Fill NaN values with appropriate defaults
+        df['name'] = df['name'].fillna('')
+        df['description'] = df['description'].fillna('')
+        df['categories'] = df['categories'].fillna('')
+        df['opening_hours'] = df['opening_hours'].fillna('')
+        df['price'] = df['price'].fillna(0)
+        df['city'] = df['city'].fillna('')
+        df['rating'] = df['rating'].fillna(0)
+        
+        print(f"Found {len(df)} items to update")
+        
+        # Process in batches
+        vectors_to_upsert = []
+        for idx, row in tqdm(df.iterrows(), total=len(df), desc="Updating metadata"):
+            try:
+                # Get current item data
+                current_data = self.get_item_by_id(row['place_id'])
+                if not current_data:
+                    print(f"Item with ID {row['place_id']} not found in Pinecone")
+                    continue
+                    
+                # Get current values
+                current_values = current_data['vectors'][str(row['place_id'])]['values']
+                
+                # Create new metadata
+                metadata = {
+                    "id": row["place_id"],
+                    "name": row["name"],
+                    "categories": row["categories"],
+                    "opening_hours": row["opening_hours"],
+                    "price": row["price"],
+                    "city": row["city"],
+                    "rating": row["rating"],
+                    "description": row["description"]
+                }
+                
+                vectors_to_upsert.append({
+                    "id": str(row["place_id"]),
+                    "values": current_values,
+                    "metadata": metadata
+                })
+                
+                # Upsert in batches
+                if len(vectors_to_upsert) >= batch_size:
+                    self.index.upsert(vectors=vectors_to_upsert)
+                    vectors_to_upsert = []
+                    
+            except Exception as e:
+                print(f"Error processing row {idx}: {e}")
+                continue
+        
+        # Upsert any remaining vectors
+        if vectors_to_upsert:
+            self.index.upsert(vectors=vectors_to_upsert)
+        
+        print(f"Successfully updated metadata for {len(df)} items")
+        return True
+
 def main():
     parser = argparse.ArgumentParser(description='Vector Database for Place Recommendations')
     parser.add_argument('--prepare-data', action='store_true', help='Prepare and process place data')
@@ -406,6 +489,7 @@ def main():
     parser.add_argument('--incremental', action='store_true', help='Use incremental update for data insertion')
     parser.add_argument('--query', type=str, help='Query text to search for similar places')
     parser.add_argument('--top-k', type=int, default=5, help='Number of results to return')
+    parser.add_argument('--update-metadata', action='store_true', help='Update metadata from CSV file')
     args = parser.parse_args()
 
     vector_db = PlaceVectorDatabase()
@@ -438,6 +522,8 @@ def main():
             print(f"Rating: {match['metadata']['rating']}")
             print(f"Description: {match['metadata']['description']}")
             print("-" * 50)
-
+    if args.update_metadata:
+        vector_db.set_up_pinecone()
+        vector_db.update_metadata_from_csv()
 if __name__ == "__main__":
     main() 
