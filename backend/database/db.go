@@ -23,22 +23,18 @@ func NewDB(cfg *config.Config) (*gorm.DB, error) {
 		return nil, err
 	}
 
-	db.Migrator().DropTable(
-		&model.User{},
-		&model.Trip{},
-		&model.Destination{},
-		&model.ActivityCategory{},
-		&model.Activity{},
-		&model.Accommodation{},
-		&model.Place{},
-		&model.Restaurant{},
-		&model.RestaurantFood{},
-		&model.TripDestination{},
-		&model.TripActivity{},
-		&model.TripAccommodation{},
-		&model.TripPlace{},
-		&model.TripRestaurant{},
-	)
+	// db.Migrator().DropTable(
+	// 	&model.User{},
+	// 	&model.Trip{},
+	// 	&model.Destination{},
+	// 	&model.Place{},
+	// 	&model.Accommodation{},
+	// 	&model.Restaurant{},
+	// 	&model.TripDestination{},
+	// 	&model.TripPlace{},
+	// 	&model.TripAccommodation{},
+	// 	&model.TripRestaurant{},
+	// )
 
 	db.Exec("SET FOREIGN_KEY_CHECKS = 0;")
 
@@ -47,16 +43,12 @@ func NewDB(cfg *config.Config) (*gorm.DB, error) {
 		&model.User{},
 		&model.Trip{},
 		&model.Destination{},
-		&model.ActivityCategory{},
-		&model.Activity{},
-		&model.Accommodation{},
 		&model.Place{},
+		&model.Accommodation{},
 		&model.Restaurant{},
-		&model.RestaurantFood{},
 		&model.TripDestination{},
-		&model.TripActivity{},
-		&model.TripAccommodation{},
 		&model.TripPlace{},
+		&model.TripAccommodation{},
 		&model.TripRestaurant{},
 	)
 	if err != nil {

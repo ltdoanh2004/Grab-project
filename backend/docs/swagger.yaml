@@ -1,5 +1,154 @@
 basePath: /api/v1
 definitions:
+  dto.AccommodationSuggestion:
+    properties:
+      accommodation_id:
+        type: string
+      address:
+        type: string
+      amenities:
+        type: string
+      booking_link:
+        type: string
+      description:
+        type: string
+      destination_id:
+        type: string
+      image_url:
+        type: string
+      name:
+        type: string
+      star_rating:
+        type: number
+      type:
+        type: string
+    type: object
+  dto.AccommodationsSuggestion:
+    properties:
+      accommodations:
+        items:
+          $ref: '#/definitions/dto.AccommodationSuggestion'
+        type: array
+    type: object
+  dto.ActivitiesSuggestion:
+    properties:
+      activities:
+        items:
+          $ref: '#/definitions/dto.ActivitySuggestion'
+        type: array
+    type: object
+  dto.ActivitySuggestion:
+    properties:
+      activity_id:
+        type: string
+      category_id:
+        type: string
+      cost:
+        type: number
+      description:
+        type: string
+      destination_id:
+        type: string
+      duration:
+        type: integer
+      image_url:
+        type: string
+      name:
+        type: string
+      place_id:
+        type: string
+    type: object
+  dto.CreateTripAccommodationRequest:
+    properties:
+      accommodation_id:
+        type: string
+      check_in_date:
+        type: string
+      check_out_date:
+        type: string
+      cost:
+        type: number
+      notes:
+        type: string
+      trip_destination_id:
+        type: string
+    type: object
+  dto.CreateTripActivityRequest:
+    properties:
+      activity_id:
+        type: string
+      end_time:
+        type: string
+      notes:
+        type: string
+      scheduled_date:
+        type: string
+      start_time:
+        type: string
+      trip_destination_id:
+        type: string
+    type: object
+  dto.CreateTripDestinationRequest:
+    properties:
+      accommodations:
+        items:
+          $ref: '#/definitions/dto.CreateTripAccommodationRequest'
+        type: array
+      activities:
+        items:
+          $ref: '#/definitions/dto.CreateTripActivityRequest'
+        type: array
+      arrival_date:
+        type: string
+      departure_date:
+        type: string
+      destination_id:
+        type: string
+      order_num:
+        type: integer
+      restaurants:
+        items:
+          $ref: '#/definitions/dto.CreateTripRestaurantRequest'
+        type: array
+      trip_id:
+        type: string
+    type: object
+  dto.CreateTripRequest:
+    properties:
+      budget:
+        type: number
+      end_date:
+        type: string
+      start_date:
+        type: string
+      trip_destinations:
+        items:
+          $ref: '#/definitions/dto.CreateTripDestinationRequest'
+        type: array
+      trip_name:
+        type: string
+      trip_status:
+        type: string
+      user_id:
+        type: string
+    type: object
+  dto.CreateTripRestaurantRequest:
+    properties:
+      end_time:
+        type: string
+      meal_date:
+        type: string
+      notes:
+        type: string
+      reservation_info:
+        type: string
+      restaurant_id:
+        type: string
+      start_time:
+        type: string
+      trip_destination_id:
+        type: string
+    type: object
   dto.LoginRequest:
     properties:
       password:
@@ -19,6 +168,38 @@ definitions:
         type: string
       username:
         type: string
+    type: object
+  dto.RestaurantSuggestion:
+    properties:
+      address:
+        type: string
+      avg_rating:
+        type: number
+      cuisine_type:
+        type: string
+      description:
+        type: string
+      destination_id:
+        type: string
+      establishment_type:
+        type: string
+      image_url:
+        type: string
+      name:
+        type: string
+      opening_hours:
+        type: string
+      price_range:
+        type: string
+      restaurant_id:
+        type: string
+    type: object
+  dto.RestaurantsSuggestion:
+    properties:
+      restaurants:
+        items:
+          $ref: '#/definitions/dto.RestaurantSuggestion'
+        type: array
     type: object
   dto.TodoCreate:
     description: Todo creation request body
@@ -49,6 +230,126 @@ definitions:
         type: string
       refresh_token:
         description: Optional refresh token, used for obtaining new access tokens.
+        type: string
+    type: object
+  dto.TravelPreference:
+    properties:
+      activities:
+        items:
+          type: string
+        type: array
+      budget:
+        type: string
+      duration_days:
+        type: integer
+      limit:
+        type: integer
+      location:
+        type: string
+      season:
+        type: string
+      travel_style:
+        type: string
+    type: object
+  dto.TripAccommodationDTO:
+    properties:
+      accommodation_id:
+        type: string
+      check_in_date:
+        type: string
+      check_out_date:
+        type: string
+      cost:
+        type: number
+      notes:
+        type: string
+      trip_accommodation_id:
+        type: string
+      trip_destination_id:
+        type: string
+    type: object
+  dto.TripActivityDTO:
+    properties:
+      activity_id:
+        type: string
+      end_time:
+        type: string
+      notes:
+        type: string
+      scheduled_date:
+        type: string
+      start_time:
+        type: string
+      trip_activity_id:
+        type: string
+      trip_destination_id:
+        type: string
+    type: object
+  dto.TripDTO:
+    properties:
+      budget:
+        type: number
+      end_date:
+        type: string
+      start_date:
+        type: string
+      trip_destinations:
+        items:
+          $ref: '#/definitions/dto.TripDestinationDTO'
+        type: array
+      trip_id:
+        type: string
+      trip_name:
+        type: string
+      trip_status:
+        type: string
+      user_id:
+        type: string
+    type: object
+  dto.TripDestinationDTO:
+    properties:
+      accommodations:
+        items:
+          $ref: '#/definitions/dto.TripAccommodationDTO'
+        type: array
+      activities:
+        items:
+          $ref: '#/definitions/dto.TripActivityDTO'
+        type: array
+      arrival_date:
+        type: string
+      departure_date:
+        type: string
+      destination_id:
+        type: string
+      order_num:
+        type: integer
+      restaurants:
+        items:
+          $ref: '#/definitions/dto.TripRestaurantDTO'
+        type: array
+      trip_destination_id:
+        type: string
+      trip_id:
+        type: string
+    type: object
+  dto.TripRestaurantDTO:
+    properties:
+      end_time:
+        type: string
+      meal_date:
+        type: string
+      notes:
+        type: string
+      reservation_info:
+        type: string
+      restaurant_id:
+        type: string
+      start_time:
+        type: string
+      trip_destination_id:
+        type: string
+      trip_restaurant_id:
         type: string
     type: object
   model.Response:
@@ -95,14 +396,13 @@ info:
     email: support@example.com
     name: API Support Team
     url: http://www.example.com/support
-  description: A modern RESTful API for managing your todos efficiently. This API
-    provides comprehensive endpoints for creating, reading, updating, and deleting
-    todo items.
+  description: A modern RESTful API for managing travel plans, including trips, destinations,
+    accommodations, activities, and restaurants.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
   termsOfService: http://swagger.io/terms/
-  title: Todo List API
+  title: Travel Planning API
   version: "1.0"
 paths:
   /api/v1/auth/login:
@@ -171,6 +471,111 @@ paths:
       summary: User registration
       tags:
       - auth
+  /api/v1/suggest/accommodations:
+    get:
+      consumes:
+      - application/json
+      description: Get accommodation suggestions based on travel preferences
+      parameters:
+      - description: Travel Preferences
+        in: body
+        name: preference
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TravelPreference'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.AccommodationsSuggestion'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Suggest accommodations
+      tags:
+      - suggest
+  /api/v1/suggest/activities:
+    get:
+      consumes:
+      - application/json
+      description: Get activity suggestions based on travel preferences
+      parameters:
+      - description: Travel Preferences
+        in: body
+        name: preference
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TravelPreference'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ActivitiesSuggestion'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Suggest activities
+      tags:
+      - suggest
+  /api/v1/suggest/restaurants:
+    get:
+      consumes:
+      - application/json
+      description: Get restaurant suggestions based on travel preferences
+      parameters:
+      - description: Travel Preferences
+        in: body
+        name: preference
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TravelPreference'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.RestaurantsSuggestion'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Suggest restaurants
+      tags:
+      - suggest
   /api/v1/todos:
     get:
       consumes:
@@ -332,6 +737,112 @@ paths:
       summary: Update a todo
       tags:
       - todos
+  /api/v1/trip/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get complete trip details including destinations, accommodations,
+        activities, and restaurants
+      parameters:
+      - description: Trip ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Trip details
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.TripDTO'
+              type: object
+        "400":
+          description: Invalid trip ID
+          schema:
+            $ref: '#/definitions/model.Response'
+        "404":
+          description: Trip not found
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Get trip details
+      tags:
+      - trip
+  /api/v1/trip/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new trip with destinations, accommodations, activities,
+        and restaurants
+      parameters:
+      - description: Trip Details
+        in: body
+        name: trip
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateTripRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Returns trip ID
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Create a new trip
+      tags:
+      - trip
+  /api/v1/trip/save:
+    put:
+      consumes:
+      - application/json
+      description: Update an existing trip with new details including destinations,
+        accommodations, activities, and restaurants
+      parameters:
+      - description: Trip Details
+        in: body
+        name: trip
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TripDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Trip updated successfully
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Save changes to an existing trip
+      tags:
+      - trip
   /health:
     get:
       consumes:
@@ -370,3 +881,18 @@ tags:
   name: auth
 - description: API health check operations
   name: health
+- description: Operations about travel suggestions
+  externalDocs:
+    description: Detailed information about suggestion operations
+    url: http://example.com/docs/suggest
+  name: suggest
+- description: Operations about travel suggestion types (hotel, restaurant, landmark)
+  externalDocs:
+    description: Detailed information about suggestion type operations
+    url: http://example.com/docs/suggestionType
+  name: suggestionType
+- description: Operations about trips and travel plans
+  externalDocs:
+    description: Detailed information about trip operations
+    url: http://example.com/docs/trip
+  name: trip

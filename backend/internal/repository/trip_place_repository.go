@@ -8,13 +8,11 @@ import (
 
 // TripPlaceRepository defines data access methods for the TripPlace entity.
 type TripPlaceRepository interface {
-	GetByID(tripPlaceID uint) (model.TripPlace, error)
+	GetByID(tripPlaceID string) (model.TripPlace, error)
 	Create(tripPlace *model.TripPlace) error
 	Update(tripPlace *model.TripPlace) error
-	Delete(tripPlaceID uint) error
-	GetByTripID(tripID uint) ([]model.TripPlace, error)
-	GetAllWithAssociations() ([]model.TripPlace, error)
-	GetWithAssociations(tripPlaceID uint) (model.TripPlace, error)
+	Delete(tripPlaceID string) error
+	GetByTripID(tripID string) ([]model.TripPlace, error)
 }
 
 // GormTripPlaceRepository implements TripPlaceRepository using GORM.
@@ -33,10 +31,10 @@ func (r *GormTripPlaceRepository) Create(tripPlace *model.TripPlace) error {
 }
 
 // GetByID retrieves a TripPlace by its ID.
-func (r *GormTripPlaceRepository) GetByID(tripPlaceID uint) (model.TripPlace, error) {
+func (r *GormTripPlaceRepository) GetByID(tripPlaceID string) (model.TripPlace, error) {
 	var tripPlace model.TripPlace
-	if err := r.DB.First(&tripPlace, tripPlaceID).Error; err != nil {
-		return tripPlace, err
+	if err := r.DB.First(&tripPlace, "trip_place_id = ?", tripPlaceID).Error; err != nil {
+		return model.TripPlace{}, err
 	}
 	return tripPlace, nil
 }
@@ -47,33 +45,15 @@ func (r *GormTripPlaceRepository) Update(tripPlace *model.TripPlace) error {
 }
 
 // Delete removes a TripPlace record by its ID.
-func (r *GormTripPlaceRepository) Delete(tripPlaceID uint) error {
+func (r *GormTripPlaceRepository) Delete(tripPlaceID string) error {
 	return r.DB.Delete(&model.TripPlace{}, tripPlaceID).Error
 }
 
 // GetByTripID retrieves all TripPlace records associated with a specific TripID.
-func (r *GormTripPlaceRepository) GetByTripID(tripID uint) ([]model.TripPlace, error) {
-	var tripPlaces []model.TripPlace
-	if err := r.DB.Where("trip_id = ?", tripID).Find(&tripPlaces).Error; err != nil {
+func (r *GormTripPlaceRepository) GetByTripID(tripDestinationID string) ([]model.TripPlace, error) {
+	var tripActivities []model.TripPlace
+	if err := r.DB.Where("trip_destination_id = ?", tripDestinationID).Find(&tripActivities).Error; err != nil {
 		return nil, err
 	}
-	return tripPlaces, nil
-}
-
-// GetAllWithAssociations retrieves all TripPlace records with associated records.
-func (r *GormTripPlaceRepository) GetAllWithAssociations() ([]model.TripPlace, error) {
-	var tripPlaces []model.TripPlace
-	if err := r.DB.Preload("Trip").Preload("Place").Find(&tripPlaces).Error; err != nil {
-		return nil, err
-	}
-	return tripPlaces, nil
-}
-
-// GetWithAssociations retrieves a TripPlace by its ID with associated records.
-func (r *GormTripPlaceRepository) GetWithAssociations(tripPlaceID uint) (model.TripPlace, error) {
-	var tripPlace model.TripPlace
-	if err := r.DB.Preload("Trip").Preload("Place").First(&tripPlace, tripPlaceID).Error; err != nil {
-		return tripPlace, err
-	}
-	return tripPlace, nil
+	return tripActivities, nil
 }

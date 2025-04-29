@@ -21,9 +21,9 @@ import (
 	"skeleton-internship-backend/internal/service"
 )
 
-// @title           Todo List API
+// @title           Travel Planning API
 // @version         1.0
-// @description     A modern RESTful API for managing your todos efficiently. This API provides comprehensive endpoints for creating, reading, updating, and deleting todo items.
+// @description     A modern RESTful API for managing travel plans, including trips, destinations, accommodations, places, and restaurants.
 // @termsOfService  http://swagger.io/terms/
 
 // @contact.name   API Support Team
@@ -50,6 +50,21 @@ import (
 // @tag.name         health
 // @tag.description  API health check operations
 
+// @tag.name         suggest
+// @tag.description  Operations about travel suggestions
+// @tag.docs.url     http://example.com/docs/suggest
+// @tag.docs.description Detailed information about suggestion operations
+
+// @tag.name         suggestionType
+// @tag.description  Operations about travel suggestion types (hotel, restaurant, landmark)
+// @tag.docs.url     http://example.com/docs/suggestionType
+// @tag.docs.description Detailed information about suggestion type operations
+
+// @tag.name         trip
+// @tag.description  Operations about trips and travel plans
+// @tag.docs.url     http://example.com/docs/trip
+// @tag.docs.description Detailed information about trip operations
+
 // @securityDefinitions.apikey Bearer
 // @in header
 // @name Authorization
@@ -63,10 +78,23 @@ func main() {
 			NewGinEngine,
 			repository.NewRepository,
 			repository.NewUserRepository,
+			repository.NewPlaceRepository,         // Add this
+			repository.NewRestaurantRepository,    // Add this
+			repository.NewAccommodationRepository, // Add this
+			repository.NewTripRepository,
+			repository.NewTripDestinationRepository,
+			repository.NewTripAccommodationRepository,
+			repository.NewTripPlaceRepository,
+			repository.NewTripRestaurantRepository,
 			service.NewService,
 			service.NewAuthService,
+			service.NewTripService,
 			controller.NewController,
 			controller.NewAuthController,
+			controller.NewTripController,
+			service.NewSuggestService,
+			controller.NewSuggestController,
+			service.NewInsertDataService,
 		),
 		fx.Invoke(RegisterRoutes),
 	)
@@ -105,9 +133,14 @@ func RegisterRoutes(
 	cfg *config.Config,
 	controller *controller.Controller,
 	auth_controller *controller.AuthController,
+	suggest_controller *controller.SuggestController,
+	trip_controller *controller.TripController,
+	insertDataService service.InsertDataService,
 ) {
 	controller.RegisterRoutes(router)
 	auth_controller.RegisterRoutes(router)
+	suggest_controller.RegisterRoutes(router)
+	trip_controller.RegisterRoutes(router)
 
 	logger.Init()
 
@@ -119,6 +152,14 @@ func RegisterRoutes(
 	lifecycle.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			log.Info().Msgf("Starting server on port %s", cfg.Server.Port)
+
+			// Edit csv path here
+			err := insertDataService.InsertHotelData("./mockdata/hotel_processed.csv")
+			if err != nil {
+				log.Fatal().Err(err).Msg("Failed to import data from CSV")
+				return err
+			}
+
 			go func() {
 				if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 					log.Fatal().Err(err).Msg("Failed to start server")

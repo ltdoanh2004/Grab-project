@@ -23,22 +23,29 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
 
   return (
     <div className="p-8 font-inter">
-      <div className="mb-6 text-center">
-        <Title level={2} className="mb-4 font-black">
-          Trước tiên, bạn muốn đi đâu?
-        </Title>
-        <Text className="text-gray-600 mb-4">
-          Bạn sẽ nhận được các gợi ý cá nhân hóa mà bạn có thể lưu lại và biến
-          thành lịch trình du lịch của riêng bạn.
-        </Text>
-      </div>
-      <div className="justify-center flex mb-16">
-        <Input
-          placeholder="Chọn điểm đến"
-          className="w-full max-w-xl mx-auto"
-          size="large"
-          prefix={<SearchOutlined />}
-        />
+      <div
+        className="mb-16 relative rounded-2xl overflow-hidden
+  bg-[url('/hinhnen.jpg')] bg-cover bg-center p-12 pb-24 shadow-lg before:content-[''] before:absolute before:inset-0
+   before:bg-gradient-to-b before:from-black/50 before:via-black/30 before:to-black/20 after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-20 after:bg-gradient-to-t after:from-white after:to-transparent after:blur-sm"
+      >
+        <div className="relative z-10 text-center">
+          <p className="mb-4 font-semibold text-white text-3xl">
+            Trước tiên, bạn muốn đi đâu?
+          </p>
+          <p className="text-gray-200 font-extralight mb-8 text-sm">
+            Bạn sẽ nhận được các gợi ý cá nhân hóa mà bạn có thể lưu lại và biến
+            thành lịch trình du lịch của riêng bạn.
+          </p>
+
+          <div className="relative z-20 max-w-xl mx-auto transform translate-y-12">
+            <Input
+              placeholder="Chọn điểm đến"
+              className="w-full shadow-lg rounded-full py-3"
+              size="large"
+              prefix={<SearchOutlined className="ml-2" />}
+            />
+          </div>
+        </div>
       </div>
       <div className="flex justify-center flex-col mb-16">
         <p className="text-center font-semibold text-xl mb-4">
