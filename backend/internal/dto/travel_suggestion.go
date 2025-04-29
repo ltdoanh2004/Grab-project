@@ -90,3 +90,9 @@ type AccommodationSuggestion struct {
 type AccommodationsSuggestion struct {
 	Accommodations []AccommodationSuggestion `json:"accommodations"`
 }
+
+type TripSuggestionRequest struct {
+	Accommodation AccommodationsSuggestion `json:"accommodation"`
+	Places        PlacesSuggestion         `json:"places"`
+	Restaurants   RestaurantsSuggestion    `json:"restaurants"`
+}

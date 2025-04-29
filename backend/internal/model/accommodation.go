@@ -16,5 +16,5 @@ type Accommodation struct {
 	RoomInfo        string        `json:"room_info"`
 	Unit            string        `json:"unit"`
 	Images          ImageArray    `gorm:"type:json" json:"images"`
-	RoomTypes       RoomTypeArray `json:"room_types"`
+	RoomTypes       RoomTypeArray `gorm:"type:json" json:"room_types"`
 }

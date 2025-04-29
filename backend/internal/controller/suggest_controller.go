@@ -11,13 +11,16 @@ import (
 
 type SuggestController struct {
 	suggestSerivce service.SuggestService
+	tripService    service.TripService
 }
 
 func NewSuggestController(
 	suggestService service.SuggestService,
+	tripService service.TripService,
 ) *SuggestController {
 	return &SuggestController{
 		suggestSerivce: suggestService,
+		tripService:    tripService,
 	}
 }
 

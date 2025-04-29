@@ -31,6 +31,10 @@ func ReadCSV(filePath string) ([]map[string]string, error) {
 			value = strings.ReplaceAll(value, "'", "\"")
 			value = strings.ReplaceAll(value, "\\xa0", " ")
 			recordMap[header[i]] = value
+			if i == 0 {
+				// Remove leading and trailing spaces from the first column
+				recordMap["id"] = strings.TrimSpace(value)
+			}
 		}
 		records = append(records, recordMap)
 	}

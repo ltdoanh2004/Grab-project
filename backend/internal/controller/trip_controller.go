@@ -28,7 +28,8 @@ func (tc *TripController) RegisterRoutes(router *gin.Engine) {
 		{
 			trip.POST("/create", tc.CreateTrip)
 			trip.PUT("/save", tc.SaveTrip)
-			trip.GET("/:id", tc.GetTrip) // Add this line
+			trip.GET("/:id", tc.GetTrip)
+			trip.GET("/suggest", tc.SuggestTrip)
 		}
 	}
 }
@@ -146,5 +147,43 @@ func (tc *TripController) GetTrip(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, model.Response{
 		Message: "Trip retrieved successfully",
 		Data:    trip,
+	})
+}
+
+// SuggestTrip godoc
+// @Summary Get trip suggestions
+// @Description Get AI-generated trip suggestions based on user preferences
+// @Tags trip
+// @Accept json
+// @Produce json
+// @Param request body dto.TripSuggestionRequest true "Trip Suggestion Parameters"
+// @Success 200 {object} model.Response{data=dto.CreateTripRequest} "Suggested trip"
+// @Failure 400 {object} model.Response "Invalid request"
+// @Failure 500 {object} model.Response "Internal server error"
+// @Router /api/v1/trip/suggest [get]
+func (tc *TripController) SuggestTrip(ctx *gin.Context) {
+	endpoints := "/suggest/trip"
+	var request dto.TripSuggestionRequest
+	if err := ctx.ShouldBindJSON(&request); err != nil {
+		ctx.JSON(http.StatusBadRequest, model.Response{
+			Message: "Invalid request body: " + err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
+	var suggestedTrip *dto.CreateTripRequest
+	suggestedTrip, err := tc.tripService.SuggestTrip(request, endpoints)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.Response{
+			Message: "Failed to save trip: " + err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, model.Response{
+		Message: "Trip saved successfully",
+		Data:    suggestedTrip,
 	})
 }

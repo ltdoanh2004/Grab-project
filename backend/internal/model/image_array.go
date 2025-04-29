@@ -14,13 +14,28 @@ type Image struct {
 type ImageArray []Image
 
 func (ia ImageArray) Value() (driver.Value, error) {
-	return json.Marshal(ia)
+	if len(ia) == 0 {
+		return "[]", nil
+	}
+	bytes, err := json.Marshal(ia)
+	if err != nil {
+		return nil, err
+	}
+	return string(bytes), nil
 }
 
 func (ia *ImageArray) Scan(value interface{}) error {
-	bytes, ok := value.([]byte)
-	if !ok {
-		return errors.New("type assertion to []byte failed")
+	if value == nil {
+		*ia = ImageArray{}
+		return nil
 	}
-	return json.Unmarshal(bytes, ia)
+
+	switch v := value.(type) {
+	case []byte:
+		return json.Unmarshal(v, ia)
+	case string:
+		return json.Unmarshal([]byte(v), ia)
+	default:
+		return errors.New("invalid type for ImageArray")
+	}
 }
