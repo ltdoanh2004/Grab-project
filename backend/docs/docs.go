@@ -192,7 +192,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/suggest/activities": {
+        "/api/v1/suggest/places": {
             "get": {
                 "description": "Get activity suggestions based on travel preferences",
                 "consumes": [
@@ -204,7 +204,7 @@ const docTemplate = `{
                 "tags": [
                     "suggest"
                 ],
-                "summary": "Suggest activities",
+                "summary": "Suggest places",
                 "parameters": [
                     {
                         "description": "Travel Preferences",
@@ -228,7 +228,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.ActivitiesSuggestion"
+                                            "$ref": "#/definitions/dto.PlacesSuggestion"
                                         }
                                     }
                                 }
@@ -673,6 +673,64 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/trip/suggest": {
+            "get": {
+                "description": "Get AI-generated trip suggestions based on user preferences",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "trip"
+                ],
+                "summary": "Get trip suggestions",
+                "parameters": [
+                    {
+                        "description": "Trip Suggestion Parameters",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.TripSuggestionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Suggested trip",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.CreateTripRequest"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/trip/{id}": {
             "get": {
                 "description": "Get complete trip details including destinations, accommodations, activities, and restaurants",
@@ -766,13 +824,10 @@ const docTemplate = `{
                 "accommodation_id": {
                     "type": "string"
                 },
-                "address": {
-                    "type": "string"
-                },
-                "amenities": {
-                    "type": "string"
-                },
                 "booking_link": {
+                    "type": "string"
+                },
+                "city": {
                     "type": "string"
                 },
                 "description": {
@@ -781,16 +836,40 @@ const docTemplate = `{
                 "destination_id": {
                     "type": "string"
                 },
+                "elderly_friendly": {
+                    "type": "boolean"
+                },
                 "image_url": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Image"
+                    }
+                },
+                "location": {
                     "type": "string"
                 },
                 "name": {
                     "type": "string"
                 },
-                "star_rating": {
+                "price": {
                     "type": "number"
                 },
-                "type": {
+                "rating": {
+                    "type": "number"
+                },
+                "room_info": {
+                    "type": "string"
+                },
+                "room_types": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.RoomType"
+                    }
+                },
+                "tax_info": {
+                    "type": "string"
+                },
+                "unit": {
                     "type": "string"
                 }
             }
@@ -803,49 +882,6 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/dto.AccommodationSuggestion"
                     }
-                }
-            }
-        },
-        "dto.ActivitiesSuggestion": {
-            "type": "object",
-            "properties": {
-                "activities": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/dto.ActivitySuggestion"
-                    }
-                }
-            }
-        },
-        "dto.ActivitySuggestion": {
-            "type": "object",
-            "properties": {
-                "activity_id": {
-                    "type": "string"
-                },
-                "category_id": {
-                    "type": "string"
-                },
-                "cost": {
-                    "type": "number"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "destination_id": {
-                    "type": "string"
-                },
-                "duration": {
-                    "type": "integer"
-                },
-                "image_url": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "place_id": {
-                    "type": "string"
                 }
             }
         },
@@ -872,29 +908,6 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.CreateTripActivityRequest": {
-            "type": "object",
-            "properties": {
-                "activity_id": {
-                    "type": "string"
-                },
-                "end_time": {
-                    "type": "string"
-                },
-                "notes": {
-                    "type": "string"
-                },
-                "scheduled_date": {
-                    "type": "string"
-                },
-                "start_time": {
-                    "type": "string"
-                },
-                "trip_destination_id": {
-                    "type": "string"
-                }
-            }
-        },
         "dto.CreateTripDestinationRequest": {
             "type": "object",
             "properties": {
@@ -902,12 +915,6 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/dto.CreateTripAccommodationRequest"
-                    }
-                },
-                "activities": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/dto.CreateTripActivityRequest"
                     }
                 },
                 "arrival_date": {
@@ -922,6 +929,12 @@ const docTemplate = `{
                 "order_num": {
                     "type": "integer"
                 },
+                "places": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.CreateTripPlaceRequest"
+                    }
+                },
                 "restaurants": {
                     "type": "array",
                     "items": {
@@ -929,6 +942,29 @@ const docTemplate = `{
                     }
                 },
                 "trip_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CreateTripPlaceRequest": {
+            "type": "object",
+            "properties": {
+                "end_time": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "place_id": {
+                    "type": "string"
+                },
+                "scheduled_date": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "trip_destination_id": {
                     "type": "string"
                 }
             }
@@ -999,6 +1035,73 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.PlaceSuggestion": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "categories": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "duration": {
+                    "type": "string"
+                },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Image"
+                    }
+                },
+                "main_image": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "opening_hours": {
+                    "type": "string"
+                },
+                "place_id": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "reviews": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.PlacesSuggestion": {
+            "type": "object",
+            "properties": {
+                "places": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.PlaceSuggestion"
+                    }
+                }
+            }
+        },
         "dto.RegisterRequest": {
             "type": "object",
             "properties": {
@@ -1025,10 +1128,7 @@ const docTemplate = `{
                 "address": {
                     "type": "string"
                 },
-                "avg_rating": {
-                    "type": "number"
-                },
-                "cuisine_type": {
+                "cuisines": {
                     "type": "string"
                 },
                 "description": {
@@ -1037,22 +1137,67 @@ const docTemplate = `{
                 "destination_id": {
                     "type": "string"
                 },
-                "establishment_type": {
+                "example_reviews": {
                     "type": "string"
                 },
-                "image_url": {
+                "is_booking": {
+                    "type": "boolean"
+                },
+                "is_delivery": {
+                    "type": "boolean"
+                },
+                "is_opening": {
+                    "type": "boolean"
+                },
+                "location": {
+                    "$ref": "#/definitions/model.Location"
+                },
+                "main_image": {
+                    "type": "string"
+                },
+                "media_urls": {
                     "type": "string"
                 },
                 "name": {
                     "type": "string"
                 },
+                "num_reviews": {
+                    "type": "integer"
+                },
                 "opening_hours": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "photo_url": {
                     "type": "string"
                 },
                 "price_range": {
                     "type": "string"
                 },
+                "rating": {
+                    "type": "number"
+                },
                 "restaurant_id": {
+                    "type": "string"
+                },
+                "review_summary": {
+                    "type": "string"
+                },
+                "reviews": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "url": {
                     "type": "string"
                 }
             }
@@ -1113,12 +1258,6 @@ const docTemplate = `{
         "dto.TravelPreference": {
             "type": "object",
             "properties": {
-                "activities": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
                 "budget": {
                     "type": "string"
                 },
@@ -1130,6 +1269,12 @@ const docTemplate = `{
                 },
                 "location": {
                     "type": "string"
+                },
+                "places": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "season": {
                     "type": "string"
@@ -1158,32 +1303,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "trip_accommodation_id": {
-                    "type": "string"
-                },
-                "trip_destination_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.TripActivityDTO": {
-            "type": "object",
-            "properties": {
-                "activity_id": {
-                    "type": "string"
-                },
-                "end_time": {
-                    "type": "string"
-                },
-                "notes": {
-                    "type": "string"
-                },
-                "scheduled_date": {
-                    "type": "string"
-                },
-                "start_time": {
-                    "type": "string"
-                },
-                "trip_activity_id": {
                     "type": "string"
                 },
                 "trip_destination_id": {
@@ -1232,12 +1351,6 @@ const docTemplate = `{
                         "$ref": "#/definitions/dto.TripAccommodationDTO"
                     }
                 },
-                "activities": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/dto.TripActivityDTO"
-                    }
-                },
                 "arrival_date": {
                     "type": "string"
                 },
@@ -1250,6 +1363,12 @@ const docTemplate = `{
                 "order_num": {
                     "type": "integer"
                 },
+                "places": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.TripPlaceDTO"
+                    }
+                },
                 "restaurants": {
                     "type": "array",
                     "items": {
@@ -1260,6 +1379,32 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "trip_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.TripPlaceDTO": {
+            "type": "object",
+            "properties": {
+                "end_time": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "place_id": {
+                    "type": "string"
+                },
+                "scheduled_date": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                },
+                "trip_place_id": {
                     "type": "string"
                 }
             }
@@ -1293,11 +1438,70 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.TripSuggestionRequest": {
+            "type": "object",
+            "properties": {
+                "accommodation": {
+                    "$ref": "#/definitions/dto.AccommodationsSuggestion"
+                },
+                "places": {
+                    "$ref": "#/definitions/dto.PlacesSuggestion"
+                },
+                "restaurants": {
+                    "$ref": "#/definitions/dto.RestaurantsSuggestion"
+                }
+            }
+        },
+        "model.Image": {
+            "type": "object",
+            "properties": {
+                "alt": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Location": {
+            "type": "object",
+            "properties": {
+                "lat": {
+                    "type": "number"
+                },
+                "lon": {
+                    "type": "number"
+                }
+            }
+        },
         "model.Response": {
             "type": "object",
             "properties": {
                 "data": {},
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.RoomType": {
+            "type": "object",
+            "properties": {
+                "bed_type": {
+                    "type": "string"
+                },
+                "conditions": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "occupancy": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "string"
+                },
+                "tax_and_fee": {
                     "type": "string"
                 }
             }
@@ -1354,14 +1558,6 @@ const docTemplate = `{
     },
     "tags": [
         {
-            "description": "Operations about todos",
-            "name": "todos",
-            "externalDocs": {
-                "description": "Detailed information about todo operations",
-                "url": "http://example.com/docs/todos"
-            }
-        },
-        {
             "description": "Operations about login and register",
             "name": "auth",
             "externalDocs": {
@@ -1382,14 +1578,6 @@ const docTemplate = `{
             }
         },
         {
-            "description": "Operations about travel suggestion types (hotel, restaurant, landmark)",
-            "name": "suggestionType",
-            "externalDocs": {
-                "description": "Detailed information about suggestion type operations",
-                "url": "http://example.com/docs/suggestionType"
-            }
-        },
-        {
             "description": "Operations about trips and travel plans",
             "name": "trip",
             "externalDocs": {
@@ -1407,7 +1595,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/api/v1",
 	Schemes:          []string{"http", "https"},
 	Title:            "Travel Planning API",
-	Description:      "A modern RESTful API for managing travel plans, including trips, destinations, accommodations, activities, and restaurants.",
+	Description:      "A modern RESTful API for managing travel plans, including trips, destinations, accommodations, places, and restaurants.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
