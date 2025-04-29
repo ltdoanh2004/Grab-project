@@ -92,3 +92,10 @@ type TripSuggestionRequest struct {
 	Places        PlacesSuggestion         `json:"places"`
 	Restaurants   RestaurantsSuggestion    `json:"restaurants"`
 }
+
+type SuggestWithIDAndType struct {
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Args string `json:"args"`
+	ID   string `json:"id"`
+}
