@@ -7,20 +7,39 @@ import (
 )
 
 type RoomType struct {
-	URL string `json:"url"`
-	Alt string `json:"alt"`
+	Name       string `json:"name"`
+	BedType    string `json:"bed_type"`
+	Price      string `json:"price"`
+	TaxAndFee  string `json:"tax_and_fee"`
+	Occupancy  string `json:"occupancy"`
+	Conditions string `json:"conditions"`
 }
 
 type RoomTypeArray []RoomType
 
-func (rta *RoomTypeArray) Value() (driver.Value, error) {
-	return json.Marshal(rta)
+func (rta RoomTypeArray) Value() (driver.Value, error) {
+	if len(rta) == 0 {
+		return "[]", nil
+	}
+	bytes, err := json.Marshal(rta)
+	if err != nil {
+		return nil, err
+	}
+	return string(bytes), nil
 }
 
 func (rta *RoomTypeArray) Scan(value interface{}) error {
-	bytes, ok := value.([]byte)
-	if !ok {
-		return errors.New("type assertion to []byte failed")
+	if value == nil {
+		*rta = RoomTypeArray{}
+		return nil
 	}
-	return json.Unmarshal(bytes, rta)
+
+	switch v := value.(type) {
+	case []byte:
+		return json.Unmarshal(v, rta)
+	case string:
+		return json.Unmarshal([]byte(v), rta)
+	default:
+		return errors.New("invalid type for RoomTypeArray")
+	}
 }

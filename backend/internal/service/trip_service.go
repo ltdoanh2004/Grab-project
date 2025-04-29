@@ -1,9 +1,15 @@
 package service
 
 import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"skeleton-internship-backend/config"
 	"skeleton-internship-backend/internal/dto"
 	"skeleton-internship-backend/internal/model"
 	"skeleton-internship-backend/internal/repository"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -12,6 +18,7 @@ type TripService interface {
 	CreateTrip(trip *dto.CreateTripRequest) (string, error)
 	SaveTrip(trip *dto.TripDTO) error
 	GetTrip(tripID string) (*dto.TripDTO, error)
+	SuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequest, error)
 }
 
 type tripService struct {
@@ -345,4 +352,52 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTO, error) {
 	}
 
 	return tripDTO, nil
+}
+
+func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequest, error) {
+	client := &http.Client{
+		Timeout: 10 * time.Second,
+	}
+
+	reqBody, err := json.Marshal(activities)
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal travel preference: %w", err)
+	}
+
+	aiURL := fmt.Sprintf("http://%s:%s%s",
+		config.AppConfig.AI.Host,
+		config.AppConfig.AI.Port,
+		endpoint,
+	)
+
+	req, err := http.NewRequest("GET", aiURL, bytes.NewBuffer(reqBody))
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %w", err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to send request to AI service: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("AI service returned non-200 status code: %d", resp.StatusCode)
+	}
+
+	var rsp dto.CreateTripRequest
+	if err := json.NewDecoder(resp.Body).Decode(&rsp); err != nil {
+		return nil, fmt.Errorf("failed to decode AI service response: %w", err)
+	}
+	return &rsp, nil
+}
+
+func (ts *tripService) SuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequest, error) {
+	suggestion, err := ts.CallAISuggestTrip(activities, endpoint)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get trip suggestion: %w", err)
+	}
+
+	return suggestion, nil
 }

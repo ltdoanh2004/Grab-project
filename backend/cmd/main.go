@@ -153,11 +153,12 @@ func RegisterRoutes(
 		OnStart: func(ctx context.Context) error {
 			log.Info().Msgf("Starting server on port %s", cfg.Server.Port)
 
-			// err := insertDataService.InsertHotelData("../data/hotel_processed.csv")
-			// if err != nil {
-			// 	log.Fatal().Err(err).Msg("Failed to import data from CSV")
-			// 	return err
-			// }
+			// Edit csv path here
+			err := insertDataService.InsertHotelData("./mockdata/hotel_processed.csv")
+			if err != nil {
+				log.Fatal().Err(err).Msg("Failed to import data from CSV")
+				return err
+			}
 
 			go func() {
 				if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
