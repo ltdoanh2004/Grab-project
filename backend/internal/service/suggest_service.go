@@ -229,3 +229,98 @@ func (ss *suggestService) SuggestRestaurants(travelPreference *dto.TravelPrefere
 	}
 	return &suggestion, nil
 }
+
+func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithIDAndType) (*dto.TripSuggestionRequest, error) {
+	var tripSuggestion dto.TripSuggestionRequest
+	var accommodations dto.AccommodationsSuggestion
+	var places dto.PlacesSuggestion
+	var restaurants dto.RestaurantsSuggestion
+	for _, value := range suggests {
+		if value.Type == "accommodation" {
+			newAccommodation, err := ss.AccommodationRepository.GetByID(value.ID)
+			if err != nil {
+				return nil, err
+			}
+			accommodations.Accommodations = append(
+				accommodations.Accommodations,
+				dto.AccommodationSuggestion{
+					AccommodationID: newAccommodation.AccommodationID,
+					DestinationID:   newAccommodation.DestinationID,
+					Name:            newAccommodation.Name,
+					Location:        newAccommodation.Location,
+					City:            newAccommodation.City,
+					Price:           newAccommodation.Price,
+					Rating:          newAccommodation.Rating,
+					Description:     newAccommodation.Description,
+					Link:            newAccommodation.Link,
+					Images:          newAccommodation.Images,
+					RoomTypes:       newAccommodation.RoomTypes,
+					RoomInfo:        newAccommodation.RoomInfo,
+					Unit:            newAccommodation.Unit,
+					TaxInfo:         newAccommodation.TaxInfo,
+					ElderlyFriendly: newAccommodation.ElderlyFriendly,
+				},
+			)
+		}
+		if value.Type == "place" {
+			newPlace, err := ss.PlaceRepository.GetByID(value.ID)
+			if err != nil {
+				return nil, err
+			}
+			places.Places = append(
+				places.Places,
+				dto.PlaceSuggestion{
+					PlaceID:       newPlace.PlaceID,
+					DestinationID: newPlace.DestinationID,
+					Name:          newPlace.Name,
+					URL:           newPlace.URL,
+					Address:       newPlace.Address,
+					Duration:      newPlace.Duration,
+					Type:          newPlace.Type,
+					Images:        newPlace.Images,
+					MainImage:     newPlace.MainImage,
+					Price:         newPlace.Price,
+					Rating:        newPlace.Rating,
+					Description:   newPlace.Description,
+					OpeningHours:  newPlace.OpeningHours,
+					Reviews:       newPlace.Reviews,
+					Categories:    newPlace.Categories,
+					Unit:          newPlace.Unit,
+				},
+			)
+		}
+		if value.Type == "place" {
+			newRestaurant, err := ss.RestaurantRepository.GetByID(value.ID)
+			if err != nil {
+				return nil, err
+			}
+			restaurants.Restaurants = append(
+				restaurants.Restaurants,
+				dto.RestaurantSuggestion{
+					RestaurantID:  newRestaurant.RestaurantID,
+					DestinationID: newRestaurant.DestinationID,
+					Name:          newRestaurant.Name,
+					Address:       newRestaurant.Address,
+					Rating:        newRestaurant.Rating,
+					Phone:         newRestaurant.Phone,
+					PhotoURL:      newRestaurant.PhotoURL,
+					URL:           newRestaurant.URL,
+					Location:      newRestaurant.Location,
+					Reviews:       newRestaurant.Reviews,
+					Services:      newRestaurant.Services,
+					IsDelivery:    newRestaurant.IsDelivery,
+					IsBooking:     newRestaurant.IsBooking,
+					IsOpening:     newRestaurant.IsOpening,
+					PriceRange:    newRestaurant.PriceRange,
+					Description:   newRestaurant.Description,
+					Cuisines:      newRestaurant.Cuisines,
+					OpeningHours:  newRestaurant.OpeningHours,
+				},
+			)
+		}
+	}
+	tripSuggestion.Accommodation = accommodations
+	tripSuggestion.Places = places
+	tripSuggestion.Restaurants = restaurants
+	return &tripSuggestion, nil
+}
