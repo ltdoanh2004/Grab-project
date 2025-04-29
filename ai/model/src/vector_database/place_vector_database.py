@@ -232,7 +232,7 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         # Load data from CSV
         print(f"Loading embeddings from: {embedding_file}")
         self.df = pd.read_csv(embedding_file)
-        text_columns = ['name', 'description', 'categories', 'location', 'opening_hours']
+        text_columns = ['name', 'description', 'categories', 'location', 'opening_hours', 'price', 'rating']
         for col in text_columns:
             if col in self.df.columns:
                 self.df[col] = self.df[col].fillna('')
@@ -261,9 +261,9 @@ class PlaceVectorDatabase(BaseVectorDatabase):
                     "id": row["place_id"],
                     "name": row["name"],
                     "categories": row.get("categories", ""),
-                    "location": row.get("location", ""),
                     "opening_hours": row.get("opening_hours", ""),
                     "price": row.get("price", 0),
+                    "city": row.get("city", ""),
                     "rating": row.get("rating", 0),
                     "description": row["description"]
                 }
@@ -311,14 +311,12 @@ class PlaceVectorDatabase(BaseVectorDatabase):
                 Đây là mô tả của địa điểm:
                 {metadata['description']}
                 Danh mục của nó là {metadata.get('categories', '')}
-                Địa chỉ của nó là {metadata.get('location', '')}
                 Giờ mở cửa: {metadata.get('opening_hours', '')}
-                Phí vào cửa: {metadata.get('entrance_fee', '0')}
                 Điểm đánh giá của nó là {metadata.get('rating', '')}
             '''
         
         # Check if we need to generate new context and embedding
-        needs_new_context = any(key in new_data for key in ['description', 'categories', 'location', 'opening_hours', 'entrance_fee', 'rating'])
+        needs_new_context = any(key in new_data for key in ['description', 'categories', 'location', 'opening_hours', 'rating'])
         
         # Use the base class update_item method with our custom context generator
         return self.update_item(
@@ -373,22 +371,7 @@ class PlaceVectorDatabase(BaseVectorDatabase):
             print(f"Error searching by location: {e}")
             return None
     
-    def search_by_entrance_fee(self, max_fee, top_k=5):
-        """
-        Search for places with entrance fee less than or equal to max_fee
-        """
-        try:
-            # Get all places and filter by entrance fee
-            all_places = self.get_all_places()
-            filtered_places = [
-                match for match in all_places['matches']
-                if float(match['metadata']['entrance_fee']) <= float(max_fee)
-            ]
-            
-            return {'matches': filtered_places[:top_k]}
-        except Exception as e:
-            print(f"Error searching by entrance fee: {e}")
-            return None
+
     
     def search_by_rating(self, min_rating, top_k=5):
         """
@@ -451,9 +434,7 @@ def main():
         for match in results['matches']:
             print(f"Name: {match['metadata']['name']}")
             print(f"Categories: {match['metadata']['categories']}")
-            print(f"Location: {match['metadata']['location']}")
             print(f"Opening Hours: {match['metadata']['opening_hours']}")
-            print(f"Entrance Fee: {match['metadata']['entrance_fee']}")
             print(f"Rating: {match['metadata']['rating']}")
             print(f"Description: {match['metadata']['description']}")
             print("-" * 50)
