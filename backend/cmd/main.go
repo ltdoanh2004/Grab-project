@@ -68,9 +68,9 @@ func main() {
 			NewGinEngine,
 			repository.NewRepository,
 			repository.NewUserRepository,
-			repository.NewPlaceRepository,         // Add this
-			repository.NewRestaurantRepository,    // Add this
-			repository.NewAccommodationRepository, // Add this
+			repository.NewPlaceRepository,
+			repository.NewRestaurantRepository,
+			repository.NewAccommodationRepository,
 			repository.NewTripRepository,
 			repository.NewTripDestinationRepository,
 			repository.NewTripAccommodationRepository,
@@ -79,13 +79,15 @@ func main() {
 			service.NewService,
 			service.NewAuthService,
 			service.NewTripService,
+			service.NewSuggestService,
+			service.NewInsertDataService,
 			controller.NewController,
 			controller.NewAuthController,
 			controller.NewTripController,
-			service.NewSuggestService,
 			controller.NewSuggestController,
-			service.NewInsertDataService,
+			controller.NewInsertDataController,
 		),
+		fx.StartTimeout(1*time.Minute),
 		fx.Invoke(RegisterRoutes),
 	)
 
@@ -143,12 +145,11 @@ func RegisterRoutes(
 		OnStart: func(ctx context.Context) error {
 			log.Info().Msgf("Starting server on port %s", cfg.Server.Port)
 
-			// Edit csv path here
-			// err := insertDataService.InsertHotelData("./mockdata/hotel_processed.csv")
-			// if err != nil {
-			// 	log.Fatal().Err(err).Msg("Failed to import data from CSV")
-			// 	return err
-			// }
+			err := insertDataService.InsertHotelData("./mockdata/hotel_processed.csv")
+			if err != nil {
+				log.Fatal().Err(err).Msg("Failed to import data from CSV")
+			}
+			log.Info().Msg("Hotel data imported successfully")
 
 			go func() {
 				if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {

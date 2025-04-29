@@ -15,13 +15,14 @@ func (s *insertDataService) InsertRestaurantData(filePath string) error {
 	}
 
 	tx := s.db.Begin()
+	fmt.Println(records[0])
 	for _, record := range records {
 		restaurant, err := s.mapRecordToRestaurant(record)
 		if err != nil {
+			fmt.Println(record["id"])
 			tx.Rollback()
 			return err
 		}
-
 		if err := tx.Create(restaurant).Error; err != nil {
 			tx.Rollback()
 			return err
@@ -34,21 +35,25 @@ func (s *insertDataService) InsertRestaurantData(filePath string) error {
 func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*model.Restaurant, error) {
 	rating, err := strconv.ParseFloat(record["rating"], 64)
 	if err != nil {
+		fmt.Println("rating: ", record["rating"])
 		return nil, err
 	}
 
 	isDelivery, err := strconv.ParseBool(record["is_delivery"])
 	if err != nil {
+		fmt.Println("Is delivery: ", record["is_delivery"])
 		return nil, err
 	}
 
 	isBooking, err := strconv.ParseBool(record["is_booking"])
 	if err != nil {
+		fmt.Println("Is booking: ", record["is_booking"])
 		return nil, err
 	}
 
 	isOpening, err := strconv.ParseBool(record["is_opening"])
 	if err != nil {
+		fmt.Println("Is opening: ", record["is_opening"])
 		return nil, err
 	}
 
@@ -58,8 +63,10 @@ func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*mo
 	}
 
 	var reviews model.StringArray
-	if err := json.Unmarshal([]byte(record["reviews"]), &reviews); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal reviews: %w", err)
+	if len(record["reviews"]) != 0 {
+		if err := json.Unmarshal([]byte(record["reviews"]), &reviews); err != nil {
+			return nil, fmt.Errorf("failed to unmarshal reviews: %w", err)
+		}
 	}
 
 	var services model.ServiceArray

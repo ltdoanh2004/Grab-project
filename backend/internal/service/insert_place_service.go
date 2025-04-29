@@ -18,10 +18,10 @@ func (s *insertDataService) InsertPlaceData(filePath string) error {
 	for _, record := range records {
 		place, err := s.mapRecordToPlace(record)
 		if err != nil {
+			fmt.Println(record["id"])
 			tx.Rollback()
 			return err
 		}
-
 		if err := tx.Create(place).Error; err != nil {
 			tx.Rollback()
 			return err
@@ -42,19 +42,27 @@ func (s *insertDataService) mapRecordToPlace(record map[string]string) (*model.P
 		return nil, err
 	}
 
+	// var imageUrls model.StringArray
 	var images model.ImageArray
 	if err := json.Unmarshal([]byte(record["images"]), &images); err != nil {
+		fmt.Println(record["images"])
 		return nil, fmt.Errorf("failed to unmarshal images: %w", err)
 	}
+	// for _, url := range imageUrls {
+	// 	images = append(images, model.Image{URL: url})
+	// }
 
 	var reviews model.StringArray
-	if err := json.Unmarshal([]byte(record["reviews"]), &reviews); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal reviews: %w", err)
+	if len(record["reviews"]) != 0 {
+		if err := json.Unmarshal([]byte(record["reviews"]), &reviews); err != nil {
+			fmt.Println(record["reviews"])
+			return nil, fmt.Errorf("failed to unmarshal reviews: %w", err)
+		}
 	}
 
 	place := &model.Place{
 		PlaceID:       record["id"],
-		DestinationID: record["destination_id"],
+		DestinationID: record["city"],
 		Name:          record["name"],
 		URL:           record["url"],
 		Address:       record["address"],
