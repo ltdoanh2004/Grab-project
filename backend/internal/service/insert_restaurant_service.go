@@ -37,11 +37,6 @@ func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*mo
 		return nil, err
 	}
 
-	numReviews, err := strconv.Atoi(record["num_reviews"])
-	if err != nil {
-		return nil, err
-	}
-
 	isDelivery, err := strconv.ParseBool(record["is_delivery"])
 	if err != nil {
 		return nil, err
@@ -67,35 +62,35 @@ func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*mo
 		return nil, fmt.Errorf("failed to unmarshal reviews: %w", err)
 	}
 
-	var services model.StringArray
+	var services model.ServiceArray
 	if err := json.Unmarshal([]byte(record["services"]), &services); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal services: %w", err)
 	}
 
+	var priceRange model.PriceRange
+	if err := json.Unmarshal([]byte(record["price_range"]), &priceRange); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal price range: %w", err)
+	}
+
 	restaurant := &model.Restaurant{
-		RestaurantID:   record["id"],
-		DestinationID:  record["destination_id"],
-		Name:           record["name"],
-		Address:        record["address"],
-		Rating:         rating,
-		Phone:          record["phone"],
-		PhotoURL:       record["photo_url"],
-		URL:            record["url"],
-		Location:       location,
-		Reviews:        reviews,
-		Services:       services,
-		IsDelivery:     isDelivery,
-		IsBooking:      isBooking,
-		IsOpening:      isOpening,
-		PriceRange:     record["price_range"],
-		Description:    record["description"],
-		Cuisines:       record["cuisines"],
-		NumReviews:     numReviews,
-		ExampleReviews: record["example_reviews"],
-		MediaURLs:      record["media_urls"],
-		MainImage:      record["main_image"],
-		OpeningHours:   record["opening_hours"],
-		ReviewSummary:  record["review_summary"],
+		RestaurantID:  record["id"],
+		DestinationID: record["destination_id"],
+		Name:          record["name"],
+		Address:       record["address"],
+		Rating:        rating,
+		Phone:         record["phone"],
+		PhotoURL:      record["photo_url"],
+		URL:           record["url"],
+		Location:      location,
+		Reviews:       reviews,
+		Services:      services,
+		IsDelivery:    isDelivery,
+		IsBooking:     isBooking,
+		IsOpening:     isOpening,
+		PriceRange:    priceRange,
+		Description:   record["description"],
+		Cuisines:      record["cuisines"],
+		OpeningHours:  record["opening_hours"],
 	}
 
 	return restaurant, nil
