@@ -4,13 +4,16 @@ PasGo Restaurant Crawler
 A specialized crawler that extracts clean, structured restaurant details from PasGo.
 """
 
-import requests
+import undetected_chromedriver as uc
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException, WebDriverException
 from bs4 import BeautifulSoup
 import json
 import time
 import os
 import random
-import re
 import logging
 from urllib.parse import urljoin
 import argparse
@@ -31,23 +34,266 @@ logger = logging.getLogger(__name__)
 class PasGoCrawler:
     """Crawler for PasGo restaurants with data extraction"""
 
-    def __init__(self, base_url=None, delay=3.0, save_interval=15):
-        self.base_url = base_url or "https://pasgo.vn/tim-kiem?search="
+    def __init__(self, base_url=None, delay=1.0, save_interval=15):
+        self.base_url = base_url or "https://pasgo.vn/ha-noi/nha-hang"
         self.min_delay = delay
-        self.max_delay = delay * 2
-        self.save_interval = save_interval  # Minutes between saves
+        self.max_delay = delay * 1.5
+        self.save_interval = save_interval
         self.last_save_time = time.time()
-        self.headers = {
-            'User-Agent': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
-                          'AppleWebKit/537.36 (KHTML, like Gecko) '
-                          'Chrome/123.0.0.0 Safari/537.36'),
-            'Accept-Language': 'vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Referer': 'https://pasgo.vn/'
-        }
         self.visited_urls = set()
-        self.session = requests.Session()
-        self.session.headers.update(self.headers)
+        
+        # Setup undetected-chromedriver
+        options = uc.ChromeOptions()
+        options.add_argument('--headless')
+        options.add_argument('--disable-gpu')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_argument('--window-size=1920,1080')
+        options.add_argument('--disable-blink-features=AutomationControlled')
+        
+        try:
+            self.driver = uc.Chrome(options=options)
+            self.driver.set_page_load_timeout(30)
+            self.wait = WebDriverWait(self.driver, 15)
+            logger.info("Undetected ChromeDriver initialized successfully")
+        except Exception as e:
+            logger.error(f"Failed to initialize ChromeDriver: {e}")
+            raise
+
+    def get_soup(self, url, retries=2):
+        """Get BeautifulSoup object from URL using undetected-chromedriver"""
+        for attempt in range(retries):
+            try:
+                logger.info(f"Fetching URL: {url} (attempt {attempt + 1}/{retries})")
+                self.driver.get(url)
+                
+                # Wait for content to load
+                selectors = [
+                    "div.restaurant-list",
+                    "div.list-restaurant",
+                    "div.restaurant-item",
+                    "div.item",
+                    "body"  # Fallback
+                ]
+                
+                # Wait for page load
+                self.driver.execute_script("return document.readyState") == "complete"
+                time.sleep(3)  # Give JavaScript time to render
+                
+                # Try to find content with different selectors
+                content_found = False
+                for selector in selectors:
+                    try:
+                        element = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
+                        if element:
+                            logger.info(f"Found content with selector: {selector}")
+                            content_found = True
+                            break
+                    except TimeoutException:
+                        continue
+                
+                if not content_found:
+                    logger.warning("No content found with any selector")
+                    if attempt < retries - 1:
+                        continue
+                    else:
+                        return None
+                
+                # Get page source and create soup
+                page_source = self.driver.page_source
+                
+                # Print first part of HTML for debugging
+                print("=== HTML Content ===")
+                print(page_source[:2000])
+                print("===================")
+                
+                soup = BeautifulSoup(page_source, 'html.parser')
+                return soup
+                
+            except Exception as e:
+                logger.error(f"Error fetching URL {url}: {e}")
+                if attempt < retries - 1:
+                    time.sleep(5)
+                else:
+                    return None
+
+    def get_restaurant_listings(self, page=1):
+        """Get restaurant listings from a page"""
+        self._random_delay()
+        
+        url = f"{self.base_url}?page={page-1}" if page > 1 else self.base_url
+        soup = self.get_soup(url)
+        if not soup:
+            return [], False
+
+        restaurants = []
+        
+        # Try different selectors for listings
+        selectors = [
+            "div.restaurant-list .restaurant-item",
+            "div.list-restaurant .item",
+            "article.restaurant",
+            ".restaurant-box",
+            ".restaurant-info"
+        ]
+        
+        listings = None
+        for selector in selectors:
+            listings = soup.select(selector)
+            if listings:
+                logger.info(f"Found {len(listings)} listings with selector: {selector}")
+                break
+                
+        if not listings:
+            logger.warning("No listings found with any selector")
+            return [], False
+
+        for listing in listings:
+            try:
+                # Try different name selectors
+                name_selectors = [
+                    'h3.item-child-headline',
+                    'h3.title',
+                    'h3 a',
+                    '.restaurant-name',
+                    '.title a',
+                    'h3'
+                ]
+                
+                name = None
+                for selector in name_selectors:
+                    name_tag = listing.select_one(selector)
+                    if name_tag:
+                        name = name_tag.text.strip()
+                        logger.info(f"Found name with selector {selector}: {name}")
+                        break
+                
+                # Try different URL selectors
+                url_selectors = [
+                    'a.item-link-desc',
+                    'a[href*="/nha-hang/"]',
+                    'h3 a[href]',
+                    '.title a[href]',
+                    'a'
+                ]
+                
+                url = None
+                for selector in url_selectors:
+                    url_tag = listing.select_one(selector)
+                    if url_tag and url_tag.has_attr('href'):
+                        url = url_tag['href']
+                        logger.info(f"Found URL with selector {selector}: {url}")
+                        break
+                
+                if not name or not url:
+                    logger.warning(f"Skipping listing - missing name or url: name={name}, url={url}")
+                    continue
+                    
+                if not url.startswith('http'):
+                    url = urljoin("https://pasgo.vn", url)
+                
+                if url in self.visited_urls:
+                    continue
+                    
+                restaurants.append({
+                    "name": name,
+                    "url": url
+                })
+                
+            except Exception as e:
+                logger.error(f"Error parsing restaurant listing: {e}")
+                continue
+
+        # Check for next page
+        next_page_selectors = [
+            'a.next',
+            '.pagination .next',
+            'a[rel="next"]',
+            '.next-page'
+        ]
+        
+        has_next_page = False
+        for selector in next_page_selectors:
+            if soup.select_one(selector):
+                has_next_page = True
+                logger.info(f"Found next page with selector: {selector}")
+                break
+        
+        return restaurants, has_next_page
+
+    def get_restaurant_details(self, restaurant_url):
+        """Get detailed information about a restaurant"""
+        self._random_delay()
+        
+        soup = self.get_soup(restaurant_url)
+        if not soup:
+            return {"url": restaurant_url, "error": "Failed to fetch restaurant page"}
+            
+        details = {
+            "url": restaurant_url
+        }
+        
+        try:
+            # Extract name
+            name = soup.select_one('h1.restaurant-title')
+            if name:
+                details["name"] = name.text.strip()
+            
+            # Extract address
+            address = soup.select_one('div.restaurant-address')
+            if address:
+                details["address"] = address.text.strip()
+            
+            # Extract description
+            description = soup.select_one('div.restaurant-description')
+            if description:
+                details["description"] = description.text.strip()
+            
+            # Extract opening hours
+            hours = soup.select_one('div.opening-hours')
+            if hours:
+                details["opening_hours"] = hours.text.strip()
+            
+            # Extract price range
+            price = soup.select_one('div.price-range')
+            if price:
+                details["price_range"] = price.text.strip()
+            
+            # Extract rating
+            rating = soup.select_one('div.rating')
+            if rating:
+                details["rating"] = rating.text.strip()
+            
+            # Extract images
+            images = []
+            for img in soup.select('div.restaurant-images img'):
+                if img.get('src'):
+                    img_url = img['src']
+                    if not img_url.startswith('http'):
+                        img_url = urljoin("https://pasgo.vn", img_url)
+                    images.append(img_url)
+            
+            if images:
+                details["image_urls"] = images
+                details["main_image"] = images[0]
+            
+            # Extract cuisine type
+            cuisine = soup.select_one('div.cuisine-type')
+            if cuisine:
+                details["cuisine"] = cuisine.text.strip()
+            
+            # Extract features/amenities
+            features = []
+            for feature in soup.select('div.features li'):
+                features.append(feature.text.strip())
+            if features:
+                details["features"] = features
+            
+        except Exception as e:
+            logger.error(f"Error parsing restaurant details for {restaurant_url}: {e}")
+            details["error"] = str(e)
+            
+        return details
 
     def _random_delay(self):
         """Add a random delay between requests to avoid being blocked"""
@@ -66,11 +312,9 @@ class PasGoCrawler:
             logger.warning("No data to save")
             return
 
-        # Create location-specific directory
         location_dir = os.path.join(output_dir, location)
         os.makedirs(location_dir, exist_ok=True)
 
-        # Find the next available index
         index = 0
         while True:
             timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -86,7 +330,6 @@ class PasGoCrawler:
             self.last_save_time = time.time()
         except Exception as e:
             logger.error(f"Error saving data to {filename}: {str(e)}")
-            # Create error backup
             error_backup = f"error_backup_{int(time.time())}.json"
             try:
                 with open(error_backup, 'w', encoding='utf-8') as f:
@@ -95,153 +338,8 @@ class PasGoCrawler:
             except Exception as backup_error:
                 logger.error(f"Failed to create error backup: {str(backup_error)}")
 
-    def get_soup(self, url, retries=3):
-        """Get BeautifulSoup object from URL with retries"""
-        for attempt in range(retries):
-            try:
-                logger.info(f"Fetching URL: {url}")
-                response = self.session.get(url, timeout=30)
-                response.raise_for_status()
-                
-                # Check if we got a captcha page
-                if "captcha" in response.text.lower() or "please enable js" in response.text.lower():
-                    logger.warning("Captcha detected! Try using a different approach or wait longer between requests")
-                    if attempt < retries - 1:
-                        wait_time = (attempt + 1) * 60  # Incremental backoff
-                        logger.info(f"Retrying after {wait_time} seconds...")
-                        time.sleep(wait_time)
-                        continue
-                    else:
-                        break
-                
-                soup = BeautifulSoup(response.content, 'html.parser')
-                return soup
-            except requests.exceptions.RequestException as e:
-                logger.error(f"Error fetching URL {url}: {e}")
-                if attempt < retries - 1:
-                    wait_time = (attempt + 1) * 30
-                    logger.info(f"Retrying after {wait_time} seconds...")
-                    time.sleep(wait_time)
-                else:
-                    logger.error(f"Failed to fetch {url} after {retries} attempts")
-        return None
-
-    def get_restaurant_listings(self, page=1):
-        """Get restaurant listings from a page"""
-        self._random_delay()
-        
-        current_url = f"{self.base_url}&page={page}"
-        soup = self.get_soup(current_url)
-        if not soup:
-            return [], False
-
-        restaurants = []
-        
-        # Find restaurant listings - adjust selectors based on actual HTML structure
-        listings = soup.select('div.restaurant-item')  # Adjust this selector
-        
-        for listing in listings:
-            try:
-                # Extract restaurant details - adjust selectors based on actual HTML structure
-                name = listing.select_one('h3.restaurant-name').text.strip()  # Adjust selector
-                url = listing.select_one('a.restaurant-link')['href']  # Adjust selector
-                
-                if not url.startswith('http'):
-                    url = urljoin("https://pasgo.vn", url)
-                
-                if url in self.visited_urls:
-                    continue
-                    
-                restaurants.append({
-                    "name": name,
-                    "url": url
-                })
-                
-            except Exception as e:
-                logger.error(f"Error parsing restaurant listing: {e}")
-                continue
-
-        # Check for next page
-        next_page = soup.select_one('a.next-page')  # Adjust selector
-        has_next_page = bool(next_page)
-        
-        return restaurants, has_next_page
-
-    def get_restaurant_details(self, restaurant_url):
-        """Get detailed information about a restaurant"""
-        self._random_delay()
-        
-        soup = self.get_soup(restaurant_url)
-        if not soup:
-            return {"url": restaurant_url, "error": "Failed to fetch restaurant page"}
-            
-        details = {
-            "url": restaurant_url
-        }
-        
-        try:
-            # Extract name
-            name = soup.select_one('h1.restaurant-title')  # Adjust selector
-            if name:
-                details["name"] = name.text.strip()
-            
-            # Extract address
-            address = soup.select_one('div.restaurant-address')  # Adjust selector
-            if address:
-                details["address"] = address.text.strip()
-            
-            # Extract description
-            description = soup.select_one('div.restaurant-description')  # Adjust selector
-            if description:
-                details["description"] = description.text.strip()
-            
-            # Extract opening hours
-            hours = soup.select_one('div.opening-hours')  # Adjust selector
-            if hours:
-                details["opening_hours"] = hours.text.strip()
-            
-            # Extract price range
-            price = soup.select_one('div.price-range')  # Adjust selector
-            if price:
-                details["price_range"] = price.text.strip()
-            
-            # Extract rating
-            rating = soup.select_one('div.rating')  # Adjust selector
-            if rating:
-                details["rating"] = rating.text.strip()
-            
-            # Extract images
-            images = []
-            for img in soup.select('div.restaurant-images img'):  # Adjust selector
-                if img.get('src'):
-                    img_url = img['src']
-                    if not img_url.startswith('http'):
-                        img_url = urljoin("https://pasgo.vn", img_url)
-                    images.append(img_url)
-            
-            if images:
-                details["image_urls"] = images
-                details["main_image"] = images[0]
-            
-            # Extract cuisine type
-            cuisine = soup.select_one('div.cuisine-type')  # Adjust selector
-            if cuisine:
-                details["cuisine"] = cuisine.text.strip()
-            
-            # Extract features/amenities
-            features = []
-            for feature in soup.select('div.features li'):  # Adjust selector
-                features.append(feature.text.strip())
-            if features:
-                details["features"] = features
-            
-        except Exception as e:
-            logger.error(f"Error parsing restaurant details for {restaurant_url}: {e}")
-            details["error"] = str(e)
-            
-        return details
-
     def crawl_restaurants(self, max_pages=3, max_restaurants=None, threads=4, start_page=1, output_dir="data_restaurants", location="hanoi"):
+        """Crawl restaurant listings and details"""
         all_listings, page, more = [], start_page, True
         detailed = []
         
@@ -299,18 +397,20 @@ class PasGoCrawler:
         logger.info(f"Found {len(detailed)} unique restaurants")
         return detailed
 
-# ----------------------------- CLI ----------------------------- #
+    def __del__(self):
+        """Clean up ChromeDriver"""
+        if hasattr(self, 'driver'):
+            self.driver.quit()
+
 def main():
     parser = argparse.ArgumentParser(description='PasGo Restaurant Crawler')
-    parser.add_argument('--url', type=str, default="https://pasgo.vn/tim-kiem?search=",
-                      help='URL to crawl')
     parser.add_argument('--max-pages', type=int, default=3,
                       help='Maximum number of pages to crawl')
     parser.add_argument('--start-page', type=int, default=1,
                       help='Page number to start crawling from')
     parser.add_argument('--max-restaurants', type=int,
                       help='Maximum number of restaurants to crawl')
-    parser.add_argument('--delay', type=float, default=4.0,
+    parser.add_argument('--delay', type=float, default=1.0,
                       help='Delay between requests in seconds')
     parser.add_argument('--threads', type=int, default=4,
                       help='Number of concurrent threads')
@@ -323,7 +423,6 @@ def main():
     args = parser.parse_args()
 
     crawler = PasGoCrawler(
-        base_url=args.url,
         delay=args.delay,
         save_interval=args.save_interval
     )
