@@ -18,6 +18,8 @@ import {
   ShareAltOutlined,
   CheckCircleFilled,
 } from "@ant-design/icons";
+import { SheetExport } from "./travelDetail/SheetExport";
+
 import {
   formatDate,
   ACTIVITY_TYPE_COLORS,
@@ -195,24 +197,11 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
                 />
               ),
             },
+
             {
-              key: "budget",
-              label: "Tổng quát và xuất lịch",
-              children: (
-                <div className="p-4">
-                  <h2>Tổng quan ngân sách</h2>
-                  <p>
-                    Tổng ngân sách: {formatCurrency(travelDetail.totalBudget)}
-                  </p>
-                  <p>Đã chi: {formatCurrency(travelDetail.spentBudget)}</p>
-                  <p>
-                    Còn lại:{" "}
-                    {formatCurrency(
-                      travelDetail.totalBudget - travelDetail.spentBudget
-                    )}
-                  </p>
-                </div>
-              ),
+              key: "sheet",
+              label: "Xuất Google Sheet",
+              children: <SheetExport travelDetail={travelDetail} />,
             },
           ]}
         />
