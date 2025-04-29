@@ -48,7 +48,7 @@ func (s *insertDataService) mapRecordToPlace(record map[string]string) (*model.P
 	}
 
 	place := &model.Place{
-		PlaceID:       record["place_id"],
+		PlaceID:       record["id"],
 		DestinationID: record["destination_id"],
 		Name:          record["name"],
 		URL:           record["url"],

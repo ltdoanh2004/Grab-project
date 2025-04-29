@@ -7,6 +7,7 @@ import (
 	"skeleton-internship-backend/internal/repository"
 	"skeleton-internship-backend/internal/util"
 	"strconv"
+	"strings"
 
 	"gorm.io/gorm"
 )
@@ -39,6 +40,7 @@ func (s *insertDataService) InsertHotelData(filePath string) error {
 	// Begin transaction
 	tx := s.db.Begin()
 	for _, record := range records {
+		fmt.Println(record["id"])
 		accommodation, err := s.mapRecordToAccommodation(record)
 		if err != nil {
 			tx.Rollback()
@@ -71,18 +73,33 @@ func (s *insertDataService) mapRecordToAccommodation(record map[string]string) (
 		return nil, err
 	}
 
+	// Clean and validate JSON strings
+	imagesStr := record["images"]
+	roomTypesStr := record["room_types"]
+
 	var images model.ImageArray
-	if err := json.Unmarshal([]byte(record["images"]), &images); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal images: %w", err)
+	if err := json.Unmarshal([]byte(imagesStr), &images); err != nil {
+		// Try to fix common JSON formatting issues
+		imagesStr = strings.ReplaceAll(imagesStr, "'", "\"")
+		imagesStr = strings.ReplaceAll(imagesStr, "~", "'")
+		if err := json.Unmarshal([]byte(imagesStr), &images); err != nil {
+			return nil, fmt.Errorf("failed to unmarshal images: %w", err)
+		}
 	}
 
 	var roomTypes model.RoomTypeArray
-	if err := json.Unmarshal([]byte(record["room_types"]), &roomTypes); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal room types: %w", err)
+	if err := json.Unmarshal([]byte(roomTypesStr), &roomTypes); err != nil {
+		// Try to fix common JSON formatting issues
+		roomTypesStr = strings.ReplaceAll(roomTypesStr, "'", "\"")
+		roomTypesStr = strings.ReplaceAll(roomTypesStr, "~", "'")
+
+		if err := json.Unmarshal([]byte(roomTypesStr), &roomTypes); err != nil {
+			return nil, fmt.Errorf("failed to unmarshal room types: %w", err)
+		}
 	}
 
 	accommodation := &model.Accommodation{
-		AccommodationID: record["hotel_id"],
+		AccommodationID: record["id"],
 		DestinationID:   record["city"],
 		Name:            record["name"],
 		Link:            record["link"],

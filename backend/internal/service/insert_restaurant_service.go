@@ -73,7 +73,7 @@ func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*mo
 	}
 
 	restaurant := &model.Restaurant{
-		RestaurantID:   record["restaurant_id"],
+		RestaurantID:   record["id"],
 		DestinationID:  record["destination_id"],
 		Name:           record["name"],
 		Address:        record["address"],
