@@ -15,6 +15,7 @@ type SuggestService interface {
 	SuggestPlaces(travelPreference *dto.TravelPreference) (*dto.PlacesSuggestion, error)
 	SuggestRestaurants(travelPreference *dto.TravelPreference) (*dto.RestaurantsSuggestion, error)
 	SuggestAccommodations(travelPreference *dto.TravelPreference) (*dto.AccommodationsSuggestion, error)
+	SuggestAll(travelPreference *dto.TravelPreference) (*dto.TripSuggestionRequest, error)
 }
 
 type suggestService struct {
@@ -228,6 +229,66 @@ func (ss *suggestService) SuggestRestaurants(travelPreference *dto.TravelPrefere
 		suggestion.Restaurants = append(suggestion.Restaurants, suggestedRestaurant)
 	}
 	return &suggestion, nil
+}
+
+func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dto.TravelPreference) ([]dto.SuggestWithIDAndType, error) {
+	client := &http.Client{
+		Timeout: 10 * time.Second,
+	}
+
+	reqBody, err := json.Marshal(travelPreference)
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal travel preference: %w", err)
+	}
+
+	aiURL := fmt.Sprintf("http://%s:%s%s",
+		config.AppConfig.AI.Host,
+		config.AppConfig.AI.Port,
+		endpoint,
+	)
+
+	req, err := http.NewRequest("GET", aiURL, bytes.NewBuffer(reqBody))
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %w", err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to send request to AI service: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("AI service returned non-200 status code: %d", resp.StatusCode)
+	}
+
+	var rsp []dto.SuggestWithIDAndType
+	if err := json.NewDecoder(resp.Body).Decode(&rsp); err != nil {
+		return nil, fmt.Errorf("failed to decode AI service response: %w", err)
+	}
+	return rsp, nil
+}
+
+func (ss *suggestService) SuggestAll(travelPreference *dto.TravelPreference) (*dto.TripSuggestionRequest, error) {
+	rsp, err := ss.callAISuggestAll(
+		getURL(config.AppConfig.AI.Host,
+			config.AppConfig.AI.Port,
+			"/suggest/all",
+		),
+		travelPreference,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	var suggestion *dto.TripSuggestionRequest
+	suggestion, err = ss.ConvertIntoTripSuggestion(rsp)
+	if err != nil {
+		return nil, err
+	}
+
+	return suggestion, nil
 }
 
 func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithIDAndType) (*dto.TripSuggestionRequest, error) {
