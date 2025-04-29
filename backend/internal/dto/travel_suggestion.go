@@ -19,21 +19,22 @@ type TravelSuggestionResponse struct {
 }
 
 type PlaceSuggestion struct {
-	PlaceID       string            `gorm:"type:char(36);primaryKey" json:"place_id"`
-	DestinationID string            `gorm:"type:char(36)" json:"destination_id"`
-	Name          string            `gorm:"size:100;not null" json:"name"`
-	URL           string            `gorm:"size:255" json:"url"`
-	Address       string            `gorm:"size:255" json:"address"`
-	Duration      string            `gorm:"size:50" json:"duration"`
-	Type          string            `gorm:"size:50" json:"type"`
-	Images        model.ImageArray  `gorm:"type:json" json:"images"`
-	MainImage     string            `gorm:"size:255" json:"main_image"`
-	Price         string            `gorm:"size:20" json:"price"`
+	PlaceID       string            `json:"place_id"`
+	DestinationID string            `json:"destination_id"`
+	Name          string            `json:"name"`
+	URL           string            `json:"url"`
+	Address       string            `json:"address"`
+	Duration      string            `json:"duration"`
+	Type          string            `json:"type"`
+	Images        model.ImageArray  `json:"images"`
+	MainImage     string            `json:"main_image"`
+	Price         float64           `json:"price"`
 	Rating        float64           `json:"rating"`
-	Description   string            `gorm:"type:text" json:"description"`
-	OpeningHours  string            `gorm:"type:text" json:"opening_hours"`
-	Reviews       model.StringArray `gorm:"type:json" json:"reviews"`
-	Categories    string            `gorm:"type:json" json:"categories"`
+	Description   string            `json:"description"`
+	OpeningHours  string            `json:"opening_hours"`
+	Reviews       model.StringArray `json:"reviews"`
+	Categories    string            `json:"categories"`
+	Unit          string            `json:"unit"`
 }
 type PlacesSuggestion struct {
 	Places []PlaceSuggestion `json:"places"`
