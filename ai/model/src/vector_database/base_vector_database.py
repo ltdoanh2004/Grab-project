@@ -307,10 +307,10 @@ class BaseVectorDatabase:
         # Get existing IDs from Pinecone
         existing_ids = self.check_existing_items()
         
-        # Convert string embeddings to lists if needed
+        # Convert string embeddings to lists if needed and handle nan values
         print("Processing embeddings...")
         dataframe['context_embedding'] = dataframe['context_embedding'].apply(
-            lambda x: eval(x) if isinstance(x, str) else x
+            lambda x: eval(x) if isinstance(x, str) and x != 'None' and x != 'nan' else None
         )
         
         # Count items for insertion and update
@@ -329,21 +329,40 @@ class BaseVectorDatabase:
         
         for idx, row in tqdm(dataframe.iterrows(), total=len(dataframe), desc="Processing items"):
             try:
-                # Skip if the embedding is None
-                if row["context_embedding"] is None:
+                # Skip if the embedding is None or nan
+                if pd.isna(row["context_embedding"]) or row["context_embedding"] is None:
+                    print(f"Skipping row {idx} due to missing or invalid embedding")
                     continue
                     
                 # Create the vector object with metadata
-                # Note: Customize this part in subclasses if needed
                 item_id = str(row[id_field])
                 
                 # Create metadata dict from all columns except embedding
-                metadata = {col: row[col] for col in dataframe.columns 
-                           if col != 'context_embedding' and col in row}
+                metadata = {}
+                for col in dataframe.columns:
+                    if col != 'context_embedding' and col in row:
+                        value = row[col]
+                        # Handle different types of NaN values
+                        if pd.isna(value):
+                            # Convert NaN to appropriate default values based on column type
+                            if col in ['price', 'rating']:
+                                metadata[col] = 0.0
+                            elif col in ['name', 'description', 'location', 'opening_hours', 'categories']:
+                                metadata[col] = ""
+                            else:
+                                metadata[col] = None
+                        else:
+                            metadata[col] = value
+                
+                # Ensure embedding is a list and not nan
+                embedding = row["context_embedding"]
+                if not isinstance(embedding, list) or any(pd.isna(x) for x in embedding):
+                    print(f"Skipping row {idx} due to invalid embedding format")
+                    continue
                 
                 vectors_to_upsert.append({
                     "id": item_id,
-                    "values": row["context_embedding"],
+                    "values": embedding,
                     "metadata": metadata
                 })
                 
@@ -420,3 +439,60 @@ class BaseVectorDatabase:
         rows_to_embed = new_df[new_df[id_field].astype(str).isin(missing_ids)].copy()
         
         return rows_to_embed, existing_df 
+
+    def update_metadata(self, item_id: str, new_metadata: Dict[str, Any]) -> bool:
+        """
+        Update metadata for an existing item without regenerating embeddings
+        
+        Args:
+            item_id: The ID of the item to update
+            new_metadata: Dictionary containing new metadata values
+            
+        Returns:
+            Boolean indicating success
+        """
+        if not self.index:
+            raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
+            
+        try:
+            # Get current item data
+            current_data = self.get_item_by_id(item_id)
+            if not current_data:
+                raise ValueError(f"Item with ID {item_id} not found")
+                
+            # Get current metadata and values
+            current_metadata = current_data['vectors'][str(item_id)]['metadata']
+            current_values = current_data['vectors'][str(item_id)]['values']
+            
+            # Update metadata with new values
+            # Handle NaN values in new_metadata
+            processed_metadata = {}
+            for key, value in new_metadata.items():
+                if pd.isna(value):
+                    if key in ['price', 'rating']:
+                        processed_metadata[key] = 0.0
+                    elif key in ['name', 'description', 'location', 'opening_hours', 'categories']:
+                        processed_metadata[key] = ""
+                    else:
+                        processed_metadata[key] = None
+                else:
+                    processed_metadata[key] = value
+            
+            # Merge with existing metadata
+            current_metadata.update(processed_metadata)
+            
+            # Update in Pinecone
+            self.index.upsert(
+                vectors=[{
+                    "id": str(item_id),
+                    "values": current_values,  # Keep existing embedding
+                    "metadata": current_metadata
+                }]
+            )
+            
+            print(f"Successfully updated metadata for item {item_id}")
+            return True
+            
+        except Exception as e:
+            print(f"Error updating metadata for item {item_id}: {e}")
+            return False 
