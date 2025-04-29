@@ -232,7 +232,7 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         # Load data from CSV
         print(f"Loading embeddings from: {embedding_file}")
         self.df = pd.read_csv(embedding_file)
-        text_columns = ['name', 'description', 'categories', 'location', 'opening_hours']
+        text_columns = ['name', 'description', 'categories', 'location', 'opening_hours', 'price', 'rating']
         for col in text_columns:
             if col in self.df.columns:
                 self.df[col] = self.df[col].fillna('')
@@ -261,9 +261,9 @@ class PlaceVectorDatabase(BaseVectorDatabase):
                     "id": row["place_id"],
                     "name": row["name"],
                     "categories": row.get("categories", ""),
-                    "location": row.get("location", ""),
                     "opening_hours": row.get("opening_hours", ""),
                     "price": row.get("price", 0),
+                    "city": row.get("city", ""),
                     "rating": row.get("rating", 0),
                     "description": row["description"]
                 }
@@ -311,14 +311,12 @@ class PlaceVectorDatabase(BaseVectorDatabase):
                 Đây là mô tả của địa điểm:
                 {metadata['description']}
                 Danh mục của nó là {metadata.get('categories', '')}
-                Địa chỉ của nó là {metadata.get('location', '')}
                 Giờ mở cửa: {metadata.get('opening_hours', '')}
-                Phí vào cửa: {metadata.get('entrance_fee', '0')}
                 Điểm đánh giá của nó là {metadata.get('rating', '')}
             '''
         
         # Check if we need to generate new context and embedding
-        needs_new_context = any(key in new_data for key in ['description', 'categories', 'location', 'opening_hours', 'entrance_fee', 'rating'])
+        needs_new_context = any(key in new_data for key in ['description', 'categories', 'location', 'opening_hours', 'rating'])
         
         # Use the base class update_item method with our custom context generator
         return self.update_item(
@@ -373,22 +371,7 @@ class PlaceVectorDatabase(BaseVectorDatabase):
             print(f"Error searching by location: {e}")
             return None
     
-    def search_by_entrance_fee(self, max_fee, top_k=5):
-        """
-        Search for places with entrance fee less than or equal to max_fee
-        """
-        try:
-            # Get all places and filter by entrance fee
-            all_places = self.get_all_places()
-            filtered_places = [
-                match for match in all_places['matches']
-                if float(match['metadata']['entrance_fee']) <= float(max_fee)
-            ]
-            
-            return {'matches': filtered_places[:top_k]}
-        except Exception as e:
-            print(f"Error searching by entrance fee: {e}")
-            return None
+
     
     def search_by_rating(self, min_rating, top_k=5):
         """
@@ -414,6 +397,89 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         ids, _ = self.query(query_text, top_k=top_k)
         return ids
 
+    def update_metadata_from_csv(self, csv_path: str = None, batch_size: int = 100) -> bool:
+        """
+        Update metadata for all places from a CSV file
+        
+        Args:
+            csv_path: Path to the CSV file containing updated metadata
+                     Default: ../data/place_processed_embedding.csv
+            batch_size: Number of items to update in each batch
+            
+        Returns:
+            Boolean indicating success
+        """
+        if not self.index:
+            raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
+            
+        if csv_path is None:
+            csv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
+                                   'data', 'place_processed_embedding.csv')
+            
+        if not os.path.exists(csv_path):
+            raise ValueError(f"CSV file not found at: {csv_path}")
+            
+        print(f"Loading data from: {csv_path}")
+        df = pd.read_csv(csv_path)
+        
+        # Fill NaN values with appropriate defaults
+        df['name'] = df['name'].fillna('')
+        df['description'] = df['description'].fillna('')
+        df['categories'] = df['categories'].fillna('')
+        df['opening_hours'] = df['opening_hours'].fillna('')
+        df['price'] = df['price'].fillna(0)
+        df['city'] = df['city'].fillna('')
+        df['rating'] = df['rating'].fillna(0)
+        
+        print(f"Found {len(df)} items to update")
+        
+        # Process in batches
+        vectors_to_upsert = []
+        for idx, row in tqdm(df.iterrows(), total=len(df), desc="Updating metadata"):
+            try:
+                # Get current item data
+                current_data = self.get_item_by_id(row['place_id'])
+                if not current_data:
+                    print(f"Item with ID {row['place_id']} not found in Pinecone")
+                    continue
+                    
+                # Get current values
+                current_values = current_data['vectors'][str(row['place_id'])]['values']
+                
+                # Create new metadata
+                metadata = {
+                    "id": row["place_id"],
+                    "name": row["name"],
+                    "categories": row["categories"],
+                    "opening_hours": row["opening_hours"],
+                    "price": row["price"],
+                    "city": row["city"],
+                    "rating": row["rating"],
+                    "description": row["description"]
+                }
+                
+                vectors_to_upsert.append({
+                    "id": str(row["place_id"]),
+                    "values": current_values,
+                    "metadata": metadata
+                })
+                
+                # Upsert in batches
+                if len(vectors_to_upsert) >= batch_size:
+                    self.index.upsert(vectors=vectors_to_upsert)
+                    vectors_to_upsert = []
+                    
+            except Exception as e:
+                print(f"Error processing row {idx}: {e}")
+                continue
+        
+        # Upsert any remaining vectors
+        if vectors_to_upsert:
+            self.index.upsert(vectors=vectors_to_upsert)
+        
+        print(f"Successfully updated metadata for {len(df)} items")
+        return True
+
 def main():
     parser = argparse.ArgumentParser(description='Vector Database for Place Recommendations')
     parser.add_argument('--prepare-data', action='store_true', help='Prepare and process place data')
@@ -423,6 +489,7 @@ def main():
     parser.add_argument('--incremental', action='store_true', help='Use incremental update for data insertion')
     parser.add_argument('--query', type=str, help='Query text to search for similar places')
     parser.add_argument('--top-k', type=int, default=5, help='Number of results to return')
+    parser.add_argument('--update-metadata', action='store_true', help='Update metadata from CSV file')
     args = parser.parse_args()
 
     vector_db = PlaceVectorDatabase()
@@ -451,12 +518,12 @@ def main():
         for match in results['matches']:
             print(f"Name: {match['metadata']['name']}")
             print(f"Categories: {match['metadata']['categories']}")
-            print(f"Location: {match['metadata']['location']}")
             print(f"Opening Hours: {match['metadata']['opening_hours']}")
-            print(f"Entrance Fee: {match['metadata']['entrance_fee']}")
             print(f"Rating: {match['metadata']['rating']}")
             print(f"Description: {match['metadata']['description']}")
             print("-" * 50)
-
+    if args.update_metadata:
+        vector_db.set_up_pinecone()
+        vector_db.update_metadata_from_csv()
 if __name__ == "__main__":
     main() 
