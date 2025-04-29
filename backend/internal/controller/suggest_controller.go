@@ -115,17 +115,17 @@ func (sc *SuggestController) SuggestRestaurants(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
 }
 
-// SuggestRestaurants godoc
-// @Summary Suggest restaurants
-// @Description Get restaurant suggestions based on travel preferences
+// SuggestAll godoc
+// @Summary Suggest all suggestions
+// @Description Get comprehensive suggestions based on travel preferences for accommodations, places, and restaurants
 // @Tags suggest
 // @Accept json
 // @Produce json
 // @Param preference body dto.TravelPreference true "Travel Preferences"
-// @Success 200 {object} model.Response{data=dto.RestaurantsSuggestion}
+// @Success 200 {object} model.Response{data=dto.TripSuggestionRequest}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/v1/suggest/restaurants [get]
+// @Router /api/v1/suggest/all [get]
 func (sc *SuggestController) SuggestAll(ctx *gin.Context) {
 	travelPreference := &dto.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
@@ -135,7 +135,7 @@ func (sc *SuggestController) SuggestAll(ctx *gin.Context) {
 
 	suggestion, err := sc.suggestSerivce.SuggestAll(travelPreference)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get restaurant suggestions: "+err.Error(), nil))
+		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get suggestions: "+err.Error(), nil))
 		return
 	}
 	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
