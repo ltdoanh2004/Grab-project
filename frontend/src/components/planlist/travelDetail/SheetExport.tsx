@@ -39,7 +39,9 @@ export const SheetExport: React.FC<SheetExportProps> = ({ travelDetail }) => {
   const handleExport = () => {
     const wsData = [
       columns.map((col) => col.title),
-      ...data.map((row) => columns.map((col) => row[col.dataIndex])),
+      ...data.map((row) =>
+        columns.map((col) => row[col.dataIndex as keyof typeof row])
+      ),
     ];
 
     const ws = XLSX.utils.aoa_to_sheet(wsData);
