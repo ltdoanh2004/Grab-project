@@ -1213,6 +1213,9 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
+                "num_reviews": {
+                    "type": "integer"
+                },
                 "opening_hours": {
                     "type": "string"
                 },

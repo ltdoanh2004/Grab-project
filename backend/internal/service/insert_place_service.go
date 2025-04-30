@@ -53,6 +53,9 @@ func (s *insertDataService) mapRecordToPlace(record map[string]string) (*model.P
 	for _, url := range imageUrls {
 		images = append(images, model.Image{URL: url})
 	}
+	// for _, url := range imageUrls {
+	// 	images = append(images, model.Image{URL: url})
+	// }
 
 	var reviews model.StringArray
 	if len(record["reviews"]) != 0 {
