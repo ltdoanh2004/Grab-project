@@ -8,13 +8,21 @@ definitions:
         type: string
       city:
         type: string
+      city:
+        type: string
       description:
         type: string
       destination_id:
         type: string
       elderly_friendly:
         type: boolean
+      elderly_friendly:
+        type: boolean
       image_url:
+        items:
+          $ref: '#/definitions/model.Image'
+        type: array
+      location:
         items:
           $ref: '#/definitions/model.Image'
         type: array
@@ -23,7 +31,19 @@ definitions:
       name:
         type: string
       price:
+      price:
         type: number
+      rating:
+        type: number
+      room_info:
+        type: string
+      room_types:
+        items:
+          $ref: '#/definitions/model.RoomType'
+        type: array
+      tax_info:
+        type: string
+      unit:
       rating:
         type: number
       room_info:
@@ -77,11 +97,30 @@ definitions:
         items:
           $ref: '#/definitions/dto.CreateTripPlaceRequest'
         type: array
+      places:
+        items:
+          $ref: '#/definitions/dto.CreateTripPlaceRequest'
+        type: array
       restaurants:
         items:
           $ref: '#/definitions/dto.CreateTripRestaurantRequest'
         type: array
       trip_id:
+        type: string
+    type: object
+  dto.CreateTripPlaceRequest:
+    properties:
+      end_time:
+        type: string
+      notes:
+        type: string
+      place_id:
+        type: string
+      scheduled_date:
+        type: string
+      start_time:
+        type: string
+      trip_destination_id:
         type: string
     type: object
   dto.CreateTripPlaceRequest:
@@ -206,10 +245,25 @@ definitions:
       address:
         type: string
       cuisines:
+      cuisines:
         type: string
       description:
         type: string
       destination_id:
+        type: string
+      example_reviews:
+        type: string
+      is_booking:
+        type: boolean
+      is_delivery:
+        type: boolean
+      is_opening:
+        type: boolean
+      location:
+        $ref: '#/definitions/model.Location'
+      main_image:
+        type: string
+      media_urls:
         type: string
       is_booking:
         type: boolean
@@ -221,7 +275,13 @@ definitions:
         $ref: '#/definitions/model.Location'
       name:
         type: string
+      num_reviews:
+        type: integer
       opening_hours:
+        type: string
+      phone:
+        type: string
+      photo_url:
         type: string
       phone:
         type: string
@@ -229,6 +289,8 @@ definitions:
         type: string
       price_range:
         $ref: '#/definitions/model.PriceRange'
+      rating:
+        type: number
       rating:
         type: number
       restaurant_id:
@@ -292,6 +354,10 @@ definitions:
         type: integer
       location:
         type: string
+      places:
+        items:
+          type: string
+        type: array
       places:
         items:
           type: string

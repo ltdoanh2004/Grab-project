@@ -15,6 +15,7 @@ func (s *insertDataService) InsertRestaurantData(filePath string) error {
 	}
 
 	tx := s.db.Begin()
+	fmt.Println(records[0])
 	for _, record := range records {
 		restaurant, err := s.mapRecordToRestaurant(record)
 		if err != nil {
