@@ -25,12 +25,13 @@ A modern RESTful API for managing todos efficiently, built with Go using clean a
 │   └── db.go            # Database connection setup
 ├── internal
 │   ├── controller       # HTTP handlers
-│   ├── dto             # Data Transfer Objects
-│   ├── logger          # Logging configuration
-│   ├── model           # Data models
-│   ├── repository      # Database operations
-│   └── service         # Business logic
-├── docs                # Swagger documentation
+│   ├── dto              # Data Transfer Objects
+│   ├── logger           # Logging configuration
+│   ├── model            # Data models
+│   ├── repository       # Database operations
+│   ├── service          # Business logic
+│   └── util             # Utility functions
+├── docs                 # Swagger documentation
 ├── docker-compose.yml  # Docker compose configuration
 ├── Dockerfile         # Docker build configuration
 ├── go.mod            # Go module file
@@ -46,12 +47,12 @@ A modern RESTful API for managing todos efficiently, built with Go using clean a
 - Docker and Docker Compose
 - MySQL (if running locally)
 
-### Running with Docker
+<!-- ### Running with Docker
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/tuannguyensn2001/skeleton-bootcamp-backend
-cd skeleton-bootcamp-backend
+git clone https://github.com/ltdoanh2004/Grab-project.git
+cd Grab-project/backend
 ```
 
 2. Start the application using Docker Compose:
@@ -59,25 +60,23 @@ cd skeleton-bootcamp-backend
 docker-compose up -d
 ```
 
-The application will be available at `http://localhost:8080`
+The application will be available at `http://localhost:8080` -->
 
 ### Running Locally
 
 1. Clone the repository
-2. Create a `.env` file based on `.env.example`:
-```env
-SERVER_PORT=8080
-DATABASE_HOST=localhost
-DATABASE_PORT=3306
-DATABASE_USER=root
-DATABASE_PASSWORD=password
-DATABASE_NAME=todo_db
+```bash
+git clone https://github.com/ltdoanh2004/Grab-project.git
+cd Grab-project/backend
 ```
-
-3. Run MySQL database (or use Docker Compose for database only)
+2. Create a `.env` file
+3. Run Docker MySQL database
+```bash
+make mysql
+```
 4. Run the application:
 ```bash
-go run cmd/main.go
+make server
 ```
 
 ## API Endpoints
