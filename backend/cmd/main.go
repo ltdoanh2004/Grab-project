@@ -37,11 +37,6 @@ import (
 // @BasePath  /api/v1
 // @schemes   http https
 
-// @tag.name         todos
-// @tag.description  Operations about todos
-// @tag.docs.url     http://example.com/docs/todos
-// @tag.docs.description Detailed information about todo operations
-
 // @tag.name         auth
 // @tag.description  Operations about login and register
 // @tag.docs.url     http://example.com/docs/auth
@@ -54,11 +49,6 @@ import (
 // @tag.description  Operations about travel suggestions
 // @tag.docs.url     http://example.com/docs/suggest
 // @tag.docs.description Detailed information about suggestion operations
-
-// @tag.name         suggestionType
-// @tag.description  Operations about travel suggestion types (hotel, restaurant, landmark)
-// @tag.docs.url     http://example.com/docs/suggestionType
-// @tag.docs.description Detailed information about suggestion type operations
 
 // @tag.name         trip
 // @tag.description  Operations about trips and travel plans
@@ -78,9 +68,9 @@ func main() {
 			NewGinEngine,
 			repository.NewRepository,
 			repository.NewUserRepository,
-			repository.NewPlaceRepository,         // Add this
-			repository.NewRestaurantRepository,    // Add this
-			repository.NewAccommodationRepository, // Add this
+			repository.NewPlaceRepository,
+			repository.NewRestaurantRepository,
+			repository.NewAccommodationRepository,
 			repository.NewTripRepository,
 			repository.NewTripDestinationRepository,
 			repository.NewTripAccommodationRepository,
@@ -89,13 +79,15 @@ func main() {
 			service.NewService,
 			service.NewAuthService,
 			service.NewTripService,
+			service.NewSuggestService,
+			service.NewInsertDataService,
 			controller.NewController,
 			controller.NewAuthController,
 			controller.NewTripController,
-			service.NewSuggestService,
 			controller.NewSuggestController,
-			service.NewInsertDataService,
+			controller.NewInsertDataController,
 		),
+		fx.StartTimeout(1*time.Minute),
 		fx.Invoke(RegisterRoutes),
 	)
 
@@ -153,12 +145,11 @@ func RegisterRoutes(
 		OnStart: func(ctx context.Context) error {
 			log.Info().Msgf("Starting server on port %s", cfg.Server.Port)
 
-			// Edit csv path here
-			// err := insertDataService.InsertHotelData("./mockdata/hotel_processed.csv")
-			// if err != nil {
-			// 	log.Fatal().Err(err).Msg("Failed to import data from CSV")
-			// 	return err
-			// }
+			err := insertDataService.InsertRestaurantData("./mockdata/fnb_processed.csv")
+			if err != nil {
+				log.Fatal().Err(err).Msg("Failed to import data from CSV")
+			}
+			log.Info().Msg("Hotel data imported successfully")
 
 			go func() {
 				if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {

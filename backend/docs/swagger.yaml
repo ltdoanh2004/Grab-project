@@ -4,23 +4,37 @@ definitions:
     properties:
       accommodation_id:
         type: string
-      address:
-        type: string
-      amenities:
-        type: string
       booking_link:
+        type: string
+      city:
         type: string
       description:
         type: string
       destination_id:
         type: string
+      elderly_friendly:
+        type: boolean
       image_url:
+        items:
+          $ref: '#/definitions/model.Image'
+        type: array
+      location:
         type: string
       name:
         type: string
-      star_rating:
+      price:
         type: number
-      type:
+      rating:
+        type: number
+      room_info:
+        type: string
+      room_types:
+        items:
+          $ref: '#/definitions/model.RoomType'
+        type: array
+      tax_info:
+        type: string
+      unit:
         type: string
     type: object
   dto.AccommodationsSuggestion:
@@ -29,34 +43,6 @@ definitions:
         items:
           $ref: '#/definitions/dto.AccommodationSuggestion'
         type: array
-    type: object
-  dto.ActivitiesSuggestion:
-    properties:
-      activities:
-        items:
-          $ref: '#/definitions/dto.ActivitySuggestion'
-        type: array
-    type: object
-  dto.ActivitySuggestion:
-    properties:
-      activity_id:
-        type: string
-      category_id:
-        type: string
-      cost:
-        type: number
-      description:
-        type: string
-      destination_id:
-        type: string
-      duration:
-        type: integer
-      image_url:
-        type: string
-      name:
-        type: string
-      place_id:
-        type: string
     type: object
   dto.CreateTripAccommodationRequest:
     properties:
@@ -73,30 +59,11 @@ definitions:
       trip_destination_id:
         type: string
     type: object
-  dto.CreateTripActivityRequest:
-    properties:
-      activity_id:
-        type: string
-      end_time:
-        type: string
-      notes:
-        type: string
-      scheduled_date:
-        type: string
-      start_time:
-        type: string
-      trip_destination_id:
-        type: string
-    type: object
   dto.CreateTripDestinationRequest:
     properties:
       accommodations:
         items:
           $ref: '#/definitions/dto.CreateTripAccommodationRequest'
-        type: array
-      activities:
-        items:
-          $ref: '#/definitions/dto.CreateTripActivityRequest'
         type: array
       arrival_date:
         type: string
@@ -106,11 +73,30 @@ definitions:
         type: string
       order_num:
         type: integer
+      places:
+        items:
+          $ref: '#/definitions/dto.CreateTripPlaceRequest'
+        type: array
       restaurants:
         items:
           $ref: '#/definitions/dto.CreateTripRestaurantRequest'
         type: array
       trip_id:
+        type: string
+    type: object
+  dto.CreateTripPlaceRequest:
+    properties:
+      end_time:
+        type: string
+      notes:
+        type: string
+      place_id:
+        type: string
+      scheduled_date:
+        type: string
+      start_time:
+        type: string
+      trip_destination_id:
         type: string
     type: object
   dto.CreateTripRequest:
@@ -156,6 +142,52 @@ definitions:
       username:
         type: string
     type: object
+  dto.PlaceSuggestion:
+    properties:
+      address:
+        type: string
+      categories:
+        type: string
+      description:
+        type: string
+      destination_id:
+        type: string
+      duration:
+        type: string
+      images:
+        items:
+          $ref: '#/definitions/model.Image'
+        type: array
+      main_image:
+        type: string
+      name:
+        type: string
+      opening_hours:
+        type: string
+      place_id:
+        type: string
+      price:
+        type: number
+      rating:
+        type: number
+      reviews:
+        items:
+          type: string
+        type: array
+      type:
+        type: string
+      unit:
+        type: string
+      url:
+        type: string
+    type: object
+  dto.PlacesSuggestion:
+    properties:
+      places:
+        items:
+          $ref: '#/definitions/dto.PlaceSuggestion'
+        type: array
+    type: object
   dto.RegisterRequest:
     properties:
       email:
@@ -173,25 +205,43 @@ definitions:
     properties:
       address:
         type: string
-      avg_rating:
-        type: number
-      cuisine_type:
+      cuisines:
         type: string
       description:
         type: string
       destination_id:
         type: string
-      establishment_type:
-        type: string
-      image_url:
-        type: string
+      is_booking:
+        type: boolean
+      is_delivery:
+        type: boolean
+      is_opening:
+        type: boolean
+      location:
+        $ref: '#/definitions/model.Location'
       name:
         type: string
       opening_hours:
         type: string
-      price_range:
+      phone:
         type: string
+      photo_url:
+        type: string
+      price_range:
+        $ref: '#/definitions/model.PriceRange'
+      rating:
+        type: number
       restaurant_id:
+        type: string
+      reviews:
+        items:
+          type: string
+        type: array
+      services:
+        items:
+          $ref: '#/definitions/model.Service'
+        type: array
+      url:
         type: string
     type: object
   dto.RestaurantsSuggestion:
@@ -234,10 +284,6 @@ definitions:
     type: object
   dto.TravelPreference:
     properties:
-      activities:
-        items:
-          type: string
-        type: array
       budget:
         type: string
       duration_days:
@@ -246,6 +292,10 @@ definitions:
         type: integer
       location:
         type: string
+      places:
+        items:
+          type: string
+        type: array
       season:
         type: string
       travel_style:
@@ -264,23 +314,6 @@ definitions:
       notes:
         type: string
       trip_accommodation_id:
-        type: string
-      trip_destination_id:
-        type: string
-    type: object
-  dto.TripActivityDTO:
-    properties:
-      activity_id:
-        type: string
-      end_time:
-        type: string
-      notes:
-        type: string
-      scheduled_date:
-        type: string
-      start_time:
-        type: string
-      trip_activity_id:
         type: string
       trip_destination_id:
         type: string
@@ -312,10 +345,6 @@ definitions:
         items:
           $ref: '#/definitions/dto.TripAccommodationDTO'
         type: array
-      activities:
-        items:
-          $ref: '#/definitions/dto.TripActivityDTO'
-        type: array
       arrival_date:
         type: string
       departure_date:
@@ -324,6 +353,10 @@ definitions:
         type: string
       order_num:
         type: integer
+      places:
+        items:
+          $ref: '#/definitions/dto.TripPlaceDTO'
+        type: array
       restaurants:
         items:
           $ref: '#/definitions/dto.TripRestaurantDTO'
@@ -331,6 +364,23 @@ definitions:
       trip_destination_id:
         type: string
       trip_id:
+        type: string
+    type: object
+  dto.TripPlaceDTO:
+    properties:
+      end_time:
+        type: string
+      notes:
+        type: string
+      place_id:
+        type: string
+      scheduled_date:
+        type: string
+      start_time:
+        type: string
+      trip_destination_id:
+        type: string
+      trip_place_id:
         type: string
     type: object
   dto.TripRestaurantDTO:
@@ -352,10 +402,64 @@ definitions:
       trip_restaurant_id:
         type: string
     type: object
+  dto.TripSuggestionRequest:
+    properties:
+      accommodation:
+        $ref: '#/definitions/dto.AccommodationsSuggestion'
+      places:
+        $ref: '#/definitions/dto.PlacesSuggestion'
+      restaurants:
+        $ref: '#/definitions/dto.RestaurantsSuggestion'
+    type: object
+  model.Image:
+    properties:
+      alt:
+        type: string
+      url:
+        type: string
+    type: object
+  model.Location:
+    properties:
+      lat:
+        type: number
+      lon:
+        type: number
+    type: object
+  model.PriceRange:
+    properties:
+      max_price:
+        type: integer
+      min_price:
+        type: integer
+    type: object
   model.Response:
     properties:
       data: {}
       message:
+        type: string
+    type: object
+  model.RoomType:
+    properties:
+      bed_type:
+        type: string
+      conditions:
+        type: string
+      name:
+        type: string
+      occupancy:
+        type: string
+      price:
+        type: string
+      tax_and_fee:
+        type: string
+    type: object
+  model.Service:
+    properties:
+      name:
+        type: string
+      type:
+        type: integer
+      url:
         type: string
     type: object
   model.Todo:
@@ -397,7 +501,7 @@ info:
     name: API Support Team
     url: http://www.example.com/support
   description: A modern RESTful API for managing travel plans, including trips, destinations,
-    accommodations, activities, and restaurants.
+    accommodations, places, and restaurants.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
@@ -506,7 +610,43 @@ paths:
       summary: Suggest accommodations
       tags:
       - suggest
-  /api/v1/suggest/activities:
+  /api/v1/suggest/all:
+    get:
+      consumes:
+      - application/json
+      description: Get comprehensive suggestions based on travel preferences for accommodations,
+        places, and restaurants
+      parameters:
+      - description: Travel Preferences
+        in: body
+        name: preference
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TravelPreference'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.TripSuggestionRequest'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Suggest all suggestions
+      tags:
+      - suggest
+  /api/v1/suggest/places:
     get:
       consumes:
       - application/json
@@ -528,7 +668,7 @@ paths:
             - $ref: '#/definitions/model.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/dto.ActivitiesSuggestion'
+                  $ref: '#/definitions/dto.PlacesSuggestion'
               type: object
         "400":
           description: Bad Request
@@ -538,7 +678,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Response'
-      summary: Suggest activities
+      summary: Suggest places
       tags:
       - suggest
   /api/v1/suggest/restaurants:
@@ -843,6 +983,41 @@ paths:
       summary: Save changes to an existing trip
       tags:
       - trip
+  /api/v1/trip/suggest:
+    get:
+      consumes:
+      - application/json
+      description: Get AI-generated trip suggestions based on user preferences
+      parameters:
+      - description: Trip Suggestion Parameters
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TripSuggestionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Suggested trip
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.CreateTripRequest'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Get trip suggestions
+      tags:
+      - trip
   /health:
     get:
       consumes:
@@ -869,11 +1044,6 @@ securityDefinitions:
     type: apiKey
 swagger: "2.0"
 tags:
-- description: Operations about todos
-  externalDocs:
-    description: Detailed information about todo operations
-    url: http://example.com/docs/todos
-  name: todos
 - description: Operations about login and register
   externalDocs:
     description: Detailed information about auth operations
@@ -886,11 +1056,6 @@ tags:
     description: Detailed information about suggestion operations
     url: http://example.com/docs/suggest
   name: suggest
-- description: Operations about travel suggestion types (hotel, restaurant, landmark)
-  externalDocs:
-    description: Detailed information about suggestion type operations
-    url: http://example.com/docs/suggestionType
-  name: suggestionType
 - description: Operations about trips and travel plans
   externalDocs:
     description: Detailed information about trip operations
