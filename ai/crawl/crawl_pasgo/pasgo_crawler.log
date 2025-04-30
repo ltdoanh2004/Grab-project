@@ -190,3 +190,45 @@ Stacktrace:
 2025-04-30 00:04:42,134 - INFO - Found 0 restaurants on page 1
 2025-04-30 00:04:42,134 - WARNING - No restaurants found on page 1, stopping listing collection
 2025-04-30 00:04:42,134 - WARNING - No restaurant listings found.
+2025-04-30 00:55:51,681 - INFO - patching driver executable /Users/doa_ai/Library/Application Support/undetected_chromedriver/undetected_chromedriver
+2025-04-30 00:55:53,664 - INFO - Undetected ChromeDriver initialized successfully
+2025-04-30 00:55:53,664 - INFO - Starting crawl from page 1 with max_pages=2, max_restaurants=None
+2025-04-30 00:55:53,665 - INFO - Crawling page 1
+2025-04-30 00:55:53,665 - INFO - Waiting for 1.28 seconds
+2025-04-30 00:55:54,944 - INFO - Fetching URL: https://pasgo.vn/ha-noi/nha-hang (attempt 1/2)
+2025-04-30 00:56:21,377 - INFO - patching driver executable /Users/doa_ai/Library/Application Support/undetected_chromedriver/undetected_chromedriver
+2025-04-30 00:56:23,349 - INFO - Undetected ChromeDriver initialized successfully
+2025-04-30 00:56:23,349 - INFO - Starting crawl from page 1 with max_pages=3, max_restaurants=None
+2025-04-30 00:56:23,349 - INFO - Crawling page 1
+2025-04-30 00:56:23,349 - INFO - Waiting for 1.22 seconds
+2025-04-30 00:56:24,577 - INFO - Fetching URL: https://pasgo.vn/ha-noi/nha-hang (attempt 1/2)
+2025-04-30 00:58:57,056 - INFO - Starting crawl from page 1 with max_pages=3, max_restaurants=None
+2025-04-30 00:58:57,056 - INFO - Crawling page 1
+2025-04-30 00:58:57,056 - INFO - Waiting for 1.27 seconds
+2025-04-30 00:58:58,327 - INFO - Fetching URL: https://pasgo.vn/ha-noi/nha-hang (attempt 1/2)
+2025-04-30 00:58:58,617 - WARNING - No listings found with any selector
+2025-04-30 00:58:58,617 - INFO - Found 0 restaurants on page 1
+2025-04-30 00:58:58,617 - WARNING - No restaurants found on page 1, stopping listing collection
+2025-04-30 00:58:58,617 - WARNING - No restaurant listings found.
+2025-04-30 00:59:06,234 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=None
+2025-04-30 00:59:06,234 - INFO - Crawling page 1
+2025-04-30 00:59:06,234 - INFO - Waiting for 1.26 seconds
+2025-04-30 00:59:07,492 - INFO - Fetching URL: https://pasgo.vn/ha-noi/nha-hang (attempt 1/2)
+2025-04-30 00:59:07,787 - WARNING - No listings found with any selector
+2025-04-30 00:59:07,787 - INFO - Found 0 restaurants on page 1
+2025-04-30 00:59:07,787 - WARNING - No restaurants found on page 1, stopping listing collection
+2025-04-30 00:59:07,787 - WARNING - No restaurant listings found.
+2025-04-30 00:59:50,230 - INFO - Starting crawl from page 1 with max_pages=1, max_restaurants=None
+2025-04-30 00:59:50,230 - INFO - Crawling page 1
+2025-04-30 00:59:50,231 - INFO - Waiting for 1.23 seconds
+2025-04-30 00:59:51,469 - INFO - Fetching URL: https://pasgo.vn/ha-noi/nha-hang (attempt 1/2)
+2025-04-30 00:59:51,744 - WARNING - No listings found with any selector
+2025-04-30 00:59:51,744 - INFO - Found 0 restaurants on page 1
+2025-04-30 00:59:51,744 - WARNING - No restaurants found on page 1, stopping listing collection
+2025-04-30 00:59:51,744 - WARNING - No restaurant listings found.
+2025-04-30 01:01:55,578 - INFO - patching driver executable /Users/doa_ai/Library/Application Support/undetected_chromedriver/undetected_chromedriver
+2025-04-30 01:01:59,231 - INFO - Processing page 1
+2025-04-30 01:02:00,730 - INFO - Fetching URL: https://pasgo.vn/ha-noi/nha-hang (attempt 1/2)
+2025-04-30 01:02:11,557 - WARNING - Timeout waiting for content on https://pasgo.vn/ha-noi/nha-hang
+2025-04-30 01:03:02,473 - WARNING - No listings found with any selector
+2025-04-30 01:03:02,474 - WARNING - No restaurants found on page 1. Stopping listing collection.
