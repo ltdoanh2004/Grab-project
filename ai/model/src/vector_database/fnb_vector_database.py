@@ -64,23 +64,19 @@ class FnBVectorDatabase(BaseVectorDatabase):
         print(f"Loading data from: {data}")
         raw_df = pd.read_csv(data)
         
-        text_columns = ['name', 'description', 'categories', 'menu_items']
+        text_columns = ['address', 'phone', 'photo_url', 'location' ,'reviews', 'services', 'is_delivery', 'is_booking', 'is_opening', 'price_range', 'description', 'cuisines', 'opening_hours']
         for col in text_columns:
             if col in raw_df.columns:
                 raw_df[col] = raw_df[col].fillna('')
         
-        print("Processing prices...")
-        if 'price_range' in raw_df.columns:
-            raw_df['price_range'] = raw_df['price_range'].fillna('')
+
         
         print("Processing ratings...")
         if 'rating' in raw_df.columns:
             raw_df['rating'].fillna(raw_df['rating'].mean(), inplace=True)
             raw_df['rating'] = raw_df['rating'].astype(float)
 
-        print("Generating indices...")
-        if 'index' not in raw_df.columns:
-            raw_df['index'] = ['fnb_' + str(i).zfill(6) for i in range(1, len(raw_df) + 1)]
+
         
         existing_df = None
         rows_to_embed = raw_df
@@ -108,12 +104,18 @@ class FnBVectorDatabase(BaseVectorDatabase):
         
         print(f"Creating context strings for {len(rows_to_embed)} items...")
         rows_to_embed['context'] = [f'''
-                                Đây là mô tả của nhà hàng/quán ăn:
-                                {row['description']}
-                                Danh mục của nó là {row.get('categories', '')}
-                                Mức giá của nó là {row.get('price_range', '')}
-                                Điểm đánh giá của nó là {row.get('rating', '')}
-                                Một số món ăn nổi bật: {row.get('menu_items', '')}
+                                Thông tin chi tiết về nhà hàng/quán ăn:
+                                • Tên nhà hàng: {row.get('name', '')}
+                                • Địa chỉ: {row.get('address', '')}
+                                • Mô tả: {row.get('description', '')}
+                                • Đánh giá: {row.get('rating', '')} sao
+                                • Khu vực: {row.get('city', '')}
+                                • Các dịch vụ cung cấp: {row.get('services', '')}
+                                • Phân khúc giá: {row.get('price_range', '')}
+                                • Các món đặc trưng: {row.get('cuisines', '')}
+                                • Dịch vụ đặt bàn: {"Có" if row.get('is_booking') else "Không"}
+                                • Dịch vụ giao hàng: {"Có" if row.get('is_delivery') else "Không"}
+                                • Trạng thái hoạt động: {"Đang mở cửa" if row.get('is_opening') else "Đã đóng cửa"}
                                 ''' for _, row in tqdm(rows_to_embed.iterrows(), total=len(rows_to_embed), desc="Creating contexts")]
 
         # Load checkpoint
@@ -166,8 +168,8 @@ class FnBVectorDatabase(BaseVectorDatabase):
         if incremental and existing_df is not None:
             # Create a combined dataframe: new embeddings + existing embeddings
             # Filter out any rows from existing_df that might conflict with new_df by index
-            existing_indices = set(rows_to_embed['index'].astype(str))
-            filtered_existing_df = existing_df[~existing_df['index'].astype(str).isin(existing_indices)]
+            existing_indices = set(rows_to_embed['restaurant_id'].astype(str))
+            filtered_existing_df = existing_df[~existing_df['restaurant_id'].astype(str).isin(existing_indices)]
             
             # Concatenate the filtered existing data with the new data
             final_df = pd.concat([filtered_existing_df, rows_to_embed], ignore_index=True)
@@ -233,7 +235,7 @@ class FnBVectorDatabase(BaseVectorDatabase):
         # Load data from CSV
         print(f"Loading embeddings from: {embedding_file}")
         self.df = pd.read_csv(embedding_file)
-        text_columns = ['name', 'description', 'categories', 'menu_items']
+        text_columns = ['address', 'phone', 'photo_url', 'location' ,'reviews', 'services', 'is_delivery', 'is_booking', 'is_opening', 'price_range', 'description', 'cuisines', 'opening_hours']
         for col in text_columns:
             if col in self.df.columns:
                 self.df[col] = self.df[col].fillna('')
@@ -241,10 +243,8 @@ class FnBVectorDatabase(BaseVectorDatabase):
         if not hasattr(self, 'df') or 'context_embedding' not in self.df.columns:
             raise ValueError("DataFrame not prepared or missing embeddings. Please run prepare_fnb_embedding first.")
             
-        # Use base class method for incremental updates if requested
         if incremental:
-            # Convert string embeddings to lists if needed before passing to incremental method
-            return self.load_data_to_pinecone_incremental(df=self.df, id_field="index", batch_size=100)
+            return self.load_data_to_pinecone_incremental(df=self.df, id_field="restaurant_id", batch_size=100)
             
         # Otherwise, continue with original full insertion method
         # Convert string embeddings to lists
@@ -259,13 +259,19 @@ class FnBVectorDatabase(BaseVectorDatabase):
         for idx, row in tqdm(self.df.iterrows(), total=len(self.df), desc="Preparing vectors"):
             try:
                 metadata = {
-                    "id": row["index"],
+                    "id": row["restaurant_id"],
                     "name": row["name"],
-                    "categories": row.get("categories", ""),
-                    "price_range": row.get("price_range", ""),
+                    "address": row["address"],
                     "rating": row.get("rating", 0),
-                    "description": row["description"],
-                    "menu_items": row.get("menu_items", ""),
+                    "phone": row.get("phone", ""),
+                    "city": row.get("city", ""),
+                    "price_range": row.get("price_range", ""),
+                    "description": row.get("description", ""),
+                    "cuisines": row.get("cuisines", ""),
+                    "opening_hours": row.get("opening_hours", ""),
+                    "is_delivery": row.get("is_delivery", ""),
+                    "is_booking": row.get("is_booking", ""),
+                    "is_opening": row.get("is_opening", ""),
                 }
                 
                 # Ensure embedding is a list
@@ -274,7 +280,7 @@ class FnBVectorDatabase(BaseVectorDatabase):
                     continue
                     
                 vectors_to_upsert.append({
-                    "id": str(row["index"]),
+                    "id": str(row["restaurant_id"]),
                     "values": embedding,
                     "metadata": metadata
                 })
@@ -308,12 +314,18 @@ class FnBVectorDatabase(BaseVectorDatabase):
         def generate_fnb_context(metadata):
             """Generate context for FnB embedding"""
             return f'''
-                Đây là mô tả của nhà hàng/quán ăn:
-                {metadata['description']}
-                Danh mục của nó là {metadata.get('categories', '')}
-                Mức giá của nó là {metadata.get('price_range', '')}
-                Điểm đánh giá của nó là {metadata.get('rating', '')}
-                Một số món ăn nổi bật: {metadata.get('menu_items', '')}
+                Thông tin chi tiết về nhà hàng/quán ăn:
+                • Tên nhà hàng: {metadata.get('name', '')}
+                • Địa chỉ: {metadata.get('address', '')}
+                • Mô tả: {metadata.get('description', '')}
+                • Đánh giá: {metadata.get('rating', '')} sao
+                • Khu vực: {metadata.get('city', '')}
+                • Các dịch vụ cung cấp: {metadata.get('services', '')}
+                • Phân khúc giá: {metadata.get('price_range', '')}
+                • Các món đặc trưng: {metadata.get('cuisines', '')}
+                • Dịch vụ đặt bàn: {"Có" if metadata.get('is_booking') else "Không"}
+                • Dịch vụ giao hàng: {"Có" if metadata.get('is_delivery') else "Không"}
+                • Trạng thái hoạt động: {"Đang mở cửa" if metadata.get('is_opening') else "Đã đóng cửa"}
             '''
         
         # Check if we need to generate new context and embedding
@@ -448,12 +460,18 @@ def main():
             print(fnb_id)
         print("\nFull results:")
         for match in results['matches']:
-            print(f"Name: {match['metadata']['name']}")
-            print(f"Categories: {match['metadata']['categories']}")
-            print(f"Price Range: {match['metadata']['price_range']}")
-            print(f"Rating: {match['metadata']['rating']}")
-            print(f"Description: {match['metadata']['description']}")
-            print(f"Menu Items: {match['metadata']['menu_items']}")
+            print(f"Tên nhà hàng: {match['metadata']['name']}")
+            print(f"Địa chỉ: {match['metadata']['address']}")
+            print(f"Đánh giá: {match['metadata']['rating']} sao")
+            print(f"Số điện thoại: {match['metadata']['phone']}")
+            print(f"Khu vực: {match['metadata']['city']}")
+            print(f"Phân khúc giá: {match['metadata']['price_range']}")
+            print(f"Mô tả: {match['metadata']['description']}")
+            print(f"Các món đặc trưng: {match['metadata']['cuisines']}")
+            print(f"Thời gian mở cửa: {match['metadata']['opening_hours']}")
+            print(f"Dịch vụ đặt bàn: {'Có' if match['metadata']['is_booking'] else 'Không'}")
+            print(f"Dịch vụ giao hàng: {'Có' if match['metadata']['is_delivery'] else 'Không'}")
+            print(f"Trạng thái: {'Đang mở cửa' if match['metadata']['is_opening'] else 'Đã đóng cửa'}")
             print("-" * 50)
 
 if __name__ == "__main__":
