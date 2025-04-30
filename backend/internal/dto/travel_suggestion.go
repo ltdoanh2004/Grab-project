@@ -2,16 +2,22 @@ package dto
 
 import (
 	"skeleton-internship-backend/internal/model"
+	"time"
 )
 
+type Participant struct {
+	Adult    int `json:"adult"`
+	Children int `json:"children"`
+	Infant   int `json:"ifant"`
+	Pet      int `json:"pet"`
+}
 type TravelPreference struct {
-	Location     string            `json:"location"`
-	TravelStyle  string            `json:"travel_style"`
-	Places       model.StringArray `json:"places"`
-	Budget       string            `json:"budget"`
-	DurationDays int               `json:"duration_days"`
-	Season       string            `json:"season"`
-	Limit        int               `json:"limit"`
+	Location    string            `json:"location"`
+	Participant Participant       `json:"participant"`
+	Budget      string            `json:"budget"`
+	StartDate   time.Time         `json:"start_date"`
+	EndDate     time.Time         `json:"end_date"`
+	Options     model.StringArray `json:"options"`
 }
 
 type TravelSuggestionResponse struct {
