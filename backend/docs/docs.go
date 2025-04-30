@@ -1093,6 +1093,23 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.Participant": {
+            "type": "object",
+            "properties": {
+                "adult": {
+                    "type": "integer"
+                },
+                "children": {
+                    "type": "integer"
+                },
+                "ifant": {
+                    "type": "integer"
+                },
+                "pet": {
+                    "type": "integer"
+                }
+            }
+        },
         "dto.PlaceSuggestion": {
             "type": "object",
             "properties": {
@@ -1307,25 +1324,22 @@ const docTemplate = `{
                 "budget": {
                     "type": "string"
                 },
-                "duration_days": {
-                    "type": "integer"
-                },
-                "limit": {
-                    "type": "integer"
+                "end_date": {
+                    "type": "string"
                 },
                 "location": {
                     "type": "string"
                 },
-                "places": {
+                "options": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
                 },
-                "season": {
-                    "type": "string"
+                "participant": {
+                    "$ref": "#/definitions/dto.Participant"
                 },
-                "travel_style": {
+                "start_date": {
                     "type": "string"
                 }
             }

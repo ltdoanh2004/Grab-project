@@ -142,6 +142,17 @@ definitions:
       username:
         type: string
     type: object
+  dto.Participant:
+    properties:
+      adult:
+        type: integer
+      children:
+        type: integer
+      ifant:
+        type: integer
+      pet:
+        type: integer
+    type: object
   dto.PlaceSuggestion:
     properties:
       address:
@@ -286,10 +297,8 @@ definitions:
     properties:
       budget:
         type: string
-      duration_days:
-        type: integer
-      limit:
-        type: integer
+      end_date:
+        type: string
       location:
         type: string
       places:
