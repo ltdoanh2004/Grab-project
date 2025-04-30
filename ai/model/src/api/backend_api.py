@@ -4,7 +4,6 @@ import os
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from ai.model.src.travel_model import TravelModel
 import uvicorn
 
 # Load environment variables
@@ -13,6 +12,9 @@ ENV_PATH = os.path.join(SCRIPT_DIR, '.env')
 load_dotenv(ENV_PATH)
 
 app = FastAPI(title="Travel Recommendation API")
+
+# Import TravelModel sau khi đã định nghĩa các class cần thiết
+from ai.model.src.travel_model import TravelModel
 model = TravelModel()
 
 class TripSuggestionRequest(BaseModel):
@@ -295,7 +297,7 @@ async def suggest_trips(request: TripSuggestionRequest):
         
         return {
             "status": "success",
-            "response": result
+            "response": result,
         }
         
     except Exception as e:
