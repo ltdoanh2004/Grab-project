@@ -4,8 +4,15 @@ from dotenv import load_dotenv
 from ai.model.src.vector_database.hotel_vector_database import HotelVectorDatabase
 from ai.model.src.vector_database.place_vector_database import PlaceVectorDatabase
 from ai.model.src.vector_database.fnb_vector_database import FnBVectorDatabase
-from ai.model.src.api.backend_api import BackendAPI
 from typing import List, Dict, Any, Optional
+import logging
+
+# Set up logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 # Load environment variables
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -46,8 +53,10 @@ class TravelModel:
         """
         Query hotels based on text input and return hotel IDs
         """
+        # Double-check that hotel database is set up
         if not self.current_db or not isinstance(self.current_db, HotelVectorDatabase):
-            raise ValueError("Hotel database is not set up. Please call setup_database('hotels') first.")
+            logger.warning("Hotel database was not set up. Setting up now...")
+            self.setup_database("hotels")
             
         # Get hotel IDs from vector database
         return self.current_db.get_hotel_ids(query_text, top_k=top_k)
@@ -56,8 +65,10 @@ class TravelModel:
         """
         Query places based on text input and return place IDs
         """
+        # Double-check that places database is set up
         if not self.current_db or not isinstance(self.current_db, PlaceVectorDatabase):
-            raise ValueError("Place database is not set up. Please call setup_database('places') first.")
+            logger.warning("Places database was not set up. Setting up now...")
+            self.setup_database("places")
             
         # Get place IDs from vector database
         return self.current_db.get_place_ids(query_text, top_k=top_k)
@@ -66,8 +77,10 @@ class TravelModel:
         """
         Query FnB based on text input and return FnB IDs
         """
+        # Double-check that FnB database is set up
         if not self.current_db or not isinstance(self.current_db, FnBVectorDatabase):
-            raise ValueError("FnB database is not set up. Please call setup_database('fnb') first.")
+            logger.warning("FnB database was not set up. Setting up now...")
+            self.setup_database("fnb")
             
         # Get FnB IDs from vector database
         return self.current_db.get_fnb_ids(query_text, top_k=top_k)
@@ -316,9 +329,21 @@ class TravelModel:
     
     def process_query(self, user_query: str) -> Dict[str, Any]:
         """
-        Process user query using function calling and return IDs
+        Process user query using function calling and return IDs grouped by type
         """
         try:
+            logger.info(f"Processing query: {user_query}")
+            
+            # Initialize results dictionary
+            results = {
+                "status": "success",
+                "results": {
+                    "hotels": {"type": "hotels", "ids": []},
+                    "places": {"type": "places", "ids": []},
+                    "restaurants": {"type": "restaurants", "ids": []}
+                }
+            }
+            
             # Initial chat completion to determine which functions to call
             messages = [
                 {
@@ -335,153 +360,124 @@ When processing a query:
    - Travel style (luxury, budget, adventure, etc.)
    - Season of travel
 
-2. Then, call the appropriate functions in this order:
-   a. First, call setup_database for each type needed (hotels, places, fnb)
-   b. Then, call the corresponding query functions with detailed context
-   c. For each query, include relevant filters (price range, rating, category, etc.)
+2. Then, call the appropriate query functions with detailed context:
+   - query_hotels: For finding accommodations
+   - query_places: For finding attractions and activities
+   - query_fnb: For finding restaurants and food options
 
 3. For each function call:
    - Create a detailed context that captures all relevant information
    - Set appropriate top_k value (default 10 for comprehensive results)
    - Include specific filters when applicable
 
-4. Return results in a structured format with:
-   - Function name
-   - Type of result (hotels, places, fnb)
-   - Arguments used
-   - List of IDs
-
-Example context for query_hotels:
-"Looking for hotels in Da Nang for a family vacation:
-- Budget: medium (2-4 million VND/night)
-- Duration: 5 days
-- Activities: beach, swimming, family-friendly
-- Season: summer
-- Travel style: family with kids
-- Requirements: pool, kids club, beach access"
-
 Remember to:
-- Always call setup_database first
-- Use multiple functions when needed
-- Include all relevant filters
-- Create detailed, specific contexts
+- Create detailed, specific contexts for each query
 - Return top 10 results for each query"""
                 },
                 {"role": "user", "content": user_query}
             ]
             
+            # Always setup all databases first
+            for db_type in ["hotels", "places", "fnb"]:
+                logger.info(f"Force setting up database: {db_type}")
+                self.setup_database(db_type)
+                messages.append({"role": "assistant", "content": f"Database {db_type} has been set up."})
+            
+            logger.debug("Sending request to OpenAI after forced database setup...")
             response = self.openai_client.chat.completions.create(
                 model=self.model,
                 messages=messages,
                 functions=self.get_available_functions(),
                 function_call="auto"
             )
+            logger.debug(f"OpenAI response: {response}")
             
             response_message = response.choices[0].message
+            logger.info(f"Model response message: {response_message}")
             
-            # If the model decided to call functions
+            # Get the search context from the model response (if any)
+            search_context = user_query
             if response_message.function_call:
                 function_name = response_message.function_call.name
                 function_args = eval(response_message.function_call.arguments)
+                logger.info(f"Function call: {function_name}")
+                logger.debug(f"Function arguments: {function_args}")
                 
-                # Handle setup_database separately
-                if function_name == "setup_database":
-                    result = self.setup_database(**function_args)
-                    return {
-                        "status": "success",
-                        "response": f"Database {function_args['db_type']} setup {'successful' if result else 'failed'}"
-                    }
-                
-                # Initialize results dictionary
-                results = {
-                    "status": "success",
-                    "functions": []
-                }
-                
-                # Handle multiple function calls
-                if isinstance(function_name, list):
-                    for i, name in enumerate(function_name):
-                        args = function_args[i] if isinstance(function_args, list) else function_args
-                        
-                        if name == "query_hotels":
-                            ids = self.query_hotels(**args)
-                            type = "hotels"
-                        elif name == "query_places":
-                            ids = self.query_places(**args)
-                            type = "places"
-                        elif name == "query_fnb":
-                            ids = self.query_fnb(**args)
-                            type = "fnb"
-                        elif name == "search_by_price_range":
-                            ids = self.search_by_price_range(**args)
-                            type = "hotels"
-                        elif name == "search_by_rating":
-                            ids = self.search_by_rating(**args)
-                            type = "hotels"
-                        elif name == "search_by_category":
-                            ids = self.search_by_category(**args)
-                            type = "places"
-                        elif name == "search_by_location":
-                            ids = self.search_by_location(**args)
-                            type = "places"
-                        elif name == "search_by_menu_item":
-                            ids = self.search_by_menu_item(**args)
-                            type = "fnb"
-                        else:
-                            raise ValueError(f"Unknown function: {name}")
-                        
-                        results["functions"].append({
-                            "name": name,
-                            "type": type,
-                            "args": args,
-                            "ids": ids
-                        })
-                else:
-                    # Single function call
-                    if function_name == "query_hotels":
-                        ids = self.query_hotels(**function_args)
-                        type = "hotels"
-                    elif function_name == "query_places":
-                        ids = self.query_places(**function_args)
-                        type = "places"
-                    elif function_name == "query_fnb":
-                        ids = self.query_fnb(**function_args)
-                        type = "fnb"
-                    elif function_name == "search_by_price_range":
-                        ids = self.search_by_price_range(**function_args)
-                        type = "hotels"
-                    elif function_name == "search_by_rating":
-                        ids = self.search_by_rating(**function_args)
-                        type = "hotels"
-                    elif function_name == "search_by_category":
-                        ids = self.search_by_category(**function_args)
-                        type = "places"
-                    elif function_name == "search_by_location":
-                        ids = self.search_by_location(**function_args)
-                        type = "places"
-                    elif function_name == "search_by_menu_item":
-                        ids = self.search_by_menu_item(**function_args)
-                        type = "fnb"
-                    else:
-                        raise ValueError(f"Unknown function: {function_name}")
+                # Extract query_text from function arguments if available
+                if "query_text" in function_args:
+                    search_context = function_args.get("query_text", user_query)
                     
-                    results["functions"].append({
-                        "name": function_name,
-                        "type": type,
-                        "args": function_args,
-                        "ids": ids
-                    })
+                # Get top_k parameter if specified
+                top_k = function_args.get("top_k", 10)
+            else:
+                top_k = 10
                 
-                return results
+            # Force calling all three query functions with the same context
+            logger.info("Force calling all query functions to ensure complete results")
             
-            # If no function was called, return the direct response
-            return {
-                "status": "success",
-                "response": response_message.content
-            }
+            # Query hotels
+            logger.info(f"Force querying hotels with context: {search_context}")
+            hotel_ids = self.query_hotels(search_context, top_k=top_k)
+            results["results"]["hotels"]["ids"] = hotel_ids
+            logger.info(f"Added {len(hotel_ids)} hotel IDs")
+            
+            # Query places
+            logger.info(f"Force querying places with context: {search_context}")
+            place_ids = self.query_places(search_context, top_k=top_k)
+            results["results"]["places"]["ids"] = place_ids
+            logger.info(f"Added {len(place_ids)} place IDs")
+            
+            # Query restaurants
+            logger.info(f"Force querying restaurants with context: {search_context}")
+            restaurant_ids = self.query_fnb(search_context, top_k=top_k)
+            results["results"]["restaurants"]["ids"] = restaurant_ids
+            logger.info(f"Added {len(restaurant_ids)} restaurant IDs")
+            
+            logger.info(f"Final results: {results}")
+            return results
             
         except Exception as e:
+            logger.error(f"Error in process_query: {e}", exc_info=True)
             return {
                 "status": "error",
                 "error": str(e)
-            } 
+            }
+            
+    def _process_function_call(self, function_name: str, args: Dict[str, Any], results: Dict[str, Any]):
+        """Helper method to process a function call and update results"""
+        try:
+            logger.debug(f"Processing function call: {function_name} with args: {args}")
+            if function_name == "query_hotels":
+                ids = self.query_hotels(**args)
+                results["results"]["hotels"]["ids"].extend(ids)
+                logger.info(f"Added {len(ids)} hotel IDs")
+            elif function_name == "query_places":
+                ids = self.query_places(**args)
+                results["results"]["places"]["ids"].extend(ids)
+                logger.info(f"Added {len(ids)} place IDs")
+            elif function_name == "query_fnb":
+                ids = self.query_fnb(**args)
+                results["results"]["restaurants"]["ids"].extend(ids)
+                logger.info(f"Added {len(ids)} restaurant IDs")
+            elif function_name == "search_by_price_range":
+                ids = self.search_by_price_range(**args)
+                results["results"]["hotels"]["ids"].extend(ids)
+                logger.info(f"Added {len(ids)} hotel IDs from price range search")
+            elif function_name == "search_by_rating":
+                ids = self.search_by_rating(**args)
+                results["results"]["hotels"]["ids"].extend(ids)
+                logger.info(f"Added {len(ids)} hotel IDs from rating search")
+            elif function_name == "search_by_category":
+                ids = self.search_by_category(**args)
+                results["results"]["places"]["ids"].extend(ids)
+                logger.info(f"Added {len(ids)} place IDs from category search")
+            elif function_name == "search_by_location":
+                ids = self.search_by_location(**args)
+                results["results"]["places"]["ids"].extend(ids)
+                logger.info(f"Added {len(ids)} place IDs from location search")
+            elif function_name == "search_by_menu_item":
+                ids = self.search_by_menu_item(**args)
+                results["results"]["restaurants"]["ids"].extend(ids)
+                logger.info(f"Added {len(ids)} restaurant IDs from menu item search")
+        except Exception as e:
+            logger.error(f"Error processing function {function_name}: {e}", exc_info=True) 
