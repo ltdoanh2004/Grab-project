@@ -15,7 +15,6 @@ func (s *insertDataService) InsertRestaurantData(filePath string) error {
 	}
 
 	tx := s.db.Begin()
-	fmt.Println(records[0])
 	for _, record := range records {
 		restaurant, err := s.mapRecordToRestaurant(record)
 		if err != nil {
@@ -58,8 +57,11 @@ func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*mo
 	}
 
 	var location model.Location
-	if err := json.Unmarshal([]byte(record["location"]), &location); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal location: %w", err)
+	if len(record["location"]) != 0 {
+		if err := json.Unmarshal([]byte(record["location"]), &location); err != nil {
+			fmt.Println(record["location"])
+			return nil, fmt.Errorf("failed to unmarshal location: %w", err)
+		}
 	}
 
 	var reviews model.StringArray
@@ -70,18 +72,24 @@ func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*mo
 	}
 
 	var services model.ServiceArray
-	if err := json.Unmarshal([]byte(record["services"]), &services); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal services: %w", err)
+	if len(record["services"]) != 0 {
+		if err := json.Unmarshal([]byte(record["services"]), &services); err != nil {
+			fmt.Println(record)
+			return nil, fmt.Errorf("failed to unmarshal services: %w", err)
+		}
 	}
 
 	var priceRange model.PriceRange
-	if err := json.Unmarshal([]byte(record["price_range"]), &priceRange); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal price range: %w", err)
+	if len(record["price_range"]) != 0 {
+		if err := json.Unmarshal([]byte(record["price_range"]), &priceRange); err != nil {
+			fmt.Println(record)
+			return nil, fmt.Errorf("failed to unmarshal price range: %w", err)
+		}
 	}
 
 	restaurant := &model.Restaurant{
 		RestaurantID:  record["id"],
-		DestinationID: record["destination_id"],
+		DestinationID: record["city"],
 		Name:          record["name"],
 		Address:       record["address"],
 		Rating:        rating,

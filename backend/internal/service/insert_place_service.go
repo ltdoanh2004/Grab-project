@@ -42,15 +42,17 @@ func (s *insertDataService) mapRecordToPlace(record map[string]string) (*model.P
 		return nil, err
 	}
 
-	// var imageUrls model.StringArray
+	var imageUrls model.StringArray
 	var images model.ImageArray
-	if err := json.Unmarshal([]byte(record["images"]), &images); err != nil {
-		fmt.Println(record["images"])
-		return nil, fmt.Errorf("failed to unmarshal images: %w", err)
+	if len(record["image_urls"]) != 0 {
+		if err := json.Unmarshal([]byte(record["image_urls"]), &imageUrls); err != nil {
+			fmt.Println(record["image_urls"])
+			return nil, fmt.Errorf("failed to unmarshal images: %w", err)
+		}
 	}
-	// for _, url := range imageUrls {
-	// 	images = append(images, model.Image{URL: url})
-	// }
+	for _, url := range imageUrls {
+		images = append(images, model.Image{URL: url})
+	}
 
 	var reviews model.StringArray
 	if len(record["reviews"]) != 0 {
