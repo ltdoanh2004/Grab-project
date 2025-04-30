@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"skeleton-internship-backend/internal/model"
-	"skeleton-internship-backend/internal/repository"
 	"skeleton-internship-backend/internal/util"
 	"strconv"
 	"strings"
@@ -14,20 +13,19 @@ import (
 
 type InsertDataService interface {
 	InsertHotelData(filePath string) error
+	InsertPlaceData(filePath string) error
+	InsertRestaurantData(filePath string) error
 }
 
 type insertDataService struct {
-	accommodationRepo repository.AccommodationRepository
-	db                *gorm.DB
+	db *gorm.DB
 }
 
 func NewInsertDataService(
-	accommodationRepo repository.AccommodationRepository,
 	db *gorm.DB,
 ) InsertDataService {
 	return &insertDataService{
-		accommodationRepo: accommodationRepo,
-		db:                db,
+		db: db,
 	}
 }
 
@@ -36,13 +34,12 @@ func (s *insertDataService) InsertHotelData(filePath string) error {
 	if err != nil {
 		return err
 	}
-
 	// Begin transaction
 	tx := s.db.Begin()
 	for _, record := range records {
-		fmt.Println(record["id"])
 		accommodation, err := s.mapRecordToAccommodation(record)
 		if err != nil {
+			fmt.Println(record["id"])
 			tx.Rollback()
 			return err
 		}
@@ -88,13 +85,15 @@ func (s *insertDataService) mapRecordToAccommodation(record map[string]string) (
 	}
 
 	var roomTypes model.RoomTypeArray
-	if err := json.Unmarshal([]byte(roomTypesStr), &roomTypes); err != nil {
-		// Try to fix common JSON formatting issues
-		roomTypesStr = strings.ReplaceAll(roomTypesStr, "'", "\"")
-		roomTypesStr = strings.ReplaceAll(roomTypesStr, "~", "'")
-
+	if len(roomTypesStr) != 0 {
 		if err := json.Unmarshal([]byte(roomTypesStr), &roomTypes); err != nil {
-			return nil, fmt.Errorf("failed to unmarshal room types: %w", err)
+			// Try to fix common JSON formatting issues
+			roomTypesStr = strings.ReplaceAll(roomTypesStr, "'", "\"")
+			roomTypesStr = strings.ReplaceAll(roomTypesStr, "~", "'")
+
+			if err := json.Unmarshal([]byte(roomTypesStr), &roomTypes); err != nil {
+				return nil, fmt.Errorf("failed to unmarshal room types: %w", err)
+			}
 		}
 	}
 

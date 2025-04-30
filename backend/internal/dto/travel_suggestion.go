@@ -19,50 +19,46 @@ type TravelSuggestionResponse struct {
 }
 
 type PlaceSuggestion struct {
-	PlaceID       string            `gorm:"type:char(36);primaryKey" json:"place_id"`
-	DestinationID string            `gorm:"type:char(36)" json:"destination_id"`
-	Name          string            `gorm:"size:100;not null" json:"name"`
-	URL           string            `gorm:"size:255" json:"url"`
-	Address       string            `gorm:"size:255" json:"address"`
-	Duration      string            `gorm:"size:50" json:"duration"`
-	Type          string            `gorm:"size:50" json:"type"`
-	Images        model.ImageArray  `gorm:"type:json" json:"images"`
-	MainImage     string            `gorm:"size:255" json:"main_image"`
-	Price         string            `gorm:"size:20" json:"price"`
+	PlaceID       string            `json:"place_id"`
+	DestinationID string            `json:"destination_id"`
+	Name          string            `json:"name"`
+	URL           string            `json:"url"`
+	Address       string            `json:"address"`
+	Duration      string            `json:"duration"`
+	Type          string            `json:"type"`
+	Images        model.ImageArray  `json:"images"`
+	MainImage     string            `json:"main_image"`
+	Price         float64           `json:"price"`
 	Rating        float64           `json:"rating"`
-	Description   string            `gorm:"type:text" json:"description"`
-	OpeningHours  string            `gorm:"type:text" json:"opening_hours"`
-	Reviews       model.StringArray `gorm:"type:json" json:"reviews"`
-	Categories    string            `gorm:"type:json" json:"categories"`
+	Description   string            `json:"description"`
+	OpeningHours  string            `json:"opening_hours"`
+	Reviews       model.StringArray `json:"reviews"`
+	Categories    string            `json:"categories"`
+	Unit          string            `json:"unit"`
 }
 type PlacesSuggestion struct {
 	Places []PlaceSuggestion `json:"places"`
 }
 
 type RestaurantSuggestion struct {
-	RestaurantID   string            `json:"restaurant_id"`
-	DestinationID  string            `json:"destination_id"`
-	Name           string            `json:"name"`
-	Address        string            `json:"address"`
-	Rating         float64           `json:"rating"`
-	Phone          string            `json:"phone"`
-	PhotoURL       string            `json:"photo_url"`
-	URL            string            `json:"url"`
-	Location       model.Location    `json:"location"`
-	Reviews        model.StringArray `json:"reviews"`
-	Services       model.StringArray `json:"services"`
-	IsDelivery     bool              `json:"is_delivery"`
-	IsBooking      bool              `json:"is_booking"`
-	IsOpening      bool              `json:"is_opening"`
-	PriceRange     string            `json:"price_range"`
-	Description    string            `json:"description"`
-	Cuisines       string            `json:"cuisines"`
-	NumReviews     int               `json:"num_reviews"`
-	ExampleReviews string            `json:"example_reviews"`
-	MediaURLs      string            `json:"media_urls"`
-	MainImage      string            `json:"main_image"`
-	OpeningHours   string            `json:"opening_hours"`
-	ReviewSummary  string            `json:"review_summary"`
+	RestaurantID  string             `json:"restaurant_id"`
+	DestinationID string             `json:"destination_id"`
+	Name          string             `json:"name"`
+	Address       string             `json:"address"`
+	Rating        float64            `json:"rating"`
+	Phone         string             `json:"phone"`
+	PhotoURL      string             `json:"photo_url"`
+	URL           string             `json:"url"`
+	Location      model.Location     `json:"location"`
+	Reviews       model.StringArray  `json:"reviews"`
+	Services      model.ServiceArray `json:"services"`
+	IsDelivery    bool               `json:"is_delivery"`
+	IsBooking     bool               `json:"is_booking"`
+	IsOpening     bool               `json:"is_opening"`
+	PriceRange    model.PriceRange   `json:"price_range"`
+	Description   string             `json:"description"`
+	Cuisines      string             `json:"cuisines"`
+	OpeningHours  string             `json:"opening_hours"`
 }
 
 type RestaurantsSuggestion struct {
@@ -95,4 +91,11 @@ type TripSuggestionRequest struct {
 	Accommodation AccommodationsSuggestion `json:"accommodation"`
 	Places        PlacesSuggestion         `json:"places"`
 	Restaurants   RestaurantsSuggestion    `json:"restaurants"`
+}
+
+type SuggestWithIDAndType struct {
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Args string `json:"args"`
+	ID   string `json:"id"`
 }
