@@ -29,7 +29,7 @@ func (tc *TripController) RegisterRoutes(router *gin.Engine) {
 			trip.POST("/create", tc.CreateTrip)
 			trip.PUT("/save", tc.SaveTrip)
 			trip.GET("/:id", tc.GetTrip)
-			trip.GET("/suggest", tc.SuggestTrip)
+			trip.GET("/get_plan", tc.GetPlan)
 		}
 	}
 }
@@ -161,7 +161,7 @@ func (tc *TripController) GetTrip(ctx *gin.Context) {
 // @Failure 400 {object} model.Response "Invalid request"
 // @Failure 500 {object} model.Response "Internal server error"
 // @Router /api/v1/trip/suggest [get]
-func (tc *TripController) SuggestTrip(ctx *gin.Context) {
+func (tc *TripController) GetPlan(ctx *gin.Context) {
 	endpoints := "/suggest/trip"
 	var request dto.TripSuggestionRequest
 	if err := ctx.ShouldBindJSON(&request); err != nil {

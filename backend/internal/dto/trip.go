@@ -108,3 +108,126 @@ type TripRestaurantDTO struct {
 	ReservationInfo   string     `json:"reservation_info"`
 	Notes             string     `json:"notes"`
 }
+
+type Activity struct {
+	ID              string   `json:"id"`
+	Type            string   `json:"type"` // e.g., "place", "accommodation", "restaurant"
+	Name            string   `json:"name"`
+	StartTime       string   `json:"start_time,omitempty"` // "HH:mm" format
+	EndTime         string   `json:"end_time,omitempty"`
+	Description     string   `json:"description,omitempty"`
+	Location        string   `json:"location,omitempty"`
+	Rating          float64  `json:"rating,omitempty"`
+	Price           float64  `json:"price,omitempty"`
+	ImageURL        string   `json:"image_url,omitempty"`
+	BookingLink     string   `json:"booking_link,omitempty"`
+	RoomInfo        string   `json:"room_info,omitempty"`
+	TaxInfo         string   `json:"tax_info,omitempty"`
+	ElderlyFriendly bool     `json:"elderly_friendly,omitempty"`
+	Categories      string   `json:"categories,omitempty"`
+	Duration        string   `json:"duration,omitempty"`
+	OpeningHours    string   `json:"opening_hours,omitempty"`
+	Address         string   `json:"address,omitempty"`
+	URL             string   `json:"url,omitempty"`
+	Cuisines        string   `json:"cuisines,omitempty"`
+	PriceRange      string   `json:"price_range,omitempty"`
+	Phone           string   `json:"phone,omitempty"`
+	Services        []string `json:"services,omitempty"`
+}
+
+type Segment struct {
+	TimeOfDay  string     `json:"time_of_day"` // e.g., "morning", "afternoon", "evening"
+	Activities []Activity `json:"activities"`
+}
+
+type PlanByDay struct {
+	Date     string    `json:"date"`      // "YYYY-MM-DD"
+	DayTitle string    `json:"day_title"` // e.g., "Ngày 1: Check-in & khám phá biển"
+	Segments []Segment `json:"segments"`
+}
+
+type CreateTripRequestByDate struct {
+	UserID      string      `json:"user_id"`
+	TripName    string      `json:"trip_name"`
+	StartDate   string      `json:"start_date"` // "YYYY-MM-DD"
+	EndDate     string      `json:"end_date"`   // "YYYY-MM-DD"
+	Destination string      `json:"destination"`
+	PlanByDay   []PlanByDay `json:"plan_by_day"`
+}
+
+func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripRequest, error) {
+	layoutDate := "2006-01-02"
+	layoutTime := "2006-01-02 15:04"
+
+	startDate, err := time.Parse(layoutDate, input.StartDate)
+	if err != nil {
+		return CreateTripRequest{}, err
+	}
+
+	endDate, err := time.Parse(layoutDate, input.EndDate)
+	if err != nil {
+		return CreateTripRequest{}, err
+	}
+
+	dest := CreateTripDestinationRequest{
+		TripID:        "", // Can be filled later
+		DestinationID: input.Destination,
+		ArrivalDate:   &startDate,
+		DepartureDate: &endDate,
+		OrderNum:      1,
+	}
+
+	for _, day := range input.PlanByDay {
+		scheduledDate, err := time.Parse(layoutDate, day.Date)
+		if err != nil {
+			return CreateTripRequest{}, err
+		}
+
+		for _, segment := range day.Segments {
+			for _, activity := range segment.Activities {
+				startTime, _ := time.Parse(layoutTime, day.Date+" "+activity.StartTime)
+				endTime, _ := time.Parse(layoutTime, day.Date+" "+activity.EndTime)
+
+				switch activity.Type {
+				case "place":
+					dest.Places = append(dest.Places, CreateTripPlaceRequest{
+						TripDestinationID: input.Destination,
+						PlaceID:           activity.ID,
+						ScheduledDate:     &scheduledDate,
+						StartTime:         &startTime,
+						EndTime:           &endTime,
+						Notes:             activity.Description,
+					})
+				case "accommodation":
+					dest.Accommodations = append(dest.Accommodations, CreateTripAccommodationRequest{
+						TripDestinationID: input.Destination,
+						AccommodationID:   activity.ID,
+						CheckInDate:       &scheduledDate,
+						Cost:              activity.Price,
+						Notes:             activity.Description,
+					})
+				case "restaurant":
+					dest.Restaurants = append(dest.Restaurants, CreateTripRestaurantRequest{
+						TripDestinationID: input.Destination,
+						RestaurantID:      activity.ID,
+						MealDate:          &scheduledDate,
+						StartTime:         &startTime,
+						EndTime:           &endTime,
+						ReservationInfo:   activity.Description,
+						Notes:             activity.Name,
+					})
+				}
+			}
+		}
+	}
+
+	return CreateTripRequest{
+		UserID:           input.UserID,
+		TripName:         input.TripName,
+		StartDate:        startDate,
+		EndDate:          endDate,
+		Budget:           0,         // Fill if needed
+		TripStatus:       "planned", // Adjust if needed
+		TripDestinations: []CreateTripDestinationRequest{dest},
+	}, nil
+}

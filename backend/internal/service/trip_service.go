@@ -354,7 +354,7 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTO, error) {
 	return tripDTO, nil
 }
 
-func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequest, error) {
+func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error) {
 	client := &http.Client{
 		Timeout: 10 * time.Second,
 	}
@@ -386,7 +386,7 @@ func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, e
 		return nil, fmt.Errorf("AI service returned non-200 status code: %d", resp.StatusCode)
 	}
 
-	var rsp dto.CreateTripRequest
+	var rsp dto.CreateTripRequestByDate
 	if err := json.NewDecoder(resp.Body).Decode(&rsp); err != nil {
 		return nil, fmt.Errorf("failed to decode AI service response: %w", err)
 	}
@@ -394,10 +394,14 @@ func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, e
 }
 
 func (ts *tripService) SuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequest, error) {
-	suggestion, err := ts.CallAISuggestTrip(activities, endpoint)
+	suggestionByDate, err := ts.CallAISuggestTrip(activities, endpoint)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get trip suggestion: %w", err)
 	}
+	suggestion, err := dto.ConvertToCreateTripRequest(*suggestionByDate)
+	if err != nil {
+		return nil, fmt.Errorf("failed to convert trip suggestion: %w", err)
+	}
 
-	return suggestion, nil
+	return &suggestion, nil
 }
