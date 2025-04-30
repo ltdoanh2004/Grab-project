@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
 PasGo Restaurant Crawler
-A specialized crawler that extracts clean, structured restaurant details from PasGo.
+A specialized crawler that extracts clean, structured restaurant details from PasGo using undetected-chromedriver.
 """
 
 import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, WebDriverException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from bs4 import BeautifulSoup
 import json
 import time
@@ -32,7 +32,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class PasGoCrawler:
-    """Crawler for PasGo restaurants with data extraction"""
+    """Crawler for PasGo restaurants with data extraction using undetected-chromedriver"""
 
     def __init__(self, base_url=None, delay=1.0, save_interval=15):
         self.base_url = base_url or "https://pasgo.vn/ha-noi/nha-hang"
@@ -42,64 +42,40 @@ class PasGoCrawler:
         self.last_save_time = time.time()
         self.visited_urls = set()
         
-        # Setup undetected-chromedriver
+        # Initialize Chrome options
         options = uc.ChromeOptions()
         options.add_argument('--headless')
-        options.add_argument('--disable-gpu')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
-        options.add_argument('--window-size=1920,1080')
-        options.add_argument('--disable-blink-features=AutomationControlled')
         
-        try:
-            self.driver = uc.Chrome(options=options)
-            self.driver.set_page_load_timeout(30)
-            self.wait = WebDriverWait(self.driver, 15)
-            logger.info("Undetected ChromeDriver initialized successfully")
-        except Exception as e:
-            logger.error(f"Failed to initialize ChromeDriver: {e}")
-            raise
+        # Initialize the driver
+        self.driver = uc.Chrome(options=options)
+        self.wait = WebDriverWait(self.driver, 10)
+
+    def __del__(self):
+        """Cleanup resources"""
+        if hasattr(self, 'driver'):
+            try:
+                self.driver.quit()
+            except:
+                pass
 
     def get_soup(self, url, retries=2):
         """Get BeautifulSoup object from URL using undetected-chromedriver"""
         for attempt in range(retries):
             try:
                 logger.info(f"Fetching URL: {url} (attempt {attempt + 1}/{retries})")
+                
+                # Load the page
                 self.driver.get(url)
                 
-                # Wait for content to load
-                selectors = [
-                    "div.restaurant-list",
-                    "div.list-restaurant",
-                    "div.restaurant-item",
-                    "div.item",
-                    "body"  # Fallback
-                ]
+                # Wait for the main content to load
+                try:
+                    self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.restaurant-item, .item, .boxed-main-items')))
+                except TimeoutException:
+                    logger.warning(f"Timeout waiting for content on {url}")
                 
-                # Wait for page load
-                self.driver.execute_script("return document.readyState") == "complete"
-                time.sleep(3)  # Give JavaScript time to render
-                
-                # Try to find content with different selectors
-                content_found = False
-                for selector in selectors:
-                    try:
-                        element = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
-                        if element:
-                            logger.info(f"Found content with selector: {selector}")
-                            content_found = True
-                            break
-                    except TimeoutException:
-                        continue
-                
-                if not content_found:
-                    logger.warning("No content found with any selector")
-                    if attempt < retries - 1:
-                        continue
-                    else:
-                        return None
-                
-                # Get page source and create soup
+                # Get the rendered page source
                 page_source = self.driver.page_source
                 
                 # Print first part of HTML for debugging
@@ -107,8 +83,7 @@ class PasGoCrawler:
                 print(page_source[:2000])
                 print("===================")
                 
-                soup = BeautifulSoup(page_source, 'html.parser')
-                return soup
+                return BeautifulSoup(page_source, 'html.parser')
                 
             except Exception as e:
                 logger.error(f"Error fetching URL {url}: {e}")
@@ -121,6 +96,7 @@ class PasGoCrawler:
         """Get restaurant listings from a page"""
         self._random_delay()
         
+        # Use the correct pagination format
         url = f"{self.base_url}?page={page-1}" if page > 1 else self.base_url
         soup = self.get_soup(url)
         if not soup:
@@ -130,19 +106,24 @@ class PasGoCrawler:
         
         # Try different selectors for listings
         selectors = [
-            "div.restaurant-list .restaurant-item",
-            "div.list-restaurant .item",
-            "article.restaurant",
-            ".restaurant-box",
-            ".restaurant-info"
+            ".restaurant-item",                # Main listing selector
+            ".item",                          # Alternative listing selector
+            ".boxed-main-items .items",       # Another possible selector
+            ".list-restaurant .item",         # Backup selector
+            ".restaurant-list .item"          # Last resort selector
         ]
         
+        # Wait for listings to be visible in the browser
         listings = None
         for selector in selectors:
-            listings = soup.select(selector)
-            if listings:
-                logger.info(f"Found {len(listings)} listings with selector: {selector}")
-                break
+            try:
+                elements = self.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, selector)))
+                if elements:
+                    listings = [BeautifulSoup(el.get_attribute('outerHTML'), 'html.parser') for el in elements]
+                    logger.info(f"Found {len(listings)} listings with selector: {selector}")
+                    break
+            except TimeoutException:
+                continue
                 
         if not listings:
             logger.warning("No listings found with any selector")
@@ -152,12 +133,11 @@ class PasGoCrawler:
             try:
                 # Try different name selectors
                 name_selectors = [
-                    'h3.item-child-headline',
-                    'h3.title',
-                    'h3 a',
-                    '.restaurant-name',
-                    '.title a',
-                    'h3'
+                    '.item-child-headline',    # Main name selector
+                    '.title',                  # Alternative name selector
+                    'h3',                      # Another name selector
+                    'h3 a',                    # Backup name selector
+                    'a[title]'                 # Last resort name selector
                 ]
                 
                 name = None
@@ -165,16 +145,19 @@ class PasGoCrawler:
                     name_tag = listing.select_one(selector)
                     if name_tag:
                         name = name_tag.text.strip()
-                        logger.info(f"Found name with selector {selector}: {name}")
-                        break
+                        if not name and name_tag.has_attr('title'):
+                            name = name_tag['title'].strip()
+                        if name:
+                            logger.info(f"Found name with selector {selector}: {name}")
+                            break
                 
                 # Try different URL selectors
                 url_selectors = [
-                    'a.item-link-desc',
-                    'a[href*="/nha-hang/"]',
-                    'h3 a[href]',
-                    '.title a[href]',
-                    'a'
+                    'a[href*="/nha-hang/"]',   # Main URL selector
+                    '.item-link-desc',         # Alternative URL selector
+                    'h3 a[href]',              # Another URL selector
+                    'a[href]',                 # Backup URL selector
+                    'a'                        # Last resort URL selector
                 ]
                 
                 url = None
@@ -195,9 +178,39 @@ class PasGoCrawler:
                 if url in self.visited_urls:
                     continue
                     
+                # Extract additional information
+                try:
+                    # Get restaurant image
+                    img_tag = listing.select_one('img[src*="restaurant"], img[data-src*="restaurant"], img.lazy')
+                    image_url = None
+                    if img_tag:
+                        image_url = img_tag.get('data-src') or img_tag.get('src')
+                        if image_url and not image_url.startswith('http'):
+                            image_url = urljoin("https://pasgo.vn", image_url)
+                    
+                    # Get restaurant address
+                    address_tag = listing.select_one('.address, .item-address, .restaurant-address')
+                    address = address_tag.text.strip() if address_tag else None
+                    
+                    # Get rating if available
+                    rating_tag = listing.select_one('.rating, .rating-score, .score')
+                    rating = rating_tag.text.strip() if rating_tag else None
+                    
+                    # Get price range if available
+                    price_tag = listing.select_one('.price, .price-range, .item-price')
+                    price_range = price_tag.text.strip() if price_tag else None
+                    
+                except Exception as e:
+                    logger.warning(f"Error extracting additional details: {e}")
+                    image_url = address = rating = price_range = None
+                
                 restaurants.append({
                     "name": name,
-                    "url": url
+                    "url": url,
+                    "image_url": image_url,
+                    "address": address,
+                    "rating": rating,
+                    "price_range": price_range
                 })
                 
             except Exception as e:
@@ -206,20 +219,22 @@ class PasGoCrawler:
 
         # Check for next page
         next_page_selectors = [
-            'a.next',
-            '.pagination .next',
-            'a[rel="next"]',
-            '.next-page'
+            '.pagination .next',           # Main next page selector
+            'a.next',                      # Alternative next page selector
+            '.pagination a[rel="next"]'    # Another next page selector
         ]
         
-        has_next_page = False
+        has_next = False
         for selector in next_page_selectors:
-            if soup.select_one(selector):
-                has_next_page = True
-                logger.info(f"Found next page with selector: {selector}")
-                break
-        
-        return restaurants, has_next_page
+            try:
+                next_button = self.driver.find_element(By.CSS_SELECTOR, selector)
+                has_next = next_button.is_displayed()
+                if has_next:
+                    break
+            except NoSuchElementException:
+                continue
+
+        return restaurants, has_next
 
     def get_restaurant_details(self, restaurant_url):
         """Get detailed information about a restaurant"""
@@ -227,78 +242,84 @@ class PasGoCrawler:
         
         soup = self.get_soup(restaurant_url)
         if not soup:
-            return {"url": restaurant_url, "error": "Failed to fetch restaurant page"}
+            return None
             
-        details = {
-            "url": restaurant_url
-        }
-        
         try:
-            # Extract name
-            name = soup.select_one('h1.restaurant-title')
-            if name:
-                details["name"] = name.text.strip()
+            # Wait for main content to load
+            try:
+                self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.restaurant-detail, .restaurant-info')))
+            except TimeoutException:
+                logger.warning(f"Timeout waiting for restaurant details on {restaurant_url}")
             
-            # Extract address
-            address = soup.select_one('div.restaurant-address')
-            if address:
-                details["address"] = address.text.strip()
+            # Extract restaurant details
+            details = {}
             
-            # Extract description
-            description = soup.select_one('div.restaurant-description')
-            if description:
-                details["description"] = description.text.strip()
+            # Basic information
+            name_tag = soup.select_one('.restaurant-name, h1.name, .detail-name')
+            details['name'] = name_tag.text.strip() if name_tag else None
             
-            # Extract opening hours
-            hours = soup.select_one('div.opening-hours')
-            if hours:
-                details["opening_hours"] = hours.text.strip()
+            address_tag = soup.select_one('.restaurant-address, .detail-address, .address')
+            details['address'] = address_tag.text.strip() if address_tag else None
             
-            # Extract price range
-            price = soup.select_one('div.price-range')
-            if price:
-                details["price_range"] = price.text.strip()
+            # Contact information
+            phone_tag = soup.select_one('.phone, .contact-phone, .restaurant-phone')
+            details['phone'] = phone_tag.text.strip() if phone_tag else None
             
-            # Extract rating
-            rating = soup.select_one('div.rating')
-            if rating:
-                details["rating"] = rating.text.strip()
+            # Opening hours
+            hours_tag = soup.select_one('.opening-hours, .business-hours, .restaurant-hours')
+            details['opening_hours'] = hours_tag.text.strip() if hours_tag else None
             
-            # Extract images
-            images = []
-            for img in soup.select('div.restaurant-images img'):
-                if img.get('src'):
-                    img_url = img['src']
-                    if not img_url.startswith('http'):
-                        img_url = urljoin("https://pasgo.vn", img_url)
-                    images.append(img_url)
+            # Price range
+            price_tag = soup.select_one('.price-range, .restaurant-price, .price')
+            details['price_range'] = price_tag.text.strip() if price_tag else None
             
-            if images:
-                details["image_urls"] = images
-                details["main_image"] = images[0]
+            # Cuisine types
+            cuisine_tags = soup.select('.cuisine-type, .restaurant-cuisine, .cuisine')
+            details['cuisines'] = [tag.text.strip() for tag in cuisine_tags] if cuisine_tags else []
             
-            # Extract cuisine type
-            cuisine = soup.select_one('div.cuisine-type')
-            if cuisine:
-                details["cuisine"] = cuisine.text.strip()
+            # Features/Facilities
+            feature_tags = soup.select('.features span, .facilities span, .amenities span')
+            details['features'] = [tag.text.strip() for tag in feature_tags] if feature_tags else []
             
-            # Extract features/amenities
-            features = []
-            for feature in soup.select('div.features li'):
-                features.append(feature.text.strip())
-            if features:
-                details["features"] = features
+            # Images
+            image_tags = soup.select('img.restaurant-image, .gallery img, .restaurant-photos img')
+            details['images'] = []
+            for img in image_tags:
+                src = img.get('data-src') or img.get('src')
+                if src:
+                    if not src.startswith('http'):
+                        src = urljoin("https://pasgo.vn", src)
+                    details['images'].append(src)
+            
+            # Description
+            desc_tag = soup.select_one('.restaurant-description, .detail-description, .description')
+            details['description'] = desc_tag.text.strip() if desc_tag else None
+            
+            # Rating information
+            rating_tag = soup.select_one('.rating-score, .restaurant-rating, .rating')
+            details['rating'] = rating_tag.text.strip() if rating_tag else None
+            
+            # Number of reviews
+            reviews_tag = soup.select_one('.review-count, .total-reviews, .reviews-count')
+            details['review_count'] = reviews_tag.text.strip() if reviews_tag else None
+            
+            # Location coordinates (if available)
+            map_div = soup.select_one('#restaurant-map, .restaurant-map, .map-container')
+            if map_div:
+                lat = map_div.get('data-lat') or map_div.get('data-latitude')
+                lng = map_div.get('data-lng') or map_div.get('data-longitude')
+                if lat and lng:
+                    details['location'] = {'latitude': lat, 'longitude': lng}
+            
+            return details
             
         except Exception as e:
-            logger.error(f"Error parsing restaurant details for {restaurant_url}: {e}")
-            details["error"] = str(e)
-            
-        return details
+            logger.error(f"Error extracting restaurant details from {restaurant_url}: {e}")
+            return None
 
     def _random_delay(self):
-        """Add a random delay between requests to avoid being blocked"""
+        """Add a random delay between requests"""
         delay = random.uniform(self.min_delay, self.max_delay)
-        logger.info(f"Waiting for {delay:.2f} seconds")
         time.sleep(delay)
 
     def _should_save(self):
@@ -338,103 +359,73 @@ class PasGoCrawler:
             except Exception as backup_error:
                 logger.error(f"Failed to create error backup: {str(backup_error)}")
 
-    def crawl_restaurants(self, max_pages=3, max_restaurants=None, threads=4, start_page=1, output_dir="data_restaurants", location="hanoi"):
-        """Crawl restaurant listings and details"""
-        all_listings, page, more = [], start_page, True
-        detailed = []
+    def crawl_restaurants(self, max_pages=None, threads=4):
+        """Crawl restaurant listings and details with multi-threading"""
+        all_restaurants = []
+        current_page = 1
         
-        logger.info(f"Starting crawl from page {start_page} with max_pages={max_pages}, max_restaurants={max_restaurants}")
-        
-        # First, collect all listings
-        while more and (page - start_page + 1) <= max_pages:
-            logger.info(f"Crawling page {page}")
-            lst, more = self.get_restaurant_listings(page=page)
-            logger.info(f"Found {len(lst)} restaurants on page {page}")
-            
-            if not lst:
-                logger.warning(f"No restaurants found on page {page}, stopping listing collection")
-                break
+        try:
+            while max_pages is None or current_page <= max_pages:
+                logger.info(f"Processing page {current_page}")
                 
-            all_listings.extend(lst)
-            if max_restaurants and len(all_listings) >= max_restaurants:
-                logger.info(f"Reached max_restaurants limit ({max_restaurants})")
-                all_listings = all_listings[:max_restaurants]
-                break
+                restaurants, has_next = self.get_restaurant_listings(current_page)
                 
-            page += 1
-            self._random_delay()
-
-        if not all_listings:
-            logger.warning("No restaurant listings found.")
-            return detailed
-
-        logger.info(f"Starting to crawl details for {len(all_listings)} restaurants")
-        with ThreadPoolExecutor(max_workers=threads) as executor:
-            future_map = {executor.submit(self.get_restaurant_details, it["url"]): it for it in all_listings}
-            for fut in as_completed(future_map):
-                it = future_map[fut]
-                try:
-                    det = fut.result()
-                    if "error" in det:
-                        logger.warning(f"Error getting details for {it['url']}: {det['error']}")
-                        continue
-                    if det["url"] in self.visited_urls:
-                        logger.info(f"Skipping duplicate: {det['name']}")
-                        continue
-                    self.visited_urls.add(det["url"])
-                    detailed.append({**it, **det})
-                    logger.info(f"✓ {det.get('name')}")
+                if not restaurants:
+                    logger.warning(f"No restaurants found on page {current_page}. Stopping listing collection.")
+                    break
+                
+                logger.info(f"Found {len(restaurants)} restaurants on page {current_page}")
+                
+                with ThreadPoolExecutor(max_workers=threads) as executor:
+                    future_to_url = {
+                        executor.submit(self.get_restaurant_details, restaurant['url']): restaurant
+                        for restaurant in restaurants
+                    }
                     
-                    # Save periodically
-                    if self._should_save():
-                        self.save_data(detailed, output_dir, location)
-                        
-                except Exception as e:
-                    logger.error(f"{e} – {it['url']}")
-
-        # Final save
-        self.save_data(detailed, output_dir, location)
-        logger.info(f"Found {len(detailed)} unique restaurants")
-        return detailed
-
-    def __del__(self):
-        """Clean up ChromeDriver"""
-        if hasattr(self, 'driver'):
-            self.driver.quit()
+                    for future in as_completed(future_to_url):
+                        restaurant = future_to_url[future]
+                        try:
+                            details = future.result()
+                            if details:
+                                restaurant.update(details)
+                                all_restaurants.append(restaurant)
+                                self.visited_urls.add(restaurant['url'])
+                                
+                                if time.time() - self.last_save_time > self.save_interval:
+                                    self.save_data(all_restaurants, "data_restaurants", "hanoi")
+                                    
+                        except Exception as e:
+                            logger.error(f"Error processing restaurant {restaurant['url']}: {e}")
+                
+                if not has_next:
+                    logger.info("No more pages available")
+                    break
+                    
+                current_page += 1
+                
+        except KeyboardInterrupt:
+            logger.info("Crawling interrupted by user")
+        except Exception as e:
+            logger.error(f"Error during crawling: {e}")
+        finally:
+            # Save final results
+            if all_restaurants:
+                self.save_data(all_restaurants, "data_restaurants", "hanoi")
+            
+            # Cleanup
+            if hasattr(self, 'driver'):
+                self.driver.quit()
 
 def main():
     parser = argparse.ArgumentParser(description='PasGo Restaurant Crawler')
-    parser.add_argument('--max-pages', type=int, default=3,
-                      help='Maximum number of pages to crawl')
-    parser.add_argument('--start-page', type=int, default=1,
-                      help='Page number to start crawling from')
-    parser.add_argument('--max-restaurants', type=int,
-                      help='Maximum number of restaurants to crawl')
-    parser.add_argument('--delay', type=float, default=1.0,
-                      help='Delay between requests in seconds')
-    parser.add_argument('--threads', type=int, default=4,
-                      help='Number of concurrent threads')
-    parser.add_argument('--output-dir', default='data_restaurants',
-                      help='Output directory for JSON files')
-    parser.add_argument('--location', default='hanoi',
-                      help='Location name for organizing files')
-    parser.add_argument('--save-interval', type=int, default=15,
-                      help='Minutes between periodic saves (default: 15)')
+    parser.add_argument('--url', help='Base URL to start crawling from', default="https://pasgo.vn/ha-noi/nha-hang")
+    parser.add_argument('--max-pages', type=int, help='Maximum number of pages to crawl (default: unlimited)', default=None)
+    parser.add_argument('--threads', type=int, help='Number of threads for parallel processing', default=4)
+    parser.add_argument('--delay', type=float, help='Minimum delay between requests in seconds', default=1.0)
     args = parser.parse_args()
 
-    crawler = PasGoCrawler(
-        delay=args.delay,
-        save_interval=args.save_interval
-    )
-    
-    crawler.crawl_restaurants(
-        max_pages=args.max_pages,
-        start_page=args.start_page,
-        max_restaurants=args.max_restaurants,
-        threads=args.threads,
-        output_dir=args.output_dir,
-        location=args.location
-    )
+    crawler = PasGoCrawler(base_url=args.url, delay=args.delay)
+    crawler.crawl_restaurants(max_pages=args.max_pages, threads=args.threads)
 
 if __name__ == "__main__":
     main()
