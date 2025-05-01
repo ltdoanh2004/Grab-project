@@ -8,7 +8,7 @@ import (
 type Trip struct {
 	TripID     string    `gorm:"type:char(36);primaryKey" json:"trip_id"`
 	UserID     string    `gorm:"type:char(36);not null" json:"user_id"`
-	TripName   string    `gorm:"size:100;not null" json:"trip_name"`
+	TripName   string    `gorm:"not null" json:"trip_name"`
 	StartDate  time.Time `gorm:"not null" json:"start_date"`
 	EndDate    time.Time `gorm:"not null" json:"end_date"`
 	Budget     float64   `gorm:"type:decimal(10,2)" json:"budget"`

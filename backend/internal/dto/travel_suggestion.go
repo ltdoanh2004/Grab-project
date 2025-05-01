@@ -73,12 +73,12 @@ type RestaurantSuggestion struct {
 	PhotoURL      string             `json:"photo_url"`
 	URL           string             `json:"url"`
 	Location      model.Location     `json:"location"`
-	Reviews       model.StringArray  `json:"reviews"`
+	Reviews       string             `json:"reviews"`
 	Services      model.ServiceArray `json:"services"`
 	IsDelivery    bool               `json:"is_delivery"`
 	IsBooking     bool               `json:"is_booking"`
 	IsOpening     bool               `json:"is_opening"`
-	PriceRange    model.PriceRange   `json:"price_range"`
+	PriceRange    string             `json:"price_range"`
 	Description   string             `json:"description"`
 	Cuisines      string             `json:"cuisines"`
 	OpeningHours  string             `json:"opening_hours"`

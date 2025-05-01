@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"log"
 	"net/http"
 	"skeleton-internship-backend/internal/service"
 
@@ -17,11 +18,12 @@ func NewWebSocketController(webSocketService *service.WebSocketService) *WebSock
 }
 
 func (wsc *WebSocketController) RegisterRoutes(router *gin.Engine) {
+	log.Println("Registering WebSocket routes")
 	v1 := router.Group("/api/v1")
 	{
 		websocket := v1.Group("/ws")
 		{
-			websocket.POST("/:documentID", wsc.HandleWebSocket)
+			websocket.GET("/:documentID", wsc.HandleWebSocket)
 		}
 	}
 }
@@ -33,13 +35,17 @@ var upgrader = websocket.Upgrader{
 }
 
 func (ctrl *WebSocketController) HandleWebSocket(c *gin.Context) {
+	log.Println("HandleWebSocket method invoked")
 	documentID := c.Param("documentID")
+	log.Printf("Attempting to upgrade connection for documentID: %s", documentID)
 
 	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
+		log.Printf("Failed to upgrade WebSocket connection: %v", err)
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 
+	log.Printf("WebSocket connection established for documentID: %s", documentID)
 	ctrl.webSocketService.HandleClient(documentID, conn)
 }
