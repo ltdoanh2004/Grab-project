@@ -943,6 +943,17 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.Budget": {
+            "type": "object",
+            "properties": {
+                "exactBudget": {
+                    "type": "number"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
         "dto.CreateTripAccommodationRequest": {
             "type": "object",
             "properties": {
@@ -1093,20 +1104,34 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.Participant": {
+        "dto.People": {
             "type": "object",
             "properties": {
-                "adult": {
+                "adults": {
                     "type": "integer"
                 },
                 "children": {
                     "type": "integer"
                 },
-                "ifant": {
+                "infants": {
                     "type": "integer"
                 },
-                "pet": {
+                "pets": {
                     "type": "integer"
+                }
+            }
+        },
+        "dto.PersonalOption": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
                 }
             }
         },
@@ -1322,24 +1347,35 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "budget": {
+                    "$ref": "#/definitions/dto.Budget"
+                },
+                "destination": {
                     "type": "string"
                 },
-                "end_date": {
-                    "type": "string"
+                "people": {
+                    "$ref": "#/definitions/dto.People"
                 },
-                "location": {
-                    "type": "string"
-                },
-                "options": {
+                "personalOptions": {
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "$ref": "#/definitions/dto.PersonalOption"
                     }
                 },
-                "participant": {
-                    "$ref": "#/definitions/dto.Participant"
+                "travelTime": {
+                    "$ref": "#/definitions/dto.TravelTime"
+                }
+            }
+        },
+        "dto.TravelTime": {
+            "type": "object",
+            "properties": {
+                "endDate": {
+                    "type": "string"
                 },
-                "start_date": {
+                "startDate": {
+                    "type": "string"
+                },
+                "type": {
                     "type": "string"
                 }
             }
