@@ -47,12 +47,29 @@ def register_routers():
         logger.error(f"Error registering routers: {e}", exc_info=True)
         raise
 
+# Register the routers at module level to ensure they are available when the app starts
+register_routers()
+
+@app.get("/")
+async def root():
+    """Root endpoint for health check."""
+    return {
+        "status": "ok", 
+        "message": "Travel API is running", 
+        "version": "1.0.0",
+        "available_endpoints": [
+            "/api/v1/trip/generate_plan",
+            "/api/v1/trip/sample_plan",
+            "/api/v1/trip/get_plan",
+            "/api/health",
+            "/api/v1/health"
+        ]
+    }
+
 if __name__ == "__main__":
-    # Register all routers before starting the server
-    register_routers()
-    
     # Get port from environment variable or use default
     port = int(os.getenv("API_PORT", 8001))
     
     print(f"Starting Travel API server on port {port}...")
-    uvicorn.run(app, host="0.0.0.0", port=port, reload=True) 
+    # Use the module:app format for reload to work properly
+    uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True) 

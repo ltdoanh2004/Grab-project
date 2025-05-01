@@ -138,7 +138,7 @@ class RestaurantData(BaseModel):
     restaurants: List[Restaurant]
 
 class TripPlanRequest(BaseModel):
-    accommodation: AccommodationData
+    accommodations: AccommodationData
     places: PlaceData
     restaurants: RestaurantData
 
@@ -147,6 +147,15 @@ class TripPlanResponse(BaseModel):
     plan: Dict[str, Any] | None = None
     error: str | None = None
 
+class SimpleTripPlanRequest(BaseModel):
+    destination: str
+    trip_name: Optional[str] = None
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+    accommodations: List[Dict[str, Any]] = []
+    places: List[Dict[str, Any]] = []
+    restaurants: List[Dict[str, Any]] = []
+
 @router.post("/trip/get_plan", response_model=TripPlanResponse)
 async def get_trip_plan(request: TripPlanRequest):
     """
@@ -154,7 +163,7 @@ async def get_trip_plan(request: TripPlanRequest):
     """
     try:
         # Extract data from request
-        accommodations = request.accommodation.accommodations
+        accommodations = request.accommodations.accommodations
         places = request.places.places
         restaurants = request.restaurants.restaurants
         
@@ -192,6 +201,47 @@ async def get_trip_plan(request: TripPlanRequest):
         
     except Exception as e:
         logger.error(f"Error processing trip plan request: {str(e)}", exc_info=True)
+        return {
+            "status": "error",
+            "error": str(e)
+        }
+
+@router.post("/trip/generate_plan", response_model=TripPlanResponse)
+async def generate_trip_plan(request: SimpleTripPlanRequest):
+    """
+    Simplified endpoint to generate a trip plan with more flexible input
+    """
+    try:
+        logger.info(f"Received simplified trip plan request for {request.destination}")
+        
+        # Prepare input data
+        input_data = {
+            "destination": request.destination,
+            "accommodations": request.accommodations,
+            "places": request.places,
+            "restaurants": request.restaurants
+        }
+        
+        # Additional metadata
+        meta = {}
+        if request.trip_name:
+            meta["trip_name"] = request.trip_name
+        if request.start_date:
+            meta["start_date"] = request.start_date
+        if request.end_date:
+            meta["end_date"] = request.end_date
+        
+        # Generate plan using our enhanced model
+        result = model.generate_plan(input_data, **meta)
+        
+        logger.info("Trip plan generated successfully")
+        return {
+            "status": "success",
+            "plan": result
+        }
+        
+    except Exception as e:
+        logger.error(f"Error generating trip plan: {str(e)}", exc_info=True)
         return {
             "status": "error",
             "error": str(e)
