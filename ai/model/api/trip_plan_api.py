@@ -5,8 +5,6 @@ import os
 import sys
 import logging
 
-from plan_model import PlanModel
-model = PlanModel()
 # Set up logging
 logging.basicConfig(
     level=logging.INFO,
@@ -14,6 +12,44 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Setup proper import paths
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
+
+# Initialize plan model
+try:
+    from src.plan_model import PlanModel
+    model = PlanModel()
+    logger.info("PlanModel imported successfully")
+except ImportError:
+    logger.warning("Failed to import PlanModel from src.plan_model, trying alternative import path")
+    try:
+        from ai.model.src.plan_model import PlanModel
+        model = PlanModel()
+        logger.info("PlanModel imported successfully from alternative path")
+    except ImportError as e:
+        logger.error(f"Failed to import PlanModel: {e}")
+        # For development, create a mock model
+        class MockPlanModel:
+            def generate_plan(self, input_data):
+                return {
+                    "itinerary": [
+                        {
+                            "day": 1,
+                            "date": "Day 1",
+                            "activities": []
+                        }
+                    ],
+                    "summary": {
+                        "total_duration": "1 day",
+                        "total_cost": 0
+                    }
+                }
+        model = MockPlanModel()
+        logger.warning("Using MockPlanModel for development")
+
+# Create router with tags for better API documentation
 router = APIRouter(tags=["Trip Planning"])
 
 # Models for trip plan retrieval
