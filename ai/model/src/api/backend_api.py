@@ -1,6 +1,7 @@
 import requests
 from typing import List, Dict, Any, Optional
 import os
+import sys
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -13,8 +14,13 @@ load_dotenv(ENV_PATH)
 
 app = FastAPI(title="Travel Recommendation API")
 
+# Setup proper import paths
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
+
 # Import TravelModel sau khi đã định nghĩa các class cần thiết
-from ai.model.src.travel_model import TravelModel
+from travel_model import TravelModel
 model = TravelModel()
 
 class TripSuggestionRequest(BaseModel):

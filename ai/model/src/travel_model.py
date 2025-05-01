@@ -1,9 +1,9 @@
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
-from ai.model.src.vector_database.hotel_vector_database import HotelVectorDatabase
-from ai.model.src.vector_database.place_vector_database import PlaceVectorDatabase
-from ai.model.src.vector_database.fnb_vector_database import FnBVectorDatabase
+from vector_database import HotelVectorDatabase
+from vector_database import PlaceVectorDatabase
+from vector_database import FnBVectorDatabase
 from typing import List, Dict, Any, Optional
 import logging
 
