@@ -1,28 +1,39 @@
 import requests
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Union
 import os
 import sys
 from datetime import datetime
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-import uvicorn
+import logging
+
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 # Load environment variables
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ENV_PATH = os.path.join(SCRIPT_DIR, '.env')
 load_dotenv(ENV_PATH)
 
-app = FastAPI(title="Travel Recommendation API")
-
 # Setup proper import paths
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 
+# Create router for recommendation endpoints
+recommend_router = APIRouter(tags=["Recommendations"])
+
+# Create an API router for backend operations
+backend_router = APIRouter(tags=["Backend"])
+
 # Import TravelModel sau khi đã định nghĩa các class cần thiết
 from travel_model import TravelModel
-model = TravelModel()
+recommend_model = TravelModel()
 
 class BudgetInfo(BaseModel):
     type: str
@@ -288,7 +299,10 @@ class BackendAPI:
                 "error": str(e)
             }
 
-@app.post("/api/v1/suggest/trips", response_model=TripSuggestionResponse)
+# Initialize backend API client
+backend_api = BackendAPI()
+
+@recommend_router.post("/suggest/trips", response_model=TripSuggestionResponse)
 async def suggest_trips(request: TripSuggestionRequest):
     """
     Endpoint to suggest complete trips based on various criteria
@@ -356,19 +370,40 @@ async def suggest_trips(request: TripSuggestionRequest):
         - The location and its unique offerings
         """
         
-        # Process the query using TravelModel
-        result = model.process_query(query)
+        logger.info(f"Processing recommendation query for {request.destination}")
         
+        # Process the query using TravelModel
+        result = recommend_model.process_query(query)
+        
+        logger.info("Recommendation query processed successfully")
         return {
             "status": "success",
             "response": result,
         }
         
     except Exception as e:
+        logger.error(f"Error processing recommendation query: {str(e)}", exc_info=True)
         return {
             "status": "error",
             "error": str(e)
         }
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000) 
+@backend_router.post("/locations/details")
+async def get_location_details(location_ids: List[str], location_type: str = "hotels"):
+    """
+    Get detailed information for locations using their IDs
+    """
+    result = backend_api.get_location_details(location_ids, location_type)
+    if result["status"] == "error":
+        raise HTTPException(status_code=500, detail=result["error"])
+    return result
+
+@backend_router.get("/locations/search")
+async def search_locations(query: str, location_type: str = "hotels", limit: int = 5):
+    """
+    Search for locations by keywords
+    """
+    result = backend_api.search_locations(query, location_type, limit)
+    if result["status"] == "error":
+        raise HTTPException(status_code=500, detail=result["error"])
+    return result 

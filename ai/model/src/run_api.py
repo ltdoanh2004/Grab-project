@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-"""
-Run script for the Travel Recommendation API server.
-This ensures proper package context for imports.
-"""
-
 import os
 import sys
 

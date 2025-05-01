@@ -1,0 +1,162 @@
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+from typing import List, Dict, Any, Optional
+import os
+import sys
+import logging
+
+from plan_model import PlanModel
+model = PlanModel()
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+router = APIRouter(tags=["Trip Planning"])
+
+# Models for trip plan retrieval
+class ImageInfo(BaseModel):
+    url: str
+    alt: str
+
+class RoomType(BaseModel):
+    name: str
+    bed_type: str
+    occupancy: str
+    price: str
+    tax_and_fee: str
+    conditions: str
+
+class Accommodation(BaseModel):
+    accommodation_id: str
+    name: str
+    description: str
+    location: str
+    city: str
+    image_url: List[ImageInfo]
+    price: float
+    unit: str
+    rating: float
+    destination_id: str
+    booking_link: str
+    elderly_friendly: bool
+    room_info: str
+    room_types: List[RoomType]
+    tax_info: str
+
+class AccommodationData(BaseModel):
+    accommodations: List[Accommodation]
+
+class Location(BaseModel):
+    lat: float
+    lon: float
+
+class Place(BaseModel):
+    place_id: str
+    name: str
+    description: str
+    address: str
+    main_image: str
+    images: List[ImageInfo]
+    rating: float
+    price: str
+    opening_hours: str
+    type: str
+    categories: str
+    url: str
+    destination_id: str
+    reviews: List[str]
+    duration: str
+
+class PlaceData(BaseModel):
+    places: List[Place]
+
+class Restaurant(BaseModel):
+    restaurant_id: str
+    name: str
+    description: str
+    address: str
+    cuisines: str
+    price_range: str
+    rating: float
+    main_image: str
+    photo_url: str
+    media_urls: str
+    opening_hours: str
+    is_opening: bool
+    is_booking: bool
+    is_delivery: bool
+    reviews: List[str]
+    num_reviews: int
+    review_summary: str
+    example_reviews: str
+    phone: str
+    url: str
+    destination_id: str
+    location: Location
+    services: List[str]
+
+class RestaurantData(BaseModel):
+    restaurants: List[Restaurant]
+
+class TripPlanRequest(BaseModel):
+    accommodation: AccommodationData
+    places: PlaceData
+    restaurants: RestaurantData
+
+class TripPlanResponse(BaseModel):
+    status: str
+    plan: Dict[str, Any] | None = None
+    error: str | None = None
+
+@router.post("/trip/get_plan", response_model=TripPlanResponse)
+async def get_trip_plan(request: TripPlanRequest):
+    """
+    Endpoint to generate a comprehensive trip plan based on selected accommodations, places, and restaurants
+    """
+    try:
+        # Extract data from request
+        accommodations = request.accommodation.accommodations
+        places = request.places.places
+        restaurants = request.restaurants.restaurants
+        
+        logger.info(f"Received trip plan request with {len(accommodations)} accommodations, {len(places)} places, and {len(restaurants)} restaurants")
+        
+        # Convert Pydantic models to dictionaries
+        input_data = {
+            "accommodations": [acc.model_dump() for acc in accommodations],
+            "places": [place.model_dump() for place in places], 
+            "restaurants": [restaurant.model_dump() for restaurant in restaurants]
+        }
+        
+        # Here you would normally pass the input_data to your plan model to process
+        # For now, we'll just return a simple response with the input data
+        result = {
+            "itinerary": [],  # This would be filled by the model
+            "summary": {
+                "total_duration": "0 days",
+                "total_cost": sum([acc.price for acc in accommodations]),
+                "accommodations": len(accommodations),
+                "places": len(places),
+                "restaurants": len(restaurants)
+            },
+            "input_data": input_data  # Including the input data for debugging
+        }
+
+        result = model.generate_plan(input_data)
+
+
+        logger.info("Trip plan request processed successfully")
+        return {
+            "status": "success",
+            "plan": result
+        }
+        
+    except Exception as e:
+        logger.error(f"Error processing trip plan request: {str(e)}", exc_info=True)
+        return {
+            "status": "error",
+            "error": str(e)
+        } 
