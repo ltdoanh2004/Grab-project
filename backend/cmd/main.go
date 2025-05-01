@@ -152,11 +152,17 @@ func RegisterRoutes(
 			}
 			log.Info().Msg("Destination data imported successfully")
 			// Insert hotel data
-			// err = insertDataService.InsertHotelData("./mockdata/hotel_processed.csv")
-			// if err != nil {
-			// 	log.Fatal().Err(err).Msg("Failed to import data from CSV")
-			// }
-			// log.Info().Msg("Hotel data imported successfully")
+			err = insertDataService.InsertHotelData("./mockdata/hotel_processed.csv")
+			if err != nil {
+				log.Fatal().Err(err).Msg("Failed to import data from CSV")
+			}
+			log.Info().Msg("Hotel data imported successfully")
+			// Insert place data
+			err = insertDataService.InsertPlaceData("./mockdata/place_processed.csv")
+			if err != nil {
+				log.Fatal().Err(err).Msg("Failed to import data from CSV")
+			}
+			log.Info().Msg("Place data imported successfully")
 			// Insert restaurant data
 			err = insertDataService.InsertRestaurantData("./mockdata/fnb_processed.csv")
 			if err != nil {
