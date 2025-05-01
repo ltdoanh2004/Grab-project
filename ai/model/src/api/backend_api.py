@@ -2,6 +2,7 @@ import requests
 from typing import List, Dict, Any, Optional
 import os
 import sys
+from datetime import datetime
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -23,14 +24,32 @@ if parent_dir not in sys.path:
 from travel_model import TravelModel
 model = TravelModel()
 
+class BudgetInfo(BaseModel):
+    type: str
+    exactBudget: Optional[int] = None
+
+class PeopleInfo(BaseModel):
+    adults: int
+    children: int
+    infants: int
+    pets: int
+
+class TravelTimeInfo(BaseModel):
+    type: str
+    startDate: datetime
+    endDate: datetime
+
+class PersonalOption(BaseModel):
+    type: str
+    name: str
+    description: str
+
 class TripSuggestionRequest(BaseModel):
-    activities: List[str]
-    budget: str
-    duration_days: int
-    limit: int
-    location: str
-    season: str
-    travel_style: str
+    destination: str
+    budget: BudgetInfo
+    people: PeopleInfo
+    travelTime: TravelTimeInfo
+    personalOptions: List[PersonalOption]
 
 class TripSuggestionResponse(BaseModel):
     status: str
@@ -275,15 +294,54 @@ async def suggest_trips(request: TripSuggestionRequest):
     Endpoint to suggest complete trips based on various criteria
     """
     try:
+        # Extract activities from personalOptions
+        activities = [option.name for option in request.personalOptions if option.type == "activities"]
+        
+        # Calculate duration in days
+        start_date = request.travelTime.startDate
+        end_date = request.travelTime.endDate
+        duration_days = (end_date - start_date).days + 1
+        if duration_days < 1:
+            duration_days = 1
+            
+        # Extract budget level
+        budget = request.budget.type
+        
+        # Extract travel preferences
+        accommodation_prefs = [option.name for option in request.personalOptions if option.type == "accommodation"]
+        food_prefs = [option.name for option in request.personalOptions if option.type == "food"]
+        transport_prefs = [option.name for option in request.personalOptions if option.type == "transportation"]
+        place_prefs = [option.name for option in request.personalOptions if option.type == "places"]
+        
+        # Determine season based on date
+        month = start_date.month
+        if 3 <= month <= 5:
+            season = "spring"
+        elif 6 <= month <= 8:
+            season = "summer"
+        elif 9 <= month <= 11:
+            season = "autumn"
+        else:
+            season = "winter"
+            
+        # Determine travel style based on preferences
+        travel_style = "family" if request.people.children > 0 else "couple" if request.people.adults == 2 else "solo"
+        
         # Create a detailed query context
         query = f"""
-        Planning a trip with the following details:
-        - Activities: {', '.join(request.activities)}
-        - Budget: {request.budget}
-        - Duration: {request.duration_days} days
-        - Location: {request.location}
-        - Season: {request.season}
-        - Travel Style: {request.travel_style}
+        Planning a trip to {request.destination} with the following details:
+        - Group: {request.people.adults} adults, {request.people.children} children, {request.people.infants} infants
+        - Budget: {budget} (approx. {request.budget.exactBudget if request.budget.exactBudget else 'not specified'} VND)
+        - Duration: {duration_days} days
+        - Season: {season}
+        - Travel Style: {travel_style}
+        
+        Preferences:
+        - Transportation: {', '.join(transport_prefs) if transport_prefs else 'No specific preference'}
+        - Accommodation: {', '.join(accommodation_prefs) if accommodation_prefs else 'No specific preference'}
+        - Food: {', '.join(food_prefs) if food_prefs else 'No specific preference'}
+        - Places to visit: {', '.join(place_prefs) if place_prefs else 'No specific preference'}
+        - Activities: {', '.join(activities) if activities else 'No specific preference'}
         
         Please suggest:
         1. Suitable accommodations
