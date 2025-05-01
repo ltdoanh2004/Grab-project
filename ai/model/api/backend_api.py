@@ -32,8 +32,24 @@ recommend_router = APIRouter(tags=["Recommendations"])
 backend_router = APIRouter(tags=["Backend"])
 
 # Import TravelModel sau khi đã định nghĩa các class cần thiết
-from travel_model import TravelModel
-recommend_model = TravelModel()
+try:
+    from src.travel_model import TravelModel
+    recommend_model = TravelModel()
+    logger.info("TravelModel imported successfully")
+except ImportError:
+    logger.warning("Failed to import TravelModel from src.travel_model, trying alternative import path")
+    try:
+        from ai.model.src.travel_model import TravelModel
+        recommend_model = TravelModel()
+        logger.info("TravelModel imported successfully from alternative path")
+    except ImportError as e:
+        logger.error(f"Failed to import TravelModel: {e}")
+        # For development, create a mock model
+        class MockTravelModel:
+            def process_query(self, query):
+                return {"mock": "This is a mock response for development"}
+        recommend_model = MockTravelModel()
+        logger.warning("Using MockTravelModel for development")
 
 class BudgetInfo(BaseModel):
     type: str
