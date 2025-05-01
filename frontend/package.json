@@ -20,7 +20,9 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
-    "tailwindcss": "^4.1.4"
+    "react-router-dom": "^7.5.2",
+    "tailwindcss": "^4.1.4",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
