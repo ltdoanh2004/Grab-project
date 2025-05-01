@@ -25,7 +25,12 @@ interface TimelineProps {
   onReplaceActivity?: (d: TravelDay, a: TravelActivity) => void;
   onDeleteActivity?: (d: TravelDay, a: TravelActivity) => void;
   onUpdateActivityTime?: (d: TravelDay, a: TravelActivity, t: string) => void;
-  onMove: (dayId: number, from: number, to: number) => void;
+  onMove: (
+    from: number,
+    to: number,
+    fromDayId: number,
+    toDayId: number
+  ) => void;
 }
 
 const Timeline: React.FC<TimelineProps> = memo(
@@ -39,10 +44,12 @@ const Timeline: React.FC<TimelineProps> = memo(
     onUpdateActivityTime,
     onMove,
   }) => {
-    const move = useCallback(
-      (from: number, to: number) => onMove(day.day, from, to),
-      [onMove, day.day]
-    );
+    const move = (
+      from: number,
+      to: number,
+      fromDayId: number,
+      toDayId: number
+    ) => onMove(from, to, fromDayId, toDayId);
 
     return (
       <div className="ml-4 mt-4">
@@ -77,9 +84,13 @@ interface ItineraryProps {
   onDeleteActivity?: (d: TravelDay, a: TravelActivity) => void;
   onUpdateActivityTime?: (d: TravelDay, a: TravelActivity, t: string) => void;
   onAddActivity?: (d: TravelDay) => void;
-  onMoveActivity?: (dayId: number, from: number, to: number) => void;
+  onMoveActivity?: (
+    fromIndex: number,
+    toIndex: number,
+    fromDayId: number,
+    toDayId: number
+  ) => void;
 }
-
 export const TravelItinerary: React.FC<ItineraryProps> = ({
   days,
   formatDate,

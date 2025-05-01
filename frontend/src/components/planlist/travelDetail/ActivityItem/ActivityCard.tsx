@@ -35,7 +35,12 @@ interface ActivityCardProps {
   onReplaceActivity?: (d: TravelDay, a: TravelActivity) => void;
   onDeleteActivity?: (d: TravelDay, a: TravelActivity) => void;
   onUpdateActivityTime?: (d: TravelDay, a: TravelActivity, t: string) => void;
-  moveActivity: (from: number, to: number, dayId: number) => void;
+  moveActivity: (
+    from: number,
+    to: number,
+    fromDayId: number,
+    toDayId: number
+  ) => void;
 }
 
 export const ActivityCard: React.FC<ActivityCardProps> = memo(

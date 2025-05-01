@@ -7,7 +7,7 @@ export function useActivityDnD(
   isEditMode: boolean,
   dragIndex: number,
   dayId: number,
-  move: (from: number, to: number, dayId: number) => void
+  move: (from: number, to: number, fromDayId: number, toDayId: number) => void
 ) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -33,9 +33,10 @@ export function useActivityDnD(
       collect: (m) => ({ isOver: m.isOver() }),
       hover: (item) => {
         if (!ref.current) return;
-        if (item.dayId !== dayId || item.index === dragIndex) return;
-        move(item.index, dragIndex, dayId);
+        if (item.dayId === dayId && item.index === dragIndex) return;
+        move(item.index, dragIndex, item.dayId, dayId);
         item.index = dragIndex;
+        item.dayId = dayId;
       },
     }),
     [isEditMode, dragIndex, dayId, move]

@@ -72,6 +72,23 @@ export function useTravelDetail(travelId: string) {
   };
 
   const toggleEditMode = () => {
+    if (isEditMode && travelDetail) {
+      const sortedTravelDetail = {
+        ...travelDetail,
+        days: travelDetail.days.map((day) => ({
+          ...day,
+          activities: [...day.activities].sort((a, b) => {
+            const getStart = (time: string) => {
+              const [start] = time.split(" - ");
+              const [h, m] = start.split(":").map(Number);
+              return h * 60 + m;
+            };
+            return getStart(a.time) - getStart(b.time);
+          }),
+        })),
+      };
+      setTravelDetail(sortedTravelDetail);
+    }
     setIsEditMode((v) => !v);
     setShowAISuggestions(false);
     setActivitySearchModalVisible(false);
@@ -145,9 +162,10 @@ export function useTravelDetail(travelId: string) {
   };
 
   const handleMoveActivity = (
-    dayId: number,
     fromIndex: number,
-    toIndex: number
+    toIndex: number,
+    fromDayId: number,
+    toDayId: number
   ) => {
     if (!travelDetail) return;
     try {
@@ -158,20 +176,42 @@ export function useTravelDetail(travelId: string) {
           activities: [...day.activities],
         })),
       };
-      const dayIndex = updatedTravelDetail.days.findIndex(
-        (d) => d.day === dayId
+
+      const fromDayIndex = updatedTravelDetail.days.findIndex(
+        (d) => d.day === fromDayId
       );
-      if (dayIndex !== -1) {
-        const activities = updatedTravelDetail.days[dayIndex].activities;
-        const sourceActivity = { ...activities[fromIndex] };
-        updatedTravelDetail.days[dayIndex].activities.splice(fromIndex, 1);
-        updatedTravelDetail.days[dayIndex].activities.splice(
-          toIndex,
-          0,
-          sourceActivity
-        );
-        setTravelDetail(updatedTravelDetail);
+      const toDayIndex = updatedTravelDetail.days.findIndex(
+        (d) => d.day === toDayId
+      );
+
+      if (fromDayIndex === -1 || toDayIndex === -1) return;
+
+      if (fromDayIndex === toDayIndex) {
+        const activities = updatedTravelDetail.days[fromDayIndex].activities;
+        [activities[fromIndex], activities[toIndex]] = [
+          activities[toIndex],
+          activities[fromIndex],
+        ];
+        const tempTime = activities[fromIndex].time;
+        activities[fromIndex].time = activities[toIndex].time;
+        activities[toIndex].time = tempTime;
+      } else {
+        const fromActivities =
+          updatedTravelDetail.days[fromDayIndex].activities;
+        const toActivities = updatedTravelDetail.days[toDayIndex].activities;
+
+        const fromActivity = fromActivities[fromIndex];
+        const toActivity = toActivities[toIndex];
+
+        fromActivities[fromIndex] = toActivity;
+        toActivities[toIndex] = fromActivity;
+
+        const tempTime = fromActivities[fromIndex].time;
+        fromActivities[fromIndex].time = toActivities[toIndex].time;
+        toActivities[toIndex].time = tempTime;
       }
+
+      setTravelDetail(updatedTravelDetail);
     } catch (error) {
       console.error("Error in handleMoveActivity:", error);
     }
