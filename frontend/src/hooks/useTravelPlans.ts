@@ -105,25 +105,25 @@ export const useTravelPlan = () => {
   );
 
   // Options
-  const [selectedOptions, setSelectedOptions] = useState<PersonalOption[]>([]);
+  const [personalOptions, setpersonalOptions] = useState<PersonalOption[]>([]);
 
   const handleAddOption = useCallback(
     (option: PersonalOption) => {
-      const optionExists = selectedOptions.some(
+      const optionExists = personalOptions.some(
         (item) => item.type === option.type && item.name === option.name
       );
 
       if (optionExists) {
-        setSelectedOptions(
-          selectedOptions.filter(
+        setpersonalOptions(
+          personalOptions.filter(
             (item) => !(item.type === option.type && item.name === option.name)
           )
         );
       } else {
-        setSelectedOptions([...selectedOptions, option]);
+        setpersonalOptions([...personalOptions, option]);
       }
     },
-    [selectedOptions]
+    [personalOptions]
   );
 
   // fỏnav
@@ -161,7 +161,7 @@ export const useTravelPlan = () => {
     handleDateChange,
     handleMonthChange,
     handleLengthChange,
-    selectedOptions,
+    personalOptions,
     handleAddOption,
   };
 };

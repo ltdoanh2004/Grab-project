@@ -160,11 +160,6 @@ export const ACTION_MENU_ITEMS = [
   },
   {
     key: "3",
-    icon: <StarOutlined />,
-    label: "Đánh dấu yêu thích",
-  },
-  {
-    key: "4",
     icon: <DeleteOutlined />,
     label: "Xóa",
     danger: true,

@@ -1,9 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
+import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import { TravelHeader } from "./components/travelHeader";
 import { TravelNewPlan } from "./components/newplan/travelNewPlan";
 import { TravelPlanListTab } from "./components/planlist/travelList";
+import { TravelDetail } from "./components/planlist/travelDetail";
 
 type TabType = "plan-new" | "plan-list";
 
@@ -16,6 +18,12 @@ const queryClient = new QueryClient({
   },
 });
 
+function TravelDetailRouteWrapper() {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  return <TravelDetail travelId={id || ""} onBack={() => navigate("/")} />;
+}
+
 function App() {
   const [activeTab, setActiveTab] = useState<TabType>("plan-new");
 
@@ -23,8 +31,19 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <div>
         <TravelHeader activeTab={activeTab} onTabChange={setActiveTab} />
-
-        {activeTab === "plan-new" ? <TravelNewPlan /> : <TravelPlanListTab />}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              activeTab === "plan-new" ? (
+                <TravelNewPlan />
+              ) : (
+                <TravelPlanListTab />
+              )
+            }
+          />
+          <Route path="/trips/:id" element={<TravelDetailRouteWrapper />} />{" "}
+        </Routes>
       </div>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
