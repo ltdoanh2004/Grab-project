@@ -72,26 +72,11 @@ func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*mo
 		}
 	}
 
-	var reviews model.StringArray
-	if len(record["reviews"]) != 0 {
-		if err := json.Unmarshal([]byte(record["reviews"]), &reviews); err != nil {
-			return nil, fmt.Errorf("failed to unmarshal reviews: %w", err)
-		}
-	}
-
 	var services model.ServiceArray
 	if len(record["services"]) != 0 {
 		if err := json.Unmarshal([]byte(record["services"]), &services); err != nil {
 			fmt.Println(record)
 			return nil, fmt.Errorf("failed to unmarshal services: %w", err)
-		}
-	}
-
-	var priceRange model.PriceRange
-	if len(record["price_range"]) != 0 {
-		if err := json.Unmarshal([]byte(record["price_range"]), &priceRange); err != nil {
-			fmt.Println(record)
-			return nil, fmt.Errorf("failed to unmarshal price range: %w", err)
 		}
 	}
 
@@ -105,12 +90,12 @@ func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*mo
 		PhotoURL:      record["photo_url"],
 		URL:           record["url"],
 		Location:      location,
-		Reviews:       reviews,
+		Reviews:       record["reviews"],
 		Services:      services,
 		IsDelivery:    isDelivery,
 		IsBooking:     isBooking,
 		IsOpening:     isOpening,
-		PriceRange:    priceRange,
+		PriceRange:    record["price_range"],
 		Description:   record["description"],
 		Cuisines:      record["cuisines"],
 		OpeningHours:  record["opening_hours"],

@@ -70,8 +70,7 @@ func (s *insertDataService) mapRecordToPlace(record map[string]string) (*model.P
 	var reviews model.StringArray
 	if len(record["reviews"]) != 0 {
 		if err := json.Unmarshal([]byte(record["reviews"]), &reviews); err != nil {
-			fmt.Println(record["reviews"])
-			return nil, fmt.Errorf("failed to unmarshal reviews: %w", err)
+			fmt.Println("failed to unmarshal reviews: %w", record["reviews"])
 		}
 	}
 
