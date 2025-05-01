@@ -31,24 +31,43 @@ recommend_router = APIRouter(tags=["Recommendations"])
 # Create an API router for backend operations
 backend_router = APIRouter(tags=["Backend"])
 
-# Import TravelModel sau khi đã định nghĩa các class cần thiết
+# Create mock routers if not already available
+recommend_router = APIRouter(tags=["Recommendations"])
+backend_router = APIRouter(tags=["Backend"])
+
+@recommend_router.get("/health")
+async def health_check():
+    """Health check endpoint for the recommendation service"""
+    return {"status": "ok", "service": "recommendations"}
+
+@backend_router.get("/health")
+async def backend_health_check():
+    """Health check endpoint for the backend service"""
+    return {"status": "ok", "service": "backend"}
+
+# Try to import TravelModel or use a mock
 try:
     from src.travel_model import TravelModel
-    recommend_model = TravelModel()
+    travel_model = TravelModel()
     logger.info("TravelModel imported successfully")
-except ImportError:
-    logger.warning("Failed to import TravelModel from src.travel_model, trying alternative import path")
+except ImportError as e:
+    logger.warning(f"Failed to import TravelModel from src.travel_model, trying alternative import path")
     try:
         from ai.model.src.travel_model import TravelModel
-        recommend_model = TravelModel()
+        travel_model = TravelModel()
         logger.info("TravelModel imported successfully from alternative path")
     except ImportError as e:
         logger.error(f"Failed to import TravelModel: {e}")
-        # For development, create a mock model
+        # Create a mock model for development
         class MockTravelModel:
-            def process_query(self, query):
-                return {"mock": "This is a mock response for development"}
-        recommend_model = MockTravelModel()
+            def get_recommendations(self, query, num_results=5):
+                return [{
+                    "name": f"Sample Recommendation {i}",
+                    "score": 0.95 - (i * 0.05),
+                    "description": "This is a sample recommendation"
+                } for i in range(num_results)]
+        
+        travel_model = MockTravelModel()
         logger.warning("Using MockTravelModel for development")
 
 class BudgetInfo(BaseModel):
@@ -389,7 +408,7 @@ async def suggest_trips(request: TripSuggestionRequest):
         logger.info(f"Processing recommendation query for {request.destination}")
         
         # Process the query using TravelModel
-        result = recommend_model.process_query(query)
+        result = travel_model.get_recommendations(query)
         
         logger.info("Recommendation query processed successfully")
         return {

@@ -55,10 +55,10 @@ JSON_SCHEMA_EXAMPLE = {
     "plan_by_day": [
         {
             "date": "YYYY-MM-DD",
-            "day_title": "<string>",
+            "day_title": "Ngày 1: Khám phá biển",
             "segments": [
                 {
-                    "time_of_day": "morning | afternoon | evening | night",
+                    "time_of_day": "morning",
                     "activities": [
                         {
                             "id": "<string>",
@@ -72,7 +72,72 @@ JSON_SCHEMA_EXAMPLE = {
                             "price": "<number or string>",
                             "image_url": "<string>",
                             "url": "<string>"
-                            # (các trường extra nếu có)
+                        }
+                    ]
+                },
+                {
+                    "time_of_day": "afternoon",
+                    "activities": [
+                        {
+                            "id": "<string>",
+                            "type": "place",
+                            "name": "<string>",
+                            "start_time": "HH:MM",
+                            "end_time": "HH:MM",
+                            "description": "<string>",
+                            "location": "<string>",
+                            "rating": "<number>",
+                            "price": "<number or string>",
+                            "image_url": "<string>",
+                            "url": "<string>"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "date": "YYYY-MM-DD",
+            "day_title": "Ngày 2: Khám phá núi",
+            "segments": [
+                {
+                    "time_of_day": "morning",
+                    "activities": [
+                        {
+                            "id": "<string>",
+                            "type": "place",
+                            "name": "<string>",
+                            "start_time": "HH:MM",
+                            "end_time": "HH:MM",
+                            "description": "<string>",
+                            "location": "<string>",
+                            "rating": "<number>",
+                            "price": "<number or string>",
+                            "image_url": "<string>",
+                            "url": "<string>"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "date": "YYYY-MM-DD",
+            "day_title": "Ngày 3: Khám phá ẩm thực",
+            "segments": [
+                {
+                    "time_of_day": "morning",
+                    "activities": [
+                        {
+                            "id": "<string>",
+                            "type": "restaurant",
+                            "name": "<string>",
+                            "start_time": "HH:MM",
+                            "end_time": "HH:MM",
+                            "description": "<string>",
+                            "location": "<string>",
+                            "rating": "<number>",
+                            "price": "<number or string>",
+                            "image_url": "<string>",
+                            "url": "<string>"
                         }
                     ]
                 }
@@ -139,8 +204,30 @@ class PlanModel:
             if "trip_name" not in merged_data:
                 merged_data["trip_name"] = "Trip to " + merged_data.get("destination", "Unknown")
             
-            # Convert to JSON string
-            user_json = json.dumps(merged_data, ensure_ascii=False)
+            # Calculate number of days based on start and end dates
+            try:
+                from datetime import datetime, timedelta
+                start_date = datetime.strptime(merged_data.get('start_date', ''), "%Y-%m-%d")
+                end_date = datetime.strptime(merged_data.get('end_date', ''), "%Y-%m-%d")
+                num_days = (end_date - start_date).days + 1
+                if num_days < 1:
+                    num_days = 1
+            except:
+                # Default to 3 days if dates are invalid or not provided
+                from datetime import datetime, timedelta
+                num_days = 3
+                start_date = datetime.now()
+                end_date = start_date + timedelta(days=num_days-1)
+            
+            # Initialize the final plan with basic information
+            final_plan = {
+                "trip_name": merged_data.get("trip_name", "Trip to " + merged_data.get("destination", "Unknown")),
+                "start_date": merged_data.get("start_date", start_date.strftime("%Y-%m-%d")),
+                "end_date": merged_data.get("end_date", end_date.strftime("%Y-%m-%d")),
+                "user_id": merged_data.get("user_id", "user123"),
+                "destination": merged_data.get("destination", "Unknown"),
+                "plan_by_day": []
+            }
             
             # System prompt for more control
             system_prompt = """
@@ -155,27 +242,161 @@ class PlanModel:
             6. Return ONLY a valid JSON object that exactly matches the requested structure
             """
             
-            # User prompt with detailed instructions
-            user_prompt = (
-                "Based on this user data, generate a coherent multi‑day trip strictly in JSON format.\n\n"
-                f"User context (JSON): {user_json}\n\n"
-                f"{FORMAT_INSTRUCTIONS}\n\n"
-                "Please ensure the JSON output is valid and matches the expected schema. "
-                "The description should be in Vietnamese, detailed in 3-4 sentences."
-            )
+            # Generate each day individually
+            for day_num in range(num_days):
+                current_date = start_date + timedelta(days=day_num)
+                current_date_str = current_date.strftime("%Y-%m-%d")
+                
+                day_title = f"Ngày {day_num+1}: "
+                if day_num == 0:
+                    day_title += "Khám phá biển"
+                elif day_num == 1:
+                    day_title += "Khám phá núi"
+                elif day_num == 2:
+                    day_title += "Khám phá văn hóa"
+                else:
+                    day_title += "Khám phá địa phương"
+                
+                # Create prompt for this specific day
+                day_prompt = f"""
+                Tạo chi tiết cho ngày {day_num+1} (ngày {current_date_str}) của lịch trình du lịch {merged_data.get("destination")}.
+                Hãy tạo 3 segments (morning, afternoon, evening) với các hoạt động phù hợp.
+                
+                Thông tin chuyến đi:
+                Điểm đến: {merged_data.get("destination")}
+                Khách sạn: {[acc.get("name") for acc in merged_data.get("accommodations", [])]}
+                Địa điểm quan tâm: {[place.get("name") for place in merged_data.get("places", [])]}
+                Nhà hàng: {[rest.get("name") for rest in merged_data.get("restaurants", [])]}
+                
+                Hãy trả về một đối tượng JSON có cấu trúc như sau:
+                {{
+                    "date": "{current_date_str}",
+                    "day_title": "{day_title}",
+                    "segments": [
+                        {{
+                            "time_of_day": "morning",
+                            "activities": [...]
+                        }},
+                        {{
+                            "time_of_day": "afternoon",
+                            "activities": [...]
+                        }},
+                        {{
+                            "time_of_day": "evening",
+                            "activities": [...]
+                        }}
+                    ]
+                }}
+                
+                Mỗi activity có định dạng như sau:
+                {{
+                    "id": "...",
+                    "type": "accommodation | place | restaurant",
+                    "name": "...",
+                    "start_time": "HH:MM",
+                    "end_time": "HH:MM",
+                    "description": "Mô tả chi tiết 3-4 câu bằng tiếng Việt",
+                    "location": "...",
+                    "rating": "...",
+                    "price": "...",
+                    "image_url": "...",
+                    "url": "..."
+                }}
+                
+                LƯU Ý: CHỈ trả về đối tượng JSON duy nhất, không có markdown, và đảm bảo có đủ 3 segments trong ngày.
+                """
+                
+                # Generate response for this day
+                messages = [
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": day_prompt}
+                ]
+                
+                day_response = self.llm.invoke(messages)
+                
+                try:
+                    # Parse the day's data
+                    day_data = self.parser.parse(day_response)
+                    
+                    # Ensure the day has all required segments
+                    if "segments" not in day_data or not day_data["segments"]:
+                        day_data["segments"] = []
+                    
+                    existing_segments = {segment.get("time_of_day"): segment for segment in day_data["segments"]}
+                    
+                    # Check for required segments and add if missing
+                    for required_segment in ["morning", "afternoon", "evening"]:
+                        if required_segment not in existing_segments:
+                            # Create a basic segment with default activity
+                            default_activity = {}
+                            if required_segment == "morning" and merged_data.get("accommodations"):
+                                default_activity = {
+                                    "id": merged_data["accommodations"][0].get("id", "hotel1"),
+                                    "type": "accommodation",
+                                    "name": merged_data["accommodations"][0].get("name", "Khách sạn"),
+                                    "start_time": "08:00",
+                                    "end_time": "10:00",
+                                    "description": "Check-in và nghỉ ngơi tại khách sạn.",
+                                    "location": merged_data["accommodations"][0].get("location", ""),
+                                    "rating": "4.5",
+                                    "price": str(merged_data["accommodations"][0].get("price", "")),
+                                    "image_url": "",
+                                    "url": ""
+                                }
+                            elif required_segment == "afternoon" and merged_data.get("places"):
+                                place = merged_data["places"][day_num % len(merged_data["places"])]
+                                default_activity = {
+                                    "id": place.get("id", f"place{day_num}"),
+                                    "type": "place",
+                                    "name": place.get("name", "Địa điểm tham quan"),
+                                    "start_time": "14:00",
+                                    "end_time": "16:00",
+                                    "description": place.get("description", "Tham quan địa điểm nổi tiếng."),
+                                    "location": place.get("address", ""),
+                                    "rating": "4.0",
+                                    "price": "",
+                                    "image_url": "",
+                                    "url": ""
+                                }
+                            elif required_segment == "evening" and merged_data.get("restaurants"):
+                                restaurant = merged_data["restaurants"][day_num % len(merged_data["restaurants"])]
+                                default_activity = {
+                                    "id": restaurant.get("id", f"rest{day_num}"),
+                                    "type": "restaurant",
+                                    "name": restaurant.get("name", "Nhà hàng"),
+                                    "start_time": "19:00",
+                                    "end_time": "21:00",
+                                    "description": restaurant.get("description", "Thưởng thức ẩm thực địa phương."),
+                                    "location": restaurant.get("address", ""),
+                                    "rating": "4.2",
+                                    "price": "",
+                                    "image_url": "",
+                                    "url": ""
+                                }
+                            
+                            day_data["segments"].append({
+                                "time_of_day": required_segment,
+                                "activities": [default_activity] if default_activity else []
+                            })
+                    
+                    # Add to the final plan
+                    final_plan["plan_by_day"].append(day_data)
+                except Exception as e:
+                    log.error(f"Error parsing day {day_num+1} data: {e}")
+                    # Create a basic day structure
+                    basic_day = {
+                        "date": current_date_str,
+                        "day_title": day_title,
+                        "segments": [
+                            {"time_of_day": "morning", "activities": []},
+                            {"time_of_day": "afternoon", "activities": []},
+                            {"time_of_day": "evening", "activities": []}
+                        ]
+                    }
+                    final_plan["plan_by_day"].append(basic_day)
             
-            # Generate response directly using the LLM with system prompt
-            messages = [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ]
+            return final_plan
             
-            # Use chat completion interface
-            response = self.llm.invoke(messages)
-            
-            # Parse the response
-            return self.parser.parse(response)
-        
         except Exception as e:
             log.error(f"Error in generate_plan: {e}")
             log.debug(f"Input data: {input_data}")
@@ -206,22 +427,202 @@ class PlanModel:
             if "trip_name" not in merged_data:
                 merged_data["trip_name"] = "Trip to " + merged_data.get("destination", "Unknown")
                 
+            # Calculate number of days based on start and end dates
+            try:
+                from datetime import datetime, timedelta
+                start_date = datetime.strptime(merged_data.get('start_date', ''), "%Y-%m-%d")
+                end_date = datetime.strptime(merged_data.get('end_date', ''), "%Y-%m-%d")
+                num_days = (end_date - start_date).days + 1
+                if num_days < 1:
+                    num_days = 1
+            except:
+                # Default to 3 days if dates are invalid or not provided
+                from datetime import datetime, timedelta
+                num_days = 3
+                start_date = datetime.now()
+                end_date = start_date + timedelta(days=num_days-1)
+                
             # Initialize the agent
             agent = initialize_agent(
                 TOOLS, self.llm, agent="zero-shot-react-description", verbose=False
             )
             
-            # Generate a prompt string directly
-            user_json = json.dumps(merged_data, ensure_ascii=False)
-            prompt_text = (
-                "You are an expert Vietnamese travel planner. Using the user data, "
-                "generate a coherent multi‑day trip strictly in JSON format.\n\n"
-                f"User context (JSON): {user_json}\n\n" + FORMAT_INSTRUCTIONS
-            )
+            # Initialize the final plan with basic information
+            final_plan = {
+                "trip_name": merged_data.get("trip_name", "Trip to " + merged_data.get("destination", "Unknown")),
+                "start_date": merged_data.get("start_date", start_date.strftime("%Y-%m-%d")),
+                "end_date": merged_data.get("end_date", end_date.strftime("%Y-%m-%d")),
+                "user_id": merged_data.get("user_id", "user123"),
+                "destination": merged_data.get("destination", "Unknown"),
+                "plan_by_day": []
+            }
             
-            # Run the agent
-            raw = agent.run(prompt_text)
-            return self.parser.parse(raw)
+            # System prompt for more control
+            system_prompt = """
+            You are an expert Vietnamese travel planner specialized in creating detailed, engaging travel itineraries.
+            Your recommendations should be specific, authentic, and tailored to the provided data.
+            Follow these guidelines:
+            1. Create detailed descriptions in Vietnamese (3-4 sentences per item)
+            2. Suggest realistic timings based on location proximity
+            3. Include both popular attractions and hidden gems
+            4. Consider weather, local events, and seasonal factors
+            5. Provide practical tips for transportation between locations
+            6. Return ONLY a valid JSON object that exactly matches the requested structure
+            7. Use available tools when appropriate to enhance your recommendations
+            """
+            
+            # Generate each day individually
+            for day_num in range(num_days):
+                current_date = start_date + timedelta(days=day_num)
+                current_date_str = current_date.strftime("%Y-%m-%d")
+                
+                day_title = f"Ngày {day_num+1}: "
+                if day_num == 0:
+                    day_title += "Khám phá biển"
+                elif day_num == 1:
+                    day_title += "Khám phá núi"
+                elif day_num == 2:
+                    day_title += "Khám phá văn hóa"
+                else:
+                    day_title += "Khám phá địa phương"
+                
+                # Create prompt for this specific day
+                day_prompt = f"""
+                Tạo chi tiết cho ngày {day_num+1} (ngày {current_date_str}) của lịch trình du lịch {merged_data.get("destination")}.
+                Hãy tạo 3 segments (morning, afternoon, evening) với các hoạt động phù hợp.
+                
+                Thông tin chuyến đi:
+                Điểm đến: {merged_data.get("destination")}
+                Khách sạn: {[acc.get("name") for acc in merged_data.get("accommodations", [])]}
+                Địa điểm quan tâm: {[place.get("name") for place in merged_data.get("places", [])]}
+                Nhà hàng: {[rest.get("name") for rest in merged_data.get("restaurants", [])]}
+                
+                Hãy sử dụng công cụ available tools nếu cần để tìm thông tin thêm.
+                
+                Hãy trả về một đối tượng JSON có cấu trúc như sau:
+                {{
+                    "date": "{current_date_str}",
+                    "day_title": "{day_title}",
+                    "segments": [
+                        {{
+                            "time_of_day": "morning",
+                            "activities": [...]
+                        }},
+                        {{
+                            "time_of_day": "afternoon",
+                            "activities": [...]
+                        }},
+                        {{
+                            "time_of_day": "evening",
+                            "activities": [...]
+                        }}
+                    ]
+                }}
+                
+                Mỗi activity có định dạng như sau:
+                {{
+                    "id": "...",
+                    "type": "accommodation | place | restaurant",
+                    "name": "...",
+                    "start_time": "HH:MM",
+                    "end_time": "HH:MM",
+                    "description": "Mô tả chi tiết 3-4 câu bằng tiếng Việt",
+                    "location": "...",
+                    "rating": "...",
+                    "price": "...",
+                    "image_url": "...",
+                    "url": "..."
+                }}
+                
+                LƯU Ý: CHỈ trả về đối tượng JSON duy nhất, không có markdown, và đảm bảo có đủ 3 segments trong ngày.
+                """
+                
+                try:
+                    # Run the agent for this day
+                    raw_day_response = agent.run(f"{system_prompt}\n\n{day_prompt}")
+                    
+                    # Parse the day's data
+                    day_data = self.parser.parse(raw_day_response)
+                    
+                    # Ensure the day has all required segments
+                    if "segments" not in day_data or not day_data["segments"]:
+                        day_data["segments"] = []
+                    
+                    existing_segments = {segment.get("time_of_day"): segment for segment in day_data["segments"]}
+                    
+                    # Check for required segments and add if missing
+                    for required_segment in ["morning", "afternoon", "evening"]:
+                        if required_segment not in existing_segments:
+                            # Create a basic segment with default activity
+                            default_activity = {}
+                            if required_segment == "morning" and merged_data.get("accommodations"):
+                                default_activity = {
+                                    "id": merged_data["accommodations"][0].get("id", "hotel1"),
+                                    "type": "accommodation",
+                                    "name": merged_data["accommodations"][0].get("name", "Khách sạn"),
+                                    "start_time": "08:00",
+                                    "end_time": "10:00",
+                                    "description": "Check-in và nghỉ ngơi tại khách sạn.",
+                                    "location": merged_data["accommodations"][0].get("location", ""),
+                                    "rating": "4.5",
+                                    "price": str(merged_data["accommodations"][0].get("price", "")),
+                                    "image_url": "",
+                                    "url": ""
+                                }
+                            elif required_segment == "afternoon" and merged_data.get("places"):
+                                place = merged_data["places"][day_num % len(merged_data["places"])]
+                                default_activity = {
+                                    "id": place.get("id", f"place{day_num}"),
+                                    "type": "place",
+                                    "name": place.get("name", "Địa điểm tham quan"),
+                                    "start_time": "14:00",
+                                    "end_time": "16:00",
+                                    "description": place.get("description", "Tham quan địa điểm nổi tiếng."),
+                                    "location": place.get("address", ""),
+                                    "rating": "4.0",
+                                    "price": "",
+                                    "image_url": "",
+                                    "url": ""
+                                }
+                            elif required_segment == "evening" and merged_data.get("restaurants"):
+                                restaurant = merged_data["restaurants"][day_num % len(merged_data["restaurants"])]
+                                default_activity = {
+                                    "id": restaurant.get("id", f"rest{day_num}"),
+                                    "type": "restaurant",
+                                    "name": restaurant.get("name", "Nhà hàng"),
+                                    "start_time": "19:00",
+                                    "end_time": "21:00",
+                                    "description": restaurant.get("description", "Thưởng thức ẩm thực địa phương."),
+                                    "location": restaurant.get("address", ""),
+                                    "rating": "4.2",
+                                    "price": "",
+                                    "image_url": "",
+                                    "url": ""
+                                }
+                            
+                            day_data["segments"].append({
+                                "time_of_day": required_segment,
+                                "activities": [default_activity] if default_activity else []
+                            })
+                    
+                    # Add to the final plan
+                    final_plan["plan_by_day"].append(day_data)
+                    
+                except Exception as e:
+                    log.error(f"Error generating day {day_num+1} with agent: {e}")
+                    # Create a basic day structure
+                    basic_day = {
+                        "date": current_date_str,
+                        "day_title": day_title,
+                        "segments": [
+                            {"time_of_day": "morning", "activities": []},
+                            {"time_of_day": "afternoon", "activities": []},
+                            {"time_of_day": "evening", "activities": []}
+                        ]
+                    }
+                    final_plan["plan_by_day"].append(basic_day)
+            
+            return final_plan
             
         except Exception as e:
             log.error(f"Error with agent generation: {e}")
