@@ -23,19 +23,19 @@ func NewDB(cfg *config.Config) (*gorm.DB, error) {
 		return nil, err
 	}
 
-	db.Migrator().DropTable(
-		&model.User{},
-		&model.Trip{},
-		&model.Destination{},
-		&model.Place{},
-		&model.Accommodation{},
-		&model.Restaurant{},
-		&model.TripDestination{},
-		&model.TripPlace{},
-		&model.TripAccommodation{},
-		&model.TripRestaurant{},
-		&model.ChatMessage{},
-	)
+	// db.Migrator().DropTable(
+	// 	&model.User{},
+	// 	&model.Trip{},
+	// 	&model.Destination{},
+	// 	&model.Place{},
+	// 	&model.Accommodation{},
+	// 	&model.Restaurant{},
+	// 	&model.TripDestination{},
+	// 	&model.TripPlace{},
+	// 	&model.TripAccommodation{},
+	// 	&model.TripRestaurant{},
+	// 	&model.ChatMessage{},
+	// )
 
 	db.Exec("SET FOREIGN_KEY_CHECKS = 0;")
 
