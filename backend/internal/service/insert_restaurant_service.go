@@ -15,7 +15,6 @@ func (s *insertDataService) InsertRestaurantData(filePath string) error {
 	}
 
 	tx := s.db.Begin()
-	fmt.Println(records[0])
 	for _, record := range records {
 		restaurant, err := s.mapRecordToRestaurant(record)
 		if err != nil {
@@ -38,23 +37,31 @@ func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*mo
 		fmt.Println("rating: ", record["rating"])
 		return nil, err
 	}
-
-	isDelivery, err := strconv.ParseBool(record["is_delivery"])
-	if err != nil {
-		fmt.Println("Is delivery: ", record["is_delivery"])
-		return nil, err
+	var isDelivery bool
+	if len(record["is_delivery"]) != 0 {
+		isDelivery, err = strconv.ParseBool(record["is_delivery"])
+		if err != nil {
+			fmt.Println("Is delivery: ", record["is_delivery"])
+			return nil, err
+		}
 	}
 
-	isBooking, err := strconv.ParseBool(record["is_booking"])
-	if err != nil {
-		fmt.Println("Is booking: ", record["is_booking"])
-		return nil, err
+	var isBooking bool
+	if len(record["is_booking"]) != 0 {
+		isBooking, err = strconv.ParseBool(record["is_booking"])
+		if err != nil {
+			fmt.Println("Is booking: ", record["is_booking"])
+			return nil, err
+		}
 	}
 
-	isOpening, err := strconv.ParseBool(record["is_opening"])
-	if err != nil {
-		fmt.Println("Is opening: ", record["is_opening"])
-		return nil, err
+	var isOpening bool
+	if len(record["is_opening"]) != 0 {
+		isOpening, err = strconv.ParseBool(record["is_opening"])
+		if err != nil {
+			fmt.Println("Is opening: ", record["is_opening"])
+			return nil, err
+		}
 	}
 
 	var location model.Location
