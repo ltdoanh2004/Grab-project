@@ -943,6 +943,17 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.Budget": {
+            "type": "object",
+            "properties": {
+                "exactBudget": {
+                    "type": "number"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
         "dto.CreateTripAccommodationRequest": {
             "type": "object",
             "properties": {
@@ -1089,6 +1100,37 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.People": {
+            "type": "object",
+            "properties": {
+                "adults": {
+                    "type": "integer"
+                },
+                "children": {
+                    "type": "integer"
+                },
+                "infants": {
+                    "type": "integer"
+                },
+                "pets": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.PersonalOption": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "type": {
                     "type": "string"
                 }
             }
@@ -1305,27 +1347,35 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "budget": {
+                    "$ref": "#/definitions/dto.Budget"
+                },
+                "destination": {
                     "type": "string"
                 },
-                "duration_days": {
-                    "type": "integer"
+                "people": {
+                    "$ref": "#/definitions/dto.People"
                 },
-                "limit": {
-                    "type": "integer"
-                },
-                "location": {
-                    "type": "string"
-                },
-                "places": {
+                "personalOptions": {
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "$ref": "#/definitions/dto.PersonalOption"
                     }
                 },
-                "season": {
+                "travelTime": {
+                    "$ref": "#/definitions/dto.TravelTime"
+                }
+            }
+        },
+        "dto.TravelTime": {
+            "type": "object",
+            "properties": {
+                "endDate": {
                     "type": "string"
                 },
-                "travel_style": {
+                "startDate": {
+                    "type": "string"
+                },
+                "type": {
                     "type": "string"
                 }
             }

@@ -15,7 +15,6 @@ func (s *insertDataService) InsertRestaurantData(filePath string) error {
 	}
 
 	tx := s.db.Begin()
-	fmt.Println(records[0])
 	for _, record := range records {
 		restaurant, err := s.mapRecordToRestaurant(record)
 		if err != nil {
@@ -38,23 +37,31 @@ func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*mo
 		fmt.Println("rating: ", record["rating"])
 		return nil, err
 	}
-
-	isDelivery, err := strconv.ParseBool(record["is_delivery"])
-	if err != nil {
-		fmt.Println("Is delivery: ", record["is_delivery"])
-		return nil, err
+	var isDelivery bool
+	if len(record["is_delivery"]) != 0 {
+		isDelivery, err = strconv.ParseBool(record["is_delivery"])
+		if err != nil {
+			fmt.Println("Is delivery: ", record["is_delivery"])
+			return nil, err
+		}
 	}
 
-	isBooking, err := strconv.ParseBool(record["is_booking"])
-	if err != nil {
-		fmt.Println("Is booking: ", record["is_booking"])
-		return nil, err
+	var isBooking bool
+	if len(record["is_booking"]) != 0 {
+		isBooking, err = strconv.ParseBool(record["is_booking"])
+		if err != nil {
+			fmt.Println("Is booking: ", record["is_booking"])
+			return nil, err
+		}
 	}
 
-	isOpening, err := strconv.ParseBool(record["is_opening"])
-	if err != nil {
-		fmt.Println("Is opening: ", record["is_opening"])
-		return nil, err
+	var isOpening bool
+	if len(record["is_opening"]) != 0 {
+		isOpening, err = strconv.ParseBool(record["is_opening"])
+		if err != nil {
+			fmt.Println("Is opening: ", record["is_opening"])
+			return nil, err
+		}
 	}
 
 	var location model.Location
@@ -65,26 +72,11 @@ func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*mo
 		}
 	}
 
-	var reviews model.StringArray
-	if len(record["reviews"]) != 0 {
-		if err := json.Unmarshal([]byte(record["reviews"]), &reviews); err != nil {
-			return nil, fmt.Errorf("failed to unmarshal reviews: %w", err)
-		}
-	}
-
 	var services model.ServiceArray
 	if len(record["services"]) != 0 {
 		if err := json.Unmarshal([]byte(record["services"]), &services); err != nil {
 			fmt.Println(record)
 			return nil, fmt.Errorf("failed to unmarshal services: %w", err)
-		}
-	}
-
-	var priceRange model.PriceRange
-	if len(record["price_range"]) != 0 {
-		if err := json.Unmarshal([]byte(record["price_range"]), &priceRange); err != nil {
-			fmt.Println(record)
-			return nil, fmt.Errorf("failed to unmarshal price range: %w", err)
 		}
 	}
 
@@ -98,12 +90,12 @@ func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*mo
 		PhotoURL:      record["photo_url"],
 		URL:           record["url"],
 		Location:      location,
-		Reviews:       reviews,
+		Reviews:       record["reviews"],
 		Services:      services,
 		IsDelivery:    isDelivery,
 		IsBooking:     isBooking,
 		IsOpening:     isOpening,
-		PriceRange:    priceRange,
+		PriceRange:    record["price_range"],
 		Description:   record["description"],
 		Cuisines:      record["cuisines"],
 		OpeningHours:  record["opening_hours"],

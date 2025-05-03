@@ -44,6 +44,13 @@ definitions:
           $ref: '#/definitions/dto.AccommodationSuggestion'
         type: array
     type: object
+  dto.Budget:
+    properties:
+      exactBudget:
+        type: number
+      type:
+        type: string
+    type: object
   dto.CreateTripAccommodationRequest:
     properties:
       accommodation_id:
@@ -140,6 +147,26 @@ definitions:
       password:
         type: string
       username:
+        type: string
+    type: object
+  dto.People:
+    properties:
+      adults:
+        type: integer
+      children:
+        type: integer
+      infants:
+        type: integer
+      pets:
+        type: integer
+    type: object
+  dto.PersonalOption:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      type:
         type: string
     type: object
   dto.PlaceSuggestion:
@@ -285,20 +312,25 @@ definitions:
   dto.TravelPreference:
     properties:
       budget:
+        $ref: '#/definitions/dto.Budget'
+      destination:
         type: string
-      duration_days:
-        type: integer
-      limit:
-        type: integer
-      location:
-        type: string
-      places:
+      people:
+        $ref: '#/definitions/dto.People'
+      personalOptions:
         items:
-          type: string
+          $ref: '#/definitions/dto.PersonalOption'
         type: array
-      season:
+      travelTime:
+        $ref: '#/definitions/dto.TravelTime'
+    type: object
+  dto.TravelTime:
+    properties:
+      endDate:
         type: string
-      travel_style:
+      startDate:
+        type: string
+      type:
         type: string
     type: object
   dto.TripAccommodationDTO:

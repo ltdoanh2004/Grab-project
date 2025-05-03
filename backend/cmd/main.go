@@ -81,11 +81,13 @@ func main() {
 			service.NewTripService,
 			service.NewSuggestService,
 			service.NewInsertDataService,
+			service.NewWebSocketService,
 			controller.NewController,
 			controller.NewAuthController,
 			controller.NewTripController,
 			controller.NewSuggestController,
 			controller.NewInsertDataController,
+			controller.NewWebSocketController,
 		),
 		fx.StartTimeout(1*time.Minute),
 		fx.Invoke(RegisterRoutes),
@@ -127,12 +129,16 @@ func RegisterRoutes(
 	auth_controller *controller.AuthController,
 	suggest_controller *controller.SuggestController,
 	trip_controller *controller.TripController,
+	webSocketController *controller.WebSocketController,
+	insertDataController *controller.InsertDataController,
 	insertDataService service.InsertDataService,
 ) {
 	controller.RegisterRoutes(router)
 	auth_controller.RegisterRoutes(router)
 	suggest_controller.RegisterRoutes(router)
 	trip_controller.RegisterRoutes(router)
+	insertDataController.RegisterRoutes(router)
+	webSocketController.RegisterRoutes(router)
 
 	logger.Init()
 
@@ -145,11 +151,30 @@ func RegisterRoutes(
 		OnStart: func(ctx context.Context) error {
 			log.Info().Msgf("Starting server on port %s", cfg.Server.Port)
 
-			err := insertDataService.InsertRestaurantData("./mockdata/fnb_processed.csv")
-			if err != nil {
-				log.Fatal().Err(err).Msg("Failed to import data from CSV")
-			}
-			log.Info().Msg("Hotel data imported successfully")
+			// // Insert destination data
+			// err := insertDataService.InsertDestinationData("./mockdata/city_processed.csv")
+			// if err != nil {
+			// 	log.Fatal().Err(err).Msg("Failed to import data from CSV")
+			// }
+			// log.Info().Msg("Destination data imported successfully")
+			// // Insert hotel data
+			// err = insertDataService.InsertHotelData("./mockdata/hotel_processed.csv")
+			// if err != nil {
+			// 	log.Fatal().Err(err).Msg("Failed to import data from CSV")
+			// }
+			// log.Info().Msg("Hotel data imported successfully")
+			// // Insert place data
+			// err = insertDataService.InsertPlaceData("./mockdata/place_processed.csv")
+			// if err != nil {
+			// 	log.Fatal().Err(err).Msg("Failed to import data from CSV")
+			// }
+			// log.Info().Msg("Place data imported successfully")
+			// // Insert restaurant data
+			// err = insertDataService.InsertRestaurantData("./mockdata/fnb_processed.csv")
+			// if err != nil {
+			// 	log.Fatal().Err(err).Msg("Failed to import data from CSV")
+			// }
+			// log.Info().Msg("Restaurant data imported successfully")
 
 			go func() {
 				if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {

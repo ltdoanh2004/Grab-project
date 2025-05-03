@@ -21,7 +21,7 @@ export const TravelNewPlan: React.FC = () => {
     handleDateChange,
     handleTimeType,
     handleAddOption,
-    selectedOptions,
+    personalOptions,
     travelTime,
     handleMonthChange,
     handleLengthChange,
@@ -63,7 +63,7 @@ export const TravelNewPlan: React.FC = () => {
       case 2:
         return (
           <PersonalStep
-            selectedOptions={selectedOptions}
+            personalOptions={personalOptions}
             onAddOption={handleAddOption}
             onNext={handleNextStep}
             onPrev={handlePrevStep}
