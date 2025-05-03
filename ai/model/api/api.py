@@ -1,11 +1,27 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
+import sys
+import os
+
+# Add parent directory to system path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
+
+# Import TravelModel after path is set
 from ai.model.src.travel_model import TravelModel
 import uvicorn
 
+# Import trip planning router
+from trip_plan_api import router as trip_plan_router
+
 app = FastAPI(title="Travel Recommendation API")
 model = TravelModel()
+
+# Include trip planning router
+app.include_router(trip_plan_router, prefix="/api/v1")
 
 class QueryRequest(BaseModel):
     query: str
