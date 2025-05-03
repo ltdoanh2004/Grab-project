@@ -106,8 +106,8 @@ func (sc *SuggestController) SuggestRestaurants(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input: "+err.Error(), nil))
 		return
 	}
-
 	suggestion, err := sc.suggestSerivce.SuggestRestaurants(travelPreference)
+	
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get restaurant suggestions: "+err.Error(), nil))
 		return
