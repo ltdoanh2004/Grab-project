@@ -247,7 +247,8 @@ func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dt
 		endpoint,
 	)
 
-	req, err := http.NewRequest("GET", aiURL, &jsonBody)
+	fmt.Println(jsonBody)
+	req, err := http.NewRequest("POST", aiURL, &jsonBody)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
