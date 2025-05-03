@@ -414,36 +414,35 @@ async def suggest_trips(request: TripSuggestionRequest):
         logger.info(f"Processing recommendation query for {request.destination}")
         
         # Process the query using TravelModel
-        recommendations = travel_model.process_query(query)
+        raw_recommendations = travel_model.process_query(query)
         
-        logger.info("Recommendation query processed successfully")
+        logger.info(f"Recommendation query processed successfully, got {len(raw_recommendations)} items")
         
         # The travel_model.process_query now returns data in the correct format already
         # We just need to convert each dict to a SuggestWithIDAndType object
-        response = [SuggestWithIDAndType(**rec) for rec in recommendations]
-        logger.info(f"response: {response}")
-        # If no recommendations were returned (empty list), use fallback
-        if not response:
-            response.append(SuggestWithIDAndType(
-                name="Luxury Hotel",
-                type="accommodation",
-                args="luxury",
-                id="hotel_000003"
-            ))
+        response = []
+        
+        # Group the recommendations by type to ensure we have at least one of each type
+        accommodations = [r for r in raw_recommendations if r["type"] == "accommodation"]
+        places = [r for r in raw_recommendations if r["type"] == "place"]
+        
+        restaurants = [r for r in raw_recommendations if r["type"] == "restaurant"]
+        
+        logger.info(f"Grouped recommendations: {len(accommodations)} accommodations, {len(places)} places, {len(restaurants)} restaurants")
+        
+        # Ensure we have at least one of each type
+        if not accommodations:
+            accommodations = [{"name": "Luxury Hotel", "type": "accommodation", "args": "luxury", "id": "hotel_000003"}]
+        if not places:
+            places = [{"name": "City Museum", "type": "place", "args": "cultural", "id": "place_000003"}]
+        if not restaurants:
+            restaurants = [{"name": "Local Restaurant", "type": "restaurant", "args": "local cuisine", "id": "restaurant_000003"}]
             
-            response.append(SuggestWithIDAndType(
-                name="City Museum",
-                type="place",
-                args="cultural",
-                id="place_000003"
-            ))
+        # Add all recommendations to response, with type-specific ones first
+        for rec in accommodations + places + restaurants:
+            response.append(SuggestWithIDAndType(**rec))
             
-            response.append(SuggestWithIDAndType(
-                name="Local Restaurant",
-                type="restaurant",
-                args="local cuisine",
-                id="restaurant_000003"
-            ))
+        logger.info(f"Final response has {len(response)} items")
         
         return response
         
