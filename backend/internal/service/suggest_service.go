@@ -271,38 +271,38 @@ func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dt
 }
 
 func (ss *suggestService) SuggestAll(travelPreference *dto.TravelPreference) (*dto.TripSuggestionRequest, error) {
-	// rsp, err := ss.callAISuggestAll(
-	// 	getURL(config.AppConfig.AI.Host,
-	// 		config.AppConfig.AI.Port,
-	// 		"/suggest/all",
-	// 	),
-	// 	travelPreference,
-	// )
-	// if err != nil {
-	// 	return nil, err
-	// }
-	var err error
-	var rsp []dto.SuggestWithIDAndType
-	rsp = append(rsp,
-		dto.SuggestWithIDAndType{
-			Name: "hotel_000000",
-			Type: "accommodation",
-			Args: "...",
-			ID:   "hotel_000000",
-		},
-		dto.SuggestWithIDAndType{
-			Name: "restaurant_000000",
-			Type: "restaurant",
-			Args: "...",
-			ID:   "restaurant_000000",
-		},
-		dto.SuggestWithIDAndType{
-			Name: "place_000000",
-			Type: "place",
-			Args: "...",
-			ID:   "place_000000",
-		},
+	rsp, err := ss.callAISuggestAll(
+		getURL(config.AppConfig.AI.Host,
+			config.AppConfig.AI.Port,
+			"/suggest/all",
+		),
+		travelPreference,
 	)
+	if err != nil {
+		return nil, err
+	}
+	// var err error
+	// var rsp []dto.SuggestWithIDAndType
+	// rsp = append(rsp,
+	// 	dto.SuggestWithIDAndType{
+	// 		Name: "hotel_000000",
+	// 		Type: "accommodation",
+	// 		Args: "...",
+	// 		ID:   "hotel_000000",
+	// 	},
+	// 	dto.SuggestWithIDAndType{
+	// 		Name: "restaurant_000000",
+	// 		Type: "restaurant",
+	// 		Args: "...",
+	// 		ID:   "restaurant_000000",
+	// 	},
+	// 	dto.SuggestWithIDAndType{
+	// 		Name: "place_000000",
+	// 		Type: "place",
+	// 		Args: "...",
+	// 		ID:   "place_000000",
+	// 	},
+	// )
 
 	var suggestion *dto.TripSuggestionRequest
 	suggestion, err = ss.ConvertIntoTripSuggestion(rsp)
@@ -322,6 +322,7 @@ func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithID
 		if value.Type == "accommodation" {
 			newAccommodation, err := ss.AccommodationRepository.GetByID(value.ID)
 			if err != nil {
+				fmt.Println("Error fetching accommodation: ", value.ID)
 				return nil, err
 			}
 			accommodations.Accommodations = append(
@@ -348,6 +349,7 @@ func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithID
 		if value.Type == "place" {
 			newPlace, err := ss.PlaceRepository.GetByID(value.ID)
 			if err != nil {
+				fmt.Println("Error fetching place: ", value.ID)
 				return nil, err
 			}
 			places.Places = append(
@@ -375,6 +377,7 @@ func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithID
 		if value.Type == "restaurant" {
 			newRestaurant, err := ss.RestaurantRepository.GetByID(value.ID)
 			if err != nil {
+				fmt.Println("Error fetching restaurant: ", value.ID)
 				return nil, err
 			}
 			restaurants.Restaurants = append(
