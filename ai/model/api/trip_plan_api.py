@@ -138,9 +138,13 @@ class RestaurantData(BaseModel):
     restaurants: List[Restaurant]
 
 class TripPlanRequest(BaseModel):
-    accommodations: AccommodationData
-    places: PlaceData
-    restaurants: RestaurantData
+    accommodation: Optional[AccommodationData] = None
+    places: Optional[PlaceData] = None
+    restaurants: Optional[RestaurantData] = None
+
+    # Allow additional properties for flexibility
+    class Config:
+        extra = "allow"
 
 class TripPlanResponse(BaseModel):
     status: str
@@ -156,42 +160,84 @@ class SimpleTripPlanRequest(BaseModel):
     places: List[Dict[str, Any]] = []
     restaurants: List[Dict[str, Any]] = []
 
-@router.post("/trip/get_plan", response_model=TripPlanResponse)
-async def get_trip_plan(request: TripPlanRequest):
+@router.post("/suggest/trip", response_model=TripPlanResponse)
+async def get_trip_plan(request: dict):
     """
     Endpoint to generate a comprehensive trip plan based on selected accommodations, places, and restaurants
     """
     try:
-        # Extract data from request
-        accommodations = request.accommodations.accommodations
-        places = request.places.places
-        restaurants = request.restaurants.restaurants
+        logger.info(f"Received raw trip plan request: {request.keys()}")
         
-        logger.info(f"Received trip plan request with {len(accommodations)} accommodations, {len(places)} places, and {len(restaurants)} restaurants")
+        # Extract data from request, handling different possible structures
+        accommodations = []
+        places = []
+        restaurants = []
+        destination = "Unknown"
         
-        # Convert Pydantic models to dictionaries
+        # Handle accommodation data
+        if "accommodation" in request and "accommodations" in request["accommodation"]:
+            accommodations = request["accommodation"]["accommodations"]
+            # Try to extract destination from accommodations
+            if accommodations and "destination_id" in accommodations[0]:
+                destination = accommodations[0]["destination_id"]
+        
+        # Handle places data
+        if "places" in request and "places" in request["places"]:
+            places = request["places"]["places"]
+            # If destination not found yet, try to get from places
+            if destination == "Unknown" and places and "destination_id" in places[0]:
+                destination = places[0]["destination_id"]
+        
+        # Handle restaurants data
+        if "restaurants" in request and "restaurants" in request["restaurants"]:
+            restaurants = request["restaurants"]["restaurants"]
+            # If destination still not found, try to get from restaurants
+            if destination == "Unknown" and restaurants and "destination_id" in restaurants[0]:
+                destination = restaurants[0]["destination_id"]
+        
+        logger.info(f"Extracted {len(accommodations)} accommodations, {len(places)} places, and {len(restaurants)} restaurants")
+        logger.info(f"Destination identified as: {destination}")
+        
+        # Function to safely get dict attributes
+        def to_dict(obj):
+            # For newer Pydantic models using model_dump()
+            if hasattr(obj, "model_dump"):
+                return obj.model_dump()
+            # For older Pydantic models using dict()
+            elif hasattr(obj, "dict"):
+                return obj.dict()
+            # If it's already a dict
+            elif isinstance(obj, dict):
+                return obj
+            # Fallback for other objects
+            else:
+                return {}
+        
+        # Prepare data for the model
         input_data = {
-            "accommodations": [acc.model_dump() for acc in accommodations],
-            "places": [place.model_dump() for place in places], 
-            "restaurants": [restaurant.model_dump() for restaurant in restaurants]
+            "destination": destination,
+            "accommodations": [to_dict(acc) for acc in accommodations],
+            "places": [to_dict(place) for place in places], 
+            "restaurants": [to_dict(rest) for rest in restaurants]
         }
         
-        # Here you would normally pass the input_data to your plan model to process
-        # For now, we'll just return a simple response with the input data
-        result = {
-            "itinerary": [],  # This would be filled by the model
-            "summary": {
-                "total_duration": "0 days",
-                "total_cost": sum([acc.price for acc in accommodations]),
-                "accommodations": len(accommodations),
-                "places": len(places),
-                "restaurants": len(restaurants)
-            },
-            "input_data": input_data  # Including the input data for debugging
+        # Calculate total cost for metadata
+        total_cost = 0
+        for acc in accommodations:
+            if "price" in acc:
+                total_cost += float(getattr(acc, "price", 0) or 0)
+        
+        # Add metadata 
+        meta = {
+            "trip_name": f"Trip to {destination.capitalize()}",
+            "start_date": "2023-09-01",  # Default date if not provided
+            "end_date": "2023-09-03",    # Default date for a 3-day trip
+            "user_id": "user123"
         }
-
-        result = model.generate_plan(input_data)
-
+        
+        # Generate plan using the model
+        logger.info(f"Generating plan with destination: {destination}")
+        result = model.generate_plan(input_data, **meta)
 
         logger.info("Trip plan request processed successfully")
         return {

@@ -25,7 +25,7 @@ class TravelModel:
         self.place_db = PlaceVectorDatabase()
         self.fnb_db = FnBVectorDatabase()
         self.openai_client = OpenAI(api_key=os.getenv("OPEN_API_KEY"))
-        self.model = "gpt-3.5-turbo"
+        self.model = "gpt-4o-mini"
         self.current_db = None
         
     def setup_database(self, db_type: str) -> bool:
@@ -351,7 +351,7 @@ When processing a query:
    - Travel style (luxury, budget, adventure, etc.)
    - Season of travel
 
-2. Then, call the appropriate query functions with detailed context:
+2. Then, YOU MUST call the appropriate query functions with detailed context:
    - query_hotels: For finding accommodations
    - query_places: For finding attractions and activities
    - query_fnb: For finding restaurants and food options
@@ -381,7 +381,7 @@ Remember to:
                 functions=self.get_available_functions(),
                 function_call="auto"
             )
-            logger.debug(f"OpenAI response: {response}")
+            logger.info(f"OpenAI response: {response}")
             
             response_message = response.choices[0].message
             logger.info(f"Model response message: {response_message}")
@@ -431,6 +431,7 @@ Remember to:
                     "args": "activity",
                     "id": place_id
                 })
+            logger.info(f"place_ids: {place_ids}")
             logger.info(f"Added {len(place_ids)} place recommendations")
             
             # Query restaurants
@@ -455,7 +456,7 @@ Remember to:
                 ]
             
             logger.info(f"Total recommendations: {len(formatted_results)}")
-            return formatted_results[:10]  # Limit to top 10 recommendations
+            return formatted_results[:30]  # Limit to top 10 recommendations
             
         except Exception as e:
             logger.error(f"Error in process_query: {e}", exc_info=True)
