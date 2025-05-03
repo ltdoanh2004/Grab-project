@@ -272,7 +272,7 @@ func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dt
 
 func (ss *suggestService) SuggestAll(travelPreference *dto.TravelPreference) (*dto.TripSuggestionRequest, error) {
 	rsp, err := ss.callAISuggestAll(
-		"/suggest/all",
+		"/api/v1/suggest/all",
 		travelPreference,
 	)
 	if err != nil {
