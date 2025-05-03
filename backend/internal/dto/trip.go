@@ -185,8 +185,24 @@ func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripReques
 
 		for _, segment := range day.Segments {
 			for _, activity := range segment.Activities {
-				startTime, _ := time.Parse(layoutTime, day.Date+" "+activity.StartTime)
-				endTime, _ := time.Parse(layoutTime, day.Date+" "+activity.EndTime)
+				var startTimePtr *time.Time
+				var endTimePtr *time.Time
+
+				if activity.StartTime != "" {
+					st, err := time.Parse(layoutTime, day.Date+" "+activity.StartTime)
+					if err != nil {
+						return CreateTripRequest{}, err
+					}
+					startTimePtr = &st
+				}
+
+				if activity.EndTime != "" {
+					et, err := time.Parse(layoutTime, day.Date+" "+activity.EndTime)
+					if err != nil {
+						return CreateTripRequest{}, err
+					}
+					endTimePtr = &et
+				}
 
 				switch activity.Type {
 				case "place":
@@ -194,8 +210,8 @@ func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripReques
 						TripDestinationID: input.Destination,
 						PlaceID:           activity.ID,
 						ScheduledDate:     &scheduledDate,
-						StartTime:         &startTime,
-						EndTime:           &endTime,
+						StartTime:         startTimePtr,
+						EndTime:           endTimePtr,
 						Notes:             activity.Description,
 					})
 				case "accommodation":
@@ -203,16 +219,17 @@ func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripReques
 						TripDestinationID: input.Destination,
 						AccommodationID:   activity.ID,
 						CheckInDate:       &scheduledDate,
-						Cost:              activity.Price,
-						Notes:             activity.Description,
+						// If a CheckOutDate is available, parse it similarly.
+						Cost:  activity.Price,
+						Notes: activity.Description,
 					})
 				case "restaurant":
 					dest.Restaurants = append(dest.Restaurants, CreateTripRestaurantRequest{
 						TripDestinationID: input.Destination,
 						RestaurantID:      activity.ID,
 						MealDate:          &scheduledDate,
-						StartTime:         &startTime,
-						EndTime:           &endTime,
+						StartTime:         startTimePtr,
+						EndTime:           endTimePtr,
 						ReservationInfo:   activity.Description,
 						Notes:             activity.Name,
 					})
