@@ -40,7 +40,7 @@ def register_routers():
         # Register routers with appropriate prefixes
         app.include_router(recommend_router, prefix="/api/v1")
         app.include_router(trip_plan_router, prefix="/api/v1")
-        app.include_router(backend_router, prefix="/api")
+        app.include_router(backend_router, prefix="/api/v1")
         
         logger.info("All routers registered successfully")
     except Exception as e:

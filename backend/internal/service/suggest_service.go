@@ -235,6 +235,7 @@ func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dt
 	client := &http.Client{
 		Timeout: 10 * time.Second,
 	}
+	fmt.Println("travelPreference ", travelPreference)
 
 	reqBody, err := json.Marshal(travelPreference)
 	if err != nil {
@@ -246,8 +247,7 @@ func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dt
 		config.AppConfig.AI.Port,
 		endpoint,
 	)
-
-	req, err := http.NewRequest("GET", aiURL, bytes.NewBuffer(reqBody))
+	req, err := http.NewRequest("POST", aiURL, bytes.NewBuffer(reqBody))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -272,7 +272,7 @@ func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dt
 
 func (ss *suggestService) SuggestAll(travelPreference *dto.TravelPreference) (*dto.TripSuggestionRequest, error) {
 	rsp, err := ss.callAISuggestAll(
-		"/suggest/all",
+		"/api/v1/suggest/all",
 		travelPreference,
 	)
 	if err != nil {
