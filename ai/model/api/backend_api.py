@@ -414,36 +414,36 @@ async def suggest_trips(request: TripSuggestionRequest):
         logger.info(f"Processing recommendation query for {request.destination}")
         
         # Process the query using TravelModel
-        recommendations = travel_model.get_recommendations(query)
+        recommendations = travel_model.process_query(query)
         
         logger.info("Recommendation query processed successfully")
         
-        # Format response to match Go backend expectations
-        # Return an array of SuggestWithIDAndType objects
-        response = []
-        
-        # Add mock recommendations for demonstration
-        # In a real system, you would extract actual IDs from the AI recommendations
-        response.append(SuggestWithIDAndType(
-            name="Luxury Hotel",
-            type="accommodation",
-            args="luxury",
-            id="hotel_000001"
-        ))
-        
-        response.append(SuggestWithIDAndType(
-            name="City Museum",
-            type="place",
-            args="cultural",
-            id="place_000001"
-        ))
-        
-        response.append(SuggestWithIDAndType(
-            name="Local Restaurant",
-            type="restaurant",
-            args="local cuisine",
-            id="restaurant_000001"
-        ))
+        # The travel_model.process_query now returns data in the correct format already
+        # We just need to convert each dict to a SuggestWithIDAndType object
+        response = [SuggestWithIDAndType(**rec) for rec in recommendations]
+        logger.info(f"response: {response}")
+        # If no recommendations were returned (empty list), use fallback
+        if not response:
+            response.append(SuggestWithIDAndType(
+                name="Luxury Hotel",
+                type="accommodation",
+                args="luxury",
+                id="hotel_000003"
+            ))
+            
+            response.append(SuggestWithIDAndType(
+                name="City Museum",
+                type="place",
+                args="cultural",
+                id="place_000003"
+            ))
+            
+            response.append(SuggestWithIDAndType(
+                name="Local Restaurant",
+                type="restaurant",
+                args="local cuisine",
+                id="restaurant_000003"
+            ))
         
         return response
         
