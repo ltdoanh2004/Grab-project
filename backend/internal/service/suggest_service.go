@@ -39,7 +39,7 @@ func NewSuggestService(
 // callAISuggestion handles the common API call to the AI service.
 func (ss *suggestService) callAISuggestion(endpoint string, travelPreference *dto.TravelPreference) (*dto.TravelSuggestionResponse, error) {
 	client := &http.Client{
-		Timeout: 10 * time.Second,
+		Timeout: 10000 * time.Second,
 	}
 
 	var jsonBody bytes.Buffer
@@ -233,21 +233,21 @@ func (ss *suggestService) SuggestRestaurants(travelPreference *dto.TravelPrefere
 
 func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dto.TravelPreference) ([]dto.SuggestWithIDAndType, error) {
 	client := &http.Client{
-		Timeout: 10 * time.Second,
+		Timeout: 10000 * time.Second,
 	}
-
+	fmt.Println("travelPreference 2: ", travelPreference)
 	var jsonBody bytes.Buffer
 	if err := json.NewEncoder(&jsonBody).Encode(travelPreference); err != nil {
 		return nil, fmt.Errorf("failed to encode travel preference to JSON: %w", err)
 	}
-
+	fmt.Println("jsonBody: ", jsonBody)
 	aiURL := fmt.Sprintf("http://%s:%s%s",
 		config.AppConfig.AI.Host,
 		config.AppConfig.AI.Port,
 		endpoint,
 	)
 
-	req, err := http.NewRequest("GET", aiURL, &jsonBody)
+	req, err := http.NewRequest("POST", aiURL, &jsonBody)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
