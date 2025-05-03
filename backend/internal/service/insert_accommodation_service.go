@@ -12,9 +12,10 @@ import (
 )
 
 type InsertDataService interface {
+	InsertDestinationData(filePath string) error
 	InsertHotelData(filePath string) error
-	InsertPlaceData(filePath string) error
 	InsertRestaurantData(filePath string) error
+	InsertPlaceData(filePath string) error
 }
 
 type insertDataService struct {

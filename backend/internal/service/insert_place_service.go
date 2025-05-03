@@ -32,14 +32,24 @@ func (s *insertDataService) InsertPlaceData(filePath string) error {
 }
 
 func (s *insertDataService) mapRecordToPlace(record map[string]string) (*model.Place, error) {
-	price, err := strconv.ParseFloat(record["price"], 64)
-	if err != nil {
-		return nil, err
+	var err error
+
+	var price float64
+	if len(record["price"]) != 0 {
+		price, err = strconv.ParseFloat(record["price"], 64)
+		if err != nil {
+			fmt.Println(record["price"])
+			return nil, err
+		}
 	}
 
-	rating, err := strconv.ParseFloat(record["rating"], 64)
-	if err != nil {
-		return nil, err
+	var rating float64
+	if len(record["rating"]) != 0 {
+		rating, err = strconv.ParseFloat(record["rating"], 64)
+		if err != nil {
+			fmt.Println(record["rating"])
+			return nil, err
+		}
 	}
 
 	var imageUrls model.StringArray
@@ -60,8 +70,7 @@ func (s *insertDataService) mapRecordToPlace(record map[string]string) (*model.P
 	var reviews model.StringArray
 	if len(record["reviews"]) != 0 {
 		if err := json.Unmarshal([]byte(record["reviews"]), &reviews); err != nil {
-			fmt.Println(record["reviews"])
-			return nil, fmt.Errorf("failed to unmarshal reviews: %w", err)
+			fmt.Println("failed to unmarshal reviews: %w", record["reviews"])
 		}
 	}
 

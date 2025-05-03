@@ -7,7 +7,7 @@ import { CheckOutlined, PlusOutlined } from "@ant-design/icons";
 const { Text, Title } = Typography;
 
 interface PersonalStepProps {
-  selectedOptions?: PersonalOption[];
+  personalOptions?: PersonalOption[];
   onAddOption: (option: PersonalOption) => void;
   onNext?: () => void;
   onPrev?: () => void;
@@ -18,7 +18,7 @@ interface PersonalStepProps {
 }
 
 export const PersonalStep: React.FC<PersonalStepProps> = ({
-  selectedOptions = [],
+  personalOptions = [],
   onAddOption,
   onNext,
   onPrev,
@@ -28,7 +28,7 @@ export const PersonalStep: React.FC<PersonalStepProps> = ({
   travelTime,
 }) => {
   const isOptionSelected = (option: PersonalOption) => {
-    return selectedOptions?.some(
+    return personalOptions?.some(
       (item) => item.type === option.type && item.name === option.name
     );
   };
@@ -47,7 +47,7 @@ export const PersonalStep: React.FC<PersonalStepProps> = ({
       budget,
       people,
       travelTime,
-      selectedOptions,
+      personalOptions,
     };
 
     console.log("userInput:", JSON.stringify(userInput, null, 2));

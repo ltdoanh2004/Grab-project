@@ -1,3 +1,12 @@
+export const ItemTypes = { ACTIVITY: "activity" } as const;
+
+export interface DragItem {
+  type: string;
+  id: string;
+  dayId: number;
+  index: number;
+}
+
 export interface Destination {
   id: string;
   name: string;

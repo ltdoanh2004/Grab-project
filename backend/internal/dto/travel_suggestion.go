@@ -2,16 +2,39 @@ package dto
 
 import (
 	"skeleton-internship-backend/internal/model"
+	"time"
 )
 
+type Budget struct {
+	Type        string  `json:"type"`
+	ExactBudget float64 `json:"exactBudget"`
+}
+
+type People struct {
+	Adults   int `json:"adults"`
+	Children int `json:"children"`
+	Infants  int `json:"infants"`
+	Pets     int `json:"pets"`
+}
+
+type TravelTime struct {
+	Type      string    `json:"type"`
+	StartDate time.Time `json:"startDate"`
+	EndDate   time.Time `json:"endDate"`
+}
+
+type PersonalOption struct {
+	Type        string `json:"type"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}
+
 type TravelPreference struct {
-	Location     string            `json:"location"`
-	TravelStyle  string            `json:"travel_style"`
-	Places       model.StringArray `json:"places"`
-	Budget       string            `json:"budget"`
-	DurationDays int               `json:"duration_days"`
-	Season       string            `json:"season"`
-	Limit        int               `json:"limit"`
+	Destination     string           `json:"destination"`
+	Budget          Budget           `json:"budget"`
+	People          People           `json:"people"`
+	TravelTime      TravelTime       `json:"travelTime"`
+	PersonalOptions []PersonalOption `json:"personalOptions"`
 }
 
 type TravelSuggestionResponse struct {
@@ -50,12 +73,12 @@ type RestaurantSuggestion struct {
 	PhotoURL      string             `json:"photo_url"`
 	URL           string             `json:"url"`
 	Location      model.Location     `json:"location"`
-	Reviews       model.StringArray  `json:"reviews"`
+	Reviews       string             `json:"reviews"`
 	Services      model.ServiceArray `json:"services"`
 	IsDelivery    bool               `json:"is_delivery"`
 	IsBooking     bool               `json:"is_booking"`
 	IsOpening     bool               `json:"is_opening"`
-	PriceRange    model.PriceRange   `json:"price_range"`
+	PriceRange    string             `json:"price_range"`
 	Description   string             `json:"description"`
 	Cuisines      string             `json:"cuisines"`
 	OpeningHours  string             `json:"opening_hours"`

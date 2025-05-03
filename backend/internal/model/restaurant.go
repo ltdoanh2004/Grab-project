@@ -11,12 +11,12 @@ type Restaurant struct {
 	PhotoURL      string       `json:"photo_url"`
 	URL           string       `json:"url"`
 	Location      Location     `gorm:"type:json" json:"location"`
-	Reviews       StringArray  `gorm:"type:json" json:"reviews"`
-	Services      ServiceArray `gorm:"type:json" json:"services"`
+	Reviews       string       `json:"reviews"`
+	Services      ServiceArray `json:"services"`
 	IsDelivery    bool         `json:"is_delivery"`
 	IsBooking     bool         `json:"is_booking"`
 	IsOpening     bool         `json:"is_opening"`
-	PriceRange    PriceRange   `gorm:"type:json" json:"price_range"`
+	PriceRange    string       `json:"price_range"`
 	Description   string       `json:"description"`
 	Cuisines      string       `json:"cuisines"`
 	OpeningHours  string       `json:"opening_hours"`
