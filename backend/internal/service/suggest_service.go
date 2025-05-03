@@ -321,7 +321,7 @@ func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithID
 			newAccommodation, err := ss.AccommodationRepository.GetByID(value.ID)
 			if err != nil {
 				fmt.Println("Error fetching accommodation: ", value.ID)
-				return nil, err
+				// return nil, err
 			}
 			accommodations.Accommodations = append(
 				accommodations.Accommodations,
@@ -348,7 +348,7 @@ func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithID
 			newPlace, err := ss.PlaceRepository.GetByID(value.ID)
 			if err != nil {
 				fmt.Println("Error fetching place: ", value.ID)
-				return nil, err
+				// return nil, err
 			}
 			places.Places = append(
 				places.Places,
@@ -376,7 +376,7 @@ func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithID
 			newRestaurant, err := ss.RestaurantRepository.GetByID(value.ID)
 			if err != nil {
 				fmt.Println("Error fetching restaurant: ", value.ID)
-				return nil, err
+				// return nil, err
 			}
 			restaurants.Restaurants = append(
 				restaurants.Restaurants,
