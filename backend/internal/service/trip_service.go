@@ -359,9 +359,9 @@ func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, e
 		Timeout: 10 * time.Second,
 	}
 
-	reqBody, err := json.Marshal(activities)
-	if err != nil {
-		return nil, fmt.Errorf("failed to marshal travel preference: %w", err)
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(activities); err != nil {
+		return nil, fmt.Errorf("failed to encode travel preference as json: %w", err)
 	}
 
 	aiURL := fmt.Sprintf("http://%s:%s%s",
@@ -370,7 +370,7 @@ func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, e
 		endpoint,
 	)
 
-	req, err := http.NewRequest("GET", aiURL, bytes.NewBuffer(reqBody))
+	req, err := http.NewRequest("POST", aiURL, &buf)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}

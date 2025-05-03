@@ -247,6 +247,8 @@ func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dt
 		endpoint,
 	)
 
+	fmt.Println(jsonBody)
+
 	req, err := http.NewRequest("POST", aiURL, &jsonBody)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
@@ -320,7 +322,8 @@ func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithID
 			newAccommodation, err := ss.AccommodationRepository.GetByID(value.ID)
 			if err != nil {
 				fmt.Println("Error fetching accommodation: ", value.ID)
-				return nil, err
+				// return nil, err
+				continue
 			}
 			accommodations.Accommodations = append(
 				accommodations.Accommodations,
@@ -347,7 +350,8 @@ func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithID
 			newPlace, err := ss.PlaceRepository.GetByID(value.ID)
 			if err != nil {
 				fmt.Println("Error fetching place: ", value.ID)
-				return nil, err
+				// return nil, err
+				continue
 			}
 			places.Places = append(
 				places.Places,
@@ -375,7 +379,8 @@ func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithID
 			newRestaurant, err := ss.RestaurantRepository.GetByID(value.ID)
 			if err != nil {
 				fmt.Println("Error fetching restaurant: ", value.ID)
-				return nil, err
+				// return nil, err
+				continue
 			}
 			restaurants.Restaurants = append(
 				restaurants.Restaurants,
