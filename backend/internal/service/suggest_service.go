@@ -271,16 +271,38 @@ func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dt
 }
 
 func (ss *suggestService) SuggestAll(travelPreference *dto.TravelPreference) (*dto.TripSuggestionRequest, error) {
-	rsp, err := ss.callAISuggestAll(
-		getURL(config.AppConfig.AI.Host,
-			config.AppConfig.AI.Port,
-			"/suggest/all",
-		),
-		travelPreference,
+	// rsp, err := ss.callAISuggestAll(
+	// 	getURL(config.AppConfig.AI.Host,
+	// 		config.AppConfig.AI.Port,
+	// 		"/suggest/all",
+	// 	),
+	// 	travelPreference,
+	// )
+	// if err != nil {
+	// 	return nil, err
+	// }
+	var err error
+	var rsp []dto.SuggestWithIDAndType
+	rsp = append(rsp,
+		dto.SuggestWithIDAndType{
+			Name: "hotel_000000",
+			Type: "accommodation",
+			Args: "...",
+			ID:   "hotel_000000",
+		},
+		dto.SuggestWithIDAndType{
+			Name: "restaurant_000000",
+			Type: "restaurant",
+			Args: "...",
+			ID:   "restaurant_000000",
+		},
+		dto.SuggestWithIDAndType{
+			Name: "place_000000",
+			Type: "place",
+			Args: "...",
+			ID:   "place_000000",
+		},
 	)
-	if err != nil {
-		return nil, err
-	}
 
 	var suggestion *dto.TripSuggestionRequest
 	suggestion, err = ss.ConvertIntoTripSuggestion(rsp)
@@ -350,7 +372,7 @@ func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithID
 				},
 			)
 		}
-		if value.Type == "place" {
+		if value.Type == "restaurant" {
 			newRestaurant, err := ss.RestaurantRepository.GetByID(value.ID)
 			if err != nil {
 				return nil, err
