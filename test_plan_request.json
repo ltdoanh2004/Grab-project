@@ -1,0 +1,44 @@
+{
+  "destination": "Đà Nẵng",
+  "trip_name": "Kỳ nghỉ Đà Nẵng 3 ngày",
+  "start_date": "2023-06-15",
+  "end_date": "2023-06-18",
+  "accommodations": [
+    {
+      "id": "hotel1",
+      "name": "Sala Danang Beach Hotel",
+      "price": 850000,
+      "description": "Khách sạn 4 sao với tầm nhìn ra biển",
+      "location": "Bãi biển Mỹ Khê"
+    }
+  ],
+  "places": [
+    {
+      "id": "place1",
+      "name": "Bãi biển Mỹ Khê",
+      "description": "Bãi biển cát trắng đẹp với nước biển trong xanh"
+    },
+    {
+      "id": "place2",
+      "name": "Bà Nà Hills",
+      "description": "Khu nghỉ dưỡng trên núi với Cầu Vàng nổi tiếng"
+    },
+    {
+      "id": "place3",
+      "name": "Ngũ Hành Sơn",
+      "description": "Danh thắng với các hang động đá vôi và chùa cổ"
+    }
+  ],
+  "restaurants": [
+    {
+      "id": "rest1",
+      "name": "Nhà hàng Bé Mặn",
+      "description": "Nhà hàng hải sản địa phương nổi tiếng"
+    },
+    {
+      "id": "rest2",
+      "name": "Quán Mít",
+      "description": "Quán ăn phục vụ các món Việt Nam truyền thống"
+    }
+  ]
+} 
