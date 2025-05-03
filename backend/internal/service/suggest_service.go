@@ -42,9 +42,9 @@ func (ss *suggestService) callAISuggestion(endpoint string, travelPreference *dt
 		Timeout: 10 * time.Second,
 	}
 
-	reqBody, err := json.Marshal(travelPreference)
-	if err != nil {
-		return nil, fmt.Errorf("failed to marshal travel preference: %w", err)
+	var jsonBody bytes.Buffer
+	if err := json.NewEncoder(&jsonBody).Encode(travelPreference); err != nil {
+		return nil, fmt.Errorf("failed to encode travel preference to JSON: %w", err)
 	}
 
 	aiURL := fmt.Sprintf("http://%s:%s%s",
@@ -53,7 +53,7 @@ func (ss *suggestService) callAISuggestion(endpoint string, travelPreference *dt
 		endpoint,
 	)
 
-	req, err := http.NewRequest("GET", aiURL, bytes.NewBuffer(reqBody))
+	req, err := http.NewRequest("GET", aiURL, &jsonBody)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -235,11 +235,10 @@ func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dt
 	client := &http.Client{
 		Timeout: 10 * time.Second,
 	}
-	fmt.Println("travelPreference ", travelPreference)
 
-	reqBody, err := json.Marshal(travelPreference)
-	if err != nil {
-		return nil, fmt.Errorf("failed to marshal travel preference: %w", err)
+	var jsonBody bytes.Buffer
+	if err := json.NewEncoder(&jsonBody).Encode(travelPreference); err != nil {
+		return nil, fmt.Errorf("failed to encode travel preference to JSON: %w", err)
 	}
 
 	aiURL := fmt.Sprintf("http://%s:%s%s",
@@ -247,7 +246,8 @@ func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dt
 		config.AppConfig.AI.Port,
 		endpoint,
 	)
-	req, err := http.NewRequest("POST", aiURL, bytes.NewBuffer(reqBody))
+
+	req, err := http.NewRequest("GET", aiURL, &jsonBody)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
