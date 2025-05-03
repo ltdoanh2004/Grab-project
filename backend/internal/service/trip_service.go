@@ -356,7 +356,7 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTO, error) {
 
 func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error) {
 	client := &http.Client{
-		Timeout: 10 * time.Second,
+		Timeout: 100000 * time.Second,
 	}
 
 	var buf bytes.Buffer
