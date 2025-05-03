@@ -322,6 +322,7 @@ func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithID
 			if err != nil {
 				fmt.Println("Error fetching accommodation: ", value.ID)
 				// return nil, err
+				continue
 			}
 			accommodations.Accommodations = append(
 				accommodations.Accommodations,
@@ -349,6 +350,7 @@ func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithID
 			if err != nil {
 				fmt.Println("Error fetching place: ", value.ID)
 				// return nil, err
+				continue
 			}
 			places.Places = append(
 				places.Places,
@@ -377,6 +379,7 @@ func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithID
 			if err != nil {
 				fmt.Println("Error fetching restaurant: ", value.ID)
 				// return nil, err
+				continue
 			}
 			restaurants.Restaurants = append(
 				restaurants.Restaurants,
