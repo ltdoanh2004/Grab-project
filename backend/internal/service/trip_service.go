@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"skeleton-internship-backend/config"
 	"skeleton-internship-backend/internal/dto"
@@ -359,6 +360,40 @@ func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, e
 		Timeout: 100000 * time.Second,
 	}
 
+	// Prepare the data for AI service - we need to convert image arrays to proper format
+	// First, handle accommodations
+	for i, acc := range activities.Accommodation.Accommodations {
+		// If the accommodation has images, extract the first image URL
+		if len(acc.Images) > 0 {
+			// Add an image_url field with the URL from the first image
+			activities.Accommodation.Accommodations[i].Link = acc.Images[0].URL
+			
+			// For debugging
+			fmt.Printf("Setting accommodation image URL for %s: %s\n", acc.Name, acc.Images[0].URL)
+		}
+	}
+
+	// Handle places
+	for i, place := range activities.Places.Places {
+		// If the place has images, extract the first image URL
+		if len(place.Images) > 0 {
+			// Set the main image field to the URL from the first image
+			activities.Places.Places[i].MainImage = place.Images[0].URL
+			
+			// For debugging
+			fmt.Printf("Setting place image URL for %s: %s\n", place.Name, place.Images[0].URL)
+		}
+	}
+
+	// Handle restaurants - just ensure photo_url is set properly
+	// (restaurants already use a direct photo_url field)
+
+	// Dump the full request content for debugging
+	requestJSON, _ := json.MarshalIndent(activities, "", "  ")
+	fmt.Println("==== SENDING REQUEST TO AI ====")
+	fmt.Println(string(requestJSON))
+	fmt.Println("===============================")
+
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(activities); err != nil {
 		return nil, fmt.Errorf("failed to encode travel preference as json: %w", err)
@@ -369,6 +404,8 @@ func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, e
 		config.AppConfig.AI.Port,
 		endpoint,
 	)
+	
+	fmt.Println("Sending request to:", aiURL)
 
 	req, err := http.NewRequest("POST", aiURL, &buf)
 	if err != nil {
@@ -382,20 +419,64 @@ func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, e
 	}
 	defer resp.Body.Close()
 
+	fmt.Printf("AI Response Status: %s (%d)\n", resp.Status, resp.StatusCode)
+
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("AI service returned non-200 status code: %d", resp.StatusCode)
+		// Try to read error response body
+		errBody, _ := io.ReadAll(resp.Body)
+		return nil, fmt.Errorf("AI service returned non-200 status code: %d, Body: %s", resp.StatusCode, string(errBody))
 	}
 
-	var rsp dto.CreateTripRequestByDate
-	if err := json.NewDecoder(resp.Body).Decode(&rsp); err != nil {
+	// Read the entire response for debugging
+	responseBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read response body: %w", err)
+	}
+	
+	fmt.Println("==== AI RESPONSE ====")
+	fmt.Println(string(responseBody))
+	fmt.Println("=====================")
+	
+	// Parse the API response which has structure: {"status": "success", "plan": {...}, "error": null}
+	var apiResponse struct {
+		Status string                     `json:"status"`
+		Plan   dto.CreateTripRequestByDate `json:"plan"`
+		Error  *string                    `json:"error"`
+	}
+	
+	if err := json.Unmarshal(responseBody, &apiResponse); err != nil {
 		return nil, fmt.Errorf("failed to decode AI service response: %w", err)
 	}
-	return &rsp, nil
+	
+	// Check if there's an error in the API response
+	if apiResponse.Error != nil && *apiResponse.Error != "" {
+		return nil, fmt.Errorf("AI service returned error: %s", *apiResponse.Error)
+	}
+	
+	// Check if status is not success
+	if apiResponse.Status != "success" {
+		return nil, fmt.Errorf("AI service returned non-success status: %s", apiResponse.Status)
+	}
+	
+	// Check if plan data is valid
+	if apiResponse.Plan.TripName == "" {
+		return nil, fmt.Errorf("AI service returned empty plan data")
+	}
+	
+	fmt.Printf("Successfully parsed plan: %s, %d days, from %s to %s\n", 
+		apiResponse.Plan.TripName, 
+		len(apiResponse.Plan.PlanByDay), 
+		apiResponse.Plan.StartDate, 
+		apiResponse.Plan.EndDate)
+		
+	return &apiResponse.Plan, nil
 }
 
 func (ts *tripService) SuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error) {
 	// suggestionByDate, err := ts.CallAISuggestTrip(activities, endpoint)
 	suggestionByDate, err := ts.CallAISuggestTrip(activities, endpoint)
+	fmt.Println("suggestionByDate", suggestionByDate)
+	fmt.Println("err", err)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get trip suggestion: %w", err)
 	}
