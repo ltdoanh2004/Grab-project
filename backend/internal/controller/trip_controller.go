@@ -172,7 +172,7 @@ func (tc *TripController) GetPlan(ctx *gin.Context) {
 		return
 	}
 
-	var suggestedTrip *dto.CreateTripRequest
+	var suggestedTrip *dto.CreateTripRequestByDate
 	suggestedTrip, err := tc.tripService.SuggestTrip(request, endpoints)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
