@@ -394,6 +394,7 @@ func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, e
 }
 
 func (ts *tripService) SuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequest, error) {
+	// suggestionByDate, err := ts.CallAISuggestTrip(activities, endpoint)
 	suggestionByDate, err := ts.CallAISuggestTrip(activities, endpoint)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get trip suggestion: %w", err)
