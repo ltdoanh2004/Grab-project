@@ -246,13 +246,16 @@ class PlanModel:
             You are an expert Vietnamese travel planner specialized in creating detailed, engaging travel itineraries.
             Your recommendations should be specific, authentic, and tailored to the provided data.
             Follow these guidelines:
-            1. Create detailed descriptions in Vietnamese (3-4 sentences per item)
-            2. Suggest realistic timings based on location proximity
-            3. Include both popular attractions and hidden gems
-            4. Consider weather, local events, and seasonal factors
-            5. Provide practical tips for transportation between locations
-            6. Return ONLY a valid JSON object that exactly matches the requested structure
-            7. IMPORTANT: Make sure to include only complete, valid JSON - do not cut off any fields or values
+            1. You are an expert Vietnamese travel planner specialized in creating detailed, engaging travel itineraries.
+            2. You must choose for the user the hotel first, to make sure that they can have a suitable hotel. If the next activities is far from the chosen hotel, you must choose another hotel.
+            3. Create detailed descriptions in Vietnamese (3-4 sentences per item)
+            4. Suggest realistic timings based on location proximity
+            5. Include both popular attractions and hidden gems
+            6. Consider weather, local events, and seasonal factors
+            7. Provide practical tips for transportation between locations
+            8. Return ONLY a valid JSON object that exactly matches the requested structure
+            9. Use available tools when appropriate to enhance your recommendations
+            10. IMPORTANT: Make sure to include only complete, valid JSON - do not cut off any fields or values
             """
             
             # Generate each day individually
@@ -288,60 +291,114 @@ class PlanModel:
                     "segments": [
                         {{
                             "time_of_day": "morning",
-                            "activities": [{{
-                                "id": "{merged_data.get('places', [{}])[0].get('place_id', 'place_morning_day' + str(day_num+1)) if merged_data.get('places') else 'place_morning_day' + str(day_num+1)}",
-                                "type": "place",
-                                "name": "Tên địa điểm",
-                                "start_time": "08:00",
-                                "end_time": "10:00",
-                                "description": "Mô tả ngắn",
-                                "address": "Địa chỉ đầy đủ",
-                                "categories": "sightseeing",
-                                "duration": "2h",
-                                "opening_hours": "08:00-17:00",
-                                "rating": 4.5,
-                                "price": 50000,
-                                "image_url": "",
-                                "url": ""
-                            }}]
+                            "activities": [
+                                {{
+                                    "id": "{merged_data.get('places', [{}])[0].get('place_id', 'place_morning_day' + str(day_num+1)) if merged_data.get('places') else 'place_morning_day' + str(day_num+1)}",
+                                    "type": "place",
+                                    "name": "Tên địa điểm",
+                                    "start_time": "08:00",
+                                    "end_time": "10:00",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ",
+                                    "categories": "sightseeing",
+                                    "duration": "2h",
+                                    "opening_hours": "08:00-17:00",
+                                    "rating": 4.5,
+                                    "price": 50000,
+                                    "image_url": "",
+                                    "url": ""
+                                }},
+                                {{
+                                    "id": "{merged_data.get('places', [{}])[min(1, len(merged_data.get('places', []))-1)].get('place_id', 'place_morning2_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 1 else 'place_morning2_day' + str(day_num+1)}",
+                                    "type": "place",
+                                    "name": "Tên địa điểm thứ 2",
+                                    "start_time": "10:30",
+                                    "end_time": "12:00",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ",
+                                    "categories": "sightseeing",
+                                    "duration": "1h30m",
+                                    "opening_hours": "08:00-17:00",
+                                    "rating": 4.5,
+                                    "price": 50000,
+                                    "image_url": "",
+                                    "url": ""
+                                }}
+                            ]
                         }},
                         {{
                             "time_of_day": "afternoon",
-                            "activities": [{{
-                                "id": "{merged_data.get('places', [{}])[min(1, len(merged_data.get('places', []))-1)].get('place_id', 'place_afternoon_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 1 else merged_data.get('places', [{}])[0].get('place_id', 'place_afternoon_day' + str(day_num+1)) if merged_data.get('places') else 'place_afternoon_day' + str(day_num+1)}",
-                                "type": "place",
-                                "name": "Tên địa điểm",
-                                "start_time": "13:00",
-                                "end_time": "15:00",
-                                "description": "Mô tả ngắn",
-                                "address": "Địa chỉ đầy đủ",
-                                "categories": "sightseeing",
-                                "duration": "2h",
-                                "opening_hours": "08:00-17:00",
-                                "rating": 4.5,
-                                "price": 50000,
-                                "image_url": "",
-                                "url": ""
-                            }}]
+                            "activities": [
+                                {{
+                                    "id": "{merged_data.get('places', [{}])[min(2, len(merged_data.get('places', []))-1)].get('place_id', 'place_afternoon_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 2 else 'place_afternoon_day' + str(day_num+1)}",
+                                    "type": "place",
+                                    "name": "Tên địa điểm",
+                                    "start_time": "13:00",
+                                    "end_time": "15:00",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ",
+                                    "categories": "sightseeing",
+                                    "duration": "2h",
+                                    "opening_hours": "08:00-17:00",
+                                    "rating": 4.5,
+                                    "price": 50000,
+                                    "image_url": "",
+                                    "url": ""
+                                }},
+                                {{
+                                    "id": "{merged_data.get('restaurants', [{}])[min(0, len(merged_data.get('restaurants', []))-1)].get('restaurant_id', 'restaurant_afternoon_day' + str(day_num+1)) if merged_data.get('restaurants') else 'restaurant_afternoon_day' + str(day_num+1)}",
+                                    "type": "restaurant",
+                                    "name": "Nhà hàng trưa",
+                                    "start_time": "15:30",
+                                    "end_time": "17:00",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ", 
+                                    "cuisines": "Hải sản, Đặc sản địa phương",
+                                    "price_range": "100,000-300,000 VND",
+                                    "rating": 4.5,
+                                    "phone": "0123456789",
+                                    "services": ["đặt bàn", "giao hàng"],
+                                    "image_url": "",
+                                    "url": ""
+                                }}
+                            ]
                         }},
                         {{
                             "time_of_day": "evening",
-                            "activities": [{{
-                                "id": "{merged_data.get('restaurants', [{}])[0].get('restaurant_id', 'restaurant_evening_day' + str(day_num+1)) if merged_data.get('restaurants') else 'restaurant_evening_day' + str(day_num+1)}",
-                                "type": "restaurant",
-                                "name": "Tên nhà hàng",
-                                "start_time": "19:00",
-                                "end_time": "21:00",
-                                "description": "Mô tả ngắn",
-                                "address": "Địa chỉ đầy đủ", 
-                                "cuisines": "Hải sản, Đặc sản địa phương",
-                                "price_range": "100,000-300,000 VND",
-                                "rating": 4.5,
-                                "phone": "0123456789",
-                                "services": ["đặt bàn", "giao hàng"],
-                                "image_url": "",
-                                "url": ""
-                            }}]
+                            "activities": [
+                                {{
+                                    "id": "{merged_data.get('places', [{}])[min(3, len(merged_data.get('places', []))-1)].get('place_id', 'place_evening_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 3 else 'place_evening_day' + str(day_num+1)}",
+                                    "type": "place",
+                                    "name": "Địa điểm buổi tối",
+                                    "start_time": "18:00",
+                                    "end_time": "19:00",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ",
+                                    "categories": "sightseeing",
+                                    "duration": "1h",
+                                    "opening_hours": "08:00-21:00",
+                                    "rating": 4.5,
+                                    "price": 50000,
+                                    "image_url": "",
+                                    "url": ""
+                                }},
+                                {{
+                                    "id": "{merged_data.get('restaurants', [{}])[min(1, len(merged_data.get('restaurants', []))-1)].get('restaurant_id', 'restaurant_evening_day' + str(day_num+1)) if len(merged_data.get('restaurants', [])) > 1 else merged_data.get('restaurants', [{}])[0].get('restaurant_id', 'restaurant_evening_day' + str(day_num+1)) if merged_data.get('restaurants') else 'restaurant_evening_day' + str(day_num+1)}",
+                                    "type": "restaurant",
+                                    "name": "Nhà hàng tối",
+                                    "start_time": "19:30",
+                                    "end_time": "21:30",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ", 
+                                    "cuisines": "Hải sản, Đặc sản địa phương",
+                                    "price_range": "100,000-300,000 VND",
+                                    "rating": 4.5,
+                                    "phone": "0123456789",
+                                    "services": ["đặt bàn", "giao hàng"],
+                                    "image_url": "",
+                                    "url": ""
+                                }}
+                            ]
                         }}
                     ]
                 }}
@@ -367,6 +424,9 @@ class PlanModel:
                 QUAN TRỌNG:
                 - LUÔN LUÔN sử dụng ID từ dữ liệu đầu vào (accommodation_id, place_id, restaurant_id)
                 - Không tạo ID tùy ý mà phải dùng những ID đã được cung cấp trong dữ liệu
+                - Mỗi SEGMENT (morning, afternoon, evening) CÓ THỂ có NHIỀU ACTIVITIES (2-3 activities mỗi segment)
+                - Các activities trong cùng một segment nên có mối liên hệ về địa lý (gần nhau) và thời gian (liền mạch)
+                - Nếu description có trong dữ liệu đầu vào, HÃY SỬ DỤNG description đó, nếu là tiếng Anh thì dịch sang tiếng Việt
                 - Chỉ trả về đối tượng JSON hợp lệ, không viết gì thêm.
                 """
                 
@@ -522,13 +582,20 @@ class PlanModel:
                                         image_url = extract_image_url(matching_accommodation)
                                         log.info(f"Extracted accommodation image URL: {image_url}")
                                     
+                                    # Process description - convert to Vietnamese if in English or use existing
+                                    original_description = matching_accommodation.get("description", "Check-in và nghỉ ngơi tại khách sạn.") if matching_accommodation else "Check-in và nghỉ ngơi tại khách sạn."
+                                    description = original_description
+                                    # If description is primarily in English, we'll note that for the LLM to translate
+                                    if self._is_primarily_english(original_description):
+                                        description = f"[TRANSLATE: {original_description}]"
+                                    
                                     default_activity = {
                                         "id": accommodation_id,
                                         "type": "accommodation",
                                         "name": matching_accommodation.get("name", merged_data["accommodations"][0].get("name", "Khách sạn")) if matching_accommodation else merged_data["accommodations"][0].get("name", "Khách sạn"),
                                         "start_time": "08:00",
                                         "end_time": "10:00",
-                                        "description": matching_accommodation.get("description", "Check-in và nghỉ ngơi tại khách sạn.") if matching_accommodation else "Check-in và nghỉ ngơi tại khách sạn.",
+                                        "description": description,
                                         "location": matching_accommodation.get("location", matching_accommodation.get("address", merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")))) if matching_accommodation else merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")),
                                         "rating": float(matching_accommodation.get("rating", merged_data["accommodations"][0].get("rating", 4.5))) if matching_accommodation else float(merged_data["accommodations"][0].get("rating", 4.5)),
                                         "price": float(matching_accommodation.get("price", merged_data["accommodations"][0].get("price", 850000))) if matching_accommodation else float(merged_data["accommodations"][0].get("price", 850000)),
@@ -582,13 +649,20 @@ class PlanModel:
                                             image_url = extract_image_url(matching_place)
                                             log.info(f"Extracted place image URL: {image_url}")
                                         
+                                        # Process description - convert to Vietnamese if in English or use existing
+                                        original_description = matching_place.get("description", "Tham quan địa điểm nổi tiếng.")
+                                        description = original_description
+                                        # If description is primarily in English, we'll note that for the LLM to translate
+                                        if self._is_primarily_english(original_description):
+                                            description = f"[TRANSLATE: {original_description}]"
+                                        
                                         default_activity = {
                                             "id": place_id,
                                             "type": "place",
                                             "name": matching_place.get("name", "Địa điểm tham quan"),
                                             "start_time": "14:00",
                                             "end_time": "16:00",
-                                            "description": matching_place.get("description", "Tham quan địa điểm nổi tiếng."),
+                                            "description": description,
                                             "address": matching_place.get("address", matching_place.get("location", "")),
                                             "categories": matching_place.get("categories", "sightseeing"),
                                             "duration": matching_place.get("duration", "2h"),
@@ -641,13 +715,20 @@ class PlanModel:
                                             image_url = extract_image_url(matching_restaurant)
                                             log.info(f"Extracted restaurant image URL: {image_url}")
                                         
+                                        # Process description - convert to Vietnamese if in English or use existing
+                                        original_description = matching_restaurant.get("description", "Thưởng thức ẩm thực địa phương.") if matching_restaurant else "Thưởng thức ẩm thực địa phương."
+                                        description = original_description
+                                        # If description is primarily in English, we'll note that for the LLM to translate
+                                        if self._is_primarily_english(original_description):
+                                            description = f"[TRANSLATE: {original_description}]"
+                                        
                                         default_activity = {
                                             "id": restaurant_id,
                                             "type": "restaurant",
                                             "name": matching_restaurant.get("name", "Nhà hàng"),
                                             "start_time": "19:00",
                                             "end_time": "21:00",
-                                            "description": matching_restaurant.get("description", "Thưởng thức ẩm thực địa phương."),
+                                            "description": description,
                                             "address": matching_restaurant.get("address", matching_restaurant.get("location", "")),
                                             "cuisines": matching_restaurant.get("cuisines", "Đặc sản địa phương"),
                                             "price_range": matching_restaurant.get("price_range", "100,000-300,000 VND"),
@@ -774,14 +855,16 @@ class PlanModel:
             You are an expert Vietnamese travel planner specialized in creating detailed, engaging travel itineraries.
             Your recommendations should be specific, authentic, and tailored to the provided data.
             Follow these guidelines:
-            1. Create detailed descriptions in Vietnamese (3-4 sentences per item)
-            2. Suggest realistic timings based on location proximity
-            3. Include both popular attractions and hidden gems
-            4. Consider weather, local events, and seasonal factors
-            5. Provide practical tips for transportation between locations
-            6. Return ONLY a valid JSON object that exactly matches the requested structure
-            7. Use available tools when appropriate to enhance your recommendations
-            8. IMPORTANT: Make sure to include only complete, valid JSON - do not cut off any fields or values
+            1. You are an expert Vietnamese travel planner specialized in creating detailed, engaging travel itineraries.
+            2. You must choose for the user the hotel first, to make sure that they can have a suitable hotel. If the next activities is far from the chosen hotel, you must choose another hotel.
+            3. Create detailed descriptions in Vietnamese (3-4 sentences per item)
+            4. Suggest realistic timings based on location proximity
+            5. Include both popular attractions and hidden gems
+            6. Consider weather, local events, and seasonal factors
+            7. Provide practical tips for transportation between locations
+            8. Return ONLY a valid JSON object that exactly matches the requested structure
+            9. Use available tools when appropriate to enhance your recommendations
+            10. IMPORTANT: Make sure to include only complete, valid JSON - do not cut off any fields or values
             """
             
             # Generate each day individually
@@ -898,6 +981,9 @@ class PlanModel:
                 QUAN TRỌNG:
                 - LUÔN LUÔN sử dụng ID từ dữ liệu đầu vào (accommodation_id, place_id, restaurant_id)
                 - Không tạo ID tùy ý mà phải dùng những ID đã được cung cấp trong dữ liệu
+                - Mỗi SEGMENT (morning, afternoon, evening) CÓ THỂ có NHIỀU ACTIVITIES (2-3 activities mỗi segment)
+                - Các activities trong cùng một segment nên có mối liên hệ về địa lý (gần nhau) và thời gian (liền mạch)
+                - Nếu description có trong dữ liệu đầu vào, HÃY SỬ DỤNG description đó, nếu là tiếng Anh thì dịch sang tiếng Việt
                 - Chỉ trả về đối tượng JSON hợp lệ, không viết gì thêm.
                 """
                 
@@ -1048,13 +1134,20 @@ class PlanModel:
                                         image_url = extract_image_url(matching_accommodation)
                                         log.info(f"Extracted accommodation image URL: {image_url}")
                                     
+                                    # Process description - convert to Vietnamese if in English or use existing
+                                    original_description = matching_accommodation.get("description", "Check-in và nghỉ ngơi tại khách sạn.") if matching_accommodation else "Check-in và nghỉ ngơi tại khách sạn."
+                                    description = original_description
+                                    # If description is primarily in English, we'll note that for the LLM to translate
+                                    if self._is_primarily_english(original_description):
+                                        description = f"[TRANSLATE: {original_description}]"
+                                    
                                     default_activity = {
                                         "id": accommodation_id,
                                         "type": "accommodation",
                                         "name": matching_accommodation.get("name", merged_data["accommodations"][0].get("name", "Khách sạn")) if matching_accommodation else merged_data["accommodations"][0].get("name", "Khách sạn"),
                                         "start_time": "08:00",
                                         "end_time": "10:00",
-                                        "description": matching_accommodation.get("description", "Check-in và nghỉ ngơi tại khách sạn.") if matching_accommodation else "Check-in và nghỉ ngơi tại khách sạn.",
+                                        "description": description,
                                         "location": matching_accommodation.get("location", matching_accommodation.get("address", merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")))) if matching_accommodation else merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")),
                                         "rating": float(matching_accommodation.get("rating", merged_data["accommodations"][0].get("rating", 4.5))) if matching_accommodation else float(merged_data["accommodations"][0].get("rating", 4.5)),
                                         "price": float(matching_accommodation.get("price", merged_data["accommodations"][0].get("price", 850000))) if matching_accommodation else float(merged_data["accommodations"][0].get("price", 850000)),
@@ -1108,13 +1201,20 @@ class PlanModel:
                                             image_url = extract_image_url(matching_place)
                                             log.info(f"Extracted place image URL: {image_url}")
                                         
+                                        # Process description - convert to Vietnamese if in English or use existing
+                                        original_description = matching_place.get("description", "Tham quan địa điểm nổi tiếng.")
+                                        description = original_description
+                                        # If description is primarily in English, we'll note that for the LLM to translate
+                                        if self._is_primarily_english(original_description):
+                                            description = f"[TRANSLATE: {original_description}]"
+                                        
                                         default_activity = {
                                             "id": place_id,
                                             "type": "place",
                                             "name": matching_place.get("name", "Địa điểm tham quan"),
                                             "start_time": "14:00",
                                             "end_time": "16:00",
-                                            "description": matching_place.get("description", "Tham quan địa điểm nổi tiếng."),
+                                            "description": description,
                                             "address": matching_place.get("address", matching_place.get("location", "")),
                                             "categories": matching_place.get("categories", "sightseeing"),
                                             "duration": matching_place.get("duration", "2h"),
@@ -1167,13 +1267,20 @@ class PlanModel:
                                             image_url = extract_image_url(matching_restaurant)
                                             log.info(f"Extracted restaurant image URL: {image_url}")
                                         
+                                        # Process description - convert to Vietnamese if in English or use existing
+                                        original_description = matching_restaurant.get("description", "Thưởng thức ẩm thực địa phương.") if matching_restaurant else "Thưởng thức ẩm thực địa phương."
+                                        description = original_description
+                                        # If description is primarily in English, we'll note that for the LLM to translate
+                                        if self._is_primarily_english(original_description):
+                                            description = f"[TRANSLATE: {original_description}]"
+                                        
                                         default_activity = {
                                             "id": restaurant_id,
                                             "type": "restaurant",
                                             "name": matching_restaurant.get("name", "Nhà hàng"),
                                             "start_time": "19:00",
                                             "end_time": "21:00",
-                                            "description": matching_restaurant.get("description", "Thưởng thức ẩm thực địa phương."),
+                                            "description": description,
                                             "address": matching_restaurant.get("address", matching_restaurant.get("location", "")),
                                             "cuisines": matching_restaurant.get("cuisines", "Đặc sản địa phương"),
                                             "price_range": matching_restaurant.get("price_range", "100,000-300,000 VND"),
@@ -1228,6 +1335,21 @@ class PlanModel:
                 "destination": input_data.get("destination", meta.get("destination", "Unknown")),
                 "plan_by_day": []
             }
+
+    def _is_primarily_english(self, text):
+        """Helper function to determine if text is primarily in English"""
+        if not text:
+            return False
+            
+        # Simple heuristic: count English letters vs Vietnamese specific characters
+        vietnamese_chars = set('áàảãạăắằẳẵặâấầẩẫậéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵđ')
+        vietnamese_chars.update(set('ÁÀẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴĐ'))
+        
+        # Count Vietnamese characters
+        vn_count = sum(1 for c in text.lower() if c in vietnamese_chars)
+        
+        # If very few Vietnamese characters, likely English
+        return vn_count < len(text) * 0.05  # Less than 5% Vietnamese characters
 
     def get_trip_plan(merged_data, metadata=None, model_name="gpt-4o", verbose=True):
         """Get a personalized trip plan based on input parameters"""
