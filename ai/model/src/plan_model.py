@@ -247,7 +247,7 @@ class PlanModel:
             Your recommendations should be specific, authentic, and tailored to the provided data.
             Follow these guidelines:
             1. You are an expert Vietnamese travel planner specialized in creating detailed, engaging travel itineraries.
-            2. You must choose for the user the hotel first, to make sure that they can have a suitable hotel. If the next activities is far from the chosen hotel, you must choose another hotel.
+            2. You must choose for the user the hotel first, to make sure that they can have a suitable hotel. If the next activities is far from the chosen hotel, you must choose another hotel and update the hotel in the itinerary, but you should rarely change the hotel.
             3. Create detailed descriptions in Vietnamese (3-4 sentences per item)
             4. Suggest realistic timings based on location proximity
             5. Include both popular attractions and hidden gems
@@ -449,49 +449,36 @@ class PlanModel:
                         import re
                         import json
                         
-                        # Find JSON-like content (anything between curly braces)
-                        json_match = re.search(r'({[\s\S]*})', day_response)
-                        if json_match:
+                        # Find JSON-like content (anything between curly braces, including nested)
+                        json_pattern = r'\{(?:[^{}]|(?R))*\}'
+                        json_matches = re.finditer(json_pattern, day_response)
+                        
+                        # Get the longest match (likely the most complete JSON)
+                        longest_match = None
+                        max_length = 0
+                        for match in json_matches:
+                            if len(match.group(0)) > max_length:
+                                max_length = len(match.group(0))
+                                longest_match = match.group(0)
+                        
+                        if longest_match:
                             try:
-                                day_data = json.loads(json_match.group(1))
-                            except:
-                                # If extraction still fails, use a more robust approach
+                                # Try to parse the extracted JSON
+                                day_data = json.loads(longest_match)
+                            except json.JSONDecodeError:
+                                # If still invalid, try to fix common issues
                                 try:
-                                    # Try to handle truncated JSON
-                                    # Find the last complete segment in case of truncation
-                                    partial_json = json_match.group(1)
-                                    
-                                    # Try to fix common truncation issues by closing brackets
-                                    # Count open and closed braces to see if we're missing any
-                                    open_braces = partial_json.count('{')
-                                    closed_braces = partial_json.count('}')
-                                    if open_braces > closed_braces:
-                                        # Add missing closing braces
-                                        partial_json += '}' * (open_braces - closed_braces)
-                                    
-                                    # Try to parse the fixed JSON
-                                    day_data = json.loads(partial_json)
+                                    # Remove any trailing commas before closing braces
+                                    fixed_json = re.sub(r',(\s*[}\]])', r'\1', longest_match)
+                                    # Fix any unclosed quotes
+                                    fixed_json = re.sub(r'([^"])"([^"]*?)([^"])\s*[}\]]', r'\1"\2\3"\4', fixed_json)
+                                    # Try parsing again
+                                    day_data = json.loads(fixed_json)
                                 except:
-                                    # If all repair attempts fail, create basic structure
-                                    log.error(f"Could not repair truncated JSON: {partial_json[:100]}...")
+                                    log.error(f"Could not repair JSON: {longest_match[:100]}...")
                                     raise ValueError("Could not extract valid JSON after repair attempts")
                         else:
-                            # Create basic structure using available data from input
                             log.error("No JSON-like content found in response. Creating basic structure.")
-                            
-                            # Get current date for this day
-                            from datetime import datetime, timedelta
-                            if 'start_date' in merged_data and merged_data['start_date']:
-                                try:
-                                    start_date = datetime.strptime(merged_data['start_date'], "%Y-%m-%d")
-                                    current_date = start_date + timedelta(days=day_num)
-                                    current_date_str = current_date.strftime("%Y-%m-%d")
-                                except:
-                                    current_date_str = datetime.now().strftime("%Y-%m-%d")
-                            else:
-                                current_date_str = datetime.now().strftime("%Y-%m-%d")
-                                
-                            # Create a basic day structure with empty segments
                             day_data = {
                                 "date": current_date_str,
                                 "day_title": f"Ngày {day_num+1}: Khám phá",
@@ -502,7 +489,6 @@ class PlanModel:
                                 ]
                             }
                     
-                    # Ensure the day has all required segments
                     if "segments" not in day_data or not day_data["segments"]:
                         day_data["segments"] = []
                     
@@ -585,13 +571,12 @@ class PlanModel:
                                     # Process description - add tour guide style narration
                                     original_description = matching_accommodation.get("description", "")
                                     if original_description:
-                                        # Add tour guide style if not already present
-                                        if not any(phrase in original_description.lower() for phrase in ["bạn sẽ", "chúng ta sẽ", "quý khách sẽ", "bạn có thể", "hãy"]):
-                                            description = f"Tại khách sạn này, bạn sẽ được tận hưởng {original_description}"
-                                        else:
-                                            description = original_description
+                                        # Sử dụng nội dung từ original_description nhưng để model tự viết lại
+                                        # với giọng văn hướng dẫn viên du lịch
+                                        key_points = original_description[:200] if len(original_description) > 200 else original_description
+                                        description = f"Tại khách sạn tuyệt vời này, bạn sẽ được tận hưởng {key_points.split('.')[0].lower() if '.' in key_points else key_points.lower()}. Hãy nghỉ ngơi và chuẩn bị cho những trải nghiệm tuyệt vời tiếp theo!"
                                     else:
-                                        description = "Chúng tôi sẽ đưa bạn đến khách sạn thoải mái này để nghỉ ngơi và chuẩn bị cho hành trình khám phá."
+                                        description = "Chúng tôi sẽ đưa bạn đến khách sạn thoải mái này để nghỉ ngơi và chuẩn bị cho hành trình khám phá. Tại đây bạn sẽ được tận hưởng dịch vụ chu đáo và tiện nghi hiện đại."
                                     
                                     default_activity = {
                                         "id": accommodation_id,
@@ -656,13 +641,12 @@ class PlanModel:
                                         # Process description - add tour guide style narration
                                         original_description = matching_place.get("description", "")
                                         if original_description:
-                                            # Add tour guide style if not already present
-                                            if not any(phrase in original_description.lower() for phrase in ["bạn sẽ", "chúng ta sẽ", "quý khách sẽ", "bạn có thể", "hãy khám phá"]):
-                                                description = f"Tại đây, bạn sẽ được khám phá {original_description}"
-                                            else:
-                                                description = original_description
+                                            # Sử dụng nội dung từ original_description nhưng để model tự viết lại
+                                            # với giọng văn hướng dẫn viên du lịch
+                                            key_points = original_description[:200] if len(original_description) > 200 else original_description
+                                            description = f"Bạn sẽ được khám phá địa điểm tuyệt vời này, nơi {key_points.split('.')[0].lower() if '.' in key_points else key_points.lower()}. Chúng ta sẽ cùng nhau tìm hiểu về văn hóa và lịch sử độc đáo của nơi đây."
                                         else:
-                                            description = "Tham quan địa điểm nổi tiếng này, bạn sẽ được trải nghiệm vẻ đẹp đặc trưng của địa phương."
+                                            description = "Tham quan địa điểm nổi tiếng này, bạn sẽ được trải nghiệm vẻ đẹp đặc trưng của địa phương và khám phá những nét văn hóa độc đáo không thể bỏ qua."
                                         
                                         default_activity = {
                                             "id": place_id,
@@ -726,13 +710,12 @@ class PlanModel:
                                         # Process description - add tour guide style narration
                                         original_description = matching_restaurant.get("description", "")
                                         if original_description:
-                                            # Add tour guide style if not already present
-                                            if not any(phrase in original_description.lower() for phrase in ["bạn sẽ", "chúng ta sẽ", "quý khách sẽ", "bạn có thể", "hãy thưởng thức"]):
-                                                description = f"Tại nhà hàng này, bạn sẽ được thưởng thức {original_description}"
-                                            else:
-                                                description = original_description
+                                            # Sử dụng nội dung từ original_description nhưng để model tự viết lại
+                                            # với giọng văn hướng dẫn viên du lịch
+                                            key_points = original_description[:200] if len(original_description) > 200 else original_description
+                                            description = f"Hãy cùng thưởng thức bữa ăn tuyệt vời tại nhà hàng đặc biệt này, nơi {key_points.split('.')[0].lower() if '.' in key_points else key_points.lower()}. Bạn sẽ được trải nghiệm những hương vị đặc trưng của ẩm thực địa phương."
                                         else:
-                                            description = "Hãy cùng nhau thưởng thức những món ăn đặc sản địa phương tại nhà hàng nổi tiếng này."
+                                            description = "Hãy cùng nhau thưởng thức những món ăn đặc sản địa phương tại nhà hàng nổi tiếng này. Bạn sẽ được đắm mình trong hương vị đặc trưng không thể tìm thấy ở nơi nào khác."
                                         
                                         default_activity = {
                                             "id": restaurant_id,
@@ -898,15 +881,13 @@ class PlanModel:
                 # Create prompt for this specific day with simplified structure
                 day_prompt = f"""
                 Tạo chi tiết cho ngày {day_num+1} (ngày {current_date_str}) của lịch trình du lịch {merged_data.get("destination")}.
-                Hãy tạo 3 segments (morning, afternoon, evening) với các hoạt động phù hợp.
+                Hãy tạo 3 segments (morning, afternoon, evening) với CÁC hoạt động phù hợp.
                 
                 Thông tin chuyến đi:
                 Điểm đến: {merged_data.get("destination")}
                 Khách sạn: {[(acc.get("name", ""), acc.get("accommodation_id", "")) for acc in merged_data.get("accommodations", [])]}
                 Địa điểm quan tâm: {[(place.get("name", ""), place.get("place_id", "")) for place in merged_data.get("places", [])]}
                 Nhà hàng: {[(rest.get("name", ""), rest.get("restaurant_id", "")) for rest in merged_data.get("restaurants", [])]}
-                
-                Hãy sử dụng công cụ available tools nếu cần để tìm thông tin thêm.
                 
                 QUAN TRỌNG: Trả lời dưới dạng đối tượng JSON đầy đủ, có cấu trúc chính xác như sau:
                 {{
@@ -915,60 +896,162 @@ class PlanModel:
                     "segments": [
                         {{
                             "time_of_day": "morning",
-                            "activities": [{{
-                                "id": "{merged_data.get('places', [{}])[0].get('place_id', 'place_morning_day' + str(day_num+1)) if merged_data.get('places') else 'place_morning_day' + str(day_num+1)}",
-                                "type": "place",
-                                "name": "Tên địa điểm",
-                                "start_time": "08:00",
-                                "end_time": "10:00",
-                                "description": "Mô tả ngắn",
-                                "address": "Địa chỉ đầy đủ",
-                                "categories": "sightseeing",
-                                "duration": "2h",
-                                "opening_hours": "08:00-17:00",
-                                "rating": 4.5,
-                                "price": 50000,
-                                "image_url": "",
-                                "url": ""
-                            }}]
+                            "activities": [
+                                {{
+                                    "id": "{merged_data.get('places', [{}])[0].get('place_id', 'place_morning_day' + str(day_num+1)) if merged_data.get('places') else 'place_morning_day' + str(day_num+1)}",
+                                    "type": "place",
+                                    "name": "Tên địa điểm",
+                                    "start_time": "08:00",
+                                    "end_time": "10:00",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ",
+                                    "categories": "sightseeing",
+                                    "duration": "2h",
+                                    "opening_hours": "08:00-17:00",
+                                    "rating": 4.5,
+                                    "price": 50000,
+                                    "image_url": "",
+                                    "url": ""
+                                }},
+                                {{
+                                    "id": "{merged_data.get('places', [{}])[min(1, len(merged_data.get('places', []))-1)].get('place_id', 'place_morning2_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 1 else 'place_morning2_day' + str(day_num+1)}",
+                                    "type": "place",
+                                    "name": "Tên địa điểm thứ 2",
+                                    "start_time": "10:30",
+                                    "end_time": "12:00",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ",
+                                    "categories": "sightseeing",
+                                    "duration": "1h30m",
+                                    "opening_hours": "08:00-17:00",
+                                    "rating": 4.5,
+                                    "price": 50000,
+                                    "image_url": "",
+                                    "url": ""
+                                }},
+                                {{
+                                    "id": "{merged_data.get('restaurants', [{}])[min(0, len(merged_data.get('restaurants', []))-1)].get('restaurant_id', 'restaurant_morning_day' + str(day_num+1)) if merged_data.get('restaurants') else 'restaurant_morning_day' + str(day_num+1)}",
+                                    "type": "restaurant",
+                                    "name": "Ăn sáng",
+                                    "start_time": "07:00",
+                                    "end_time": "08:00",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ", 
+                                    "cuisines": "Ẩm thực địa phương",
+                                    "price_range": "50,000-100,000 VND",
+                                    "rating": 4.5,
+                                    "phone": "0123456789",
+                                    "services": ["đặt bàn", "giao hàng"],
+                                    "image_url": "",
+                                    "url": ""
+                                }}
+                            ]
                         }},
                         {{
                             "time_of_day": "afternoon",
-                            "activities": [{{
-                                "id": "{merged_data.get('places', [{}])[min(1, len(merged_data.get('places', []))-1)].get('place_id', 'place_afternoon_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 1 else merged_data.get('places', [{}])[0].get('place_id', 'place_afternoon_day' + str(day_num+1)) if merged_data.get('places') else 'place_afternoon_day' + str(day_num+1)}",
-                                "type": "place",
-                                "name": "Tên địa điểm",
-                                "start_time": "13:00",
-                                "end_time": "15:00",
-                                "description": "Mô tả ngắn",
-                                "address": "Địa chỉ đầy đủ",
-                                "categories": "sightseeing",
-                                "duration": "2h",
-                                "opening_hours": "08:00-17:00",
-                                "rating": 4.5,
-                                "price": 50000,
-                                "image_url": "",
-                                "url": ""
-                            }}]
+                            "activities": [
+                                {{
+                                    "id": "{merged_data.get('places', [{}])[min(2, len(merged_data.get('places', []))-1)].get('place_id', 'place_afternoon_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 2 else 'place_afternoon_day' + str(day_num+1)}",
+                                    "type": "place",
+                                    "name": "Tên địa điểm",
+                                    "start_time": "13:00",
+                                    "end_time": "15:00",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ",
+                                    "categories": "sightseeing",
+                                    "duration": "2h",
+                                    "opening_hours": "08:00-17:00",
+                                    "rating": 4.5,
+                                    "price": 50000,
+                                    "image_url": "",
+                                    "url": ""
+                                }},
+                                {{
+                                    "id": "{merged_data.get('places', [{}])[min(3, len(merged_data.get('places', []))-1)].get('place_id', 'place_afternoon2_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 3 else 'place_afternoon2_day' + str(day_num+1)}",
+                                    "type": "place",
+                                    "name": "Tên địa điểm thứ 2",
+                                    "start_time": "15:30",
+                                    "end_time": "17:00",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ",
+                                    "categories": "sightseeing",
+                                    "duration": "1h30m",
+                                    "opening_hours": "08:00-17:00",
+                                    "rating": 4.5,
+                                    "price": 50000,
+                                    "image_url": "",
+                                    "url": ""
+                                }},
+                                {{
+                                    "id": "{merged_data.get('restaurants', [{}])[min(1, len(merged_data.get('restaurants', []))-1)].get('restaurant_id', 'restaurant_afternoon_day' + str(day_num+1)) if len(merged_data.get('restaurants', [])) > 1 else merged_data.get('restaurants', [{}])[0].get('restaurant_id', 'restaurant_afternoon_day' + str(day_num+1)) if merged_data.get('restaurants') else 'restaurant_afternoon_day' + str(day_num+1)}",
+                                    "type": "restaurant",
+                                    "name": "Ăn trưa",
+                                    "start_time": "12:00",
+                                    "end_time": "13:00",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ", 
+                                    "cuisines": "Hải sản, Đặc sản địa phương",
+                                    "price_range": "100,000-300,000 VND",
+                                    "rating": 4.5,
+                                    "phone": "0123456789",
+                                    "services": ["đặt bàn", "giao hàng"],
+                                    "image_url": "",
+                                    "url": ""
+                                }}
+                            ]
                         }},
                         {{
                             "time_of_day": "evening",
-                            "activities": [{{
-                                "id": "{merged_data.get('restaurants', [{}])[0].get('restaurant_id', 'restaurant_evening_day' + str(day_num+1)) if merged_data.get('restaurants') else 'restaurant_evening_day' + str(day_num+1)}",
-                                "type": "restaurant",
-                                "name": "Tên nhà hàng",
-                                "start_time": "19:00",
-                                "end_time": "21:00",
-                                "description": "Mô tả ngắn",
-                                "address": "Địa chỉ đầy đủ", 
-                                "cuisines": "Hải sản, Đặc sản địa phương",
-                                "price_range": "100,000-300,000 VND",
-                                "rating": 4.5,
-                                "phone": "0123456789",
-                                "services": ["đặt bàn", "giao hàng"],
-                                "image_url": "",
-                                "url": ""
-                            }}]
+                            "activities": [
+                                {{
+                                    "id": "{merged_data.get('places', [{}])[min(4, len(merged_data.get('places', []))-1)].get('place_id', 'place_evening_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 4 else 'place_evening_day' + str(day_num+1)}",
+                                    "type": "place",
+                                    "name": "Địa điểm buổi tối",
+                                    "start_time": "18:00",
+                                    "end_time": "19:00",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ",
+                                    "categories": "sightseeing",
+                                    "duration": "1h",
+                                    "opening_hours": "08:00-21:00",
+                                    "rating": 4.5,
+                                    "price": 50000,
+                                    "image_url": "",
+                                    "url": ""
+                                }},
+                                {{
+                                    "id": "{merged_data.get('places', [{}])[min(5, len(merged_data.get('places', []))-1)].get('place_id', 'place_evening2_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 5 else 'place_evening2_day' + str(day_num+1)}",
+                                    "type": "place",
+                                    "name": "Địa điểm thứ 2 buổi tối",
+                                    "start_time": "19:30",
+                                    "end_time": "20:30",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ",
+                                    "categories": "entertainment",
+                                    "duration": "1h",
+                                    "opening_hours": "18:00-23:00",
+                                    "rating": 4.5,
+                                    "price": 50000,
+                                    "image_url": "",
+                                    "url": ""
+                                }},
+                                {{
+                                    "id": "{merged_data.get('restaurants', [{}])[min(2, len(merged_data.get('restaurants', []))-1)].get('restaurant_id', 'restaurant_evening_day' + str(day_num+1)) if len(merged_data.get('restaurants', [])) > 2 else merged_data.get('restaurants', [{}])[0].get('restaurant_id', 'restaurant_evening_day' + str(day_num+1)) if merged_data.get('restaurants') else 'restaurant_evening_day' + str(day_num+1)}",
+                                    "type": "restaurant",
+                                    "name": "Nhà hàng tối",
+                                    "start_time": "20:30",
+                                    "end_time": "22:30",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ", 
+                                    "cuisines": "Hải sản, Đặc sản địa phương",
+                                    "price_range": "100,000-300,000 VND",
+                                    "rating": 4.5,
+                                    "phone": "0123456789",
+                                    "services": ["đặt bàn", "giao hàng"],
+                                    "image_url": "",
+                                    "url": ""
+                                }}
+                            ]
                         }}
                     ]
                 }}
@@ -994,10 +1077,42 @@ class PlanModel:
                 QUAN TRỌNG:
                 - LUÔN LUÔN sử dụng ID từ dữ liệu đầu vào (accommodation_id, place_id, restaurant_id)
                 - Không tạo ID tùy ý mà phải dùng những ID đã được cung cấp trong dữ liệu
-                - Mỗi SEGMENT (morning, afternoon, evening) CÓ THỂ có NHIỀU ACTIVITIES (2-3 activities mỗi segment)
+                - Mỗi SEGMENT (morning, afternoon, evening) PHẢI có NHIỀU ACTIVITIES (2-3 activities mỗi segment)
                 - Các activities trong cùng một segment nên có mối liên hệ về địa lý (gần nhau) và thời gian (liền mạch)
-                - Nếu description có trong dữ liệu đầu vào, HÃY SỬ DỤNG description đó, và thêm giọng văn hướng dẫn viên du lịch (vd: "Bạn sẽ được...", "Chúng ta sẽ...", "Hãy cùng khám phá...")
+                - Khi viết description, HÃY TẠO RA MÔ TẢ SÁNG TẠO với giọng văn hướng dẫn viên du lịch, dựa trên thông tin từ input data (nếu có) nhưng định dạng lại và làm phong phú thêm
+                - Description nên có phong cách của hướng dẫn viên du lịch như: "Bạn sẽ được khám phá..." hoặc "Chúng ta sẽ cùng thưởng thức..."
                 - Chỉ trả về đối tượng JSON hợp lệ, không viết gì thêm.
+                """
+                
+                # Thêm adjustment cho start_time theo thời gian hiện tại
+                # Kiểm tra nếu đây là ngày đầu tiên
+                if day_num == 0:
+                    try:
+                        from datetime import datetime
+                        current_hour = datetime.now().hour
+                        adjusted_times, current_segment = self._get_appropriate_start_times(current_hour)
+                        
+                        # Nếu là buổi chiều hoặc tối, bổ sung thông tin vào prompt
+                        if current_segment in ["afternoon", "evening"]:
+                            day_prompt += f"""
+                            
+                            LƯU Ý ĐẶC BIỆT:
+                            - Hiện tại đã là buổi {current_segment}, vì vậy hãy tạo lịch trình bắt đầu từ buổi {current_segment}
+                            - Các hoạt động buổi {current_segment} nên bắt đầu sau {current_hour+1}:00
+                            - Các buổi trước đó có thể bỏ qua hoặc để trống
+                            """
+                    except Exception as e:
+                        log.warning(f"Không thể điều chỉnh thời gian bắt đầu: {e}")
+
+                # Thêm hướng dẫn cho prompt về việc tạo description
+                day_prompt += """
+                
+                HƯỚNG DẪN VỀ DESCRIPTION:
+                - HÃY TỰ VIẾT MÔ TẢ SÁNG TẠO với giọng văn hướng dẫn viên du lịch
+                - KHÔNG copy mô tả gốc, nhưng lấy ý tưởng và thông tin chính từ đó
+                - Mô tả nên có phong cách: "Bạn sẽ được...", "Chúng ta sẽ cùng...", "Hãy khám phá..."
+                - Nên tạo ra mô tả mới hoàn toàn, độ dài khoảng 2-3 câu ngắn gọn, súc tích
+                - Mô tả nên bao gồm: điểm đặc biệt của địa điểm, trải nghiệm du khách có thể có, và lý do nên ghé thăm
                 """
                 
                 try:
@@ -1014,49 +1129,37 @@ class PlanModel:
                         import re
                         import json
                         
-                        # Find JSON-like content (anything between curly braces)
-                        json_match = re.search(r'({[\s\S]*})', raw_day_response)
-                        if json_match:
+                        # Find JSON-like content (anything between curly braces, including nested)
+                        json_pattern = r'\{(?:[^{}]|(?R))*\}'
+                        json_matches = re.finditer(json_pattern, raw_day_response)
+                        
+                        # Get the longest match (likely the most complete JSON)
+                        longest_match = None
+                        max_length = 0
+                        for match in json_matches:
+                            if len(match.group(0)) > max_length:
+                                max_length = len(match.group(0))
+                                longest_match = match.group(0)
+                        
+                        if longest_match:
                             try:
-                                day_data = json.loads(json_match.group(1))
-                            except:
-                                # If extraction still fails, use a more robust approach
+                                # Try to parse the extracted JSON
+                                day_data = json.loads(longest_match)
+                            except json.JSONDecodeError:
+                                # If still invalid, try to fix common issues
                                 try:
-                                    # Try to handle truncated JSON
-                                    # Find the last complete segment in case of truncation
-                                    partial_json = json_match.group(1)
-                                    
-                                    # Try to fix common truncation issues by closing brackets
-                                    # Count open and closed braces to see if we're missing any
-                                    open_braces = partial_json.count('{')
-                                    closed_braces = partial_json.count('}')
-                                    if open_braces > closed_braces:
-                                        # Add missing closing braces
-                                        partial_json += '}' * (open_braces - closed_braces)
-                                    
-                                    # Try to parse the fixed JSON
-                                    day_data = json.loads(partial_json)
+                                    # Remove any trailing commas before closing braces
+                                    fixed_json = re.sub(r',(\s*[}\]])', r'\1', longest_match)
+                                    # Fix any unclosed quotes
+                                    fixed_json = re.sub(r'([^"])"([^"]*?)([^"])\s*[}\]]', r'\1"\2\3"\4', fixed_json)
+                                    # Try parsing again
+                                    day_data = json.loads(fixed_json)
                                 except:
-                                    # If all repair attempts fail, create basic structure
-                                    log.error(f"Could not repair truncated JSON: {partial_json[:100]}...")
+                                    log.error(f"Could not repair JSON: {longest_match[:100]}...")
                                     raise ValueError("Could not extract valid JSON after repair attempts")
                         else:
-                            # Create basic structure using available data from input
                             log.error("No JSON-like content found in response. Creating basic structure.")
-                            
-                            # Get current date for this day
-                            from datetime import datetime, timedelta
-                            if 'start_date' in merged_data and merged_data['start_date']:
-                                try:
-                                    start_date = datetime.strptime(merged_data['start_date'], "%Y-%m-%d")
-                                    current_date = start_date + timedelta(days=day_num)
-                                    current_date_str = current_date.strftime("%Y-%m-%d")
-                                except:
-                                    current_date_str = datetime.now().strftime("%Y-%m-%d")
-                            else:
-                                current_date_str = datetime.now().strftime("%Y-%m-%d")
-                                
-                            # Create a basic day structure with empty segments
+                            # Create basic structure using available data from input
                             day_data = {
                                 "date": current_date_str,
                                 "day_title": f"Ngày {day_num+1}: Khám phá",
@@ -1150,13 +1253,12 @@ class PlanModel:
                                     # Process description - add tour guide style narration
                                     original_description = matching_accommodation.get("description", "")
                                     if original_description:
-                                        # Add tour guide style if not already present
-                                        if not any(phrase in original_description.lower() for phrase in ["bạn sẽ", "chúng ta sẽ", "quý khách sẽ", "bạn có thể", "hãy"]):
-                                            description = f"Tại khách sạn này, bạn sẽ được tận hưởng {original_description}"
-                                        else:
-                                            description = original_description
+                                        # Sử dụng nội dung từ original_description nhưng để model tự viết lại
+                                        # với giọng văn hướng dẫn viên du lịch
+                                        key_points = original_description[:200] if len(original_description) > 200 else original_description
+                                        description = f"Tại khách sạn tuyệt vời này, bạn sẽ được tận hưởng {key_points.split('.')[0].lower() if '.' in key_points else key_points.lower()}. Hãy nghỉ ngơi và chuẩn bị cho những trải nghiệm tuyệt vời tiếp theo!"
                                     else:
-                                        description = "Chúng tôi sẽ đưa bạn đến khách sạn thoải mái này để nghỉ ngơi và chuẩn bị cho hành trình khám phá."
+                                        description = "Chúng tôi sẽ đưa bạn đến khách sạn thoải mái này để nghỉ ngơi và chuẩn bị cho hành trình khám phá. Tại đây bạn sẽ được tận hưởng dịch vụ chu đáo và tiện nghi hiện đại."
                                     
                                     default_activity = {
                                         "id": accommodation_id,
@@ -1221,13 +1323,12 @@ class PlanModel:
                                         # Process description - add tour guide style narration
                                         original_description = matching_place.get("description", "")
                                         if original_description:
-                                            # Add tour guide style if not already present
-                                            if not any(phrase in original_description.lower() for phrase in ["bạn sẽ", "chúng ta sẽ", "quý khách sẽ", "bạn có thể", "hãy khám phá"]):
-                                                description = f"Tại đây, bạn sẽ được khám phá {original_description}"
-                                            else:
-                                                description = original_description
+                                            # Sử dụng nội dung từ original_description nhưng để model tự viết lại
+                                            # với giọng văn hướng dẫn viên du lịch
+                                            key_points = original_description[:200] if len(original_description) > 200 else original_description
+                                            description = f"Bạn sẽ được khám phá địa điểm tuyệt vời này, nơi {key_points.split('.')[0].lower() if '.' in key_points else key_points.lower()}. Chúng ta sẽ cùng nhau tìm hiểu về văn hóa và lịch sử độc đáo của nơi đây."
                                         else:
-                                            description = "Tham quan địa điểm nổi tiếng này, bạn sẽ được trải nghiệm vẻ đẹp đặc trưng của địa phương."
+                                            description = "Tham quan địa điểm nổi tiếng này, bạn sẽ được trải nghiệm vẻ đẹp đặc trưng của địa phương và khám phá những nét văn hóa độc đáo không thể bỏ qua."
                                         
                                         default_activity = {
                                             "id": place_id,
@@ -1291,13 +1392,12 @@ class PlanModel:
                                         # Process description - add tour guide style narration
                                         original_description = matching_restaurant.get("description", "")
                                         if original_description:
-                                            # Add tour guide style if not already present
-                                            if not any(phrase in original_description.lower() for phrase in ["bạn sẽ", "chúng ta sẽ", "quý khách sẽ", "bạn có thể", "hãy thưởng thức"]):
-                                                description = f"Tại nhà hàng này, bạn sẽ được thưởng thức {original_description}"
-                                            else:
-                                                description = original_description
+                                            # Sử dụng nội dung từ original_description nhưng để model tự viết lại
+                                            # với giọng văn hướng dẫn viên du lịch
+                                            key_points = original_description[:200] if len(original_description) > 200 else original_description
+                                            description = f"Hãy cùng thưởng thức bữa ăn tuyệt vời tại nhà hàng đặc biệt này, nơi {key_points.split('.')[0].lower() if '.' in key_points else key_points.lower()}. Bạn sẽ được trải nghiệm những hương vị đặc trưng của ẩm thực địa phương."
                                         else:
-                                            description = "Hãy cùng nhau thưởng thức những món ăn đặc sản địa phương tại nhà hàng nổi tiếng này."
+                                            description = "Hãy cùng nhau thưởng thức những món ăn đặc sản địa phương tại nhà hàng nổi tiếng này. Bạn sẽ được đắm mình trong hương vị đặc trưng không thể tìm thấy ở nơi nào khác."
                                         
                                         default_activity = {
                                             "id": restaurant_id,
@@ -1427,6 +1527,86 @@ class PlanModel:
                 "error": str(e),
                 "plan": {}
             }
+
+    # Thêm hàm giúp xác định thời gian bắt đầu dựa vào thời điểm hiện tại
+    def _get_appropriate_start_times(self, current_hour=None):
+        """Xác định thời gian bắt đầu phù hợp dựa vào thời điểm hiện tại"""
+        from datetime import datetime
+        
+        if current_hour is None:
+            current_hour = datetime.now().hour
+        
+        # Định nghĩa khung giờ cho các segment
+        morning_hours = range(5, 12)   # 5:00 - 11:59
+        afternoon_hours = range(12, 18) # 12:00 - 17:59
+        evening_hours = range(18, 23)  # 18:00 - 22:59
+        
+        # Xác định segment hiện tại và các segment còn lại
+        current_segment = None
+        if current_hour in morning_hours:
+            current_segment = "morning"
+        elif current_hour in afternoon_hours:
+            current_segment = "afternoon"
+        elif current_hour in evening_hours:
+            current_segment = "evening"
+        else:  # Qua nửa đêm (23:00-4:59), chúng ta sẽ lên kế hoạch cho ngày tiếp theo
+            current_segment = "next_day"
+        
+        # Cấu trúc thời gian bắt đầu/kết thúc mặc định cho từng segment
+        segment_times = {
+            "morning": [
+                {"start_time": "08:00", "end_time": "09:30"},
+                {"start_time": "10:00", "end_time": "11:30"}
+            ],
+            "afternoon": [
+                {"start_time": "13:00", "end_time": "14:30"},
+                {"start_time": "15:00", "end_time": "16:30"}
+            ],
+            "evening": [
+                {"start_time": "18:00", "end_time": "19:30"},
+                {"start_time": "20:00", "end_time": "21:30"}
+            ]
+        }
+        
+        # Điều chỉnh thời gian bắt đầu dựa vào thời điểm hiện tại
+        adjusted_times = {}
+        
+        if current_segment == "morning":
+            # Nếu đang là buổi sáng, điều chỉnh thời gian bắt đầu cho buổi sáng
+            start_hour = max(8, current_hour + 1)  # Bắt đầu ít nhất 1 giờ sau giờ hiện tại, không sớm hơn 8:00
+            adjusted_times["morning"] = [
+                {"start_time": f"{start_hour:02d}:00", "end_time": f"{start_hour+1:02d}:30"},
+                {"start_time": f"{start_hour+2:02d}:00", "end_time": f"{start_hour+3:02d}:00"}
+            ]
+            # Giữ nguyên thời gian cho các segment khác
+            adjusted_times["afternoon"] = segment_times["afternoon"]
+            adjusted_times["evening"] = segment_times["evening"]
+            
+        elif current_segment == "afternoon":
+            # Bỏ qua buổi sáng, chỉ lên kế hoạch cho buổi chiều và tối
+            start_hour = max(13, current_hour + 1)  # Bắt đầu ít nhất 1 giờ sau giờ hiện tại
+            adjusted_times["afternoon"] = [
+                {"start_time": f"{start_hour:02d}:00", "end_time": f"{start_hour+1:02d}:30"},
+                {"start_time": f"{start_hour+2:02d}:00", "end_time": f"{start_hour+3:02d}:00"}
+            ]
+            adjusted_times["evening"] = segment_times["evening"]
+            adjusted_times["morning"] = None  # Đánh dấu buổi sáng không có kế hoạch
+            
+        elif current_segment == "evening":
+            # Bỏ qua buổi sáng và chiều, chỉ lên kế hoạch cho buổi tối
+            start_hour = max(18, current_hour + 1)  # Bắt đầu ít nhất 1 giờ sau giờ hiện tại
+            adjusted_times["evening"] = [
+                {"start_time": f"{start_hour:02d}:00", "end_time": f"{start_hour+1:02d}:30"},
+                {"start_time": f"{start_hour+2:02d}:00", "end_time": f"{min(start_hour+3, 23):02d}:00"}
+            ]
+            adjusted_times["morning"] = None  # Đánh dấu buổi sáng không có kế hoạch
+            adjusted_times["afternoon"] = None  # Đánh dấu buổi chiều không có kế hoạch
+            
+        else:  # next_day - qua nửa đêm, lên kế hoạch cho ngày mai
+            # Giữ nguyên tất cả thời gian mặc định
+            adjusted_times = segment_times
+        
+        return adjusted_times, current_segment
 
 
 # ---------------------------------------------------------------------------
