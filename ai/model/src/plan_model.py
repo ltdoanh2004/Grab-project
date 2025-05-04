@@ -451,112 +451,212 @@ class PlanModel:
                     # Check for required segments and add if missing
                     for required_segment in ["morning", "afternoon", "evening"]:
                         if required_segment not in existing_segments:
-                            # Create a basic segment with default activity
-                            default_activity = {}
-                            if required_segment == "morning" and merged_data.get("accommodations"):
-                                # Get accommodation ID first
-                                accommodation_id = merged_data["accommodations"][0].get("accommodation_id", merged_data["accommodations"][0].get("id", f"hotel_morning_day{day_num+1}"))
+                            # Define a helper function to extract image URL from various formats
+                            def extract_image_url(item):
+                                # Check if there's a direct image_url string
+                                if isinstance(item.get("image_url"), str) and item.get("image_url"):
+                                    return item.get("image_url")
                                 
-                                # Find the matching accommodation to get complete data
-                                matching_accommodation = None
-                                for acc in merged_data.get("accommodations", []):
-                                    if acc.get("accommodation_id") == accommodation_id or acc.get("id") == accommodation_id:
-                                        matching_accommodation = acc
-                                        break
+                                # Check alternative direct image fields
+                                if isinstance(item.get("imageUrl"), str) and item.get("imageUrl"):
+                                    return item.get("imageUrl")
+                                if isinstance(item.get("image"), str) and item.get("image"):
+                                    return item.get("image")
                                 
-                                # If no match found, use the first one
-                                if not matching_accommodation and merged_data.get("accommodations"):
-                                    matching_accommodation = merged_data["accommodations"][0]
+                                # Check for array-based image fields
+                                for field in ["image_url", "imageUrl", "image", "images"]:
+                                    # If the field exists and is a list/array
+                                    if isinstance(item.get(field), list) and len(item.get(field)) > 0:
+                                        first_image = item.get(field)[0]
+                                        # If the item is a string, use it directly
+                                        if isinstance(first_image, str):
+                                            return first_image
+                                        # If the item is a dict with a url field
+                                        elif isinstance(first_image, dict) and first_image.get("url"):
+                                            return first_image.get("url")
                                 
-                                default_activity = {
-                                    "id": accommodation_id,
-                                    "type": "accommodation",
-                                    "name": matching_accommodation.get("name", merged_data["accommodations"][0].get("name", "Khách sạn")) if matching_accommodation else merged_data["accommodations"][0].get("name", "Khách sạn"),
-                                    "start_time": "08:00",
-                                    "end_time": "10:00",
-                                    "description": matching_accommodation.get("description", "Check-in và nghỉ ngơi tại khách sạn.") if matching_accommodation else "Check-in và nghỉ ngơi tại khách sạn.",
-                                    "location": matching_accommodation.get("location", matching_accommodation.get("address", merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")))) if matching_accommodation else merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")),
-                                    "rating": float(matching_accommodation.get("rating", merged_data["accommodations"][0].get("rating", 4.5))) if matching_accommodation else float(merged_data["accommodations"][0].get("rating", 4.5)),
-                                    "price": float(matching_accommodation.get("price", merged_data["accommodations"][0].get("price", 850000))) if matching_accommodation else float(merged_data["accommodations"][0].get("price", 850000)),
-                                    "image_url": matching_accommodation.get("image_url", matching_accommodation.get("imageUrl", matching_accommodation.get("image", merged_data["accommodations"][0].get("image_url", merged_data["accommodations"][0].get("imageUrl", merged_data["accommodations"][0].get("image", "")))))) if matching_accommodation else merged_data["accommodations"][0].get("image_url", merged_data["accommodations"][0].get("imageUrl", merged_data["accommodations"][0].get("image", ""))),
-                                    "booking_link": matching_accommodation.get("booking_link", merged_data["accommodations"][0].get("booking_link", "")) if matching_accommodation else merged_data["accommodations"][0].get("booking_link", ""),
-                                    "room_info": matching_accommodation.get("room_info", merged_data["accommodations"][0].get("room_info", "Phòng tiêu chuẩn, 2 giường")) if matching_accommodation else merged_data["accommodations"][0].get("room_info", "Phòng tiêu chuẩn, 2 giường"),
-                                    "tax_info": matching_accommodation.get("tax_info", merged_data["accommodations"][0].get("tax_info", "Đã bao gồm thuế VAT")) if matching_accommodation else merged_data["accommodations"][0].get("tax_info", "Đã bao gồm thuế VAT"),
-                                    "elderly_friendly": matching_accommodation.get("elderly_friendly", merged_data["accommodations"][0].get("elderly_friendly", True)) if matching_accommodation else merged_data["accommodations"][0].get("elderly_friendly", True),
-                                    "url": matching_accommodation.get("url", matching_accommodation.get("link", merged_data["accommodations"][0].get("url", merged_data["accommodations"][0].get("link", "")))) if matching_accommodation else merged_data["accommodations"][0].get("url", merged_data["accommodations"][0].get("link", ""))
-                                }
-                            elif required_segment == "afternoon" and merged_data.get("places"):
-                                place_index = min(day_num, len(merged_data["places"])-1) if merged_data["places"] else 0
-                                if place_index >= 0 and merged_data["places"]:
-                                    # Get place ID first
-                                    place_id = merged_data["places"][place_index].get("place_id", merged_data["places"][place_index].get("id", f"place_afternoon_day{day_num+1}"))
+                                # Nothing found
+                                return ""
+
+                            if required_segment not in existing_segments:
+                                # Create a basic segment with default activity
+                                default_activity = {}
+                                if required_segment == "morning" and merged_data.get("accommodations"):
+                                    # Get accommodation ID first
+                                    accommodation_id = merged_data["accommodations"][0].get("accommodation_id", merged_data["accommodations"][0].get("id", f"hotel_morning_day{day_num+1}"))
                                     
-                                    # Find the matching place to get complete data
-                                    matching_place = None
-                                    for place in merged_data.get("places", []):
-                                        if place.get("place_id") == place_id or place.get("id") == place_id:
-                                            matching_place = place
+                                    # Print all accommodation IDs for debugging
+                                    log.info(f"Available accommodation IDs: {[a.get('accommodation_id', a.get('id', 'unknown')) for a in merged_data.get('accommodations', [])]}")
+                                    log.info(f"Looking for accommodation ID: {accommodation_id}")
+                                    
+                                    # Find the matching accommodation to get complete data
+                                    matching_accommodation = None
+                                    for acc in merged_data.get("accommodations", []):
+                                        # Check for exact matches first
+                                        if acc.get("accommodation_id") == accommodation_id or acc.get("id") == accommodation_id:
+                                            matching_accommodation = acc
+                                            log.info(f"Found exact match for accommodation ID: {accommodation_id}")
+                                            break
+                                        
+                                        # If the accommodation_id contains the ID (e.g., "hotel_123" contains "123")
+                                        elif accommodation_id and acc.get("accommodation_id") and accommodation_id in acc.get("accommodation_id"):
+                                            matching_accommodation = acc
+                                            log.info(f"Found partial match: {accommodation_id} in {acc.get('accommodation_id')}")
+                                            break
+                                        elif accommodation_id and acc.get("id") and accommodation_id in acc.get("id"):
+                                            matching_accommodation = acc
+                                            log.info(f"Found partial match: {accommodation_id} in {acc.get('id')}")
                                             break
                                     
-                                    # If no match found, use the one at place_index
-                                    if not matching_place:
-                                        matching_place = merged_data["places"][place_index]
+                                    # If no match found, use the first one
+                                    if not matching_accommodation and merged_data.get("accommodations"):
+                                        matching_accommodation = merged_data["accommodations"][0]
+                                        log.info(f"No match found, using first accommodation")
                                     
-                                    # Log the matched place for debugging
-                                    log.info(f"Matched place: {matching_place}")
+                                    # Log the matched accommodation for debugging
+                                    log.info(f"Matched accommodation: {matching_accommodation}")
                                     
-                                    default_activity = {
-                                        "id": place_id,
-                                        "type": "place",
-                                        "name": matching_place.get("name", "Địa điểm tham quan"),
-                                        "start_time": "14:00",
-                                        "end_time": "16:00",
-                                        "description": matching_place.get("description", "Tham quan địa điểm nổi tiếng."),
-                                        "address": matching_place.get("address", matching_place.get("location", "")),
-                                        "categories": matching_place.get("categories", "sightseeing"),
-                                        "duration": matching_place.get("duration", "2h"),
-                                        "opening_hours": matching_place.get("opening_hours", "08:00-17:00"),
-                                        "rating": float(matching_place.get("rating", 4.0)),
-                                        "price": float(matching_place.get("price", 50000)) if matching_place.get("price") else "",
-                                        "image_url": matching_place.get("image_url", matching_place.get("imageUrl", matching_place.get("image", ""))),
-                                        "url": matching_place.get("url", matching_place.get("link", ""))
-                                    }
-                            elif required_segment == "evening" and merged_data.get("restaurants"):
-                                rest_index = min(day_num, len(merged_data["restaurants"])-1) if merged_data["restaurants"] else 0
-                                if rest_index >= 0 and merged_data["restaurants"]:
-                                    # Get restaurant ID first
-                                    restaurant_id = merged_data["restaurants"][rest_index].get("restaurant_id", merged_data["restaurants"][rest_index].get("id", f"restaurant_evening_day{day_num+1}"))
-                                    
-                                    # Find the matching restaurant to get complete data
-                                    matching_restaurant = None
-                                    for restaurant in merged_data.get("restaurants", []):
-                                        if restaurant.get("restaurant_id") == restaurant_id or restaurant.get("id") == restaurant_id:
-                                            matching_restaurant = restaurant
-                                            break
-                                    
-                                    # If no match found, use the one at rest_index
-                                    if not matching_restaurant:
-                                        matching_restaurant = merged_data["restaurants"][rest_index]
-                                    
-                                    # Log the matched restaurant for debugging
-                                    log.info(f"Matched restaurant: {matching_restaurant}")
+                                    # Extract image URL
+                                    image_url = ""
+                                    if matching_accommodation:
+                                        image_url = extract_image_url(matching_accommodation)
+                                        log.info(f"Extracted accommodation image URL: {image_url}")
                                     
                                     default_activity = {
-                                        "id": restaurant_id,
-                                        "type": "restaurant",
-                                        "name": matching_restaurant.get("name", "Nhà hàng"),
-                                        "start_time": "19:00",
-                                        "end_time": "21:00",
-                                        "description": matching_restaurant.get("description", "Thưởng thức ẩm thực địa phương."),
-                                        "address": matching_restaurant.get("address", matching_restaurant.get("location", "")),
-                                        "cuisines": matching_restaurant.get("cuisines", "Đặc sản địa phương"),
-                                        "price_range": matching_restaurant.get("price_range", "100,000-300,000 VND"),
-                                        "rating": float(matching_restaurant.get("rating", 4.2)),
-                                        "phone": matching_restaurant.get("phone", ""),
-                                        "services": matching_restaurant.get("services", ["đặt bàn"]),
-                                        "image_url": matching_restaurant.get("image_url", matching_restaurant.get("imageUrl", matching_restaurant.get("image", ""))),
-                                        "url": matching_restaurant.get("url", matching_restaurant.get("link", ""))
+                                        "id": accommodation_id,
+                                        "type": "accommodation",
+                                        "name": matching_accommodation.get("name", merged_data["accommodations"][0].get("name", "Khách sạn")) if matching_accommodation else merged_data["accommodations"][0].get("name", "Khách sạn"),
+                                        "start_time": "08:00",
+                                        "end_time": "10:00",
+                                        "description": matching_accommodation.get("description", "Check-in và nghỉ ngơi tại khách sạn.") if matching_accommodation else "Check-in và nghỉ ngơi tại khách sạn.",
+                                        "location": matching_accommodation.get("location", matching_accommodation.get("address", merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")))) if matching_accommodation else merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")),
+                                        "rating": float(matching_accommodation.get("rating", merged_data["accommodations"][0].get("rating", 4.5))) if matching_accommodation else float(merged_data["accommodations"][0].get("rating", 4.5)),
+                                        "price": float(matching_accommodation.get("price", merged_data["accommodations"][0].get("price", 850000))) if matching_accommodation else float(merged_data["accommodations"][0].get("price", 850000)),
+                                        "image_url": image_url,
+                                        "booking_link": matching_accommodation.get("booking_link", merged_data["accommodations"][0].get("booking_link", "")) if matching_accommodation else merged_data["accommodations"][0].get("booking_link", ""),
+                                        "room_info": matching_accommodation.get("room_info", merged_data["accommodations"][0].get("room_info", "Phòng tiêu chuẩn, 2 giường")) if matching_accommodation else merged_data["accommodations"][0].get("room_info", "Phòng tiêu chuẩn, 2 giường"),
+                                        "tax_info": matching_accommodation.get("tax_info", merged_data["accommodations"][0].get("tax_info", "Đã bao gồm thuế VAT")) if matching_accommodation else merged_data["accommodations"][0].get("tax_info", "Đã bao gồm thuế VAT"),
+                                        "elderly_friendly": matching_accommodation.get("elderly_friendly", merged_data["accommodations"][0].get("elderly_friendly", True)) if matching_accommodation else merged_data["accommodations"][0].get("elderly_friendly", True),
+                                        "url": matching_accommodation.get("url", matching_accommodation.get("link", merged_data["accommodations"][0].get("url", merged_data["accommodations"][0].get("link", "")))) if matching_accommodation else merged_data["accommodations"][0].get("url", merged_data["accommodations"][0].get("link", ""))
                                     }
+                                elif required_segment == "afternoon" and merged_data.get("places"):
+                                    place_index = min(day_num, len(merged_data["places"])-1) if merged_data["places"] else 0
+                                    if place_index >= 0 and merged_data["places"]:
+                                        # Get place ID first
+                                        place_id = merged_data["places"][place_index].get("place_id", merged_data["places"][place_index].get("id", f"place_afternoon_day{day_num+1}"))
+                                        
+                                        # Print all place IDs for debugging
+                                        log.info(f"Available place IDs: {[p.get('place_id', p.get('id', 'unknown')) for p in merged_data.get('places', [])]}")
+                                        log.info(f"Looking for place ID: {place_id}")
+                                        
+                                        # Find the matching place to get complete data
+                                        matching_place = None
+                                        for place in merged_data.get("places", []):
+                                            # Check for exact matches first
+                                            if place.get("place_id") == place_id or place.get("id") == place_id:
+                                                matching_place = place
+                                                log.info(f"Found exact match for place ID: {place_id}")
+                                                break
+                                            
+                                            # If the place_id contains the ID (e.g., "place_123" contains "123")
+                                            elif place_id and place.get("place_id") and place_id in place.get("place_id"):
+                                                matching_place = place
+                                                log.info(f"Found partial match: {place_id} in {place.get('place_id')}")
+                                                break
+                                            elif place_id and place.get("id") and place_id in place.get("id"):
+                                                matching_place = place
+                                                log.info(f"Found partial match: {place_id} in {place.get('id')}")
+                                                break
+                                        
+                                        # If no match found, use the one at place_index
+                                        if not matching_place:
+                                            matching_place = merged_data["places"][place_index]
+                                            log.info(f"No match found, using place at index {place_index}")
+                                        
+                                        # Log the matched place for debugging
+                                        log.info(f"Matched place: {matching_place}")
+                                        
+                                        # Extract image URL
+                                        image_url = ""
+                                        if matching_place:
+                                            image_url = extract_image_url(matching_place)
+                                            log.info(f"Extracted place image URL: {image_url}")
+                                        
+                                        default_activity = {
+                                            "id": place_id,
+                                            "type": "place",
+                                            "name": matching_place.get("name", "Địa điểm tham quan"),
+                                            "start_time": "14:00",
+                                            "end_time": "16:00",
+                                            "description": matching_place.get("description", "Tham quan địa điểm nổi tiếng."),
+                                            "address": matching_place.get("address", matching_place.get("location", "")),
+                                            "categories": matching_place.get("categories", "sightseeing"),
+                                            "duration": matching_place.get("duration", "2h"),
+                                            "opening_hours": matching_place.get("opening_hours", "08:00-17:00"),
+                                            "rating": float(matching_place.get("rating", 4.0)),
+                                            "price": float(matching_place.get("price", 50000)) if matching_place.get("price") else "",
+                                            "image_url": image_url,
+                                            "url": matching_place.get("url", matching_place.get("link", ""))
+                                        }
+                                elif required_segment == "evening" and merged_data.get("restaurants"):
+                                    rest_index = min(day_num, len(merged_data["restaurants"])-1) if merged_data["restaurants"] else 0
+                                    if rest_index >= 0 and merged_data["restaurants"]:
+                                        # Get restaurant ID first
+                                        restaurant_id = merged_data["restaurants"][rest_index].get("restaurant_id", merged_data["restaurants"][rest_index].get("id", f"restaurant_evening_day{day_num+1}"))
+                                        
+                                        # Print all restaurant IDs for debugging
+                                        log.info(f"Available restaurant IDs: {[r.get('restaurant_id', r.get('id', 'unknown')) for r in merged_data.get('restaurants', [])]}")
+                                        log.info(f"Looking for restaurant ID: {restaurant_id}")
+                                        
+                                        # Find the matching restaurant to get complete data
+                                        matching_restaurant = None
+                                        for restaurant in merged_data.get("restaurants", []):
+                                            # Check for exact matches first
+                                            if restaurant.get("restaurant_id") == restaurant_id or restaurant.get("id") == restaurant_id:
+                                                matching_restaurant = restaurant
+                                                log.info(f"Found exact match for restaurant ID: {restaurant_id}")
+                                                break
+                                            
+                                            # If the restaurant_id contains the ID (e.g., "restaurant_123" contains "123")
+                                            elif restaurant_id and restaurant.get("restaurant_id") and restaurant_id in restaurant.get("restaurant_id"):
+                                                matching_restaurant = restaurant
+                                                log.info(f"Found partial match: {restaurant_id} in {restaurant.get('restaurant_id')}")
+                                                break
+                                            elif restaurant_id and restaurant.get("id") and restaurant_id in restaurant.get("id"):
+                                                matching_restaurant = restaurant
+                                                log.info(f"Found partial match: {restaurant_id} in {restaurant.get('id')}")
+                                                break
+                                        
+                                        # If no match found, use the one at rest_index
+                                        if not matching_restaurant:
+                                            matching_restaurant = merged_data["restaurants"][rest_index]
+                                            log.info(f"No match found, using restaurant at index {rest_index}")
+                                        
+                                        # Log the matched restaurant for debugging
+                                        log.info(f"Matched restaurant: {matching_restaurant}")
+                                        
+                                        # Extract image URL
+                                        image_url = ""
+                                        if matching_restaurant:
+                                            image_url = extract_image_url(matching_restaurant)
+                                            log.info(f"Extracted restaurant image URL: {image_url}")
+                                        
+                                        default_activity = {
+                                            "id": restaurant_id,
+                                            "type": "restaurant",
+                                            "name": matching_restaurant.get("name", "Nhà hàng"),
+                                            "start_time": "19:00",
+                                            "end_time": "21:00",
+                                            "description": matching_restaurant.get("description", "Thưởng thức ẩm thực địa phương."),
+                                            "address": matching_restaurant.get("address", matching_restaurant.get("location", "")),
+                                            "cuisines": matching_restaurant.get("cuisines", "Đặc sản địa phương"),
+                                            "price_range": matching_restaurant.get("price_range", "100,000-300,000 VND"),
+                                            "rating": float(matching_restaurant.get("rating", 4.2)),
+                                            "phone": matching_restaurant.get("phone", ""),
+                                            "services": matching_restaurant.get("services", ["đặt bàn"]),
+                                            "image_url": image_url,
+                                            "url": matching_restaurant.get("url", matching_restaurant.get("link", ""))
+                                        }
                             
                             # Only add if we have a valid default activity
                             if default_activity:
@@ -877,112 +977,212 @@ class PlanModel:
                     # Check for required segments and add if missing
                     for required_segment in ["morning", "afternoon", "evening"]:
                         if required_segment not in existing_segments:
-                            # Create a basic segment with default activity
-                            default_activity = {}
-                            if required_segment == "morning" and merged_data.get("accommodations"):
-                                # Get accommodation ID first
-                                accommodation_id = merged_data["accommodations"][0].get("accommodation_id", merged_data["accommodations"][0].get("id", f"hotel_morning_day{day_num+1}"))
+                            # Define a helper function to extract image URL from various formats
+                            def extract_image_url(item):
+                                # Check if there's a direct image_url string
+                                if isinstance(item.get("image_url"), str) and item.get("image_url"):
+                                    return item.get("image_url")
                                 
-                                # Find the matching accommodation to get complete data
-                                matching_accommodation = None
-                                for acc in merged_data.get("accommodations", []):
-                                    if acc.get("accommodation_id") == accommodation_id or acc.get("id") == accommodation_id:
-                                        matching_accommodation = acc
-                                        break
+                                # Check alternative direct image fields
+                                if isinstance(item.get("imageUrl"), str) and item.get("imageUrl"):
+                                    return item.get("imageUrl")
+                                if isinstance(item.get("image"), str) and item.get("image"):
+                                    return item.get("image")
                                 
-                                # If no match found, use the first one
-                                if not matching_accommodation and merged_data.get("accommodations"):
-                                    matching_accommodation = merged_data["accommodations"][0]
+                                # Check for array-based image fields
+                                for field in ["image_url", "imageUrl", "image", "images"]:
+                                    # If the field exists and is a list/array
+                                    if isinstance(item.get(field), list) and len(item.get(field)) > 0:
+                                        first_image = item.get(field)[0]
+                                        # If the item is a string, use it directly
+                                        if isinstance(first_image, str):
+                                            return first_image
+                                        # If the item is a dict with a url field
+                                        elif isinstance(first_image, dict) and first_image.get("url"):
+                                            return first_image.get("url")
                                 
-                                default_activity = {
-                                    "id": accommodation_id,
-                                    "type": "accommodation",
-                                    "name": matching_accommodation.get("name", merged_data["accommodations"][0].get("name", "Khách sạn")) if matching_accommodation else merged_data["accommodations"][0].get("name", "Khách sạn"),
-                                    "start_time": "08:00",
-                                    "end_time": "10:00",
-                                    "description": matching_accommodation.get("description", "Check-in và nghỉ ngơi tại khách sạn.") if matching_accommodation else "Check-in và nghỉ ngơi tại khách sạn.",
-                                    "location": matching_accommodation.get("location", matching_accommodation.get("address", merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")))) if matching_accommodation else merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")),
-                                    "rating": float(matching_accommodation.get("rating", merged_data["accommodations"][0].get("rating", 4.5))) if matching_accommodation else float(merged_data["accommodations"][0].get("rating", 4.5)),
-                                    "price": float(matching_accommodation.get("price", merged_data["accommodations"][0].get("price", 850000))) if matching_accommodation else float(merged_data["accommodations"][0].get("price", 850000)),
-                                    "image_url": matching_accommodation.get("image_url", matching_accommodation.get("imageUrl", matching_accommodation.get("image", merged_data["accommodations"][0].get("image_url", merged_data["accommodations"][0].get("imageUrl", merged_data["accommodations"][0].get("image", "")))))) if matching_accommodation else merged_data["accommodations"][0].get("image_url", merged_data["accommodations"][0].get("imageUrl", merged_data["accommodations"][0].get("image", ""))),
-                                    "booking_link": matching_accommodation.get("booking_link", merged_data["accommodations"][0].get("booking_link", "")) if matching_accommodation else merged_data["accommodations"][0].get("booking_link", ""),
-                                    "room_info": matching_accommodation.get("room_info", merged_data["accommodations"][0].get("room_info", "Phòng tiêu chuẩn, 2 giường")) if matching_accommodation else merged_data["accommodations"][0].get("room_info", "Phòng tiêu chuẩn, 2 giường"),
-                                    "tax_info": matching_accommodation.get("tax_info", merged_data["accommodations"][0].get("tax_info", "Đã bao gồm thuế VAT")) if matching_accommodation else merged_data["accommodations"][0].get("tax_info", "Đã bao gồm thuế VAT"),
-                                    "elderly_friendly": matching_accommodation.get("elderly_friendly", merged_data["accommodations"][0].get("elderly_friendly", True)) if matching_accommodation else merged_data["accommodations"][0].get("elderly_friendly", True),
-                                    "url": matching_accommodation.get("url", matching_accommodation.get("link", merged_data["accommodations"][0].get("url", merged_data["accommodations"][0].get("link", "")))) if matching_accommodation else merged_data["accommodations"][0].get("url", merged_data["accommodations"][0].get("link", ""))
-                                }
-                            elif required_segment == "afternoon" and merged_data.get("places"):
-                                place_index = min(day_num, len(merged_data["places"])-1) if merged_data["places"] else 0
-                                if place_index >= 0 and merged_data["places"]:
-                                    # Get place ID first
-                                    place_id = merged_data["places"][place_index].get("place_id", merged_data["places"][place_index].get("id", f"place_afternoon_day{day_num+1}"))
+                                # Nothing found
+                                return ""
+
+                            if required_segment not in existing_segments:
+                                # Create a basic segment with default activity
+                                default_activity = {}
+                                if required_segment == "morning" and merged_data.get("accommodations"):
+                                    # Get accommodation ID first
+                                    accommodation_id = merged_data["accommodations"][0].get("accommodation_id", merged_data["accommodations"][0].get("id", f"hotel_morning_day{day_num+1}"))
                                     
-                                    # Find the matching place to get complete data
-                                    matching_place = None
-                                    for place in merged_data.get("places", []):
-                                        if place.get("place_id") == place_id or place.get("id") == place_id:
-                                            matching_place = place
+                                    # Print all accommodation IDs for debugging
+                                    log.info(f"Available accommodation IDs: {[a.get('accommodation_id', a.get('id', 'unknown')) for a in merged_data.get('accommodations', [])]}")
+                                    log.info(f"Looking for accommodation ID: {accommodation_id}")
+                                    
+                                    # Find the matching accommodation to get complete data
+                                    matching_accommodation = None
+                                    for acc in merged_data.get("accommodations", []):
+                                        # Check for exact matches first
+                                        if acc.get("accommodation_id") == accommodation_id or acc.get("id") == accommodation_id:
+                                            matching_accommodation = acc
+                                            log.info(f"Found exact match for accommodation ID: {accommodation_id}")
+                                            break
+                                        
+                                        # If the accommodation_id contains the ID (e.g., "hotel_123" contains "123")
+                                        elif accommodation_id and acc.get("accommodation_id") and accommodation_id in acc.get("accommodation_id"):
+                                            matching_accommodation = acc
+                                            log.info(f"Found partial match: {accommodation_id} in {acc.get('accommodation_id')}")
+                                            break
+                                        elif accommodation_id and acc.get("id") and accommodation_id in acc.get("id"):
+                                            matching_accommodation = acc
+                                            log.info(f"Found partial match: {accommodation_id} in {acc.get('id')}")
                                             break
                                     
-                                    # If no match found, use the one at place_index
-                                    if not matching_place:
-                                        matching_place = merged_data["places"][place_index]
+                                    # If no match found, use the first one
+                                    if not matching_accommodation and merged_data.get("accommodations"):
+                                        matching_accommodation = merged_data["accommodations"][0]
+                                        log.info(f"No match found, using first accommodation")
                                     
-                                    # Log the matched place for debugging
-                                    log.info(f"Matched place: {matching_place}")
+                                    # Log the matched accommodation for debugging
+                                    log.info(f"Matched accommodation: {matching_accommodation}")
                                     
-                                    default_activity = {
-                                        "id": place_id,
-                                        "type": "place",
-                                        "name": matching_place.get("name", "Địa điểm tham quan"),
-                                        "start_time": "14:00",
-                                        "end_time": "16:00",
-                                        "description": matching_place.get("description", "Tham quan địa điểm nổi tiếng."),
-                                        "address": matching_place.get("address", matching_place.get("location", "")),
-                                        "categories": matching_place.get("categories", "sightseeing"),
-                                        "duration": matching_place.get("duration", "2h"),
-                                        "opening_hours": matching_place.get("opening_hours", "08:00-17:00"),
-                                        "rating": float(matching_place.get("rating", 4.0)),
-                                        "price": float(matching_place.get("price", 50000)) if matching_place.get("price") else "",
-                                        "image_url": matching_place.get("image_url", matching_place.get("imageUrl", matching_place.get("image", ""))),
-                                        "url": matching_place.get("url", matching_place.get("link", ""))
-                                    }
-                            elif required_segment == "evening" and merged_data.get("restaurants"):
-                                rest_index = min(day_num, len(merged_data["restaurants"])-1) if merged_data["restaurants"] else 0
-                                if rest_index >= 0 and merged_data["restaurants"]:
-                                    # Get restaurant ID first
-                                    restaurant_id = merged_data["restaurants"][rest_index].get("restaurant_id", merged_data["restaurants"][rest_index].get("id", f"restaurant_evening_day{day_num+1}"))
-                                    
-                                    # Find the matching restaurant to get complete data
-                                    matching_restaurant = None
-                                    for restaurant in merged_data.get("restaurants", []):
-                                        if restaurant.get("restaurant_id") == restaurant_id or restaurant.get("id") == restaurant_id:
-                                            matching_restaurant = restaurant
-                                            break
-                                    
-                                    # If no match found, use the one at rest_index
-                                    if not matching_restaurant:
-                                        matching_restaurant = merged_data["restaurants"][rest_index]
-                                    
-                                    # Log the matched restaurant for debugging
-                                    log.info(f"Matched restaurant: {matching_restaurant}")
+                                    # Extract image URL
+                                    image_url = ""
+                                    if matching_accommodation:
+                                        image_url = extract_image_url(matching_accommodation)
+                                        log.info(f"Extracted accommodation image URL: {image_url}")
                                     
                                     default_activity = {
-                                        "id": restaurant_id,
-                                        "type": "restaurant",
-                                        "name": matching_restaurant.get("name", "Nhà hàng"),
-                                        "start_time": "19:00",
-                                        "end_time": "21:00",
-                                        "description": matching_restaurant.get("description", "Thưởng thức ẩm thực địa phương."),
-                                        "address": matching_restaurant.get("address", matching_restaurant.get("location", "")),
-                                        "cuisines": matching_restaurant.get("cuisines", "Đặc sản địa phương"),
-                                        "price_range": matching_restaurant.get("price_range", "100,000-300,000 VND"),
-                                        "rating": float(matching_restaurant.get("rating", 4.2)),
-                                        "phone": matching_restaurant.get("phone", ""),
-                                        "services": matching_restaurant.get("services", ["đặt bàn"]),
-                                        "image_url": matching_restaurant.get("image_url", matching_restaurant.get("imageUrl", matching_restaurant.get("image", ""))),
-                                        "url": matching_restaurant.get("url", matching_restaurant.get("link", ""))
+                                        "id": accommodation_id,
+                                        "type": "accommodation",
+                                        "name": matching_accommodation.get("name", merged_data["accommodations"][0].get("name", "Khách sạn")) if matching_accommodation else merged_data["accommodations"][0].get("name", "Khách sạn"),
+                                        "start_time": "08:00",
+                                        "end_time": "10:00",
+                                        "description": matching_accommodation.get("description", "Check-in và nghỉ ngơi tại khách sạn.") if matching_accommodation else "Check-in và nghỉ ngơi tại khách sạn.",
+                                        "location": matching_accommodation.get("location", matching_accommodation.get("address", merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")))) if matching_accommodation else merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")),
+                                        "rating": float(matching_accommodation.get("rating", merged_data["accommodations"][0].get("rating", 4.5))) if matching_accommodation else float(merged_data["accommodations"][0].get("rating", 4.5)),
+                                        "price": float(matching_accommodation.get("price", merged_data["accommodations"][0].get("price", 850000))) if matching_accommodation else float(merged_data["accommodations"][0].get("price", 850000)),
+                                        "image_url": image_url,
+                                        "booking_link": matching_accommodation.get("booking_link", merged_data["accommodations"][0].get("booking_link", "")) if matching_accommodation else merged_data["accommodations"][0].get("booking_link", ""),
+                                        "room_info": matching_accommodation.get("room_info", merged_data["accommodations"][0].get("room_info", "Phòng tiêu chuẩn, 2 giường")) if matching_accommodation else merged_data["accommodations"][0].get("room_info", "Phòng tiêu chuẩn, 2 giường"),
+                                        "tax_info": matching_accommodation.get("tax_info", merged_data["accommodations"][0].get("tax_info", "Đã bao gồm thuế VAT")) if matching_accommodation else merged_data["accommodations"][0].get("tax_info", "Đã bao gồm thuế VAT"),
+                                        "elderly_friendly": matching_accommodation.get("elderly_friendly", merged_data["accommodations"][0].get("elderly_friendly", True)) if matching_accommodation else merged_data["accommodations"][0].get("elderly_friendly", True),
+                                        "url": matching_accommodation.get("url", matching_accommodation.get("link", merged_data["accommodations"][0].get("url", merged_data["accommodations"][0].get("link", "")))) if matching_accommodation else merged_data["accommodations"][0].get("url", merged_data["accommodations"][0].get("link", ""))
                                     }
+                                elif required_segment == "afternoon" and merged_data.get("places"):
+                                    place_index = min(day_num, len(merged_data["places"])-1) if merged_data["places"] else 0
+                                    if place_index >= 0 and merged_data["places"]:
+                                        # Get place ID first
+                                        place_id = merged_data["places"][place_index].get("place_id", merged_data["places"][place_index].get("id", f"place_afternoon_day{day_num+1}"))
+                                        
+                                        # Print all place IDs for debugging
+                                        log.info(f"Available place IDs: {[p.get('place_id', p.get('id', 'unknown')) for p in merged_data.get('places', [])]}")
+                                        log.info(f"Looking for place ID: {place_id}")
+                                        
+                                        # Find the matching place to get complete data
+                                        matching_place = None
+                                        for place in merged_data.get("places", []):
+                                            # Check for exact matches first
+                                            if place.get("place_id") == place_id or place.get("id") == place_id:
+                                                matching_place = place
+                                                log.info(f"Found exact match for place ID: {place_id}")
+                                                break
+                                            
+                                            # If the place_id contains the ID (e.g., "place_123" contains "123")
+                                            elif place_id and place.get("place_id") and place_id in place.get("place_id"):
+                                                matching_place = place
+                                                log.info(f"Found partial match: {place_id} in {place.get('place_id')}")
+                                                break
+                                            elif place_id and place.get("id") and place_id in place.get("id"):
+                                                matching_place = place
+                                                log.info(f"Found partial match: {place_id} in {place.get('id')}")
+                                                break
+                                        
+                                        # If no match found, use the one at place_index
+                                        if not matching_place:
+                                            matching_place = merged_data["places"][place_index]
+                                            log.info(f"No match found, using place at index {place_index}")
+                                        
+                                        # Log the matched place for debugging
+                                        log.info(f"Matched place: {matching_place}")
+                                        
+                                        # Extract image URL
+                                        image_url = ""
+                                        if matching_place:
+                                            image_url = extract_image_url(matching_place)
+                                            log.info(f"Extracted place image URL: {image_url}")
+                                        
+                                        default_activity = {
+                                            "id": place_id,
+                                            "type": "place",
+                                            "name": matching_place.get("name", "Địa điểm tham quan"),
+                                            "start_time": "14:00",
+                                            "end_time": "16:00",
+                                            "description": matching_place.get("description", "Tham quan địa điểm nổi tiếng."),
+                                            "address": matching_place.get("address", matching_place.get("location", "")),
+                                            "categories": matching_place.get("categories", "sightseeing"),
+                                            "duration": matching_place.get("duration", "2h"),
+                                            "opening_hours": matching_place.get("opening_hours", "08:00-17:00"),
+                                            "rating": float(matching_place.get("rating", 4.0)),
+                                            "price": float(matching_place.get("price", 50000)) if matching_place.get("price") else "",
+                                            "image_url": image_url,
+                                            "url": matching_place.get("url", matching_place.get("link", ""))
+                                        }
+                                elif required_segment == "evening" and merged_data.get("restaurants"):
+                                    rest_index = min(day_num, len(merged_data["restaurants"])-1) if merged_data["restaurants"] else 0
+                                    if rest_index >= 0 and merged_data["restaurants"]:
+                                        # Get restaurant ID first
+                                        restaurant_id = merged_data["restaurants"][rest_index].get("restaurant_id", merged_data["restaurants"][rest_index].get("id", f"restaurant_evening_day{day_num+1}"))
+                                        
+                                        # Print all restaurant IDs for debugging
+                                        log.info(f"Available restaurant IDs: {[r.get('restaurant_id', r.get('id', 'unknown')) for r in merged_data.get('restaurants', [])]}")
+                                        log.info(f"Looking for restaurant ID: {restaurant_id}")
+                                        
+                                        # Find the matching restaurant to get complete data
+                                        matching_restaurant = None
+                                        for restaurant in merged_data.get("restaurants", []):
+                                            # Check for exact matches first
+                                            if restaurant.get("restaurant_id") == restaurant_id or restaurant.get("id") == restaurant_id:
+                                                matching_restaurant = restaurant
+                                                log.info(f"Found exact match for restaurant ID: {restaurant_id}")
+                                                break
+                                            
+                                            # If the restaurant_id contains the ID (e.g., "restaurant_123" contains "123")
+                                            elif restaurant_id and restaurant.get("restaurant_id") and restaurant_id in restaurant.get("restaurant_id"):
+                                                matching_restaurant = restaurant
+                                                log.info(f"Found partial match: {restaurant_id} in {restaurant.get('restaurant_id')}")
+                                                break
+                                            elif restaurant_id and restaurant.get("id") and restaurant_id in restaurant.get("id"):
+                                                matching_restaurant = restaurant
+                                                log.info(f"Found partial match: {restaurant_id} in {restaurant.get('id')}")
+                                                break
+                                        
+                                        # If no match found, use the one at rest_index
+                                        if not matching_restaurant:
+                                            matching_restaurant = merged_data["restaurants"][rest_index]
+                                            log.info(f"No match found, using restaurant at index {rest_index}")
+                                        
+                                        # Log the matched restaurant for debugging
+                                        log.info(f"Matched restaurant: {matching_restaurant}")
+                                        
+                                        # Extract image URL
+                                        image_url = ""
+                                        if matching_restaurant:
+                                            image_url = extract_image_url(matching_restaurant)
+                                            log.info(f"Extracted restaurant image URL: {image_url}")
+                                        
+                                        default_activity = {
+                                            "id": restaurant_id,
+                                            "type": "restaurant",
+                                            "name": matching_restaurant.get("name", "Nhà hàng"),
+                                            "start_time": "19:00",
+                                            "end_time": "21:00",
+                                            "description": matching_restaurant.get("description", "Thưởng thức ẩm thực địa phương."),
+                                            "address": matching_restaurant.get("address", matching_restaurant.get("location", "")),
+                                            "cuisines": matching_restaurant.get("cuisines", "Đặc sản địa phương"),
+                                            "price_range": matching_restaurant.get("price_range", "100,000-300,000 VND"),
+                                            "rating": float(matching_restaurant.get("rating", 4.2)),
+                                            "phone": matching_restaurant.get("phone", ""),
+                                            "services": matching_restaurant.get("services", ["đặt bàn"]),
+                                            "image_url": image_url,
+                                            "url": matching_restaurant.get("url", matching_restaurant.get("link", ""))
+                                        }
                             
                             # Only add if we have a valid default activity
                             if default_activity:
