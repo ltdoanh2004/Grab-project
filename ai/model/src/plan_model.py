@@ -25,6 +25,7 @@ import os
 from datetime import date
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+import time
 
 from dotenv import load_dotenv
 from langchain.agents import Tool, initialize_agent
@@ -32,6 +33,7 @@ from langchain.chains import LLMChain
 from langchain_core.output_parsers import JsonOutputParser
 from langchain.prompts import PromptTemplate
 from langchain_openai import OpenAI
+from langchain.chat_models import ChatOpenAI
 
 # ---------------------------------------------------------------------------
 # 🔧 ENV & Logging
@@ -173,7 +175,6 @@ TOOLS: List[Tool] = [
 
 class PlanModel:
     def __init__(self, temperature: float = 0.7):
-        # Use OPEN_API_KEY since that's what's set in the environment
         self.llm = OpenAI(api_key=os.getenv("OPEN_API_KEY"), temperature=temperature)
         self.parser = json_parser  # langchain JSON parser
 
@@ -197,18 +198,14 @@ class PlanModel:
         log.info("Generating plan (no agent)…")
         
         try:
-            # Create a merged data dictionary with meta information
             merged_data = {**input_data, **meta}
             
-            # Ensure trip_name exists in the data
             if "trip_name" not in merged_data:
                 merged_data["trip_name"] = "Trip to " + merged_data.get("destination", "Unknown")
             
-            # Calculate number of days based on start and end dates
             try:
                 from datetime import datetime, timedelta
                 
-                # Set default dates if not provided
                 if not merged_data.get('start_date'):
                     start_date = datetime.now()
                     merged_data['start_date'] = start_date.strftime("%Y-%m-%d")
@@ -227,7 +224,6 @@ class PlanModel:
                     end_date = start_date
                     merged_data['end_date'] = end_date.strftime("%Y-%m-%d")
             except Exception as date_error:
-                # Default to 3 days if dates are invalid or not provided
                 log.warning(f"Date parsing error: {date_error}. Using default dates.")
                 from datetime import datetime, timedelta
                 num_days = 3
@@ -236,7 +232,6 @@ class PlanModel:
                 merged_data['start_date'] = start_date.strftime("%Y-%m-%d")
                 merged_data['end_date'] = end_date.strftime("%Y-%m-%d")
             
-            # Initialize the final plan with basic information
             final_plan = {
                 "trip_name": merged_data.get("trip_name", "Trip to " + merged_data.get("destination", "Unknown")),
                 "start_date": merged_data.get("start_date"),
@@ -282,9 +277,9 @@ class PlanModel:
                 
                 Thông tin chuyến đi:
                 Điểm đến: {merged_data.get("destination")}
-                Khách sạn: {[acc.get("name", "") for acc in merged_data.get("accommodations", [])]}
-                Địa điểm quan tâm: {[place.get("name", "") for place in merged_data.get("places", [])]}
-                Nhà hàng: {[rest.get("name", "") for rest in merged_data.get("restaurants", [])]}
+                Khách sạn: {[(acc.get("name", ""), acc.get("accommodation_id", "")) for acc in merged_data.get("accommodations", [])]}
+                Địa điểm quan tâm: {[(place.get("name", ""), place.get("place_id", "")) for place in merged_data.get("places", [])]}
+                Nhà hàng: {[(rest.get("name", ""), rest.get("restaurant_id", "")) for rest in merged_data.get("restaurants", [])]}
                 
                 QUAN TRỌNG: Trả lời dưới dạng đối tượng JSON đầy đủ, có cấu trúc chính xác như sau:
                 {{
@@ -294,15 +289,18 @@ class PlanModel:
                         {{
                             "time_of_day": "morning",
                             "activities": [{{
-                                "id": "morning1",
+                                "id": "{merged_data.get('places', [{}])[0].get('place_id', 'place_morning_day' + str(day_num+1)) if merged_data.get('places') else 'place_morning_day' + str(day_num+1)}",
                                 "type": "place",
                                 "name": "Tên địa điểm",
                                 "start_time": "08:00",
                                 "end_time": "10:00",
                                 "description": "Mô tả ngắn",
-                                "location": "Địa chỉ",
+                                "address": "Địa chỉ đầy đủ",
+                                "categories": "sightseeing",
+                                "duration": "2h",
+                                "opening_hours": "08:00-17:00",
                                 "rating": 4.5,
-                                "price": "",
+                                "price": 50000,
                                 "image_url": "",
                                 "url": ""
                             }}]
@@ -310,15 +308,18 @@ class PlanModel:
                         {{
                             "time_of_day": "afternoon",
                             "activities": [{{
-                                "id": "afternoon1",
+                                "id": "{merged_data.get('places', [{}])[min(1, len(merged_data.get('places', []))-1)].get('place_id', 'place_afternoon_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 1 else merged_data.get('places', [{}])[0].get('place_id', 'place_afternoon_day' + str(day_num+1)) if merged_data.get('places') else 'place_afternoon_day' + str(day_num+1)}",
                                 "type": "place",
                                 "name": "Tên địa điểm",
                                 "start_time": "13:00",
                                 "end_time": "15:00",
                                 "description": "Mô tả ngắn",
-                                "location": "Địa chỉ",
+                                "address": "Địa chỉ đầy đủ",
+                                "categories": "sightseeing",
+                                "duration": "2h",
+                                "opening_hours": "08:00-17:00",
                                 "rating": 4.5,
-                                "price": "",
+                                "price": 50000,
                                 "image_url": "",
                                 "url": ""
                             }}]
@@ -326,15 +327,18 @@ class PlanModel:
                         {{
                             "time_of_day": "evening",
                             "activities": [{{
-                                "id": "evening1",
+                                "id": "{merged_data.get('restaurants', [{}])[0].get('restaurant_id', 'restaurant_evening_day' + str(day_num+1)) if merged_data.get('restaurants') else 'restaurant_evening_day' + str(day_num+1)}",
                                 "type": "restaurant",
                                 "name": "Tên nhà hàng",
                                 "start_time": "19:00",
                                 "end_time": "21:00",
                                 "description": "Mô tả ngắn",
-                                "location": "Địa chỉ",
+                                "address": "Địa chỉ đầy đủ", 
+                                "cuisines": "Hải sản, Đặc sản địa phương",
+                                "price_range": "100,000-300,000 VND",
                                 "rating": 4.5,
-                                "price": "",
+                                "phone": "0123456789",
+                                "services": ["đặt bàn", "giao hàng"],
                                 "image_url": "",
                                 "url": ""
                             }}]
@@ -342,7 +346,28 @@ class PlanModel:
                     ]
                 }}
                 
-                QUAN TRỌNG: Chỉ trả về đối tượng JSON hợp lệ, không viết gì thêm.
+                Hãy chuẩn hóa định dạng dữ liệu theo TYPE của activity:
+                1. Nếu type là "accommodation":
+                   - Bổ sung: "booking_link", "room_info", "tax_info", "elderly_friendly"
+                   - Đổi "address" thành "location"
+                   - Price nên là số nguyên (VND)
+                   - Sử dụng ID từ danh sách accommodation_id cung cấp (hotel_XXXXX)
+                
+                2. Nếu type là "place":
+                   - Bổ sung: "categories", "duration", "opening_hours"
+                   - Giữ nguyên "address"
+                   - Price là số nguyên nếu có (VND)
+                   - Sử dụng ID từ danh sách place_id cung cấp (place_XXXXX)
+                
+                3. Nếu type là "restaurant":
+                   - Bổ sung: "cuisines", "price_range", "phone", "services" (array)
+                   - Giữ nguyên "address"
+                   - Sử dụng ID từ danh sách restaurant_id cung cấp (restaurant_XXXXX)
+                
+                QUAN TRỌNG:
+                - LUÔN LUÔN sử dụng ID từ dữ liệu đầu vào (accommodation_id, place_id, restaurant_id)
+                - Không tạo ID tùy ý mà phải dùng những ID đã được cung cấp trong dữ liệu
+                - Chỉ trả về đối tượng JSON hợp lệ, không viết gì thêm.
                 """
                 
                 # Generate response for this day
@@ -370,10 +395,52 @@ class PlanModel:
                             try:
                                 day_data = json.loads(json_match.group(1))
                             except:
-                                # If extraction still fails, create a basic structure
-                                raise ValueError("Could not extract valid JSON")
+                                # If extraction still fails, use a more robust approach
+                                try:
+                                    # Try to handle truncated JSON
+                                    # Find the last complete segment in case of truncation
+                                    partial_json = json_match.group(1)
+                                    
+                                    # Try to fix common truncation issues by closing brackets
+                                    # Count open and closed braces to see if we're missing any
+                                    open_braces = partial_json.count('{')
+                                    closed_braces = partial_json.count('}')
+                                    if open_braces > closed_braces:
+                                        # Add missing closing braces
+                                        partial_json += '}' * (open_braces - closed_braces)
+                                    
+                                    # Try to parse the fixed JSON
+                                    day_data = json.loads(partial_json)
+                                except:
+                                    # If all repair attempts fail, create basic structure
+                                    log.error(f"Could not repair truncated JSON: {partial_json[:100]}...")
+                                    raise ValueError("Could not extract valid JSON after repair attempts")
                         else:
-                            raise ValueError("No JSON-like content found in response")
+                            # Create basic structure using available data from input
+                            log.error("No JSON-like content found in response. Creating basic structure.")
+                            
+                            # Get current date for this day
+                            from datetime import datetime, timedelta
+                            if 'start_date' in merged_data and merged_data['start_date']:
+                                try:
+                                    start_date = datetime.strptime(merged_data['start_date'], "%Y-%m-%d")
+                                    current_date = start_date + timedelta(days=day_num)
+                                    current_date_str = current_date.strftime("%Y-%m-%d")
+                                except:
+                                    current_date_str = datetime.now().strftime("%Y-%m-%d")
+                            else:
+                                current_date_str = datetime.now().strftime("%Y-%m-%d")
+                                
+                            # Create a basic day structure with empty segments
+                            day_data = {
+                                "date": current_date_str,
+                                "day_title": f"Ngày {day_num+1}: Khám phá",
+                                "segments": [
+                                    {"time_of_day": "morning", "activities": []},
+                                    {"time_of_day": "afternoon", "activities": []},
+                                    {"time_of_day": "evening", "activities": []}
+                                ]
+                            }
                     
                     # Ensure the day has all required segments
                     if "segments" not in day_data or not day_data["segments"]:
@@ -387,52 +454,108 @@ class PlanModel:
                             # Create a basic segment with default activity
                             default_activity = {}
                             if required_segment == "morning" and merged_data.get("accommodations"):
+                                # Get accommodation ID first
+                                accommodation_id = merged_data["accommodations"][0].get("accommodation_id", merged_data["accommodations"][0].get("id", f"hotel_morning_day{day_num+1}"))
+                                
+                                # Find the matching accommodation to get complete data
+                                matching_accommodation = None
+                                for acc in merged_data.get("accommodations", []):
+                                    if acc.get("accommodation_id") == accommodation_id or acc.get("id") == accommodation_id:
+                                        matching_accommodation = acc
+                                        break
+                                
+                                # If no match found, use the first one
+                                if not matching_accommodation and merged_data.get("accommodations"):
+                                    matching_accommodation = merged_data["accommodations"][0]
+                                
                                 default_activity = {
-                                    "id": merged_data["accommodations"][0].get("accommodation_id", merged_data["accommodations"][0].get("id", "hotel1")),
+                                    "id": accommodation_id,
                                     "type": "accommodation",
-                                    "name": merged_data["accommodations"][0].get("name", "Khách sạn"),
+                                    "name": matching_accommodation.get("name", merged_data["accommodations"][0].get("name", "Khách sạn")) if matching_accommodation else merged_data["accommodations"][0].get("name", "Khách sạn"),
                                     "start_time": "08:00",
                                     "end_time": "10:00",
-                                    "description": "Check-in và nghỉ ngơi tại khách sạn.",
-                                    "location": merged_data["accommodations"][0].get("location", ""),
-                                    "rating": float(merged_data["accommodations"][0].get("rating", 4.5)),
-                                    "price": str(merged_data["accommodations"][0].get("price", "")),
-                                    "image_url": "",
-                                    "url": ""
+                                    "description": matching_accommodation.get("description", "Check-in và nghỉ ngơi tại khách sạn.") if matching_accommodation else "Check-in và nghỉ ngơi tại khách sạn.",
+                                    "location": matching_accommodation.get("location", matching_accommodation.get("address", merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")))) if matching_accommodation else merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")),
+                                    "rating": float(matching_accommodation.get("rating", merged_data["accommodations"][0].get("rating", 4.5))) if matching_accommodation else float(merged_data["accommodations"][0].get("rating", 4.5)),
+                                    "price": float(matching_accommodation.get("price", merged_data["accommodations"][0].get("price", 850000))) if matching_accommodation else float(merged_data["accommodations"][0].get("price", 850000)),
+                                    "image_url": matching_accommodation.get("image_url", matching_accommodation.get("imageUrl", matching_accommodation.get("image", merged_data["accommodations"][0].get("image_url", merged_data["accommodations"][0].get("imageUrl", merged_data["accommodations"][0].get("image", "")))))) if matching_accommodation else merged_data["accommodations"][0].get("image_url", merged_data["accommodations"][0].get("imageUrl", merged_data["accommodations"][0].get("image", ""))),
+                                    "booking_link": matching_accommodation.get("booking_link", merged_data["accommodations"][0].get("booking_link", "")) if matching_accommodation else merged_data["accommodations"][0].get("booking_link", ""),
+                                    "room_info": matching_accommodation.get("room_info", merged_data["accommodations"][0].get("room_info", "Phòng tiêu chuẩn, 2 giường")) if matching_accommodation else merged_data["accommodations"][0].get("room_info", "Phòng tiêu chuẩn, 2 giường"),
+                                    "tax_info": matching_accommodation.get("tax_info", merged_data["accommodations"][0].get("tax_info", "Đã bao gồm thuế VAT")) if matching_accommodation else merged_data["accommodations"][0].get("tax_info", "Đã bao gồm thuế VAT"),
+                                    "elderly_friendly": matching_accommodation.get("elderly_friendly", merged_data["accommodations"][0].get("elderly_friendly", True)) if matching_accommodation else merged_data["accommodations"][0].get("elderly_friendly", True),
+                                    "url": matching_accommodation.get("url", matching_accommodation.get("link", merged_data["accommodations"][0].get("url", merged_data["accommodations"][0].get("link", "")))) if matching_accommodation else merged_data["accommodations"][0].get("url", merged_data["accommodations"][0].get("link", ""))
                                 }
                             elif required_segment == "afternoon" and merged_data.get("places"):
                                 place_index = min(day_num, len(merged_data["places"])-1) if merged_data["places"] else 0
                                 if place_index >= 0 and merged_data["places"]:
-                                    place = merged_data["places"][place_index]
+                                    # Get place ID first
+                                    place_id = merged_data["places"][place_index].get("place_id", merged_data["places"][place_index].get("id", f"place_afternoon_day{day_num+1}"))
+                                    
+                                    # Find the matching place to get complete data
+                                    matching_place = None
+                                    for place in merged_data.get("places", []):
+                                        if place.get("place_id") == place_id or place.get("id") == place_id:
+                                            matching_place = place
+                                            break
+                                    
+                                    # If no match found, use the one at place_index
+                                    if not matching_place:
+                                        matching_place = merged_data["places"][place_index]
+                                    
+                                    # Log the matched place for debugging
+                                    log.info(f"Matched place: {matching_place}")
+                                    
                                     default_activity = {
-                                        "id": place.get("place_id", place.get("id", f"place{day_num}")),
+                                        "id": place_id,
                                         "type": "place",
-                                        "name": place.get("name", "Địa điểm tham quan"),
+                                        "name": matching_place.get("name", "Địa điểm tham quan"),
                                         "start_time": "14:00",
                                         "end_time": "16:00",
-                                        "description": place.get("description", "Tham quan địa điểm nổi tiếng."),
-                                        "location": place.get("address", place.get("location", "")),
-                                        "rating": float(place.get("rating", 4.0)),
-                                        "price": place.get("price", ""),
-                                        "image_url": place.get("image_url", ""),
-                                        "url": place.get("url", "")
+                                        "description": matching_place.get("description", "Tham quan địa điểm nổi tiếng."),
+                                        "address": matching_place.get("address", matching_place.get("location", "")),
+                                        "categories": matching_place.get("categories", "sightseeing"),
+                                        "duration": matching_place.get("duration", "2h"),
+                                        "opening_hours": matching_place.get("opening_hours", "08:00-17:00"),
+                                        "rating": float(matching_place.get("rating", 4.0)),
+                                        "price": float(matching_place.get("price", 50000)) if matching_place.get("price") else "",
+                                        "image_url": matching_place.get("image_url", matching_place.get("imageUrl", matching_place.get("image", ""))),
+                                        "url": matching_place.get("url", matching_place.get("link", ""))
                                     }
                             elif required_segment == "evening" and merged_data.get("restaurants"):
                                 rest_index = min(day_num, len(merged_data["restaurants"])-1) if merged_data["restaurants"] else 0
                                 if rest_index >= 0 and merged_data["restaurants"]:
-                                    restaurant = merged_data["restaurants"][rest_index]
+                                    # Get restaurant ID first
+                                    restaurant_id = merged_data["restaurants"][rest_index].get("restaurant_id", merged_data["restaurants"][rest_index].get("id", f"restaurant_evening_day{day_num+1}"))
+                                    
+                                    # Find the matching restaurant to get complete data
+                                    matching_restaurant = None
+                                    for restaurant in merged_data.get("restaurants", []):
+                                        if restaurant.get("restaurant_id") == restaurant_id or restaurant.get("id") == restaurant_id:
+                                            matching_restaurant = restaurant
+                                            break
+                                    
+                                    # If no match found, use the one at rest_index
+                                    if not matching_restaurant:
+                                        matching_restaurant = merged_data["restaurants"][rest_index]
+                                    
+                                    # Log the matched restaurant for debugging
+                                    log.info(f"Matched restaurant: {matching_restaurant}")
+                                    
                                     default_activity = {
-                                        "id": restaurant.get("restaurant_id", restaurant.get("id", f"rest{day_num}")),
+                                        "id": restaurant_id,
                                         "type": "restaurant",
-                                        "name": restaurant.get("name", "Nhà hàng"),
+                                        "name": matching_restaurant.get("name", "Nhà hàng"),
                                         "start_time": "19:00",
                                         "end_time": "21:00",
-                                        "description": restaurant.get("description", "Thưởng thức ẩm thực địa phương."),
-                                        "location": restaurant.get("address", restaurant.get("location", "")),
-                                        "rating": float(restaurant.get("rating", 4.2)),
-                                        "price": "",
-                                        "image_url": "",
-                                        "url": ""
+                                        "description": matching_restaurant.get("description", "Thưởng thức ẩm thực địa phương."),
+                                        "address": matching_restaurant.get("address", matching_restaurant.get("location", "")),
+                                        "cuisines": matching_restaurant.get("cuisines", "Đặc sản địa phương"),
+                                        "price_range": matching_restaurant.get("price_range", "100,000-300,000 VND"),
+                                        "rating": float(matching_restaurant.get("rating", 4.2)),
+                                        "phone": matching_restaurant.get("phone", ""),
+                                        "services": matching_restaurant.get("services", ["đặt bàn"]),
+                                        "image_url": matching_restaurant.get("image_url", matching_restaurant.get("imageUrl", matching_restaurant.get("image", ""))),
+                                        "url": matching_restaurant.get("url", matching_restaurant.get("link", ""))
                                     }
                             
                             # Only add if we have a valid default activity
@@ -583,9 +706,9 @@ class PlanModel:
                 
                 Thông tin chuyến đi:
                 Điểm đến: {merged_data.get("destination")}
-                Khách sạn: {[acc.get("name", "") for acc in merged_data.get("accommodations", [])]}
-                Địa điểm quan tâm: {[place.get("name", "") for place in merged_data.get("places", [])]}
-                Nhà hàng: {[rest.get("name", "") for rest in merged_data.get("restaurants", [])]}
+                Khách sạn: {[(acc.get("name", ""), acc.get("accommodation_id", "")) for acc in merged_data.get("accommodations", [])]}
+                Địa điểm quan tâm: {[(place.get("name", ""), place.get("place_id", "")) for place in merged_data.get("places", [])]}
+                Nhà hàng: {[(rest.get("name", ""), rest.get("restaurant_id", "")) for rest in merged_data.get("restaurants", [])]}
                 
                 Hãy sử dụng công cụ available tools nếu cần để tìm thông tin thêm.
                 
@@ -597,15 +720,18 @@ class PlanModel:
                         {{
                             "time_of_day": "morning",
                             "activities": [{{
-                                "id": "morning1",
+                                "id": "{merged_data.get('places', [{}])[0].get('place_id', 'place_morning_day' + str(day_num+1)) if merged_data.get('places') else 'place_morning_day' + str(day_num+1)}",
                                 "type": "place",
                                 "name": "Tên địa điểm",
                                 "start_time": "08:00",
                                 "end_time": "10:00",
                                 "description": "Mô tả ngắn",
-                                "location": "Địa chỉ",
+                                "address": "Địa chỉ đầy đủ",
+                                "categories": "sightseeing",
+                                "duration": "2h",
+                                "opening_hours": "08:00-17:00",
                                 "rating": 4.5,
-                                "price": "",
+                                "price": 50000,
                                 "image_url": "",
                                 "url": ""
                             }}]
@@ -613,15 +739,18 @@ class PlanModel:
                         {{
                             "time_of_day": "afternoon",
                             "activities": [{{
-                                "id": "afternoon1",
+                                "id": "{merged_data.get('places', [{}])[min(1, len(merged_data.get('places', []))-1)].get('place_id', 'place_afternoon_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 1 else merged_data.get('places', [{}])[0].get('place_id', 'place_afternoon_day' + str(day_num+1)) if merged_data.get('places') else 'place_afternoon_day' + str(day_num+1)}",
                                 "type": "place",
                                 "name": "Tên địa điểm",
                                 "start_time": "13:00",
                                 "end_time": "15:00",
                                 "description": "Mô tả ngắn",
-                                "location": "Địa chỉ",
+                                "address": "Địa chỉ đầy đủ",
+                                "categories": "sightseeing",
+                                "duration": "2h",
+                                "opening_hours": "08:00-17:00",
                                 "rating": 4.5,
-                                "price": "",
+                                "price": 50000,
                                 "image_url": "",
                                 "url": ""
                             }}]
@@ -629,15 +758,18 @@ class PlanModel:
                         {{
                             "time_of_day": "evening",
                             "activities": [{{
-                                "id": "evening1",
+                                "id": "{merged_data.get('restaurants', [{}])[0].get('restaurant_id', 'restaurant_evening_day' + str(day_num+1)) if merged_data.get('restaurants') else 'restaurant_evening_day' + str(day_num+1)}",
                                 "type": "restaurant",
                                 "name": "Tên nhà hàng",
                                 "start_time": "19:00",
                                 "end_time": "21:00",
                                 "description": "Mô tả ngắn",
-                                "location": "Địa chỉ",
+                                "address": "Địa chỉ đầy đủ", 
+                                "cuisines": "Hải sản, Đặc sản địa phương",
+                                "price_range": "100,000-300,000 VND",
                                 "rating": 4.5,
-                                "price": "",
+                                "phone": "0123456789",
+                                "services": ["đặt bàn", "giao hàng"],
                                 "image_url": "",
                                 "url": ""
                             }}]
@@ -645,7 +777,28 @@ class PlanModel:
                     ]
                 }}
                 
-                QUAN TRỌNG: Chỉ trả về đối tượng JSON hợp lệ, không viết gì thêm.
+                Hãy chuẩn hóa định dạng dữ liệu theo TYPE của activity:
+                1. Nếu type là "accommodation":
+                   - Bổ sung: "booking_link", "room_info", "tax_info", "elderly_friendly"
+                   - Đổi "address" thành "location"
+                   - Price nên là số nguyên (VND)
+                   - Sử dụng ID từ danh sách accommodation_id cung cấp (hotel_XXXXX)
+                
+                2. Nếu type là "place":
+                   - Bổ sung: "categories", "duration", "opening_hours"
+                   - Giữ nguyên "address"
+                   - Price là số nguyên nếu có (VND)
+                   - Sử dụng ID từ danh sách place_id cung cấp (place_XXXXX)
+                
+                3. Nếu type là "restaurant":
+                   - Bổ sung: "cuisines", "price_range", "phone", "services" (array)
+                   - Giữ nguyên "address"
+                   - Sử dụng ID từ danh sách restaurant_id cung cấp (restaurant_XXXXX)
+                
+                QUAN TRỌNG:
+                - LUÔN LUÔN sử dụng ID từ dữ liệu đầu vào (accommodation_id, place_id, restaurant_id)
+                - Không tạo ID tùy ý mà phải dùng những ID đã được cung cấp trong dữ liệu
+                - Chỉ trả về đối tượng JSON hợp lệ, không viết gì thêm.
                 """
                 
                 try:
@@ -668,10 +821,52 @@ class PlanModel:
                             try:
                                 day_data = json.loads(json_match.group(1))
                             except:
-                                # If extraction still fails, create a basic structure
-                                raise ValueError("Could not extract valid JSON")
+                                # If extraction still fails, use a more robust approach
+                                try:
+                                    # Try to handle truncated JSON
+                                    # Find the last complete segment in case of truncation
+                                    partial_json = json_match.group(1)
+                                    
+                                    # Try to fix common truncation issues by closing brackets
+                                    # Count open and closed braces to see if we're missing any
+                                    open_braces = partial_json.count('{')
+                                    closed_braces = partial_json.count('}')
+                                    if open_braces > closed_braces:
+                                        # Add missing closing braces
+                                        partial_json += '}' * (open_braces - closed_braces)
+                                    
+                                    # Try to parse the fixed JSON
+                                    day_data = json.loads(partial_json)
+                                except:
+                                    # If all repair attempts fail, create basic structure
+                                    log.error(f"Could not repair truncated JSON: {partial_json[:100]}...")
+                                    raise ValueError("Could not extract valid JSON after repair attempts")
                         else:
-                            raise ValueError("No JSON-like content found in response")
+                            # Create basic structure using available data from input
+                            log.error("No JSON-like content found in response. Creating basic structure.")
+                            
+                            # Get current date for this day
+                            from datetime import datetime, timedelta
+                            if 'start_date' in merged_data and merged_data['start_date']:
+                                try:
+                                    start_date = datetime.strptime(merged_data['start_date'], "%Y-%m-%d")
+                                    current_date = start_date + timedelta(days=day_num)
+                                    current_date_str = current_date.strftime("%Y-%m-%d")
+                                except:
+                                    current_date_str = datetime.now().strftime("%Y-%m-%d")
+                            else:
+                                current_date_str = datetime.now().strftime("%Y-%m-%d")
+                                
+                            # Create a basic day structure with empty segments
+                            day_data = {
+                                "date": current_date_str,
+                                "day_title": f"Ngày {day_num+1}: Khám phá",
+                                "segments": [
+                                    {"time_of_day": "morning", "activities": []},
+                                    {"time_of_day": "afternoon", "activities": []},
+                                    {"time_of_day": "evening", "activities": []}
+                                ]
+                            }
                     
                     # Ensure the day has all required segments
                     if "segments" not in day_data or not day_data["segments"]:
@@ -685,52 +880,108 @@ class PlanModel:
                             # Create a basic segment with default activity
                             default_activity = {}
                             if required_segment == "morning" and merged_data.get("accommodations"):
+                                # Get accommodation ID first
+                                accommodation_id = merged_data["accommodations"][0].get("accommodation_id", merged_data["accommodations"][0].get("id", f"hotel_morning_day{day_num+1}"))
+                                
+                                # Find the matching accommodation to get complete data
+                                matching_accommodation = None
+                                for acc in merged_data.get("accommodations", []):
+                                    if acc.get("accommodation_id") == accommodation_id or acc.get("id") == accommodation_id:
+                                        matching_accommodation = acc
+                                        break
+                                
+                                # If no match found, use the first one
+                                if not matching_accommodation and merged_data.get("accommodations"):
+                                    matching_accommodation = merged_data["accommodations"][0]
+                                
                                 default_activity = {
-                                    "id": merged_data["accommodations"][0].get("accommodation_id", merged_data["accommodations"][0].get("id", "hotel1")),
+                                    "id": accommodation_id,
                                     "type": "accommodation",
-                                    "name": merged_data["accommodations"][0].get("name", "Khách sạn"),
+                                    "name": matching_accommodation.get("name", merged_data["accommodations"][0].get("name", "Khách sạn")) if matching_accommodation else merged_data["accommodations"][0].get("name", "Khách sạn"),
                                     "start_time": "08:00",
                                     "end_time": "10:00",
-                                    "description": "Check-in và nghỉ ngơi tại khách sạn.",
-                                    "location": merged_data["accommodations"][0].get("location", ""),
-                                    "rating": float(merged_data["accommodations"][0].get("rating", 4.5)),
-                                    "price": str(merged_data["accommodations"][0].get("price", "")),
-                                    "image_url": "",
-                                    "url": ""
+                                    "description": matching_accommodation.get("description", "Check-in và nghỉ ngơi tại khách sạn.") if matching_accommodation else "Check-in và nghỉ ngơi tại khách sạn.",
+                                    "location": matching_accommodation.get("location", matching_accommodation.get("address", merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")))) if matching_accommodation else merged_data["accommodations"][0].get("location", merged_data["accommodations"][0].get("address", "")),
+                                    "rating": float(matching_accommodation.get("rating", merged_data["accommodations"][0].get("rating", 4.5))) if matching_accommodation else float(merged_data["accommodations"][0].get("rating", 4.5)),
+                                    "price": float(matching_accommodation.get("price", merged_data["accommodations"][0].get("price", 850000))) if matching_accommodation else float(merged_data["accommodations"][0].get("price", 850000)),
+                                    "image_url": matching_accommodation.get("image_url", matching_accommodation.get("imageUrl", matching_accommodation.get("image", merged_data["accommodations"][0].get("image_url", merged_data["accommodations"][0].get("imageUrl", merged_data["accommodations"][0].get("image", "")))))) if matching_accommodation else merged_data["accommodations"][0].get("image_url", merged_data["accommodations"][0].get("imageUrl", merged_data["accommodations"][0].get("image", ""))),
+                                    "booking_link": matching_accommodation.get("booking_link", merged_data["accommodations"][0].get("booking_link", "")) if matching_accommodation else merged_data["accommodations"][0].get("booking_link", ""),
+                                    "room_info": matching_accommodation.get("room_info", merged_data["accommodations"][0].get("room_info", "Phòng tiêu chuẩn, 2 giường")) if matching_accommodation else merged_data["accommodations"][0].get("room_info", "Phòng tiêu chuẩn, 2 giường"),
+                                    "tax_info": matching_accommodation.get("tax_info", merged_data["accommodations"][0].get("tax_info", "Đã bao gồm thuế VAT")) if matching_accommodation else merged_data["accommodations"][0].get("tax_info", "Đã bao gồm thuế VAT"),
+                                    "elderly_friendly": matching_accommodation.get("elderly_friendly", merged_data["accommodations"][0].get("elderly_friendly", True)) if matching_accommodation else merged_data["accommodations"][0].get("elderly_friendly", True),
+                                    "url": matching_accommodation.get("url", matching_accommodation.get("link", merged_data["accommodations"][0].get("url", merged_data["accommodations"][0].get("link", "")))) if matching_accommodation else merged_data["accommodations"][0].get("url", merged_data["accommodations"][0].get("link", ""))
                                 }
                             elif required_segment == "afternoon" and merged_data.get("places"):
                                 place_index = min(day_num, len(merged_data["places"])-1) if merged_data["places"] else 0
                                 if place_index >= 0 and merged_data["places"]:
-                                    place = merged_data["places"][place_index]
+                                    # Get place ID first
+                                    place_id = merged_data["places"][place_index].get("place_id", merged_data["places"][place_index].get("id", f"place_afternoon_day{day_num+1}"))
+                                    
+                                    # Find the matching place to get complete data
+                                    matching_place = None
+                                    for place in merged_data.get("places", []):
+                                        if place.get("place_id") == place_id or place.get("id") == place_id:
+                                            matching_place = place
+                                            break
+                                    
+                                    # If no match found, use the one at place_index
+                                    if not matching_place:
+                                        matching_place = merged_data["places"][place_index]
+                                    
+                                    # Log the matched place for debugging
+                                    log.info(f"Matched place: {matching_place}")
+                                    
                                     default_activity = {
-                                        "id": place.get("place_id", place.get("id", f"place{day_num}")),
+                                        "id": place_id,
                                         "type": "place",
-                                        "name": place.get("name", "Địa điểm tham quan"),
+                                        "name": matching_place.get("name", "Địa điểm tham quan"),
                                         "start_time": "14:00",
                                         "end_time": "16:00",
-                                        "description": place.get("description", "Tham quan địa điểm nổi tiếng."),
-                                        "location": place.get("address", place.get("location", "")),
-                                        "rating": float(place.get("rating", 4.0)),
-                                        "price": place.get("price", ""),
-                                        "image_url": place.get("image_url", ""),
-                                        "url": place.get("url", "")
+                                        "description": matching_place.get("description", "Tham quan địa điểm nổi tiếng."),
+                                        "address": matching_place.get("address", matching_place.get("location", "")),
+                                        "categories": matching_place.get("categories", "sightseeing"),
+                                        "duration": matching_place.get("duration", "2h"),
+                                        "opening_hours": matching_place.get("opening_hours", "08:00-17:00"),
+                                        "rating": float(matching_place.get("rating", 4.0)),
+                                        "price": float(matching_place.get("price", 50000)) if matching_place.get("price") else "",
+                                        "image_url": matching_place.get("image_url", matching_place.get("imageUrl", matching_place.get("image", ""))),
+                                        "url": matching_place.get("url", matching_place.get("link", ""))
                                     }
                             elif required_segment == "evening" and merged_data.get("restaurants"):
                                 rest_index = min(day_num, len(merged_data["restaurants"])-1) if merged_data["restaurants"] else 0
                                 if rest_index >= 0 and merged_data["restaurants"]:
-                                    restaurant = merged_data["restaurants"][rest_index]
+                                    # Get restaurant ID first
+                                    restaurant_id = merged_data["restaurants"][rest_index].get("restaurant_id", merged_data["restaurants"][rest_index].get("id", f"restaurant_evening_day{day_num+1}"))
+                                    
+                                    # Find the matching restaurant to get complete data
+                                    matching_restaurant = None
+                                    for restaurant in merged_data.get("restaurants", []):
+                                        if restaurant.get("restaurant_id") == restaurant_id or restaurant.get("id") == restaurant_id:
+                                            matching_restaurant = restaurant
+                                            break
+                                    
+                                    # If no match found, use the one at rest_index
+                                    if not matching_restaurant:
+                                        matching_restaurant = merged_data["restaurants"][rest_index]
+                                    
+                                    # Log the matched restaurant for debugging
+                                    log.info(f"Matched restaurant: {matching_restaurant}")
+                                    
                                     default_activity = {
-                                        "id": restaurant.get("restaurant_id", restaurant.get("id", f"rest{day_num}")),
+                                        "id": restaurant_id,
                                         "type": "restaurant",
-                                        "name": restaurant.get("name", "Nhà hàng"),
+                                        "name": matching_restaurant.get("name", "Nhà hàng"),
                                         "start_time": "19:00",
                                         "end_time": "21:00",
-                                        "description": restaurant.get("description", "Thưởng thức ẩm thực địa phương."),
-                                        "location": restaurant.get("address", restaurant.get("location", "")),
-                                        "rating": float(restaurant.get("rating", 4.2)),
-                                        "price": "",
-                                        "image_url": "",
-                                        "url": ""
+                                        "description": matching_restaurant.get("description", "Thưởng thức ẩm thực địa phương."),
+                                        "address": matching_restaurant.get("address", matching_restaurant.get("location", "")),
+                                        "cuisines": matching_restaurant.get("cuisines", "Đặc sản địa phương"),
+                                        "price_range": matching_restaurant.get("price_range", "100,000-300,000 VND"),
+                                        "rating": float(matching_restaurant.get("rating", 4.2)),
+                                        "phone": matching_restaurant.get("phone", ""),
+                                        "services": matching_restaurant.get("services", ["đặt bàn"]),
+                                        "image_url": matching_restaurant.get("image_url", matching_restaurant.get("imageUrl", matching_restaurant.get("image", ""))),
+                                        "url": matching_restaurant.get("url", matching_restaurant.get("link", ""))
                                     }
                             
                             # Only add if we have a valid default activity
@@ -776,6 +1027,55 @@ class PlanModel:
                 "end_date": (datetime.now() + timedelta(days=2)).strftime("%Y-%m-%d"),
                 "destination": input_data.get("destination", meta.get("destination", "Unknown")),
                 "plan_by_day": []
+            }
+
+    def get_trip_plan(merged_data, metadata=None, model_name="gpt-4o", verbose=True):
+        """Get a personalized trip plan based on input parameters"""
+        start_time = time.time()
+        
+        try:
+            # Initialize chat model
+            chat_model = ChatOpenAI(temperature=0.7, model_name=model_name)
+            
+            # Extract data from merged_data
+            destination = merged_data.get("destination", "")
+            days = merged_data.get("days", 3)
+            start_date = merged_data.get("start_date", "")
+            
+            if not start_date:
+                start_date = datetime.now().strftime("%Y-%m-%d")
+            
+            # Pass ID maps from metadata to merged_data if available
+            if metadata and "accommodation_id_map" in metadata:
+                merged_data["accommodation_id_map"] = metadata.get("accommodation_id_map", {})
+            if metadata and "place_id_map" in metadata:
+                merged_data["place_id_map"] = metadata.get("place_id_map", {})
+            if metadata and "restaurant_id_map" in metadata:
+                merged_data["restaurant_id_map"] = metadata.get("restaurant_id_map", {})
+            
+            # Create a complete trip plan
+            plan_output = get_complete_trip_plan(merged_data, days, start_date, chat_model, verbose)
+            
+            # Add metadata if provided
+            if metadata:
+                for key, value in metadata.items():
+                    if key not in plan_output.get("plan", {}):
+                        plan_output["plan"][key] = value
+            
+            end_time = time.time()
+            if verbose:
+                print(f"Trip plan generation completed in {end_time - start_time:.2f} seconds")
+            
+            return plan_output
+            
+        except Exception as e:
+            print(f"Error generating trip plan: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            return {
+                "status": "error",
+                "error": str(e),
+                "plan": {}
             }
 
 
