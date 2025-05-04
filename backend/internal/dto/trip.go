@@ -1,6 +1,8 @@
 package dto
 
 import (
+	"fmt"
+	"sort"
 	"time"
 )
 
@@ -247,5 +249,114 @@ func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripReques
 		Budget:           0,         // Fill if needed
 		TripStatus:       "planned", // Adjust if needed
 		TripDestinations: []CreateTripDestinationRequest{dest},
+	}, nil
+}
+
+func ConvertToCreateTripRequestByDate(input CreateTripRequest) (CreateTripRequestByDate, error) {
+	layoutDate := "2006-01-02"
+	layoutTime := "15:04"
+
+	startDateStr := input.StartDate.Format(layoutDate)
+	endDateStr := input.EndDate.Format(layoutDate)
+
+	var destination string
+	if len(input.TripDestinations) > 0 {
+		destination = input.TripDestinations[0].DestinationID
+	}
+
+	// Group activities by scheduled date.
+	activitiesByDate := make(map[string][]Activity)
+
+	// If there is at least one destination, gather activities from its places,
+	// accommodations, and restaurants.
+	if len(input.TripDestinations) > 0 {
+		dest := input.TripDestinations[0]
+
+		// Process places.
+		for _, p := range dest.Places {
+			if p.ScheduledDate == nil {
+				continue
+			}
+			dateStr := p.ScheduledDate.Format(layoutDate)
+			act := Activity{
+				ID:          p.PlaceID,
+				Type:        "place",
+				Description: p.Notes,
+			}
+			if p.StartTime != nil {
+				act.StartTime = p.StartTime.Format(layoutTime)
+			}
+			if p.EndTime != nil {
+				act.EndTime = p.EndTime.Format(layoutTime)
+			}
+			activitiesByDate[dateStr] = append(activitiesByDate[dateStr], act)
+		}
+
+		// Process accommodations.
+		for _, a := range dest.Accommodations {
+			if a.CheckInDate == nil {
+				continue
+			}
+			dateStr := a.CheckInDate.Format(layoutDate)
+			act := Activity{
+				ID:          a.AccommodationID,
+				Type:        "accommodation",
+				Description: a.Notes,
+				Price:       a.Cost,
+			}
+			activitiesByDate[dateStr] = append(activitiesByDate[dateStr], act)
+		}
+
+		// Process restaurants.
+		for _, r := range dest.Restaurants {
+			if r.MealDate == nil {
+				continue
+			}
+			dateStr := r.MealDate.Format(layoutDate)
+			act := Activity{
+				ID:          r.RestaurantID,
+				Type:        "restaurant",
+				Description: r.ReservationInfo,
+				Name:        r.Notes,
+			}
+			if r.StartTime != nil {
+				act.StartTime = r.StartTime.Format(layoutTime)
+			}
+			if r.EndTime != nil {
+				act.EndTime = r.EndTime.Format(layoutTime)
+			}
+			activitiesByDate[dateStr] = append(activitiesByDate[dateStr], act)
+		}
+	}
+
+	// Create a sorted list of dates.
+	var dates []string
+	for d := range activitiesByDate {
+		dates = append(dates, d)
+	}
+	sort.Strings(dates)
+
+	// Build PlanByDay from the grouped activities.
+	var planByDay []PlanByDay
+	for i, d := range dates {
+		segment := Segment{
+			TimeOfDay: "default",
+
+			Activities: activitiesByDate[d],
+		}
+		planByDay = append(planByDay, PlanByDay{
+			Date:     d,
+			DayTitle: fmt.Sprintf("Ngày %d", i+1),
+			Segments: []Segment{segment},
+		})
+	}
+
+	return CreateTripRequestByDate{
+		UserID:      input.UserID,
+		TripName:    input.TripName,
+		StartDate:   startDateStr,
+		EndDate:     endDateStr,
+		Destination: destination,
+		PlanByDay:   planByDay,
 	}, nil
 }
