@@ -109,30 +109,31 @@ type TripRestaurantDTO struct {
 	Notes             string     `json:"notes"`
 }
 
+type Service struct {
+	Name string `json:"name"`
+	URL  string `json:"url"`
+	Type int    `json:"type"`
+}
+
 type Activity struct {
-	ID              string   `json:"id"`
-	Type            string   `json:"type"` // e.g., "place", "accommodation", "restaurant"
-	Name            string   `json:"name"`
-	StartTime       string   `json:"start_time,omitempty"` // "HH:mm" format
-	EndTime         string   `json:"end_time,omitempty"`
-	Description     string   `json:"description,omitempty"`
-	Location        string   `json:"location,omitempty"`
-	Rating          float64  `json:"rating,omitempty"`
-	Price           float64  `json:"price,omitempty"`
-	ImageURL        string   `json:"image_url,omitempty"`
-	BookingLink     string   `json:"booking_link,omitempty"`
-	RoomInfo        string   `json:"room_info,omitempty"`
-	TaxInfo         string   `json:"tax_info,omitempty"`
-	ElderlyFriendly bool     `json:"elderly_friendly,omitempty"`
-	Categories      string   `json:"categories,omitempty"`
-	Duration        string   `json:"duration,omitempty"`
-	OpeningHours    string   `json:"opening_hours,omitempty"`
-	Address         string   `json:"address,omitempty"`
-	URL             string   `json:"url,omitempty"`
-	Cuisines        string   `json:"cuisines,omitempty"`
-	PriceRange      string   `json:"price_range,omitempty"`
-	Phone           string   `json:"phone,omitempty"`
-	Services        []string `json:"services,omitempty"`
+	ID           string    `json:"id"`
+	Type         string    `json:"type"` // e.g., "place", "accommodation", "restaurant"
+	Name         string    `json:"name"`
+	StartTime    string    `json:"start_time,omitempty"` // "HH:mm" format
+	EndTime      string    `json:"end_time,omitempty"`
+	Description  string    `json:"description,omitempty"`
+	Address      string    `json:"address,omitempty"`
+	Categories   string    `json:"categories,omitempty"`
+	Duration     string    `json:"duration,omitempty"`
+	OpeningHours string    `json:"opening_hours,omitempty"`
+	Rating       float64   `json:"rating,omitempty"`
+	Price        float64   `json:"price,omitempty"`
+	ImageURL     string    `json:"image_url,omitempty"`
+	URL          string    `json:"url,omitempty"`
+	Cuisines     string    `json:"cuisines,omitempty"`
+	PriceRange   string    `json:"price_range,omitempty"`
+	Phone        string    `json:"phone,omitempty"`
+	Services     []Service `json:"services,omitempty"`
 }
 
 type Segment struct {
