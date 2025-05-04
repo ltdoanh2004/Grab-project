@@ -294,15 +294,18 @@ class PlanModel:
                         {{
                             "time_of_day": "morning",
                             "activities": [{{
-                                "id": "morning1",
+                                "id": "place_morning_day{day_num+1}",
                                 "type": "place",
                                 "name": "Tên địa điểm",
                                 "start_time": "08:00",
                                 "end_time": "10:00",
                                 "description": "Mô tả ngắn",
-                                "location": "Địa chỉ",
+                                "address": "Địa chỉ đầy đủ",
+                                "categories": "sightseeing",
+                                "duration": "2h",
+                                "opening_hours": "08:00-17:00",
                                 "rating": 4.5,
-                                "price": "",
+                                "price": 50000,
                                 "image_url": "",
                                 "url": ""
                             }}]
@@ -310,15 +313,18 @@ class PlanModel:
                         {{
                             "time_of_day": "afternoon",
                             "activities": [{{
-                                "id": "afternoon1",
+                                "id": "place_afternoon_day{day_num+1}",
                                 "type": "place",
                                 "name": "Tên địa điểm",
                                 "start_time": "13:00",
                                 "end_time": "15:00",
                                 "description": "Mô tả ngắn",
-                                "location": "Địa chỉ",
+                                "address": "Địa chỉ đầy đủ",
+                                "categories": "sightseeing",
+                                "duration": "2h",
+                                "opening_hours": "08:00-17:00",
                                 "rating": 4.5,
-                                "price": "",
+                                "price": 50000,
                                 "image_url": "",
                                 "url": ""
                             }}]
@@ -326,21 +332,39 @@ class PlanModel:
                         {{
                             "time_of_day": "evening",
                             "activities": [{{
-                                "id": "evening1",
+                                "id": "restaurant_evening_day{day_num+1}",
                                 "type": "restaurant",
                                 "name": "Tên nhà hàng",
                                 "start_time": "19:00",
                                 "end_time": "21:00",
                                 "description": "Mô tả ngắn",
-                                "location": "Địa chỉ",
+                                "address": "Địa chỉ đầy đủ", 
+                                "cuisines": "Hải sản, Đặc sản địa phương",
+                                "price_range": "100,000-300,000 VND",
                                 "rating": 4.5,
-                                "price": "",
+                                "phone": "0123456789",
+                                "services": ["đặt bàn", "giao hàng"],
                                 "image_url": "",
                                 "url": ""
                             }}]
                         }}
                     ]
                 }}
+                
+                Hãy chuẩn hóa định dạng dữ liệu theo TYPE của activity:
+                1. Nếu type là "accommodation":
+                   - Bổ sung: "booking_link", "room_info", "tax_info", "elderly_friendly"
+                   - Đổi "address" thành "location"
+                   - Price nên là số nguyên (VND)
+                
+                2. Nếu type là "place":
+                   - Bổ sung: "categories", "duration", "opening_hours"
+                   - Giữ nguyên "address"
+                   - Price là số nguyên nếu có (VND)
+                
+                3. Nếu type là "restaurant":
+                   - Bổ sung: "cuisines", "price_range", "phone", "services" (array)
+                   - Giữ nguyên "address"
                 
                 QUAN TRỌNG: Chỉ trả về đối tượng JSON hợp lệ, không viết gì thêm.
                 """
@@ -388,7 +412,7 @@ class PlanModel:
                             default_activity = {}
                             if required_segment == "morning" and merged_data.get("accommodations"):
                                 default_activity = {
-                                    "id": merged_data["accommodations"][0].get("accommodation_id", merged_data["accommodations"][0].get("id", "hotel1")),
+                                    "id": merged_data["accommodations"][0].get("accommodation_id", f"hotel_morning_day{day_num+1}"),
                                     "type": "accommodation",
                                     "name": merged_data["accommodations"][0].get("name", "Khách sạn"),
                                     "start_time": "08:00",
@@ -396,24 +420,31 @@ class PlanModel:
                                     "description": "Check-in và nghỉ ngơi tại khách sạn.",
                                     "location": merged_data["accommodations"][0].get("location", ""),
                                     "rating": float(merged_data["accommodations"][0].get("rating", 4.5)),
-                                    "price": str(merged_data["accommodations"][0].get("price", "")),
-                                    "image_url": "",
-                                    "url": ""
+                                    "price": float(merged_data["accommodations"][0].get("price", 850000)),
+                                    "image_url": merged_data["accommodations"][0].get("image_url", ""),
+                                    "booking_link": merged_data["accommodations"][0].get("booking_link", ""),
+                                    "room_info": merged_data["accommodations"][0].get("room_info", "Phòng tiêu chuẩn, 2 giường"),
+                                    "tax_info": merged_data["accommodations"][0].get("tax_info", "Đã bao gồm thuế VAT"),
+                                    "elderly_friendly": merged_data["accommodations"][0].get("elderly_friendly", True),
+                                    "url": merged_data["accommodations"][0].get("url", "")
                                 }
                             elif required_segment == "afternoon" and merged_data.get("places"):
                                 place_index = min(day_num, len(merged_data["places"])-1) if merged_data["places"] else 0
                                 if place_index >= 0 and merged_data["places"]:
                                     place = merged_data["places"][place_index]
                                     default_activity = {
-                                        "id": place.get("place_id", place.get("id", f"place{day_num}")),
+                                        "id": place.get("place_id", f"place_afternoon_day{day_num+1}"),
                                         "type": "place",
                                         "name": place.get("name", "Địa điểm tham quan"),
                                         "start_time": "14:00",
                                         "end_time": "16:00",
                                         "description": place.get("description", "Tham quan địa điểm nổi tiếng."),
-                                        "location": place.get("address", place.get("location", "")),
+                                        "address": place.get("address", ""),
+                                        "categories": place.get("categories", "sightseeing"),
+                                        "duration": place.get("duration", "2h"),
+                                        "opening_hours": place.get("opening_hours", "08:00-17:00"),
                                         "rating": float(place.get("rating", 4.0)),
-                                        "price": place.get("price", ""),
+                                        "price": float(place.get("price", 50000)) if place.get("price") else "",
                                         "image_url": place.get("image_url", ""),
                                         "url": place.get("url", "")
                                     }
@@ -422,17 +453,20 @@ class PlanModel:
                                 if rest_index >= 0 and merged_data["restaurants"]:
                                     restaurant = merged_data["restaurants"][rest_index]
                                     default_activity = {
-                                        "id": restaurant.get("restaurant_id", restaurant.get("id", f"rest{day_num}")),
+                                        "id": restaurant.get("restaurant_id", f"restaurant_evening_day{day_num+1}"),
                                         "type": "restaurant",
                                         "name": restaurant.get("name", "Nhà hàng"),
                                         "start_time": "19:00",
                                         "end_time": "21:00",
                                         "description": restaurant.get("description", "Thưởng thức ẩm thực địa phương."),
-                                        "location": restaurant.get("address", restaurant.get("location", "")),
+                                        "address": restaurant.get("address", ""),
+                                        "cuisines": restaurant.get("cuisines", "Đặc sản địa phương"),
+                                        "price_range": restaurant.get("price_range", "100,000-300,000 VND"),
                                         "rating": float(restaurant.get("rating", 4.2)),
-                                        "price": "",
-                                        "image_url": "",
-                                        "url": ""
+                                        "phone": restaurant.get("phone", ""),
+                                        "services": restaurant.get("services", ["đặt bàn"]),
+                                        "image_url": restaurant.get("image_url", ""),
+                                        "url": restaurant.get("url", "")
                                     }
                             
                             # Only add if we have a valid default activity
@@ -597,15 +631,18 @@ class PlanModel:
                         {{
                             "time_of_day": "morning",
                             "activities": [{{
-                                "id": "morning1",
+                                "id": "place_morning_day{day_num+1}",
                                 "type": "place",
                                 "name": "Tên địa điểm",
                                 "start_time": "08:00",
                                 "end_time": "10:00",
                                 "description": "Mô tả ngắn",
-                                "location": "Địa chỉ",
+                                "address": "Địa chỉ đầy đủ",
+                                "categories": "sightseeing",
+                                "duration": "2h",
+                                "opening_hours": "08:00-17:00",
                                 "rating": 4.5,
-                                "price": "",
+                                "price": 50000,
                                 "image_url": "",
                                 "url": ""
                             }}]
@@ -613,15 +650,18 @@ class PlanModel:
                         {{
                             "time_of_day": "afternoon",
                             "activities": [{{
-                                "id": "afternoon1",
+                                "id": "place_afternoon_day{day_num+1}",
                                 "type": "place",
                                 "name": "Tên địa điểm",
                                 "start_time": "13:00",
                                 "end_time": "15:00",
                                 "description": "Mô tả ngắn",
-                                "location": "Địa chỉ",
+                                "address": "Địa chỉ đầy đủ",
+                                "categories": "sightseeing",
+                                "duration": "2h",
+                                "opening_hours": "08:00-17:00",
                                 "rating": 4.5,
-                                "price": "",
+                                "price": 50000,
                                 "image_url": "",
                                 "url": ""
                             }}]
@@ -629,21 +669,39 @@ class PlanModel:
                         {{
                             "time_of_day": "evening",
                             "activities": [{{
-                                "id": "evening1",
+                                "id": "restaurant_evening_day{day_num+1}",
                                 "type": "restaurant",
                                 "name": "Tên nhà hàng",
                                 "start_time": "19:00",
                                 "end_time": "21:00",
                                 "description": "Mô tả ngắn",
-                                "location": "Địa chỉ",
+                                "address": "Địa chỉ đầy đủ", 
+                                "cuisines": "Hải sản, Đặc sản địa phương",
+                                "price_range": "100,000-300,000 VND",
                                 "rating": 4.5,
-                                "price": "",
+                                "phone": "0123456789",
+                                "services": ["đặt bàn", "giao hàng"],
                                 "image_url": "",
                                 "url": ""
                             }}]
                         }}
                     ]
                 }}
+                
+                Hãy chuẩn hóa định dạng dữ liệu theo TYPE của activity:
+                1. Nếu type là "accommodation":
+                   - Bổ sung: "booking_link", "room_info", "tax_info", "elderly_friendly"
+                   - Đổi "address" thành "location"
+                   - Price nên là số nguyên (VND)
+                
+                2. Nếu type là "place":
+                   - Bổ sung: "categories", "duration", "opening_hours"
+                   - Giữ nguyên "address"
+                   - Price là số nguyên nếu có (VND)
+                
+                3. Nếu type là "restaurant":
+                   - Bổ sung: "cuisines", "price_range", "phone", "services" (array)
+                   - Giữ nguyên "address"
                 
                 QUAN TRỌNG: Chỉ trả về đối tượng JSON hợp lệ, không viết gì thêm.
                 """
@@ -686,7 +744,7 @@ class PlanModel:
                             default_activity = {}
                             if required_segment == "morning" and merged_data.get("accommodations"):
                                 default_activity = {
-                                    "id": merged_data["accommodations"][0].get("accommodation_id", merged_data["accommodations"][0].get("id", "hotel1")),
+                                    "id": merged_data["accommodations"][0].get("accommodation_id", f"hotel_morning_day{day_num+1}"),
                                     "type": "accommodation",
                                     "name": merged_data["accommodations"][0].get("name", "Khách sạn"),
                                     "start_time": "08:00",
@@ -694,24 +752,31 @@ class PlanModel:
                                     "description": "Check-in và nghỉ ngơi tại khách sạn.",
                                     "location": merged_data["accommodations"][0].get("location", ""),
                                     "rating": float(merged_data["accommodations"][0].get("rating", 4.5)),
-                                    "price": str(merged_data["accommodations"][0].get("price", "")),
-                                    "image_url": "",
-                                    "url": ""
+                                    "price": float(merged_data["accommodations"][0].get("price", 850000)),
+                                    "image_url": merged_data["accommodations"][0].get("image_url", ""),
+                                    "booking_link": merged_data["accommodations"][0].get("booking_link", ""),
+                                    "room_info": merged_data["accommodations"][0].get("room_info", "Phòng tiêu chuẩn, 2 giường"),
+                                    "tax_info": merged_data["accommodations"][0].get("tax_info", "Đã bao gồm thuế VAT"),
+                                    "elderly_friendly": merged_data["accommodations"][0].get("elderly_friendly", True),
+                                    "url": merged_data["accommodations"][0].get("url", "")
                                 }
                             elif required_segment == "afternoon" and merged_data.get("places"):
                                 place_index = min(day_num, len(merged_data["places"])-1) if merged_data["places"] else 0
                                 if place_index >= 0 and merged_data["places"]:
                                     place = merged_data["places"][place_index]
                                     default_activity = {
-                                        "id": place.get("place_id", place.get("id", f"place{day_num}")),
+                                        "id": place.get("place_id", f"place_afternoon_day{day_num+1}"),
                                         "type": "place",
                                         "name": place.get("name", "Địa điểm tham quan"),
                                         "start_time": "14:00",
                                         "end_time": "16:00",
                                         "description": place.get("description", "Tham quan địa điểm nổi tiếng."),
-                                        "location": place.get("address", place.get("location", "")),
+                                        "address": place.get("address", ""),
+                                        "categories": place.get("categories", "sightseeing"),
+                                        "duration": place.get("duration", "2h"),
+                                        "opening_hours": place.get("opening_hours", "08:00-17:00"),
                                         "rating": float(place.get("rating", 4.0)),
-                                        "price": place.get("price", ""),
+                                        "price": float(place.get("price", 50000)) if place.get("price") else "",
                                         "image_url": place.get("image_url", ""),
                                         "url": place.get("url", "")
                                     }
@@ -720,17 +785,20 @@ class PlanModel:
                                 if rest_index >= 0 and merged_data["restaurants"]:
                                     restaurant = merged_data["restaurants"][rest_index]
                                     default_activity = {
-                                        "id": restaurant.get("restaurant_id", restaurant.get("id", f"rest{day_num}")),
+                                        "id": restaurant.get("restaurant_id", f"restaurant_evening_day{day_num+1}"),
                                         "type": "restaurant",
                                         "name": restaurant.get("name", "Nhà hàng"),
                                         "start_time": "19:00",
                                         "end_time": "21:00",
                                         "description": restaurant.get("description", "Thưởng thức ẩm thực địa phương."),
-                                        "location": restaurant.get("address", restaurant.get("location", "")),
+                                        "address": restaurant.get("address", ""),
+                                        "cuisines": restaurant.get("cuisines", "Đặc sản địa phương"),
+                                        "price_range": restaurant.get("price_range", "100,000-300,000 VND"),
                                         "rating": float(restaurant.get("rating", 4.2)),
-                                        "price": "",
-                                        "image_url": "",
-                                        "url": ""
+                                        "phone": restaurant.get("phone", ""),
+                                        "services": restaurant.get("services", ["đặt bàn"]),
+                                        "image_url": restaurant.get("image_url", ""),
+                                        "url": restaurant.get("url", "")
                                     }
                             
                             # Only add if we have a valid default activity
