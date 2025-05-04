@@ -162,6 +162,18 @@ func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripReques
 	layoutDate := "2006-01-02"
 	layoutTime := "2006-01-02 15:04"
 
+	// Default to current date if input dates are empty
+	if input.StartDate == "" {
+		currentTime := time.Now()
+		input.StartDate = currentTime.Format(layoutDate)
+	}
+
+	if input.EndDate == "" {
+		// Default to 3 days from now if end date is empty
+		endDate := time.Now().AddDate(0, 0, 2)
+		input.EndDate = endDate.Format(layoutDate)
+	}
+
 	startDate, err := time.Parse(layoutDate, input.StartDate)
 	if err != nil {
 		return CreateTripRequest{}, err
@@ -181,9 +193,15 @@ func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripReques
 	}
 
 	for _, day := range input.PlanByDay {
+		// Skip days with empty dates
+		if day.Date == "" {
+			continue
+		}
+		
 		scheduledDate, err := time.Parse(layoutDate, day.Date)
 		if err != nil {
-			return CreateTripRequest{}, err
+			// Skip this day if date parsing fails instead of returning error
+			continue
 		}
 
 		for _, segment := range day.Segments {
@@ -193,18 +211,16 @@ func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripReques
 
 				if activity.StartTime != "" {
 					st, err := time.Parse(layoutTime, day.Date+" "+activity.StartTime)
-					if err != nil {
-						return CreateTripRequest{}, err
+					if err == nil { // Only set if parsing succeeds
+						startTimePtr = &st
 					}
-					startTimePtr = &st
 				}
 
 				if activity.EndTime != "" {
 					et, err := time.Parse(layoutTime, day.Date+" "+activity.EndTime)
-					if err != nil {
-						return CreateTripRequest{}, err
+					if err == nil { // Only set if parsing succeeds
+						endTimePtr = &et
 					}
-					endTimePtr = &et
 				}
 
 				switch activity.Type {

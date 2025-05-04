@@ -4,6 +4,7 @@ from typing import List, Dict, Any, Optional
 import os
 import sys
 import logging
+from datetime import datetime, timedelta
 
 # Set up logging
 logging.basicConfig(
@@ -227,11 +228,15 @@ async def get_trip_plan(request: dict):
             if "price" in acc:
                 total_cost += float(getattr(acc, "price", 0) or 0)
         
-        # Add metadata 
+        # Generate current date and end date (3 days from now)
+        current_date = datetime.now()
+        end_date = current_date + timedelta(days=2)  # 3-day trip
+        
+        # Add metadata with properly formatted dates
         meta = {
             "trip_name": f"Trip to {destination.capitalize()}",
-            "start_date": "2023-09-01",  # Default date if not provided
-            "end_date": "2023-09-03",    # Default date for a 3-day trip
+            "start_date": current_date.strftime("%Y-%m-%d"),  # Ensure valid date format
+            "end_date": end_date.strftime("%Y-%m-%d"),        # Ensure valid date format
             "user_id": "user123"
         }
         
@@ -239,6 +244,117 @@ async def get_trip_plan(request: dict):
         logger.info(f"Generating plan with destination: {destination}")
         result = model.generate_plan(input_data, **meta)
 
+        # Function to standardize activity fields based on type
+        def standardize_activity(activity):
+            activity_type = activity.get("type", "")
+            
+            # Extract original ID or use a fallback
+            original_id = activity.get("id", "")
+            
+            # Define standard fields for each type
+            standard_fields = {
+                "accommodation": {
+                    "id": original_id,  # Preserve original ID from input data
+                    "type": "accommodation",
+                    "name": activity.get("name", ""),
+                    "start_time": activity.get("start_time", ""),
+                    "end_time": activity.get("end_time", ""),
+                    "description": activity.get("description", ""),
+                    "location": activity.get("location", activity.get("address", "")),
+                    "rating": float(activity.get("rating", 4.5)),
+                    "price": float(activity.get("price", 0)) if activity.get("price") else 0,
+                    "image_url": activity.get("image_url", ""),
+                    "booking_link": activity.get("booking_link", ""),
+                    "room_info": activity.get("room_info", "Phòng tiêu chuẩn"),
+                    "tax_info": activity.get("tax_info", "Đã bao gồm thuế"),
+                    "elderly_friendly": activity.get("elderly_friendly", True),
+                    "url": activity.get("url", "")
+                },
+                "place": {
+                    "id": original_id,  # Preserve original ID from input data
+                    "type": "place",
+                    "name": activity.get("name", ""),
+                    "start_time": activity.get("start_time", ""),
+                    "end_time": activity.get("end_time", ""),
+                    "description": activity.get("description", ""),
+                    "address": activity.get("address", activity.get("location", "")),
+                    "categories": activity.get("categories", "sightseeing"),
+                    "duration": activity.get("duration", "2h"),
+                    "opening_hours": activity.get("opening_hours", "08:00-17:00"),
+                    "rating": float(activity.get("rating", 4.0)),
+                    "price": float(activity.get("price", 0)) if activity.get("price") else 0,
+                    "image_url": activity.get("image_url", ""),
+                    "url": activity.get("url", "")
+                },
+                "restaurant": {
+                    "id": original_id,  # Preserve original ID from input data
+                    "type": "restaurant",
+                    "name": activity.get("name", ""),
+                    "start_time": activity.get("start_time", ""),
+                    "end_time": activity.get("end_time", ""),
+                    "description": activity.get("description", ""),
+                    "address": activity.get("address", activity.get("location", "")),
+                    "cuisines": activity.get("cuisines", "Đặc sản địa phương"),
+                    "price_range": activity.get("price_range", "100,000-300,000 VND"),
+                    "rating": float(activity.get("rating", 4.2)),
+                    "phone": activity.get("phone", ""),
+                    "services": activity.get("services", ["đặt bàn"]),
+                    "image_url": activity.get("image_url", ""),
+                    "url": activity.get("url", "")
+                }
+            }
+            
+            # Return standardized activity based on type
+            if activity_type in standard_fields:
+                return standard_fields[activity_type]
+            
+            # Default to place type if not recognized
+            return standard_fields["place"]
+
+        # Ensure all dates are valid and non-empty
+        # Fix main trip dates
+        if not result.get("start_date") or result["start_date"] == "":
+            result["start_date"] = meta["start_date"]
+        if not result.get("end_date") or result["end_date"] == "":
+            result["end_date"] = meta["end_date"]
+            
+        # Fix dates in each day of the plan and standardize activities
+        for day_index, day in enumerate(result.get("plan_by_day", [])):
+            # If day date is empty, use a date based on the start_date plus day_index
+            if not day.get("date") or day["date"] == "":
+                day_date = current_date + timedelta(days=day_index)
+                day["date"] = day_date.strftime("%Y-%m-%d")
+                
+            # Fix and standardize activities
+            for segment in day.get("segments", []):
+                standardized_activities = []
+                
+                for activity in segment.get("activities", []):
+                    # Ensure start_time and end_time are non-empty
+                    if not activity.get("start_time") or activity["start_time"] == "":
+                        if segment["time_of_day"] == "morning":
+                            activity["start_time"] = "08:00"
+                        elif segment["time_of_day"] == "afternoon":
+                            activity["start_time"] = "13:00"
+                        elif segment["time_of_day"] == "evening":
+                            activity["start_time"] = "19:00"
+                    
+                    if not activity.get("end_time") or activity["end_time"] == "":
+                        if segment["time_of_day"] == "morning":
+                            activity["end_time"] = "10:00"
+                        elif segment["time_of_day"] == "afternoon":
+                            activity["end_time"] = "15:00"
+                        elif segment["time_of_day"] == "evening":
+                            activity["end_time"] = "21:00"
+                    
+                    # Standardize the activity based on its type
+                    standardized_activity = standardize_activity(activity)
+                    standardized_activities.append(standardized_activity)
+                
+                # Replace activities with standardized ones
+                segment["activities"] = standardized_activities
+        
+        logger.info(f"Generated plan: {result}")
         logger.info("Trip plan request processed successfully")
         return {
             "status": "success",
@@ -262,7 +378,7 @@ async def generate_trip_plan(request: SimpleTripPlanRequest):
         
         # Prepare input data
         input_data = {
-            "destination": request.destination,
+            # "destination": request.destination,
             "accommodations": request.accommodations,
             "places": request.places,
             "restaurants": request.restaurants
