@@ -426,7 +426,7 @@ class PlanModel:
                 - Không tạo ID tùy ý mà phải dùng những ID đã được cung cấp trong dữ liệu
                 - Mỗi SEGMENT (morning, afternoon, evening) CÓ THỂ có NHIỀU ACTIVITIES (2-3 activities mỗi segment)
                 - Các activities trong cùng một segment nên có mối liên hệ về địa lý (gần nhau) và thời gian (liền mạch)
-                - Nếu description có trong dữ liệu đầu vào, HÃY SỬ DỤNG description đó, nếu là tiếng Anh thì dịch sang tiếng Việt
+                - Nếu description có trong dữ liệu đầu vào, HÃY SỬ DỤNG description đó, và thêm giọng văn hướng dẫn viên du lịch (vd: "Bạn sẽ được...", "Chúng ta sẽ...", "Hãy cùng khám phá...")
                 - Chỉ trả về đối tượng JSON hợp lệ, không viết gì thêm.
                 """
                 
@@ -582,12 +582,16 @@ class PlanModel:
                                         image_url = extract_image_url(matching_accommodation)
                                         log.info(f"Extracted accommodation image URL: {image_url}")
                                     
-                                    # Process description - convert to Vietnamese if in English or use existing
-                                    original_description = matching_accommodation.get("description", "Check-in và nghỉ ngơi tại khách sạn.") if matching_accommodation else "Check-in và nghỉ ngơi tại khách sạn."
-                                    description = original_description
-                                    # If description is primarily in English, we'll note that for the LLM to translate
-                                    if self._is_primarily_english(original_description):
-                                        description = f"[TRANSLATE: {original_description}]"
+                                    # Process description - add tour guide style narration
+                                    original_description = matching_accommodation.get("description", "")
+                                    if original_description:
+                                        # Add tour guide style if not already present
+                                        if not any(phrase in original_description.lower() for phrase in ["bạn sẽ", "chúng ta sẽ", "quý khách sẽ", "bạn có thể", "hãy"]):
+                                            description = f"Tại khách sạn này, bạn sẽ được tận hưởng {original_description}"
+                                        else:
+                                            description = original_description
+                                    else:
+                                        description = "Chúng tôi sẽ đưa bạn đến khách sạn thoải mái này để nghỉ ngơi và chuẩn bị cho hành trình khám phá."
                                     
                                     default_activity = {
                                         "id": accommodation_id,
@@ -649,12 +653,16 @@ class PlanModel:
                                             image_url = extract_image_url(matching_place)
                                             log.info(f"Extracted place image URL: {image_url}")
                                         
-                                        # Process description - convert to Vietnamese if in English or use existing
-                                        original_description = matching_place.get("description", "Tham quan địa điểm nổi tiếng.")
-                                        description = original_description
-                                        # If description is primarily in English, we'll note that for the LLM to translate
-                                        if self._is_primarily_english(original_description):
-                                            description = f"[TRANSLATE: {original_description}]"
+                                        # Process description - add tour guide style narration
+                                        original_description = matching_place.get("description", "")
+                                        if original_description:
+                                            # Add tour guide style if not already present
+                                            if not any(phrase in original_description.lower() for phrase in ["bạn sẽ", "chúng ta sẽ", "quý khách sẽ", "bạn có thể", "hãy khám phá"]):
+                                                description = f"Tại đây, bạn sẽ được khám phá {original_description}"
+                                            else:
+                                                description = original_description
+                                        else:
+                                            description = "Tham quan địa điểm nổi tiếng này, bạn sẽ được trải nghiệm vẻ đẹp đặc trưng của địa phương."
                                         
                                         default_activity = {
                                             "id": place_id,
@@ -715,12 +723,16 @@ class PlanModel:
                                             image_url = extract_image_url(matching_restaurant)
                                             log.info(f"Extracted restaurant image URL: {image_url}")
                                         
-                                        # Process description - convert to Vietnamese if in English or use existing
-                                        original_description = matching_restaurant.get("description", "Thưởng thức ẩm thực địa phương.") if matching_restaurant else "Thưởng thức ẩm thực địa phương."
-                                        description = original_description
-                                        # If description is primarily in English, we'll note that for the LLM to translate
-                                        if self._is_primarily_english(original_description):
-                                            description = f"[TRANSLATE: {original_description}]"
+                                        # Process description - add tour guide style narration
+                                        original_description = matching_restaurant.get("description", "")
+                                        if original_description:
+                                            # Add tour guide style if not already present
+                                            if not any(phrase in original_description.lower() for phrase in ["bạn sẽ", "chúng ta sẽ", "quý khách sẽ", "bạn có thể", "hãy thưởng thức"]):
+                                                description = f"Tại nhà hàng này, bạn sẽ được thưởng thức {original_description}"
+                                            else:
+                                                description = original_description
+                                        else:
+                                            description = "Hãy cùng nhau thưởng thức những món ăn đặc sản địa phương tại nhà hàng nổi tiếng này."
                                         
                                         default_activity = {
                                             "id": restaurant_id,
@@ -857,7 +869,7 @@ class PlanModel:
             Follow these guidelines:
             1. You are an expert Vietnamese travel planner specialized in creating detailed, engaging travel itineraries.
             2. You must choose for the user the hotel first, to make sure that they can have a suitable hotel. If the next activities is far from the chosen hotel, you must choose another hotel.
-            3. Create detailed descriptions in Vietnamese (3-4 sentences per item)
+            3. Create detailed descriptions in Vietnamese with TOUR GUIDE STYLE language (vd: "Bạn sẽ được khám phá...", "Hãy cùng thưởng thức...", "Chúng ta sẽ tham quan...")
             4. Suggest realistic timings based on location proximity
             5. Include both popular attractions and hidden gems
             6. Consider weather, local events, and seasonal factors
@@ -865,6 +877,7 @@ class PlanModel:
             8. Return ONLY a valid JSON object that exactly matches the requested structure
             9. Use available tools when appropriate to enhance your recommendations
             10. IMPORTANT: Make sure to include only complete, valid JSON - do not cut off any fields or values
+            11. Mỗi phân đoạn (morning, afternoon, evening) nên có 2-3 hoạt động liên quan và hợp lý về mặt thời gian và địa lý
             """
             
             # Generate each day individually
@@ -983,7 +996,7 @@ class PlanModel:
                 - Không tạo ID tùy ý mà phải dùng những ID đã được cung cấp trong dữ liệu
                 - Mỗi SEGMENT (morning, afternoon, evening) CÓ THỂ có NHIỀU ACTIVITIES (2-3 activities mỗi segment)
                 - Các activities trong cùng một segment nên có mối liên hệ về địa lý (gần nhau) và thời gian (liền mạch)
-                - Nếu description có trong dữ liệu đầu vào, HÃY SỬ DỤNG description đó, nếu là tiếng Anh thì dịch sang tiếng Việt
+                - Nếu description có trong dữ liệu đầu vào, HÃY SỬ DỤNG description đó, và thêm giọng văn hướng dẫn viên du lịch (vd: "Bạn sẽ được...", "Chúng ta sẽ...", "Hãy cùng khám phá...")
                 - Chỉ trả về đối tượng JSON hợp lệ, không viết gì thêm.
                 """
                 
@@ -1134,12 +1147,16 @@ class PlanModel:
                                         image_url = extract_image_url(matching_accommodation)
                                         log.info(f"Extracted accommodation image URL: {image_url}")
                                     
-                                    # Process description - convert to Vietnamese if in English or use existing
-                                    original_description = matching_accommodation.get("description", "Check-in và nghỉ ngơi tại khách sạn.") if matching_accommodation else "Check-in và nghỉ ngơi tại khách sạn."
-                                    description = original_description
-                                    # If description is primarily in English, we'll note that for the LLM to translate
-                                    if self._is_primarily_english(original_description):
-                                        description = f"[TRANSLATE: {original_description}]"
+                                    # Process description - add tour guide style narration
+                                    original_description = matching_accommodation.get("description", "")
+                                    if original_description:
+                                        # Add tour guide style if not already present
+                                        if not any(phrase in original_description.lower() for phrase in ["bạn sẽ", "chúng ta sẽ", "quý khách sẽ", "bạn có thể", "hãy"]):
+                                            description = f"Tại khách sạn này, bạn sẽ được tận hưởng {original_description}"
+                                        else:
+                                            description = original_description
+                                    else:
+                                        description = "Chúng tôi sẽ đưa bạn đến khách sạn thoải mái này để nghỉ ngơi và chuẩn bị cho hành trình khám phá."
                                     
                                     default_activity = {
                                         "id": accommodation_id,
@@ -1201,12 +1218,16 @@ class PlanModel:
                                             image_url = extract_image_url(matching_place)
                                             log.info(f"Extracted place image URL: {image_url}")
                                         
-                                        # Process description - convert to Vietnamese if in English or use existing
-                                        original_description = matching_place.get("description", "Tham quan địa điểm nổi tiếng.")
-                                        description = original_description
-                                        # If description is primarily in English, we'll note that for the LLM to translate
-                                        if self._is_primarily_english(original_description):
-                                            description = f"[TRANSLATE: {original_description}]"
+                                        # Process description - add tour guide style narration
+                                        original_description = matching_place.get("description", "")
+                                        if original_description:
+                                            # Add tour guide style if not already present
+                                            if not any(phrase in original_description.lower() for phrase in ["bạn sẽ", "chúng ta sẽ", "quý khách sẽ", "bạn có thể", "hãy khám phá"]):
+                                                description = f"Tại đây, bạn sẽ được khám phá {original_description}"
+                                            else:
+                                                description = original_description
+                                        else:
+                                            description = "Tham quan địa điểm nổi tiếng này, bạn sẽ được trải nghiệm vẻ đẹp đặc trưng của địa phương."
                                         
                                         default_activity = {
                                             "id": place_id,
@@ -1267,12 +1288,16 @@ class PlanModel:
                                             image_url = extract_image_url(matching_restaurant)
                                             log.info(f"Extracted restaurant image URL: {image_url}")
                                         
-                                        # Process description - convert to Vietnamese if in English or use existing
-                                        original_description = matching_restaurant.get("description", "Thưởng thức ẩm thực địa phương.") if matching_restaurant else "Thưởng thức ẩm thực địa phương."
-                                        description = original_description
-                                        # If description is primarily in English, we'll note that for the LLM to translate
-                                        if self._is_primarily_english(original_description):
-                                            description = f"[TRANSLATE: {original_description}]"
+                                        # Process description - add tour guide style narration
+                                        original_description = matching_restaurant.get("description", "")
+                                        if original_description:
+                                            # Add tour guide style if not already present
+                                            if not any(phrase in original_description.lower() for phrase in ["bạn sẽ", "chúng ta sẽ", "quý khách sẽ", "bạn có thể", "hãy thưởng thức"]):
+                                                description = f"Tại nhà hàng này, bạn sẽ được thưởng thức {original_description}"
+                                            else:
+                                                description = original_description
+                                        else:
+                                            description = "Hãy cùng nhau thưởng thức những món ăn đặc sản địa phương tại nhà hàng nổi tiếng này."
                                         
                                         default_activity = {
                                             "id": restaurant_id,
@@ -1337,19 +1362,9 @@ class PlanModel:
             }
 
     def _is_primarily_english(self, text):
-        """Helper function to determine if text is primarily in English"""
-        if not text:
-            return False
-            
-        # Simple heuristic: count English letters vs Vietnamese specific characters
-        vietnamese_chars = set('áàảãạăắằẳẵặâấầẩẫậéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵđ')
-        vietnamese_chars.update(set('ÁÀẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴĐ'))
-        
-        # Count Vietnamese characters
-        vn_count = sum(1 for c in text.lower() if c in vietnamese_chars)
-        
-        # If very few Vietnamese characters, likely English
-        return vn_count < len(text) * 0.05  # Less than 5% Vietnamese characters
+        """Helper function to determine if text is primarily in English - KHÔNG DÙNG NỮA"""
+        # This function is kept for compatibility but no longer used actively
+        return False
 
     def get_trip_plan(merged_data, metadata=None, model_name="gpt-4o", verbose=True):
         """Get a personalized trip plan based on input parameters"""
@@ -1375,8 +1390,21 @@ class PlanModel:
             if metadata and "restaurant_id_map" in metadata:
                 merged_data["restaurant_id_map"] = metadata.get("restaurant_id_map", {})
             
+            # Add system message about tour guide style
+            system_message = """
+            Tạo kế hoạch du lịch chi tiết với giọng văn HƯỚNG DẪN VIÊN DU LỊCH. 
+            Mỗi mô tả hoạt động nên sử dụng câu như:
+            - "Bạn sẽ được khám phá..."
+            - "Hãy cùng thưởng thức..."
+            - "Chúng ta sẽ tham quan..."
+            - "Quý khách sẽ có cơ hội..."
+            
+            Mỗi phân đoạn thời gian (sáng, chiều, tối) nên có 2-3 hoạt động liên quan và hợp lý.
+            Sử dụng dữ liệu mô tả từ input nhưng PHẢI định dạng lại với giọng văn hướng dẫn viên du lịch.
+            """
+            
             # Create a complete trip plan
-            plan_output = get_complete_trip_plan(merged_data, days, start_date, chat_model, verbose)
+            plan_output = get_complete_trip_plan(merged_data, days, start_date, chat_model, verbose, system_message=system_message)
             
             # Add metadata if provided
             if metadata:
