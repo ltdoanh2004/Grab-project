@@ -248,10 +248,13 @@ async def get_trip_plan(request: dict):
         def standardize_activity(activity):
             activity_type = activity.get("type", "")
             
+            # Extract original ID or use a fallback
+            original_id = activity.get("id", "")
+            
             # Define standard fields for each type
             standard_fields = {
                 "accommodation": {
-                    "id": activity.get("id", ""),
+                    "id": original_id,  # Preserve original ID from input data
                     "type": "accommodation",
                     "name": activity.get("name", ""),
                     "start_time": activity.get("start_time", ""),
@@ -268,7 +271,7 @@ async def get_trip_plan(request: dict):
                     "url": activity.get("url", "")
                 },
                 "place": {
-                    "id": activity.get("id", ""),
+                    "id": original_id,  # Preserve original ID from input data
                     "type": "place",
                     "name": activity.get("name", ""),
                     "start_time": activity.get("start_time", ""),
@@ -284,7 +287,7 @@ async def get_trip_plan(request: dict):
                     "url": activity.get("url", "")
                 },
                 "restaurant": {
-                    "id": activity.get("id", ""),
+                    "id": original_id,  # Preserve original ID from input data
                     "type": "restaurant",
                     "name": activity.get("name", ""),
                     "start_time": activity.get("start_time", ""),
@@ -375,7 +378,7 @@ async def generate_trip_plan(request: SimpleTripPlanRequest):
         
         # Prepare input data
         input_data = {
-            "destination": request.destination,
+            # "destination": request.destination,
             "accommodations": request.accommodations,
             "places": request.places,
             "restaurants": request.restaurants
