@@ -240,15 +240,17 @@ class PlanModel:
             system_prompt = """
             Chuyên gia lập kế hoạch du lịch Việt Nam. Tạo lịch trình hấp dẫn dưới dạng JSON.
             
-            CHÚ Ý: CHỈ TRẢ VỀ JSON! KHÔNG THÊM TEXT HAY GIẢI THÍCH!
+            ====> QUAN TRỌNG: CHỈ TRẢ VỀ MỘT ĐỐI TƯỢNG JSON HỢP LỆ! KHÔNG CÓ VĂN BẢN GIỚI THIỆU HAY GIẢI THÍCH! <====
+            ====> PHẢN HỒI CỦA BẠN PHẢI BẮT ĐẦU BẰNG DẤU "{" VÀ KẾT THÚC BẰNG DẤU "}" <====
             
             Yêu cầu:
             1. Ưu tiên khách sạn đầu tiên
             2. Mô tả hấp dẫn và sinh động (3-4 câu), với giọng hướng dẫn viên: "Bạn sẽ được...", "Chúng ta sẽ..."
             3. Tiêu đề ngày sáng tạo (vd: "Ngày 1: Hành trình khám phá thiên đường biển xanh")
-            4. Mỗi segment (morning/afternoon/evening) có 2-3 hoạt động gần nhau
-            5. Tuân thủ chính xác cấu trúc JSON yêu cầu
+            4. Mỗi segment (morning/afternoon/evening) phải có 2-3 hoạt động gần nhau, đừng để segment chỉ có một hoạt động
+            5. Tuân thủ chính xác cấu trúc JSON yêu cầu với tất cả các trường bắt buộc
             6. Sử dụng đúng ID từ dữ liệu đầu vào
+            7. PHẢI TRẢ VỀ JSON HỢP LỆ, KHÔNG THÊM BẤT KỲ VĂN BẢN NÀO TRƯỚC "{" HOẶC SAU "}"
             """
             
             # Generate each day individually
@@ -271,7 +273,8 @@ class PlanModel:
                 Tạo chi tiết cho ngày {day_num+1} (ngày {current_date_str}) của lịch trình du lịch {merged_data.get("destination")}.
                 Tạo 3 segments (morning, afternoon, evening) với các hoạt động phù hợp.
                 
-                CHÚ Ý: CHỈ TRẢ VỀ JSON! KHÔNG THÊM TEXT!
+                ====> QUAN TRỌNG: CHỈ TRẢ VỀ MỘT ĐỐI TƯỢNG JSON HỢP LỆ! KHÔNG CÓ VĂN BẢN GIỚI THIỆU HAY GIẢI THÍCH! <====
+                ====> PHẢN HỒI CỦA BẠN PHẢI BẮT ĐẦU BẰNG DẤU {{ VÀ KẾT THÚC BẰNG DẤU }} <====
                 
                 Thông tin chuyến đi:
                 Điểm đến: {merged_data.get("destination")}
@@ -280,11 +283,11 @@ class PlanModel:
                 Nhà hàng: {[(rest.get("name", ""), rest.get("restaurant_id", "")) for rest in merged_data.get("restaurants", [])]}
                 
                 Cấu trúc JSON cần tuân thủ:
-                {{
+                {
                     "date": "{current_date_str}",
                     "day_title": "Ngày {day_num+1}: [Tiêu đề sáng tạo]",
                     "segments": [...]
-                }}
+                }
                 
                 Hướng dẫn quan trọng:
                 - Tiêu đề ngày phải sáng tạo, hấp dẫn (vd: "Hành trình khám phá thiên đường...")
@@ -965,15 +968,17 @@ class PlanModel:
             system_prompt = """
             Chuyên gia lập kế hoạch du lịch Việt Nam. Tạo lịch trình hấp dẫn dưới dạng JSON.
             
-            CHÚ Ý: CHỈ TRẢ VỀ JSON! KHÔNG THÊM TEXT HAY GIẢI THÍCH!
+            ====> QUAN TRỌNG: CHỈ TRẢ VỀ MỘT ĐỐI TƯỢNG JSON HỢP LỆ! KHÔNG CÓ VĂN BẢN GIỚI THIỆU HAY GIẢI THÍCH! <====
+            ====> PHẢN HỒI CỦA BẠN PHẢI BẮT ĐẦU BẰNG DẤU { VÀ KẾT THÚC BẰNG DẤU } <====
             
             Yêu cầu:
             1. Ưu tiên khách sạn đầu tiên
             2. Mô tả hấp dẫn và sinh động (3-4 câu), với giọng hướng dẫn viên: "Bạn sẽ được...", "Chúng ta sẽ..."
             3. Tiêu đề ngày sáng tạo (vd: "Ngày 1: Hành trình khám phá thiên đường biển xanh")
-            4. Mỗi segment (morning/afternoon/evening) có 2-3 hoạt động gần nhau
-            5. Tuân thủ chính xác cấu trúc JSON yêu cầu
+            4. Mỗi segment (morning/afternoon/evening) phải có 2-3 hoạt động gần nhau, đừng để segment chỉ có một hoạt động
+            5. Tuân thủ chính xác cấu trúc JSON yêu cầu với tất cả các trường bắt buộc
             6. Sử dụng đúng ID từ dữ liệu đầu vào
+            7. PHẢI TRẢ VỀ JSON HỢP LỆ, KHÔNG THÊM BẤT KỲ VĂN BẢN NÀO TRƯỚC { HOẶC SAU }
             """
             
             # Generate each day individually
@@ -1034,29 +1039,30 @@ class PlanModel:
                 
                 # Create prompt for this specific day with simplified structure
                 day_prompt = f"""
-                Tạo chi tiết cho ngày {day_num+1} (ngày {current_date_str}) của lịch trình du lịch {merged_data.get("destination")}.
+                Tạo chi tiết cho ngày {day_num+1} (ngày {current_date_str}) của lịch trình du lịch {destination}.
                 Tạo 3 segments (morning, afternoon, evening) với các hoạt động phù hợp.
                 
-                CHÚ Ý: CHỈ TRẢ VỀ JSON! KHÔNG THÊM TEXT!
+                ====> QUAN TRỌNG: CHỈ TRẢ VỀ MỘT ĐỐI TƯỢNG JSON HỢP LỆ! KHÔNG CÓ VĂN BẢN GIỚI THIỆU HAY GIẢI THÍCH! <====
+                ====> PHẢN HỒI CỦA BẠN PHẢI BẮT ĐẦU BẰNG DẤU {{ VÀ KẾT THÚC BẰNG DẤU }} <====
                 
                 Thông tin chuyến đi:
-                Điểm đến: {merged_data.get("destination")}
-                Khách sạn: {[(acc.get("name", ""), acc.get("accommodation_id", "")) for acc in merged_data.get("accommodations", [])]}
-                Địa điểm: {[(place.get("name", ""), place.get("place_id", "")) for place in merged_data.get("places", [])]}
-                Nhà hàng: {[(rest.get("name", ""), rest.get("restaurant_id", "")) for rest in merged_data.get("restaurants", [])]}
+                Điểm đến: {destination}
+                Khách sạn: {[(item.get("name", ""), item.get("id", "")) for item in merged_data.get("accommodations", [])]}
+                Địa điểm: {[(item.get("name", ""), item.get("id", "")) for item in merged_data.get("places", [])]}
+                Nhà hàng: {[(item.get("name", ""), item.get("id", "")) for item in merged_data.get("restaurants", [])]}
                 
                 Cấu trúc JSON cần tuân thủ:
-                {{
+                {
                     "date": "{current_date_str}",
                     "day_title": "Ngày {day_num+1}: [Tiêu đề sáng tạo]",
                     "segments": [...]
-                }}
+                }
                 
                 Hướng dẫn quan trọng:
                 - Tiêu đề ngày phải sáng tạo, hấp dẫn (vd: "Hành trình khám phá thiên đường...")
                 - Mô tả phải sống động với phong cách hướng dẫn viên: "Bạn sẽ được...", "Hãy cùng khám phá..."
                 - Luôn sử dụng đúng ID từ dữ liệu đầu vào
-                - Mỗi segment nên có 2-3 hoạt động liên quan
+                - Mỗi segment nên có 2-3 hoạt động liên quan, đừng để quá nhiều segment chỉ có một hoạt động
                 """
                 
                 # Điều chỉnh prompt dựa vào day_num (nếu là ngày đầu tiên, hiển thị khách sạn là activity đầu tiên)
@@ -1245,53 +1251,15 @@ class PlanModel:
                 QUAN TRỌNG:
                 - LUÔN LUÔN sử dụng ID từ dữ liệu đầu vào (accommodation_id, place_id, restaurant_id)
                 - Không tạo ID tùy ý mà phải dùng những ID đã được cung cấp trong dữ liệu
-                - Mỗi SEGMENT (morning, afternoon, evening) PHẢI có NHIỀU ACTIVITIES (2-3 activities mỗi segment)
+                - Mỗi SEGMENT (morning, afternoon, evening) CÓ THỂ có NHIỀU ACTIVITIES (2-3 activities mỗi segment)
                 - Các activities trong cùng một segment nên có mối liên hệ về địa lý (gần nhau) và thời gian (liền mạch)
-                - Khi viết description, HÃY TẠO RA MÔ TẢ SÁNG TẠO với giọng văn hướng dẫn viên du lịch, dựa trên thông tin từ input data (nếu có) nhưng định dạng lại và làm phong phú thêm
-                - Description nên có phong cách của hướng dẫn viên du lịch như: "Bạn sẽ được khám phá..." hoặc "Chúng ta sẽ cùng thưởng thức..."
+                - Nếu description có trong dữ liệu đầu vào, HÃY SỬ DỤNG description đó, và thêm giọng văn hướng dẫn viên du lịch (vd: "Bạn sẽ được...", "Chúng ta sẽ...", "Hãy cùng khám phá...")
                 - Chỉ trả về đối tượng JSON hợp lệ, không viết gì thêm.
+                - You must choose for the user the hotel first, to make sure that they can have a suitable hotel. If the next activities is far from the chosen hotel, you must choose another hotel and update the hotel in the itinerary, but you should rarely change the hotel.
                 """
                 
-                # Thêm adjustment cho start_time theo thời gian hiện tại
-                # Kiểm tra nếu đây là ngày đầu tiên
-                if day_num == 0:
-                    try:
-                        from datetime import datetime
-                        current_hour = datetime.now().hour
-                        adjusted_times, current_segment = self._get_appropriate_start_times(current_hour)
-                        
-                        # Nếu là buổi chiều hoặc tối, bổ sung thông tin vào prompt
-                        if current_segment in ["afternoon", "evening"]:
-                            day_prompt += f"""
-                            
-                            LƯU Ý ĐẶC BIỆT:
-                            - Hiện tại đã là buổi {current_segment}, vì vậy hãy tạo lịch trình bắt đầu từ buổi {current_segment}
-                            - Các hoạt động buổi {current_segment} nên bắt đầu sau {current_hour+1}:00
-                            - Các buổi trước đó có thể bỏ qua hoặc để trống
-                            """
-                    except Exception as e:
-                        log.warning(f"Không thể điều chỉnh thời gian bắt đầu: {e}")
-
-                # Thêm hướng dẫn cho prompt về việc tạo description
+                # Thêm hướng dẫn về day_title và description cho day_prompt 
                 day_prompt += """
-                
-                HƯỚNG DẪN VỀ DESCRIPTION:
-                - HÃY TỰ VIẾT MÔ TẢ SÁNG TẠO với giọng văn hướng dẫn viên du lịch
-                - KHÔNG copy mô tả gốc, nhưng lấy ý tưởng và thông tin chính từ đó
-                - Mô tả nên có phong cách: "Bạn sẽ được...", "Chúng ta sẽ cùng...", "Hãy khám phá..."
-                - Nên tạo ra mô tả mới hoàn toàn, độ dài khoảng 2-3 câu ngắn gọn, súc tích
-                - Mô tả nên bao gồm: điểm đặc biệt của địa điểm, trải nghiệm du khách có thể có, và lý do nên ghé thăm
-                """
-                
-                # Thêm hướng dẫn cho prompt về việc tạo description
-                day_prompt += """
-                
-                HƯỚNG DẪN VỀ DESCRIPTION:
-                - HÃY TỰ VIẾT MÔ TẢ SÁNG TẠO với giọng văn hướng dẫn viên du lịch
-                - KHÔNG copy mô tả gốc, nhưng lấy ý tưởng và thông tin chính từ đó
-                - Mô tả nên có phong cách: "Bạn sẽ được...", "Chúng ta sẽ cùng...", "Hãy khám phá..."
-                - Nên tạo ra mô tả mới hoàn toàn, độ dài khoảng 2-3 câu ngắn gọn, súc tích
-                - Mô tả nên bao gồm: điểm đặc biệt của địa điểm, trải nghiệm du khách có thể có, và lý do nên ghé thăm
                 
                 HƯỚNG DẪN QUAN TRỌNG VỀ TIÊU ĐỀ VÀ MÔ TẢ:
                 
