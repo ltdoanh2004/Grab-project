@@ -291,7 +291,30 @@ class PlanModel:
                     "segments": [
                         {{
                             "time_of_day": "morning",
-                            "activities": [
+                            "activities": ["""
+                
+                # Điều chỉnh prompt dựa vào day_num (nếu là ngày đầu tiên, hiển thị khách sạn là activity đầu tiên)
+                if day_num == 0:
+                    day_prompt += f"""
+                                {{
+                                    "id": "{merged_data.get('accommodations', [{}])[0].get('accommodation_id', 'hotel_morning_day' + str(day_num+1)) if merged_data.get('accommodations') else 'hotel_morning_day' + str(day_num+1)}",
+                                    "type": "accommodation",
+                                    "name": "Tên khách sạn",
+                                    "start_time": "08:00",
+                                    "end_time": "10:00",
+                                    "description": "Mô tả ngắn",
+                                    "location": "Địa chỉ đầy đủ",
+                                    "booking_link": "https://...",
+                                    "room_info": "Thông tin phòng",
+                                    "tax_info": "Thông tin thuế",
+                                    "elderly_friendly": true,
+                                    "rating": 4.5,
+                                    "price": 850000,
+                                    "image_url": "",
+                                    "url": ""
+                                }},"""
+                
+                day_prompt += f"""
                                 {{
                                     "id": "{merged_data.get('places', [{}])[0].get('place_id', 'place_morning_day' + str(day_num+1)) if merged_data.get('places') else 'place_morning_day' + str(day_num+1)}",
                                     "type": "place",
@@ -309,18 +332,18 @@ class PlanModel:
                                     "url": ""
                                 }},
                                 {{
-                                    "id": "{merged_data.get('places', [{}])[min(1, len(merged_data.get('places', []))-1)].get('place_id', 'place_morning2_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 1 else 'place_morning2_day' + str(day_num+1)}",
-                                    "type": "place",
-                                    "name": "Tên địa điểm thứ 2",
-                                    "start_time": "10:30",
-                                    "end_time": "12:00",
+                                    "id": "{merged_data.get('restaurants', [{}])[min(0, len(merged_data.get('restaurants', []))-1)].get('restaurant_id', 'restaurant_morning_day' + str(day_num+1)) if merged_data.get('restaurants') else 'restaurant_morning_day' + str(day_num+1)}",
+                                    "type": "restaurant",
+                                    "name": "Ăn sáng",
+                                    "start_time": "07:00",
+                                    "end_time": "08:00",
                                     "description": "Mô tả ngắn",
-                                    "address": "Địa chỉ đầy đủ",
-                                    "categories": "sightseeing",
-                                    "duration": "1h30m",
-                                    "opening_hours": "08:00-17:00",
+                                    "address": "Địa chỉ đầy đủ", 
+                                    "cuisines": "Ẩm thực địa phương",
+                                    "price_range": "50,000-100,000 VND",
                                     "rating": 4.5,
-                                    "price": 50000,
+                                    "phone": "0123456789",
+                                    "services": ["đặt bàn", "giao hàng"],
                                     "image_url": "",
                                     "url": ""
                                 }}
@@ -346,11 +369,27 @@ class PlanModel:
                                     "url": ""
                                 }},
                                 {{
-                                    "id": "{merged_data.get('restaurants', [{}])[min(0, len(merged_data.get('restaurants', []))-1)].get('restaurant_id', 'restaurant_afternoon_day' + str(day_num+1)) if merged_data.get('restaurants') else 'restaurant_afternoon_day' + str(day_num+1)}",
-                                    "type": "restaurant",
-                                    "name": "Nhà hàng trưa",
+                                    "id": "{merged_data.get('places', [{}])[min(3, len(merged_data.get('places', []))-1)].get('place_id', 'place_afternoon2_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 3 else 'place_afternoon2_day' + str(day_num+1)}",
+                                    "type": "place",
+                                    "name": "Tên địa điểm thứ 2",
                                     "start_time": "15:30",
                                     "end_time": "17:00",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ",
+                                    "categories": "sightseeing",
+                                    "duration": "1h30m",
+                                    "opening_hours": "08:00-17:00",
+                                    "rating": 4.5,
+                                    "price": 50000,
+                                    "image_url": "",
+                                    "url": ""
+                                }},
+                                {{
+                                    "id": "{merged_data.get('restaurants', [{}])[min(1, len(merged_data.get('restaurants', []))-1)].get('restaurant_id', 'restaurant_afternoon_day' + str(day_num+1)) if len(merged_data.get('restaurants', [])) > 1 else merged_data.get('restaurants', [{}])[0].get('restaurant_id', 'restaurant_afternoon_day' + str(day_num+1)) if merged_data.get('restaurants') else 'restaurant_afternoon_day' + str(day_num+1)}",
+                                    "type": "restaurant",
+                                    "name": "Ăn trưa",
+                                    "start_time": "12:00",
+                                    "end_time": "13:00",
                                     "description": "Mô tả ngắn",
                                     "address": "Địa chỉ đầy đủ", 
                                     "cuisines": "Hải sản, Đặc sản địa phương",
@@ -367,7 +406,7 @@ class PlanModel:
                             "time_of_day": "evening",
                             "activities": [
                                 {{
-                                    "id": "{merged_data.get('places', [{}])[min(3, len(merged_data.get('places', []))-1)].get('place_id', 'place_evening_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 3 else 'place_evening_day' + str(day_num+1)}",
+                                    "id": "{merged_data.get('places', [{}])[min(4, len(merged_data.get('places', []))-1)].get('place_id', 'place_evening_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 4 else 'place_evening_day' + str(day_num+1)}",
                                     "type": "place",
                                     "name": "Địa điểm buổi tối",
                                     "start_time": "18:00",
@@ -383,11 +422,27 @@ class PlanModel:
                                     "url": ""
                                 }},
                                 {{
-                                    "id": "{merged_data.get('restaurants', [{}])[min(1, len(merged_data.get('restaurants', []))-1)].get('restaurant_id', 'restaurant_evening_day' + str(day_num+1)) if len(merged_data.get('restaurants', [])) > 1 else merged_data.get('restaurants', [{}])[0].get('restaurant_id', 'restaurant_evening_day' + str(day_num+1)) if merged_data.get('restaurants') else 'restaurant_evening_day' + str(day_num+1)}",
+                                    "id": "{merged_data.get('places', [{}])[min(5, len(merged_data.get('places', []))-1)].get('place_id', 'place_evening2_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 5 else 'place_evening2_day' + str(day_num+1)}",
+                                    "type": "place",
+                                    "name": "Địa điểm thứ 2 buổi tối",
+                                    "start_time": "19:30",
+                                    "end_time": "20:30",
+                                    "description": "Mô tả ngắn",
+                                    "address": "Địa chỉ đầy đủ",
+                                    "categories": "entertainment",
+                                    "duration": "1h",
+                                    "opening_hours": "18:00-23:00",
+                                    "rating": 4.5,
+                                    "price": 50000,
+                                    "image_url": "",
+                                    "url": ""
+                                }},
+                                {{
+                                    "id": "{merged_data.get('restaurants', [{}])[min(2, len(merged_data.get('restaurants', []))-1)].get('restaurant_id', 'restaurant_evening_day' + str(day_num+1)) if len(merged_data.get('restaurants', [])) > 2 else merged_data.get('restaurants', [{}])[0].get('restaurant_id', 'restaurant_evening_day' + str(day_num+1)) if merged_data.get('restaurants') else 'restaurant_evening_day' + str(day_num+1)}",
                                     "type": "restaurant",
                                     "name": "Nhà hàng tối",
-                                    "start_time": "19:30",
-                                    "end_time": "21:30",
+                                    "start_time": "20:30",
+                                    "end_time": "22:30",
                                     "description": "Mô tả ngắn",
                                     "address": "Địa chỉ đầy đủ", 
                                     "cuisines": "Hải sản, Đặc sản địa phương",
@@ -428,9 +483,9 @@ class PlanModel:
                 - Các activities trong cùng một segment nên có mối liên hệ về địa lý (gần nhau) và thời gian (liền mạch)
                 - Nếu description có trong dữ liệu đầu vào, HÃY SỬ DỤNG description đó, và thêm giọng văn hướng dẫn viên du lịch (vd: "Bạn sẽ được...", "Chúng ta sẽ...", "Hãy cùng khám phá...")
                 - Chỉ trả về đối tượng JSON hợp lệ, không viết gì thêm.
+                - You must choose for the user the hotel first, to make sure that they can have a suitable hotel. If the next activities is far from the chosen hotel, you must choose another hotel and update the hotel in the itinerary, but you should rarely change the hotel.
                 """
                 
-                # Generate response for this day
                 messages = [
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": day_prompt}
@@ -439,43 +494,39 @@ class PlanModel:
                 day_response = self.llm.invoke(messages)
                 
                 try:
-                    # Try to parse the day's data, handling any potential errors
                     try:
-                        # First attempt to parse directly
                         day_data = self.parser.parse(day_response)
                     except Exception as json_error:
-                        # If that fails, attempt to find and extract a JSON object from the response
                         log.warning(f"Initial JSON parsing failed: {json_error}. Attempting to extract JSON.")
                         import re
                         import json
                         
-                        # Find JSON-like content (anything between curly braces, including nested)
-                        json_pattern = r'\{(?:[^{}]|(?R))*\}'
-                        json_matches = re.finditer(json_pattern, day_response)
+                        cleaned_response = re.sub(r'^(System:|User:|Assistant:)\s*', '', day_response.strip())
                         
-                        # Get the longest match (likely the most complete JSON)
-                        longest_match = None
-                        max_length = 0
-                        for match in json_matches:
-                            if len(match.group(0)) > max_length:
-                                max_length = len(match.group(0))
-                                longest_match = match.group(0)
+                        json_match = re.search(r'(\{[\s\S]*\})', cleaned_response)
                         
-                        if longest_match:
+                        if json_match:
+                            potential_json = json_match.group(1)
+                            
                             try:
-                                # Try to parse the extracted JSON
-                                day_data = json.loads(longest_match)
+                                day_data = json.loads(potential_json)
                             except json.JSONDecodeError:
-                                # If still invalid, try to fix common issues
                                 try:
-                                    # Remove any trailing commas before closing braces
-                                    fixed_json = re.sub(r',(\s*[}\]])', r'\1', longest_match)
-                                    # Fix any unclosed quotes
-                                    fixed_json = re.sub(r'([^"])"([^"]*?)([^"])\s*[}\]]', r'\1"\2\3"\4', fixed_json)
+                                    open_braces = potential_json.count('{')
+                                    closed_braces = potential_json.count('}')
+                                    
+                                    fixed_json = potential_json
+                                    if open_braces > closed_braces:
+                                        fixed_json += '}' * (open_braces - closed_braces)
+                                    
+                                    fixed_json = re.sub(r',(\s*[}\]])', r'\1', fixed_json)
+                                    
+                                    fixed_json = re.sub(r'([^\\])"([^"]*?)([^\\])(\s*[}\]])', r'\1"\2\3"\4', fixed_json)
+                                    
                                     # Try parsing again
                                     day_data = json.loads(fixed_json)
-                                except:
-                                    log.error(f"Could not repair JSON: {longest_match[:100]}...")
+                                except Exception as repair_error:
+                                    log.error(f"Could not repair JSON: {potential_json[:100]}... Error: {repair_error}")
                                     raise ValueError("Could not extract valid JSON after repair attempts")
                         else:
                             log.error("No JSON-like content found in response. Creating basic structure.")
@@ -747,6 +798,63 @@ class PlanModel:
                                     "activities": []
                                 })
                     
+                    # Ensure the first activity of the first day is accommodation
+                    if day_num == 0:
+                        has_accommodation = False
+                        for segment in day_data.get("segments", []):
+                            if segment.get("time_of_day") == "morning" and segment.get("activities"):
+                                for activity in segment["activities"]:
+                                    if activity.get("type") == "accommodation":
+                                        has_accommodation = True
+                                        log.info(f"Found accommodation in morning activities for day 1")
+                                        break
+                                if has_accommodation:
+                                    break
+                        
+                        # If no accommodation found in morning segment on day 1, add it
+                        if not has_accommodation and merged_data.get("accommodations"):
+                            accommodation = merged_data["accommodations"][0]
+                            accommodation_id = accommodation.get("accommodation_id", accommodation.get("id", "hotel_day1"))
+                            accommodation_name = accommodation.get("name", "Khách sạn")
+                            
+                            # Create accommodation activity
+                            accommodation_activity = {
+                                "id": accommodation_id,
+                                "type": "accommodation",
+                                "name": accommodation_name,
+                                "start_time": "08:00",
+                                "end_time": "10:00",
+                                "description": f"Tại khách sạn tuyệt vời này, bạn sẽ được tận hưởng không gian nghỉ dưỡng thoải mái và tiện nghi. Hãy nghỉ ngơi và chuẩn bị cho những trải nghiệm tuyệt vời tiếp theo!",
+                                "location": accommodation.get("location", accommodation.get("address", "")),
+                                "booking_link": accommodation.get("booking_link", ""),
+                                "room_info": accommodation.get("room_info", "Phòng tiêu chuẩn"),
+                                "tax_info": accommodation.get("tax_info", "Đã bao gồm thuế"),
+                                "elderly_friendly": accommodation.get("elderly_friendly", True),
+                                "rating": float(accommodation.get("rating", 4.5)),
+                                "price": float(accommodation.get("price", 850000)),
+                                "image_url": accommodation.get("image_url", ""),
+                                "url": accommodation.get("url", "")
+                            }
+                            
+                            # Find morning segment or create it
+                            morning_segment = None
+                            for segment in day_data.get("segments", []):
+                                if segment.get("time_of_day") == "morning":
+                                    morning_segment = segment
+                                    break
+                            
+                            if morning_segment:
+                                # Add to beginning of morning activities
+                                morning_segment["activities"].insert(0, accommodation_activity)
+                                log.info(f"Added accommodation to existing morning segment for day 1")
+                            else:
+                                # Create morning segment with accommodation
+                                day_data.setdefault("segments", []).insert(0, {
+                                    "time_of_day": "morning",
+                                    "activities": [accommodation_activity]
+                                })
+                                log.info(f"Created new morning segment with accommodation for day 1")
+                    
                     # Add to the final plan
                     final_plan["plan_by_day"].append(day_data)
                 except Exception as e:
@@ -851,7 +959,7 @@ class PlanModel:
             Your recommendations should be specific, authentic, and tailored to the provided data.
             Follow these guidelines:
             1. You are an expert Vietnamese travel planner specialized in creating detailed, engaging travel itineraries.
-            2. You must choose for the user the hotel first, to make sure that they can have a suitable hotel. If the next activities is far from the chosen hotel, you must choose another hotel.
+            2. You must choose for the user the hotel first, to make sure that they can have a suitable hotel. If the next activities is far from the chosen hotel, you must choose another hotel and update the hotel in the itinerary, but you should rarely change the hotel.
             3. Create detailed descriptions in Vietnamese with TOUR GUIDE STYLE language (vd: "Bạn sẽ được khám phá...", "Hãy cùng thưởng thức...", "Chúng ta sẽ tham quan...")
             4. Suggest realistic timings based on location proximity
             5. Include both popular attractions and hidden gems
@@ -861,6 +969,7 @@ class PlanModel:
             9. Use available tools when appropriate to enhance your recommendations
             10. IMPORTANT: Make sure to include only complete, valid JSON - do not cut off any fields or values
             11. Mỗi phân đoạn (morning, afternoon, evening) nên có 2-3 hoạt động liên quan và hợp lý về mặt thời gian và địa lý
+            12. ƯU TIÊN chọn khách sạn (accommodation) là hoạt động đầu tiên trong ngày đầu tiên của chuyến đi để đảm bảo người dùng có chỗ ở ngay khi đến nơi
             """
             
             # Generate each day individually
@@ -896,7 +1005,30 @@ class PlanModel:
                     "segments": [
                         {{
                             "time_of_day": "morning",
-                            "activities": [
+                            "activities": ["""
+                
+                # Điều chỉnh prompt dựa vào day_num (nếu là ngày đầu tiên, hiển thị khách sạn là activity đầu tiên)
+                if day_num == 0:
+                    day_prompt += f"""
+                                {{
+                                    "id": "{merged_data.get('accommodations', [{}])[0].get('accommodation_id', 'hotel_morning_day' + str(day_num+1)) if merged_data.get('accommodations') else 'hotel_morning_day' + str(day_num+1)}",
+                                    "type": "accommodation",
+                                    "name": "Tên khách sạn",
+                                    "start_time": "08:00",
+                                    "end_time": "10:00",
+                                    "description": "Mô tả ngắn",
+                                    "location": "Địa chỉ đầy đủ",
+                                    "booking_link": "https://...",
+                                    "room_info": "Thông tin phòng",
+                                    "tax_info": "Thông tin thuế",
+                                    "elderly_friendly": true,
+                                    "rating": 4.5,
+                                    "price": 850000,
+                                    "image_url": "",
+                                    "url": ""
+                                }},"""
+                
+                day_prompt += f"""
                                 {{
                                     "id": "{merged_data.get('places', [{}])[0].get('place_id', 'place_morning_day' + str(day_num+1)) if merged_data.get('places') else 'place_morning_day' + str(day_num+1)}",
                                     "type": "place",
@@ -907,22 +1039,6 @@ class PlanModel:
                                     "address": "Địa chỉ đầy đủ",
                                     "categories": "sightseeing",
                                     "duration": "2h",
-                                    "opening_hours": "08:00-17:00",
-                                    "rating": 4.5,
-                                    "price": 50000,
-                                    "image_url": "",
-                                    "url": ""
-                                }},
-                                {{
-                                    "id": "{merged_data.get('places', [{}])[min(1, len(merged_data.get('places', []))-1)].get('place_id', 'place_morning2_day' + str(day_num+1)) if len(merged_data.get('places', [])) > 1 else 'place_morning2_day' + str(day_num+1)}",
-                                    "type": "place",
-                                    "name": "Tên địa điểm thứ 2",
-                                    "start_time": "10:30",
-                                    "end_time": "12:00",
-                                    "description": "Mô tả ngắn",
-                                    "address": "Địa chỉ đầy đủ",
-                                    "categories": "sightseeing",
-                                    "duration": "1h30m",
                                     "opening_hours": "08:00-17:00",
                                     "rating": 4.5,
                                     "price": 50000,
@@ -1129,37 +1245,44 @@ class PlanModel:
                         import re
                         import json
                         
-                        # Find JSON-like content (anything between curly braces, including nested)
-                        json_pattern = r'\{(?:[^{}]|(?R))*\}'
-                        json_matches = re.finditer(json_pattern, raw_day_response)
+                        # Remove common prefixes that may appear in the response
+                        cleaned_response = re.sub(r'^(System:|User:|Assistant:)\s*', '', raw_day_response.strip())
                         
-                        # Get the longest match (likely the most complete JSON)
-                        longest_match = None
-                        max_length = 0
-                        for match in json_matches:
-                            if len(match.group(0)) > max_length:
-                                max_length = len(match.group(0))
-                                longest_match = match.group(0)
+                        # Find JSON-like content (anything between outer curly braces)
+                        json_match = re.search(r'(\{[\s\S]*\})', cleaned_response)
                         
-                        if longest_match:
+                        if json_match:
+                            potential_json = json_match.group(1)
+                            
                             try:
                                 # Try to parse the extracted JSON
-                                day_data = json.loads(longest_match)
+                                day_data = json.loads(potential_json)
                             except json.JSONDecodeError:
                                 # If still invalid, try to fix common issues
                                 try:
+                                    # Count open and closed braces to ensure they match
+                                    open_braces = potential_json.count('{')
+                                    closed_braces = potential_json.count('}')
+                                    
+                                    # Fix mismatched braces
+                                    fixed_json = potential_json
+                                    if open_braces > closed_braces:
+                                        # Add missing closing braces
+                                        fixed_json += '}' * (open_braces - closed_braces)
+                                    
                                     # Remove any trailing commas before closing braces
-                                    fixed_json = re.sub(r',(\s*[}\]])', r'\1', longest_match)
+                                    fixed_json = re.sub(r',(\s*[}\]])', r'\1', fixed_json)
+                                    
                                     # Fix any unclosed quotes
-                                    fixed_json = re.sub(r'([^"])"([^"]*?)([^"])\s*[}\]]', r'\1"\2\3"\4', fixed_json)
+                                    fixed_json = re.sub(r'([^\\])"([^"]*?)([^\\])(\s*[}\]])', r'\1"\2\3"\4', fixed_json)
+                                    
                                     # Try parsing again
                                     day_data = json.loads(fixed_json)
-                                except:
-                                    log.error(f"Could not repair JSON: {longest_match[:100]}...")
+                                except Exception as repair_error:
+                                    log.error(f"Could not repair JSON: {potential_json[:100]}... Error: {repair_error}")
                                     raise ValueError("Could not extract valid JSON after repair attempts")
                         else:
                             log.error("No JSON-like content found in response. Creating basic structure.")
-                            # Create basic structure using available data from input
                             day_data = {
                                 "date": current_date_str,
                                 "day_title": f"Ngày {day_num+1}: Khám phá",
@@ -1170,7 +1293,6 @@ class PlanModel:
                                 ]
                             }
                     
-                    # Ensure the day has all required segments
                     if "segments" not in day_data or not day_data["segments"]:
                         day_data["segments"] = []
                     
@@ -1429,9 +1551,65 @@ class PlanModel:
                                     "activities": []
                                 })
                     
+                    # Ensure the first activity of the first day is accommodation
+                    if day_num == 0:
+                        has_accommodation = False
+                        for segment in day_data.get("segments", []):
+                            if segment.get("time_of_day") == "morning" and segment.get("activities"):
+                                for activity in segment["activities"]:
+                                    if activity.get("type") == "accommodation":
+                                        has_accommodation = True
+                                        log.info(f"Found accommodation in morning activities for day 1")
+                                        break
+                                if has_accommodation:
+                                    break
+                        
+                        # If no accommodation found in morning segment on day 1, add it
+                        if not has_accommodation and merged_data.get("accommodations"):
+                            accommodation = merged_data["accommodations"][0]
+                            accommodation_id = accommodation.get("accommodation_id", accommodation.get("id", "hotel_day1"))
+                            accommodation_name = accommodation.get("name", "Khách sạn")
+                            
+                            # Create accommodation activity
+                            accommodation_activity = {
+                                "id": accommodation_id,
+                                "type": "accommodation",
+                                "name": accommodation_name,
+                                "start_time": "08:00",
+                                "end_time": "10:00",
+                                "description": f"Tại khách sạn tuyệt vời này, bạn sẽ được tận hưởng không gian nghỉ dưỡng thoải mái và tiện nghi. Hãy nghỉ ngơi và chuẩn bị cho những trải nghiệm tuyệt vời tiếp theo!",
+                                "location": accommodation.get("location", accommodation.get("address", "")),
+                                "booking_link": accommodation.get("booking_link", ""),
+                                "room_info": accommodation.get("room_info", "Phòng tiêu chuẩn"),
+                                "tax_info": accommodation.get("tax_info", "Đã bao gồm thuế"),
+                                "elderly_friendly": accommodation.get("elderly_friendly", True),
+                                "rating": float(accommodation.get("rating", 4.5)),
+                                "price": float(accommodation.get("price", 850000)),
+                                "image_url": accommodation.get("image_url", ""),
+                                "url": accommodation.get("url", "")
+                            }
+                            
+                            # Find morning segment or create it
+                            morning_segment = None
+                            for segment in day_data.get("segments", []):
+                                if segment.get("time_of_day") == "morning":
+                                    morning_segment = segment
+                                    break
+                            
+                            if morning_segment:
+                                # Add to beginning of morning activities
+                                morning_segment["activities"].insert(0, accommodation_activity)
+                                log.info(f"Added accommodation to existing morning segment for day 1")
+                            else:
+                                # Create morning segment with accommodation
+                                day_data.setdefault("segments", []).insert(0, {
+                                    "time_of_day": "morning",
+                                    "activities": [accommodation_activity]
+                                })
+                                log.info(f"Created new morning segment with accommodation for day 1")
+                    
                     # Add to the final plan
                     final_plan["plan_by_day"].append(day_data)
-                    
                 except Exception as e:
                     log.error(f"Error generating day {day_num+1} with agent: {e}")
                     # Create a basic day structure
