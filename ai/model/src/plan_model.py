@@ -255,7 +255,6 @@ class PlanModel:
             6. Sử dụng đúng ID từ dữ liệu đầu vào
             """
             
-            # Generate each day individually
             for day_num in range(num_days):
                 current_date = start_date + timedelta(days=day_num)
                 current_date_str = current_date.strftime("%Y-%m-%d")
@@ -287,15 +286,16 @@ class PlanModel:
                 Cấu trúc JSON cần tuân thủ:
                 {{
                     "date": "{current_date_str}",
-                    "day_title": "Ngày {day_num+1}: [Tiêu đề sáng tạo]",
+                    "day_title": "Ngày {day_num+1}: [Tiêu đề sáng tạo và độc đáo]",
                     "segments": [...]
                 }}
                 
                 Hướng dẫn quan trọng:
-                - Tiêu đề ngày phải sáng tạo, hấp dẫn (vd: "Hành trình khám phá thiên đường...")
+                - Tiêu đề ngày PHẢI sáng tạo, hấp dẫn và ĐA DẠNG (vd: "Hành trình khám phá thiên đường...", "Đắm mình trong văn hóa...", "Khám phá ẩm thực đặc sắc...")
                 - Mô tả phải sống động với phong cách hướng dẫn viên: "Bạn sẽ được...", "Hãy cùng khám phá..."
                 - Luôn sử dụng đúng ID từ dữ liệu đầu vào
-                - Mỗi segment nên có 2-3 hoạt động liên quan, đừng để quá nhiều segment chỉ có một hoạt động
+                - Mỗi segment (morning/afternoon/evening) BẮT BUỘC phải có 2-3 hoạt động gần nhau, KHÔNG được chỉ có 1 hoạt động
+                - Phân bổ các địa điểm tham quan và nhà hàng hợp lý trong các segment
                 """
                 
                 # Điều chỉnh prompt dựa vào day_num (nếu là ngày đầu tiên, hiển thị khách sạn là activity đầu tiên)
