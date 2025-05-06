@@ -55,6 +55,9 @@ import (
 // @tag.docs.url     http://example.com/docs/trip
 // @tag.docs.description Detailed information about trip operations
 
+// @tag.name         InsertData
+// @tag.description  Operations for importing data from CSV files
+
 // @securityDefinitions.apikey Bearer
 // @in header
 // @name Authorization

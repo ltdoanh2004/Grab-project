@@ -17,4 +17,5 @@ type TripAccommodation struct {
 	// Associations
 	TripDestination *TripDestination `json:"trip_destination,omitempty"`
 	Accommodation   *Accommodation   `json:"accommodation,omitempty"`
+	Comments        []Comment        `gorm:"foreignKey:TripAccommodationID" json:"comments,omitempty"`
 }
