@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Spin, Typography, Card, Row, Col, List, Button } from "antd";
+import { Spin, Typography, Card, Row, Col, List, Button, message } from "antd";
 import {
   LoadingOutlined,
   CheckOutlined,
   SyncOutlined,
 } from "@ant-design/icons";
+import { getAllSuggestions, getTripPlan } from "../../services/travelPlanApi";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -21,6 +22,8 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({
   const [currentStepIndex, setCurrentStepIndex] = useState(2);
   // Track which steps have been processed
   const [completedSteps, setCompletedSteps] = useState<number[]>([0, 1]);
+  // State to track API loading status
+  const [apiLoadingComplete, setApiLoadingComplete] = useState(false);
 
   const travelTips = [
     "Đừng quên sạc đầy các thiết bị điện tử trước khi khởi hành",
@@ -38,16 +41,41 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({
     { text: "Hoàn thiện lịch trình", complete: false },
   ];
 
-  // Simulate progressing through steps without ever finishing
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      try {
+        const suggestionsData = await getAllSuggestions();
+        console.log("Suggestions data:", suggestionsData);
+
+        const tripPlanData = await getTripPlan(suggestionsData.data);
+        console.log("Trip plan data:", tripPlanData);
+
+        localStorage.setItem("tripPlan", JSON.stringify(tripPlanData));
+
+        setApiLoadingComplete(true);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+        if (error.response) {
+          console.error("Error response:", error.response.data);
+          message.error(
+            `Lỗi: ${error.response.data.message || "Không thể tải dữ liệu"}`
+          );
+        } else {
+          message.error("Không thể tải dữ liệu. Vui lòng thử lại sau.");
+        }
+      }
+    };
+
+    fetchSuggestions();
+  }, []);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentStepIndex((prevIndex) => {
-        // Mark current step as completed
         if (!completedSteps.includes(prevIndex)) {
           setCompletedSteps((prev) => [...prev, prevIndex]);
         }
 
-        // Cycle through steps 2-4 to create illusion of progress without completion
         if (prevIndex >= 4) return 2;
         return prevIndex + 1;
       });
@@ -55,6 +83,16 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({
 
     return () => clearInterval(interval);
   }, [completedSteps]);
+
+  useEffect(() => {
+    if (apiLoadingComplete && onFinish) {
+      const timer = setTimeout(() => {
+        onFinish();
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [apiLoadingComplete, onFinish]);
 
   return (
     <div className="p-8 font-inter">

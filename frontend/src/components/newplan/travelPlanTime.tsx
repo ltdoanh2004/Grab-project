@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Typography, Space } from "antd";
+import React, { useState } from "react";
+import { Button, Typography, Space, message } from "antd";
 import { TravelTime } from "../../types/travelPlan";
 import { ExactTimeComponent } from "./travelTime/exactTime";
 import { FlexibleTimeComponent } from "./travelTime/flexibleTime";
@@ -31,6 +31,20 @@ export const TimeStep: React.FC<TimeStepProps> = ({
       : !travelTime.month || !travelTime.length;
 
   const isExactTime = travelTime.type === "exact";
+
+  const handleNext = () => {
+    if (isNextDisabled) {
+      if (travelTime.type === "exact") {
+        message.error("Vui lòng chọn ngày đi và ngày về trước khi tiếp tục");
+      } else {
+        message.error(
+          "Vui lòng chọn tháng và số ngày đi du lịch trước khi tiếp tục"
+        );
+      }
+      return;
+    }
+    onNext();
+  };
 
   return (
     <div className="p-8">
@@ -69,7 +83,7 @@ export const TimeStep: React.FC<TimeStepProps> = ({
         <Button
           type="primary"
           className="!bg-black !rounded-full"
-          onClick={onNext}
+          onClick={handleNext}
         >
           Tiếp tục
         </Button>
