@@ -11,16 +11,13 @@ import (
 
 type SuggestController struct {
 	suggestSerivce service.SuggestService
-	tripService    service.TripService
 }
 
 func NewSuggestController(
 	suggestService service.SuggestService,
-	tripService service.TripService,
 ) *SuggestController {
 	return &SuggestController{
 		suggestSerivce: suggestService,
-		tripService:    tripService,
 	}
 }
 
@@ -33,6 +30,12 @@ func (sc *SuggestController) RegisterRoutes(router *gin.Engine) {
 			suggestion.GET("/places", sc.SuggestPlaces)
 			suggestion.GET("/restaurants", sc.SuggestRestaurants)
 			suggestion.GET("/all", sc.SuggestAll)
+		}
+		detail := v1.Group("/detail")
+		{
+			detail.GET("/place/:id", sc.GetPlaceByID)
+			detail.GET("/restaurant/:id", sc.GetRestaurantByID)
+			detail.GET("/accommodation/:id", sc.GetAccommodationByID)
 		}
 	}
 }
@@ -107,7 +110,7 @@ func (sc *SuggestController) SuggestRestaurants(ctx *gin.Context) {
 		return
 	}
 	suggestion, err := sc.suggestSerivce.SuggestRestaurants(travelPreference)
-	
+
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get restaurant suggestions: "+err.Error(), nil))
 		return
@@ -139,4 +142,67 @@ func (sc *SuggestController) SuggestAll(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
+}
+
+// GetPlaceByID godoc
+// @Summary Get place details by ID
+// @Description Retrieve detailed information about a specific place
+// @Tags detail
+// @Accept json
+// @Produce json
+// @Param id path string true "Place ID"
+// @Success 200 {object} model.Response{data=model.Place}
+// @Failure 400 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/v1/detail/place/{id} [get]
+func (sc *SuggestController) GetPlaceByID(ctx *gin.Context) {
+	id := ctx.Param("id")
+	placeDetail, err := sc.suggestSerivce.GetPlaceByID(id)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get place details: "+err.Error(), nil))
+		return
+	}
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", placeDetail))
+}
+
+// GetRestaurantByID godoc
+// @Summary Get restaurant details by ID
+// @Description Retrieve detailed information about a specific restaurant
+// @Tags detail
+// @Accept json
+// @Produce json
+// @Param id path string true "Restaurant ID"
+// @Success 200 {object} model.Response{data=model.Restaurant}
+// @Failure 400 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/v1/detail/restaurant/{id} [get]
+func (sc *SuggestController) GetRestaurantByID(ctx *gin.Context) {
+	id := ctx.Param("id")
+	restaurantDetail, err := sc.suggestSerivce.GetRestaurantByID(id)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get restaurant details: "+err.Error(), nil))
+		return
+	}
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", restaurantDetail))
+}
+
+// GetAccommodationByID godoc
+// @Summary Get accommodation details by ID
+// @Description Retrieve detailed information about a specific accommodation
+// @Tags detail
+// @Accept json
+// @Produce json
+// @Param id path string true "Accommodation ID"
+// @Success 200 {object} model.Response{data=model.Accommodation}
+// @Failure 400 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/v1/detail/accommodation/{id} [get]
+func (sc *SuggestController) GetAccommodationByID(ctx *gin.Context) {
+	id := ctx.Param("id")
+	accommodationDetail, err := sc.suggestSerivce.GetAccommodationByID(id)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get accommodation details: "+err.Error(), nil))
+		return
+	}
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", accommodationDetail))
 }

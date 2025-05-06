@@ -15,4 +15,5 @@ type TripPlace struct {
 	// Update associations
 	TripDestination *TripDestination `json:"trip_destination,omitempty"`
 	Place           *Place           `json:"place,omitempty"`
+	Comments        []Comment        `gorm:"foreignKey:TripPlaceID" json:"comments,omitempty"`
 }
