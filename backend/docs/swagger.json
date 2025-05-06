@@ -132,6 +132,174 @@
                 }
             }
         },
+        "/api/v1/detail/accommodation/{id}": {
+            "get": {
+                "description": "Retrieve detailed information about a specific accommodation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "detail"
+                ],
+                "summary": "Get accommodation details by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Accommodation ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Accommodation"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/detail/place/{id}": {
+            "get": {
+                "description": "Retrieve detailed information about a specific place",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "detail"
+                ],
+                "summary": "Get place details by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Place ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Place"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/detail/restaurant/{id}": {
+            "get": {
+                "description": "Retrieve detailed information about a specific restaurant",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "detail"
+                ],
+                "summary": "Get restaurant details by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Restaurant ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Restaurant"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/insert_csv/destination": {
             "post": {
                 "description": "Import destination data from a CSV file",
@@ -1799,6 +1967,62 @@
                 }
             }
         },
+        "model.Accommodation": {
+            "type": "object",
+            "properties": {
+                "accommodation_id": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "elderly_friendly": {
+                    "type": "boolean"
+                },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Image"
+                    }
+                },
+                "link": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "room_info": {
+                    "type": "string"
+                },
+                "room_types": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.RoomType"
+                    }
+                },
+                "tax_info": {
+                    "type": "string"
+                },
+                "unit": {
+                    "type": "string"
+                }
+            }
+        },
         "model.Image": {
             "type": "object",
             "properties": {
@@ -1821,11 +2045,132 @@
                 }
             }
         },
+        "model.Place": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "categories": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "duration": {
+                    "type": "string"
+                },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Image"
+                    }
+                },
+                "main_image": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "opening_hours": {
+                    "type": "string"
+                },
+                "place_id": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "reviews": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                },
+                "unit": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
         "model.Response": {
             "type": "object",
             "properties": {
                 "data": {},
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Restaurant": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "cuisines": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "is_booking": {
+                    "type": "boolean"
+                },
+                "is_delivery": {
+                    "type": "boolean"
+                },
+                "is_opening": {
+                    "type": "boolean"
+                },
+                "location": {
+                    "$ref": "#/definitions/model.Location"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "opening_hours": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "photo_url": {
+                    "type": "string"
+                },
+                "price_range": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "restaurant_id": {
+                    "type": "string"
+                },
+                "reviews": {
+                    "type": "string"
+                },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Service"
+                    }
+                },
+                "url": {
                     "type": "string"
                 }
             }
@@ -1945,6 +2290,10 @@
                 "description": "Detailed information about trip operations",
                 "url": "http://example.com/docs/trip"
             }
+        },
+        {
+            "description": "Operations for importing data from CSV files",
+            "name": "InsertData"
         }
     ]
 }

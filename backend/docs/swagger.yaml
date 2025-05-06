@@ -535,6 +535,43 @@ definitions:
       restaurants:
         $ref: '#/definitions/dto.RestaurantsSuggestion'
     type: object
+  model.Accommodation:
+    properties:
+      accommodation_id:
+        type: string
+      city:
+        type: string
+      description:
+        type: string
+      destination_id:
+        type: string
+      elderly_friendly:
+        type: boolean
+      images:
+        items:
+          $ref: '#/definitions/model.Image'
+        type: array
+      link:
+        type: string
+      location:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      rating:
+        type: number
+      room_info:
+        type: string
+      room_types:
+        items:
+          $ref: '#/definitions/model.RoomType'
+        type: array
+      tax_info:
+        type: string
+      unit:
+        type: string
+    type: object
   model.Image:
     properties:
       alt:
@@ -549,10 +586,90 @@ definitions:
       lon:
         type: number
     type: object
+  model.Place:
+    properties:
+      address:
+        type: string
+      categories:
+        type: string
+      description:
+        type: string
+      destination_id:
+        type: string
+      duration:
+        type: string
+      images:
+        items:
+          $ref: '#/definitions/model.Image'
+        type: array
+      main_image:
+        type: string
+      name:
+        type: string
+      opening_hours:
+        type: string
+      place_id:
+        type: string
+      price:
+        type: number
+      rating:
+        type: number
+      reviews:
+        items:
+          type: string
+        type: array
+      type:
+        type: string
+      unit:
+        type: string
+      url:
+        type: string
+    type: object
   model.Response:
     properties:
       data: {}
       message:
+        type: string
+    type: object
+  model.Restaurant:
+    properties:
+      address:
+        type: string
+      cuisines:
+        type: string
+      description:
+        type: string
+      destination_id:
+        type: string
+      is_booking:
+        type: boolean
+      is_delivery:
+        type: boolean
+      is_opening:
+        type: boolean
+      location:
+        $ref: '#/definitions/model.Location'
+      name:
+        type: string
+      opening_hours:
+        type: string
+      phone:
+        type: string
+      photo_url:
+        type: string
+      price_range:
+        type: string
+      rating:
+        type: number
+      restaurant_id:
+        type: string
+      reviews:
+        type: string
+      services:
+        items:
+          $ref: '#/definitions/model.Service'
+        type: array
+      url:
         type: string
     type: object
   model.RoomType:
@@ -692,6 +809,108 @@ paths:
       summary: User registration
       tags:
       - auth
+  /api/v1/detail/accommodation/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve detailed information about a specific accommodation
+      parameters:
+      - description: Accommodation ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Accommodation'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Get accommodation details by ID
+      tags:
+      - detail
+  /api/v1/detail/place/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve detailed information about a specific place
+      parameters:
+      - description: Place ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Place'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Get place details by ID
+      tags:
+      - detail
+  /api/v1/detail/restaurant/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve detailed information about a specific restaurant
+      parameters:
+      - description: Restaurant ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Restaurant'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Get restaurant details by ID
+      tags:
+      - detail
   /api/v1/insert_csv/destination:
     post:
       consumes:
@@ -1254,3 +1473,5 @@ tags:
     description: Detailed information about trip operations
     url: http://example.com/docs/trip
   name: trip
+- description: Operations for importing data from CSV files
+  name: InsertData
