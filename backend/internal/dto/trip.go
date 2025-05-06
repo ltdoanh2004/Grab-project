@@ -239,6 +239,9 @@ func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripReques
 						TripDestinationID: input.Destination,
 						AccommodationID:   activity.ID,
 						CheckInDate:       &scheduledDate,
+						CheckOutDate:      &scheduledDate, // Assuming CheckOutDate is the same as CheckInDate for simplicity.
+						StartTime:         startTimePtr,
+						EndTime:           endTimePtr,
 						// If a CheckOutDate is available, parse it similarly.
 						Cost:  activity.Price,
 						Notes: activity.Description,
