@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"encoding/csv"
 	"fmt"
+	"io"
+	"log"
 	"os"
 	"strings"
 )
@@ -24,8 +26,11 @@ func ReadCSV(filePath string) ([]map[string]string, error) {
 	var records []map[string]string
 	for {
 		record, err := reader.Read()
-		if err != nil {
+		if err == io.EOF {
 			break
+		}
+		if err != nil {
+			log.Fatalf("Error on line %d: \n", err)
 		}
 		recordMap := make(map[string]string)
 		for i, value := range record {
