@@ -18,10 +18,12 @@ import {
   ClockCircleOutlined,
   EnvironmentOutlined,
   RightOutlined,
+  MessageOutlined,
 } from "@ant-design/icons";
 import { TravelDay, TravelActivity } from "../../../../types/travelPlan";
 import { useActivityDnD } from "../../../../hooks/useActivityDnD";
 import { useTimeEdit } from "../../../../hooks/useTimeEdit";
+import { ActivityCommentModal } from "./Comment";
 
 const { Title, Text } = Typography;
 
@@ -69,10 +71,12 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
 
     const cardClick = isEditMode ? undefined : () => onActivityClick(activity);
 
+    const [showCommentModal, setShowCommentModal] = React.useState(false);
+
     return (
       <div
         ref={ref}
-        className="mb-4"
+        className="mb-4 flex items-center"
         style={{
           opacity: isDragging ? 0.4 : 1,
           cursor: isEditMode ? "move" : "pointer",
@@ -81,7 +85,43 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
           transition: "all .2s ease",
         }}
       >
-        <Card hoverable={!isEditMode} onClick={cardClick}>
+        <div className="flex flex-col items-center justify-center h-full mx-1">
+          <Tooltip title="Bình luận">
+            <Button
+              type="text"
+              icon={
+                <MessageOutlined
+                  style={{
+                    fontSize: 18,
+                    color: showCommentModal ? "#1677ff" : "#bdbdbd",
+                    transition: "color 0.2s",
+                  }}
+                />
+              }
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowCommentModal(true);
+              }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: 32,
+                width: 32,
+                borderRadius: "50%",
+                background: showCommentModal ? "#e6f4ff" : "#f5f5f5",
+                boxShadow: showCommentModal
+                  ? "0 0 0 2px #1677ff"
+                  : "0 0 0 1px #e5e7eb",
+                border: "none",
+                marginTop: 4,
+                marginBottom: 4,
+                padding: 0,
+              }}
+            />
+          </Tooltip>
+        </div>
+        <Card hoverable={!isEditMode} onClick={cardClick} className="flex-1">
           <div className="flex">
             {isEditMode && (
               <div className="mr-2 flex items-center text-gray-500">
@@ -136,9 +176,11 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
                 </Tag>
               )}
 
-              <Title level={5} className="m-0">
-                {activity.name}
-              </Title>
+              <div className="flex items-center">
+                <Title level={5} className="m-0">
+                  {activity.name}
+                </Title>
+              </div>
               <Text type="secondary">
                 <EnvironmentOutlined className="mr-1" /> {activity.location}
               </Text>
@@ -183,6 +225,11 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
             </div>
           </div>
         </Card>
+        <ActivityCommentModal
+          open={showCommentModal}
+          onClose={() => setShowCommentModal(false)}
+          activityId={activity.id}
+        />
       </div>
     );
   }

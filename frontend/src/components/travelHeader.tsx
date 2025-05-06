@@ -3,6 +3,7 @@ import { Modal, Avatar, Dropdown } from "antd";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { SignIn } from "./authScreen/signIn";
 import { SignUp } from "./authScreen/signUp";
+import { useAuth } from "../hooks/useAuth";
 
 type TabType = "plan-new" | "plan-list";
 
@@ -15,31 +16,17 @@ export const TravelHeader: React.FC<TravelHeaderProps> = ({
   activeTab,
   onTabChange,
 }) => {
-  const [authOpen, setAuthOpen] = useState(false);
-  const [authTab, setAuthTab] = useState<"signIn" | "signUp">("signIn");
+  const { isLoggedIn, signOut, authModalState, closeAuthModal, requireAuth } =
+    useAuth();
   const [fade, setFade] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authTab, setAuthTab] = useState<"signIn" | "signUp">("signIn");
 
+  // Keep local authTab in sync with authModalState
   useEffect(() => {
-    const checkLoginStatus = () => {
-      const token = localStorage.getItem("access_token");
-      setIsLoggedIn(!!token);
-    };
-
-    checkLoginStatus();
-
-    window.addEventListener("storage", checkLoginStatus);
-
-    return () => {
-      window.removeEventListener("storage", checkLoginStatus);
-    };
-  }, []);
-
-  const handleModalClose = () => {
-    setAuthOpen(false);
-    const token = localStorage.getItem("access_token");
-    setIsLoggedIn(!!token);
-  };
+    if (authModalState.initialTab) {
+      setAuthTab(authModalState.initialTab);
+    }
+  }, [authModalState]);
 
   const switchTab = (tab: "signIn" | "signUp") => {
     setFade(true);
@@ -49,18 +36,12 @@ export const TravelHeader: React.FC<TravelHeaderProps> = ({
     }, 200);
   };
 
-  const handleSignOut = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
-    setIsLoggedIn(false);
-  };
-
   const userMenuItems = [
     {
       key: "1",
       label: "Đăng xuất",
       icon: <LogoutOutlined />,
-      onClick: handleSignOut,
+      onClick: signOut,
     },
   ];
 
@@ -98,7 +79,7 @@ export const TravelHeader: React.FC<TravelHeaderProps> = ({
                 ? "text-black font-semibold"
                 : "text-gray-600 hover:text-black hover:bg-gray-50"
             }`}
-            onClick={() => onTabChange("plan-list")}
+            onClick={() => requireAuth(() => onTabChange("plan-list"))}
           >
             Lịch trình
             {activeTab === "plan-list" && (
@@ -109,8 +90,6 @@ export const TravelHeader: React.FC<TravelHeaderProps> = ({
 
         {isLoggedIn ? (
           <div className="flex justify-end w-[154px]">
-            {" "}
-            {/* Fixed width matching login buttons */}
             <Dropdown
               menu={{ items: userMenuItems }}
               placement="bottomRight"
@@ -129,19 +108,13 @@ export const TravelHeader: React.FC<TravelHeaderProps> = ({
           <div className="flex space-x-3">
             <button
               className="px-4 py-1.5 text-sm font-medium text-black hover:text-gray-700 border border-gray-300 hover:border-gray-400 rounded-full transition-all duration-200 cursor-pointer"
-              onClick={() => {
-                setAuthTab("signIn");
-                setAuthOpen(true);
-              }}
+              onClick={() => requireAuth(undefined, "signIn")}
             >
               Đăng nhập
             </button>
             <button
               className="px-4 py-1.5 text-sm font-medium text-white bg-black hover:bg-gray-800 rounded-full shadow-sm hover:shadow transition-all duration-200 cursor-pointer"
-              onClick={() => {
-                setAuthTab("signUp");
-                setAuthOpen(true);
-              }}
+              onClick={() => requireAuth(undefined, "signUp")}
             >
               Đăng ký
             </button>
@@ -150,8 +123,8 @@ export const TravelHeader: React.FC<TravelHeaderProps> = ({
       </div>
 
       <Modal
-        open={authOpen}
-        onCancel={handleModalClose}
+        open={authModalState.isOpen}
+        onCancel={closeAuthModal}
         footer={null}
         destroyOnClose
         centered
@@ -170,12 +143,12 @@ export const TravelHeader: React.FC<TravelHeaderProps> = ({
           {authTab === "signIn" ? (
             <SignIn
               onSwitchToSignUp={() => switchTab("signUp")}
-              onLoginSuccess={handleModalClose}
+              onLoginSuccess={closeAuthModal}
             />
           ) : (
             <SignUp
               onSwitchToSignIn={() => switchTab("signIn")}
-              onSignUpSuccess={handleModalClose}
+              onSignUpSuccess={closeAuthModal}
             />
           )}
         </div>
