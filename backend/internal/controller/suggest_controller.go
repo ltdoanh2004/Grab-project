@@ -151,7 +151,7 @@ func (sc *SuggestController) SuggestAll(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Place ID"
-// @Success 200 {object} model.Response{data=dto.PlaceDetail}
+// @Success 200 {object} model.Response{data=model.Place}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/detail/place/{id} [get]
@@ -172,7 +172,7 @@ func (sc *SuggestController) GetPlaceByID(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Restaurant ID"
-// @Success 200 {object} model.Response{data=dto.RestaurantDetail}
+// @Success 200 {object} model.Response{data=model.Restaurant}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/detail/restaurant/{id} [get]
@@ -193,7 +193,7 @@ func (sc *SuggestController) GetRestaurantByID(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Accommodation ID"
-// @Success 200 {object} model.Response{data=dto.AccommodationDetail}
+// @Success 200 {object} model.Response{data=model.Accommodation}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/detail/accommodation/{id} [get]
