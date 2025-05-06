@@ -20,6 +20,8 @@ type CreateTripAccommodationRequest struct {
 	AccommodationID   string     `json:"accommodation_id"`
 	CheckInDate       *time.Time `json:"check_in_date,omitempty"`
 	CheckOutDate      *time.Time `json:"check_out_date,omitempty"`
+	StartTime         *time.Time `json:"start_time,omitempty"`
+	EndTime           *time.Time `json:"end_time,omitempty"`
 	Cost              float64    `json:"cost"`
 	Notes             string     `json:"notes"`
 }
@@ -249,7 +251,7 @@ func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripReques
 						StartTime:         startTimePtr,
 						EndTime:           endTimePtr,
 						ReservationInfo:   activity.Description,
-						Notes:             activity.Name,
+						Notes:             activity.Description,
 					})
 				}
 			}
@@ -317,9 +319,15 @@ func ConvertToCreateTripRequestByDate(input CreateTripRequest) (CreateTripReques
 				ID:          a.AccommodationID,
 				Type:        "accommodation",
 				Description: a.Notes,
-				Price:       a.Cost,
 			}
 			activitiesByDate[dateStr] = append(activitiesByDate[dateStr], act)
+			if a.StartTime != nil {
+				act.StartTime = a.StartTime.Format(layoutTime)
+			}
+			if a.EndTime != nil {
+				act.EndTime = a.EndTime.Format(layoutTime)
+			}
+
 		}
 
 		// Process restaurants.
@@ -331,8 +339,7 @@ func ConvertToCreateTripRequestByDate(input CreateTripRequest) (CreateTripReques
 			act := Activity{
 				ID:          r.RestaurantID,
 				Type:        "restaurant",
-				Description: r.ReservationInfo,
-				Name:        r.Notes,
+				Description: r.Notes,
 			}
 			if r.StartTime != nil {
 				act.StartTime = r.StartTime.Format(layoutTime)
@@ -363,8 +370,8 @@ func ConvertToCreateTripRequestByDate(input CreateTripRequest) (CreateTripReques
 		}
 
 		for _, act := range activitiesByDate[d] {
-			if act.StartTime != "" {
-				t, err := time.Parse(layoutTime, act.StartTime)
+			if act.EndTime != "" {
+				t, err := time.Parse(layoutTime, act.EndTime)
 				if err == nil {
 					hour := t.Hour()
 					if hour < 12 {
