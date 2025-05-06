@@ -651,6 +651,7 @@ func (ts *tripService) SuggestTrip(activities dto.TripSuggestionRequest, endpoin
 	if err != nil {
 		return nil, fmt.Errorf("failed to convert trip suggestion: %w", err)
 	}
+	fmt.Println("Converted suggestion: ", newSuggestionByDate)
 
-	return &newSuggestionByDate, nil
+	return suggestionByDate, nil
 }
