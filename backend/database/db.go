@@ -52,6 +52,7 @@ func NewDB(cfg *config.Config) (*gorm.DB, error) {
 		&model.TripAccommodation{},
 		&model.TripRestaurant{},
 		&model.ChatMessage{},
+		&model.Comment{},
 	)
 	if err != nil {
 		return nil, err
