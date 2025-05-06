@@ -266,8 +266,6 @@ func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripReques
 		TripName:         input.TripName,
 		StartDate:        startDate,
 		EndDate:          endDate,
-		Budget:           0,         // Fill if needed
-		TripStatus:       "planned", // Adjust if needed
 		TripDestinations: []CreateTripDestinationRequest{dest},
 	}, nil
 }
