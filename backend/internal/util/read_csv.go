@@ -1,7 +1,9 @@
 package util
 
 import (
+	"bufio"
 	"encoding/csv"
+	"fmt"
 	"os"
 	"strings"
 )
@@ -13,7 +15,7 @@ func ReadCSV(filePath string) ([]map[string]string, error) {
 	}
 	defer f.Close()
 
-	reader := csv.NewReader(f)
+	reader := csv.NewReader(bufio.NewReaderSize(f, 100*1024*1024))
 	header, err := reader.Read()
 	if err != nil {
 		return nil, err
@@ -38,6 +40,6 @@ func ReadCSV(filePath string) ([]map[string]string, error) {
 		}
 		records = append(records, recordMap)
 	}
-
+	fmt.Println("Number of records: ", len(records))
 	return records, nil
 }
