@@ -134,6 +134,290 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/detail/accommodation/{id}": {
+            "get": {
+                "description": "Retrieve detailed information about a specific accommodation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "detail"
+                ],
+                "summary": "Get accommodation details by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Accommodation ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Accommodation"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/detail/place/{id}": {
+            "get": {
+                "description": "Retrieve detailed information about a specific place",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "detail"
+                ],
+                "summary": "Get place details by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Place ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Place"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/detail/restaurant/{id}": {
+            "get": {
+                "description": "Retrieve detailed information about a specific restaurant",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "detail"
+                ],
+                "summary": "Get restaurant details by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Restaurant ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Restaurant"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/insert_csv/destination": {
+            "post": {
+                "description": "Import destination data from a CSV file",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "InsertData"
+                ],
+                "summary": "Insert Destination Data",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/insert_csv/hotel": {
+            "post": {
+                "description": "Import hotel data from a CSV file",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "InsertData"
+                ],
+                "summary": "Insert Hotel Data",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/insert_csv/place": {
+            "post": {
+                "description": "Import place data from a CSV file",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "InsertData"
+                ],
+                "summary": "Insert Place Data",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/insert_csv/restaurant": {
+            "post": {
+                "description": "Import restaurant data from a CSV file",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "InsertData"
+                ],
+                "summary": "Insert Restaurant Data",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/suggest/accommodations": {
             "get": {
                 "description": "Get accommodation suggestions based on travel preferences",
@@ -685,54 +969,8 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/trip/save": {
-            "put": {
-                "description": "Update an existing trip with new details including destinations, accommodations, activities, and restaurants",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "trip"
-                ],
-                "summary": "Save changes to an existing trip",
-                "parameters": [
-                    {
-                        "description": "Trip Details",
-                        "name": "trip",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.TripDTO"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Trip updated successfully",
-                        "schema": {
-                            "$ref": "#/definitions/model.Response"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request",
-                        "schema": {
-                            "$ref": "#/definitions/model.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/model.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/trip/suggest": {
-            "get": {
+        "/api/v1/trip/get_plan": {
+            "post": {
                 "description": "Get AI-generated trip suggestions based on user preferences",
                 "consumes": [
                     "application/json"
@@ -767,11 +1005,57 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.CreateTripRequest"
+                                            "$ref": "#/definitions/dto.CreateTripRequestByDate"
                                         }
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/trip/save": {
+            "put": {
+                "description": "Update an existing trip with new details including destinations, accommodations, activities, and restaurants",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "trip"
+                ],
+                "summary": "Save changes to an existing trip",
+                "parameters": [
+                    {
+                        "description": "Trip Details",
+                        "name": "trip",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.TripDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trip updated successfully",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
                         }
                     },
                     "400": {
@@ -943,6 +1227,70 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.Activity": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "categories": {
+                    "type": "string"
+                },
+                "cuisines": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "duration": {
+                    "type": "string"
+                },
+                "end_time": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image_url": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "opening_hours": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "price_range": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Service"
+                    }
+                },
+                "start_time": {
+                    "description": "\"HH:mm\" format",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "e.g., \"place\", \"accommodation\", \"restaurant\"",
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
         "dto.Budget": {
             "type": "object",
             "properties": {
@@ -1060,6 +1408,34 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "trip_status": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CreateTripRequestByDate": {
+            "type": "object",
+            "properties": {
+                "destination": {
+                    "type": "string"
+                },
+                "end_date": {
+                    "description": "\"YYYY-MM-DD\"",
+                    "type": "string"
+                },
+                "plan_by_day": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.PlanByDay"
+                    }
+                },
+                "start_date": {
+                    "description": "\"YYYY-MM-DD\"",
+                    "type": "string"
+                },
+                "trip_name": {
                     "type": "string"
                 },
                 "user_id": {
@@ -1205,6 +1581,25 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.PlanByDay": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "description": "\"YYYY-MM-DD\"",
+                    "type": "string"
+                },
+                "day_title": {
+                    "description": "e.g., \"Ngày 1: Check-in \u0026 khám phá biển\"",
+                    "type": "string"
+                },
+                "segments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Segment"
+                    }
+                }
+            }
+        },
         "dto.RegisterRequest": {
             "type": "object",
             "properties": {
@@ -1265,7 +1660,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "price_range": {
-                    "$ref": "#/definitions/model.PriceRange"
+                    "type": "string"
                 },
                 "rating": {
                     "type": "number"
@@ -1274,10 +1669,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "reviews": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "type": "string"
                 },
                 "services": {
                     "type": "array",
@@ -1298,6 +1690,35 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/dto.RestaurantSuggestion"
                     }
+                }
+            }
+        },
+        "dto.Segment": {
+            "type": "object",
+            "properties": {
+                "activities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Activity"
+                    }
+                },
+                "time_of_day": {
+                    "description": "e.g., \"morning\", \"afternoon\", \"evening\"",
+                    "type": "string"
+                }
+            }
+        },
+        "dto.Service": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "url": {
+                    "type": "string"
                 }
             }
         },
@@ -1548,6 +1969,62 @@ const docTemplate = `{
                 }
             }
         },
+        "model.Accommodation": {
+            "type": "object",
+            "properties": {
+                "accommodation_id": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "elderly_friendly": {
+                    "type": "boolean"
+                },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Image"
+                    }
+                },
+                "link": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "room_info": {
+                    "type": "string"
+                },
+                "room_types": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.RoomType"
+                    }
+                },
+                "tax_info": {
+                    "type": "string"
+                },
+                "unit": {
+                    "type": "string"
+                }
+            }
+        },
         "model.Image": {
             "type": "object",
             "properties": {
@@ -1570,14 +2047,62 @@ const docTemplate = `{
                 }
             }
         },
-        "model.PriceRange": {
+        "model.Place": {
             "type": "object",
             "properties": {
-                "max_price": {
-                    "type": "integer"
+                "address": {
+                    "type": "string"
                 },
-                "min_price": {
-                    "type": "integer"
+                "categories": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "duration": {
+                    "type": "string"
+                },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Image"
+                    }
+                },
+                "main_image": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "opening_hours": {
+                    "type": "string"
+                },
+                "place_id": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "reviews": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                },
+                "unit": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
                 }
             }
         },
@@ -1586,6 +2111,68 @@ const docTemplate = `{
             "properties": {
                 "data": {},
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Restaurant": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "cuisines": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "is_booking": {
+                    "type": "boolean"
+                },
+                "is_delivery": {
+                    "type": "boolean"
+                },
+                "is_opening": {
+                    "type": "boolean"
+                },
+                "location": {
+                    "$ref": "#/definitions/model.Location"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "opening_hours": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "photo_url": {
+                    "type": "string"
+                },
+                "price_range": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "restaurant_id": {
+                    "type": "string"
+                },
+                "reviews": {
+                    "type": "string"
+                },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Service"
+                    }
+                },
+                "url": {
                     "type": "string"
                 }
             }
@@ -1705,6 +2292,10 @@ const docTemplate = `{
                 "description": "Detailed information about trip operations",
                 "url": "http://example.com/docs/trip"
             }
+        },
+        {
+            "description": "Operations for importing data from CSV files",
+            "name": "InsertData"
         }
     ]
 }`

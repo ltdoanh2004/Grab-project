@@ -18,4 +18,5 @@ type TripRestaurant struct {
 	// Associations with proper GORM foreign key definitions
 	TripDestination *TripDestination `json:"trip_destination,omitempty"`
 	Restaurant      *Restaurant      `json:"restaurant,omitempty"`
+	Comments        []Comment        `gorm:"foreignKey:TripRestaurantID" json:"comments,omitempty"`
 }

@@ -6,6 +6,8 @@ import (
 	"skeleton-internship-backend/internal/service"
 
 	"github.com/gin-gonic/gin"
+	_ "github.com/swaggo/files"       // Swagger files
+	_ "github.com/swaggo/gin-swagger" // Swagger middleware
 )
 
 type InsertDataController struct {
@@ -31,6 +33,14 @@ func (c *InsertDataController) RegisterRoutes(router *gin.Engine) {
 	}
 }
 
+// @Summary Insert Destination Data
+// @Description Import destination data from a CSV file
+// @Tags InsertData
+// @Accept json
+// @Produce json
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/v1/insert_csv/destination [post]
 func (x *InsertDataController) InsertDestinationCSV(ctx *gin.Context) {
 	err := x.insertDataService.InsertDestinationData("./mockdata/city_processed.csv")
 	if err != nil {
@@ -41,6 +51,14 @@ func (x *InsertDataController) InsertDestinationCSV(ctx *gin.Context) {
 
 }
 
+// @Summary Insert Hotel Data
+// @Description Import hotel data from a CSV file
+// @Tags InsertData
+// @Accept json
+// @Produce json
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/v1/insert_csv/hotel [post]
 func (x *InsertDataController) InsertHotelCSV(ctx *gin.Context) {
 	err := x.insertDataService.InsertHotelData("./mockdata/hotel_processed.csv")
 	if err != nil {
@@ -50,6 +68,14 @@ func (x *InsertDataController) InsertHotelCSV(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, model.NewResponse("Hotels data imported successfully", nil))
 }
 
+// @Summary Insert Place Data
+// @Description Import place data from a CSV file
+// @Tags InsertData
+// @Accept json
+// @Produce json
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/v1/insert_csv/place [post]
 func (x *InsertDataController) InsertPlaceCSV(ctx *gin.Context) {
 	err := x.insertDataService.InsertPlaceData("./mockdata/place_processed.csv")
 	if err != nil {
@@ -59,6 +85,14 @@ func (x *InsertDataController) InsertPlaceCSV(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, model.NewResponse("Places data imported successfully", nil))
 }
 
+// @Summary Insert Restaurant Data
+// @Description Import restaurant data from a CSV file
+// @Tags InsertData
+// @Accept json
+// @Produce json
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/v1/insert_csv/restaurant [post]
 func (x *InsertDataController) InsertRestaurantCSV(ctx *gin.Context) {
 	err := x.insertDataService.InsertRestaurantData("./mockdata/fnb_processed.csv")
 	if err != nil {

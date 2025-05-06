@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"skeleton-internship-backend/config"
 	"skeleton-internship-backend/internal/dto"
+	"skeleton-internship-backend/internal/model"
 	"skeleton-internship-backend/internal/repository"
 	"time"
 )
@@ -16,6 +17,9 @@ type SuggestService interface {
 	SuggestRestaurants(travelPreference *dto.TravelPreference) (*dto.RestaurantsSuggestion, error)
 	SuggestAccommodations(travelPreference *dto.TravelPreference) (*dto.AccommodationsSuggestion, error)
 	SuggestAll(travelPreference *dto.TravelPreference) (*dto.TripSuggestionRequest, error)
+	GetPlaceByID(id string) (model.Place, error)
+	GetRestaurantByID(id string) (model.Restaurant, error)
+	GetAccommodationByID(id string) (model.Accommodation, error)
 }
 
 type suggestService struct {
@@ -411,4 +415,28 @@ func (ss *suggestService) ConvertIntoTripSuggestion(suggests []dto.SuggestWithID
 	tripSuggestion.Places = places
 	tripSuggestion.Restaurants = restaurants
 	return &tripSuggestion, nil
+}
+
+func (ss *suggestService) GetPlaceByID(id string) (model.Place, error) {
+	place, err := ss.PlaceRepository.GetByID(id)
+	if err != nil {
+		return model.Place{}, err
+	}
+	return place, nil
+}
+
+func (ss *suggestService) GetRestaurantByID(id string) (model.Restaurant, error) {
+	restaurant, err := ss.RestaurantRepository.GetByID(id)
+	if err != nil {
+		return model.Restaurant{}, err
+	}
+	return restaurant, nil
+}
+
+func (ss *suggestService) GetAccommodationByID(id string) (model.Accommodation, error) {
+	accommodation, err := ss.AccommodationRepository.GetByID(id)
+	if err != nil {
+		return model.Accommodation{}, err
+	}
+	return accommodation, nil
 }

@@ -157,10 +157,10 @@ func (tc *TripController) GetTrip(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param request body dto.TripSuggestionRequest true "Trip Suggestion Parameters"
-// @Success 200 {object} model.Response{data=dto.CreateTripRequest} "Suggested trip"
+// @Success 200 {object} model.Response{data=dto.CreateTripRequestByDate} "Suggested trip"
 // @Failure 400 {object} model.Response "Invalid request"
 // @Failure 500 {object} model.Response "Internal server error"
-// @Router /api/v1/trip/suggest [get]
+// @Router /api/v1/trip/get_plan [post]
 func (tc *TripController) GetPlan(ctx *gin.Context) {
 	endpoints := "/api/v1/suggest/trip"
 	var request dto.TripSuggestionRequest

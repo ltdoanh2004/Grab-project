@@ -44,6 +44,49 @@ definitions:
           $ref: '#/definitions/dto.AccommodationSuggestion'
         type: array
     type: object
+  dto.Activity:
+    properties:
+      address:
+        type: string
+      categories:
+        type: string
+      cuisines:
+        type: string
+      description:
+        type: string
+      duration:
+        type: string
+      end_time:
+        type: string
+      id:
+        type: string
+      image_url:
+        type: string
+      name:
+        type: string
+      opening_hours:
+        type: string
+      phone:
+        type: string
+      price:
+        type: number
+      price_range:
+        type: string
+      rating:
+        type: number
+      services:
+        items:
+          $ref: '#/definitions/dto.Service'
+        type: array
+      start_time:
+        description: '"HH:mm" format'
+        type: string
+      type:
+        description: e.g., "place", "accommodation", "restaurant"
+        type: string
+      url:
+        type: string
+    type: object
   dto.Budget:
     properties:
       exactBudget:
@@ -121,6 +164,25 @@ definitions:
       trip_name:
         type: string
       trip_status:
+        type: string
+      user_id:
+        type: string
+    type: object
+  dto.CreateTripRequestByDate:
+    properties:
+      destination:
+        type: string
+      end_date:
+        description: '"YYYY-MM-DD"'
+        type: string
+      plan_by_day:
+        items:
+          $ref: '#/definitions/dto.PlanByDay'
+        type: array
+      start_date:
+        description: '"YYYY-MM-DD"'
+        type: string
+      trip_name:
         type: string
       user_id:
         type: string
@@ -215,6 +277,19 @@ definitions:
           $ref: '#/definitions/dto.PlaceSuggestion'
         type: array
     type: object
+  dto.PlanByDay:
+    properties:
+      date:
+        description: '"YYYY-MM-DD"'
+        type: string
+      day_title:
+        description: 'e.g., "Ngày 1: Check-in & khám phá biển"'
+        type: string
+      segments:
+        items:
+          $ref: '#/definitions/dto.Segment'
+        type: array
+    type: object
   dto.RegisterRequest:
     properties:
       email:
@@ -255,15 +330,13 @@ definitions:
       photo_url:
         type: string
       price_range:
-        $ref: '#/definitions/model.PriceRange'
+        type: string
       rating:
         type: number
       restaurant_id:
         type: string
       reviews:
-        items:
-          type: string
-        type: array
+        type: string
       services:
         items:
           $ref: '#/definitions/model.Service'
@@ -277,6 +350,25 @@ definitions:
         items:
           $ref: '#/definitions/dto.RestaurantSuggestion'
         type: array
+    type: object
+  dto.Segment:
+    properties:
+      activities:
+        items:
+          $ref: '#/definitions/dto.Activity'
+        type: array
+      time_of_day:
+        description: e.g., "morning", "afternoon", "evening"
+        type: string
+    type: object
+  dto.Service:
+    properties:
+      name:
+        type: string
+      type:
+        type: integer
+      url:
+        type: string
     type: object
   dto.TodoCreate:
     description: Todo creation request body
@@ -443,6 +535,43 @@ definitions:
       restaurants:
         $ref: '#/definitions/dto.RestaurantsSuggestion'
     type: object
+  model.Accommodation:
+    properties:
+      accommodation_id:
+        type: string
+      city:
+        type: string
+      description:
+        type: string
+      destination_id:
+        type: string
+      elderly_friendly:
+        type: boolean
+      images:
+        items:
+          $ref: '#/definitions/model.Image'
+        type: array
+      link:
+        type: string
+      location:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      rating:
+        type: number
+      room_info:
+        type: string
+      room_types:
+        items:
+          $ref: '#/definitions/model.RoomType'
+        type: array
+      tax_info:
+        type: string
+      unit:
+        type: string
+    type: object
   model.Image:
     properties:
       alt:
@@ -457,17 +586,90 @@ definitions:
       lon:
         type: number
     type: object
-  model.PriceRange:
+  model.Place:
     properties:
-      max_price:
-        type: integer
-      min_price:
-        type: integer
+      address:
+        type: string
+      categories:
+        type: string
+      description:
+        type: string
+      destination_id:
+        type: string
+      duration:
+        type: string
+      images:
+        items:
+          $ref: '#/definitions/model.Image'
+        type: array
+      main_image:
+        type: string
+      name:
+        type: string
+      opening_hours:
+        type: string
+      place_id:
+        type: string
+      price:
+        type: number
+      rating:
+        type: number
+      reviews:
+        items:
+          type: string
+        type: array
+      type:
+        type: string
+      unit:
+        type: string
+      url:
+        type: string
     type: object
   model.Response:
     properties:
       data: {}
       message:
+        type: string
+    type: object
+  model.Restaurant:
+    properties:
+      address:
+        type: string
+      cuisines:
+        type: string
+      description:
+        type: string
+      destination_id:
+        type: string
+      is_booking:
+        type: boolean
+      is_delivery:
+        type: boolean
+      is_opening:
+        type: boolean
+      location:
+        $ref: '#/definitions/model.Location'
+      name:
+        type: string
+      opening_hours:
+        type: string
+      phone:
+        type: string
+      photo_url:
+        type: string
+      price_range:
+        type: string
+      rating:
+        type: number
+      restaurant_id:
+        type: string
+      reviews:
+        type: string
+      services:
+        items:
+          $ref: '#/definitions/model.Service'
+        type: array
+      url:
         type: string
     type: object
   model.RoomType:
@@ -607,6 +809,184 @@ paths:
       summary: User registration
       tags:
       - auth
+  /api/v1/detail/accommodation/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve detailed information about a specific accommodation
+      parameters:
+      - description: Accommodation ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Accommodation'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Get accommodation details by ID
+      tags:
+      - detail
+  /api/v1/detail/place/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve detailed information about a specific place
+      parameters:
+      - description: Place ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Place'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Get place details by ID
+      tags:
+      - detail
+  /api/v1/detail/restaurant/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve detailed information about a specific restaurant
+      parameters:
+      - description: Restaurant ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Restaurant'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Get restaurant details by ID
+      tags:
+      - detail
+  /api/v1/insert_csv/destination:
+    post:
+      consumes:
+      - application/json
+      description: Import destination data from a CSV file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Insert Destination Data
+      tags:
+      - InsertData
+  /api/v1/insert_csv/hotel:
+    post:
+      consumes:
+      - application/json
+      description: Import hotel data from a CSV file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Insert Hotel Data
+      tags:
+      - InsertData
+  /api/v1/insert_csv/place:
+    post:
+      consumes:
+      - application/json
+      description: Import place data from a CSV file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Insert Place Data
+      tags:
+      - InsertData
+  /api/v1/insert_csv/restaurant:
+    post:
+      consumes:
+      - application/json
+      description: Import restaurant data from a CSV file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Insert Restaurant Data
+      tags:
+      - InsertData
   /api/v1/suggest/accommodations:
     get:
       consumes:
@@ -984,6 +1364,41 @@ paths:
       summary: Create a new trip
       tags:
       - trip
+  /api/v1/trip/get_plan:
+    post:
+      consumes:
+      - application/json
+      description: Get AI-generated trip suggestions based on user preferences
+      parameters:
+      - description: Trip Suggestion Parameters
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TripSuggestionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Suggested trip
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.CreateTripRequestByDate'
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Get trip suggestions
+      tags:
+      - trip
   /api/v1/trip/save:
     put:
       consumes:
@@ -1013,41 +1428,6 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: Save changes to an existing trip
-      tags:
-      - trip
-  /api/v1/trip/suggest:
-    get:
-      consumes:
-      - application/json
-      description: Get AI-generated trip suggestions based on user preferences
-      parameters:
-      - description: Trip Suggestion Parameters
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/dto.TripSuggestionRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Suggested trip
-          schema:
-            allOf:
-            - $ref: '#/definitions/model.Response'
-            - properties:
-                data:
-                  $ref: '#/definitions/dto.CreateTripRequest'
-              type: object
-        "400":
-          description: Invalid request
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal server error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: Get trip suggestions
       tags:
       - trip
   /health:
@@ -1093,3 +1473,5 @@ tags:
     description: Detailed information about trip operations
     url: http://example.com/docs/trip
   name: trip
+- description: Operations for importing data from CSV files
+  name: InsertData

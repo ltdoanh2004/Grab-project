@@ -197,7 +197,7 @@ func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripReques
 		if day.Date == "" {
 			continue
 		}
-		
+
 		scheduledDate, err := time.Parse(layoutDate, day.Date)
 		if err != nil {
 			// Skip this day if date parsing fails instead of returning error
@@ -355,15 +355,49 @@ func ConvertToCreateTripRequestByDate(input CreateTripRequest) (CreateTripReques
 	// Build PlanByDay from the grouped activities.
 	var planByDay []PlanByDay
 	for i, d := range dates {
-		segment := Segment{
-			TimeOfDay: "default",
-
-			Activities: activitiesByDate[d],
+		// Partition activities into segments based on start time.
+		segMap := map[string][]Activity{
+			"morning":   {},
+			"afternoon": {},
+			"evening":   {},
+			"default":   {},
 		}
+
+		for _, act := range activitiesByDate[d] {
+			if act.StartTime != "" {
+				t, err := time.Parse(layoutTime, act.StartTime)
+				if err == nil {
+					hour := t.Hour()
+					if hour < 12 {
+						segMap["morning"] = append(segMap["morning"], act)
+					} else if hour < 18 {
+						segMap["afternoon"] = append(segMap["afternoon"], act)
+					} else {
+						segMap["evening"] = append(segMap["evening"], act)
+					}
+					continue
+				}
+			}
+			// If no valid start time, group under "default"
+			segMap["default"] = append(segMap["default"], act)
+		}
+
+		// Build segments in a defined order.
+		var segments []Segment
+		orderedSegments := []string{"morning", "afternoon", "evening", "default"}
+		for _, key := range orderedSegments {
+			if len(segMap[key]) > 0 {
+				segments = append(segments, Segment{
+					TimeOfDay:  key,
+					Activities: segMap[key],
+				})
+			}
+		}
+
 		planByDay = append(planByDay, PlanByDay{
 			Date:     d,
 			DayTitle: fmt.Sprintf("Ngày %d", i+1),
-			Segments: []Segment{segment},
+			Segments: segments,
 		})
 	}
 
