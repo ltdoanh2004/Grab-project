@@ -24,13 +24,15 @@ func ReadCSV(filePath string) ([]map[string]string, error) {
 	}
 
 	var records []map[string]string
+	line := 0
 	for {
+		line++
 		record, err := reader.Read()
 		if err == io.EOF {
 			break
 		}
 		if err != nil {
-			log.Fatalf("Error on line %d: \n", err)
+			log.Fatalf("Error on line %d: %v \n", line, err)
 		}
 		recordMap := make(map[string]string)
 		for i, value := range record {
