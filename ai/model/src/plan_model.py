@@ -325,6 +325,7 @@ class PlanModel:
                 - Luôn sử dụng đúng ID từ dữ liệu đầu vào
                 - Mỗi segment có 1-2 hoạt động (KHÔNG cần 3 hoạt động/segment để giảm kích thước JSON)
                 - XÓA tất cả chú thích, hướng dẫn trong JSON cuối cùng
+                - Description phải ngắn gọn sáng tạo và có thể chèn thêm icon. 
                 """
                 
                 # Điều chỉnh prompt dựa vào day_num
