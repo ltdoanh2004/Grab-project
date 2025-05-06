@@ -118,24 +118,23 @@ type Service struct {
 }
 
 type Activity struct {
-	ID           string    `json:"id"`
-	Type         string    `json:"type"` // e.g., "place", "accommodation", "restaurant"
-	Name         string    `json:"name"`
-	StartTime    string    `json:"start_time,omitempty"` // "HH:mm" format
-	EndTime      string    `json:"end_time,omitempty"`
-	Description  string    `json:"description,omitempty"`
-	Address      string    `json:"address,omitempty"`
-	Categories   string    `json:"categories,omitempty"`
-	Duration     string    `json:"duration,omitempty"`
-	OpeningHours string    `json:"opening_hours,omitempty"`
-	Rating       float64   `json:"rating,omitempty"`
-	Price        float64   `json:"price,omitempty"`
-	ImageURL     string    `json:"image_url,omitempty"`
-	URL          string    `json:"url,omitempty"`
-	Cuisines     string    `json:"cuisines,omitempty"`
-	PriceRange   string    `json:"price_range,omitempty"`
-	Phone        string    `json:"phone,omitempty"`
-	Services     []Service `json:"services,omitempty"`
+	ID           string  `json:"id"`
+	Type         string  `json:"type"` // e.g., "place", "accommodation", "restaurant"
+	Name         string  `json:"name"`
+	StartTime    string  `json:"start_time,omitempty"` // "HH:mm" format
+	EndTime      string  `json:"end_time,omitempty"`
+	Description  string  `json:"description,omitempty"`
+	Address      string  `json:"address,omitempty"`
+	Categories   string  `json:"categories,omitempty"`
+	Duration     string  `json:"duration,omitempty"`
+	OpeningHours string  `json:"opening_hours,omitempty"`
+	Rating       float64 `json:"rating,omitempty"`
+	Price        float64 `json:"price,omitempty"`
+	ImageURL     string  `json:"image_url,omitempty"`
+	URL          string  `json:"url,omitempty"`
+	Cuisines     string  `json:"cuisines,omitempty"`
+	PriceRange   string  `json:"price_range,omitempty"`
+	Phone        string  `json:"phone,omitempty"`
 }
 
 type Segment struct {
