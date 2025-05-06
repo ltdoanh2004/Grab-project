@@ -11,6 +11,8 @@ type TripAccommodation struct {
 	AccommodationID     string     `gorm:"type:char(36);column:accommodation_id;not null" json:"accommodation_id"`
 	CheckInDate         *time.Time `gorm:"column:check_in_date" json:"check_in_date,omitempty"`
 	CheckOutDate        *time.Time `gorm:"column:check_out_date" json:"check_out_date,omitempty"`
+	StartTime           *time.Time `gorm:"column:start_time" json:"start_time,omitempty"`
+	EndTime             *time.Time `gorm:"column:end_time" json:"end_time,omitempty"`
 	Cost                float64    `gorm:"column:cost;type:decimal(10,2)" json:"cost"`
 	Notes               string     `gorm:"column:notes" json:"notes"`
 
