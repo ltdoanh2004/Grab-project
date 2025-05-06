@@ -46,7 +46,7 @@ ai/model/src/data/fnb_processed.csv
 ai/model/src/data/fnb_processed_embedding.csv
 ai/model/src/data/place_processed.csv
 ai/model/src/data/place_processed_embedding.csv
-
+ai/model/src/test_api/generated_plan
 # pinecone
 ai/model/src/vector_database/pinecone_index.json
 ai/model/src/vector_database/pinecone_index.json.lock
