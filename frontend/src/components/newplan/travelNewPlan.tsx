@@ -6,9 +6,15 @@ import { PeopleBudgetStep } from "./travelPlanBasic";
 import { LoadingStep } from "./travelLoading";
 import { StepNavigation } from "./navbar";
 import { useTravelPlan } from "../../hooks/useTravelPlans";
+import { useAuth } from "../../hooks/useAuth";
 import { DESTINATIONS } from "../../constants/travelPlanConstants";
+import { Modal } from "antd";
+import { SignIn } from "../authScreen/signIn";
+import { SignUp } from "../authScreen/signUp";
 
 export const TravelNewPlan: React.FC = () => {
+  const [fade, setFade] = React.useState(false);
+
   const {
     currentStep,
     selectedDestinationId,
@@ -30,10 +36,25 @@ export const TravelNewPlan: React.FC = () => {
     isDestinationSelection,
   } = useTravelPlan();
 
+  const { isLoggedIn, authModalState, closeAuthModal, requireAuth } = useAuth();
+
   // Get destination name for display in loading screen
   const selectedDestination =
     DESTINATIONS.find((dest) => dest.id === selectedDestinationId)?.name ||
     "điểm đến của bạn";
+
+  // Handle destination selection with auth check
+  const handleDestinationWithAuth = (destId: string) => {
+    handleDestinationSelect(destId);
+    requireAuth(() => handleNextStep());
+  };
+
+  const switchTab = (tab: "signIn" | "signUp") => {
+    setFade(true);
+    setTimeout(() => {
+      setFade(false);
+    }, 200);
+  };
 
   const renderStepContent = () => {
     switch (currentStep) {
@@ -92,7 +113,7 @@ export const TravelNewPlan: React.FC = () => {
           selectedDestination={selectedDestinationId}
           onSelectDestination={handleDestinationSelect}
           onStartPlan={() => {
-            handleNextStep();
+            requireAuth(handleNextStep);
           }}
         />
       ) : (
@@ -101,6 +122,38 @@ export const TravelNewPlan: React.FC = () => {
           {renderStepContent()}
         </>
       )}
+
+      <Modal
+        open={authModalState.isOpen}
+        onCancel={closeAuthModal}
+        footer={null}
+        destroyOnClose
+        centered
+        width={420}
+      >
+        <div
+          style={{
+            transition: "opacity 0.1s",
+            opacity: fade ? 0 : 1,
+            minHeight: 420,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {authModalState.initialTab === "signIn" ? (
+            <SignIn
+              onSwitchToSignUp={() => switchTab("signUp")}
+              onLoginSuccess={closeAuthModal}
+            />
+          ) : (
+            <SignUp
+              onSwitchToSignIn={() => switchTab("signIn")}
+              onSignUpSuccess={closeAuthModal}
+            />
+          )}
+        </div>
+      </Modal>
     </div>
   );
 };
