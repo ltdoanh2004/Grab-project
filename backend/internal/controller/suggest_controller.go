@@ -26,10 +26,10 @@ func (sc *SuggestController) RegisterRoutes(router *gin.Engine) {
 	{
 		suggestion := v1.Group("/suggest")
 		{
-			suggestion.GET("/accommodations", sc.SuggestAccommodations)
-			suggestion.GET("/places", sc.SuggestPlaces)
-			suggestion.GET("/restaurants", sc.SuggestRestaurants)
-			suggestion.GET("/all", sc.SuggestAll)
+			suggestion.POST("/accommodations", sc.SuggestAccommodations)
+			suggestion.POST("/places", sc.SuggestPlaces)
+			suggestion.POST("/restaurants", sc.SuggestRestaurants)
+			suggestion.POST("/all", sc.SuggestAll)
 		}
 		detail := v1.Group("/detail")
 		{

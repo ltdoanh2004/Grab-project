@@ -98,6 +98,8 @@ type TripAccommodationDTO struct {
 	AccommodationID     string     `json:"accommodation_id"`
 	CheckInDate         *time.Time `json:"check_in_date,omitempty"`
 	CheckOutDate        *time.Time `json:"check_out_date,omitempty"`
+	StartTime           *time.Time `json:"start_time,omitempty"`
+	EndTime             *time.Time `json:"end_time,omitempty"`
 	Cost                float64    `json:"cost"`
 	Notes               string     `json:"notes"`
 }
