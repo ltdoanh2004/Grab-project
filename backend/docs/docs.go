@@ -419,7 +419,7 @@ const docTemplate = `{
             }
         },
         "/api/v1/suggest/accommodations": {
-            "get": {
+            "post": {
                 "description": "Get accommodation suggestions based on travel preferences",
                 "consumes": [
                     "application/json"
@@ -477,7 +477,7 @@ const docTemplate = `{
             }
         },
         "/api/v1/suggest/all": {
-            "get": {
+            "post": {
                 "description": "Get comprehensive suggestions based on travel preferences for accommodations, places, and restaurants",
                 "consumes": [
                     "application/json"
@@ -535,7 +535,7 @@ const docTemplate = `{
             }
         },
         "/api/v1/suggest/places": {
-            "get": {
+            "post": {
                 "description": "Get activity suggestions based on travel preferences",
                 "consumes": [
                     "application/json"
@@ -593,7 +593,7 @@ const docTemplate = `{
             }
         },
         "/api/v1/suggest/restaurants": {
-            "get": {
+            "post": {
                 "description": "Get restaurant suggestions based on travel preferences",
                 "consumes": [
                     "application/json"
@@ -1272,12 +1272,6 @@ const docTemplate = `{
                 "rating": {
                     "type": "number"
                 },
-                "services": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/dto.Service"
-                    }
-                },
                 "start_time": {
                     "description": "\"HH:mm\" format",
                     "type": "string"
@@ -1317,7 +1311,13 @@ const docTemplate = `{
                 "cost": {
                     "type": "number"
                 },
+                "end_time": {
+                    "type": "string"
+                },
                 "notes": {
+                    "type": "string"
+                },
+                "start_time": {
                     "type": "string"
                 },
                 "trip_destination_id": {
@@ -1708,20 +1708,6 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.Service": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "integer"
-                },
-                "url": {
-                    "type": "string"
-                }
-            }
-        },
         "dto.TodoCreate": {
             "description": "Todo creation request body",
             "type": "object",
@@ -1816,7 +1802,13 @@ const docTemplate = `{
                 "cost": {
                     "type": "number"
                 },
+                "end_time": {
+                    "type": "string"
+                },
                 "notes": {
+                    "type": "string"
+                },
+                "start_time": {
                     "type": "string"
                 },
                 "trip_accommodation_id": {
