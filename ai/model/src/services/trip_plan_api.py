@@ -5,161 +5,29 @@ import os
 import sys
 import logging
 from datetime import datetime, timedelta
-
-# Set up logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
+from src.agents.plan_model import PlanModel
+from src.utils.logger import setup_logger
+from src.models import (
+    TripPlanRequest,
+    TripPlanResponse,
+    SimpleTripPlanRequest
 )
-logger = logging.getLogger(__name__)
+from dotenv import load_dotenv
 
-# Setup proper import paths
+model = PlanModel()
+logger = setup_logger(__name__)
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+ENV_PATH = os.path.join(SCRIPT_DIR, '.env')
+load_dotenv(ENV_PATH)
+
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 
-# Initialize plan model
-try:
-    from src.plan_model import PlanModel
-    model = PlanModel()
-    logger.info("PlanModel imported successfully")
-except ImportError:
-    logger.warning("Failed to import PlanModel from src.plan_model, trying alternative import path")
-    try:
-        from ai.model.src.plan_model import PlanModel
-        model = PlanModel()
-        logger.info("PlanModel imported successfully from alternative path")
-    except ImportError as e:
-        logger.error(f"Failed to import PlanModel: {e}")
-        # For development, create a mock model
-        class MockPlanModel:
-            def generate_plan(self, input_data):
-                return {
-                    "itinerary": [
-                        {
-                            "day": 1,
-                            "date": "Day 1",
-                            "activities": []
-                        }
-                    ],
-                    "summary": {
-                        "total_duration": "1 day",
-                        "total_cost": 0
-                    }
-                }
-        model = MockPlanModel()
-        logger.warning("Using MockPlanModel for development")
-
-# Create router with tags for better API documentation
 router = APIRouter(tags=["Trip Planning"])
 
-# Models for trip plan retrieval
-class ImageInfo(BaseModel):
-    url: str
-    alt: str
 
-class RoomType(BaseModel):
-    name: str
-    bed_type: str
-    occupancy: str
-    price: str
-    tax_and_fee: str
-    conditions: str
-
-class Accommodation(BaseModel):
-    accommodation_id: str
-    name: str
-    description: str
-    location: str
-    city: str
-    image_url: List[ImageInfo]
-    price: float
-    unit: str
-    rating: float
-    destination_id: str
-    booking_link: str
-    elderly_friendly: bool
-    room_info: str
-    room_types: List[RoomType]
-    tax_info: str
-
-class AccommodationData(BaseModel):
-    accommodations: List[Accommodation]
-
-class Location(BaseModel):
-    lat: float
-    lon: float
-
-class Place(BaseModel):
-    place_id: str
-    name: str
-    description: str
-    address: str
-    main_image: str
-    images: List[ImageInfo]
-    rating: float
-    price: str
-    opening_hours: str
-    type: str
-    categories: str
-    url: str
-    destination_id: str
-    reviews: List[str]
-    duration: str
-
-class PlaceData(BaseModel):
-    places: List[Place]
-
-class Restaurant(BaseModel):
-    restaurant_id: str
-    name: str
-    description: str
-    address: str
-    cuisines: str
-    price_range: str
-    rating: float
-    main_image: str
-    photo_url: str
-    media_urls: str
-    opening_hours: str
-    is_opening: bool
-    is_booking: bool
-    is_delivery: bool
-    reviews: List[str]
-    num_reviews: int
-    review_summary: str
-    example_reviews: str
-    phone: str
-    url: str
-    destination_id: str
-    location: Location
-    services: List[str]
-
-class RestaurantData(BaseModel):
-    restaurants: List[Restaurant]
-
-class TripPlanRequest(BaseModel):
-    accommodation: Optional[AccommodationData] = None
-    places: Optional[PlaceData] = None
-    restaurants: Optional[RestaurantData] = None
-
-    # Allow additional properties for flexibility
-    class Config:
-        extra = "allow"
-
-class TripPlanResponse(BaseModel):
-    status: str
-    plan: Dict[str, Any] | None = None
-    error: str | None = None
-
-class SimpleTripPlanRequest(BaseModel):
-    destination: str
-    trip_name: Optional[str] = None
-    start_date: Optional[str] = None
-    end_date: Optional[str] = None
-    accommodations: List[Dict[str, Any]] = []
-    places: List[Dict[str, Any]] = []
-    restaurants: List[Dict[str, Any]] = []
 
 @router.post("/suggest/trip", response_model=TripPlanResponse)
 async def get_trip_plan(request: dict):

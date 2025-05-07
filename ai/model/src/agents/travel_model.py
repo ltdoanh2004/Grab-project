@@ -1,18 +1,14 @@
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
-from .vector_database import HotelVectorDatabase
-from .vector_database import PlaceVectorDatabase
-from .vector_database import FnBVectorDatabase
-from .promts.travel_promt import travel_suggestion_system_prompt
+from ..vector_database import HotelVectorDatabase, PlaceVectorDatabase, FnBVectorDatabase
+from ..promts.travel_promt import travel_suggestion_system_prompt
+from ..promts.function_promt import query_hotels, query_places, query_fnb, search_by_price_range, search_by_rating, search_by_category, search_by_location, search_by_menu_item
 from typing import List, Dict, Any, Optional
-import logging
+from ..utils.logger import setup_logger
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+# Set up logger for this module
+logger = setup_logger(__name__)
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ENV_PATH = os.path.join(SCRIPT_DIR, '.env')
@@ -20,18 +16,24 @@ load_dotenv(ENV_PATH)
 
 class TravelModel:
     def __init__(self):
-        self.hotel_db = HotelVectorDatabase()
-        self.place_db = PlaceVectorDatabase()
-        self.fnb_db = FnBVectorDatabase()
+        """
+        Initialize the travel model with OpenAI API key
+        """
         self.openai_client = OpenAI(api_key=os.getenv("OPEN_API_KEY"))
         self.model = "gpt-4o"
         
-        # Setup all databases during initialization
         logger.info("Setting up all databases...")
+        self.hotel_db = HotelVectorDatabase()
+        self.place_db = PlaceVectorDatabase()
+        self.fnb_db = FnBVectorDatabase()
+        
+        # Setup all databases during initialization
         self.hotel_db.set_up_pinecone()
         self.place_db.set_up_pinecone()
         self.fnb_db.set_up_pinecone()
-        logger.info("All databases setup complete")
+        
+        self.current_db = None
+        logger.info("All databases setup completed")
         
     def setup_database(self, db_type: str) -> bool:
         """
@@ -74,9 +76,29 @@ class TravelModel:
         Query FnB based on text input and return FnB IDs
         Limited to top 20 results
         """
-        self.current_db = self.fnb_db
-        top_k = min(top_k, 20)  # Enforce maximum of 20 results
-        return self.current_db.get_fnb_ids(query_text, top_k=top_k)
+        try:
+            self.current_db = self.fnb_db
+            top_k = min(top_k, 20)  # Enforce maximum of 20 results
+            
+            # Log the query attempt
+            logger.info(f"Attempting to query FnB with text: {query_text}, top_k: {top_k}")
+            
+            # Get results
+            results = self.current_db.get_fnb_ids(query_text, top_k=top_k)
+            
+            # Log the results
+            logger.info(f"FnB query returned {len(results)} results")
+            if not results:
+                logger.warning("No FnB results found, trying with broader context")
+                # Try with broader context if no results
+                broader_query = f"restaurant {query_text}"
+                results = self.current_db.get_fnb_ids(broader_query, top_k=top_k)
+                logger.info(f"Broader FnB query returned {len(results)} results")
+            
+            return results
+        except Exception as e:
+            logger.error(f"Error in query_fnb: {e}", exc_info=True)
+            return []
     
     def search_by_price_range(self, min_price: float, max_price: float, top_k: int = 5) -> List[str]:
         """
@@ -147,165 +169,14 @@ class TravelModel:
         Define available functions for the model
         """
         return [
-            {
-                "name": "query_hotels",
-                "description": "Query hotels based on text input (returns top 5 results)",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "query_text": {
-                            "type": "string",
-                            "description": "The query text to search for hotels"
-                        },
-                        "top_k": {
-                            "type": "integer",
-                            "description": "Number of hotels to return (limited to 5)",
-                            "default": 5,
-                            "maximum": 5
-                        }
-                    },
-                    "required": ["query_text"]
-                }
-            },
-            {
-                "name": "query_places",
-                "description": "Query places based on text input (returns top 20 results)",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "query_text": {
-                            "type": "string",
-                            "description": "The query text to search for places"
-                        },
-                        "top_k": {
-                            "type": "integer",
-                            "description": "Number of places to return (limited to 20)",
-                            "default": 20,
-                            "maximum": 20
-                        }
-                    },
-                    "required": ["query_text"]
-                }
-            },
-            {
-                "name": "query_fnb",
-                "description": "Query FnB based on text input (returns top 20 results)",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "query_text": {
-                            "type": "string",
-                            "description": "The query text to search for FnB"
-                        },
-                        "top_k": {
-                            "type": "integer",
-                            "description": "Number of FnB to return (limited to 20)",
-                            "default": 20,
-                            "maximum": 20
-                        }
-                    },
-                    "required": ["query_text"]
-                }
-            },
-            {
-                "name": "search_by_price_range",
-                "description": "Search within a specific price range",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "min_price": {
-                            "type": "number",
-                            "description": "Minimum price for search"
-                        },
-                        "max_price": {
-                            "type": "number",
-                            "description": "Maximum price for search"
-                        },
-                        "top_k": {
-                            "type": "integer",
-                            "description": "Number of results to return",
-                            "default": 5
-                        }
-                    },
-                    "required": ["min_price", "max_price"]
-                }
-            },
-            {
-                "name": "search_by_rating",
-                "description": "Search with minimum rating",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "min_rating": {
-                            "type": "number",
-                            "description": "Minimum rating for search"
-                        },
-                        "top_k": {
-                            "type": "integer",
-                            "description": "Number of results to return",
-                            "default": 5
-                        }
-                    },
-                    "required": ["min_rating"]
-                }
-            },
-            {
-                "name": "search_by_category",
-                "description": "Search by category",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "category": {
-                            "type": "string",
-                            "description": "Category to search for"
-                        },
-                        "top_k": {
-                            "type": "integer",
-                            "description": "Number of results to return",
-                            "default": 5
-                        }
-                    },
-                    "required": ["category"]
-                }
-            },
-            {
-                "name": "search_by_location",
-                "description": "Search places by location",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "location": {
-                            "type": "string",
-                            "description": "Location to search for"
-                        },
-                        "top_k": {
-                            "type": "integer",
-                            "description": "Number of results to return",
-                            "default": 5
-                        }
-                    },
-                    "required": ["location"]
-                }
-            },
-            {
-                "name": "search_by_menu_item",
-                "description": "Search FnB by menu item",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "item_name": {
-                            "type": "string",
-                            "description": "Menu item to search for"
-                        },
-                        "top_k": {
-                            "type": "integer",
-                            "description": "Number of results to return",
-                            "default": 5
-                        }
-                    },
-                    "required": ["item_name"]
-                }
-            }
+            query_hotels,
+            query_places,
+            query_fnb,
+            search_by_price_range,
+            search_by_rating,
+            search_by_category,
+            search_by_location,
+            search_by_menu_item
         ]
     
     def process_query(self, user_query: str) -> List[Dict[str, str]]:
@@ -387,6 +258,13 @@ class TravelModel:
             # Query restaurants (max 20 results)
             logger.info(f"Querying restaurants with context: {search_context}")
             restaurant_ids = self.query_fnb(search_context, top_k=20)
+            
+            # If no restaurant results, try with broader context
+            if not restaurant_ids:
+                logger.warning("No restaurant results found with original context, trying broader search")
+                broader_context = f"restaurant {search_context}"
+                restaurant_ids = self.query_fnb(broader_context, top_k=20)
+            
             for restaurant_id in restaurant_ids:
                 formatted_results.append({
                     "name": f"Restaurant {restaurant_id}",
@@ -404,7 +282,12 @@ class TravelModel:
                     {"name": "Local Restaurant", "type": "restaurant", "args": "local cuisine", "id": "restaurant_000001"}
                 ]
             
-            logger.info(f"Total recommendations: {len(formatted_results)}")
+            hotel_count = sum(1 for r in formatted_results if r["type"] == "accommodation")
+            place_count = sum(1 for r in formatted_results if r["type"] == "place")
+            restaurant_count = sum(1 for r in formatted_results if r["type"] == "restaurant")
+            
+            logger.info(f"Final result distribution: {hotel_count} hotels, {place_count} places, {restaurant_count} restaurants")
+            
             return formatted_results
             
         except Exception as e:

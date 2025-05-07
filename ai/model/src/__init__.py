@@ -1,3 +1,3 @@
 # AI Model Package 
-from .travel_model import TravelModel
-from .plan_model import PlanModel
+from .agents.travel_model import TravelModel
+from .agents.plan_model import PlanModel

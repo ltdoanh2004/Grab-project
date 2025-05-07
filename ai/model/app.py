@@ -8,15 +8,12 @@ and registering all router components from different modules.
 import os
 import sys
 import uvicorn
-import logging
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 
-# Set up logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+from src.utils.logger import setup_logger
+
+# Set up logger for this module
+logger = setup_logger(__name__)
 
 # Add the current directory to the path
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -32,8 +29,8 @@ app = FastAPI(
 
 def register_routers():
     try:
-        from api.backend_api import recommend_router
-        from api.trip_plan_api import router as trip_plan_router
+        from src.services.backend_api import recommend_router
+        from src.services.trip_plan_api import router as trip_plan_router
         
         app.include_router(recommend_router, prefix="/api/v1")
         app.include_router(trip_plan_router, prefix="/api/v1")
