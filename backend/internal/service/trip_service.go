@@ -19,7 +19,7 @@ type TripService interface {
 	CreateTrip(trip *dto.CreateTripRequest) (string, error)
 	SaveTrip(trip *dto.TripDTO) error
 	GetTrip(tripID string) (*dto.TripDTO, error)
-	SuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error)
+	SuggestTrip(userID string, activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error)
 }
 
 type tripService struct {
@@ -90,6 +90,8 @@ func (ts *tripService) CreateTrip(trip *dto.CreateTripRequest) (string, error) {
 				AccommodationID:     acc.AccommodationID,
 				CheckInDate:         acc.CheckInDate,
 				CheckOutDate:        acc.CheckOutDate,
+				StartTime:           acc.StartTime,
+				EndTime:             acc.EndTime,
 				Cost:                acc.Cost,
 				Notes:               acc.Notes,
 			}
@@ -194,6 +196,8 @@ func (ts *tripService) SaveTrip(trip *dto.TripDTO) error {
 				AccommodationID:     acc.AccommodationID,
 				CheckInDate:         acc.CheckInDate,
 				CheckOutDate:        acc.CheckOutDate,
+				StartTime:           acc.StartTime,
+				EndTime:             acc.EndTime,
 				Cost:                acc.Cost,
 				Notes:               acc.Notes,
 			}
@@ -307,6 +311,8 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTO, error) {
 				AccommodationID:     acc.AccommodationID,
 				CheckInDate:         acc.CheckInDate,
 				CheckOutDate:        acc.CheckOutDate,
+				StartTime:           acc.StartTime,
+				EndTime:             acc.EndTime,
 				Cost:                acc.Cost,
 				Notes:               acc.Notes,
 			})
@@ -475,238 +481,255 @@ func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, e
 func (ts *tripService) mockAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error) {
 	sampleJSON := `
 {
-  "trip_name": "Trip to Hanoi",
-  "start_date": "2025-05-04",
-  "end_date": "2025-05-06",
-  "user_id": "user123",
-  "destination": "hanoi",
-  "plan_by_day": [
-	{
-	  "date": "2025-05-04",
-	  "day_title": "Ngày 1: Khám phá biển",
-	  "segments": [
-		{
-		  "time_of_day": "morning",
-		  "activities": [
-			{
-			  "id": "place_morning_day1",
-			  "type": "place",
-			  "name": "WanderOn",
-			  "start_time": "08:00",
-			  "end_time": "10:00",
-			  "description": "WanderOn là một công ty du lịch tuyệt vời tại Hà Nội. Công ty cung cấp các tour du lịch chuyên biệt tại Hà Nội và các tỉnh lân cận, với những trải nghiệm thú vị và đội ngũ hướng dẫn viên chuyên nghiệp. Nếu bạn muốn khám phá Hà Nội theo cách đặc biệt và đầy thú vị, hãy đến với WanderOn. Địa",
-			  "address": "",
-			  "categories": "sightseeing",
-			  "duration": "2h",
-			  "opening_hours": "08:00-17:00",
-			  "rating": 4.0,
-			  "price": 0,
-			  "image_url": "",
-			  "url": ""
-			}
-		  ]
-		},
-		{
-		  "time_of_day": "afternoon",
-		  "activities": [
-			{
-			  "id": "place_011198",
-			  "type": "place",
-			  "name": "WanderOn",
-			  "start_time": "14:00",
-			  "end_time": "16:00",
-			  "description": "An evolving & expanding backpacking travel community, we organize well-crafted tours for thousands of enthusiastic travelers. As professionals, travel is our passion & life-work; we have the knowledge & experience to ensure you enjoy an exceptional travel experience! It’s about going on a Trip ourselves. Talk to us about your Travel plans,& let our specialists make your dream holiday perfect!",
-			  "address": "",
-			  "categories": "",
-			  "duration": "",
-			  "opening_hours": "12:00 AM - 11:59 PM",
-			  "rating": 4.9,
-			  "price": 37.0,
-			  "image_url": "",
-			  "url": "https://www.tripadvisor.com/Attraction_Review-g304551-d15013133-Reviews-WanderOn-New_Delhi_National_Capital_Territory_of_Delhi.html"
-			}
-		  ]
-		},
-		{
-		  "time_of_day": "evening",
-		  "activities": [
-			{
-			  "id": "restaurant_022913",
-			  "type": "restaurant",
-			  "name": "Busan Korean Food - Nguyễn Tri Phương",
-			  "start_time": "19:00",
-			  "end_time": "21:00",
-			  "description": "",
-			  "address": "272A Nguyễn Tri Phương, P. 4, Quận 10, TP. HCM",
-			  "cuisines": "",
-			  "price_range": "",
-			  "rating": 5.8,
-			  "phone": "Đang cập nhật",
-			  "services": [
-				{
-				  "name": "ShopeeFood",
-				  "url": "https://www.deliverynow.vn/ho-chi-minh/busan-korean-food-nguyen-tri-phuong",
-				  "type": 0
-				}
-			  ],
-			  "image_url": "",
-			  "url": "https://www.foody.vn/ho-chi-minh/busan-korean-food-nguyen-tri-phuong"
-			}
-		  ]
-		}
-	  ]
-	},
-	{
-	  "date": "2025-05-05",
-	  "day_title": "Ngày 2: Khám phá núi",
-	  "segments": [
-		{
-		  "time_of_day": "morning",
-		  "activities": [
-			{
-			  "id": "WanderOn_morning_day2",
-			  "type": "place",
-			  "name": "WanderOn",
-			  "start_time": "08:00",
-			  "end_time": "10:00",
-			  "description": "WanderOn là một trong những địa điểm tuyệt vời để bắt đầu ngày mới. Nơi đây có khung cảnh đẹp và yên bình, mang lại cho bạn cảm giác thư thái khi ngắm nhìn một bức tranh thiên nhiên tuyệt vời của Hà Nội.",
-			  "address": "Số 7 Ngõ 118 Đường Quán Thánh, Ba Đình, Hà Nội",
-			  "categories": "sightseeing",
-			  "duration": "",
-			  "opening_hours": "08:00-17:00",
-			  "rating": 4.0,
-			  "price": 0,
-			  "image_url": "",
-			  "url": ""
-			}
-		  ]
-		},
-		{
-		  "time_of_day": "afternoon",
-		  "activities": [
-			{
-			  "id": "place_011608",
-			  "type": "place",
-			  "name": "WanderOn",
-			  "start_time": "14:00",
-			  "end_time": "16:00",
-			  "description": "An evolving & expanding backpacking travel community, we organize well-crafted tours for thousands of enthusiastic travelers. As professionals, travel is our passion & life-work; we have the knowledge & experience to ensure you enjoy an exceptional travel experience! It’s about going on a Trip ourselves. Talk to us about your Travel plans,& let our specialists make your dream holiday perfect!",
-			  "address": "",
-			  "categories": "",
-			  "duration": "",
-			  "opening_hours": "12:00 AM - 11:59 PM",
-			  "rating": 4.9,
-			  "price": 37.0,
-			  "image_url": "",
-			  "url": "https://www.tripadvisor.com/Attraction_Review-g304551-d15013133-Reviews-WanderOn-New_Delhi_National_Capital_Territory_of_Delhi.html"
-			}
-		  ]
-		},
-		{
-		  "time_of_day": "evening",
-		  "activities": [
-			{
-			  "id": "restaurant_022911",
-			  "type": "restaurant",
-			  "name": "Trung Nguyên Legend Coffee - 219 Lý Tự Trọng",
-			  "start_time": "19:00",
-			  "end_time": "21:00",
-			  "description": "",
-			  "address": "219 Lý Tự Trọng, P. Bến Thành, Quận 1, TP. HCM",
-			  "cuisines": "",
-			  "price_range": "",
-			  "rating": 7.66,
-			  "phone": "(028) 38 258 847",
-			  "services": [
-				{
-				  "name": "ShopeeFood",
-				  "url": "https://www.deliverynow.vn/ho-chi-minh/trung-nguyen-legend-coffee-219-ly-tu-trong",
-				  "type": 0
-				}
-			  ],
-			  "image_url": "",
-			  "url": "https://www.foody.vn/ho-chi-minh/trung-nguyen-legend-coffee-219-ly-tu-trong"
-			}
-		  ]
-		}
-	  ]
-	},
-	{
-	  "date": "2025-05-06",
-	  "day_title": "Ngày 3: Khám phá văn hóa",
-	  "segments": [
-		{
-		  "time_of_day": "morning",
-		  "activities": [
-			{
-			  "id": "place_morning_day3",
-			  "type": "place",
-			  "name": "WanderOn",
-			  "start_time": "08:00",
-			  "end_time": "10:00",
-			  "description": "WanderOn là một trung tâm nghệ thuật và văn hóa của Hà Nội, nơi bạn có thể tìm hiểu về lịch sử, nghệ thuật và văn hóa dân tộc Việt Nam. Đón xem những buổi diễn trình diễn truyền thống đặc sắc và tham quan các triển lãm nghệ thuật độc đáo tại đây.",
-			  "address": "Nguyễn Thị Minh Khai, Đống",
-			  "categories": "sightseeing",
-			  "duration": "2h",
-			  "opening_hours": "08:00-17:00",
-			  "rating": 4.0,
-			  "price": 0,
-			  "image_url": "",
-			  "url": ""
-			}
-		  ]
-		},
-		{
-		  "time_of_day": "afternoon",
-		  "activities": [
-			{
-			  "id": "place_011475",
-			  "type": "place",
-			  "name": "WanderOn",
-			  "start_time": "14:00",
-			  "end_time": "16:00",
-			  "description": "An evolving & expanding backpacking travel community, we organize well-crafted tours for thousands of enthusiastic travelers. As professionals, travel is our passion & life-work; we have the knowledge & experience to ensure you enjoy an exceptional travel experience! It’s about going on a Trip ourselves. Talk to us about your Travel plans,& let our specialists make your dream holiday perfect!",
-			  "address": "",
-			  "categories": "",
-			  "duration": "",
-			  "opening_hours": "12:00 AM - 11:59 PM",
-			  "rating": 4.9,
-			  "price": 37.0,
-			  "image_url": "",
-			  "url": "https://www.tripadvisor.com/Attraction_Review-g304551-d15013133-Reviews-WanderOn-New_Delhi_National_Capital_Territory_of_Delhi.html"
-			}
-		  ]
-		},
-		{
-		  "time_of_day": "evening",
-		  "activities": [
-			{
-			  "id": "restaurant_021947",
-			  "type": "restaurant",
-			  "name": "Cafe Zoom ",
-			  "start_time": "19:00",
-			  "end_time": "21:00",
-			  "description": "",
-			  "address": "169A Đề Thám, P. Phạm Ngũ Lão, Quận 1, TP. HCM",
-			  "cuisines": "",
-			  "price_range": "",
-			  "rating": 7.55,
-			  "phone": "(028) 39 203 897",
-			  "services": [
-				{
-				  "name": "ShopeeFood",
-				  "url": "https://www.deliverynow.vn/ho-chi-minh/cafe-zoom",
-				  "type": 0
-				}
-			  ],
-			  "image_url": "",
-			  "url": "https://www.foody.vn/ho-chi-minh/cafe-zoom"
-			}
-		  ]
-		}
-	  ]
-	}
-  ]
+    "trip_name": "Trip to Hanoi",
+    "start_date": "2025-05-06",
+    "end_date": "2025-05-08",
+    "user_id": "user123",
+    "destination": "hanoi",
+    "plan_by_day": [
+        {
+            "date": "2025-05-06",
+            "day_title": "Ngày 1: Khám phá nét đẹp thủ đô Hà Nội",
+            "segments": [
+                {
+                    "time_of_day": "morning",
+                    "activities": [
+                        {
+                            "id": "hotel_006100",
+                            "type": "accommodation",
+                            "name": "Hanoi Capital Hostel & Travel",
+                            "start_time": "08:00",
+                            "end_time": "10:00",
+                            "description": "Bạn sẽ được tận hưởng bữa sáng ngon miệng tại khách sạn."
+                        },
+                        {
+                            "id": "place_000481",
+                            "type": "place",
+                            "name": "Ha Noi",
+                            "start_time": "10:30",
+                            "end_time": "12:00",
+                            "description": "Chúng ta sẽ khám phá nét đẹp của thủ đô Hà Nội."
+                        }
+                    ]
+                },
+                {
+                    "time_of_day": "afternoon",
+                    "activities": [
+                        {
+                            "id": "restaurant_020781",
+                            "type": "restaurant",
+                            "name": "Beefsteak Nam Sơn - Nguyễn Thị Minh Khai",
+                            "start_time": "12:30",
+                            "end_time": "13:30",
+                            "description": "Bạn sẽ được thưởng thức bữa trưa tại Beefsteak Nam Sơn."
+                        },
+                        {
+                            "id": "place_011825",
+                            "type": "place",
+                            "name": "Hanoi Old Quarter",
+                            "start_time": "14:00",
+                            "end_time": "16:30",
+                            "description": "Chúng ta sẽ tham quan phố cổ Hà Nội, nơi lưu giữ nét cổ kính của thủ đô."
+                        }
+                    ]
+                },
+                {
+                    "time_of_day": "evening",
+                    "activities": [
+                        {
+                            "id": "restaurant_000880",
+                            "type": "restaurant",
+                            "name": "Phở Hà Nội - Hồng Hà",
+                            "start_time": "18:00",
+                            "end_time": "19:00",
+                            "description": "Thưởng thức món phở truyền thống, đặc sản của Hà Nội."
+                        },
+                        {
+                            "id": "place_000159",
+                            "type": "place",
+                            "name": "City Game Hanoi",
+                            "start_time": "19:30",
+                            "end_time": "21:30",
+                            "description": "Chúng ta sẽ kết thúc ngày bằng những trò chơi vui nhộn tại City Game Hanoi."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "date": "2025-05-07",
+            "day_title": "Ngày 2: Hành trình khám phá Hà Nội cổ kính",
+            "segments": [
+                {
+                    "time_of_day": "morning",
+                    "activities": [
+                        {
+                            "id": "hotel_006100",
+                            "type": "accommodation",
+                            "name": "Hanoi Capital Hostel & Travel",
+                            "start_time": "08:00",
+                            "end_time": "10:00",
+                            "description": "Bạn sẽ bắt đầu ngày mới với không gian thoáng đãng, yên tĩnh tại khách sạn.",
+                            "location": "Hà Nội",
+                            "rating": 4.5,
+                            "price": 850000,
+                            "image_url": "",
+                            "url": ""
+                        },
+                        {
+                            "id": "place_000481",
+                            "type": "place",
+                            "name": "Ha Noi (Hanoi, Vietnam)",
+                            "start_time": "10:30",
+                            "end_time": "12:00",
+                            "description": "Khám phá nét đẹp truyền thống, văn hóa phong phú của Hà Nội.",
+                            "address": "Hà Nội",
+                            "categories": "sightseeing",
+                            "rating": 4.0,
+                            "price": 50000,
+                            "image_url": "",
+                            "url": ""
+                        }
+                    ]
+                },
+                {
+                    "time_of_day": "afternoon",
+                    "activities": [
+                        {
+                            "id": "restaurant_020781",
+                            "type": "restaurant",
+                            "name": "Beefsteak Nam Sơn - Nguyễn Thị Minh Khai",
+                            "start_time": "12:30",
+                            "end_time": "13:30",
+                            "description": "Thưởng thức bữa trưa với thịt bò nướng thơm ngon, mềm mại.",
+                            "address": "Hà Nội",
+                            "cuisines": "Steakhouse",
+                            "rating": 4.5,
+                            "phone": "",
+                            "image_url": "",
+                            "url": ""
+                        },
+                        {
+                            "id": "place_011825",
+                            "type": "place",
+                            "name": "Hanoi Old Quarter",
+                            "start_time": "14:00",
+                            "end_time": "17:00",
+                            "description": "Dạo quanh phố cổ Hà Nội, thưởng thức không khí sôi động, đậm chất lịch sử.",
+                            "address": "Hà Nội",
+                            "categories": "sightseeing",
+                            "rating": 4.5,
+                            "price": 0,
+                            "image_url": "",
+                            "url": ""
+                        }
+                    ]
+                },
+                {
+                    "time_of_day": "evening",
+                    "activities": [
+                        {
+                            "id": "restaurant_000880",
+                            "type": "restaurant",
+                            "name": "Phở Hà Nội - Hồng Hà",
+                            "start_time": "18:00",
+                            "end_time": "19:00",
+                            "description": "Thưởng thức hương vị đặc trưng của phở Hà Nội, món ăn truyền thống.",
+                            "address": "Hà Nội",
+                            "cuisines": "Vietnamese",
+                            "rating": 4.2,
+                            "phone": "",
+                            "image_url": "",
+                            "url": ""
+                        },
+                        {
+                            "id": "place_000300",
+                            "type": "place",
+                            "name": "Ha Noi Nail",
+                            "start_time": "19:30",
+                            "end_time": "21:00",
+                            "description": "Chăm sóc bản thân tại Ha Noi Nail, tận hưởng dịch vụ chất lượng cao.",
+                            "address": "Hà Nội",
+                            "categories": "beauty_salon",
+                            "rating": 4.0,
+                            "price": 150000,
+                            "image_url": "",
+                            "url": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "date": "2025-05-08",
+            "day_title": "Ngày 3: Khám phá văn hóa và ẩm thực Hà Nội",
+            "segments": [
+                {
+                    "time_of_day": "morning",
+                    "activities": [
+                        {
+                            "id": "hotel_001980",
+                            "type": "accommodation",
+                            "name": "GRAND CITITEL Hanoi Hotel & Spa",
+                            "start_time": "08:00",
+                            "end_time": "10:00",
+                            "description": "Bạn sẽ được thưởng thức bữa sáng ngon miệng tại khách sạn."
+                        },
+                        {
+                            "id": "place_011825",
+                            "type": "place",
+                            "name": "Hanoi Old Quarter",
+                            "start_time": "10:30",
+                            "end_time": "12:00",
+                            "description": "Chúng ta sẽ dạo quanh phố cổ Hà Nội, nơi lịch sử và hiện đại giao thoa."
+                        }
+                    ]
+                },
+                {
+                    "time_of_day": "afternoon",
+                    "activities": [
+                        {
+                            "id": "restaurant_020781",
+                            "type": "restaurant",
+                            "name": "Beefsteak Nam Sơn - Nguyễn Thị Minh Khai",
+                            "start_time": "12:30",
+                            "end_time": "14:00",
+                            "description": "Bạn sẽ được thưởng thức bữa trưa với món bò nổi tiếng của Hà Nội."
+                        },
+                        {
+                            "id": "place_011374",
+                            "type": "place",
+                            "name": "Hanoi Old Quarter",
+                            "start_time": "14:30",
+                            "end_time": "17:00",
+                            "description": "Tiếp tục hành trình khám phá phố cổ, thăm các cửa hàng lưu niệm và nghệ thuật đường phố."
+                        }
+                    ]
+                },
+                {
+                    "time_of_day": "evening",
+                    "activities": [
+                        {
+                            "id": "restaurant_000880",
+                            "type": "restaurant",
+                            "name": "Phở Hà Nội - Hồng Hà",
+                            "start_time": "18:00",
+                            "end_time": "20:00",
+                            "description": "Bạn sẽ được thưởng thức món phở nổi tiếng thế giới trong bữa tối."
+                        },
+                        {
+                            "id": "place_000159",
+                            "type": "place",
+                            "name": "City Game Hanoi",
+                            "start_time": "20:30",
+                            "end_time": "22:00",
+                            "description": "Chúng ta sẽ kết thúc ngày bằng một đêm vui chơi tại City Game Hanoi."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }
 `
 	var result dto.CreateTripRequestByDate
@@ -716,10 +739,9 @@ func (ts *tripService) mockAISuggestTrip(activities dto.TripSuggestionRequest, e
 	return &result, nil
 }
 
-func (ts *tripService) SuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error) {
+func (ts *tripService) SuggestTrip(userID string, activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error) {
 	suggestionByDate, err := ts.CallAISuggestTrip(activities, endpoint)
-	fmt.Println("suggestionByDate", suggestionByDate)
-	fmt.Println("err", err)
+	// suggestionByDate, err := ts.mockAISuggestTrip(activities, endpoint)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get trip suggestion: %w", err)
 	}
@@ -727,6 +749,13 @@ func (ts *tripService) SuggestTrip(activities dto.TripSuggestionRequest, endpoin
 	if err != nil {
 		return nil, fmt.Errorf("failed to convert trip suggestion: %w", err)
 	}
+	suggestion.UserID = userID
+
+	_, err = ts.CreateTrip(&suggestion)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create trip: %w", err)
+	}
+
 	newSuggestionByDate, err := dto.ConvertToCreateTripRequestByDate(suggestion)
 	if err != nil {
 		return nil, fmt.Errorf("failed to convert trip suggestion: %w", err)

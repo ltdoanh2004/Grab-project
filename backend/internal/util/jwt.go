@@ -50,7 +50,7 @@ func GenerateRefreshToken(userId string) (string, error) {
 // ValidateAccessToken validates the access token and returns its claims.
 func ValidateAccessToken(tokenString string) (*AccessClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &AccessClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return config.AppConfig.Token.AccessTokenSecret, nil
+		return []byte(config.AppConfig.Token.AccessTokenSecret), nil
 	})
 	if err != nil {
 		return nil, err
@@ -67,7 +67,7 @@ func ValidateAccessToken(tokenString string) (*AccessClaims, error) {
 // ValidateRefreshToken validates the refresh token and returns its claims.
 func ValidateRefreshToken(tokenString string) (*RefreshClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &RefreshClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return config.AppConfig.Token.RefreshTokenSecret, nil
+		return []byte(config.AppConfig.Token.RefreshTokenSecret), nil
 	})
 	if err != nil {
 		return nil, err
