@@ -31,16 +31,12 @@ app = FastAPI(
 )
 
 def register_routers():
-    """Register all router components from different modules"""
     try:
-        # Import routers
-        from api.backend_api import recommend_router, backend_router
+        from api.backend_api import recommend_router
         from api.trip_plan_api import router as trip_plan_router
         
-        # Register routers with appropriate prefixes
         app.include_router(recommend_router, prefix="/api/v1")
         app.include_router(trip_plan_router, prefix="/api/v1")
-        app.include_router(backend_router, prefix="/api/v1")
         
         logger.info("All routers registered successfully")
     except Exception as e:
