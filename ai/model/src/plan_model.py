@@ -26,7 +26,7 @@ from .utils.helper_function import extract_image_url
 from dotenv import load_dotenv
 from langchain_core.output_parsers import JsonOutputParser
 from langchain.prompts import PromptTemplate
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 
 from utils.utils import save_data_to_json
 

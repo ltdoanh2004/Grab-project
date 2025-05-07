@@ -8,14 +8,12 @@ from .promts.travel_promt import travel_suggestion_system_prompt
 from typing import List, Dict, Any, Optional
 import logging
 
-# Set up logging    
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
-# Load environment variables
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ENV_PATH = os.path.join(SCRIPT_DIR, '.env')
 load_dotenv(ENV_PATH)
@@ -26,8 +24,14 @@ class TravelModel:
         self.place_db = PlaceVectorDatabase()
         self.fnb_db = FnBVectorDatabase()
         self.openai_client = OpenAI(api_key=os.getenv("OPEN_API_KEY"))
-        self.model = "gpt-4o-mini"
-        self.current_db = None
+        self.model = "gpt-4o"
+        
+        # Setup all databases during initialization
+        logger.info("Setting up all databases...")
+        self.hotel_db.set_up_pinecone()
+        self.place_db.set_up_pinecone()
+        self.fnb_db.set_up_pinecone()
+        logger.info("All databases setup complete")
         
     def setup_database(self, db_type: str) -> bool:
         """
@@ -35,55 +39,43 @@ class TravelModel:
         """
         try:
             if db_type == "hotels":
-                self.hotel_db.set_up_pinecone()
                 self.current_db = self.hotel_db
             elif db_type == "places":
-                self.place_db.set_up_pinecone()
                 self.current_db = self.place_db
             elif db_type == "fnb":
-                self.fnb_db.set_up_pinecone()
                 self.current_db = self.fnb_db
             else:
                 raise ValueError(f"Unknown database type: {db_type}")
             return True
         except Exception as e:
-            print(f"Error setting up database: {e}")
+            logger.error(f"Error setting up database: {e}")
             return False
             
     def query_hotels(self, query_text: str, top_k: int = 5) -> List[str]:
         """
         Query hotels based on text input and return hotel IDs
+        Limited to top 5 results
         """
-        # Double-check that hotel database is set up
-        if not self.current_db or not isinstance(self.current_db, HotelVectorDatabase):
-            logger.warning("Hotel database was not set up. Setting up now...")
-            self.setup_database("hotels")
-            
-        # Get hotel IDs from vector database
+        self.current_db = self.hotel_db
+        top_k = min(top_k, 5)  # Enforce maximum of 5 results
         return self.current_db.get_hotel_ids(query_text, top_k=top_k)
     
-    def query_places(self, query_text: str, top_k: int = 5) -> List[str]:
+    def query_places(self, query_text: str, top_k: int = 20) -> List[str]:
         """
         Query places based on text input and return place IDs
+        Limited to top 20 results
         """
-        # Double-check that places database is set up
-        if not self.current_db or not isinstance(self.current_db, PlaceVectorDatabase):
-            logger.warning("Places database was not set up. Setting up now...")
-            self.setup_database("places")
-            
-        # Get place IDs from vector database
+        self.current_db = self.place_db
+        top_k = min(top_k, 20)  # Enforce maximum of 20 results
         return self.current_db.get_place_ids(query_text, top_k=top_k)
     
-    def query_fnb(self, query_text: str, top_k: int = 5) -> List[str]:
+    def query_fnb(self, query_text: str, top_k: int = 20) -> List[str]:
         """
         Query FnB based on text input and return FnB IDs
+        Limited to top 20 results
         """
-        # Double-check that FnB database is set up
-        if not self.current_db or not isinstance(self.current_db, FnBVectorDatabase):
-            logger.warning("FnB database was not set up. Setting up now...")
-            self.setup_database("fnb")
-            
-        # Get FnB IDs from vector database
+        self.current_db = self.fnb_db
+        top_k = min(top_k, 20)  # Enforce maximum of 20 results
         return self.current_db.get_fnb_ids(query_text, top_k=top_k)
     
     def search_by_price_range(self, min_price: float, max_price: float, top_k: int = 5) -> List[str]:
@@ -156,23 +148,8 @@ class TravelModel:
         """
         return [
             {
-                "name": "setup_database",
-                "description": "Setup database for specific type",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "db_type": {
-                            "type": "string",
-                            "description": "Type of database (hotels, places, fnb)",
-                            "enum": ["hotels", "places", "fnb"]
-                        }
-                    },
-                    "required": ["db_type"]
-                }
-            },
-            {
                 "name": "query_hotels",
-                "description": "Query hotels based on text input",
+                "description": "Query hotels based on text input (returns top 5 results)",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -182,8 +159,9 @@ class TravelModel:
                         },
                         "top_k": {
                             "type": "integer",
-                            "description": "Number of hotels to return",
-                            "default": 5
+                            "description": "Number of hotels to return (limited to 5)",
+                            "default": 5,
+                            "maximum": 5
                         }
                     },
                     "required": ["query_text"]
@@ -191,7 +169,7 @@ class TravelModel:
             },
             {
                 "name": "query_places",
-                "description": "Query places based on text input",
+                "description": "Query places based on text input (returns top 20 results)",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -201,8 +179,9 @@ class TravelModel:
                         },
                         "top_k": {
                             "type": "integer",
-                            "description": "Number of places to return",
-                            "default": 5
+                            "description": "Number of places to return (limited to 20)",
+                            "default": 20,
+                            "maximum": 20
                         }
                     },
                     "required": ["query_text"]
@@ -210,7 +189,7 @@ class TravelModel:
             },
             {
                 "name": "query_fnb",
-                "description": "Query FnB based on text input",
+                "description": "Query FnB based on text input (returns top 20 results)",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -220,8 +199,9 @@ class TravelModel:
                         },
                         "top_k": {
                             "type": "integer",
-                            "description": "Number of FnB to return",
-                            "default": 5
+                            "description": "Number of FnB to return (limited to 20)",
+                            "default": 20,
+                            "maximum": 20
                         }
                     },
                     "required": ["query_text"]
@@ -336,7 +316,6 @@ class TravelModel:
         try:
             logger.info(f"Processing query: {user_query}")
             
-            # Initial chat completion to determine which functions to call
             messages = [
                 {
                     "role": "system", 
@@ -345,13 +324,7 @@ class TravelModel:
                 {"role": "user", "content": user_query}
             ]
             
-            # Always setup all databases first
-            for db_type in ["hotels", "places", "fnb"]:
-                logger.info(f"Force setting up database: {db_type}")
-                self.setup_database(db_type)
-                messages.append({"role": "assistant", "content": f"Database {db_type} has been set up."})
-            
-            logger.debug("Sending request to OpenAI after forced database setup...")
+            logger.debug("Sending request to OpenAI...")
             response = self.openai_client.chat.completions.create(
                 model=self.model,
                 messages=messages,
@@ -363,7 +336,6 @@ class TravelModel:
             response_message = response.choices[0].message
             logger.info(f"Model response message: {response_message}")
             
-            # Get the search context from the model response (if any)
             search_context = user_query
             if response_message.function_call:
                 function_name = response_message.function_call.name
@@ -371,24 +343,25 @@ class TravelModel:
                 logger.info(f"Function call: {function_name}")
                 logger.debug(f"Function arguments: {function_args}")
                 
-                # Extract query_text from function arguments if available
                 if "query_text" in function_args:
                     search_context = function_args.get("query_text", user_query)
                     
-                # Get top_k parameter if specified
-                top_k = function_args.get("top_k", 10)
+                # Set appropriate top_k based on function type
+                if function_name == "query_hotels":
+                    top_k = min(function_args.get("top_k", 5), 5)
+                else:
+                    top_k = min(function_args.get("top_k", 20), 20)
             else:
-                top_k = 10
+                # Default to maximum allowed values
+                top_k = 20
                 
-            # Force calling all three query functions with the same context
-            logger.info("Force calling all query functions to ensure complete results")
+            logger.info("Querying all databases with context")
             
-            # Results will store all recommendations
             formatted_results = []
             
-            # Query hotels
-            logger.info(f"Force querying hotels with context: {search_context}")
-            hotel_ids = self.query_hotels(search_context, top_k=top_k)
+            # Query hotels (max 5 results)
+            logger.info(f"Querying hotels with context: {search_context}")
+            hotel_ids = self.query_hotels(search_context, top_k=5)
             for hotel_id in hotel_ids:
                 formatted_results.append({
                     "name": f"Hotel {hotel_id}",
@@ -398,9 +371,9 @@ class TravelModel:
                 })
             logger.info(f"Added {len(hotel_ids)} hotel recommendations")
             
-            # Query places
-            logger.info(f"Force querying places with context: {search_context}")
-            place_ids = self.query_places(search_context, top_k=top_k)
+            # Query places (max 20 results)
+            logger.info(f"Querying places with context: {search_context}")
+            place_ids = self.query_places(search_context, top_k=20)
             for place_id in place_ids:
                 formatted_results.append({
                     "name": f"Place {place_id}",
@@ -411,9 +384,9 @@ class TravelModel:
             logger.info(f"place_ids: {place_ids}")
             logger.info(f"Added {len(place_ids)} place recommendations")
             
-            # Query restaurants
-            logger.info(f"Force querying restaurants with context: {search_context}")
-            restaurant_ids = self.query_fnb(search_context, top_k=top_k)
+            # Query restaurants (max 20 results)
+            logger.info(f"Querying restaurants with context: {search_context}")
+            restaurant_ids = self.query_fnb(search_context, top_k=20)
             for restaurant_id in restaurant_ids:
                 formatted_results.append({
                     "name": f"Restaurant {restaurant_id}",
@@ -423,7 +396,6 @@ class TravelModel:
                 })
             logger.info(f"Added {len(restaurant_ids)} restaurant recommendations")
             
-            # If no results, provide fallback recommendations
             if not formatted_results:
                 logger.warning("No recommendations found, using fallback suggestions")
                 formatted_results = [
@@ -433,11 +405,10 @@ class TravelModel:
                 ]
             
             logger.info(f"Total recommendations: {len(formatted_results)}")
-            return formatted_results[:30]  # Limit to top 10 recommendations
+            return formatted_results
             
         except Exception as e:
             logger.error(f"Error in process_query: {e}", exc_info=True)
-            # Return fallback recommendations in case of error
             return [
                 {"name": "Luxury Hotel", "type": "accommodation", "args": "luxury", "id": "hotel_000001"},
                 {"name": "City Museum", "type": "place", "args": "cultural", "id": "place_000001"},
