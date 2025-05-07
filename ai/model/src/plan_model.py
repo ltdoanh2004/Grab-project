@@ -21,6 +21,8 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 import time
 
+from .promts.plan_promt import JSON_SCHEMA_EXAMPLE, system_plan_prompt
+
 from dotenv import load_dotenv
 from langchain.agents import Tool, initialize_agent
 from langchain.chains import LLMChain
@@ -30,9 +32,7 @@ from langchain_openai import OpenAI
 from langchain.chat_models import ChatOpenAI
 
 from utils.utils import save_data_to_json
-# ---------------------------------------------------------------------------
-# 🔧 ENV & Logging
-# ---------------------------------------------------------------------------
+
 ROOT = Path(__file__).resolve().parent
 print(ROOT)
 load_dotenv(ROOT / ".env")
@@ -40,108 +40,6 @@ load_dotenv(ROOT / ".env")
 logging.basicConfig(level=logging.INFO, format="%(levelname)s - %(message)s")
 log = logging.getLogger("travel_planner")
 
-# ---------------------------------------------------------------------------
-# 📜 Example JSON schema we expect from LLM
-# ---------------------------------------------------------------------------
-JSON_SCHEMA_EXAMPLE = {
-    "trip_name": "<string – ex: Đà Nẵng nghỉ dưỡng 4 ngày>",
-    "start_date": "YYYY-MM-DD",
-    "end_date": "YYYY-MM-DD",
-    "user_id": "<string>",
-    "destination": "<string>",
-    "plan_by_day": [
-        {
-            "date": "YYYY-MM-DD",
-            "day_title": "Ngày 1: Khám phá biển",
-            "segments": [
-                {
-                    "time_of_day": "morning",
-                    "activities": [
-                        {
-                            "id": "<string>",
-                            "type": "accommodation | place | restaurant",
-                            "name": "<string>",
-                            "start_time": "HH:MM",
-                            "end_time": "HH:MM",
-                            "description": "<string>",
-                            "location": "<string>",
-                            "rating": "<number>",
-                            "price": "<number or string>",
-                            "image_url": "<string>",
-                            "url": "<string>"
-                        }
-                    ]
-                },
-                {
-                    "time_of_day": "afternoon",
-                    "activities": [
-                        {
-                            "id": "<string>",
-                            "type": "place",
-                            "name": "<string>",
-                            "start_time": "HH:MM",
-                            "end_time": "HH:MM",
-                            "description": "<string>",
-                            "location": "<string>",
-                            "rating": "<number>",
-                            "price": "<number or string>",
-                            "image_url": "<string>",
-                            "url": "<string>"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "date": "YYYY-MM-DD",
-            "day_title": "Ngày 2: Khám phá núi",
-            "segments": [
-                {
-                    "time_of_day": "morning",
-                    "activities": [
-                        {
-                            "id": "<string>",
-                            "type": "place",
-                            "name": "<string>",
-                            "start_time": "HH:MM",
-                            "end_time": "HH:MM",
-                            "description": "<string>",
-                            "location": "<string>",
-                            "rating": "<number>",
-                            "price": "<number or string>",
-                            "image_url": "<string>",
-                            "url": "<string>"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "date": "YYYY-MM-DD",
-            "day_title": "Ngày 3: Khám phá ẩm thực",
-            "segments": [
-                {
-                    "time_of_day": "morning",
-                    "activities": [
-                        {
-                            "id": "<string>",
-                            "type": "restaurant",
-                            "name": "<string>",
-                            "start_time": "HH:MM",
-                            "end_time": "HH:MM",
-                            "description": "<string>",
-                            "location": "<string>",
-                            "rating": "<number>",
-                            "price": "<number or string>",
-                            "image_url": "<string>",
-                            "url": "<string>"
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-}
 
 FORMAT_INSTRUCTIONS = (
     "Respond ONLY with VALID minified JSON (no markdown) that matches "
@@ -173,8 +71,8 @@ class PlanModel:
         self.llm = ChatOpenAI(
             api_key=os.getenv("OPEN_API_KEY"), 
             temperature=temperature,
-            model="gpt-4",  # Sử dụng GPT-4 để có kết quả toàn diện hơn
-            max_tokens=4000  # Tăng giới hạn token để tránh bị cắt giữa chừng
+            model="gpt-4",  
+            max_tokens=4000  
         )
         self.parser = json_parser  # langchain JSON parser
 
@@ -244,25 +142,7 @@ class PlanModel:
                 "plan_by_day": []
             }
             
-            # System prompt for more control
-            system_prompt = """
-            Chuyên gia lập kế hoạch du lịch Việt Nam. Tạo lịch trình hấp dẫn dưới dạng JSON.
-            
-            CHÚ Ý QUAN TRỌNG:
-            1. CHỈ TRẢ VỀ JSON THUẦN TÚY! KHÔNG THÊM BẤT KỲ VĂN BẢN NÀO TRƯỚC HOẶC SAU JSON!
-            2. PHẢN HỒI CỦA BẠN PHẢI BẮT ĐẦU BẰNG DẤU "{" VÀ KẾT THÚC BẰNG DẤU "}" - KHÔNG CÓ GÌ KHÁC!
-            3. PHẢI ĐẢM BẢO JSON KHÔNG BỊ CẮT NGẮN - TẤT CẢ CÁC DẤU NGOẶC PHẢI ĐƯỢC ĐÓNG ĐÚNG CÁCH!
-            4. MÔ TẢ HOẠT ĐỘNG NÊN NGẮN GỌN (<100 ký tự) VÀ TẬP TRUNG VÀO TRẢI NGHIỆM
-            5. TẤT CẢ CÁC TRƯỜNG TRONG JSON PHẢI CÓ GIÁ TRỊ, KHÔNG ĐƯỢC ĐỂ TRỐNG
-            
-            Yêu cầu:
-            1. Ưu tiên khách sạn đầu tiên. Mỗi chuyến đi chỉ nên có 1 khách sạn. Nếu trong kế hoạch có di chuyển xa giữa các địa điểm thì mới được có thêm 1 khách sạn. Tối đa là 2 khách sạn.
-            2. Mô tả hấp dẫn và sinh động (2-3 câu NGẮN GỌN), với giọng hướng dẫn viên: "Bạn sẽ được...", "Chúng ta sẽ..."
-            3. Tiêu đề ngày sáng tạo (vd: "Ngày 1: Hành trình khám phá thiên đường biển xanh")
-            4. Mỗi segment (morning/afternoon/evening) có 2-3 hoạt động gần nhau
-            5. Tuân thủ chính xác cấu trúc JSON yêu cầu
-            6. Sử dụng đúng ID từ dữ liệu đầu vào
-            """
+            system_prompt = system_plan_prompt
             
             for day_num in range(num_days):
                 current_date = start_date + timedelta(days=day_num)
@@ -831,76 +711,6 @@ class PlanModel:
                 "plan_by_day": []
             }
 
-    
-
-    def _is_primarily_english(self, text):
-        """Helper function to determine if text is primarily in English - KHÔNG DÙNG NỮA"""
-        # This function is kept for compatibility but no longer used actively
-        return False
-
-    def get_trip_plan(merged_data, metadata=None, model_name="gpt-4o", verbose=True):
-        """Get a personalized trip plan based on input parameters"""
-        start_time = time.time()
-        
-        try:
-            # Initialize chat model
-            chat_model = ChatOpenAI(temperature=0.7, model_name=model_name)
-            
-            # Extract data from merged_data
-            destination = merged_data.get("destination", "")
-            days = merged_data.get("days", 3)
-            start_date = merged_data.get("start_date", "")
-            
-            if not start_date:
-                start_date = datetime.now().strftime("%Y-%m-%d")
-            
-            # Pass ID maps from metadata to merged_data if available
-            if metadata and "accommodation_id_map" in metadata:
-                merged_data["accommodation_id_map"] = metadata.get("accommodation_id_map", {})
-            if metadata and "place_id_map" in metadata:
-                merged_data["place_id_map"] = metadata.get("place_id_map", {})
-            if metadata and "restaurant_id_map" in metadata:
-                merged_data["restaurant_id_map"] = metadata.get("restaurant_id_map", {})
-            
-            # Add system message about tour guide style
-            system_message = """
-            Tạo kế hoạch du lịch chi tiết với giọng văn HƯỚNG DẪN VIÊN DU LỊCH. 
-            Mỗi mô tả hoạt động nên sử dụng câu như:
-            - "Bạn sẽ được khám phá..."
-            - "Hãy cùng thưởng thức..."
-            - "Chúng ta sẽ tham quan..."
-            - "Quý khách sẽ có cơ hội..."
-            
-            Mỗi phân đoạn thời gian (sáng, chiều, tối) nên có 2-3 hoạt động liên quan và hợp lý.
-            Sử dụng dữ liệu mô tả từ input nhưng PHẢI định dạng lại với giọng văn hướng dẫn viên du lịch.
-            """
-            
-            # Create a complete trip plan
-            plan_output = get_complete_trip_plan(merged_data, days, start_date, chat_model, verbose, system_message=system_message)
-            
-            # Add metadata if provided
-            if metadata:
-                for key, value in metadata.items():
-                    if key not in plan_output.get("plan", {}):
-                        plan_output["plan"][key] = value
-            
-            end_time = time.time()
-            if verbose:
-                print(f"Trip plan generation completed in {end_time - start_time:.2f} seconds")
-            
-            return plan_output
-            
-        except Exception as e:
-            print(f"Error generating trip plan: {str(e)}")
-            import traceback
-            traceback.print_exc()
-            return {
-                "status": "error",
-                "error": str(e),
-                "plan": {}
-            }
-
-    # Thêm hàm giúp xác định thời gian bắt đầu dựa vào thời điểm hiện tại
     def _get_appropriate_start_times(self, current_hour=None):
         """Xác định thời gian bắt đầu phù hợp dựa vào thời điểm hiện tại"""
         from datetime import datetime
@@ -921,10 +731,9 @@ class PlanModel:
             current_segment = "afternoon"
         elif current_hour in evening_hours:
             current_segment = "evening"
-        else:  # Qua nửa đêm (23:00-4:59), chúng ta sẽ lên kế hoạch cho ngày tiếp theo
+        else:  
             current_segment = "next_day"
         
-        # Cấu trúc thời gian bắt đầu/kết thúc mặc định cho từng segment
         segment_times = {
             "morning": [
                 {"start_time": "08:00", "end_time": "09:30"},
@@ -940,23 +749,19 @@ class PlanModel:
             ]
         }
         
-        # Điều chỉnh thời gian bắt đầu dựa vào thời điểm hiện tại
         adjusted_times = {}
         
         if current_segment == "morning":
-            # Nếu đang là buổi sáng, điều chỉnh thời gian bắt đầu cho buổi sáng
-            start_hour = max(8, current_hour + 1)  # Bắt đầu ít nhất 1 giờ sau giờ hiện tại, không sớm hơn 8:00
+            start_hour = max(8, current_hour + 1)  
             adjusted_times["morning"] = [
                 {"start_time": f"{start_hour:02d}:00", "end_time": f"{start_hour+1:02d}:30"},
                 {"start_time": f"{start_hour+2:02d}:00", "end_time": f"{start_hour+3:02d}:00"}
             ]
-            # Giữ nguyên thời gian cho các segment khác
             adjusted_times["afternoon"] = segment_times["afternoon"]
             adjusted_times["evening"] = segment_times["evening"]
             
         elif current_segment == "afternoon":
-            # Bỏ qua buổi sáng, chỉ lên kế hoạch cho buổi chiều và tối
-            start_hour = max(13, current_hour + 1)  # Bắt đầu ít nhất 1 giờ sau giờ hiện tại
+            start_hour = max(13, current_hour + 1) 
             adjusted_times["afternoon"] = [
                 {"start_time": f"{start_hour:02d}:00", "end_time": f"{start_hour+1:02d}:30"},
                 {"start_time": f"{start_hour+2:02d}:00", "end_time": f"{start_hour+3:02d}:00"}
@@ -991,22 +796,17 @@ class PlanModel:
         if not response_text:
             return "{}"
         
-        # Log the initial 200 characters of the response for debugging
         log.info(f"Raw response (first 200 chars): {response_text[:200]}")
             
-        # Specifically handle the common pattern where there's text before the JSON starts
-        # This is the most critical fix - finding the first { that begins the actual JSON object
-        # and removing all text before it
+
         first_brace_index = response_text.find('{')
         if first_brace_index > 0:
             response_text = response_text[first_brace_index:]
             log.info(f"Removed leading text, JSON now starts with: {response_text[:50]}")
             
-        # Loại bỏ các tiêu đề và giới thiệu không mong muốn
         cleaned_text = re.sub(r'^(System:|User:|Assistant:|Day \d+:|Ngày \d+:)[^\{]*', '', response_text.strip())
         
-        # Try to find a complete JSON object (accounting for nested objects)
-        # This uses a more robust approach to find the outermost JSON object
+
         stack = []
         start_idx = -1
         potential_jsons = []
@@ -1030,18 +830,13 @@ class PlanModel:
                 log.info(f"Found valid JSON of length {len(json_str)}")
                 return json_str
             except json.JSONDecodeError as e:
-                # Try to fix common JSON errors
                 try:
-                    # Fix trailing commas
                     fixed_json = re.sub(r',\s*([}\]])', r'\1', json_str)
-                    # Fix missing quotes around keys
                     fixed_json = re.sub(r'([{,])\s*([a-zA-Z0-9_]+)\s*:', r'\1"\2":', fixed_json)
                     
-                    # Remove JS-style comments that might be in the JSON
                     fixed_json = re.sub(r'//.*?\n', '', fixed_json)
                     fixed_json = re.sub(r'/\*.*?\*/', '', fixed_json, flags=re.DOTALL)
                     
-                    # Try parsing again
                     json_obj = json.loads(fixed_json)
                     log.info(f"Fixed and parsed JSON of length {len(fixed_json)}")
                     return fixed_json
@@ -1049,19 +844,15 @@ class PlanModel:
                     log.warning(f"Failed to fix JSON: {e}")
                     continue
         
-        # Try a different approach - if no complete JSON was found, we might be dealing with truncated content
-        # Extract the most complete structure possible
+
         try:
-            # Search for key fields we want to preserve
             json_fragment = cleaned_text
             if cleaned_text.find("{") != -1:
                 json_fragment = cleaned_text[cleaned_text.find("{"):]
             
-            # Basic structure detection
             date_match = re.search(r'"date"\s*:\s*"([^"]+)"', json_fragment)
             title_match = re.search(r'"day_title"\s*:\s*"([^"]+)"', json_fragment)
             
-            # Check if we have enough data to reconstruct a basic structure
             if date_match or title_match:
                 # Start building a valid JSON structure
                 partial_json = {
@@ -1070,14 +861,11 @@ class PlanModel:
                     "segments": []
                 }
                 
-                # Try to extract morning segment if present
                 morning_match = re.search(r'"time_of_day"\s*:\s*"morning"', json_fragment)
                 if morning_match:
-                    # Find activities for morning
                     morning_activities = []
                     hotel_match = re.search(r'"type"\s*:\s*"accommodation"[\s\S]*?(?=},|}\])', json_fragment)
                     if hotel_match:
-                        # Try to extract hotel activity
                         try:
                             hotel_id_match = re.search(r'"id"\s*:\s*"([^"]+)"', hotel_match.group(0))
                             hotel_name_match = re.search(r'"name"\s*:\s*"([^"]+)"', hotel_match.group(0))
@@ -1101,32 +889,26 @@ class PlanModel:
                         except Exception as e:
                             log.warning(f"Error extracting hotel info: {e}")
                     
-                    # Add morning segment
                     if morning_activities:
                         partial_json["segments"].append({
                             "time_of_day": "morning",
                             "activities": morning_activities
                         })
                 
-                # Try to extract afternoon segment if present
                 afternoon_match = re.search(r'"time_of_day"\s*:\s*"afternoon"', json_fragment)
                 if afternoon_match:
-                    # Basic afternoon segment
                     partial_json["segments"].append({
                         "time_of_day": "afternoon",
                         "activities": []
                     })
                 
-                # Try to extract evening segment if present
                 evening_match = re.search(r'"time_of_day"\s*:\s*"evening"', json_fragment)
                 if evening_match:
-                    # Basic evening segment
                     partial_json["segments"].append({
                         "time_of_day": "evening",
                         "activities": []
                     })
                 
-                # Ensure we have at least the basic segments
                 if not partial_json["segments"]:
                     partial_json["segments"] = [
                         {"time_of_day": "morning", "activities": []},
@@ -1139,8 +921,7 @@ class PlanModel:
         except Exception as e:
             log.error(f"Error during partial extraction: {e}")
             
-        # If we still haven't found valid JSON, try more aggressive extraction
-        # First, try to extract JSON from the first { to the last }
+
         try:
             first_brace = cleaned_text.find('{')
             last_brace = cleaned_text.rfind('}')
@@ -1171,8 +952,6 @@ class PlanModel:
         except Exception as e:
             log.warning(f"Error during full JSON extraction: {e}")
             
-        # If the balanced braces approach failed, try a more aggressive regex approach
-        # This looks for the largest JSON-like structure
         match = re.search(r'(\{(?:[^{}]|(?:\{(?:[^{}]|(?:\{[^{}]*\}))*\}))*\})', cleaned_text)
         if match:
             try:
@@ -1185,27 +964,19 @@ class PlanModel:
                 return json_str
             except json.JSONDecodeError:
                 try:
-                    # More aggressive fixing
-                    # Balance braces
                     open_count = json_str.count('{')
                     close_count = json_str.count('}')
                     if open_count > close_count:
                         json_str += '}' * (open_count - close_count)
-                    
-                    # Fix common issues
-                    # Remove trailing commas
                     json_str = re.sub(r',\s*([}\]])', r'\1', json_str)
-                    # Ensure property names are quoted
                     json_str = re.sub(r'([{,])\s*([a-zA-Z0-9_]+)\s*:', r'\1"\2":', json_str)
                     
-                    # Try parsing again
                     json.loads(json_str)
                     log.info(f"Fixed JSON with aggressive approach, length {len(json_str)}")
                     return json_str
                 except Exception as e:
                     log.warning(f"Failed aggressive JSON fixing: {e}")
         
-        # Last resort: try to extract any JSON-like structure with a simpler regex
         json_candidates = re.findall(r'(\{[\s\S]*?\})', cleaned_text)
         if json_candidates:
             for candidate in sorted(json_candidates, key=len, reverse=True):
@@ -1216,10 +987,7 @@ class PlanModel:
                 except json.JSONDecodeError:
                     continue
         
-        # If we get here, we couldn't extract a valid JSON
-        # Try to create a partial JSON structure with the data we have
         try:
-            # Look for properties we can extract
             date_match = re.search(r'"date"\s*:\s*"([^"]+)"', cleaned_text)
             title_match = re.search(r'"day_title"\s*:\s*"([^"]+)"', cleaned_text)
             
@@ -1234,17 +1002,14 @@ class PlanModel:
         except Exception:
             pass
             
-        # Nothing worked, return a minimal JSON structure
         log.error(f"Could not extract valid JSON from: {response_text[:200]}...")
         return '{"error": "Failed to parse response", "segments": []}'
 
     def _populate_default_activities(self, day_data, day_num, merged_data):
         """Đảm bảo mỗi segment đều có ít nhất một hoạt động mặc định"""
         
-        # Đảm bảo có đủ các segments
         existing_segments = {segment.get("time_of_day"): segment for segment in day_data.get("segments", [])}
         
-        # Hàm helper để trích xuất URL hình ảnh
         def extract_image_url(item):
             if isinstance(item.get("image_url"), str) and item.get("image_url"):
                 return item.get("image_url")
@@ -1375,11 +1140,9 @@ class PlanModel:
                             "url": restaurant.get("url", restaurant.get("link", ""))
                         })
                 
-                # Cập nhật segment với các hoạt động mặc định
                 if activities:
                     segment["activities"] = activities
         
-        # Sắp xếp lại segments theo thứ tự morning, afternoon, evening
         sorted_segments = []
         for segment_type in ["morning", "afternoon", "evening"]:
             if segment_type in existing_segments:

@@ -23,4 +23,5 @@ When processing a query:
 
 Remember to:
 - Create detailed, specific contexts for each query
-- Return top 10 results for each query"""
+- Return top 10 results for each query
+"""
