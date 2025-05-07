@@ -74,10 +74,6 @@ definitions:
         type: string
       rating:
         type: number
-      services:
-        items:
-          $ref: '#/definitions/dto.Service'
-        type: array
       start_time:
         description: '"HH:mm" format'
         type: string
@@ -104,7 +100,11 @@ definitions:
         type: string
       cost:
         type: number
+      end_time:
+        type: string
       notes:
+        type: string
+      start_time:
         type: string
       trip_destination_id:
         type: string
@@ -361,15 +361,6 @@ definitions:
         description: e.g., "morning", "afternoon", "evening"
         type: string
     type: object
-  dto.Service:
-    properties:
-      name:
-        type: string
-      type:
-        type: integer
-      url:
-        type: string
-    type: object
   dto.TodoCreate:
     description: Todo creation request body
     properties:
@@ -435,7 +426,11 @@ definitions:
         type: string
       cost:
         type: number
+      end_time:
+        type: string
       notes:
+        type: string
+      start_time:
         type: string
       trip_accommodation_id:
         type: string
@@ -988,7 +983,7 @@ paths:
       tags:
       - InsertData
   /api/v1/suggest/accommodations:
-    get:
+    post:
       consumes:
       - application/json
       description: Get accommodation suggestions based on travel preferences
@@ -1023,7 +1018,7 @@ paths:
       tags:
       - suggest
   /api/v1/suggest/all:
-    get:
+    post:
       consumes:
       - application/json
       description: Get comprehensive suggestions based on travel preferences for accommodations,
@@ -1059,7 +1054,7 @@ paths:
       tags:
       - suggest
   /api/v1/suggest/places:
-    get:
+    post:
       consumes:
       - application/json
       description: Get activity suggestions based on travel preferences
@@ -1094,7 +1089,7 @@ paths:
       tags:
       - suggest
   /api/v1/suggest/restaurants:
-    get:
+    post:
       consumes:
       - application/json
       description: Get restaurant suggestions based on travel preferences

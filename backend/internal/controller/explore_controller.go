@@ -29,9 +29,9 @@ func (ec *ExploreController) RegisterRoutes(router *gin.Engine) {
 	{
 		explore := v1.Group("/explore")
 		{
-			explore.GET("/place", ec.getPlaceByID)
-			explore.GET("/restaurant", ec.getRestaurantByID)
-			explore.GET("/accommodation", ec.getAccommodationByID)
+			explore.GET("/place/:id", ec.getPlaceByID)
+			explore.GET("/restaurant/:id", ec.getRestaurantByID)
+			explore.GET("/accommodation/:id", ec.getAccommodationByID)
 		}
 	}
 }

@@ -50,7 +50,7 @@ func (sc *SuggestController) RegisterRoutes(router *gin.Engine) {
 // @Success 200 {object} model.Response{data=dto.AccommodationsSuggestion}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/v1/suggest/accommodations [get]
+// @Router /api/v1/suggest/accommodations [post]
 func (sc *SuggestController) SuggestAccommodations(ctx *gin.Context) {
 	travelPreference := &dto.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
@@ -76,7 +76,7 @@ func (sc *SuggestController) SuggestAccommodations(ctx *gin.Context) {
 // @Success 200 {object} model.Response{data=dto.PlacesSuggestion}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/v1/suggest/places [get]
+// @Router /api/v1/suggest/places [post]
 func (sc *SuggestController) SuggestPlaces(ctx *gin.Context) {
 	travelPreference := &dto.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
@@ -102,7 +102,7 @@ func (sc *SuggestController) SuggestPlaces(ctx *gin.Context) {
 // @Success 200 {object} model.Response{data=dto.RestaurantsSuggestion}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/v1/suggest/restaurants [get]
+// @Router /api/v1/suggest/restaurants [post]
 func (sc *SuggestController) SuggestRestaurants(ctx *gin.Context) {
 	travelPreference := &dto.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
@@ -128,7 +128,7 @@ func (sc *SuggestController) SuggestRestaurants(ctx *gin.Context) {
 // @Success 200 {object} model.Response{data=dto.TripSuggestionRequest}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/v1/suggest/all [get]
+// @Router /api/v1/suggest/all [post]
 func (sc *SuggestController) SuggestAll(ctx *gin.Context) {
 	travelPreference := &dto.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
