@@ -59,36 +59,50 @@ export interface PersonalOptions {
 
 export interface TravelActivity {
   id: string;
-  time: string;
-  type: "attraction" | "restaurant" | "hotel" | "transport";
+  type: string;
   name: string;
-  location: string;
+  imgUrl?: string;
+  image_url?: string;
+  start_time: string;
+  end_time: string;
   description: string;
-  imageUrl: string;
-  rating: number;
-  price?: number | string;
-  contactInfo?: string;
-  duration?: number;
+  rating?: number;
+  cuisines?: string;
+  price_range?: string;
+  price?: number;
+  address?: string;
+  categories?: string;
+  duration?: string;
+  opening_hours?: string;
+}
+
+export interface TravelSegment {
+  time_of_day: string;
+  activities: TravelActivity[];
 }
 
 export interface TravelDay {
-  day: number;
-  date: Date;
-  activities: TravelActivity[];
+  date: string;
+  day_title: string;
+  segments: TravelSegment[];
 }
 
 export interface TravelDetailData {
   id: string;
+  user_id: string;
+  trip_name: string;
+  start_date: string;
+  end_date: string;
   destination: string;
-  imageUrl: string;
-  startDate: Date;
-  endDate: Date;
-  adults: number;
-  children: number;
-  budgetType: "$" | "$$" | "$$$" | "$$$$" | "$$$$$";
-  totalBudget: number;
-  spentBudget: number;
-  status: "planning" | "confirmed" | "completed" | "canceled" | "upcoming";
-  notes: string;
-  days: TravelDay[];
+  plan_by_day: TravelDay[];
+
+  // Faked/optional fields for UI compatibility
+  adults?: number;
+  children?: number;
+  budgetType?: "$" | "$$" | "$$$" | "$$$$" | "$$$$$";
+  totalBudget?: number;
+  spentBudget?: number;
+  status?: "planning" | "confirmed" | "completed" | "canceled" | "upcoming";
+  notes?: string;
+  imageUrl?: string;
 }

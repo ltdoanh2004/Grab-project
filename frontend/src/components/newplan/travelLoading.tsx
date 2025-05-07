@@ -6,6 +6,7 @@ import {
   SyncOutlined,
 } from "@ant-design/icons";
 import { getAllSuggestions, getTripPlan } from "../../services/travelPlanApi";
+import { useNavigate } from "react-router-dom";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -18,12 +19,10 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({
   destination,
   onFinish,
 }) => {
-  // State to track progress of loading steps
   const [currentStepIndex, setCurrentStepIndex] = useState(2);
-  // Track which steps have been processed
   const [completedSteps, setCompletedSteps] = useState<number[]>([0, 1]);
-  // State to track API loading status
   const [apiLoadingComplete, setApiLoadingComplete] = useState(false);
+  const navigate = useNavigate();
 
   const travelTips = [
     "Đừng quên sạc đầy các thiết bị điện tử trước khi khởi hành",
@@ -45,20 +44,31 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({
     const fetchSuggestions = async () => {
       try {
         const suggestionsData = await getAllSuggestions();
-        console.log("Suggestions data:", suggestionsData);
-
         const tripPlanData = await getTripPlan(suggestionsData.data);
-        console.log("Trip plan data:", tripPlanData);
 
-        localStorage.setItem("tripPlan", JSON.stringify(tripPlanData));
+        const tripPlanWithId = {
+          ...tripPlanData.data,
+          id: "temp123",
+        };
+
+        localStorage.setItem(
+          "tripPlan_temp123",
+          JSON.stringify(tripPlanWithId)
+        );
 
         setApiLoadingComplete(true);
+        navigate("/trips/temp123");
       } catch (error) {
         console.error("Failed to fetch data:", error);
-        if (error.response) {
-          console.error("Error response:", error.response.data);
+        if (
+          typeof error === "object" &&
+          error !== null &&
+          "response" in error
+        ) {
+          const err = error as { response?: { data?: any } };
+          console.error("Error response:", err.response?.data);
           message.error(
-            `Lỗi: ${error.response.data.message || "Không thể tải dữ liệu"}`
+            `Lỗi: ${err.response?.data?.message || "Không thể tải dữ liệu"}`
           );
         } else {
           message.error("Không thể tải dữ liệu. Vui lòng thử lại sau.");

@@ -1,96 +1,53 @@
-import React, { useCallback, memo } from "react";
-import { Collapse, Typography, Button, Tooltip } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import React, { useState } from "react";
+import {
+  Collapse,
+  Typography,
+  Button,
+  Tooltip,
+  Tag,
+  Divider,
+  Card,
+  Empty,
+} from "antd";
+import { PlusOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-
+import { ActivityCard } from "./ActivityItem/ActivityCard";
 import {
   TravelDay,
   TravelActivity,
-  ItemTypes,
-  DragItem,
+  TravelSegment,
 } from "../../../types/travelPlan";
-import { ActivityCard } from "./ActivityItem/ActivityCard";
-import { useActivityDnD } from "../../../hooks/useActivityDnD";
-import { useTimeEdit } from "../../../hooks/useTimeEdit";
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
-interface TimelineProps {
-  day: TravelDay;
-  activityTypeColors: Record<TravelActivity["type"], string>;
-  onActivityClick: (a: TravelActivity) => void;
-  isEditMode: boolean;
-  onReplaceActivity?: (d: TravelDay, a: TravelActivity) => void;
-  onDeleteActivity?: (d: TravelDay, a: TravelActivity) => void;
-  onUpdateActivityTime?: (d: TravelDay, a: TravelActivity, t: string) => void;
-  onMove: (
-    from: number,
-    to: number,
-    fromDayId: number,
-    toDayId: number
-  ) => void;
-}
-
-const Timeline: React.FC<TimelineProps> = memo(
-  ({
-    day,
-    activityTypeColors,
-    onActivityClick,
-    isEditMode,
-    onReplaceActivity,
-    onDeleteActivity,
-    onUpdateActivityTime,
-    onMove,
-  }) => {
-    const move = (
-      from: number,
-      to: number,
-      fromDayId: number,
-      toDayId: number
-    ) => onMove(from, to, fromDayId, toDayId);
-
-    return (
-      <div className="ml-4 mt-4">
-        {day.activities.map((a, idx) => (
-          <ActivityCard
-            key={a.id}
-            day={day}
-            activity={a}
-            index={idx}
-            activityTypeColors={activityTypeColors}
-            onActivityClick={onActivityClick}
-            isEditMode={isEditMode}
-            onReplaceActivity={onReplaceActivity}
-            onDeleteActivity={onDeleteActivity}
-            onUpdateActivityTime={onUpdateActivityTime}
-            moveActivity={move}
-          />
-        ))}
-      </div>
-    );
-  }
-);
-Timeline.displayName = "Timeline";
+const TIME_OF_DAY_LABELS: Record<string, string> = {
+  morning: "Buổi sáng",
+  afternoon: "Buổi chiều",
+  evening: "Buổi tối",
+};
 
 interface ItineraryProps {
   days: TravelDay[];
-  formatDate: (d: Date) => string;
+  formatDate: (d: string) => string;
   activityTypeColors: Record<TravelActivity["type"], string>;
   onActivityClick: (a: TravelActivity) => void;
   isEditMode?: boolean;
   onReplaceActivity?: (d: TravelDay, a: TravelActivity) => void;
   onDeleteActivity?: (d: TravelDay, a: TravelActivity) => void;
   onUpdateActivityTime?: (d: TravelDay, a: TravelActivity, t: string) => void;
-  onAddActivity?: (d: TravelDay) => void;
+  onAddActivity?: (d: TravelDay, segment?: TravelSegment) => void;
   onMoveActivity?: (
-    fromIndex: number,
-    toIndex: number,
-    fromDayId: number,
-    toDayId: number
+    fromDayIndex: number,
+    fromSegment: string,
+    fromActivityIndex: number,
+    toDayIndex: number,
+    toSegment: string,
+    toActivityIndex: number
   ) => void;
 }
+
 export const TravelItinerary: React.FC<ItineraryProps> = ({
   days,
   formatDate,
@@ -101,55 +58,124 @@ export const TravelItinerary: React.FC<ItineraryProps> = ({
   onDeleteActivity,
   onUpdateActivityTime,
   onAddActivity,
-  onMoveActivity = () => {},
-}) => (
-  <DndProvider backend={HTML5Backend}>
-    <Collapse defaultActiveKey={["0"]} bordered={false}>
-      {days.map((day) => (
-        <Panel
-          key={day.day}
-          header={
-            <div className="flex items-center">
-              <div className="bg-black text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                {day.day}
-              </div>
-              <div>
-                <Text strong className="text-lg">
-                  Ngày {day.day}
-                </Text>
-                <div className="text-gray-500 text-sm">
-                  {formatDate(day.date)} • {day.activities.length} hoạt động
+  onMoveActivity,
+}) => {
+  const [activeKeys, setActiveKeys] = useState<string[]>(["0"]);
+
+  if (!days || days.length === 0) {
+    return (
+      <Empty
+        description="Chưa có lịch trình nào"
+        className="my-8"
+      />
+    );
+  }
+
+  const handleMoveActivity = (
+    fromActivityIndex: number,
+    toActivityIndex: number,
+    fromDayIndex: number,
+    toDayIndex: number,
+    fromSegment: string,
+    toSegment: string
+  ) => {
+    // Call parent's onMoveActivity if provided
+    if (onMoveActivity) {
+      onMoveActivity(
+        fromDayIndex,
+        fromSegment,
+        fromActivityIndex,
+        toDayIndex,
+        toSegment,
+        toActivityIndex
+      );
+    }
+  };
+
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <Collapse 
+        activeKey={activeKeys}
+        onChange={(keys) => setActiveKeys(keys as string[])}
+        bordered={false}
+        className="travel-itinerary"
+      >
+        {days.map((day, dayIdx) => (
+          <Panel
+            key={day.date}
+            header={
+              <div className="flex items-center">
+                <div className="bg-black text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                  {dayIdx + 1}
+                </div>
+                <div>
+                  <Text strong className="text-lg">
+                    {day.day_title || `Ngày ${dayIdx + 1}`}
+                  </Text>
+                  <div className="text-gray-500 text-sm">
+                    {formatDate(day.date)}
+                  </div>
                 </div>
               </div>
-            </div>
-          }
-          extra={
-            isEditMode && (
-              <Tooltip title="Thêm hoạt động" placement="left">
-                <Button
-                  size="small"
-                  icon={<PlusOutlined />}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onAddActivity?.(day);
-                  }}
-                />
-              </Tooltip>
-            )
-          }
-        >
-          <Timeline
-            day={day}
-            activityTypeColors={activityTypeColors}
-            onActivityClick={onActivityClick}
-            isEditMode={isEditMode}
-            onReplaceActivity={onReplaceActivity}
-            onDeleteActivity={onDeleteActivity}
-            onUpdateActivityTime={onUpdateActivityTime}
-            onMove={onMoveActivity}
-          />
-        </Panel>
-      ))}
-    </Collapse>
-  </DndProvider>
-);
+            }
+            className="mb-4 bg-white rounded-lg shadow-sm"
+          >
+            {day.segments.map((segment) => (
+              <div key={segment.time_of_day} className="mb-6 last:mb-0">
+                <div className="flex items-center mb-3">
+                  <ClockCircleOutlined className="mr-2 text-gray-500" />
+                  <Text strong className="text-base">
+                    {TIME_OF_DAY_LABELS[segment.time_of_day] ||
+                      segment.time_of_day}
+                  </Text>
+                  {isEditMode && (
+                    <Tooltip
+                      title="Thêm hoạt động vào khung giờ này"
+                      placement="left"
+                    >
+                      <Button
+                        size="small"
+                        icon={<PlusOutlined />}
+                        className="ml-2"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onAddActivity?.(day, segment);
+                        }}
+                      />
+                    </Tooltip>
+                  )}
+                </div>
+                <Divider className="my-2" />
+                {segment.activities.length === 0 ? (
+                  <div className="text-gray-400 italic mb-4 ml-2">
+                    Chưa có hoạt động nào
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {segment.activities.map((activity, activityIdx) => (
+                      <ActivityCard
+                        key={activity.id}
+                        day={day}
+                        activity={activity}
+                        index={activityIdx}
+                        dayIndex={dayIdx}
+                        segment={segment.time_of_day}
+                        activityTypeColors={activityTypeColors}
+                        onActivityClick={onActivityClick}
+                        isEditMode={isEditMode}
+                        onReplaceActivity={onReplaceActivity}
+                        onDeleteActivity={onDeleteActivity}
+                        onUpdateActivityTime={onUpdateActivityTime}
+                        moveActivity={handleMoveActivity}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </Panel>
+        ))}
+      </Collapse>
+    </DndProvider>
+  );
+};

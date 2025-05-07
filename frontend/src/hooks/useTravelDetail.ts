@@ -7,6 +7,7 @@ import {
   TravelActivity,
   TravelDetailData,
   TravelDay,
+  TravelSegment,
 } from "../types/travelPlan";
 
 export function useTravelDetail(travelId: string) {
@@ -20,13 +21,20 @@ export function useTravelDetail(travelId: string) {
     let ignore = false;
     setLoading(true);
     setNotFound(false);
-
+    if (travelId === "temp123") {
+      const local = localStorage.getItem("tripPlan_temp123");
+      if (local) {
+        setTravelDetail(JSON.parse(local));
+        setLoading(false);
+        return;
+      }
+    }
     const mockDetail =
       travelId === MOCK_TRAVEL_DETAIL.id
         ? MOCK_TRAVEL_DETAIL
         : (MOCK_TRAVEL_PLANS.find((p) => p.id === travelId) as any);
 
-    if (mockDetail && mockDetail.days) {
+    if (mockDetail && mockDetail.plan_by_day) {
       setTimeout(() => {
         if (!ignore) {
           setTravelDetail({ ...mockDetail });
@@ -71,20 +79,44 @@ export function useTravelDetail(travelId: string) {
     setActivityModalVisible(true);
   };
 
+  // Helper: flatten all activities for a day (from segments)
+  const getAllActivitiesOfDay = (day: TravelDay): TravelActivity[] => {
+    return day.segments.flatMap((segment: TravelSegment) => segment.activities);
+  };
+
+  // Helper: update activities in a day (by segments)
+  const updateActivitiesOfDay = (
+    day: TravelDay,
+    newActivities: TravelActivity[]
+  ) => {
+    // Distribute newActivities back into segments by original segment lengths
+    let idx = 0;
+    const newSegments = day.segments.map((segment) => {
+      const segActs = segment.activities.length;
+      const acts = newActivities.slice(idx, idx + segActs);
+      idx += segActs;
+      return { ...segment, activities: acts };
+    });
+    return { ...day, segments: newSegments };
+  };
+
   const toggleEditMode = () => {
     if (isEditMode && travelDetail) {
+      // Sort activities in each segment by start_time
       const sortedTravelDetail = {
         ...travelDetail,
-        days: travelDetail.days.map((day) => ({
+        plan_by_day: travelDetail.plan_by_day.map((day) => ({
           ...day,
-          activities: [...day.activities].sort((a, b) => {
-            const getStart = (time: string) => {
-              const [start] = time.split(" - ");
-              const [h, m] = start.split(":").map(Number);
-              return h * 60 + m;
-            };
-            return getStart(a.time) - getStart(b.time);
-          }),
+          segments: day.segments.map((segment) => ({
+            ...segment,
+            activities: [...segment.activities].sort((a, b) => {
+              const getStart = (time: string) => {
+                const [h, m] = a.start_time.split(":").map(Number);
+                return h * 60 + m;
+              };
+              return getStart(a.start_time) - getStart(b.start_time);
+            }),
+          })),
         })),
       };
       setTravelDetail(sortedTravelDetail);
@@ -103,23 +135,23 @@ export function useTravelDetail(travelId: string) {
   const handleSelectAISuggestion = (newActivity: TravelActivity) => {
     if (travelDetail && currentDay && activityToReplace) {
       const updatedTravelDetail = { ...travelDetail };
-      const dayIndex = updatedTravelDetail.days.findIndex(
-        (d) => d.day === currentDay.day
-      );
-      if (dayIndex !== -1) {
-        const activityIndex = updatedTravelDetail.days[
-          dayIndex
-        ].activities.findIndex((a) => a.id === activityToReplace.id);
-
-        if (activityIndex !== -1) {
-          updatedTravelDetail.days[dayIndex].activities[activityIndex] = {
-            ...newActivity,
-            id: activityToReplace.id,
-            time: activityToReplace.time,
+      updatedTravelDetail.plan_by_day = updatedTravelDetail.plan_by_day.map(
+        (day) => {
+          if (day.date !== currentDay.date) return day;
+          return {
+            ...day,
+            segments: day.segments.map((segment) => ({
+              ...segment,
+              activities: segment.activities.map((a) =>
+                a.id === activityToReplace.id
+                  ? { ...newActivity, id: activityToReplace.id }
+                  : a
+              ),
+            })),
           };
-          setTravelDetail(updatedTravelDetail);
         }
-      }
+      );
+      setTravelDetail(updatedTravelDetail);
       setShowAISuggestions(false);
     }
   };
@@ -127,15 +159,19 @@ export function useTravelDetail(travelId: string) {
   const handleDeleteActivity = (day: TravelDay, activity: TravelActivity) => {
     if (!travelDetail) return;
     const updatedTravelDetail = { ...travelDetail };
-    const dayIndex = updatedTravelDetail.days.findIndex(
-      (d) => d.day === day.day
+    updatedTravelDetail.plan_by_day = updatedTravelDetail.plan_by_day.map(
+      (d) => {
+        if (d.date !== day.date) return d;
+        return {
+          ...d,
+          segments: d.segments.map((segment) => ({
+            ...segment,
+            activities: segment.activities.filter((a) => a.id !== activity.id),
+          })),
+        };
+      }
     );
-    if (dayIndex !== -1) {
-      updatedTravelDetail.days[dayIndex].activities = updatedTravelDetail.days[
-        dayIndex
-      ].activities.filter((a) => a.id !== activity.id);
-      setTravelDetail(updatedTravelDetail);
-    }
+    setTravelDetail(updatedTravelDetail);
   };
 
   const handleUpdateActivityTime = (
@@ -144,77 +180,69 @@ export function useTravelDetail(travelId: string) {
     newTime: string
   ) => {
     if (!travelDetail) return;
+    const [start_time, end_time] = newTime.split(" - ");
     const updatedTravelDetail = { ...travelDetail };
-    const dayIndex = updatedTravelDetail.days.findIndex(
-      (d) => d.day === day.day
-    );
-    if (dayIndex !== -1) {
-      const activityIndex = updatedTravelDetail.days[
-        dayIndex
-      ].activities.findIndex((a) => a.id === activity.id);
-
-      if (activityIndex !== -1) {
-        updatedTravelDetail.days[dayIndex].activities[activityIndex].time =
-          newTime;
-        setTravelDetail(updatedTravelDetail);
+    updatedTravelDetail.plan_by_day = updatedTravelDetail.plan_by_day.map(
+      (d) => {
+        if (d.date !== day.date) return d;
+        return {
+          ...d,
+          segments: d.segments.map((segment) => ({
+            ...segment,
+            activities: segment.activities.map((a) =>
+              a.id === activity.id
+                ? {
+                    ...a,
+                    start_time: start_time || a.start_time,
+                    end_time: end_time || a.end_time,
+                  }
+                : a
+            ),
+          })),
+        };
       }
-    }
+    );
+    setTravelDetail(updatedTravelDetail);
   };
 
+  // Move activity between segments/days
   const handleMoveActivity = (
     fromIndex: number,
     toIndex: number,
-    fromDayId: number,
-    toDayId: number
+    fromDayDate: string,
+    toDayDate: string
   ) => {
     if (!travelDetail) return;
-    try {
-      const updatedTravelDetail = {
-        ...travelDetail,
-        days: travelDetail.days.map((day) => ({
-          ...day,
-          activities: [...day.activities],
-        })),
-      };
+    const updatedTravelDetail = { ...travelDetail };
+    const fromDayIdx = updatedTravelDetail.plan_by_day.findIndex(
+      (d) => d.date === fromDayDate
+    );
+    const toDayIdx = updatedTravelDetail.plan_by_day.findIndex(
+      (d) => d.date === toDayDate
+    );
+    if (fromDayIdx === -1 || toDayIdx === -1) return;
 
-      const fromDayIndex = updatedTravelDetail.days.findIndex(
-        (d) => d.day === fromDayId
-      );
-      const toDayIndex = updatedTravelDetail.days.findIndex(
-        (d) => d.day === toDayId
-      );
+    // Flatten activities for both days
+    const fromDay = updatedTravelDetail.plan_by_day[fromDayIdx];
+    const toDay = updatedTravelDetail.plan_by_day[toDayIdx];
+    let fromActs = getAllActivitiesOfDay(fromDay);
+    let toActs = getAllActivitiesOfDay(toDay);
 
-      if (fromDayIndex === -1 || toDayIndex === -1) return;
+    // Move activity
+    const [moved] = fromActs.splice(fromIndex, 1);
+    toActs.splice(toIndex, 0, moved);
 
-      if (fromDayIndex === toDayIndex) {
-        const activities = updatedTravelDetail.days[fromDayIndex].activities;
-        [activities[fromIndex], activities[toIndex]] = [
-          activities[toIndex],
-          activities[fromIndex],
-        ];
-        const tempTime = activities[fromIndex].time;
-        activities[fromIndex].time = activities[toIndex].time;
-        activities[toIndex].time = tempTime;
-      } else {
-        const fromActivities =
-          updatedTravelDetail.days[fromDayIndex].activities;
-        const toActivities = updatedTravelDetail.days[toDayIndex].activities;
+    // Update days
+    updatedTravelDetail.plan_by_day[fromDayIdx] = updateActivitiesOfDay(
+      fromDay,
+      fromActs
+    );
+    updatedTravelDetail.plan_by_day[toDayIdx] = updateActivitiesOfDay(
+      toDay,
+      toActs
+    );
 
-        const fromActivity = fromActivities[fromIndex];
-        const toActivity = toActivities[toIndex];
-
-        fromActivities[fromIndex] = toActivity;
-        toActivities[toIndex] = fromActivity;
-
-        const tempTime = fromActivities[fromIndex].time;
-        fromActivities[fromIndex].time = toActivities[toIndex].time;
-        toActivities[toIndex].time = tempTime;
-      }
-
-      setTravelDetail(updatedTravelDetail);
-    } catch (error) {
-      console.error("Error in handleMoveActivity:", error);
-    }
+    setTravelDetail(updatedTravelDetail);
   };
 
   const openAddActivityModal = (day: TravelDay) => {
@@ -224,26 +252,34 @@ export function useTravelDetail(travelId: string) {
 
   const handleAddCustomActivity = (searchValue: string) => {
     if (travelDetail && dayForNewActivity && searchValue.trim()) {
+      // Add to first segment by default
       const newActivity: TravelActivity = {
         id: `custom-${Date.now()}`,
-        time: "12:00 - 14:00",
         type: "attraction",
         name: searchValue,
-        location: "Địa điểm tùy chỉnh",
+        start_time: "12:00",
+        end_time: "14:00",
         description: "Hoạt động do người dùng tự thêm",
-        imageUrl:
-          "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
         rating: 5,
-        price: "Chưa có thông tin",
       };
       const updatedTravelDetail = { ...travelDetail };
-      const dayIndex = updatedTravelDetail.days.findIndex(
-        (d) => d.day === dayForNewActivity.day
+      updatedTravelDetail.plan_by_day = updatedTravelDetail.plan_by_day.map(
+        (d) => {
+          if (d.date !== dayForNewActivity.date) return d;
+          return {
+            ...d,
+            segments: d.segments.map((segment, idx) =>
+              idx === 0
+                ? {
+                    ...segment,
+                    activities: [...segment.activities, newActivity],
+                  }
+                : segment
+            ),
+          };
+        }
       );
-      if (dayIndex !== -1) {
-        updatedTravelDetail.days[dayIndex].activities.push(newActivity);
-        setTravelDetail(updatedTravelDetail);
-      }
+      setTravelDetail(updatedTravelDetail);
       setActivitySearchModalVisible(false);
     }
   };
@@ -278,5 +314,6 @@ export function useTravelDetail(travelId: string) {
     handleMoveActivity,
     openAddActivityModal,
     handleAddCustomActivity,
+    setTravelDetail,
   };
 }

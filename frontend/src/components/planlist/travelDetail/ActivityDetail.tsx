@@ -5,6 +5,8 @@ import { TravelActivity } from "../../../types/travelPlan";
 
 const { Paragraph } = Typography;
 
+const DEFAULT_IMAGE = "/hinhnen.jpg";
+
 interface ActivityModalProps {
   activity: TravelActivity | null;
   visible: boolean;
@@ -20,6 +22,11 @@ export const ActivityModal: React.FC<ActivityModalProps> = ({
 }) => {
   if (!activity) return null;
 
+  const timeStr =
+    activity.start_time && activity.end_time
+      ? `${activity.start_time} - ${activity.end_time}`
+      : activity.start_time || activity.end_time || "";
+
   return (
     <Modal
       title={activity.name}
@@ -31,12 +38,17 @@ export const ActivityModal: React.FC<ActivityModalProps> = ({
         </Button>,
       ]}
       width={700}
+      styles={{ body: { padding: "16px" } }}
     >
-      <Image
-        src={activity.imageUrl}
-        alt={activity.name}
-        className="w-full h-64 object-cover rounded mb-4"
-      />
+      <div className="w-full h-72 lg:h-96 rounded-lg overflow-hidden mb-6">
+        <Image
+          src={activity.image_url || activity.imgUrl || DEFAULT_IMAGE}
+          alt={activity.name}
+          className="w-full h-full object-cover"
+          fallback={DEFAULT_IMAGE}
+          preview={true}
+        />
+      </div>
 
       <Row gutter={16} className="mb-4">
         <Col span={12}>
@@ -45,7 +57,7 @@ export const ActivityModal: React.FC<ActivityModalProps> = ({
         </Col>
         <Col span={12}>
           <div className="text-gray-500">Thời gian</div>
-          <div className="font-semibold">{activity.time}</div>
+          <div className="font-semibold">{timeStr}</div>
         </Col>
       </Row>
 
@@ -69,6 +81,12 @@ export const ActivityModal: React.FC<ActivityModalProps> = ({
               <div className="font-semibold">{activity.price}</div>
             </>
           )}
+          {activity.price_range && (
+            <>
+              <div className="text-gray-500">Khoảng giá</div>
+              <div className="font-semibold">{activity.price_range}</div>
+            </>
+          )}
         </Col>
       </Row>
 
@@ -76,11 +94,11 @@ export const ActivityModal: React.FC<ActivityModalProps> = ({
         <div className="text-gray-500">Địa điểm</div>
         <div className="font-semibold flex items-center">
           <EnvironmentOutlined className="mr-2" />
-          {activity.location}
+          {activity.address || "Không có thông tin"}
         </div>
       </div>
 
-      {activity.duration !== undefined && (
+      {activity.duration && (
         <div className="mb-4">
           <div className="text-gray-500">Thời lượng</div>
           <div className="font-semibold">{activity.duration}</div>
@@ -90,22 +108,6 @@ export const ActivityModal: React.FC<ActivityModalProps> = ({
       <div className="mb-4">
         <div className="text-gray-500">Mô tả</div>
         <Paragraph>{activity.description}</Paragraph>
-      </div>
-
-      <div className="flex flex-wrap">
-        {activity.contactInfo && (
-          <Button
-            icon={<PhoneOutlined />}
-            className="mr-2 mb-2"
-            href={`tel:${activity.contactInfo}`}
-          >
-            {activity.contactInfo}
-          </Button>
-        )}
-
-        <Button icon={<EnvironmentOutlined />} className="mb-2">
-          Xem bản đồ
-        </Button>
       </div>
     </Modal>
   );
