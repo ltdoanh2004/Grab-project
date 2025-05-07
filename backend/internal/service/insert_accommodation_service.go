@@ -73,7 +73,13 @@ func (s *insertDataService) mapRecordToAccommodation(record map[string]string) (
 
 	// Clean and validate JSON strings
 	imagesStr := record["images"]
+	if imagesStr == "nan" {
+		imagesStr = "[]"
+	}
 	roomTypesStr := record["room_types"]
+	if roomTypesStr == "nan" {
+		roomTypesStr = "[]"
+	}
 
 	var images model.ImageArray
 	if err := json.Unmarshal([]byte(imagesStr), &images); err != nil {
@@ -86,7 +92,7 @@ func (s *insertDataService) mapRecordToAccommodation(record map[string]string) (
 	}
 
 	var roomTypes model.RoomTypeArray
-	if len(roomTypesStr) != 0 {
+	if len(strings.TrimSpace(roomTypesStr)) != 0 {
 		if err := json.Unmarshal([]byte(roomTypesStr), &roomTypes); err != nil {
 			// Try to fix common JSON formatting issues
 			roomTypesStr = strings.ReplaceAll(roomTypesStr, "'", "\"")
