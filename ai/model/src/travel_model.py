@@ -8,7 +8,7 @@ from .promts.travel_promt import travel_suggestion_system_prompt
 from typing import List, Dict, Any, Optional
 import logging
 
-# Set up logging
+# Set up logging    
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - %(message)s'
