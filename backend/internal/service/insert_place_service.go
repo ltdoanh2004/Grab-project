@@ -6,6 +6,7 @@ import (
 	"skeleton-internship-backend/internal/model"
 	"skeleton-internship-backend/internal/util"
 	"strconv"
+	"strings"
 )
 
 func (s *insertDataService) InsertPlaceData(filePath string) error {
@@ -54,7 +55,7 @@ func (s *insertDataService) mapRecordToPlace(record map[string]string) (*model.P
 
 	var imageUrls model.StringArray
 	var images model.ImageArray
-	if len(record["image_urls"]) != 0 {
+	if len(strings.TrimSpace(record["image_urls"])) != 0 {
 		if err := json.Unmarshal([]byte(record["image_urls"]), &imageUrls); err != nil {
 			fmt.Println(record["image_urls"])
 			return nil, fmt.Errorf("failed to unmarshal images: %w", err)
@@ -68,7 +69,7 @@ func (s *insertDataService) mapRecordToPlace(record map[string]string) (*model.P
 	// }
 
 	var reviews model.StringArray
-	if len(record["reviews"]) != 0 {
+	if len(strings.TrimSpace(record["reviews"])) != 0 {
 		if err := json.Unmarshal([]byte(record["reviews"]), &reviews); err != nil {
 			fmt.Println("failed to unmarshal reviews: %w", record["reviews"])
 		}
