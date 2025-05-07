@@ -89,6 +89,8 @@ func (ts *tripService) CreateTrip(trip *dto.CreateTripRequest) (string, error) {
 				AccommodationID:     acc.AccommodationID,
 				CheckInDate:         acc.CheckInDate,
 				CheckOutDate:        acc.CheckOutDate,
+				StartTime:           acc.StartTime,
+				EndTime:             acc.EndTime,
 				Cost:                acc.Cost,
 				Notes:               acc.Notes,
 			}
@@ -193,6 +195,8 @@ func (ts *tripService) SaveTrip(trip *dto.TripDTO) error {
 				AccommodationID:     acc.AccommodationID,
 				CheckInDate:         acc.CheckInDate,
 				CheckOutDate:        acc.CheckOutDate,
+				StartTime:           acc.StartTime,
+				EndTime:             acc.EndTime,
 				Cost:                acc.Cost,
 				Notes:               acc.Notes,
 			}
@@ -306,6 +310,8 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTO, error) {
 				AccommodationID:     acc.AccommodationID,
 				CheckInDate:         acc.CheckInDate,
 				CheckOutDate:        acc.CheckOutDate,
+				StartTime:           acc.StartTime,
+				EndTime:             acc.EndTime,
 				Cost:                acc.Cost,
 				Notes:               acc.Notes,
 			})
@@ -664,6 +670,8 @@ func (ts *tripService) SuggestTrip(userID string, activities dto.TripSuggestionR
 	if err != nil {
 		return nil, fmt.Errorf("failed to convert trip suggestion: %w", err)
 	}
+	suggestion.UserID = userID
+
 	_, err = ts.CreateTrip(&suggestion)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create trip: %w", err)
@@ -675,5 +683,5 @@ func (ts *tripService) SuggestTrip(userID string, activities dto.TripSuggestionR
 	}
 	fmt.Println("Converted suggestion: ", newSuggestionByDate)
 
-	return &newSuggestionByDate, nil
+	return suggestionByDate, nil
 }
