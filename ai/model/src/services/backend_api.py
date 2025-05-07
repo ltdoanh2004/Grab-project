@@ -4,7 +4,7 @@ import os
 import sys
 from dotenv import load_dotenv
 from fastapi import APIRouter, HTTPException
-from src.agents.travel_model import TravelModel
+from src.agents.travel_agent import TravelModel
 from src.utils.logger import setup_logger
 from src.models.request_models import TripSuggestionRequest
 from src.models.reponse_models import SuggestWithIDAndType
