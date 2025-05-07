@@ -479,7 +479,9 @@ func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, e
 }
 
 func (ts *tripService) mockAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error) {
-	sampleJSON := ``
+	sampleJSON := `
+
+	`
 	var result dto.TripDTOByDate
 	if err := json.Unmarshal([]byte(sampleJSON), &result); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal mock JSON: %w", err)

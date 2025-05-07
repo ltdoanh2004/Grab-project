@@ -70,6 +70,7 @@ type Service struct {
 }
 
 type Activity struct {
+	ActivityID   string  `json:"activity_id"`
 	ID           string  `json:"id"`
 	Type         string  `json:"type"` // e.g., "place", "accommodation", "restaurant"
 	Name         string  `json:"name"`
@@ -177,6 +178,7 @@ func ConvertTripDTO(input TripDTOByDate) (TripDTO, error) {
 				switch activity.Type {
 				case "place":
 					dest.Places = append(dest.Places, TripPlaceDTO{
+						TripPlaceID:       activity.ActivityID,
 						TripDestinationID: input.Destination,
 						PlaceID:           activity.ID,
 						ScheduledDate:     &scheduledDate,
@@ -186,18 +188,20 @@ func ConvertTripDTO(input TripDTOByDate) (TripDTO, error) {
 					})
 				case "accommodation":
 					dest.Accommodations = append(dest.Accommodations, TripAccommodationDTO{
-						TripDestinationID: input.Destination,
-						AccommodationID:   activity.ID,
-						CheckInDate:       &scheduledDate,
-						CheckOutDate:      &scheduledDate, // Assuming CheckOutDate is the same as CheckInDate for simplicity.
-						StartTime:         startTimePtr,
-						EndTime:           endTimePtr,
+						TripAccommodationID: activity.ActivityID,
+						TripDestinationID:   input.Destination,
+						AccommodationID:     activity.ID,
+						CheckInDate:         &scheduledDate,
+						CheckOutDate:        &scheduledDate, // Assuming CheckOutDate is the same as CheckInDate for simplicity.
+						StartTime:           startTimePtr,
+						EndTime:             endTimePtr,
 						// If a CheckOutDate is available, parse it similarly.
 						Cost:  activity.Price,
 						Notes: activity.Description,
 					})
 				case "restaurant":
 					dest.Restaurants = append(dest.Restaurants, TripRestaurantDTO{
+						TripRestaurantID:  activity.ActivityID,
 						TripDestinationID: input.Destination,
 						RestaurantID:      activity.ID,
 						MealDate:          &scheduledDate,
@@ -247,6 +251,7 @@ func ConvertTripDTOByDate(input TripDTO) (TripDTOByDate, error) {
 			}
 			dateStr := p.ScheduledDate.Format(layoutDate)
 			act := Activity{
+				ActivityID:  p.TripPlaceID,
 				ID:          p.PlaceID,
 				Type:        "place",
 				Description: p.Notes,
@@ -267,6 +272,7 @@ func ConvertTripDTOByDate(input TripDTO) (TripDTOByDate, error) {
 			}
 			dateStr := a.CheckInDate.Format(layoutDate)
 			act := Activity{
+				ActivityID:  a.TripAccommodationID,
 				ID:          a.AccommodationID,
 				Type:        "accommodation",
 				Description: a.Notes,
@@ -288,6 +294,7 @@ func ConvertTripDTOByDate(input TripDTO) (TripDTOByDate, error) {
 			}
 			dateStr := r.MealDate.Format(layoutDate)
 			act := Activity{
+				ActivityID:  r.TripRestaurantID,
 				ID:          r.RestaurantID,
 				Type:        "restaurant",
 				Description: r.Notes,
