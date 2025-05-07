@@ -1,10 +1,8 @@
 import json
 import logging
 import os
-from datetime import date
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-import time
 
 from dotenv import load_dotenv
 from langchain.agents import Tool, initialize_agent
@@ -46,4 +44,10 @@ class AgentTool:
         return chain.invoke({"plan_for_specific_element": plan_for_specific_element, "data_detail_for_element": data_detail_for_element, "comment": comment})
     
     def get_plan_for_specific_element(self, plan: Dict[str, Any], data_detail: Dict[str, Any], element_id: str) -> Dict[str, Any]:
-        
+        """
+        Lấy kế hoạch cho một phần tử cụ thể
+        """
+        prompt = PromptTemplate(
+            template=self.get_plan_for_specific_element_prompt,
+            input_variables=["plan", "data_detail", "element_id"]
+        )
