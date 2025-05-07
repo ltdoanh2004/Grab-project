@@ -48,13 +48,13 @@ func (tc *TripController) RegisterRoutes(router *gin.Engine) {
 // @Tags trip
 // @Accept json
 // @Produce json
-// @Param trip body dto.CreateTripRequest true "Trip Details"
+// @Param trip body dto.TripDTO true "Trip Details"
 // @Success 200 {object} model.Response{data=string} "Returns trip ID"
 // @Failure 400 {object} model.Response "Invalid request"
 // @Failure 500 {object} model.Response "Internal server error"
 // @Router /api/v1/trip/create [post]
 func (tc *TripController) CreateTrip(ctx *gin.Context) {
-	var request dto.CreateTripRequest
+	var request dto.TripDTO
 	if err := ctx.ShouldBindJSON(&request); err != nil {
 		ctx.JSON(http.StatusBadRequest, model.Response{
 			Message: "Invalid request body: " + err.Error(),
@@ -181,7 +181,7 @@ func (tc *TripController) GetTrip(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param request body dto.TripSuggestionRequest true "Trip Suggestion Parameters"
-// @Success 200 {object} model.Response{data=dto.CreateTripRequestByDate} "Suggested trip"
+// @Success 200 {object} model.Response{data=dto.TripDTOByDate} "Suggested trip"
 // @Failure 400 {object} model.Response "Invalid request"
 // @Failure 500 {object} model.Response "Internal server error"
 // @Router /api/v1/trip/get_plan [post]
@@ -206,7 +206,7 @@ func (tc *TripController) GetPlan(ctx *gin.Context) {
 		return
 	}
 
-	var suggestedTrip *dto.CreateTripRequestByDate
+	var suggestedTrip *dto.TripDTOByDate
 	suggestedTrip, err := tc.tripService.SuggestTrip(userID.(string), request, endpoints)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{

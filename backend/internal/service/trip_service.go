@@ -16,10 +16,10 @@ import (
 )
 
 type TripService interface {
-	CreateTrip(trip *dto.CreateTripRequest) (string, error)
+	CreateTrip(trip *dto.TripDTO) (string, error)
 	SaveTrip(trip *dto.TripDTO) error
 	GetTrip(tripID string) (*dto.TripDTO, error)
-	SuggestTrip(userID string, activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error)
+	SuggestTrip(userID string, activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error)
 }
 
 type tripService struct {
@@ -46,7 +46,7 @@ func NewTripService(
 	}
 }
 
-func (ts *tripService) CreateTrip(trip *dto.CreateTripRequest) (string, error) {
+func (ts *tripService) CreateTrip(trip *dto.TripDTO) (string, error) {
 	tripID := uuid.New().String()
 
 	// Create Trip entity
@@ -361,7 +361,7 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTO, error) {
 	return tripDTO, nil
 }
 
-func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error) {
+func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error) {
 	client := &http.Client{
 		Timeout: 100000 * time.Second,
 	}
@@ -445,9 +445,9 @@ func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, e
 
 	// Parse the API response which has structure: {"status": "success", "plan": {...}, "error": null}
 	var apiResponse struct {
-		Status string                      `json:"status"`
-		Plan   dto.CreateTripRequestByDate `json:"plan"`
-		Error  *string                     `json:"error"`
+		Status string            `json:"status"`
+		Plan   dto.TripDTOByDate `json:"plan"`
+		Error  *string           `json:"error"`
 	}
 
 	if err := json.Unmarshal(responseBody, &apiResponse); err != nil {
@@ -478,22 +478,22 @@ func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, e
 	return &apiResponse.Plan, nil
 }
 
-func (ts *tripService) mockAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error) {
+func (ts *tripService) mockAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error) {
 	sampleJSON := ``
-	var result dto.CreateTripRequestByDate
+	var result dto.TripDTOByDate
 	if err := json.Unmarshal([]byte(sampleJSON), &result); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal mock JSON: %w", err)
 	}
 	return &result, nil
 }
 
-func (ts *tripService) SuggestTrip(userID string, activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error) {
+func (ts *tripService) SuggestTrip(userID string, activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error) {
 	suggestionByDate, err := ts.CallAISuggestTrip(activities, endpoint)
 	// suggestionByDate, err := ts.mockAISuggestTrip(activities, endpoint)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get trip suggestion: %w", err)
 	}
-	suggestion, err := dto.ConvertToCreateTripRequest(*suggestionByDate)
+	suggestion, err := dto.ConvertTripDTO(*suggestionByDate)
 	if err != nil {
 		return nil, fmt.Errorf("failed to convert trip suggestion: %w", err)
 	}
@@ -504,7 +504,7 @@ func (ts *tripService) SuggestTrip(userID string, activities dto.TripSuggestionR
 		return nil, fmt.Errorf("failed to create trip: %w", err)
 	}
 
-	newSuggestionByDate, err := dto.ConvertToCreateTripRequestByDate(suggestion)
+	newSuggestionByDate, err := dto.ConvertTripDTOByDate(suggestion)
 	if err != nil {
 		return nil, fmt.Errorf("failed to convert trip suggestion: %w", err)
 	}
