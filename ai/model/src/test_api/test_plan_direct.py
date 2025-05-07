@@ -14,7 +14,7 @@ if src_dir not in sys.path:
     sys.path.append(src_dir)
 
 # Import the plan model
-from ai.model.src.agents.plan_model import PlanModel
+from ai.model.src.agents.plan_agent import PlanModel
 
 def main():
     # Sample input data with multiple locations

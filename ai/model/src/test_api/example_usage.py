@@ -5,7 +5,7 @@ for generating travel plans with LangChain integration.
 """
 import json
 import os
-from ai.model.src.agents.plan_model import PlanModel
+from ai.model.src.agents.plan_agent import PlanModel
 
 def print_plan_summary(plan):
     """Print a summary of the generated plan."""

@@ -241,3 +241,38 @@ NameError: name 'setup_logger' is not defined
 2025-05-07 13:49:34,001 - app - INFO - All routers registered successfully
 2025-05-07 13:49:42,087 - __mp_main__ - INFO - All routers registered successfully
 2025-05-07 13:49:42,102 - app - INFO - All routers registered successfully
+2025-05-07 13:50:18,596 - __mp_main__ - INFO - All routers registered successfully
+2025-05-07 13:50:18,613 - app - INFO - All routers registered successfully
+2025-05-07 13:51:23,386 - __mp_main__ - ERROR - Error registering routers: No module named 'ai'
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/app.py", line 33, in register_routers
+    from src.services.trip_plan_api import router as trip_plan_router
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/trip_plan_api.py", line 8, in <module>
+    from ai.model.src.agents.plan_agent import PlanModel
+ModuleNotFoundError: No module named 'ai'
+2025-05-07 13:51:42,195 - __mp_main__ - ERROR - Error registering routers: No module named 'ai'
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/app.py", line 32, in register_routers
+    from src.services.backend_api import recommend_router
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/backend_api.py", line 7, in <module>
+    from ai.model.src.agents.travel_agent import TravelModel
+ModuleNotFoundError: No module named 'ai'
+2025-05-07 13:52:09,401 - __mp_main__ - ERROR - Error registering routers: No module named 'ai'
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/app.py", line 33, in register_routers
+    from src.services.trip_plan_api import router as trip_plan_router
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/trip_plan_api.py", line 8, in <module>
+    from ai.model.src.agents.plan_agent import PlanModel
+ModuleNotFoundError: No module named 'ai'
+2025-05-07 13:52:16,640 - __mp_main__ - INFO - All routers registered successfully
+2025-05-07 13:52:16,657 - app - INFO - All routers registered successfully
+2025-05-07 15:22:29,855 - __mp_main__ - INFO - All routers registered successfully
+2025-05-07 15:22:29,871 - app - INFO - All routers registered successfully
+2025-05-07 15:23:21,001 - __mp_main__ - INFO - All routers registered successfully
+2025-05-07 15:23:21,018 - app - INFO - All routers registered successfully
+2025-05-07 15:24:16,592 - __mp_main__ - INFO - All routers registered successfully
+2025-05-07 15:24:16,607 - app - INFO - All routers registered successfully
+2025-05-07 15:24:38,368 - __mp_main__ - INFO - All routers registered successfully
+2025-05-07 15:24:38,384 - app - INFO - All routers registered successfully
+2025-05-07 15:24:47,237 - __mp_main__ - INFO - All routers registered successfully
+2025-05-07 15:24:47,252 - app - INFO - All routers registered successfully

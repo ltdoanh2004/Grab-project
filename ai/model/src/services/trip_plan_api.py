@@ -5,7 +5,7 @@ import os
 import sys
 import logging
 from datetime import datetime, timedelta
-from src.agents.plan_model import PlanModel
+from src.agents.plan_agent import PlanModel
 from src.utils.logger import setup_logger
 from src.models import (
     TripPlanRequest,
