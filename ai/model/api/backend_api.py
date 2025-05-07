@@ -28,22 +28,17 @@ if parent_dir not in sys.path:
 # Create router for recommendation endpoints
 recommend_router = APIRouter(tags=["Recommendations"])
 
-# Create an API router for backend operations
-backend_router = APIRouter(tags=["Backend"])
+
 
 # Create mock routers if not already available
 recommend_router = APIRouter(tags=["Recommendations"])
-backend_router = APIRouter(tags=["Backend"])
 
 @recommend_router.get("/health")
 async def health_check():
     """Health check endpoint for the recommendation service"""
     return {"status": "ok", "service": "recommendations"}
 
-@backend_router.get("/health")
-async def backend_health_check():
-    """Health check endpoint for the backend service"""
-    return {"status": "ok", "service": "backend"}
+
 
 # Try to import TravelModel or use a mock
 try:
@@ -379,10 +374,8 @@ async def suggest_trips(request: TripSuggestionRequest):
         else:
             season = "winter"
             
-        # Determine travel style based on preferences
         travel_style = "family" if request.people.children > 0 else "couple" if request.people.adults == 2 else "solo"
         
-        # Create a detailed query context
         query = f"""
         Planning a trip to {request.destination} with the following details:
         - Group: {request.people.adults} adults, {request.people.children} children, {request.people.infants} infants
@@ -413,7 +406,6 @@ async def suggest_trips(request: TripSuggestionRequest):
         
         logger.info(f"Processing recommendation query for {request.destination}")
         
-        # Process the query using TravelModel
         raw_recommendations = travel_model.process_query(query)
         
         logger.info(f"Recommendation query processed successfully, got {len(raw_recommendations)} items")
@@ -450,22 +442,3 @@ async def suggest_trips(request: TripSuggestionRequest):
         logger.error(f"Error processing recommendation query: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
-@backend_router.post("/locations/details")
-async def get_location_details(location_ids: List[str], location_type: str = "hotels"):
-    """
-    Get detailed information for locations using their IDs
-    """
-    result = backend_api.get_location_details(location_ids, location_type)
-    if result["status"] == "error":
-        raise HTTPException(status_code=500, detail=result["error"])
-    return result
-
-@backend_router.get("/locations/search")
-async def search_locations(query: str, location_type: str = "hotels", limit: int = 5):
-    """
-    Search for locations by keywords
-    """
-    result = backend_api.search_locations(query, location_type, limit)
-    if result["status"] == "error":
-        raise HTTPException(status_code=500, detail=result["error"])
-    return result 
