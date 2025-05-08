@@ -22,7 +22,7 @@ from typing import Any, Dict, List, Optional
 
 from ..promts.plan_promt import JSON_SCHEMA_EXAMPLE, system_plan_prompt
 from ..utils.helper_function import extract_image_url
-
+from ..agents.review_agent import ReviewAgent
 from dotenv import load_dotenv
 from langchain_core.output_parsers import JsonOutputParser
 from langchain.prompts import PromptTemplate
@@ -53,6 +53,7 @@ class PlanModel:
             max_tokens=4000  
         )
         self.parser = JsonOutputParser()  
+        self.review_agent = ReviewAgent()
 
 
     def _build_prompt(self) -> PromptTemplate:
@@ -457,23 +458,18 @@ class PlanModel:
                                     elif required_segment == "evening" and merged_data.get("restaurants"):
                                         rest_index = min(day_num, len(merged_data["restaurants"])-1) if merged_data["restaurants"] else 0
                                         if rest_index >= 0 and merged_data["restaurants"]:
-                                            # Get restaurant ID first
                                             restaurant_id = merged_data["restaurants"][rest_index].get("restaurant_id", merged_data["restaurants"][rest_index].get("id", f"restaurant_evening_day{day_num+1}"))
                                             
-                                            # Print all restaurant IDs for debugging
                                             log.info(f"Available restaurant IDs: {[r.get('restaurant_id', r.get('id', 'unknown')) for r in merged_data.get('restaurants', [])]}")
                                             log.info(f"Looking for restaurant ID: {restaurant_id}")
                                             
-                                            # Find the matching restaurant to get complete data
                                             matching_restaurant = None
                                             for restaurant in merged_data.get("restaurants", []):
-                                                # Check for exact matches first
                                                 if restaurant.get("restaurant_id") == restaurant_id or restaurant.get("id") == restaurant_id:
                                                     matching_restaurant = restaurant
                                                     log.info(f"Found exact match for restaurant ID: {restaurant_id}")
                                                     break
                                                 
-                                                # If the restaurant_id contains the ID (e.g., "restaurant_123" contains "123")
                                                 elif restaurant_id and restaurant.get("restaurant_id") and restaurant_id in restaurant.get("restaurant_id"):
                                                     matching_restaurant = restaurant
                                                     log.info(f"Found partial match: {restaurant_id} in {restaurant.get('restaurant_id')}")
@@ -483,12 +479,10 @@ class PlanModel:
                                                     log.info(f"Found partial match: {restaurant_id} in {restaurant.get('id')}")
                                                     break
                                             
-                                            # If no match found, use the one at rest_index
                                             if not matching_restaurant:
                                                 matching_restaurant = merged_data["restaurants"][rest_index]
                                                 log.info(f"No match found, using restaurant at index {rest_index}")
                                             
-                                            # Log the matched restaurant for debugging
                                             log.info(f"Matched restaurant: {matching_restaurant}")
                                             
                                             # Extract image URL
@@ -637,7 +631,8 @@ class PlanModel:
                     day = self._populate_default_activities(day, idx, merged_data)
             
             save_data_to_json(final_plan, f"/Users/doa_ai/Developer/Grab-project/ai/model/src/test_api/generated_plan/plan_{input_data.get('trip_name', 'default_trip')}.json")
-            return final_plan
+            review_plan = self.review_agent.process_plan(final_plan)
+            return review_plan
             
         except Exception as e:
             log.error(f"Error in generate_plan: {e}")
