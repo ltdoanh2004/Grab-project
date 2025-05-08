@@ -4,12 +4,11 @@ import sys
 import json
 from pathlib import Path
 
-# Add the src directory to Python path
 current_dir = Path(__file__).parent
 src_dir = current_dir.parent
 sys.path.append(str(src_dir))
 
-from promts import system_review_promt
+from promts import system_review_promt, few_shot_review_promt, reviewer_promt, note_promt, summary_tips_promt
 from langchain.agents import initialize_agent, AgentType
 from langchain.tools import Tool
 from langchain.chat_models import ChatOpenAI
@@ -19,10 +18,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-class TravelTipAggregator:
+class TravelReviewer:
     def __init__(self, openai_api_key: Optional[str] = None, tavily_api_key: Optional[str] = None):
         """
-        Initialize the TravelTipAggregator agent.
+        Initialize the TravelReviewer agent.
         
         Args:
             openai_api_key: OpenAI API key (optional, will use env var if not provided)
@@ -37,7 +36,7 @@ class TravelTipAggregator:
             raise ValueError("Tavily API key is required")
             
         self.llm = ChatOpenAI(
-            model="gpt-4o-mini",
+            model="gpt-4o",
             temperature=0.5,
             openai_api_key=self.openai_api_key
         )
@@ -58,33 +57,13 @@ class TravelTipAggregator:
         plan_by_day = plan.get('plan_by_day', [])
         
         prompt = f"""Bạn là một chuyên gia du lịch giàu kinh nghiệm, chuyên cung cấp những mẹo du lịch thực tế và hữu ích cho khách du lịch.
-
-Hãy review và thêm tips cho chuyến du lịch sau:
-
-Tên chuyến đi: {trip_name}
-Địa điểm: {destination}
-
-Ví dụ về cách trả lời mong muốn:
-
-### Ngày 1: Khám phá phố cổ Hà Nội
-1. **Thời gian tốt nhất để tham quan**: Sáng sớm (6:00 - 8:00) để tránh đông đúc và ngắm nhịp sống buổi sáng của người dân địa phương.
-2. **Cách di chuyển**: Nên đi bộ hoặc thuê xe đạp để khám phá các ngõ nhỏ, tránh taxi vào giờ cao điểm.
-3. **Chi phí dự kiến**: Khoảng 500,000 VND cho cả ngày, bao gồm ăn uống và mua sắm.
-4. **Những điều cần tránh**: Tránh mua đồ ở các cửa hàng đầu phố, thường đắt hơn 2-3 lần so với trong ngõ.
-5. **Mẹo tiết kiệm**: Ăn sáng tại quán vỉa hè, giá chỉ 20,000 - 30,000 VND/phần.
-6. **Văn hóa cần lưu ý**: Khi vào chùa, nhớ mặc quần áo kín đáo và cởi giày trước khi vào.
-
-### Ngày 2: Trải nghiệm ẩm thực
-1. **Thời gian tốt nhất**: Buổi tối (18:00 - 21:00) để thưởng thức ẩm thực đường phố.
-2. **Cách di chuyển**: Đi bộ giữa các quán ăn, khoảng cách thường ngắn.
-3. **Chi phí dự kiến**: 300,000 - 400,000 VND cho bữa tối và đồ uống.
-4. **Những điều cần tránh**: Không nên ăn quá no ở một quán, hãy thử nhiều món ở nhiều quán khác nhau.
-5. **Mẹo tiết kiệm**: Chia sẻ món ăn với bạn bè để thử được nhiều món.
-6. **Văn hóa cần lưu ý**: Khi ăn phở, nên thêm các loại rau thơm và nước mắm theo khẩu vị.
-
-Bây giờ, hãy cung cấp tips tương tự cho các ngày trong chuyến đi:
-
-"""
+        Hãy review và thêm tips cho chuyến du lịch sau:
+        Tên chuyến đi: {trip_name}
+        Địa điểm: {destination}
+        Ví dụ về cách trả lời mong muốn:
+        {few_shot_review_promt}
+        Bây giờ, hãy cung cấp tips tương tự cho các ngày trong chuyến đi:
+        """
 
         for day in plan_by_day:
             date = day.get('date', '')
@@ -93,16 +72,8 @@ Bây giờ, hãy cung cấp tips tương tự cho các ngày trong chuyến đi:
             
             # Tạo prompt cho tips chung của ngày
             prompt += f"\n{day_title} ({date}):\n"
-            prompt += f"""Hãy cung cấp 5-6 mẹo du lịch thực tế CHO RIÊNG NGÀY NÀY, bao gồm:
-1. Thời gian tốt nhất để tham quan các địa điểm
-2. Cách di chuyển giữa các địa điểm
-3. Chi phí dự kiến cho cả ngày
-4. Những điều cần tránh
-5. Mẹo tiết kiệm
-6. Văn hóa và phong tục địa phương cần lưu ý
-
-Các hoạt động trong ngày này:
-"""
+            prompt += f"""{reviewer_promt}
+            """
             
             for segment in segments:
                 time_of_day = segment.get('time_of_day', '')
@@ -118,20 +89,12 @@ Các hoạt động trong ngày này:
                     description = activity.get('description', '')
                     
                     prompt += f"""
-- {name} ({activity_type})
-  Thời gian: {start_time} - {end_time}
-  Mô tả: {description}
-"""
-        
-        prompt += """
-Lưu ý:
-- Hãy cung cấp thông tin thực tế, có thể áp dụng ngay
-- Ưu tiên thông tin từ người dân địa phương và du khách có kinh nghiệm
-- Trả lời bằng tiếng Việt, ngắn gọn và dễ hiểu
-- Mỗi tip nên có 1-2 câu giải thích ngắn gọn
-- CHỈ CUNG CẤP TIPS CHO NGÀY ĐANG ĐƯỢC XEM XÉT, KHÔNG BAO GỒM CÁC NGÀY KHÁC
-- Format tips giống như ví dụ trên, với số thứ tự và tiêu đề in đậm
-"""
+            - {name} ({activity_type})
+            Thời gian: {start_time} - {end_time}
+            Mô tả: {description}
+            """
+                    
+                    prompt += f"""{note_promt}"""
         
         return prompt
 
@@ -147,7 +110,6 @@ Lưu ý:
         return self.llm.predict(prompt)    
     def _setup_tools(self):
         """Set up the tools for the agent."""
-        # Web search tool using Tavily
         self.search_tool = TavilySearchResults(
             api_key=self.tavily_api_key,
             max_results=3
@@ -157,7 +119,6 @@ Lưu ý:
             name="TipExtractor",
             description="Extract practical travel tips from travel articles or descriptions."
         )
-        
         self.tools = [self.search_tool, self.tip_extractor_tool]
         
     def _setup_agent(self):
@@ -197,39 +158,103 @@ Lưu ý:
             print(f"Error getting travel tips: {str(e)}")
             return []
 
-    def process_plan(self, plan: dict) -> dict:
-        """Process the travel plan and add tips for each day.
+    def estimate_activity_price(self, activity: dict, destination: str) -> float:
+        """Estimate the price for a specific activity based on its type and other details.
         
         Args:
-            plan (dict): The travel plan generated by plan agent
+            activity (dict): The activity data
+            destination (str): The destination of the trip
             
         Returns:
-            dict: The plan with added daily tips
+            float: The estimated price for the activity
         """
-        # Process each day separately
+        activity_type = activity.get('type', '').lower()
+        name = activity.get('name', '')
+        description = activity.get('description', '')
+        
+        prompt = f"""Hãy ước tính giá cho hoạt động du lịch sau tại {destination}:
+        
+        Loại hoạt động: {activity_type}
+        Tên: {name}
+        Mô tả: {description}
+
+        Trả về chỉ một số duy nhất là ước tính giá tiền bằng VND, không kèm theo chữ, đơn vị hay giải thích.
+        Ví dụ: 250000 (không phải 250,000 VND hoặc 250.000đ)
+
+        Lưu ý:
+        - Thông tin giá phải thực tế dựa trên giá cả tại {destination}
+        - Đối với khách sạn/nhà nghỉ, đây là giá 1 đêm
+        - Đối với nhà hàng, đây là giá trung bình cho một người
+        - Đối với hoạt động tham quan, đây là giá vé vào cổng hoặc chi phí tham gia
+        - Đối với di chuyển, đây là chi phí di chuyển trung bình
+        """
+        
+        try:
+            price_str = self.llm.predict(prompt).strip()
+            price_str = ''.join(c for c in price_str if c.isdigit())
+            if price_str:
+                return float(price_str)
+            return 0.0
+        except Exception as e:
+            print(f"Error estimating price: {str(e)}")
+            return 0.0
+
+    def summarize_tips_to_list(self, detailed_tips: List[str]) -> List[str]:
+        """Summarize detailed tips into a simple list format.
+        
+        Args:
+            detailed_tips (List[str]): The detailed tips returned by the agent
+            
+        Returns:
+            List[str]: Simplified list of travel tips
+        """
+        if not detailed_tips:
+            return []
+        prompt = f"""Hãy tóm tắt các mẹo du lịch sau đây thành một danh sách đơn giản, mỗi mẹo là một câu ngắn gọn.
+        Tips gốc:
+        {"\n".join(detailed_tips)}
+        {summary_tips_promt}
+        """
+        
+        try:
+            result = self.llm.predict(prompt)
+            tips = [tip.strip() for tip in result.split('\n') if tip.strip()]
+            tips = [tip for tip in tips if not tip.startswith('#') and not tip.startswith('*') and len(tip) > 10]
+            return tips
+        except Exception as e:
+            print(f"Error summarizing tips: {str(e)}")
+            return detailed_tips  # Trả về tips gốc nếu có lỗi
+
+    def process_plan(self, plan: dict) -> dict:
+        """Process the travel plan and add tips for each day and price estimates for activities.
+        Args:
+            plan (dict): The travel plan generated by plan agent
+        Returns:
+            dict: The plan with added daily tips and price estimates
+        """
+        destination = plan.get('destination', '')
+        
         for day in plan['plan_by_day']:
-            # Create a temporary plan with just this day
             temp_plan = {
                 'trip_name': plan['trip_name'],
-                'destination': plan['destination'],
+                'destination': destination,
                 'plan_by_day': [day]
             }
-            
-            # Get tips for this specific day
             prompt = self.build_prompt_from_plan_agent(temp_plan)
-            tips = self.get_travel_tips(prompt)
-            
-            # Add tips only to this day
-            day['daily_tips'] = tips
-        
+            detailed_tips = self.get_travel_tips(prompt)
+            simplified_tips = self.summarize_tips_to_list(detailed_tips)
+            day['daily_tips'] = simplified_tips
+            for segment in day.get('segments', []):
+                for activity in segment.get('activities', []):
+                    if 'price_ai_estimate' not in activity:
+                        price = self.estimate_activity_price(activity, destination)
+                        activity['price_ai_estimate'] = price
         return plan
 
-# Example usage
 if __name__ == "__main__":
-    # Get the absolute path to the plan file
     plan_path = os.path.join(src_dir, 'test_api/generated_plan/plan_default_trip.json')
     
-    aggregator = TravelTipAggregator()
+    aggregator = TravelReviewer()
     plan = json.load(open(plan_path))
     processed_plan = aggregator.process_plan(plan)
     print(json.dumps(processed_plan, indent=2, ensure_ascii=False))
