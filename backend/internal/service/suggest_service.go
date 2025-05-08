@@ -273,35 +273,35 @@ func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dt
 }
 
 func (ss *suggestService) SuggestAll(travelPreference *dto.TravelPreference) (*dto.TripSuggestionRequest, error) {
-	// rsp, err := ss.callAISuggestAll(
-	// 	"/api/v1/suggest/all",
-	// 	travelPreference,
-	// )
-	// if err != nil {
-	// 	return nil, err
-	// }
-	var err error
-	var rsp []dto.SuggestWithIDAndType
-	rsp = append(rsp,
-		dto.SuggestWithIDAndType{
-			Name: "hotel_000000",
-			Type: "accommodation",
-			Args: "...",
-			ID:   "hotel_000000",
-		},
-		dto.SuggestWithIDAndType{
-			Name: "restaurant_000000",
-			Type: "restaurant",
-			Args: "...",
-			ID:   "restaurant_000000",
-		},
-		dto.SuggestWithIDAndType{
-			Name: "place_000000",
-			Type: "place",
-			Args: "...",
-			ID:   "place_000000",
-		},
+	rsp, err := ss.callAISuggestAll(
+		"/api/v1/suggest/all",
+		travelPreference,
 	)
+	if err != nil {
+		return nil, err
+	}
+	// var err error
+	// var rsp []dto.SuggestWithIDAndType
+	// rsp = append(rsp,
+	// 	dto.SuggestWithIDAndType{
+	// 		Name: "hotel_000000",
+	// 		Type: "accommodation",
+	// 		Args: "...",
+	// 		ID:   "hotel_000000",
+	// 	},
+	// 	dto.SuggestWithIDAndType{
+	// 		Name: "restaurant_000000",
+	// 		Type: "restaurant",
+	// 		Args: "...",
+	// 		ID:   "restaurant_000000",
+	// 	},
+	// 	dto.SuggestWithIDAndType{
+	// 		Name: "place_000000",
+	// 		Type: "place",
+	// 		Args: "...",
+	// 		ID:   "place_000000",
+	// 	},
+	// )
 
 	var suggestion *dto.TripSuggestionRequest
 	suggestion, err = ss.ConvertIntoTripSuggestion(rsp)
