@@ -16,10 +16,12 @@ import (
 )
 
 type TripService interface {
-	CreateTrip(trip *dto.CreateTripRequest) (string, error)
+	CreateTrip(trip *dto.TripDTO) (string, error)
 	SaveTrip(trip *dto.TripDTO) error
 	GetTrip(tripID string) (*dto.TripDTO, error)
-	SuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error)
+	SuggestTrip(userID string, activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error)
+	GetTravelPreference(tripID string) (*model.TravelPreference, error)
+	CreateTravelPreference(tripID string, tp *model.TravelPreference) (string, error)
 }
 
 type tripService struct {
@@ -28,6 +30,7 @@ type tripService struct {
 	tripAccommodationRepository repository.TripAccommodationRepository
 	tripPlaceRepository         repository.TripPlaceRepository
 	tripRestaurantRepository    repository.TripRestaurantRepository
+	travelPreferenceRepository  repository.TravelPreferenceRepository
 }
 
 func NewTripService(
@@ -36,6 +39,7 @@ func NewTripService(
 	accommodationRepo repository.TripAccommodationRepository,
 	placeRepo repository.TripPlaceRepository,
 	restaurantRepo repository.TripRestaurantRepository,
+	tpRepo repository.TravelPreferenceRepository,
 ) TripService {
 	return &tripService{
 		tripRepository:              tripRepo,
@@ -43,10 +47,11 @@ func NewTripService(
 		tripAccommodationRepository: accommodationRepo,
 		tripPlaceRepository:         placeRepo,
 		tripRestaurantRepository:    restaurantRepo,
+		travelPreferenceRepository:  tpRepo,
 	}
 }
 
-func (ts *tripService) CreateTrip(trip *dto.CreateTripRequest) (string, error) {
+func (ts *tripService) CreateTrip(trip *dto.TripDTO) (string, error) {
 	tripID := uuid.New().String()
 
 	// Create Trip entity
@@ -90,6 +95,8 @@ func (ts *tripService) CreateTrip(trip *dto.CreateTripRequest) (string, error) {
 				AccommodationID:     acc.AccommodationID,
 				CheckInDate:         acc.CheckInDate,
 				CheckOutDate:        acc.CheckOutDate,
+				StartTime:           acc.StartTime,
+				EndTime:             acc.EndTime,
 				Cost:                acc.Cost,
 				Notes:               acc.Notes,
 			}
@@ -194,6 +201,8 @@ func (ts *tripService) SaveTrip(trip *dto.TripDTO) error {
 				AccommodationID:     acc.AccommodationID,
 				CheckInDate:         acc.CheckInDate,
 				CheckOutDate:        acc.CheckOutDate,
+				StartTime:           acc.StartTime,
+				EndTime:             acc.EndTime,
 				Cost:                acc.Cost,
 				Notes:               acc.Notes,
 			}
@@ -307,6 +316,8 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTO, error) {
 				AccommodationID:     acc.AccommodationID,
 				CheckInDate:         acc.CheckInDate,
 				CheckOutDate:        acc.CheckOutDate,
+				StartTime:           acc.StartTime,
+				EndTime:             acc.EndTime,
 				Cost:                acc.Cost,
 				Notes:               acc.Notes,
 			})
@@ -355,7 +366,7 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTO, error) {
 	return tripDTO, nil
 }
 
-func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error) {
+func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error) {
 	client := &http.Client{
 		Timeout: 100000 * time.Second,
 	}
@@ -439,9 +450,9 @@ func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, e
 
 	// Parse the API response which has structure: {"status": "success", "plan": {...}, "error": null}
 	var apiResponse struct {
-		Status string                      `json:"status"`
-		Plan   dto.CreateTripRequestByDate `json:"plan"`
-		Error  *string                     `json:"error"`
+		Status string            `json:"status"`
+		Plan   dto.TripDTOByDate `json:"plan"`
+		Error  *string           `json:"error"`
 	}
 
 	if err := json.Unmarshal(responseBody, &apiResponse); err != nil {
@@ -472,265 +483,71 @@ func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, e
 	return &apiResponse.Plan, nil
 }
 
-func (ts *tripService) mockAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error) {
+func (ts *tripService) mockAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error) {
 	sampleJSON := `
-{
-  "trip_name": "Trip to Hanoi",
-  "start_date": "2025-05-04",
-  "end_date": "2025-05-06",
-  "user_id": "user123",
-  "destination": "hanoi",
-  "plan_by_day": [
-	{
-	  "date": "2025-05-04",
-	  "day_title": "Ngày 1: Khám phá biển",
-	  "segments": [
-		{
-		  "time_of_day": "morning",
-		  "activities": [
-			{
-			  "id": "place_morning_day1",
-			  "type": "place",
-			  "name": "WanderOn",
-			  "start_time": "08:00",
-			  "end_time": "10:00",
-			  "description": "WanderOn là một công ty du lịch tuyệt vời tại Hà Nội. Công ty cung cấp các tour du lịch chuyên biệt tại Hà Nội và các tỉnh lân cận, với những trải nghiệm thú vị và đội ngũ hướng dẫn viên chuyên nghiệp. Nếu bạn muốn khám phá Hà Nội theo cách đặc biệt và đầy thú vị, hãy đến với WanderOn. Địa",
-			  "address": "",
-			  "categories": "sightseeing",
-			  "duration": "2h",
-			  "opening_hours": "08:00-17:00",
-			  "rating": 4.0,
-			  "price": 0,
-			  "image_url": "",
-			  "url": ""
-			}
-		  ]
-		},
-		{
-		  "time_of_day": "afternoon",
-		  "activities": [
-			{
-			  "id": "place_011198",
-			  "type": "place",
-			  "name": "WanderOn",
-			  "start_time": "14:00",
-			  "end_time": "16:00",
-			  "description": "An evolving & expanding backpacking travel community, we organize well-crafted tours for thousands of enthusiastic travelers. As professionals, travel is our passion & life-work; we have the knowledge & experience to ensure you enjoy an exceptional travel experience! It’s about going on a Trip ourselves. Talk to us about your Travel plans,& let our specialists make your dream holiday perfect!",
-			  "address": "",
-			  "categories": "",
-			  "duration": "",
-			  "opening_hours": "12:00 AM - 11:59 PM",
-			  "rating": 4.9,
-			  "price": 37.0,
-			  "image_url": "",
-			  "url": "https://www.tripadvisor.com/Attraction_Review-g304551-d15013133-Reviews-WanderOn-New_Delhi_National_Capital_Territory_of_Delhi.html"
-			}
-		  ]
-		},
-		{
-		  "time_of_day": "evening",
-		  "activities": [
-			{
-			  "id": "restaurant_022913",
-			  "type": "restaurant",
-			  "name": "Busan Korean Food - Nguyễn Tri Phương",
-			  "start_time": "19:00",
-			  "end_time": "21:00",
-			  "description": "",
-			  "address": "272A Nguyễn Tri Phương, P. 4, Quận 10, TP. HCM",
-			  "cuisines": "",
-			  "price_range": "",
-			  "rating": 5.8,
-			  "phone": "Đang cập nhật",
-			  "services": [
-				{
-				  "name": "ShopeeFood",
-				  "url": "https://www.deliverynow.vn/ho-chi-minh/busan-korean-food-nguyen-tri-phuong",
-				  "type": 0
-				}
-			  ],
-			  "image_url": "",
-			  "url": "https://www.foody.vn/ho-chi-minh/busan-korean-food-nguyen-tri-phuong"
-			}
-		  ]
-		}
-	  ]
-	},
-	{
-	  "date": "2025-05-05",
-	  "day_title": "Ngày 2: Khám phá núi",
-	  "segments": [
-		{
-		  "time_of_day": "morning",
-		  "activities": [
-			{
-			  "id": "WanderOn_morning_day2",
-			  "type": "place",
-			  "name": "WanderOn",
-			  "start_time": "08:00",
-			  "end_time": "10:00",
-			  "description": "WanderOn là một trong những địa điểm tuyệt vời để bắt đầu ngày mới. Nơi đây có khung cảnh đẹp và yên bình, mang lại cho bạn cảm giác thư thái khi ngắm nhìn một bức tranh thiên nhiên tuyệt vời của Hà Nội.",
-			  "address": "Số 7 Ngõ 118 Đường Quán Thánh, Ba Đình, Hà Nội",
-			  "categories": "sightseeing",
-			  "duration": "",
-			  "opening_hours": "08:00-17:00",
-			  "rating": 4.0,
-			  "price": 0,
-			  "image_url": "",
-			  "url": ""
-			}
-		  ]
-		},
-		{
-		  "time_of_day": "afternoon",
-		  "activities": [
-			{
-			  "id": "place_011608",
-			  "type": "place",
-			  "name": "WanderOn",
-			  "start_time": "14:00",
-			  "end_time": "16:00",
-			  "description": "An evolving & expanding backpacking travel community, we organize well-crafted tours for thousands of enthusiastic travelers. As professionals, travel is our passion & life-work; we have the knowledge & experience to ensure you enjoy an exceptional travel experience! It’s about going on a Trip ourselves. Talk to us about your Travel plans,& let our specialists make your dream holiday perfect!",
-			  "address": "",
-			  "categories": "",
-			  "duration": "",
-			  "opening_hours": "12:00 AM - 11:59 PM",
-			  "rating": 4.9,
-			  "price": 37.0,
-			  "image_url": "",
-			  "url": "https://www.tripadvisor.com/Attraction_Review-g304551-d15013133-Reviews-WanderOn-New_Delhi_National_Capital_Territory_of_Delhi.html"
-			}
-		  ]
-		},
-		{
-		  "time_of_day": "evening",
-		  "activities": [
-			{
-			  "id": "restaurant_022911",
-			  "type": "restaurant",
-			  "name": "Trung Nguyên Legend Coffee - 219 Lý Tự Trọng",
-			  "start_time": "19:00",
-			  "end_time": "21:00",
-			  "description": "",
-			  "address": "219 Lý Tự Trọng, P. Bến Thành, Quận 1, TP. HCM",
-			  "cuisines": "",
-			  "price_range": "",
-			  "rating": 7.66,
-			  "phone": "(028) 38 258 847",
-			  "services": [
-				{
-				  "name": "ShopeeFood",
-				  "url": "https://www.deliverynow.vn/ho-chi-minh/trung-nguyen-legend-coffee-219-ly-tu-trong",
-				  "type": 0
-				}
-			  ],
-			  "image_url": "",
-			  "url": "https://www.foody.vn/ho-chi-minh/trung-nguyen-legend-coffee-219-ly-tu-trong"
-			}
-		  ]
-		}
-	  ]
-	},
-	{
-	  "date": "2025-05-06",
-	  "day_title": "Ngày 3: Khám phá văn hóa",
-	  "segments": [
-		{
-		  "time_of_day": "morning",
-		  "activities": [
-			{
-			  "id": "place_morning_day3",
-			  "type": "place",
-			  "name": "WanderOn",
-			  "start_time": "08:00",
-			  "end_time": "10:00",
-			  "description": "WanderOn là một trung tâm nghệ thuật và văn hóa của Hà Nội, nơi bạn có thể tìm hiểu về lịch sử, nghệ thuật và văn hóa dân tộc Việt Nam. Đón xem những buổi diễn trình diễn truyền thống đặc sắc và tham quan các triển lãm nghệ thuật độc đáo tại đây.",
-			  "address": "Nguyễn Thị Minh Khai, Đống",
-			  "categories": "sightseeing",
-			  "duration": "2h",
-			  "opening_hours": "08:00-17:00",
-			  "rating": 4.0,
-			  "price": 0,
-			  "image_url": "",
-			  "url": ""
-			}
-		  ]
-		},
-		{
-		  "time_of_day": "afternoon",
-		  "activities": [
-			{
-			  "id": "place_011475",
-			  "type": "place",
-			  "name": "WanderOn",
-			  "start_time": "14:00",
-			  "end_time": "16:00",
-			  "description": "An evolving & expanding backpacking travel community, we organize well-crafted tours for thousands of enthusiastic travelers. As professionals, travel is our passion & life-work; we have the knowledge & experience to ensure you enjoy an exceptional travel experience! It’s about going on a Trip ourselves. Talk to us about your Travel plans,& let our specialists make your dream holiday perfect!",
-			  "address": "",
-			  "categories": "",
-			  "duration": "",
-			  "opening_hours": "12:00 AM - 11:59 PM",
-			  "rating": 4.9,
-			  "price": 37.0,
-			  "image_url": "",
-			  "url": "https://www.tripadvisor.com/Attraction_Review-g304551-d15013133-Reviews-WanderOn-New_Delhi_National_Capital_Territory_of_Delhi.html"
-			}
-		  ]
-		},
-		{
-		  "time_of_day": "evening",
-		  "activities": [
-			{
-			  "id": "restaurant_021947",
-			  "type": "restaurant",
-			  "name": "Cafe Zoom ",
-			  "start_time": "19:00",
-			  "end_time": "21:00",
-			  "description": "",
-			  "address": "169A Đề Thám, P. Phạm Ngũ Lão, Quận 1, TP. HCM",
-			  "cuisines": "",
-			  "price_range": "",
-			  "rating": 7.55,
-			  "phone": "(028) 39 203 897",
-			  "services": [
-				{
-				  "name": "ShopeeFood",
-				  "url": "https://www.deliverynow.vn/ho-chi-minh/cafe-zoom",
-				  "type": 0
-				}
-			  ],
-			  "image_url": "",
-			  "url": "https://www.foody.vn/ho-chi-minh/cafe-zoom"
-			}
-		  ]
-		}
-	  ]
-	}
-  ]
-}
-`
-	var result dto.CreateTripRequestByDate
+
+	`
+	var result dto.TripDTOByDate
 	if err := json.Unmarshal([]byte(sampleJSON), &result); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal mock JSON: %w", err)
 	}
 	return &result, nil
 }
 
-func (ts *tripService) SuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.CreateTripRequestByDate, error) {
+func (ts *tripService) SuggestTrip(userID string, activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error) {
 	suggestionByDate, err := ts.CallAISuggestTrip(activities, endpoint)
-	fmt.Println("suggestionByDate", suggestionByDate)
-	fmt.Println("err", err)
+	// suggestionByDate, err := ts.mockAISuggestTrip(activities, endpoint)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get trip suggestion: %w", err)
 	}
-	suggestion, err := dto.ConvertToCreateTripRequest(*suggestionByDate)
+	suggestion, err := dto.ConvertTripDTO(*suggestionByDate)
 	if err != nil {
 		return nil, fmt.Errorf("failed to convert trip suggestion: %w", err)
 	}
-	newSuggestionByDate, err := dto.ConvertToCreateTripRequestByDate(suggestion)
+	suggestion.UserID = userID
+
+	tripID, err := ts.CreateTrip(&suggestion)
 	if err != nil {
-		return nil, fmt.Errorf("failed to convert trip suggestion: %w", err)
+		return nil, fmt.Errorf("failed to create trip: %w", err)
 	}
 
-	return &newSuggestionByDate, nil
+	newSuggestionByDate, err := dto.ConvertTripDTOByDate(suggestion)
+	if err != nil {
+		return nil, fmt.Errorf("failed to convert trip suggestion: %w", err)
+	}
+	suggestionByDate.TripID = tripID
+	newSuggestionByDate.TripID = tripID
+	fmt.Println("Converted suggestion: ", newSuggestionByDate)
+	return suggestionByDate, nil
+}
+
+func (ts *tripService) GetTravelPreference(tripID string) (*model.TravelPreference, error) {
+	tp, err := ts.travelPreferenceRepository.GetByTripID(tripID)
+	if err != nil {
+		return nil, err
+	}
+	return &tp, nil
+}
+
+func (ts *tripService) CreateTravelPreference(tripID string, tp *model.TravelPreference) (string, error) {
+	// Generate UUID for travel preference
+	tp.TravelPreferenceID = uuid.New().String()
+	tp.TripID = tripID
+
+	// Begin transaction
+	tx := ts.travelPreferenceRepository.(*repository.GormTravelPreferenceRepository).DB.Begin()
+
+	// Create travel preference
+	if err := tx.Create(tp).Error; err != nil {
+		tx.Rollback()
+		return "", err
+	}
+
+	// Commit transaction
+	if err := tx.Commit().Error; err != nil {
+		tx.Rollback()
+		return "", err
+	}
+
+	return tp.TravelPreferenceID, nil
 }

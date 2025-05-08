@@ -2,61 +2,10 @@ package dto
 
 import (
 	"fmt"
+	"skeleton-internship-backend/internal/model"
 	"sort"
 	"time"
 )
-
-type CreateTripPlaceRequest struct {
-	TripDestinationID string     `json:"trip_destination_id"`
-	PlaceID           string     `json:"place_id"`
-	ScheduledDate     *time.Time `json:"scheduled_date,omitempty"`
-	StartTime         *time.Time `json:"start_time,omitempty"`
-	EndTime           *time.Time `json:"end_time,omitempty"`
-	Notes             string     `json:"notes"`
-}
-
-type CreateTripAccommodationRequest struct {
-	TripDestinationID string     `json:"trip_destination_id"`
-	AccommodationID   string     `json:"accommodation_id"`
-	CheckInDate       *time.Time `json:"check_in_date,omitempty"`
-	CheckOutDate      *time.Time `json:"check_out_date,omitempty"`
-	StartTime         *time.Time `json:"start_time,omitempty"`
-	EndTime           *time.Time `json:"end_time,omitempty"`
-	Cost              float64    `json:"cost"`
-	Notes             string     `json:"notes"`
-}
-
-type CreateTripRestaurantRequest struct {
-	TripDestinationID string     `json:"trip_destination_id"`
-	RestaurantID      string     `json:"restaurant_id"`
-	MealDate          *time.Time `json:"meal_date,omitempty"`
-	StartTime         *time.Time `json:"start_time,omitempty"`
-	EndTime           *time.Time `json:"end_time,omitempty"`
-	ReservationInfo   string     `json:"reservation_info"`
-	Notes             string     `json:"notes"`
-}
-
-type CreateTripDestinationRequest struct {
-	TripID        string     `json:"trip_id"`
-	DestinationID string     `json:"destination_id"`
-	ArrivalDate   *time.Time `json:"arrival_date,omitempty"`
-	DepartureDate *time.Time `json:"departure_date,omitempty"`
-	OrderNum      int        `json:"order_num"`
-
-	Places         []CreateTripPlaceRequest         `json:"places,omitempty"`
-	Accommodations []CreateTripAccommodationRequest `json:"accommodations,omitempty"`
-	Restaurants    []CreateTripRestaurantRequest    `json:"restaurants,omitempty"`
-}
-
-type CreateTripRequest struct {
-	UserID           string                         `json:"user_id"`
-	TripName         string                         `json:"trip_name"`
-	StartDate        time.Time                      `json:"start_date"`
-	EndDate          time.Time                      `json:"end_date"`
-	Budget           float64                        `json:"budget"`
-	TripStatus       string                         `json:"trip_status"`
-	TripDestinations []CreateTripDestinationRequest `json:"trip_destinations"`
-}
 
 type TripDTO struct {
 	TripID           string               `json:"trip_id"`
@@ -98,6 +47,8 @@ type TripAccommodationDTO struct {
 	AccommodationID     string     `json:"accommodation_id"`
 	CheckInDate         *time.Time `json:"check_in_date,omitempty"`
 	CheckOutDate        *time.Time `json:"check_out_date,omitempty"`
+	StartTime           *time.Time `json:"start_time,omitempty"`
+	EndTime             *time.Time `json:"end_time,omitempty"`
 	Cost                float64    `json:"cost"`
 	Notes               string     `json:"notes"`
 }
@@ -120,23 +71,15 @@ type Service struct {
 }
 
 type Activity struct {
-	ID           string  `json:"id"`
-	Type         string  `json:"type"` // e.g., "place", "accommodation", "restaurant"
-	Name         string  `json:"name"`
-	StartTime    string  `json:"start_time,omitempty"` // "HH:mm" format
-	EndTime      string  `json:"end_time,omitempty"`
-	Description  string  `json:"description,omitempty"`
-	Address      string  `json:"address,omitempty"`
-	Categories   string  `json:"categories,omitempty"`
-	Duration     string  `json:"duration,omitempty"`
-	OpeningHours string  `json:"opening_hours,omitempty"`
-	Rating       float64 `json:"rating,omitempty"`
-	Price        float64 `json:"price,omitempty"`
-	ImageURL     string  `json:"image_url,omitempty"`
-	URL          string  `json:"url,omitempty"`
-	Cuisines     string  `json:"cuisines,omitempty"`
-	PriceRange   string  `json:"price_range,omitempty"`
-	Phone        string  `json:"phone,omitempty"`
+	ActivityID  string          `json:"activity_id"`
+	ID          string          `json:"id"`
+	Type        string          `json:"type"` // e.g., "place", "accommodation", "restaurant"
+	Name        string          `json:"name"`
+	StartTime   string          `json:"start_time,omitempty"` // "HH:mm" format
+	EndTime     string          `json:"end_time,omitempty"`
+	Description string          `json:"description,omitempty"`
+	Price       float64         `json:"price,omitempty"`
+	Comments    []model.Comment `json:"comments,omitempty"`
 }
 
 type Segment struct {
@@ -150,16 +93,17 @@ type PlanByDay struct {
 	Segments []Segment `json:"segments"`
 }
 
-type CreateTripRequestByDate struct {
-	UserID      string      `json:"user_id"`
-	TripName    string      `json:"trip_name"`
-	StartDate   string      `json:"start_date"` // "YYYY-MM-DD"
-	EndDate     string      `json:"end_date"`   // "YYYY-MM-DD"
-	Destination string      `json:"destination"`
-	PlanByDay   []PlanByDay `json:"plan_by_day"`
+type TripDTOByDate struct {
+	TripID        string      `json:"trip_id"`
+	UserID        string      `json:"user_id"`
+	TripName      string      `json:"trip_name"`
+	StartDate     string      `json:"start_date"` // "YYYY-MM-DD"
+	EndDate       string      `json:"end_date"`   // "YYYY-MM-DD"
+	DestinationID string      `json:"destination_id"`
+	PlanByDay     []PlanByDay `json:"plan_by_day"`
 }
 
-func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripRequest, error) {
+func ConvertTripDTO(input TripDTOByDate) (TripDTO, error) {
 	layoutDate := "2006-01-02"
 	layoutTime := "2006-01-02 15:04"
 
@@ -177,17 +121,17 @@ func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripReques
 
 	startDate, err := time.Parse(layoutDate, input.StartDate)
 	if err != nil {
-		return CreateTripRequest{}, err
+		return TripDTO{}, err
 	}
 
 	endDate, err := time.Parse(layoutDate, input.EndDate)
 	if err != nil {
-		return CreateTripRequest{}, err
+		return TripDTO{}, err
 	}
 
-	dest := CreateTripDestinationRequest{
+	dest := TripDestinationDTO{
 		TripID:        "", // Can be filled later
-		DestinationID: input.Destination,
+		DestinationID: input.DestinationID,
 		ArrivalDate:   &startDate,
 		DepartureDate: &endDate,
 		OrderNum:      1,
@@ -226,8 +170,9 @@ func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripReques
 
 				switch activity.Type {
 				case "place":
-					dest.Places = append(dest.Places, CreateTripPlaceRequest{
-						TripDestinationID: input.Destination,
+					dest.Places = append(dest.Places, TripPlaceDTO{
+						TripPlaceID:       activity.ActivityID,
+						TripDestinationID: input.DestinationID,
 						PlaceID:           activity.ID,
 						ScheduledDate:     &scheduledDate,
 						StartTime:         startTimePtr,
@@ -235,20 +180,22 @@ func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripReques
 						Notes:             activity.Description,
 					})
 				case "accommodation":
-					dest.Accommodations = append(dest.Accommodations, CreateTripAccommodationRequest{
-						TripDestinationID: input.Destination,
-						AccommodationID:   activity.ID,
-						CheckInDate:       &scheduledDate,
-						CheckOutDate:      &scheduledDate, // Assuming CheckOutDate is the same as CheckInDate for simplicity.
-						StartTime:         startTimePtr,
-						EndTime:           endTimePtr,
+					dest.Accommodations = append(dest.Accommodations, TripAccommodationDTO{
+						TripAccommodationID: activity.ActivityID,
+						TripDestinationID:   input.DestinationID,
+						AccommodationID:     activity.ID,
+						CheckInDate:         &scheduledDate,
+						CheckOutDate:        &scheduledDate, // Assuming CheckOutDate is the same as CheckInDate for simplicity.
+						StartTime:           startTimePtr,
+						EndTime:             endTimePtr,
 						// If a CheckOutDate is available, parse it similarly.
 						Cost:  activity.Price,
 						Notes: activity.Description,
 					})
 				case "restaurant":
-					dest.Restaurants = append(dest.Restaurants, CreateTripRestaurantRequest{
-						TripDestinationID: input.Destination,
+					dest.Restaurants = append(dest.Restaurants, TripRestaurantDTO{
+						TripRestaurantID:  activity.ActivityID,
+						TripDestinationID: input.DestinationID,
 						RestaurantID:      activity.ID,
 						MealDate:          &scheduledDate,
 						StartTime:         startTimePtr,
@@ -261,18 +208,16 @@ func ConvertToCreateTripRequest(input CreateTripRequestByDate) (CreateTripReques
 		}
 	}
 
-	return CreateTripRequest{
+	return TripDTO{
 		UserID:           input.UserID,
 		TripName:         input.TripName,
 		StartDate:        startDate,
 		EndDate:          endDate,
-		Budget:           0,         // Fill if needed
-		TripStatus:       "planned", // Adjust if needed
-		TripDestinations: []CreateTripDestinationRequest{dest},
+		TripDestinations: []TripDestinationDTO{dest},
 	}, nil
 }
 
-func ConvertToCreateTripRequestByDate(input CreateTripRequest) (CreateTripRequestByDate, error) {
+func ConvertTripDTOByDate(input TripDTO) (TripDTOByDate, error) {
 	layoutDate := "2006-01-02"
 	layoutTime := "15:04"
 
@@ -299,6 +244,7 @@ func ConvertToCreateTripRequestByDate(input CreateTripRequest) (CreateTripReques
 			}
 			dateStr := p.ScheduledDate.Format(layoutDate)
 			act := Activity{
+				ActivityID:  p.TripPlaceID,
 				ID:          p.PlaceID,
 				Type:        "place",
 				Description: p.Notes,
@@ -319,6 +265,7 @@ func ConvertToCreateTripRequestByDate(input CreateTripRequest) (CreateTripReques
 			}
 			dateStr := a.CheckInDate.Format(layoutDate)
 			act := Activity{
+				ActivityID:  a.TripAccommodationID,
 				ID:          a.AccommodationID,
 				Type:        "accommodation",
 				Description: a.Notes,
@@ -340,6 +287,7 @@ func ConvertToCreateTripRequestByDate(input CreateTripRequest) (CreateTripReques
 			}
 			dateStr := r.MealDate.Format(layoutDate)
 			act := Activity{
+				ActivityID:  r.TripRestaurantID,
 				ID:          r.RestaurantID,
 				Type:        "restaurant",
 				Description: r.Notes,
@@ -410,12 +358,12 @@ func ConvertToCreateTripRequestByDate(input CreateTripRequest) (CreateTripReques
 		})
 	}
 
-	return CreateTripRequestByDate{
-		UserID:      input.UserID,
-		TripName:    input.TripName,
-		StartDate:   startDateStr,
-		EndDate:     endDateStr,
-		Destination: destination,
-		PlanByDay:   planByDay,
+	return TripDTOByDate{
+		UserID:        input.UserID,
+		TripName:      input.TripName,
+		StartDate:     startDateStr,
+		EndDate:       endDateStr,
+		DestinationID: destination,
+		PlanByDay:     planByDay,
 	}, nil
 }

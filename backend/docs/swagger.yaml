@@ -46,45 +46,27 @@ definitions:
     type: object
   dto.Activity:
     properties:
-      address:
+      activity_id:
         type: string
-      categories:
-        type: string
-      cuisines:
-        type: string
+      comments:
+        items:
+          $ref: '#/definitions/model.Comment'
+        type: array
       description:
-        type: string
-      duration:
         type: string
       end_time:
         type: string
       id:
         type: string
-      image_url:
-        type: string
       name:
-        type: string
-      opening_hours:
-        type: string
-      phone:
         type: string
       price:
         type: number
-      price_range:
-        type: string
-      rating:
-        type: number
-      services:
-        items:
-          $ref: '#/definitions/dto.Service'
-        type: array
       start_time:
         description: '"HH:mm" format'
         type: string
       type:
         description: e.g., "place", "accommodation", "restaurant"
-        type: string
-      url:
         type: string
     type: object
   dto.Budget:
@@ -92,116 +74,6 @@ definitions:
       exactBudget:
         type: number
       type:
-        type: string
-    type: object
-  dto.CreateTripAccommodationRequest:
-    properties:
-      accommodation_id:
-        type: string
-      check_in_date:
-        type: string
-      check_out_date:
-        type: string
-      cost:
-        type: number
-      notes:
-        type: string
-      trip_destination_id:
-        type: string
-    type: object
-  dto.CreateTripDestinationRequest:
-    properties:
-      accommodations:
-        items:
-          $ref: '#/definitions/dto.CreateTripAccommodationRequest'
-        type: array
-      arrival_date:
-        type: string
-      departure_date:
-        type: string
-      destination_id:
-        type: string
-      order_num:
-        type: integer
-      places:
-        items:
-          $ref: '#/definitions/dto.CreateTripPlaceRequest'
-        type: array
-      restaurants:
-        items:
-          $ref: '#/definitions/dto.CreateTripRestaurantRequest'
-        type: array
-      trip_id:
-        type: string
-    type: object
-  dto.CreateTripPlaceRequest:
-    properties:
-      end_time:
-        type: string
-      notes:
-        type: string
-      place_id:
-        type: string
-      scheduled_date:
-        type: string
-      start_time:
-        type: string
-      trip_destination_id:
-        type: string
-    type: object
-  dto.CreateTripRequest:
-    properties:
-      budget:
-        type: number
-      end_date:
-        type: string
-      start_date:
-        type: string
-      trip_destinations:
-        items:
-          $ref: '#/definitions/dto.CreateTripDestinationRequest'
-        type: array
-      trip_name:
-        type: string
-      trip_status:
-        type: string
-      user_id:
-        type: string
-    type: object
-  dto.CreateTripRequestByDate:
-    properties:
-      destination:
-        type: string
-      end_date:
-        description: '"YYYY-MM-DD"'
-        type: string
-      plan_by_day:
-        items:
-          $ref: '#/definitions/dto.PlanByDay'
-        type: array
-      start_date:
-        description: '"YYYY-MM-DD"'
-        type: string
-      trip_name:
-        type: string
-      user_id:
-        type: string
-    type: object
-  dto.CreateTripRestaurantRequest:
-    properties:
-      end_time:
-        type: string
-      meal_date:
-        type: string
-      notes:
-        type: string
-      reservation_info:
-        type: string
-      restaurant_id:
-        type: string
-      start_time:
-        type: string
-      trip_destination_id:
         type: string
     type: object
   dto.LoginRequest:
@@ -361,15 +233,6 @@ definitions:
         description: e.g., "morning", "afternoon", "evening"
         type: string
     type: object
-  dto.Service:
-    properties:
-      name:
-        type: string
-      type:
-        type: integer
-      url:
-        type: string
-    type: object
   dto.TodoCreate:
     description: Todo creation request body
     properties:
@@ -435,7 +298,11 @@ definitions:
         type: string
       cost:
         type: number
+      end_time:
+        type: string
       notes:
+        type: string
+      start_time:
         type: string
       trip_accommodation_id:
         type: string
@@ -459,6 +326,25 @@ definitions:
       trip_name:
         type: string
       trip_status:
+        type: string
+      user_id:
+        type: string
+    type: object
+  dto.TripDTOByDate:
+    properties:
+      destination:
+        type: string
+      end_date:
+        description: '"YYYY-MM-DD"'
+        type: string
+      plan_by_day:
+        items:
+          $ref: '#/definitions/dto.PlanByDay'
+        type: array
+      start_date:
+        description: '"YYYY-MM-DD"'
+        type: string
+      trip_name:
         type: string
       user_id:
         type: string
@@ -570,6 +456,21 @@ definitions:
       tax_info:
         type: string
       unit:
+        type: string
+    type: object
+  model.Comment:
+    properties:
+      comment_id:
+        type: string
+      comment_message:
+        type: string
+      trip_accommodation_id:
+        type: string
+      trip_place_id:
+        type: string
+      trip_restaurant_id:
+        type: string
+      user_id:
         type: string
     type: object
   model.Image:
@@ -809,6 +710,75 @@ paths:
       summary: User registration
       tags:
       - auth
+  /api/v1/comment/activity/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get all comments for a specific activity
+      parameters:
+      - description: Activity ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Comments for the activity
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Comment'
+              type: object
+        "400":
+          description: Invalid activity ID
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Get comments by activity ID
+      tags:
+      - comment
+  /api/v1/comment/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new comment
+      parameters:
+      - description: Comment Details
+        in: body
+        name: comment
+        required: true
+        schema:
+          $ref: '#/definitions/model.Comment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Returns comment ID
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Create a new comment
+      tags:
+      - comment
   /api/v1/detail/accommodation/{id}:
     get:
       consumes:
@@ -988,7 +958,7 @@ paths:
       tags:
       - InsertData
   /api/v1/suggest/accommodations:
-    get:
+    post:
       consumes:
       - application/json
       description: Get accommodation suggestions based on travel preferences
@@ -1022,44 +992,8 @@ paths:
       summary: Suggest accommodations
       tags:
       - suggest
-  /api/v1/suggest/all:
-    get:
-      consumes:
-      - application/json
-      description: Get comprehensive suggestions based on travel preferences for accommodations,
-        places, and restaurants
-      parameters:
-      - description: Travel Preferences
-        in: body
-        name: preference
-        required: true
-        schema:
-          $ref: '#/definitions/dto.TravelPreference'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/model.Response'
-            - properties:
-                data:
-                  $ref: '#/definitions/dto.TripSuggestionRequest'
-              type: object
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: Suggest all suggestions
-      tags:
-      - suggest
   /api/v1/suggest/places:
-    get:
+    post:
       consumes:
       - application/json
       description: Get activity suggestions based on travel preferences
@@ -1094,7 +1028,7 @@ paths:
       tags:
       - suggest
   /api/v1/suggest/restaurants:
-    get:
+    post:
       consumes:
       - application/json
       description: Get restaurant suggestions based on travel preferences
@@ -1126,6 +1060,42 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: Suggest restaurants
+      tags:
+      - suggest
+  /api/v1/suggest/trip:
+    post:
+      consumes:
+      - application/json
+      description: Get comprehensive suggestions based on travel preferences for accommodations,
+        places, and restaurants
+      parameters:
+      - description: Travel Preferences
+        in: body
+        name: preference
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TravelPreference'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Suggested trip
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.TripDTOByDate'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Suggest trip
       tags:
       - suggest
   /api/v1/todos:
@@ -1340,7 +1310,7 @@ paths:
         name: trip
         required: true
         schema:
-          $ref: '#/definitions/dto.CreateTripRequest'
+          $ref: '#/definitions/dto.TripDTO'
       produces:
       - application/json
       responses:
@@ -1386,7 +1356,7 @@ paths:
             - $ref: '#/definitions/model.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/dto.CreateTripRequestByDate'
+                  $ref: '#/definitions/dto.TripDTOByDate'
               type: object
         "400":
           description: Invalid request
@@ -1473,5 +1443,10 @@ tags:
     description: Detailed information about trip operations
     url: http://example.com/docs/trip
   name: trip
+- description: Operations about comments
+  externalDocs:
+    description: Detailed information about comment operations
+    url: http://example.com/docs/comment
+  name: comment
 - description: Operations for importing data from CSV files
   name: InsertData
