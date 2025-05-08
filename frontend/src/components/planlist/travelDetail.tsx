@@ -123,7 +123,7 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
       key: "itinerary",
       label: "Lịch trình",
       children: (
-        <div className="tab-content">
+        <div className="min-h-[200px]">
           <TravelItinerary
             days={travelDetail.plan_by_day}
             formatDate={formatDate}
@@ -134,63 +134,85 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
             onDeleteActivity={handleDeleteActivity}
             onUpdateActivityTime={handleUpdateActivityTime}
             onAddActivity={openAddActivityModal}
-            onMoveActivity={(fromDayIndex, fromSegment, fromActivityIndex, toDayIndex, toSegment, toActivityIndex) => {
+            onMoveActivity={(
+              fromDayIndex,
+              fromSegment,
+              fromActivityIndex,
+              toDayIndex,
+              toSegment,
+              toActivityIndex
+            ) => {
               const fromDay = travelDetail.plan_by_day[fromDayIndex];
               const toDay = travelDetail.plan_by_day[toDayIndex];
-              
+
               if (fromDay && toDay) {
                 // Find activities in both segments
-                const fromSegmentObj = fromDay.segments.find(s => s.time_of_day === fromSegment);
-                const toSegmentObj = toDay.segments.find(s => s.time_of_day === toSegment);
-                
+                const fromSegmentObj = fromDay.segments.find(
+                  (s) => s.time_of_day === fromSegment
+                );
+                const toSegmentObj = toDay.segments.find(
+                  (s) => s.time_of_day === toSegment
+                );
+
                 if (fromSegmentObj && toSegmentObj) {
                   // Get activities to swap
-                  const fromActivity = fromSegmentObj.activities[fromActivityIndex];
+                  const fromActivity =
+                    fromSegmentObj.activities[fromActivityIndex];
                   const toActivity = toSegmentObj.activities[toActivityIndex];
-                  
+
                   if (fromActivity && toActivity) {
                     // Create a deep copy of the travel detail
                     const updatedTravelDetail = {
                       ...travelDetail,
-                      plan_by_day: [...travelDetail.plan_by_day.map(day => ({
-                        ...day,
-                        segments: day.segments.map(segment => ({
-                          ...segment,
-                          activities: [...segment.activities]
-                        }))
-                      }))]
+                      plan_by_day: [
+                        ...travelDetail.plan_by_day.map((day) => ({
+                          ...day,
+                          segments: day.segments.map((segment) => ({
+                            ...segment,
+                            activities: [...segment.activities],
+                          })),
+                        })),
+                      ],
                     };
-                    
+
                     // Get references to the updated days and segments
-                    const updatedFromDay = updatedTravelDetail.plan_by_day[fromDayIndex];
-                    const updatedToDay = updatedTravelDetail.plan_by_day[toDayIndex];
-                    const updatedFromSegment = updatedFromDay.segments.find(s => s.time_of_day === fromSegment);
-                    const updatedToSegment = updatedToDay.segments.find(s => s.time_of_day === toSegment);
-                    
+                    const updatedFromDay =
+                      updatedTravelDetail.plan_by_day[fromDayIndex];
+                    const updatedToDay =
+                      updatedTravelDetail.plan_by_day[toDayIndex];
+                    const updatedFromSegment = updatedFromDay.segments.find(
+                      (s) => s.time_of_day === fromSegment
+                    );
+                    const updatedToSegment = updatedToDay.segments.find(
+                      (s) => s.time_of_day === toSegment
+                    );
+
                     if (updatedFromSegment && updatedToSegment) {
                       // Extract time information from both activities
                       const fromStartTime = fromActivity.start_time;
                       const fromEndTime = fromActivity.end_time;
                       const toStartTime = toActivity.start_time;
                       const toEndTime = toActivity.end_time;
-                      
+
                       // Create copies of the activities with swapped times
-                      const fromActivityCopy = { 
+                      const fromActivityCopy = {
                         ...fromActivity,
                         start_time: toStartTime,
-                        end_time: toEndTime 
+                        end_time: toEndTime,
                       };
-                      
-                      const toActivityCopy = { 
+
+                      const toActivityCopy = {
                         ...toActivity,
                         start_time: fromStartTime,
-                        end_time: fromEndTime 
+                        end_time: fromEndTime,
                       };
-                      
+
                       // Perform the swap
-                      updatedFromSegment.activities[fromActivityIndex] = toActivityCopy;
-                      updatedToSegment.activities[toActivityIndex] = fromActivityCopy;
-                      
+                      updatedFromSegment.activities[fromActivityIndex] =
+                        toActivityCopy;
+                      updatedToSegment.activities[toActivityIndex] =
+                        fromActivityCopy;
+
                       // Update the state
                       setTravelDetail(updatedTravelDetail);
                     }
@@ -206,7 +228,7 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
       key: "sheet",
       label: "Xuất Google Sheet",
       children: (
-        <div className="tab-content">
+        <div className="min-h-[200px]">
           <SheetExport travelDetail={travelDetail} />
         </div>
       ),
@@ -225,9 +247,9 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
 
       <Affix offsetTop={0} className="z-10">
         <div className="flex justify-between items-center py-3 px-4 bg-white shadow-sm">
-          <Button 
-            icon={<ArrowLeftOutlined />} 
-            onClick={onBack} 
+          <Button
+            icon={<ArrowLeftOutlined />}
+            onClick={onBack}
             type="text"
             className="hover:bg-gray-50 flex items-center"
           >
@@ -245,7 +267,11 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
               type="primary"
               icon={isEditMode ? <SaveOutlined /> : <EditOutlined />}
               onClick={toggleEditMode}
-              className={isEditMode ? "bg-green-600 hover:bg-green-700" : "bg-blue-600 hover:bg-blue-700"}
+              className={
+                isEditMode
+                  ? "bg-green-600 hover:bg-green-700"
+                  : "bg-blue-600 hover:bg-blue-700"
+              }
             >
               {isEditMode ? "Lưu thay đổi" : "Chỉnh sửa lịch trình"}
             </Button>
@@ -262,7 +288,7 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
           getStatusTag={getStatusTag}
         />
 
-        <Card 
+        <Card
           className="rounded-xl shadow-sm overflow-hidden mb-6 border-0"
           styles={{ body: { padding: 0 } }}
         >
@@ -271,9 +297,9 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
               activeKey={activeTab}
               onChange={setActiveTab}
               className="travel-detail-tabs"
-              tabBarStyle={{ 
+              tabBarStyle={{
                 margin: 0,
-                padding: '0 16px'
+                padding: "0 16px",
               }}
               items={tabItems}
               size="large"
@@ -312,7 +338,7 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
         footer={null}
         width={800}
         className="ai-suggestion-modal"
-        styles={{ body: { maxHeight: '70vh', overflowY: 'auto' } }}
+        styles={{ body: { maxHeight: "70vh", overflowY: "auto" } }}
       >
         {currentDay && (
           <AIActivitySuggestions
@@ -332,43 +358,18 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
         className="custom-activity-modal"
       >
         <p className="mb-4">
-          Chọn ngày và nhập thông tin để thêm hoạt động mới vào lịch trình của bạn.
+          Chọn ngày và nhập thông tin để thêm hoạt động mới vào lịch trình của
+          bạn.
         </p>
-        <Search placeholder="Tìm địa điểm, hoạt động..." className="mb-4" onSearch={handleAddCustomActivity} />
+        <Search
+          placeholder="Tìm địa điểm, hoạt động..."
+          className="mb-4"
+          onSearch={handleAddCustomActivity}
+        />
         <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
           <p className="text-gray-400">Kết quả tìm kiếm sẽ hiển thị ở đây</p>
         </div>
       </Modal>
-
-      <style>
-        {`
-        .travel-tabs-container .ant-tabs-nav {
-          margin: 0 !important;
-          padding: 12px 16px 0;
-        }
-        .travel-tabs-container .ant-tabs-content-holder {
-          padding: 16px;
-        }
-        .tab-content {
-          min-height: 200px;
-        }
-        .travel-day-collapse .ant-collapse-header {
-          padding: 0 !important;
-          background: transparent !important;
-        }
-        .travel-day-collapse .ant-collapse-content {
-          border-top: none !important;
-        }
-        .travel-day-collapse .ant-collapse-item {
-          background: white;
-          border-radius: 0.75rem !important;
-          overflow: hidden;
-          margin-bottom: 1.5rem;
-          border: none !important;
-          box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-        }
-        `}
-      </style>
     </div>
   );
 };

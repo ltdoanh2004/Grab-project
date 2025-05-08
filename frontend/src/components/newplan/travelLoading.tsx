@@ -55,6 +55,7 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({
           "tripPlan_temp123",
           JSON.stringify(tripPlanWithId)
         );
+        console.log(tripPlanData.data);
 
         setApiLoadingComplete(true);
         navigate("/trips/temp123");

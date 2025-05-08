@@ -719,70 +719,77 @@ export const MOCK_TRAVEL_DETAIL: TravelDetailData = {
 export const MOCK_AI_SUGGESTIONS: TravelActivity[] = [
   {
     id: "ai-suggestion-1",
-    time: "00:00 - 00:00",
     type: "attraction",
     name: "Bảo tàng văn hóa dân tộc Việt Nam",
-    location: "Đường Nguyễn Văn Huyên, Cầu Giấy, Hà Nội",
+    start_time: "09:00",
+    end_time: "11:30",
+    address: "Đường Nguyễn Văn Huyên, Cầu Giấy, Hà Nội",
     description:
       "Một trong những bảo tàng lớn nhất về văn hóa dân tộc tại Hà Nội. Khám phá lịch sử và văn hóa đa dạng của 54 dân tộc Việt Nam.",
-    imageUrl:
+    image_url:
       "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
     rating: 4.8,
-    duration: 2.5,
-    price: "30.000đ/người",
+    duration: "2.5h",
+    price: 30000,
   },
   {
     id: "ai-suggestion-2",
-    time: "00:00 - 00:00",
     type: "restaurant",
     name: "Phở Lý Quốc Sư",
-    location: "Số 42 Lý Quốc Sư, Hoàn Kiếm, Hà Nội",
+    start_time: "12:00",
+    end_time: "13:00",
+    address: "Số 42 Lý Quốc Sư, Hoàn Kiếm, Hà Nội",
     description:
       "Thưởng thức phở truyền thống Hà Nội với nước dùng trong và ngọt tự nhiên. Nhà hàng nổi tiếng với công thức gia truyền nhiều đời.",
-    imageUrl:
+    image_url:
       "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
     rating: 4.9,
-    price: "75.000đ - 95.000đ/tô",
+    price: 95000,
+    duration: "1h",
   },
   {
     id: "ai-suggestion-3",
-    time: "00:00 - 00:00",
     type: "attraction",
     name: "Chùa Trấn Quốc",
-    location: "Thanh Niên, Quận Tây Hồ, Hà Nội",
+    start_time: "14:00",
+    end_time: "17:00",
+    address: "Thanh Niên, Quận Tây Hồ, Hà Nội",
     description:
       "Chùa Phật giáo cổ nhất Hà Nội, nằm trên một hòn đảo nhỏ phía đông Hồ Tây. Kiến trúc độc đáo và bầu không khí thanh bình.",
-    imageUrl:
+    image_url:
       "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
     rating: 4.7,
-    duration: 3,
-    price: "Miễn phí (đóng góp tùy tâm)",
+    duration: "3h",
+    price: 0,
   },
   {
     id: "ai-suggestion-4",
-    time: "00:00 - 00:00",
     type: "restaurant",
     name: "Cha Ca Thang Long",
-    location: "19-21-31 Đường Thành, Hoàn Kiếm, Hà Nội",
+    start_time: "18:00",
+    end_time: "19:30",
+    address: "19-21-31 Đường Thành, Hoàn Kiếm, Hà Nội",
     description:
       "Nhà hàng chuyên về món chả cá truyền thống Hà Nội. Được chế biến ngay tại bàn với cá lóc tươi, thì là, hành và các loại gia vị.",
-    imageUrl:
+    image_url:
       "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
     rating: 4.6,
-    price: "175.000đ/người",
+    price: 175000,
+    duration: "1.5h",
   },
   {
     id: "ai-suggestion-5",
-    time: "00:00 - 00:00",
     type: "attraction",
     name: "Phố cổ Hà Nội về đêm",
-    location: "Khu phố cổ, Hoàn Kiếm, Hà Nội",
+    start_time: "19:30",
+    end_time: "21:00",
+    address: "Khu phố cổ, Hoàn Kiếm, Hà Nội",
     description:
       "Khám phá phố cổ Hà Nội về đêm với không khí sôi động, ẩm thực đường phố phong phú và các cửa hàng mua sắm.",
-    imageUrl:
+    image_url:
       "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
     rating: 4.9,
-    duration: 1.5,
-    price: "Miễn phí",
+    duration: "1.5h",
+    price: 0,
   },
 ];

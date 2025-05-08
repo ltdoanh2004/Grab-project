@@ -31,6 +31,7 @@ export async function login(payload: LoginPayload): Promise<AuthResponse> {
 export async function getAllSuggestions(): Promise<SuggestionsResponse> {
   try {
     const userInput = JSON.parse(localStorage.getItem("planUserInput") || "{}");
+    console.log(userInput);
 
     const res = await axios.post<SuggestionsResponse>(
       `${API_BASE_URL}/suggest/all`,
