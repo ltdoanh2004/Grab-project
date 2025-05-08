@@ -5,19 +5,23 @@ import (
 	"skeleton-internship-backend/internal/dto"
 	"skeleton-internship-backend/internal/model"
 	"skeleton-internship-backend/internal/service"
+	"skeleton-internship-backend/middleware"
 
 	"github.com/gin-gonic/gin"
 )
 
 type SuggestController struct {
 	suggestSerivce service.SuggestService
+	tripService    service.TripService
 }
 
 func NewSuggestController(
 	suggestService service.SuggestService,
+	tripService service.TripService,
 ) *SuggestController {
 	return &SuggestController{
 		suggestSerivce: suggestService,
+		tripService:    tripService,
 	}
 }
 
@@ -25,11 +29,13 @@ func (sc *SuggestController) RegisterRoutes(router *gin.Engine) {
 	v1 := router.Group("/api/v1")
 	{
 		suggestion := v1.Group("/suggest")
+		protected := suggestion.Group("/")
+		protected.Use(middleware.AuthMiddleware())
 		{
-			suggestion.POST("/accommodations", sc.SuggestAccommodations)
-			suggestion.POST("/places", sc.SuggestPlaces)
-			suggestion.POST("/restaurants", sc.SuggestRestaurants)
-			suggestion.POST("/all", sc.SuggestAll)
+			protected.POST("/accommodations", sc.SuggestAccommodations)
+			protected.POST("/places", sc.SuggestPlaces)
+			protected.POST("/restaurants", sc.SuggestRestaurants)
+			protected.POST("/all", sc.SuggestAll)
 		}
 		detail := v1.Group("/detail")
 		{
@@ -125,7 +131,7 @@ func (sc *SuggestController) SuggestRestaurants(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param preference body dto.TravelPreference true "Travel Preferences"
-// @Success 200 {object} model.Response{data=dto.TripSuggestionRequest}
+// @Success 200 {object} model.Response{data=dto.TripDTOByDate} "Suggested trip"
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/suggest/all [post]
@@ -141,6 +147,32 @@ func (sc *SuggestController) SuggestAll(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get suggestions: "+err.Error(), nil))
 		return
 	}
+	getPlanEndpoint := "/api/v1/suggest/trip"
+	// Extract userID from access_token
+	userID, exists := ctx.Get("user_id")
+	if !exists {
+		ctx.JSON(http.StatusUnauthorized, model.Response{
+			Message: "Unauthorized: userID not found in access_token",
+			Data:    nil,
+		})
+		return
+	}
+
+	var suggestedTrip *dto.TripDTOByDate
+	suggestedTrip, err = sc.tripService.SuggestTrip(userID.(string), *suggestion, getPlanEndpoint)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.Response{
+			Message: "Failed to get trip suggestion: " + err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, model.Response{
+		Message: "Trip suggestion retrieved successfully",
+		Data:    suggestedTrip,
+	})
+
 	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
 }
 

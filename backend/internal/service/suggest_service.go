@@ -239,19 +239,15 @@ func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dt
 	client := &http.Client{
 		Timeout: 10000 * time.Second,
 	}
-	fmt.Println("travelPreference 2: ", travelPreference)
 	var jsonBody bytes.Buffer
 	if err := json.NewEncoder(&jsonBody).Encode(travelPreference); err != nil {
 		return nil, fmt.Errorf("failed to encode travel preference to JSON: %w", err)
 	}
-	fmt.Println("jsonBody: ", jsonBody)
 	aiURL := fmt.Sprintf("http://%s:%s%s",
 		config.AppConfig.AI.Host,
 		config.AppConfig.AI.Port,
 		endpoint,
 	)
-
-	fmt.Println(jsonBody)
 
 	req, err := http.NewRequest("POST", aiURL, &jsonBody)
 	if err != nil {
@@ -277,35 +273,35 @@ func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dt
 }
 
 func (ss *suggestService) SuggestAll(travelPreference *dto.TravelPreference) (*dto.TripSuggestionRequest, error) {
-	rsp, err := ss.callAISuggestAll(
-		"/api/v1/suggest/all",
-		travelPreference,
-	)
-	if err != nil {
-		return nil, err
-	}
-	// var err error
-	// var rsp []dto.SuggestWithIDAndType
-	// rsp = append(rsp,
-	// 	dto.SuggestWithIDAndType{
-	// 		Name: "hotel_000000",
-	// 		Type: "accommodation",
-	// 		Args: "...",
-	// 		ID:   "hotel_000000",
-	// 	},
-	// 	dto.SuggestWithIDAndType{
-	// 		Name: "restaurant_000000",
-	// 		Type: "restaurant",
-	// 		Args: "...",
-	// 		ID:   "restaurant_000000",
-	// 	},
-	// 	dto.SuggestWithIDAndType{
-	// 		Name: "place_000000",
-	// 		Type: "place",
-	// 		Args: "...",
-	// 		ID:   "place_000000",
-	// 	},
+	// rsp, err := ss.callAISuggestAll(
+	// 	"/api/v1/suggest/all",
+	// 	travelPreference,
 	// )
+	// if err != nil {
+	// 	return nil, err
+	// }
+	var err error
+	var rsp []dto.SuggestWithIDAndType
+	rsp = append(rsp,
+		dto.SuggestWithIDAndType{
+			Name: "hotel_000000",
+			Type: "accommodation",
+			Args: "...",
+			ID:   "hotel_000000",
+		},
+		dto.SuggestWithIDAndType{
+			Name: "restaurant_000000",
+			Type: "restaurant",
+			Args: "...",
+			ID:   "restaurant_000000",
+		},
+		dto.SuggestWithIDAndType{
+			Name: "place_000000",
+			Type: "place",
+			Args: "...",
+			ID:   "place_000000",
+		},
+	)
 
 	var suggestion *dto.TripSuggestionRequest
 	suggestion, err = ss.ConvertIntoTripSuggestion(rsp)
