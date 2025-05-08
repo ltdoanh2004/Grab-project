@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 	"skeleton-internship-backend/config"
 	"skeleton-internship-backend/internal/util"
@@ -30,7 +29,6 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		fmt.Println("tokenString: ", tokenString)
 		claims, err := util.ValidateAccessToken(tokenString)
 
 		if err != nil {

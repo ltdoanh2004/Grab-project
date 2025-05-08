@@ -12,7 +12,7 @@ type CommentRepository interface {
 	Create(comment *model.Comment) error
 	Update(comment *model.Comment) error
 	Delete(commentID string) error
-	GetByTripID(tripID string) ([]model.Comment, error)
+	GetByActivityID(activityID string) ([]model.Comment, error)
 	GetAll() ([]model.Comment, error)
 	GetWithAssociations(commentID string) (model.Comment, error)
 	GetAllWithAssociations() ([]model.Comment, error)
@@ -55,10 +55,10 @@ func (r *GormCommentRepository) Delete(commentID string) error {
 	return r.DB.Delete(&model.Comment{}, "comment_id = ?", commentID).Error
 }
 
-// GetByTripID retrieves all Comment records associated with a specific TripID.
-func (r *GormCommentRepository) GetByTripID(tripID string) ([]model.Comment, error) {
+// GetByActivityID retrieves all Comment records associated with a specific ActivityID.
+func (r *GormCommentRepository) GetByActivityID(activityID string) ([]model.Comment, error) {
 	var comments []model.Comment
-	if err := r.DB.Where("trip_restaurant_id = ? OR trip_accommodation_id = ? OR trip_place_id = ?", tripID, tripID, tripID).Find(&comments).Error; err != nil {
+	if err := r.DB.Where("trip_restaurant_id = ? OR trip_accommodation_id = ? OR trip_place_id = ?", activityID, activityID, activityID).Find(&comments).Error; err != nil {
 		return nil, err
 	}
 	return comments, nil
