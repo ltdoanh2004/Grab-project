@@ -16,6 +16,9 @@ type CommentRepository interface {
 	GetAll() ([]model.Comment, error)
 	GetWithAssociations(commentID string) (model.Comment, error)
 	GetAllWithAssociations() ([]model.Comment, error)
+	GetByTripPlaceID(tripPlaceID string) ([]model.Comment, error)
+	GetByTripRestaurantID(tripRestaurantID string) ([]model.Comment, error)
+	GetByTripAccommodationID(tripAccommodationID string) ([]model.Comment, error)
 }
 
 // GormCommentRepository implements CommentRepository using GORM.
@@ -83,6 +86,33 @@ func (r *GormCommentRepository) GetWithAssociations(commentID string) (model.Com
 func (r *GormCommentRepository) GetAllWithAssociations() ([]model.Comment, error) {
 	var comments []model.Comment
 	if err := r.DB.Preload("TripRestaurantID").Preload("TripAccommodationID").Preload("TripPlaceID").Find(&comments).Error; err != nil {
+		return nil, err
+	}
+	return comments, nil
+}
+
+// GetByTripPlaceID retrieves all comments associated with a specific TripPlaceID.
+func (r *GormCommentRepository) GetByTripPlaceID(tripPlaceID string) ([]model.Comment, error) {
+	var comments []model.Comment
+	if err := r.DB.Where("trip_place_id = ?", tripPlaceID).Find(&comments).Error; err != nil {
+		return nil, err
+	}
+	return comments, nil
+}
+
+// GetByTripRestaurantID retrieves all comments associated with a specific TripRestaurantID.
+func (r *GormCommentRepository) GetByTripRestaurantID(tripRestaurantID string) ([]model.Comment, error) {
+	var comments []model.Comment
+	if err := r.DB.Where("trip_restaurant_id = ?", tripRestaurantID).Find(&comments).Error; err != nil {
+		return nil, err
+	}
+	return comments, nil
+}
+
+// GetByTripAccommodationID retrieves all comments associated with a specific TripAccommodationID.
+func (r *GormCommentRepository) GetByTripAccommodationID(tripAccommodationID string) ([]model.Comment, error) {
+	var comments []model.Comment
+	if err := r.DB.Where("trip_accommodation_id = ?", tripAccommodationID).Find(&comments).Error; err != nil {
 		return nil, err
 	}
 	return comments, nil
