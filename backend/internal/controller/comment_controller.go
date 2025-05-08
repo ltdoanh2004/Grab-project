@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 
+	"skeleton-internship-backend/internal/dto"
 	"skeleton-internship-backend/internal/model"
 	"skeleton-internship-backend/internal/service"
 	"skeleton-internship-backend/middleware"
@@ -33,6 +34,7 @@ func (cc *CommentController) RegisterRoutes(router *gin.Engine) {
 			{
 				protected.POST("/create", cc.CreateComment)
 				protected.GET("/trip/:id", cc.GetCommentsByTripID)
+				protected.POST("/activity", cc.GetCommentsByActivity)
 			}
 		}
 	}
@@ -58,6 +60,15 @@ func (cc *CommentController) CreateComment(ctx *gin.Context) {
 		})
 		return
 	}
+	userID, exists := ctx.Get("user_id")
+	if !exists {
+		ctx.JSON(http.StatusUnauthorized, model.Response{
+			Message: "Unauthorized: userID not found in access_token",
+			Data:    nil,
+		})
+		return
+	}
+	request.UserID = userID.(string)
 
 	commentID, err := cc.commentService.AddComment(&request)
 	if err != nil {
@@ -96,6 +107,42 @@ func (cc *CommentController) GetCommentsByTripID(ctx *gin.Context) {
 	}
 
 	comments, err := cc.commentService.GetCommentsByTripID(tripID)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.Response{
+			Message: "Failed to get comments: " + err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, model.Response{
+		Message: "Comments retrieved successfully",
+		Data:    comments,
+	})
+}
+
+// GetCommentsByActivity godoc
+// @Summary Get comments by activity
+// @Description Get all comments for a specific activity
+// @Tags comment
+// @Accept json
+// @Produce json
+// @Param activity body dto.Activity true "Activity Details"
+// @Success 200 {object} model.Response{data=model.Comment} "Comments for the activity"
+// @Failure 400 {object} model.Response "Invalid activity"
+// @Failure 500 {object} model.Response "Internal server error"
+// @Router /api/v1/comment/activity [post]
+func (cc *CommentController) GetCommentsByActivity(ctx *gin.Context) {
+	var request dto.Activity
+	if err := ctx.ShouldBindJSON(&request); err != nil {
+		ctx.JSON(http.StatusBadRequest, model.Response{
+			Message: "Invalid request body: " + err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
+	comments, err := cc.commentService.GetCommentsByActivity(request)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
 			Message: "Failed to get comments: " + err.Error(),
