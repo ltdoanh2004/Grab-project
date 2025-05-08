@@ -20,6 +20,8 @@ type TripService interface {
 	SaveTrip(trip *dto.TripDTO) error
 	GetTrip(tripID string) (*dto.TripDTO, error)
 	SuggestTrip(userID string, activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error)
+	GetTravelPreference(tripID string) (*model.TravelPreference, error)
+	CreateTravelPreference(tripID string, tp *model.TravelPreference) (string, error)
 }
 
 type tripService struct {
@@ -28,6 +30,7 @@ type tripService struct {
 	tripAccommodationRepository repository.TripAccommodationRepository
 	tripPlaceRepository         repository.TripPlaceRepository
 	tripRestaurantRepository    repository.TripRestaurantRepository
+	travelPreferenceRepository  repository.TravelPreferenceRepository
 }
 
 func NewTripService(
@@ -36,6 +39,7 @@ func NewTripService(
 	accommodationRepo repository.TripAccommodationRepository,
 	placeRepo repository.TripPlaceRepository,
 	restaurantRepo repository.TripRestaurantRepository,
+	tpRepo repository.TravelPreferenceRepository,
 ) TripService {
 	return &tripService{
 		tripRepository:              tripRepo,
@@ -43,6 +47,7 @@ func NewTripService(
 		tripAccommodationRepository: accommodationRepo,
 		tripPlaceRepository:         placeRepo,
 		tripRestaurantRepository:    restaurantRepo,
+		travelPreferenceRepository:  tpRepo,
 	}
 }
 
@@ -480,6 +485,257 @@ func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, e
 
 func (ts *tripService) mockAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error) {
 	sampleJSON := `
+	{
+    "trip_name": "Trip to Hanoi",
+    "start_date": "2025-05-06",
+    "end_date": "2025-05-08",
+    "user_id": "user123",
+    "destination_id": "hanoi",
+    "plan_by_day": [
+        {
+            "date": "2025-05-06",
+            "day_title": "Ngày 1: Khám phá nét đẹp thủ đô Hà Nội",
+            "segments": [
+                {
+                    "time_of_day": "morning",
+                    "activities": [
+                        {
+                            "id": "hotel_006100",
+                            "type": "accommodation",
+                            "name": "Hanoi Capital Hostel & Travel",
+                            "start_time": "08:00",
+                            "end_time": "10:00",
+                            "description": "Bạn sẽ được tận hưởng bữa sáng ngon miệng tại khách sạn."
+                        },
+                        {
+                            "id": "place_000481",
+                            "type": "place",
+                            "name": "Ha Noi",
+                            "start_time": "10:30",
+                            "end_time": "12:00",
+                            "description": "Chúng ta sẽ khám phá nét đẹp của thủ đô Hà Nội."
+                        }
+                    ]
+                },
+                {
+                    "time_of_day": "afternoon",
+                    "activities": [
+                        {
+                            "id": "restaurant_020781",
+                            "type": "restaurant",
+                            "name": "Beefsteak Nam Sơn - Nguyễn Thị Minh Khai",
+                            "start_time": "12:30",
+                            "end_time": "13:30",
+                            "description": "Bạn sẽ được thưởng thức bữa trưa tại Beefsteak Nam Sơn."
+                        },
+                        {
+                            "id": "place_011825",
+                            "type": "place",
+                            "name": "Hanoi Old Quarter",
+                            "start_time": "14:00",
+                            "end_time": "16:30",
+                            "description": "Chúng ta sẽ tham quan phố cổ Hà Nội, nơi lưu giữ nét cổ kính của thủ đô."
+                        }
+                    ]
+                },
+                {
+                    "time_of_day": "evening",
+                    "activities": [
+                        {
+                            "id": "restaurant_000880",
+                            "type": "restaurant",
+                            "name": "Phở Hà Nội - Hồng Hà",
+                            "start_time": "18:00",
+                            "end_time": "19:00",
+                            "description": "Thưởng thức món phở truyền thống, đặc sản của Hà Nội."
+                        },
+                        {
+                            "id": "place_000159",
+                            "type": "place",
+                            "name": "City Game Hanoi",
+                            "start_time": "19:30",
+                            "end_time": "21:30",
+                            "description": "Chúng ta sẽ kết thúc ngày bằng những trò chơi vui nhộn tại City Game Hanoi."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "date": "2025-05-07",
+            "day_title": "Ngày 2: Hành trình khám phá Hà Nội cổ kính",
+            "segments": [
+                {
+                    "time_of_day": "morning",
+                    "activities": [
+                        {
+                            "id": "hotel_006100",
+                            "type": "accommodation",
+                            "name": "Hanoi Capital Hostel & Travel",
+                            "start_time": "08:00",
+                            "end_time": "10:00",
+                            "description": "Bạn sẽ bắt đầu ngày mới với không gian thoáng đãng, yên tĩnh tại khách sạn.",
+                            "location": "Hà Nội",
+                            "rating": 4.5,
+                            "price": 850000,
+                            "image_url": "",
+                            "url": ""
+                        },
+                        {
+                            "id": "place_000481",
+                            "type": "place",
+                            "name": "Ha Noi (Hanoi, Vietnam)",
+                            "start_time": "10:30",
+                            "end_time": "12:00",
+                            "description": "Khám phá nét đẹp truyền thống, văn hóa phong phú của Hà Nội.",
+                            "address": "Hà Nội",
+                            "categories": "sightseeing",
+                            "rating": 4.0,
+                            "price": 50000,
+                            "image_url": "",
+                            "url": ""
+                        }
+                    ]
+                },
+                {
+                    "time_of_day": "afternoon",
+                    "activities": [
+                        {
+                            "id": "restaurant_020781",
+                            "type": "restaurant",
+                            "name": "Beefsteak Nam Sơn - Nguyễn Thị Minh Khai",
+                            "start_time": "12:30",
+                            "end_time": "13:30",
+                            "description": "Thưởng thức bữa trưa với thịt bò nướng thơm ngon, mềm mại.",
+                            "address": "Hà Nội",
+                            "cuisines": "Steakhouse",
+                            "rating": 4.5,
+                            "phone": "",
+                            "image_url": "",
+                            "url": ""
+                        },
+                        {
+                            "id": "place_011825",
+                            "type": "place",
+                            "name": "Hanoi Old Quarter",
+                            "start_time": "14:00",
+                            "end_time": "17:00",
+                            "description": "Dạo quanh phố cổ Hà Nội, thưởng thức không khí sôi động, đậm chất lịch sử.",
+                            "address": "Hà Nội",
+                            "categories": "sightseeing",
+                            "rating": 4.5,
+                            "price": 0,
+                            "image_url": "",
+                            "url": ""
+                        }
+                    ]
+                },
+                {
+                    "time_of_day": "evening",
+                    "activities": [
+                        {
+                            "id": "restaurant_000880",
+                            "type": "restaurant",
+                            "name": "Phở Hà Nội - Hồng Hà",
+                            "start_time": "18:00",
+                            "end_time": "19:00",
+                            "description": "Thưởng thức hương vị đặc trưng của phở Hà Nội, món ăn truyền thống.",
+                            "address": "Hà Nội",
+                            "cuisines": "Vietnamese",
+                            "rating": 4.2,
+                            "phone": "",
+                            "image_url": "",
+                            "url": ""
+                        },
+                        {
+                            "id": "place_000300",
+                            "type": "place",
+                            "name": "Ha Noi Nail",
+                            "start_time": "19:30",
+                            "end_time": "21:00",
+                            "description": "Chăm sóc bản thân tại Ha Noi Nail, tận hưởng dịch vụ chất lượng cao.",
+                            "address": "Hà Nội",
+                            "categories": "beauty_salon",
+                            "rating": 4.0,
+                            "price": 150000,
+                            "image_url": "",
+                            "url": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "date": "2025-05-08",
+            "day_title": "Ngày 3: Khám phá văn hóa và ẩm thực Hà Nội",
+            "segments": [
+                {
+                    "time_of_day": "morning",
+                    "activities": [
+                        {
+                            "id": "hotel_001980",
+                            "type": "accommodation",
+                            "name": "GRAND CITITEL Hanoi Hotel & Spa",
+                            "start_time": "08:00",
+                            "end_time": "10:00",
+                            "description": "Bạn sẽ được thưởng thức bữa sáng ngon miệng tại khách sạn."
+                        },
+                        {
+                            "id": "place_011825",
+                            "type": "place",
+                            "name": "Hanoi Old Quarter",
+                            "start_time": "10:30",
+                            "end_time": "12:00",
+                            "description": "Chúng ta sẽ dạo quanh phố cổ Hà Nội, nơi lịch sử và hiện đại giao thoa."
+                        }
+                    ]
+                },
+                {
+                    "time_of_day": "afternoon",
+                    "activities": [
+                        {
+                            "id": "restaurant_020781",
+                            "type": "restaurant",
+                            "name": "Beefsteak Nam Sơn - Nguyễn Thị Minh Khai",
+                            "start_time": "12:30",
+                            "end_time": "14:00",
+                            "description": "Bạn sẽ được thưởng thức bữa trưa với món bò nổi tiếng của Hà Nội."
+                        },
+                        {
+                            "id": "place_011374",
+                            "type": "place",
+                            "name": "Hanoi Old Quarter",
+                            "start_time": "14:30",
+                            "end_time": "17:00",
+                            "description": "Tiếp tục hành trình khám phá phố cổ, thăm các cửa hàng lưu niệm và nghệ thuật đường phố."
+                        }
+                    ]
+                },
+                {
+                    "time_of_day": "evening",
+                    "activities": [
+                        {
+                            "id": "restaurant_000880",
+                            "type": "restaurant",
+                            "name": "Phở Hà Nội - Hồng Hà",
+                            "start_time": "18:00",
+                            "end_time": "20:00",
+                            "description": "Bạn sẽ được thưởng thức món phở nổi tiếng thế giới trong bữa tối."
+                        },
+                        {
+                            "id": "place_000159",
+                            "type": "place",
+                            "name": "City Game Hanoi",
+                            "start_time": "20:30",
+                            "end_time": "22:00",
+                            "description": "Chúng ta sẽ kết thúc ngày bằng một đêm vui chơi tại City Game Hanoi."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
 
 	`
 	var result dto.TripDTOByDate
@@ -490,8 +746,8 @@ func (ts *tripService) mockAISuggestTrip(activities dto.TripSuggestionRequest, e
 }
 
 func (ts *tripService) SuggestTrip(userID string, activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error) {
-	suggestionByDate, err := ts.CallAISuggestTrip(activities, endpoint)
-	// suggestionByDate, err := ts.mockAISuggestTrip(activities, endpoint)
+	// suggestionByDate, err := ts.CallAISuggestTrip(activities, endpoint)
+	suggestionByDate, err := ts.mockAISuggestTrip(activities, endpoint)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get trip suggestion: %w", err)
 	}
@@ -501,7 +757,7 @@ func (ts *tripService) SuggestTrip(userID string, activities dto.TripSuggestionR
 	}
 	suggestion.UserID = userID
 
-	_, err = ts.CreateTrip(&suggestion)
+	tripID, err := ts.CreateTrip(&suggestion)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create trip: %w", err)
 	}
@@ -510,7 +766,39 @@ func (ts *tripService) SuggestTrip(userID string, activities dto.TripSuggestionR
 	if err != nil {
 		return nil, fmt.Errorf("failed to convert trip suggestion: %w", err)
 	}
+	suggestionByDate.TripID = tripID
+	newSuggestionByDate.TripID = tripID
 	fmt.Println("Converted suggestion: ", newSuggestionByDate)
-
 	return suggestionByDate, nil
+}
+
+func (ts *tripService) GetTravelPreference(tripID string) (*model.TravelPreference, error) {
+	tp, err := ts.travelPreferenceRepository.GetByTripID(tripID)
+	if err != nil {
+		return nil, err
+	}
+	return &tp, nil
+}
+
+func (ts *tripService) CreateTravelPreference(tripID string, tp *model.TravelPreference) (string, error) {
+	// Generate UUID for travel preference
+	tp.TravelPreferenceID = uuid.New().String()
+	tp.TripID = tripID
+
+	// Begin transaction
+	tx := ts.travelPreferenceRepository.(*repository.GormTravelPreferenceRepository).DB.Begin()
+
+	// Create travel preference
+	if err := tx.Create(tp).Error; err != nil {
+		tx.Rollback()
+		return "", err
+	}
+
+	// Commit transaction
+	if err := tx.Commit().Error; err != nil {
+		tx.Rollback()
+		return "", err
+	}
+
+	return tp.TravelPreferenceID, nil
 }

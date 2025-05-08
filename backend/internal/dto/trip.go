@@ -94,12 +94,13 @@ type PlanByDay struct {
 }
 
 type TripDTOByDate struct {
-	UserID      string      `json:"user_id"`
-	TripName    string      `json:"trip_name"`
-	StartDate   string      `json:"start_date"` // "YYYY-MM-DD"
-	EndDate     string      `json:"end_date"`   // "YYYY-MM-DD"
-	Destination string      `json:"destination"`
-	PlanByDay   []PlanByDay `json:"plan_by_day"`
+	TripID        string      `json:"trip_id"`
+	UserID        string      `json:"user_id"`
+	TripName      string      `json:"trip_name"`
+	StartDate     string      `json:"start_date"` // "YYYY-MM-DD"
+	EndDate       string      `json:"end_date"`   // "YYYY-MM-DD"
+	DestinationID string      `json:"destination_id"`
+	PlanByDay     []PlanByDay `json:"plan_by_day"`
 }
 
 func ConvertTripDTO(input TripDTOByDate) (TripDTO, error) {
@@ -130,7 +131,7 @@ func ConvertTripDTO(input TripDTOByDate) (TripDTO, error) {
 
 	dest := TripDestinationDTO{
 		TripID:        "", // Can be filled later
-		DestinationID: input.Destination,
+		DestinationID: input.DestinationID,
 		ArrivalDate:   &startDate,
 		DepartureDate: &endDate,
 		OrderNum:      1,
@@ -171,7 +172,7 @@ func ConvertTripDTO(input TripDTOByDate) (TripDTO, error) {
 				case "place":
 					dest.Places = append(dest.Places, TripPlaceDTO{
 						TripPlaceID:       activity.ActivityID,
-						TripDestinationID: input.Destination,
+						TripDestinationID: input.DestinationID,
 						PlaceID:           activity.ID,
 						ScheduledDate:     &scheduledDate,
 						StartTime:         startTimePtr,
@@ -181,7 +182,7 @@ func ConvertTripDTO(input TripDTOByDate) (TripDTO, error) {
 				case "accommodation":
 					dest.Accommodations = append(dest.Accommodations, TripAccommodationDTO{
 						TripAccommodationID: activity.ActivityID,
-						TripDestinationID:   input.Destination,
+						TripDestinationID:   input.DestinationID,
 						AccommodationID:     activity.ID,
 						CheckInDate:         &scheduledDate,
 						CheckOutDate:        &scheduledDate, // Assuming CheckOutDate is the same as CheckInDate for simplicity.
@@ -194,7 +195,7 @@ func ConvertTripDTO(input TripDTOByDate) (TripDTO, error) {
 				case "restaurant":
 					dest.Restaurants = append(dest.Restaurants, TripRestaurantDTO{
 						TripRestaurantID:  activity.ActivityID,
-						TripDestinationID: input.Destination,
+						TripDestinationID: input.DestinationID,
 						RestaurantID:      activity.ID,
 						MealDate:          &scheduledDate,
 						StartTime:         startTimePtr,
@@ -358,11 +359,11 @@ func ConvertTripDTOByDate(input TripDTO) (TripDTOByDate, error) {
 	}
 
 	return TripDTOByDate{
-		UserID:      input.UserID,
-		TripName:    input.TripName,
-		StartDate:   startDateStr,
-		EndDate:     endDateStr,
-		Destination: destination,
-		PlanByDay:   planByDay,
+		UserID:        input.UserID,
+		TripName:      input.TripName,
+		StartDate:     startDateStr,
+		EndDate:       endDateStr,
+		DestinationID: destination,
+		PlanByDay:     planByDay,
 	}, nil
 }
