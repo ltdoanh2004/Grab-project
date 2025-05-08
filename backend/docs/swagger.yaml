@@ -992,42 +992,6 @@ paths:
       summary: Suggest accommodations
       tags:
       - suggest
-  /api/v1/suggest/all:
-    post:
-      consumes:
-      - application/json
-      description: Get comprehensive suggestions based on travel preferences for accommodations,
-        places, and restaurants
-      parameters:
-      - description: Travel Preferences
-        in: body
-        name: preference
-        required: true
-        schema:
-          $ref: '#/definitions/dto.TravelPreference'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Suggested trip
-          schema:
-            allOf:
-            - $ref: '#/definitions/model.Response'
-            - properties:
-                data:
-                  $ref: '#/definitions/dto.TripDTOByDate'
-              type: object
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: Suggest all suggestions
-      tags:
-      - suggest
   /api/v1/suggest/places:
     post:
       consumes:
@@ -1096,6 +1060,42 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: Suggest restaurants
+      tags:
+      - suggest
+  /api/v1/suggest/trip:
+    post:
+      consumes:
+      - application/json
+      description: Get comprehensive suggestions based on travel preferences for accommodations,
+        places, and restaurants
+      parameters:
+      - description: Travel Preferences
+        in: body
+        name: preference
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TravelPreference'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Suggested trip
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.TripDTOByDate'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Suggest trip
       tags:
       - suggest
   /api/v1/todos:

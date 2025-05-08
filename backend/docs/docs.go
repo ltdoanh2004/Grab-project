@@ -590,64 +590,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/suggest/all": {
-            "post": {
-                "description": "Get comprehensive suggestions based on travel preferences for accommodations, places, and restaurants",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "suggest"
-                ],
-                "summary": "Suggest all suggestions",
-                "parameters": [
-                    {
-                        "description": "Travel Preferences",
-                        "name": "preference",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.TravelPreference"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Suggested trip",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/model.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/dto.TripDTOByDate"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/model.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/model.Response"
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/suggest/places": {
             "post": {
                 "description": "Get activity suggestions based on travel preferences",
@@ -743,6 +685,64 @@ const docTemplate = `{
                                     "properties": {
                                         "data": {
                                             "$ref": "#/definitions/dto.RestaurantsSuggestion"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/suggest/trip": {
+            "post": {
+                "description": "Get comprehensive suggestions based on travel preferences for accommodations, places, and restaurants",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "suggest"
+                ],
+                "summary": "Suggest trip",
+                "parameters": [
+                    {
+                        "description": "Travel Preferences",
+                        "name": "preference",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.TravelPreference"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Suggested trip",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.TripDTOByDate"
                                         }
                                     }
                                 }
