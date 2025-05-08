@@ -35,7 +35,7 @@ func (sc *SuggestController) RegisterRoutes(router *gin.Engine) {
 			protected.POST("/accommodations", sc.SuggestAccommodations)
 			protected.POST("/places", sc.SuggestPlaces)
 			protected.POST("/restaurants", sc.SuggestRestaurants)
-			protected.POST("/trip", sc.SuggestAll)
+			protected.POST("/trip", sc.SuggestTrip)
 		}
 		detail := v1.Group("/detail")
 		{
@@ -124,8 +124,8 @@ func (sc *SuggestController) SuggestRestaurants(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
 }
 
-// SuggestAll godoc
-// @Summary Suggest all suggestions
+// SuggestTrip godoc
+// @Summary Suggest trip
 // @Description Get comprehensive suggestions based on travel preferences for accommodations, places, and restaurants
 // @Tags suggest
 // @Accept json
@@ -134,8 +134,8 @@ func (sc *SuggestController) SuggestRestaurants(ctx *gin.Context) {
 // @Success 200 {object} model.Response{data=dto.TripDTOByDate} "Suggested trip"
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/v1/suggest/all [post]
-func (sc *SuggestController) SuggestAll(ctx *gin.Context) {
+// @Router /api/v1/suggest/trip [post]
+func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
 	travelPreference := &dto.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
 		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input: "+err.Error(), nil))
@@ -172,8 +172,6 @@ func (sc *SuggestController) SuggestAll(ctx *gin.Context) {
 		Message: "Trip suggestion retrieved successfully",
 		Data:    suggestedTrip,
 	})
-
-	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
 }
 
 // GetPlaceByID godoc
