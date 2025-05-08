@@ -21,3 +21,13 @@ def extract_image_url(item):
     
     # Nothing found
     return ""
+def to_dict(obj):
+    if hasattr(obj, "model_dump"):
+        return obj.model_dump()
+    elif hasattr(obj, "dict"):
+        return obj.dict()
+    elif isinstance(obj, dict):
+        return obj
+    else:
+        return {}
+    return ""

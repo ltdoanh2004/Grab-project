@@ -15,7 +15,6 @@ except ImportError:
 class FnBVectorDatabase(BaseVectorDatabase):
     def __init__(self):
         super().__init__(index_name="fnb-recommendations")
-        # Override checkpoint file path to be specific for FnB
         self.checkpoint_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fnb_checkpoint.json')
 
     def prepare_fnb_embedding(self, data=None, incremental=True):
@@ -249,9 +248,24 @@ class FnBVectorDatabase(BaseVectorDatabase):
         # Otherwise, continue with original full insertion method
         # Convert string embeddings to lists
         print("Converting embeddings to lists...")
-        self.df['context_embedding'] = self.df['context_embedding'].apply(
-            lambda x: eval(x) if isinstance(x, str) else x
-        )
+        def safe_eval_embedding(x):
+            if x is None:
+                return None
+            if not isinstance(x, str):
+                return x
+            try:
+                # Check if string starts with [ and ends with ]
+                if x.strip().startswith('[') and x.strip().endswith(']'):
+                    return eval(x)
+                else:
+                    print(f"Warning: Embedding string doesn't look like a list: {x[:50]}...")
+                    return None
+            except Exception as e:
+                print(f"Error evaluating embedding string: {e}")
+                return None
+                
+        self.df['context_embedding'] = self.df['context_embedding'].apply(safe_eval_embedding)
+
             
         print("Inserting data into Pinecone...")
         vectors_to_upsert = []
@@ -279,13 +293,24 @@ class FnBVectorDatabase(BaseVectorDatabase):
                 if embedding is None:
                     continue
                     
+                if isinstance(embedding, (int, float)):
+                    print(f"Warning: Row {idx} has a non-iterable embedding (type: {type(embedding)}). Skipping.")
+                    continue
+                
+                if not isinstance(embedding, list):
+                    try:
+                        embedding = list(embedding)
+                    except Exception as e:
+                        print(f"Error converting embedding to list for row {idx}: {e}")
+                        continue
+                    
+
                 vectors_to_upsert.append({
                     "id": str(row["restaurant_id"]),
                     "values": embedding,
                     "metadata": metadata
                 })
                 
-                # Upsert in batches of 100
                 if len(vectors_to_upsert) >= 100:
                     self.index.upsert(vectors=vectors_to_upsert)
                     vectors_to_upsert = []
@@ -294,7 +319,6 @@ class FnBVectorDatabase(BaseVectorDatabase):
                 print(f"Error processing row {idx}: {e}")
                 continue
         
-        # Upsert remaining vectors
         if vectors_to_upsert:
             self.index.upsert(vectors=vectors_to_upsert)
         

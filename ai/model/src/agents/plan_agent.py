@@ -22,7 +22,10 @@ from typing import Any, Dict, List, Optional
 
 from ..promts.plan_promt import JSON_SCHEMA_EXAMPLE, system_plan_prompt
 from ..utils.helper_function import extract_image_url
-from ..agents.review_agent import ReviewAgent
+
+from ..agents.review_agent import TravelReviewer
+
+
 from dotenv import load_dotenv
 from langchain_core.output_parsers import JsonOutputParser
 from langchain.prompts import PromptTemplate
@@ -53,6 +56,7 @@ class PlanModel:
             max_tokens=4000  
         )
         self.parser = JsonOutputParser()  
+
         self.review_agent = ReviewAgent()
 
 
