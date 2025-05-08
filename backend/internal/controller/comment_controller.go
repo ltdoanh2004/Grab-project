@@ -3,7 +3,6 @@ package controller
 import (
 	"net/http"
 
-	"skeleton-internship-backend/internal/dto"
 	"skeleton-internship-backend/internal/model"
 	"skeleton-internship-backend/internal/service"
 	"skeleton-internship-backend/middleware"
@@ -33,8 +32,7 @@ func (cc *CommentController) RegisterRoutes(router *gin.Engine) {
 			protected.Use(middleware.AuthMiddleware())
 			{
 				protected.POST("/create", cc.CreateComment)
-				protected.GET("/trip/:id", cc.GetCommentsByTripID)
-				protected.POST("/activity", cc.GetCommentsByActivity)
+				protected.GET("/activity/:id", cc.GetCommentsByActivityID)
 			}
 		}
 	}
@@ -85,64 +83,28 @@ func (cc *CommentController) CreateComment(ctx *gin.Context) {
 	})
 }
 
-// GetCommentsByTripID godoc
-// @Summary Get comments by trip ID
-// @Description Get all comments for a specific trip
-// @Tags comment
-// @Accept json
-// @Produce json
-// @Param id path string true "Trip ID"
-// @Success 200 {object} model.Response{data=model.Comment} "Comments for the trip"
-// @Failure 400 {object} model.Response "Invalid trip ID"
-// @Failure 500 {object} model.Response "Internal server error"
-// @Router /api/v1/comment/trip/{id} [get]
-func (cc *CommentController) GetCommentsByTripID(ctx *gin.Context) {
-	tripID := ctx.Param("id")
-	if tripID == "" {
-		ctx.JSON(http.StatusBadRequest, model.Response{
-			Message: "Invalid trip ID: ID cannot be empty",
-			Data:    nil,
-		})
-		return
-	}
-
-	comments, err := cc.commentService.GetCommentsByTripID(tripID)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, model.Response{
-			Message: "Failed to get comments: " + err.Error(),
-			Data:    nil,
-		})
-		return
-	}
-
-	ctx.JSON(http.StatusOK, model.Response{
-		Message: "Comments retrieved successfully",
-		Data:    comments,
-	})
-}
-
-// GetCommentsByActivity godoc
-// @Summary Get comments by activity
+// GetCommentsByActivityID godoc
+// @Summary Get comments by activity ID
 // @Description Get all comments for a specific activity
 // @Tags comment
 // @Accept json
 // @Produce json
-// @Param activity body dto.Activity true "Activity Details"
+// @Param id path string true "Activity ID"
 // @Success 200 {object} model.Response{data=model.Comment} "Comments for the activity"
-// @Failure 400 {object} model.Response "Invalid activity"
+// @Failure 400 {object} model.Response "Invalid activity ID"
 // @Failure 500 {object} model.Response "Internal server error"
-// @Router /api/v1/comment/activity [post]
-func (cc *CommentController) GetCommentsByActivity(ctx *gin.Context) {
-	var request dto.Activity
-	if err := ctx.ShouldBindJSON(&request); err != nil {
+// @Router /api/v1/comment/activity/{id} [get]
+func (cc *CommentController) GetCommentsByActivityID(ctx *gin.Context) {
+	activityID := ctx.Param("id")
+	if activityID == "" {
 		ctx.JSON(http.StatusBadRequest, model.Response{
-			Message: "Invalid request body: " + err.Error(),
+			Message: "Invalid activity ID: ID cannot be empty",
 			Data:    nil,
 		})
 		return
 	}
 
-	comments, err := cc.commentService.GetCommentsByActivity(request)
+	comments, err := cc.commentService.GetCommentsByActivityID(activityID)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
 			Message: "Failed to get comments: " + err.Error(),
