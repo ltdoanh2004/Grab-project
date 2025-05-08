@@ -35,7 +35,7 @@ func (sc *SuggestController) RegisterRoutes(router *gin.Engine) {
 			protected.POST("/accommodations", sc.SuggestAccommodations)
 			protected.POST("/places", sc.SuggestPlaces)
 			protected.POST("/restaurants", sc.SuggestRestaurants)
-			protected.POST("/all", sc.SuggestAll)
+			protected.POST("/trip", sc.SuggestAll)
 		}
 		detail := v1.Group("/detail")
 		{
