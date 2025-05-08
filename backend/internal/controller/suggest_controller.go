@@ -52,13 +52,13 @@ func (sc *SuggestController) RegisterRoutes(router *gin.Engine) {
 // @Tags suggest
 // @Accept json
 // @Produce json
-// @Param preference body dto.TravelPreference true "Travel Preferences"
+// @Param preference body model.TravelPreference true "Travel Preferences"
 // @Success 200 {object} model.Response{data=dto.AccommodationsSuggestion}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/suggest/accommodations [post]
 func (sc *SuggestController) SuggestAccommodations(ctx *gin.Context) {
-	travelPreference := &dto.TravelPreference{}
+	travelPreference := &model.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
 		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input: "+err.Error(), nil))
 		return
@@ -78,13 +78,13 @@ func (sc *SuggestController) SuggestAccommodations(ctx *gin.Context) {
 // @Tags suggest
 // @Accept json
 // @Produce json
-// @Param preference body dto.TravelPreference true "Travel Preferences"
+// @Param preference body model.TravelPreference true "Travel Preferences"
 // @Success 200 {object} model.Response{data=dto.PlacesSuggestion}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/suggest/places [post]
 func (sc *SuggestController) SuggestPlaces(ctx *gin.Context) {
-	travelPreference := &dto.TravelPreference{}
+	travelPreference := &model.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
 		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input: "+err.Error(), nil))
 		return
@@ -104,13 +104,13 @@ func (sc *SuggestController) SuggestPlaces(ctx *gin.Context) {
 // @Tags suggest
 // @Accept json
 // @Produce json
-// @Param preference body dto.TravelPreference true "Travel Preferences"
+// @Param preference body model.TravelPreference true "Travel Preferences"
 // @Success 200 {object} model.Response{data=dto.RestaurantsSuggestion}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/suggest/restaurants [post]
 func (sc *SuggestController) SuggestRestaurants(ctx *gin.Context) {
-	travelPreference := &dto.TravelPreference{}
+	travelPreference := &model.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
 		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input: "+err.Error(), nil))
 		return
@@ -130,13 +130,13 @@ func (sc *SuggestController) SuggestRestaurants(ctx *gin.Context) {
 // @Tags suggest
 // @Accept json
 // @Produce json
-// @Param preference body dto.TravelPreference true "Travel Preferences"
+// @Param preference body model.TravelPreference true "Travel Preferences"
 // @Success 200 {object} model.Response{data=dto.TripDTOByDate} "Suggested trip"
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/suggest/trip [post]
 func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
-	travelPreference := &dto.TravelPreference{}
+	travelPreference := &model.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
 		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input: "+err.Error(), nil))
 		return
@@ -163,6 +163,15 @@ func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
 			Message: "Failed to get trip suggestion: " + err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
+	_, err = sc.tripService.CreateTravelPreference(suggestedTrip.TripID, travelPreference)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.Response{
+			Message: "Failed to create travel preference: " + err.Error(),
 			Data:    nil,
 		})
 		return
