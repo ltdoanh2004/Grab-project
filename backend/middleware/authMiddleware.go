@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"net/http"
 	"skeleton-internship-backend/config"
 	"skeleton-internship-backend/internal/util"
@@ -39,6 +40,7 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		// Optionally store claims in context
 		c.Set("user_id", claims.UserID)
+		fmt.Println("UserID:", claims.UserID)
 
 		c.Next()
 	}

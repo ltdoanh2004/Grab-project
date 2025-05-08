@@ -134,8 +134,8 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/comment/activity": {
-            "post": {
+        "/api/v1/comment/activity/{id}": {
+            "get": {
                 "description": "Get all comments for a specific activity",
                 "consumes": [
                     "application/json"
@@ -146,16 +146,14 @@ const docTemplate = `{
                 "tags": [
                     "comment"
                 ],
-                "summary": "Get comments by activity",
+                "summary": "Get comments by activity ID",
                 "parameters": [
                     {
-                        "description": "Activity Details",
-                        "name": "activity",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.Activity"
-                        }
+                        "type": "string",
+                        "description": "Activity ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -170,10 +168,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/model.Comment"
-                                            }
+                                            "$ref": "#/definitions/model.Comment"
                                         }
                                     }
                                 }
@@ -181,7 +176,7 @@ const docTemplate = `{
                         }
                     },
                     "400": {
-                        "description": "Invalid activity",
+                        "description": "Invalid activity ID",
                         "schema": {
                             "$ref": "#/definitions/model.Response"
                         }
@@ -240,62 +235,6 @@ const docTemplate = `{
                     },
                     "400": {
                         "description": "Invalid request",
-                        "schema": {
-                            "$ref": "#/definitions/model.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/model.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/comment/trip/{id}": {
-            "get": {
-                "description": "Get all comments for a specific trip",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "comment"
-                ],
-                "summary": "Get comments by trip ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Trip ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Comments for the trip",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/model.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/model.Comment"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid trip ID",
                         "schema": {
                             "$ref": "#/definitions/model.Response"
                         }
@@ -677,7 +616,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Suggested trip",
                         "schema": {
                             "allOf": [
                                 {
@@ -687,7 +626,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.TripSuggestionRequest"
+                                            "$ref": "#/definitions/dto.TripDTOByDate"
                                         }
                                     }
                                 }
