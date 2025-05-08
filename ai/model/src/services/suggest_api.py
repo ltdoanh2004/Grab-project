@@ -32,20 +32,16 @@ async def suggest_trips(request: TripSuggestionRequest):
     Endpoint to suggest complete trips based on various criteria
     """
     try:
-        # Extract activities from personalOptions
         activities = [option.name for option in request.personalOptions if option.type == "activities"]
         
-        # Calculate duration in days
         start_date = request.travelTime.startDate
         end_date = request.travelTime.endDate
         duration_days = (end_date - start_date).days + 1
         if duration_days < 1:
             duration_days = 1
             
-        # Extract budget level
         budget = request.budget.type
         
-        # Extract travel preferences
         accommodation_prefs = [option.name for option in request.personalOptions if option.type == "accommodation"]
         food_prefs = [option.name for option in request.personalOptions if option.type == "food"]
         transport_prefs = [option.name for option in request.personalOptions if option.type == "transportation"]

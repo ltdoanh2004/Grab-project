@@ -29,8 +29,8 @@ app = FastAPI(
 
 def register_routers():
     try:
-        from src.services.backend_api import recommend_router
-        from src.services.trip_plan_api import router as trip_plan_router
+        from src.services.suggest_api import recommend_router
+        from src.services.genrate_plan_api import router as trip_plan_router
         
         app.include_router(recommend_router, prefix="/api/v1")
         app.include_router(trip_plan_router, prefix="/api/v1")

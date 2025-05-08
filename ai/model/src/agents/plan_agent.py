@@ -22,7 +22,11 @@ from typing import Any, Dict, List, Optional
 
 from ..promts.plan_promt import JSON_SCHEMA_EXAMPLE, system_plan_prompt
 from ..utils.helper_function import extract_image_url
+<<<<<<< HEAD
 from ..agents.review_agent import ReviewAgent
+=======
+from ..agents.review_agent import TravelReviewer
+>>>>>>> edfaf9e (add comment agent)
 from dotenv import load_dotenv
 from langchain_core.output_parsers import JsonOutputParser
 from langchain.prompts import PromptTemplate
@@ -53,7 +57,11 @@ class PlanModel:
             max_tokens=4000  
         )
         self.parser = JsonOutputParser()  
+<<<<<<< HEAD
         self.review_agent = ReviewAgent()
+=======
+        self.review_agent = TravelReviewer()
+>>>>>>> edfaf9e (add comment agent)
 
 
     def _build_prompt(self) -> PromptTemplate:

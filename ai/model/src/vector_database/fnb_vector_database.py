@@ -249,9 +249,23 @@ class FnBVectorDatabase(BaseVectorDatabase):
         # Otherwise, continue with original full insertion method
         # Convert string embeddings to lists
         print("Converting embeddings to lists...")
-        self.df['context_embedding'] = self.df['context_embedding'].apply(
-            lambda x: eval(x) if isinstance(x, str) else x
-        )
+        def safe_eval_embedding(x):
+            if x is None:
+                return None
+            if not isinstance(x, str):
+                return x
+            try:
+                # Check if string starts with [ and ends with ]
+                if x.strip().startswith('[') and x.strip().endswith(']'):
+                    return eval(x)
+                else:
+                    print(f"Warning: Embedding string doesn't look like a list: {x[:50]}...")
+                    return None
+            except Exception as e:
+                print(f"Error evaluating embedding string: {e}")
+                return None
+                
+        self.df['context_embedding'] = self.df['context_embedding'].apply(safe_eval_embedding)
             
         print("Inserting data into Pinecone...")
         vectors_to_upsert = []
@@ -278,6 +292,19 @@ class FnBVectorDatabase(BaseVectorDatabase):
                 embedding = row["context_embedding"]
                 if embedding is None:
                     continue
+                    
+                # Check if embedding is a float (not iterable) and skip it
+                if isinstance(embedding, (int, float)):
+                    print(f"Warning: Row {idx} has a non-iterable embedding (type: {type(embedding)}). Skipping.")
+                    continue
+                
+                # Ensure embedding is a list
+                if not isinstance(embedding, list):
+                    try:
+                        embedding = list(embedding)
+                    except Exception as e:
+                        print(f"Error converting embedding to list for row {idx}: {e}")
+                        continue
                     
                 vectors_to_upsert.append({
                     "id": str(row["restaurant_id"]),
