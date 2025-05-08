@@ -5,19 +5,23 @@ import (
 	"skeleton-internship-backend/internal/dto"
 	"skeleton-internship-backend/internal/model"
 	"skeleton-internship-backend/internal/service"
+	"skeleton-internship-backend/middleware"
 
 	"github.com/gin-gonic/gin"
 )
 
 type SuggestController struct {
 	suggestSerivce service.SuggestService
+	tripService    service.TripService
 }
 
 func NewSuggestController(
 	suggestService service.SuggestService,
+	tripService service.TripService,
 ) *SuggestController {
 	return &SuggestController{
 		suggestSerivce: suggestService,
+		tripService:    tripService,
 	}
 }
 
@@ -25,11 +29,13 @@ func (sc *SuggestController) RegisterRoutes(router *gin.Engine) {
 	v1 := router.Group("/api/v1")
 	{
 		suggestion := v1.Group("/suggest")
+		protected := suggestion.Group("/")
+		protected.Use(middleware.AuthMiddleware())
 		{
-			suggestion.GET("/accommodations", sc.SuggestAccommodations)
-			suggestion.GET("/places", sc.SuggestPlaces)
-			suggestion.GET("/restaurants", sc.SuggestRestaurants)
-			suggestion.GET("/all", sc.SuggestAll)
+			protected.POST("/accommodations", sc.SuggestAccommodations)
+			protected.POST("/places", sc.SuggestPlaces)
+			protected.POST("/restaurants", sc.SuggestRestaurants)
+			protected.POST("/trip", sc.SuggestTrip)
 		}
 		detail := v1.Group("/detail")
 		{
@@ -46,13 +52,13 @@ func (sc *SuggestController) RegisterRoutes(router *gin.Engine) {
 // @Tags suggest
 // @Accept json
 // @Produce json
-// @Param preference body dto.TravelPreference true "Travel Preferences"
+// @Param preference body model.TravelPreference true "Travel Preferences"
 // @Success 200 {object} model.Response{data=dto.AccommodationsSuggestion}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/v1/suggest/accommodations [get]
+// @Router /api/v1/suggest/accommodations [post]
 func (sc *SuggestController) SuggestAccommodations(ctx *gin.Context) {
-	travelPreference := &dto.TravelPreference{}
+	travelPreference := &model.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
 		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input: "+err.Error(), nil))
 		return
@@ -72,13 +78,13 @@ func (sc *SuggestController) SuggestAccommodations(ctx *gin.Context) {
 // @Tags suggest
 // @Accept json
 // @Produce json
-// @Param preference body dto.TravelPreference true "Travel Preferences"
+// @Param preference body model.TravelPreference true "Travel Preferences"
 // @Success 200 {object} model.Response{data=dto.PlacesSuggestion}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/v1/suggest/places [get]
+// @Router /api/v1/suggest/places [post]
 func (sc *SuggestController) SuggestPlaces(ctx *gin.Context) {
-	travelPreference := &dto.TravelPreference{}
+	travelPreference := &model.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
 		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input: "+err.Error(), nil))
 		return
@@ -98,13 +104,13 @@ func (sc *SuggestController) SuggestPlaces(ctx *gin.Context) {
 // @Tags suggest
 // @Accept json
 // @Produce json
-// @Param preference body dto.TravelPreference true "Travel Preferences"
+// @Param preference body model.TravelPreference true "Travel Preferences"
 // @Success 200 {object} model.Response{data=dto.RestaurantsSuggestion}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/v1/suggest/restaurants [get]
+// @Router /api/v1/suggest/restaurants [post]
 func (sc *SuggestController) SuggestRestaurants(ctx *gin.Context) {
-	travelPreference := &dto.TravelPreference{}
+	travelPreference := &model.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
 		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input: "+err.Error(), nil))
 		return
@@ -118,19 +124,19 @@ func (sc *SuggestController) SuggestRestaurants(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
 }
 
-// SuggestAll godoc
-// @Summary Suggest all suggestions
+// SuggestTrip godoc
+// @Summary Suggest trip
 // @Description Get comprehensive suggestions based on travel preferences for accommodations, places, and restaurants
 // @Tags suggest
 // @Accept json
 // @Produce json
-// @Param preference body dto.TravelPreference true "Travel Preferences"
-// @Success 200 {object} model.Response{data=dto.TripSuggestionRequest}
+// @Param preference body model.TravelPreference true "Travel Preferences"
+// @Success 200 {object} model.Response{data=dto.TripDTOByDate} "Suggested trip"
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/v1/suggest/all [get]
-func (sc *SuggestController) SuggestAll(ctx *gin.Context) {
-	travelPreference := &dto.TravelPreference{}
+// @Router /api/v1/suggest/trip [post]
+func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
+	travelPreference := &model.TravelPreference{}
 	if err := ctx.ShouldBindJSON(travelPreference); err != nil {
 		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input: "+err.Error(), nil))
 		return
@@ -141,7 +147,40 @@ func (sc *SuggestController) SuggestAll(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get suggestions: "+err.Error(), nil))
 		return
 	}
-	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
+	getPlanEndpoint := "/api/v1/suggest/trip"
+	// Extract userID from access_token
+	userID, exists := ctx.Get("user_id")
+	if !exists {
+		ctx.JSON(http.StatusUnauthorized, model.Response{
+			Message: "Unauthorized: userID not found in access_token",
+			Data:    nil,
+		})
+		return
+	}
+
+	var suggestedTrip *dto.TripDTOByDate
+	suggestedTrip, err = sc.tripService.SuggestTrip(userID.(string), *suggestion, getPlanEndpoint)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.Response{
+			Message: "Failed to get trip suggestion: " + err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
+	_, err = sc.tripService.CreateTravelPreference(suggestedTrip.TripID, travelPreference)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.Response{
+			Message: "Failed to create travel preference: " + err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, model.Response{
+		Message: "Trip suggestion retrieved successfully",
+		Data:    suggestedTrip,
+	})
 }
 
 // GetPlaceByID godoc

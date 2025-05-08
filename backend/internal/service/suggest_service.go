@@ -13,10 +13,10 @@ import (
 )
 
 type SuggestService interface {
-	SuggestPlaces(travelPreference *dto.TravelPreference) (*dto.PlacesSuggestion, error)
-	SuggestRestaurants(travelPreference *dto.TravelPreference) (*dto.RestaurantsSuggestion, error)
-	SuggestAccommodations(travelPreference *dto.TravelPreference) (*dto.AccommodationsSuggestion, error)
-	SuggestAll(travelPreference *dto.TravelPreference) (*dto.TripSuggestionRequest, error)
+	SuggestPlaces(travelPreference *model.TravelPreference) (*dto.PlacesSuggestion, error)
+	SuggestRestaurants(travelPreference *model.TravelPreference) (*dto.RestaurantsSuggestion, error)
+	SuggestAccommodations(travelPreference *model.TravelPreference) (*dto.AccommodationsSuggestion, error)
+	SuggestAll(travelPreference *model.TravelPreference) (*dto.TripSuggestionRequest, error)
 	GetPlaceByID(id string) (model.Place, error)
 	GetRestaurantByID(id string) (model.Restaurant, error)
 	GetAccommodationByID(id string) (model.Accommodation, error)
@@ -41,7 +41,7 @@ func NewSuggestService(
 }
 
 // callAISuggestion handles the common API call to the AI service.
-func (ss *suggestService) callAISuggestion(endpoint string, travelPreference *dto.TravelPreference) (*dto.TravelSuggestionResponse, error) {
+func (ss *suggestService) callAISuggestion(endpoint string, travelPreference *model.TravelPreference) (*dto.TravelSuggestionResponse, error) {
 	client := &http.Client{
 		Timeout: 10000 * time.Second,
 	}
@@ -80,7 +80,7 @@ func (ss *suggestService) callAISuggestion(endpoint string, travelPreference *dt
 	return &rsp, nil
 }
 
-func (ss *suggestService) mockCallSuggestAccommodationAPI(endpoint string, travelPreference *dto.TravelPreference) (*dto.TravelSuggestionResponse, error) {
+func (ss *suggestService) mockCallSuggestAccommodationAPI(endpoint string, travelPreference *model.TravelPreference) (*dto.TravelSuggestionResponse, error) {
 	fmt.Println("Mock API call to:", endpoint)
 	fmt.Println("Travel Preference:", travelPreference)
 
@@ -89,7 +89,7 @@ func (ss *suggestService) mockCallSuggestAccommodationAPI(endpoint string, trave
 	}, nil
 }
 
-func (ss *suggestService) mockCallSuggestPlaceAPI(endpoint string, travelPreference *dto.TravelPreference) (*dto.TravelSuggestionResponse, error) {
+func (ss *suggestService) mockCallSuggestPlaceAPI(endpoint string, travelPreference *model.TravelPreference) (*dto.TravelSuggestionResponse, error) {
 	fmt.Println("Mock API call to:", endpoint)
 	fmt.Println("Travel Preference:", travelPreference)
 
@@ -98,7 +98,7 @@ func (ss *suggestService) mockCallSuggestPlaceAPI(endpoint string, travelPrefere
 	}, nil
 }
 
-func (ss *suggestService) mockCallSuggestRestaurantAPI(endpoint string, travelPreference *dto.TravelPreference) (*dto.TravelSuggestionResponse, error) {
+func (ss *suggestService) mockCallSuggestRestaurantAPI(endpoint string, travelPreference *model.TravelPreference) (*dto.TravelSuggestionResponse, error) {
 	fmt.Println("Mock API call to:", endpoint)
 	fmt.Println("Travel Preference:", travelPreference)
 
@@ -111,7 +111,7 @@ func getURL(host, port, endpoint string) string {
 	return fmt.Sprintf("http://%s:%s%s", host, port, endpoint)
 }
 
-func (ss *suggestService) SuggestAccommodations(travelPreference *dto.TravelPreference) (*dto.AccommodationsSuggestion, error) {
+func (ss *suggestService) SuggestAccommodations(travelPreference *model.TravelPreference) (*dto.AccommodationsSuggestion, error) {
 	rsp, err := ss.mockCallSuggestAccommodationAPI(
 		getURL(config.AppConfig.AI.Host,
 			config.AppConfig.AI.Port,
@@ -152,7 +152,7 @@ func (ss *suggestService) SuggestAccommodations(travelPreference *dto.TravelPref
 	return &suggestion, nil
 }
 
-func (ss *suggestService) SuggestPlaces(travelPreference *dto.TravelPreference) (*dto.PlacesSuggestion, error) {
+func (ss *suggestService) SuggestPlaces(travelPreference *model.TravelPreference) (*dto.PlacesSuggestion, error) {
 	rsp, err := ss.mockCallSuggestPlaceAPI(
 		getURL(config.AppConfig.AI.Host,
 			config.AppConfig.AI.Port,
@@ -192,7 +192,7 @@ func (ss *suggestService) SuggestPlaces(travelPreference *dto.TravelPreference) 
 	return &suggestion, nil
 }
 
-func (ss *suggestService) SuggestRestaurants(travelPreference *dto.TravelPreference) (*dto.RestaurantsSuggestion, error) {
+func (ss *suggestService) SuggestRestaurants(travelPreference *model.TravelPreference) (*dto.RestaurantsSuggestion, error) {
 	rsp, err := ss.mockCallSuggestRestaurantAPI(
 		getURL(config.AppConfig.AI.Host,
 			config.AppConfig.AI.Port,
@@ -235,23 +235,19 @@ func (ss *suggestService) SuggestRestaurants(travelPreference *dto.TravelPrefere
 	return &suggestion, nil
 }
 
-func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dto.TravelPreference) ([]dto.SuggestWithIDAndType, error) {
+func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *model.TravelPreference) ([]dto.SuggestWithIDAndType, error) {
 	client := &http.Client{
 		Timeout: 10000 * time.Second,
 	}
-	fmt.Println("travelPreference 2: ", travelPreference)
 	var jsonBody bytes.Buffer
 	if err := json.NewEncoder(&jsonBody).Encode(travelPreference); err != nil {
 		return nil, fmt.Errorf("failed to encode travel preference to JSON: %w", err)
 	}
-	fmt.Println("jsonBody: ", jsonBody)
 	aiURL := fmt.Sprintf("http://%s:%s%s",
 		config.AppConfig.AI.Host,
 		config.AppConfig.AI.Port,
 		endpoint,
 	)
-
-	fmt.Println(jsonBody)
 
 	req, err := http.NewRequest("POST", aiURL, &jsonBody)
 	if err != nil {
@@ -276,7 +272,7 @@ func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *dt
 	return rsp, nil
 }
 
-func (ss *suggestService) SuggestAll(travelPreference *dto.TravelPreference) (*dto.TripSuggestionRequest, error) {
+func (ss *suggestService) SuggestAll(travelPreference *model.TravelPreference) (*dto.TripSuggestionRequest, error) {
 	rsp, err := ss.callAISuggestAll(
 		"/api/v1/suggest/all",
 		travelPreference,
@@ -284,6 +280,7 @@ func (ss *suggestService) SuggestAll(travelPreference *dto.TravelPreference) (*d
 	if err != nil {
 		return nil, err
 	}
+
 	// var err error
 	// var rsp []dto.SuggestWithIDAndType
 	// rsp = append(rsp,

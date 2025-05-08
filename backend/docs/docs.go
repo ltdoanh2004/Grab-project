@@ -134,6 +134,120 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/comment/activity/{id}": {
+            "get": {
+                "description": "Get all comments for a specific activity",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "comment"
+                ],
+                "summary": "Get comments by activity ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Activity ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comments for the activity",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Comment"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid activity ID",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/comment/create": {
+            "post": {
+                "description": "Create a new comment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "comment"
+                ],
+                "summary": "Create a new comment",
+                "parameters": [
+                    {
+                        "description": "Comment Details",
+                        "name": "comment",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Comment"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns comment ID",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/detail/accommodation/{id}": {
             "get": {
                 "description": "Retrieve detailed information about a specific accommodation",
@@ -419,7 +533,7 @@ const docTemplate = `{
             }
         },
         "/api/v1/suggest/accommodations": {
-            "get": {
+            "post": {
                 "description": "Get accommodation suggestions based on travel preferences",
                 "consumes": [
                     "application/json"
@@ -476,66 +590,8 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/suggest/all": {
-            "get": {
-                "description": "Get comprehensive suggestions based on travel preferences for accommodations, places, and restaurants",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "suggest"
-                ],
-                "summary": "Suggest all suggestions",
-                "parameters": [
-                    {
-                        "description": "Travel Preferences",
-                        "name": "preference",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.TravelPreference"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/model.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/dto.TripSuggestionRequest"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/model.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/model.Response"
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/suggest/places": {
-            "get": {
+            "post": {
                 "description": "Get activity suggestions based on travel preferences",
                 "consumes": [
                     "application/json"
@@ -593,7 +649,7 @@ const docTemplate = `{
             }
         },
         "/api/v1/suggest/restaurants": {
-            "get": {
+            "post": {
                 "description": "Get restaurant suggestions based on travel preferences",
                 "consumes": [
                     "application/json"
@@ -629,6 +685,64 @@ const docTemplate = `{
                                     "properties": {
                                         "data": {
                                             "$ref": "#/definitions/dto.RestaurantsSuggestion"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/suggest/trip": {
+            "post": {
+                "description": "Get comprehensive suggestions based on travel preferences for accommodations, places, and restaurants",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "suggest"
+                ],
+                "summary": "Suggest trip",
+                "parameters": [
+                    {
+                        "description": "Travel Preferences",
+                        "name": "preference",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.TravelPreference"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Suggested trip",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.TripDTOByDate"
                                         }
                                     }
                                 }
@@ -931,7 +1045,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.CreateTripRequest"
+                            "$ref": "#/definitions/dto.TripDTO"
                         }
                     }
                 ],
@@ -1005,7 +1119,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.CreateTripRequestByDate"
+                                            "$ref": "#/definitions/dto.TripDTOByDate"
                                         }
                                     }
                                 }
@@ -1230,19 +1344,16 @@ const docTemplate = `{
         "dto.Activity": {
             "type": "object",
             "properties": {
-                "address": {
+                "activity_id": {
                     "type": "string"
                 },
-                "categories": {
-                    "type": "string"
-                },
-                "cuisines": {
-                    "type": "string"
+                "comments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Comment"
+                    }
                 },
                 "description": {
-                    "type": "string"
-                },
-                "duration": {
                     "type": "string"
                 },
                 "end_time": {
@@ -1251,32 +1362,11 @@ const docTemplate = `{
                 "id": {
                     "type": "string"
                 },
-                "image_url": {
-                    "type": "string"
-                },
                 "name": {
-                    "type": "string"
-                },
-                "opening_hours": {
-                    "type": "string"
-                },
-                "phone": {
                     "type": "string"
                 },
                 "price": {
                     "type": "number"
-                },
-                "price_range": {
-                    "type": "string"
-                },
-                "rating": {
-                    "type": "number"
-                },
-                "services": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/dto.Service"
-                    }
                 },
                 "start_time": {
                     "description": "\"HH:mm\" format",
@@ -1284,9 +1374,6 @@ const docTemplate = `{
                 },
                 "type": {
                     "description": "e.g., \"place\", \"accommodation\", \"restaurant\"",
-                    "type": "string"
-                },
-                "url": {
                     "type": "string"
                 }
             }
@@ -1298,173 +1385,6 @@ const docTemplate = `{
                     "type": "number"
                 },
                 "type": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.CreateTripAccommodationRequest": {
-            "type": "object",
-            "properties": {
-                "accommodation_id": {
-                    "type": "string"
-                },
-                "check_in_date": {
-                    "type": "string"
-                },
-                "check_out_date": {
-                    "type": "string"
-                },
-                "cost": {
-                    "type": "number"
-                },
-                "notes": {
-                    "type": "string"
-                },
-                "trip_destination_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.CreateTripDestinationRequest": {
-            "type": "object",
-            "properties": {
-                "accommodations": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/dto.CreateTripAccommodationRequest"
-                    }
-                },
-                "arrival_date": {
-                    "type": "string"
-                },
-                "departure_date": {
-                    "type": "string"
-                },
-                "destination_id": {
-                    "type": "string"
-                },
-                "order_num": {
-                    "type": "integer"
-                },
-                "places": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/dto.CreateTripPlaceRequest"
-                    }
-                },
-                "restaurants": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/dto.CreateTripRestaurantRequest"
-                    }
-                },
-                "trip_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.CreateTripPlaceRequest": {
-            "type": "object",
-            "properties": {
-                "end_time": {
-                    "type": "string"
-                },
-                "notes": {
-                    "type": "string"
-                },
-                "place_id": {
-                    "type": "string"
-                },
-                "scheduled_date": {
-                    "type": "string"
-                },
-                "start_time": {
-                    "type": "string"
-                },
-                "trip_destination_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.CreateTripRequest": {
-            "type": "object",
-            "properties": {
-                "budget": {
-                    "type": "number"
-                },
-                "end_date": {
-                    "type": "string"
-                },
-                "start_date": {
-                    "type": "string"
-                },
-                "trip_destinations": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/dto.CreateTripDestinationRequest"
-                    }
-                },
-                "trip_name": {
-                    "type": "string"
-                },
-                "trip_status": {
-                    "type": "string"
-                },
-                "user_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.CreateTripRequestByDate": {
-            "type": "object",
-            "properties": {
-                "destination": {
-                    "type": "string"
-                },
-                "end_date": {
-                    "description": "\"YYYY-MM-DD\"",
-                    "type": "string"
-                },
-                "plan_by_day": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/dto.PlanByDay"
-                    }
-                },
-                "start_date": {
-                    "description": "\"YYYY-MM-DD\"",
-                    "type": "string"
-                },
-                "trip_name": {
-                    "type": "string"
-                },
-                "user_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.CreateTripRestaurantRequest": {
-            "type": "object",
-            "properties": {
-                "end_time": {
-                    "type": "string"
-                },
-                "meal_date": {
-                    "type": "string"
-                },
-                "notes": {
-                    "type": "string"
-                },
-                "reservation_info": {
-                    "type": "string"
-                },
-                "restaurant_id": {
-                    "type": "string"
-                },
-                "start_time": {
-                    "type": "string"
-                },
-                "trip_destination_id": {
                     "type": "string"
                 }
             }
@@ -1708,20 +1628,6 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.Service": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "integer"
-                },
-                "url": {
-                    "type": "string"
-                }
-            }
-        },
         "dto.TodoCreate": {
             "description": "Todo creation request body",
             "type": "object",
@@ -1816,7 +1722,13 @@ const docTemplate = `{
                 "cost": {
                     "type": "number"
                 },
+                "end_time": {
+                    "type": "string"
+                },
                 "notes": {
+                    "type": "string"
+                },
+                "start_time": {
                     "type": "string"
                 },
                 "trip_accommodation_id": {
@@ -1852,6 +1764,34 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "trip_status": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.TripDTOByDate": {
+            "type": "object",
+            "properties": {
+                "destination": {
+                    "type": "string"
+                },
+                "end_date": {
+                    "description": "\"YYYY-MM-DD\"",
+                    "type": "string"
+                },
+                "plan_by_day": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.PlanByDay"
+                    }
+                },
+                "start_date": {
+                    "description": "\"YYYY-MM-DD\"",
+                    "type": "string"
+                },
+                "trip_name": {
                     "type": "string"
                 },
                 "user_id": {
@@ -2021,6 +1961,29 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "unit": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Comment": {
+            "type": "object",
+            "properties": {
+                "comment_id": {
+                    "type": "string"
+                },
+                "comment_message": {
+                    "type": "string"
+                },
+                "trip_accommodation_id": {
+                    "type": "string"
+                },
+                "trip_place_id": {
+                    "type": "string"
+                },
+                "trip_restaurant_id": {
+                    "type": "string"
+                },
+                "user_id": {
                     "type": "string"
                 }
             }
@@ -2291,6 +2254,14 @@ const docTemplate = `{
             "externalDocs": {
                 "description": "Detailed information about trip operations",
                 "url": "http://example.com/docs/trip"
+            }
+        },
+        {
+            "description": "Operations about comments",
+            "name": "comment",
+            "externalDocs": {
+                "description": "Detailed information about comment operations",
+                "url": "http://example.com/docs/comment"
             }
         },
         {

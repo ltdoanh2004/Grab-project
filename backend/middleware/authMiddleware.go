@@ -1,12 +1,13 @@
 package middleware
 
 import (
+	"fmt"
 	"net/http"
 	"skeleton-internship-backend/config"
+	"skeleton-internship-backend/internal/util"
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt"
 )
 
 var JwtSecret = []byte(config.AppConfig.Token.AccessTokenSecret) // Replace with env variable in production
@@ -29,24 +30,17 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-			// Validate signing method
-			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-				return nil, jwt.ErrSignatureInvalid
-			}
-			return JwtSecret, nil
-		})
+		claims, err := util.ValidateAccessToken(tokenString)
 
-		if err != nil || !token.Valid {
+		if err != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
 			c.Abort()
 			return
 		}
 
 		// Optionally store claims in context
-		if claims, ok := token.Claims.(jwt.MapClaims); ok {
-			c.Set("user_id", claims["user_id"])
-		}
+		c.Set("user_id", claims.UserID)
+		fmt.Println("UserID:", claims.UserID)
 
 		c.Next()
 	}

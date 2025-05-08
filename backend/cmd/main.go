@@ -55,6 +55,11 @@ import (
 // @tag.docs.url     http://example.com/docs/trip
 // @tag.docs.description Detailed information about trip operations
 
+// @tag.name         comment
+// @tag.description  Operations about comments
+// @tag.docs.url     http://example.com/docs/comment
+// @tag.docs.description Detailed information about comment operations
+
 // @tag.name         InsertData
 // @tag.description  Operations for importing data from CSV files
 
@@ -79,18 +84,22 @@ func main() {
 			repository.NewTripAccommodationRepository,
 			repository.NewTripPlaceRepository,
 			repository.NewTripRestaurantRepository,
+			repository.NewCommentRepository,
+			repository.NewTravelPreferenceRepository,
 			service.NewService,
 			service.NewAuthService,
 			service.NewTripService,
 			service.NewSuggestService,
 			service.NewInsertDataService,
 			service.NewWebSocketService,
+			service.NewCommentService,
 			controller.NewController,
 			controller.NewAuthController,
 			controller.NewTripController,
 			controller.NewSuggestController,
 			controller.NewInsertDataController,
 			controller.NewWebSocketController,
+			controller.NewCommentController,
 		),
 		fx.StartTimeout(1*time.Minute),
 		fx.Invoke(RegisterRoutes),
@@ -132,6 +141,7 @@ func RegisterRoutes(
 	auth_controller *controller.AuthController,
 	suggest_controller *controller.SuggestController,
 	trip_controller *controller.TripController,
+	comment_controller *controller.CommentController,
 	webSocketController *controller.WebSocketController,
 	insertDataController *controller.InsertDataController,
 	insertDataService service.InsertDataService,
@@ -140,6 +150,7 @@ func RegisterRoutes(
 	auth_controller.RegisterRoutes(router)
 	suggest_controller.RegisterRoutes(router)
 	trip_controller.RegisterRoutes(router)
+	comment_controller.RegisterRoutes(router)
 	insertDataController.RegisterRoutes(router)
 	webSocketController.RegisterRoutes(router)
 

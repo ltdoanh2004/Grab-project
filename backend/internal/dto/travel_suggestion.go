@@ -2,40 +2,7 @@ package dto
 
 import (
 	"skeleton-internship-backend/internal/model"
-	"time"
 )
-
-type Budget struct {
-	Type        string  `json:"type"`
-	ExactBudget float64 `json:"exactBudget"`
-}
-
-type People struct {
-	Adults   int `json:"adults"`
-	Children int `json:"children"`
-	Infants  int `json:"infants"`
-	Pets     int `json:"pets"`
-}
-
-type TravelTime struct {
-	Type      string    `json:"type"`
-	StartDate time.Time `json:"startDate"`
-	EndDate   time.Time `json:"endDate"`
-}
-
-type PersonalOption struct {
-	Type        string `json:"type"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-}
-
-type TravelPreference struct {
-	Destination     string           `json:"destination"`
-	Budget          Budget           `json:"budget"`
-	People          People           `json:"people"`
-	TravelTime      TravelTime       `json:"travelTime"`
-	PersonalOptions []PersonalOption `json:"personalOptions"`
-}
 
 type TravelSuggestionResponse struct {
 	IDs model.StringArray `json:"ids"`

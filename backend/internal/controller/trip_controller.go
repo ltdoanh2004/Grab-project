@@ -5,6 +5,7 @@ import (
 	"skeleton-internship-backend/internal/dto"
 	"skeleton-internship-backend/internal/model"
 	"skeleton-internship-backend/internal/service"
+	"skeleton-internship-backend/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,10 +27,17 @@ func (tc *TripController) RegisterRoutes(router *gin.Engine) {
 	{
 		trip := v1.Group("/trip")
 		{
-			trip.POST("/create", tc.CreateTrip)
-			trip.PUT("/save", tc.SaveTrip)
+			// This endpoint doesn't require middleware
 			trip.GET("/:id", tc.GetTrip)
-			trip.POST("/get_plan", tc.GetPlan)
+
+			// Other endpoints require authentication
+			protected := trip.Group("/")
+			protected.Use(middleware.AuthMiddleware())
+			{
+				protected.POST("/create", tc.CreateTrip)
+				protected.PUT("/save", tc.SaveTrip)
+				protected.POST("/get_plan", tc.GetPlan)
+			}
 		}
 	}
 }
@@ -40,13 +48,13 @@ func (tc *TripController) RegisterRoutes(router *gin.Engine) {
 // @Tags trip
 // @Accept json
 // @Produce json
-// @Param trip body dto.CreateTripRequest true "Trip Details"
+// @Param trip body dto.TripDTO true "Trip Details"
 // @Success 200 {object} model.Response{data=string} "Returns trip ID"
 // @Failure 400 {object} model.Response "Invalid request"
 // @Failure 500 {object} model.Response "Internal server error"
 // @Router /api/v1/trip/create [post]
 func (tc *TripController) CreateTrip(ctx *gin.Context) {
-	var request dto.CreateTripRequest
+	var request dto.TripDTO
 	if err := ctx.ShouldBindJSON(&request); err != nil {
 		ctx.JSON(http.StatusBadRequest, model.Response{
 			Message: "Invalid request body: " + err.Error(),
@@ -86,6 +94,22 @@ func (tc *TripController) SaveTrip(ctx *gin.Context) {
 	if err := ctx.ShouldBindJSON(&request); err != nil {
 		ctx.JSON(http.StatusBadRequest, model.Response{
 			Message: "Invalid request body: " + err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
+	userID, exists := ctx.Get("user_id")
+	if !exists {
+		ctx.JSON(http.StatusUnauthorized, model.Response{
+			Message: "Unauthorized: userID not found in access_token",
+			Data:    nil,
+		})
+		return
+	}
+	if userID.(string) != request.UserID {
+		ctx.JSON(http.StatusUnauthorized, model.Response{
+			Message: "Unauthorized: userID in access_token does not match the trip's userID",
 			Data:    nil,
 		})
 		return
@@ -157,7 +181,7 @@ func (tc *TripController) GetTrip(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param request body dto.TripSuggestionRequest true "Trip Suggestion Parameters"
-// @Success 200 {object} model.Response{data=dto.CreateTripRequestByDate} "Suggested trip"
+// @Success 200 {object} model.Response{data=dto.TripDTOByDate} "Suggested trip"
 // @Failure 400 {object} model.Response "Invalid request"
 // @Failure 500 {object} model.Response "Internal server error"
 // @Router /api/v1/trip/get_plan [post]
@@ -172,18 +196,28 @@ func (tc *TripController) GetPlan(ctx *gin.Context) {
 		return
 	}
 
-	var suggestedTrip *dto.CreateTripRequestByDate
-	suggestedTrip, err := tc.tripService.SuggestTrip(request, endpoints)
+	// Extract userID from access_token
+	userID, exists := ctx.Get("user_id")
+	if !exists {
+		ctx.JSON(http.StatusUnauthorized, model.Response{
+			Message: "Unauthorized: userID not found in access_token",
+			Data:    nil,
+		})
+		return
+	}
+
+	var suggestedTrip *dto.TripDTOByDate
+	suggestedTrip, err := tc.tripService.SuggestTrip(userID.(string), request, endpoints)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
-			Message: "Failed to save trip: " + err.Error(),
+			Message: "Failed to get trip suggestion: " + err.Error(),
 			Data:    nil,
 		})
 		return
 	}
 
 	ctx.JSON(http.StatusOK, model.Response{
-		Message: "Trip saved successfully",
+		Message: "Trip suggestion retrieved successfully",
 		Data:    suggestedTrip,
 	})
 }

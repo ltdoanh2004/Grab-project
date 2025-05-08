@@ -19,4 +19,7 @@ type Trip struct {
 	// Associations
 	User             *User             `json:"user,omitempty"`
 	TripDestinations []TripDestination `gorm:"foreignKey:TripID" json:"trip_destinations,omitempty"`
+
+	// New association with TravelPreference (one-to-one)
+	TravelPreference *TravelPreference `gorm:"foreignKey:TripID" json:"travel_preference,omitempty"`
 }
