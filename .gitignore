@@ -52,6 +52,7 @@ ai/model/src/vector_database/pinecone_index.json
 ai/model/src/vector_database/pinecone_index.json.lock
 
 ai/model/src/vector_database/.env
+
 # Python cache files
 __pycache__/
 *.py[cod]

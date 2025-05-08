@@ -72,3 +72,4 @@ summary_tips_promt = """
         Output:
         "Nên bắt đầu sớm từ 6-8h sáng để tránh nóng và đông đúc."
 """
+

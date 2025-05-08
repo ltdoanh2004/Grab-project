@@ -15,7 +15,6 @@ except ImportError:
 class FnBVectorDatabase(BaseVectorDatabase):
     def __init__(self):
         super().__init__(index_name="fnb-recommendations")
-        # Override checkpoint file path to be specific for FnB
         self.checkpoint_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fnb_checkpoint.json')
 
     def prepare_fnb_embedding(self, data=None, incremental=True):
@@ -266,6 +265,7 @@ class FnBVectorDatabase(BaseVectorDatabase):
                 return None
                 
         self.df['context_embedding'] = self.df['context_embedding'].apply(safe_eval_embedding)
+
             
         print("Inserting data into Pinecone...")
         vectors_to_upsert = []
@@ -293,12 +293,10 @@ class FnBVectorDatabase(BaseVectorDatabase):
                 if embedding is None:
                     continue
                     
-                # Check if embedding is a float (not iterable) and skip it
                 if isinstance(embedding, (int, float)):
                     print(f"Warning: Row {idx} has a non-iterable embedding (type: {type(embedding)}). Skipping.")
                     continue
                 
-                # Ensure embedding is a list
                 if not isinstance(embedding, list):
                     try:
                         embedding = list(embedding)
@@ -306,13 +304,13 @@ class FnBVectorDatabase(BaseVectorDatabase):
                         print(f"Error converting embedding to list for row {idx}: {e}")
                         continue
                     
+
                 vectors_to_upsert.append({
                     "id": str(row["restaurant_id"]),
                     "values": embedding,
                     "metadata": metadata
                 })
                 
-                # Upsert in batches of 100
                 if len(vectors_to_upsert) >= 100:
                     self.index.upsert(vectors=vectors_to_upsert)
                     vectors_to_upsert = []
@@ -321,7 +319,6 @@ class FnBVectorDatabase(BaseVectorDatabase):
                 print(f"Error processing row {idx}: {e}")
                 continue
         
-        # Upsert remaining vectors
         if vectors_to_upsert:
             self.index.upsert(vectors=vectors_to_upsert)
         

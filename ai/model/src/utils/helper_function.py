@@ -30,3 +30,4 @@ def to_dict(obj):
         return obj
     else:
         return {}
+    return ""
