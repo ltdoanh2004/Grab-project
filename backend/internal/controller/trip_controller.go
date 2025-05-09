@@ -136,7 +136,7 @@ func (tc *TripController) SaveTrip(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Trip ID"
-// @Success 200 {object} model.Response{data=dto.TripDTO} "Trip details"
+// @Success 200 {object} model.Response{data=dto.TripDTOByDate} "Trip details"
 // @Failure 400 {object} model.Response "Invalid trip ID"
 // @Failure 404 {object} model.Response "Trip not found"
 // @Failure 500 {object} model.Response "Internal server error"

@@ -1221,7 +1221,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.TripDTO"
+                                            "$ref": "#/definitions/dto.TripDTOByDate"
                                         }
                                     }
                                 }
