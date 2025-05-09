@@ -62,7 +62,7 @@ async def suggest_trips(request: TripSuggestionRequest):
         travel_style = "family" if request.people.children > 0 else "couple" if request.people.adults == 2 else "solo"
         
         query = f"""
-        Planning a trip to {request.destination} with the following details:
+        Planning a trip to {request.destination_id} with the following details:
         - Group: {request.people.adults} adults, {request.people.children} children, {request.people.infants} infants
         - Budget: {budget} (approx. {request.budget.exactBudget if request.budget.exactBudget else 'not specified'} VND)
         - Duration: {duration_days} days
@@ -89,7 +89,7 @@ async def suggest_trips(request: TripSuggestionRequest):
         - The location and its unique offerings
         """
         
-        logger.info(f"Processing recommendation query for {request.destination}")
+        logger.info(f"Processing recommendation query for {request.destination_id}")
         
         travel_model = TravelModel()
         raw_recommendations = travel_model.process_query(query)

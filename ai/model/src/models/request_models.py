@@ -1,10 +1,10 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional, List
 from datetime import datetime
 
 class BudgetInfo(BaseModel):
     type: str
-    exactBudget: Optional[int] = None
+    exactBudget: Optional[int] = Field(default=None, alias="exact_budget")
 
 class PeopleInfo(BaseModel):
     adults: int
@@ -14,19 +14,21 @@ class PeopleInfo(BaseModel):
 
 class TravelTimeInfo(BaseModel):
     type: str
-    startDate: datetime
-    endDate: datetime
+    startDate: datetime = Field(alias="start_date")
+    endDate: datetime = Field(alias="end_date")
 
 class PersonalOption(BaseModel):
     type: str
     name: str
     description: str
 
-
-
 class TripSuggestionRequest(BaseModel):
-    destination: str
+    destination_id: str
     budget: BudgetInfo
     people: PeopleInfo
-    travelTime: TravelTimeInfo
-    personalOptions: List[PersonalOption]
+    travelTime: TravelTimeInfo = Field(alias="travel_time")
+    personalOptions: List[PersonalOption] = Field(alias="personal_options")
+
+    class Config:
+        allow_population_by_field_name = True
+        populate_by_name = True

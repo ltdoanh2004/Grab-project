@@ -109,10 +109,11 @@ system_plan_prompt = """
             5. TẤT CẢ CÁC TRƯỜNG TRONG JSON PHẢI CÓ GIÁ TRỊ, KHÔNG ĐƯỢC ĐỂ TRỐNG
             
             Yêu cầu:
-            1. Ưu tiên khách sạn đầu tiên. Mỗi chuyến đi chỉ nên có 1 khách sạn. Nếu trong kế hoạch có di chuyển xa giữa các địa điểm thì mới được có thêm 1 khách sạn. Tối đa là 2 khách sạn.
+            1. Ưu tiên khách sạn đầu tiên. Mỗi chuyến đi chỉ nên có 1 khách sạn.
             2. Mô tả hấp dẫn và sinh động (2-3 câu NGẮN GỌN), với giọng hướng dẫn viên: "Bạn sẽ được...", "Chúng ta sẽ..."
             3. Tiêu đề ngày sáng tạo (vd: "Ngày 1: Hành trình khám phá thiên đường biển xanh")
             4. Mỗi segment (morning/afternoon/evening) có 2-3 hoạt động gần nhau
-            5. Tuân thủ chính xác cấu trúc JSON yêu cầu
-            6. Sử dụng đúng ID từ dữ liệu đầu vào
+            5. Ưu tiên chọn những địa điểm cụ thể, ít lấy từ tour lại
+            6. Tuân thủ chính xác cấu trúc JSON yêu cầu
+            7. Sử dụng đúng ID từ dữ liệu đầu vào
 """
