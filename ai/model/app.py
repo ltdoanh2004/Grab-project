@@ -31,11 +31,11 @@ def register_routers():
     try:
         from src.services.suggest_api import recommend_router
         from src.services.genrate_plan_api import router as trip_plan_router
-
+        from src.services.comment_api import router as comment_router
         
         app.include_router(recommend_router, prefix="/api/v1")
         app.include_router(trip_plan_router, prefix="/api/v1")
-        
+        app.include_router(comment_router, prefix="/api/v1")
         logger.info("All routers registered successfully")
     except Exception as e:
         logger.error(f"Error registering routers: {e}", exc_info=True)

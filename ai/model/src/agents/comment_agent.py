@@ -12,25 +12,20 @@ try:
 except ImportError:
     print("Warning: OpenAI package not found. Please install with: pip install openai")
 
-# Add parent directory to path
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 
-# Set up .env path
 ENV_PATH = os.path.join(parent_dir, '.env')
 
-# Import after setting path
 try:
     from dotenv import load_dotenv
     load_dotenv(ENV_PATH)
 except ImportError:
     print("Warning: python-dotenv package not found. Please install with: pip install python-dotenv")
 
-# Flag to use mock data when database is unavailable
 USE_MOCK_DATA = False
 
-# Try importing vector database modules
 try:
     from vector_database import PlaceVectorDatabase, FnBVectorDatabase, HotelVectorDatabase
 except ImportError as e:
@@ -45,18 +40,14 @@ class CommentAgent:
         Args:
             use_mock_data: Override whether to use mock data
         """
-        # Set mock data flag
         self.use_mock_data = use_mock_data if use_mock_data is not None else USE_MOCK_DATA
         
-        # Initialize vector databases
         self.place_db = None
         self.fnb_db = None
         self.hotel_db = None
         
-        # Initialize connection flag
         self.database_connected = False
         
-        # Initialize OpenAI client
         self.openai_api_key = os.getenv("OPEN_API_KEY", "")
         self.client = None
         if self.openai_api_key:
@@ -108,14 +99,12 @@ class CommentAgent:
             }
         }
         
-        # Initialize query templates
         self.query_templates = {
             "place": "{features} {place_type} in {location}",
             "restaurant": "{cuisine} restaurant in {location}: {features}",
             "hotel": "{location} hotel {price_range}: {features}"
         }
         
-        # Lazy initialize databases to avoid connection errors
         if not self.use_mock_data:
             try:
                 self._init_databases()
@@ -127,15 +116,12 @@ class CommentAgent:
         
     def _init_databases(self):
         """Initialize vector databases as needed"""
-        # Skip if using mock data
         if self.use_mock_data:
             return
             
-        # Check if databases are already initialized
         if self.place_db is not None and self.fnb_db is not None and self.hotel_db is not None:
             return
             
-        # Initialize with connection timeout
         timeout = 10  # seconds
         start_time = time.time()
         
@@ -174,66 +160,66 @@ class CommentAgent:
             self.use_mock_data = True
             raise
     
-    def _generate_mock_suggestions(self, query, suggestion_type, destination="Paris", count=5):
+    def _generate_mock_suggestions(self, query, suggestion_type, destination="Hà Nội", count=5):
         """Generate mock suggestions when database is not available"""
-        print(f"Generating mock {suggestion_type} suggestions for query: {query}")
+        print(f"Đang tạo {suggestion_type} mẫu cho truy vấn: {query}")
         
         mock_data = {
             "place": [
                 {
                     "id": "place_001117",
-                    "name": "Musée de l'Orangerie",
+                    "name": "Bảo tàng Dân tộc học Việt Nam",
                     "type": "place",
-                    "address": "Jardin des Tuileries, 75001 Paris, France",
-                    "description": "A small museum with Monet's Water Lilies and other impressionist masterpieces, perfect for a shorter family visit.",
-                    "categories": "art museum, family-friendly",
-                    "opening_hours": "9:00-18:00",
+                    "address": "Đường Nguyễn Văn Huyên, Cầu Giấy, Hà Nội",
+                    "description": "Bảo tàng tương tác với các mô hình và hiện vật dân tộc học sống động. Có nhiều khu vực ngoài trời rộng rãi để trẻ em có thể khám phá và vui chơi.",
+                    "categories": "bảo tàng, thân thiện với gia đình",
+                    "opening_hours": "8:30-17:30",
                     "rating": 4.7,
                     "score": 0.92
                 },
                 {
                     "id": "place_000594",
-                    "name": "Cité des Enfants",
+                    "name": "Khu vui chơi Thiên đường Bảo Sơn",
                     "type": "place",
-                    "address": "30 Avenue Corentin Cariou, 75019 Paris, France",
-                    "description": "Interactive science museum designed especially for children with hands-on exhibits and activities.",
-                    "categories": "science museum, family-friendly, interactive",
-                    "opening_hours": "10:00-18:00",
-                    "rating": 4.8,
+                    "address": "Phường An Khánh, Nam Từ Liêm, Hà Nội",
+                    "description": "Khu vui chơi giải trí kết hợp với bảo tàng tương tác dành cho trẻ em, có nhiều hoạt động giáo dục và giải trí.",
+                    "categories": "vui chơi, thân thiện với gia đình, tương tác",
+                    "opening_hours": "8:00-17:00",
+                    "rating": 4.5,
                     "score": 0.89
                 },
                 {
                     "id": "place_000881",
-                    "name": "Jardin d'Acclimatation",
+                    "name": "Bảo tàng Phụ nữ Việt Nam",
                     "type": "place",
-                    "address": "Bois de Boulogne, 75116 Paris, France",
-                    "description": "Amusement park with rides, petting zoo and beautiful gardens, ideal for families with children.",
-                    "categories": "amusement park, family-friendly, outdoors",
-                    "opening_hours": "10:00-19:00",
-                    "rating": 4.5,
+                    "address": "36 Lý Thường Kiệt, Hoàn Kiếm, Hà Nội",
+                    "description": "Bảo tàng hiện đại với nhiều khu vực tương tác, thời gian tham quan ngắn phù hợp với trẻ em và các triển lãm thân thiện với gia đình.",
+                    "categories": "bảo tàng, thân thiện với gia đình, ngoài trời",
+                    "opening_hours": "8:00-17:00",
+                    "rating": 4.6,
                     "score": 0.87
                 }
             ],
             "restaurant": [
                 {
                     "id": "restaurant_001440",
-                    "name": "Le Petit Prince",
+                    "name": "Quán Ăn Ngon",
                     "type": "restaurant",
-                    "address": "12 Rue de Buci, 75006 Paris, France",
-                    "description": "Charming bistro with authentic French cuisine in a relaxed setting. Perfect for families with a special children's menu.",
-                    "cuisines": "French, Traditional",
-                    "price_range": "€15-30",
+                    "address": "18 Phan Bội Châu, Hoàn Kiếm, Hà Nội",
+                    "description": "Nhà hàng phục vụ các món ăn Việt Nam đa dạng trong không gian thoải mái, phù hợp cho gia đình với thực đơn đặc biệt cho trẻ em.",
+                    "cuisines": "Việt Nam, Đặc sản địa phương",
+                    "price_range": "150.000-300.000 VNĐ",
                     "rating": 4.6,
                     "score": 0.91
                 },
                 {
                     "id": "restaurant_000424",
-                    "name": "Chez Janou",
+                    "name": "Nhà hàng Hương Việt",
                     "type": "restaurant",
-                    "address": "2 Rue Roger Verlomme, 75003 Paris, France",
-                    "description": "Casual bistro with Provençal dishes and a friendly atmosphere. Reasonable prices and welcoming to families.",
-                    "cuisines": "French, Mediterranean",
-                    "price_range": "€20-35",
+                    "address": "35 Nguyễn Thị Định, Cầu Giấy, Hà Nội",
+                    "description": "Nhà hàng bình dân với các món ăn Việt Nam truyền thống, không gian thân thiện và giá cả phải chăng, phù hợp cho gia đình.",
+                    "cuisines": "Việt Nam, Truyền thống",
+                    "price_range": "100.000-200.000 VNĐ",
                     "rating": 4.4,
                     "score": 0.88
                 }
@@ -241,23 +227,23 @@ class CommentAgent:
             "hotel": [
                 {
                     "id": "hotel_005950",
-                    "name": "Hôtel des Grands Boulevards",
+                    "name": "Hanoi La Siesta Hotel & Spa",
                     "type": "hotel",
-                    "address": "17 Boulevard Poissonnière, 75002 Paris, France",
-                    "description": "Charming mid-range hotel with family rooms and convenient location near attractions. Offers kitchenette in some rooms.",
-                    "amenities": "Free WiFi, Family Rooms, Kitchenette",
-                    "price_per_night": 220,
+                    "address": "94 Mã Mây, Hoàn Kiếm, Hà Nội",
+                    "description": "Khách sạn tầm trung với phòng gia đình và vị trí thuận tiện gần các điểm tham quan. Có bếp nhỏ trong một số phòng.",
+                    "amenities": "WiFi miễn phí, Phòng gia đình, Bếp nhỏ",
+                    "price_per_night": 1500000,
                     "rating": 4.5,
                     "score": 0.90
                 },
                 {
                     "id": "hotel_001100",
-                    "name": "Citadines Les Halles Paris",
+                    "name": "Hanoi Emerald Waters Hotel",
                     "type": "hotel",
-                    "address": "4 Rue des Innocents, 75001 Paris, France",
-                    "description": "Apartment-hotel with kitchenettes and connecting rooms. Great for families looking for more space and self-catering options.",
-                    "amenities": "Kitchenette, Free WiFi, Connecting Rooms, Laundry Facilities",
-                    "price_per_night": 180,
+                    "address": "42 Hàng Bạc, Hoàn Kiếm, Hà Nội",
+                    "description": "Khách sạn căn hộ với bếp nhỏ và phòng kết nối. Tuyệt vời cho gia đình muốn có không gian rộng rãi và tự nấu ăn.",
+                    "amenities": "Bếp nhỏ, WiFi miễn phí, Phòng kết nối, Tiện nghi giặt ủi",
+                    "price_per_night": 1200000,
                     "rating": 4.3,
                     "score": 0.87
                 }
@@ -289,6 +275,7 @@ class CommentAgent:
                 "id": modified_item["id"],
                 "name": modified_item["name"],
                 "description": modified_item["description"],
+                "type": modified_item["type"],  # Add type to ensure it's available
                 "score": modified_item["score"]
             }
             
@@ -846,9 +833,12 @@ class CommentAgent:
         try:
             self._initialize_llm()
             
+            # Get suggestion type safely
+            suggestion_type = suggestion.get("type", data.get("suggestion_type", "place"))
+            
             prompt = f"""
-            Tạo một mô tả hấp dẫn và nhiều thông tin cho {suggestion['type']} này ở {data['destination']['id']}.
-            Tên: {suggestion['name']}
+            Tạo một mô tả hấp dẫn và nhiều thông tin cho {suggestion_type} này ở {data['destination']['id']}.
+            Tên: {suggestion.get('name', '')}
             Mô tả hiện tại: {base_description}
             
             Tập trung vào:
@@ -856,17 +846,17 @@ class CommentAgent:
             2. Tại sao nó là một lựa chọn thay thế tốt cho {data['current_activity']['name']}
             3. Nó giải quyết những mối quan tâm được nêu trong bình luận của người dùng như thế nào
             
-            Hãy viết ngắn gọn (70-100 từ), hấp dẫn, và nhấn mạnh các tính năng phù hợp với sở thích của người dùng.
-            Không sử dụng ngôn ngữ quảng cáo hoặc phóng đại.
+            Hãy viết ngắn gọn (khoảng 200-250 từ), hấp dẫn, và nhấn mạnh các tính năng phù hợp với sở thích của người dùng.
+            Không sử dụng ngôn ngữ quảng cáo hoặc phóng đại. Đảm bảo đầy đủ các ý.
             """
             
             response = self.client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4o-mini",
                 messages=[
                     {"role": "system", "content": "Bạn là chuyên gia du lịch tạo ra các mô tả chính xác và hữu ích bằng tiếng Việt."},
                     {"role": "user", "content": prompt}
                 ],
-                max_tokens=150
+                max_tokens=300
             )
             
             return response.choices[0].message.content.strip()
@@ -877,10 +867,9 @@ class CommentAgent:
     
     def _estimate_price(self, suggestion, data):
         """Estimate the price for a specific activity based on its type and other details"""
-        # Check for existing price data first
-        if suggestion["type"] == "hotel" and suggestion.get("price_per_night"):
+        if "price_per_night" in suggestion:
             return float(suggestion["price_per_night"])
-        elif suggestion.get("price"):
+        elif "price" in suggestion:
             return float(suggestion["price"])
         
         try:
@@ -891,8 +880,11 @@ class CommentAgent:
             if data["budget"]["amount"] > 0:
                 budget_info = f"Ngân sách của người dùng khoảng {data['budget']['amount']} ({data['budget']['type']})"
             
+            # Determine suggestion type from either the suggestion or from data
+            suggestion_type = suggestion.get("type", data.get("suggestion_type", "place"))
+            
             prompt = f"""
-            Ước tính một mức giá hợp lý cho {suggestion['type']} này ở {data['destination']['id']}:
+            Ước tính một mức giá hợp lý cho {suggestion_type} này ở {data['destination']['id']}:
             Tên: {suggestion['name']}
             Mô tả: {suggestion['description']}
             
@@ -928,12 +920,21 @@ class CommentAgent:
     def _prepare_suggestion_list(self, suggestions, data):
         """Prepare the suggestion list with enhanced data"""
         suggestion_list = []
+        suggestion_type = data.get("suggestion_type", "place")
         
         for suggestion in suggestions:
-            enhanced_description = self._generate_description(suggestion, data)
+            # Get suggestion type safely
+            item_type = suggestion.get("type", suggestion_type)
+            
+            # Add the type to the suggestion for _generate_description to use
+            suggestion_with_type = suggestion.copy()
+            if "type" not in suggestion_with_type:
+                suggestion_with_type["type"] = item_type
+                
+            enhanced_description = self._generate_description(suggestion_with_type, data)
             price_estimate = self._estimate_price(suggestion, data)
             
-            # Chỉ bao gồm các trường cơ bản, loại bỏ type, categories, opening_hours, address
+            # Create base suggestion item with common fields
             suggestion_item = {
                 "id": suggestion["id"],
                 "name": suggestion["name"],
@@ -941,13 +942,13 @@ class CommentAgent:
                 "price_ai_estimate": price_estimate
             }
             
-            # Thêm các trường cụ thể theo loại nếu cần (nhưng không thêm type)
-            if suggestion["type"] == "restaurant":
+            # Add type-specific fields based on item_type
+            if item_type == "restaurant":
                 suggestion_item.update({
                     "cuisines": suggestion.get("cuisines", ""),
                     "price_range": suggestion.get("price_range", "")
                 })
-            elif suggestion["type"] == "hotel":
+            elif item_type == "hotel":
                 suggestion_item.update({
                     "amenities": suggestion.get("amenities", ""),
                     "price_per_night": suggestion.get("price_per_night", price_estimate)
@@ -975,12 +976,12 @@ class CommentAgent:
             raise
 
 def main():
-    # Base test data with common fields
+    # Base test data with common fields in Vietnamese
     base_data = {
-        "destination_id": "Paris",
+        "destination_id": "Hà Nội",
         "budget": {
-            "type": "flexible",
-            "exact_budget": 1500
+            "type": "linh hoạt",
+            "exact_budget": 2000000
         },
         "people": {
             "adults": 2,
@@ -989,102 +990,102 @@ def main():
             "pets": 0
         },
         "travel_time": {
-            "type": "fixed",
+            "type": "cố định",
             "start_date": "2025-06-01T00:00:00Z",
             "end_date": "2025-06-10T00:00:00Z"
         },
         "personal_options": []  # Initial preferences will be empty as we want suggestions based on comments
     }
 
-    # Test Case 1: User wants to change their museum activity
+    # Test Case 1: User wants to change their museum activity (Vietnamese)
     place_data = base_data.copy()
     place_data["activity"] = {
         "activity_id": "act_123",
         "id": "place_000481",
         "type": "place",
-        "name": "Louvre Museum",
+        "name": "Bảo tàng Lịch sử Quốc gia",
         "start_time": "10:30",
         "end_time": "14:00",
-        "description": "World's largest art museum and historic monument.",
+        "description": "Bảo tàng lưu giữ và trưng bày các hiện vật lịch sử qua các thời kỳ của Việt Nam.",
         "comments": [
             {
                 "user_id": "user123",
-                "comment_message": "The Louvre is amazing but it's way too crowded for our family. The kids got tired quickly. We need a more family-friendly museum with interactive exhibits and shorter tour duration.",
+                "comment_message": "Bảo tàng rất đẹp nhưng quá tĩnh lặng và thiếu các hoạt động tương tác cho trẻ em. Con tôi chán và mệt sau 30 phút. Chúng tôi cần một bảo tàng thân thiện với gia đình hơn, có các triển lãm tương tác và thời gian tham quan ngắn hơn.",
                 "trip_place_id": "place_000481"
             },
             {
                 "user_id": "user456",
-                "comment_message": "The art is incredible but we spent most time waiting in queues. Would prefer a smaller museum where we can actually enjoy the art without rushing.",
+                "comment_message": "Các hiện vật rất giá trị nhưng cách trưng bày không hấp dẫn trẻ em. Chúng tôi muốn một nơi nào đó vui nhộn hơn mà vẫn mang tính giáo dục cho cả gia đình.",
                 "trip_place_id": "place_000481"
             }
         ]
     }
 
-    # Test Case 2: User wants to change their dining experience
+    # Test Case 2: User wants to change their dining experience (Vietnamese)
     restaurant_data = base_data.copy()
     restaurant_data["activity"] = {
         "activity_id": "act_456",
         "id": "rest_000789",
         "type": "restaurant",
-        "name": "Le Cheval Blanc",
+        "name": "Nhà hàng Sen Tây Hồ",
         "start_time": "19:30",
         "end_time": "21:30",
-        "description": "Michelin-starred French restaurant with formal dining atmosphere",
+        "description": "Nhà hàng cao cấp phục vụ ẩm thực Việt Nam truyền thống với không gian sang trọng",
         "comments": [
             {
                 "user_id": "user789",
-                "comment_message": "The food is exceptional but too formal for our family dinner. We want authentic French food but in a more relaxed setting where kids won't disturb others. Maybe a traditional bistro?",
+                "comment_message": "Thức ăn ngon nhưng không gian quá trang trọng cho bữa tối gia đình. Chúng tôi muốn ăn đồ Việt Nam ngon nhưng trong một không gian thoải mái hơn, nơi trẻ em không làm phiền người khác. Có lẽ một quán bình dân?",
                 "trip_place_id": "rest_000789"
             },
             {
                 "user_id": "user101",
-                "comment_message": "Service was great but €400 for dinner is too much for us. Looking for a more affordable option that still gives us the French experience.",
+                "comment_message": "Dịch vụ tốt nhưng 1.500.000 đồng cho bữa tối quá đắt cho gia đình chúng tôi. Tôi muốn tìm một lựa chọn phải chăng hơn mà vẫn có hương vị Việt Nam đích thực.",
                 "trip_place_id": "rest_000789"
             }
         ]
     }
 
-    # Test Case 3: User wants to change their accommodation
+    # Test Case 3: User wants to change their accommodation (Vietnamese)
     hotel_data = base_data.copy()
     hotel_data["activity"] = {
         "activity_id": "act_789",
         "id": "hotel_000123",
         "type": "hotel",
-        "name": "Four Seasons Hotel George V",
+        "name": "Khách sạn Metropole Hà Nội",
         "start_time": "",
         "end_time": "",
-        "description": "Luxury 5-star hotel in the 8th arrondissement",
+        "description": "Khách sạn 5 sao sang trọng tại trung tâm Hà Nội",
         "comments": [
             {
                 "user_id": "user202",
-                "comment_message": "This hotel is too expensive for our 9-day stay. We need a more affordable option but still want to be near the main attractions. Somewhere around €200-250 per night would be better.",
+                "comment_message": "Khách sạn này quá đắt cho chuyến đi 9 ngày của chúng tôi. Chúng tôi cần một lựa chọn phải chăng hơn nhưng vẫn muốn ở gần các điểm tham quan chính. Khoảng 1-2 triệu đồng mỗi đêm sẽ phù hợp hơn.",
                 "trip_place_id": "hotel_000123"
             },
             {
                 "user_id": "user303",
-                "comment_message": "The room is beautiful but not practical for our family. We need a hotel with a kitchenette and maybe connecting rooms. Also would love a pool or kids' play area.",
+                "comment_message": "Phòng đẹp nhưng không thực tế cho gia đình chúng tôi. Chúng tôi cần một khách sạn có bếp nhỏ và có thể là phòng kết nối. Cũng muốn có hồ bơi hoặc khu vui chơi cho trẻ em.",
                 "trip_place_id": "hotel_000123"
             }
         ]
     }
 
     # Initialize agent
-    agent = CommentAgent()
+    agent = CommentAgent(use_mock_data=True)  # Force using mock data for testing
 
-    print("\nTesting Place Recommendation:")
-    print("Scenario: Family wants to change from Louvre to a more kid-friendly museum")
+    print("\nKiểm tra Đề xuất Địa điểm:")
+    print("Kịch bản: Gia đình muốn thay đổi từ Bảo tàng sang nơi thân thiện với trẻ em hơn")
     place_result = agent.gen_activity_comment(place_data)
-    print(json.dumps(place_result, indent=2))
+    print(json.dumps(place_result, indent=2, ensure_ascii=False))
 
-    print("\nTesting Restaurant Recommendation:")
-    print("Scenario: Family seeking more casual, affordable French dining experience")
+    print("\nKiểm tra Đề xuất Nhà hàng:")
+    print("Kịch bản: Gia đình tìm kiếm trải nghiệm ẩm thực Việt Nam thoải mái, giá cả phải chăng hơn")
     restaurant_result = agent.gen_activity_comment(restaurant_data)
-    print(json.dumps(restaurant_result, indent=2))
+    print(json.dumps(restaurant_result, indent=2, ensure_ascii=False))
 
-    print("\nTesting Hotel Recommendation:")
-    print("Scenario: Family needs more affordable, family-oriented accommodation")
+    print("\nKiểm tra Đề xuất Khách sạn:")
+    print("Kịch bản: Gia đình cần chỗ ở giá cả phải chăng, thân thiện với gia đình hơn")
     hotel_result = agent.gen_activity_comment(hotel_data)
-    print(json.dumps(hotel_result, indent=2))
+    print(json.dumps(hotel_result, indent=2, ensure_ascii=False))
 
 if __name__ == "__main__":
     main()
