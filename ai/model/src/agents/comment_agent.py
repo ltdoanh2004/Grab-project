@@ -401,21 +401,16 @@ class CommentAgent:
         """Enhanced fallback query builder with better context understanding"""
         query_parts = []
         
-        # Get comment analysis
         analysis = self._extract_basic_intentions(data["current_activity"].get("comments", []))
         
-        # Prioritize the extracted intentions
         prioritized_intentions = self._prioritize_features(analysis, suggestion_type)
         
-        # Add current activity as reference
         if data["current_activity"]["name"]:
             query_parts.append(f"alternative to {data['current_activity']['name']}")
         
-        # Add top prioritized intentions
         if prioritized_intentions:
             query_parts.extend(prioritized_intentions[:3])  # Add top 3 prioritized intentions
         
-        # Add type-specific context
         if suggestion_type == "restaurant":
             if any("budget" in i.lower() for i in prioritized_intentions):
                 query_parts.append("affordable")

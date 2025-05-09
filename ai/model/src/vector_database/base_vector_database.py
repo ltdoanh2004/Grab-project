@@ -10,12 +10,10 @@ from pinecone import Pinecone, ServerlessSpec
 from typing import List, Dict, Any, Set, Tuple
 
 # Get the directory where the script is located
-SCRIPT_DIR = os.path.dirname(os.path.abspath(os.path.abspath(__file__)))
-print(f"SCRIPT_DIR: {SCRIPT_DIR}")
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ENV_PATH = os.path.join(SCRIPT_DIR, '.env')
-
-# Load environment variables from the correct path
 load_dotenv(ENV_PATH)
+
 
 # Get API keys after loading .env
 OPEN_API_KEY = os.getenv("OPEN_API_KEY")

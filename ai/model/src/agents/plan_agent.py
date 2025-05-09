@@ -57,7 +57,7 @@ class PlanModel:
         )
         self.parser = JsonOutputParser()  
 
-        self.review_agent = ReviewAgent()
+        self.review_agent = TravelReviewer()
 
 
     def _build_prompt(self) -> PromptTemplate:
