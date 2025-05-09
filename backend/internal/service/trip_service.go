@@ -18,7 +18,7 @@ import (
 type TripService interface {
 	CreateTrip(trip *dto.TripDTO) (string, error)
 	SaveTrip(trip *dto.TripDTO) error
-	GetTrip(tripID string) (*dto.TripDTO, error)
+	GetTrip(tripID string) (*dto.TripDTOByDate, error)
 	SuggestTrip(userID string, activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error)
 	GetTravelPreference(tripID string) (*model.TravelPreference, error)
 	CreateTravelPreference(tripID string, tp *model.TravelPreference) (string, error)
@@ -273,7 +273,7 @@ func (ts *tripService) SaveTrip(trip *dto.TripDTO) error {
 	return nil
 }
 
-func (ts *tripService) GetTrip(tripID string) (*dto.TripDTO, error) {
+func (ts *tripService) GetTrip(tripID string) (*dto.TripDTOByDate, error) {
 	// Get trip with all associations
 	trip, err := ts.tripRepository.GetWithAssociations(tripID)
 	if err != nil {
@@ -368,8 +368,11 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTO, error) {
 
 		tripDTO.TripDestinations = append(tripDTO.TripDestinations, destDTO)
 	}
-
-	return tripDTO, nil
+	tripDTOByDate, err := dto.ConvertTripDTOByDate(*tripDTO)
+	if err != nil {
+		return nil, err
+	}
+	return &tripDTOByDate, nil
 }
 
 func (ts *tripService) CallAISuggestTrip(activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error) {
