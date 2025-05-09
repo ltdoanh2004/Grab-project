@@ -60,7 +60,7 @@ definitions:
         type: string
       name:
         type: string
-      price:
+      price_ai_estimate:
         type: number
       start_time:
         description: '"HH:mm" format'
@@ -69,38 +69,11 @@ definitions:
         description: e.g., "place", "accommodation", "restaurant"
         type: string
     type: object
-  dto.Budget:
-    properties:
-      exactBudget:
-        type: number
-      type:
-        type: string
-    type: object
   dto.LoginRequest:
     properties:
       password:
         type: string
       username:
-        type: string
-    type: object
-  dto.People:
-    properties:
-      adults:
-        type: integer
-      children:
-        type: integer
-      infants:
-        type: integer
-      pets:
-        type: integer
-    type: object
-  dto.PersonalOption:
-    properties:
-      description:
-        type: string
-      name:
-        type: string
-      type:
         type: string
     type: object
   dto.PlaceSuggestion:
@@ -151,6 +124,10 @@ definitions:
     type: object
   dto.PlanByDay:
     properties:
+      daily_tips:
+        items:
+          type: string
+        type: array
       date:
         description: '"YYYY-MM-DD"'
         type: string
@@ -264,30 +241,6 @@ definitions:
         description: Optional refresh token, used for obtaining new access tokens.
         type: string
     type: object
-  dto.TravelPreference:
-    properties:
-      budget:
-        $ref: '#/definitions/dto.Budget'
-      destination:
-        type: string
-      people:
-        $ref: '#/definitions/dto.People'
-      personalOptions:
-        items:
-          $ref: '#/definitions/dto.PersonalOption'
-        type: array
-      travelTime:
-        $ref: '#/definitions/dto.TravelTime'
-    type: object
-  dto.TravelTime:
-    properties:
-      endDate:
-        type: string
-      startDate:
-        type: string
-      type:
-        type: string
-    type: object
   dto.TripAccommodationDTO:
     properties:
       accommodation_id:
@@ -296,12 +249,12 @@ definitions:
         type: string
       check_out_date:
         type: string
-      cost:
-        type: number
       end_time:
         type: string
       notes:
         type: string
+      price_ai_estimate:
+        type: number
       start_time:
         type: string
       trip_accommodation_id:
@@ -332,7 +285,7 @@ definitions:
     type: object
   dto.TripDTOByDate:
     properties:
-      destination:
+      destination_id:
         type: string
       end_date:
         description: '"YYYY-MM-DD"'
@@ -343,6 +296,8 @@ definitions:
         type: array
       start_date:
         description: '"YYYY-MM-DD"'
+        type: string
+      trip_id:
         type: string
       trip_name:
         type: string
@@ -384,6 +339,8 @@ definitions:
         type: string
       place_id:
         type: string
+      price_ai_estimate:
+        type: number
       scheduled_date:
         type: string
       start_time:
@@ -401,6 +358,8 @@ definitions:
         type: string
       notes:
         type: string
+      price_ai_estimate:
+        type: number
       reservation_info:
         type: string
       restaurant_id:
@@ -458,6 +417,13 @@ definitions:
       unit:
         type: string
     type: object
+  model.Budget:
+    properties:
+      exact_budget:
+        type: number
+      type:
+        type: string
+    type: object
   model.Comment:
     properties:
       comment_id:
@@ -473,6 +439,35 @@ definitions:
       user_id:
         type: string
     type: object
+  model.Destination:
+    properties:
+      accommodations:
+        items:
+          $ref: '#/definitions/model.Accommodation'
+        type: array
+      best_season:
+        type: string
+      city:
+        type: string
+      climate:
+        type: string
+      description:
+        type: string
+      destination_id:
+        type: string
+      image_url:
+        type: string
+      name:
+        type: string
+      places:
+        items:
+          $ref: '#/definitions/model.Place'
+        type: array
+      restaurants:
+        items:
+          $ref: '#/definitions/model.Restaurant'
+        type: array
+    type: object
   model.Image:
     properties:
       alt:
@@ -486,6 +481,27 @@ definitions:
         type: number
       lon:
         type: number
+    type: object
+  model.People:
+    properties:
+      adults:
+        type: integer
+      children:
+        type: integer
+      infants:
+        type: integer
+      pets:
+        type: integer
+    type: object
+  model.PersonalOption:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      type:
+        description: '"places", "activities", "accommodation"'
+        type: string
     type: object
   model.Place:
     properties:
@@ -627,6 +643,220 @@ definitions:
       updated_at:
         description: Timestamp when the todo was last updated
         example: "2024-03-15T08:00:00Z"
+        type: string
+    type: object
+  model.TravelPreference:
+    properties:
+      budget:
+        $ref: '#/definitions/model.Budget'
+      destination:
+        $ref: '#/definitions/model.Destination'
+      destination_id:
+        type: string
+      people:
+        $ref: '#/definitions/model.People'
+      personal_options:
+        items:
+          $ref: '#/definitions/model.PersonalOption'
+        type: array
+      travel_preference_id:
+        type: string
+      travel_time:
+        $ref: '#/definitions/model.TravelTime'
+      trip:
+        $ref: '#/definitions/model.Trip'
+      trip_id:
+        type: string
+    type: object
+  model.TravelTime:
+    properties:
+      end_date:
+        type: string
+      start_date:
+        type: string
+      type:
+        type: string
+    type: object
+  model.Trip:
+    properties:
+      budget:
+        type: number
+      created_at:
+        type: string
+      end_date:
+        type: string
+      start_date:
+        type: string
+      travel_preference:
+        allOf:
+        - $ref: '#/definitions/model.TravelPreference'
+        description: New association with TravelPreference (one-to-one)
+      trip_destinations:
+        items:
+          $ref: '#/definitions/model.TripDestination'
+        type: array
+      trip_id:
+        type: string
+      trip_name:
+        type: string
+      trip_status:
+        type: string
+      updated_at:
+        type: string
+      user:
+        allOf:
+        - $ref: '#/definitions/model.User'
+        description: Associations
+      user_id:
+        type: string
+    type: object
+  model.TripAccommodation:
+    properties:
+      accommodation:
+        $ref: '#/definitions/model.Accommodation'
+      accommodation_id:
+        type: string
+      check_in_date:
+        type: string
+      check_out_date:
+        type: string
+      comments:
+        items:
+          $ref: '#/definitions/model.Comment'
+        type: array
+      cost:
+        type: number
+      end_time:
+        type: string
+      notes:
+        type: string
+      price_ai_estimate:
+        type: number
+      start_time:
+        type: string
+      trip_accommodation_id:
+        type: string
+      trip_destination:
+        allOf:
+        - $ref: '#/definitions/model.TripDestination'
+        description: Associations
+      trip_destination_id:
+        type: string
+    type: object
+  model.TripDestination:
+    properties:
+      arrival_date:
+        type: string
+      departure_date:
+        type: string
+      destination:
+        $ref: '#/definitions/model.Destination'
+      destination_id:
+        type: string
+      order_num:
+        type: integer
+      trip:
+        allOf:
+        - $ref: '#/definitions/model.Trip'
+        description: |-
+          Associations
+          Reference to the Trip (from the same package).
+      trip_accommodations:
+        items:
+          $ref: '#/definitions/model.TripAccommodation'
+        type: array
+      trip_destination_id:
+        type: string
+      trip_id:
+        type: string
+      trip_places:
+        description: Other associations as slices.
+        items:
+          $ref: '#/definitions/model.TripPlace'
+        type: array
+      trip_restaurants:
+        items:
+          $ref: '#/definitions/model.TripRestaurant'
+        type: array
+    type: object
+  model.TripPlace:
+    properties:
+      comments:
+        items:
+          $ref: '#/definitions/model.Comment'
+        type: array
+      end_time:
+        type: string
+      notes:
+        type: string
+      place:
+        $ref: '#/definitions/model.Place'
+      place_id:
+        type: string
+      price_ai_estimate:
+        type: number
+      scheduled_date:
+        type: string
+      start_time:
+        type: string
+      trip_destination:
+        allOf:
+        - $ref: '#/definitions/model.TripDestination'
+        description: Update associations
+      trip_destination_id:
+        type: string
+      trip_place_id:
+        type: string
+    type: object
+  model.TripRestaurant:
+    properties:
+      comments:
+        items:
+          $ref: '#/definitions/model.Comment'
+        type: array
+      end_time:
+        type: string
+      meal_date:
+        type: string
+      notes:
+        type: string
+      price_ai_estimate:
+        type: number
+      reservation_info:
+        type: string
+      restaurant:
+        $ref: '#/definitions/model.Restaurant'
+      restaurant_id:
+        type: string
+      start_time:
+        type: string
+      trip_destination:
+        allOf:
+        - $ref: '#/definitions/model.TripDestination'
+        description: Associations with proper GORM foreign key definitions
+      trip_destination_id:
+        type: string
+      trip_restaurant_id:
+        type: string
+    type: object
+  model.User:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password:
+        type: string
+      trips:
+        description: Relationships
+        items:
+          $ref: '#/definitions/model.Trip'
+        type: array
+      user_id:
+        type: string
+      username:
         type: string
     type: object
 host: localhost:8080
@@ -968,7 +1198,7 @@ paths:
         name: preference
         required: true
         schema:
-          $ref: '#/definitions/dto.TravelPreference'
+          $ref: '#/definitions/model.TravelPreference'
       produces:
       - application/json
       responses:
@@ -1003,7 +1233,7 @@ paths:
         name: preference
         required: true
         schema:
-          $ref: '#/definitions/dto.TravelPreference'
+          $ref: '#/definitions/model.TravelPreference'
       produces:
       - application/json
       responses:
@@ -1038,7 +1268,7 @@ paths:
         name: preference
         required: true
         schema:
-          $ref: '#/definitions/dto.TravelPreference'
+          $ref: '#/definitions/model.TravelPreference'
       produces:
       - application/json
       responses:
@@ -1074,7 +1304,7 @@ paths:
         name: preference
         required: true
         schema:
-          $ref: '#/definitions/dto.TravelPreference'
+          $ref: '#/definitions/model.TravelPreference'
       produces:
       - application/json
       responses:
