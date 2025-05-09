@@ -102,6 +102,6 @@ type TravelPreference struct {
 	TravelTime         TravelTime       `gorm:"type:json" json:"travel_time"`
 	PersonalOptions    []PersonalOption `gorm:"type:json" json:"personal_options"`
 
-	Trip        *Trip        `json:"trip,omitempty"`
-	Destination *Destination `json:"destination,omitempty"`
+	// Trip *Trip `json:"trip,omitempty"`
+	// Destination *Destination `json:"destination,omitempty"`
 }
