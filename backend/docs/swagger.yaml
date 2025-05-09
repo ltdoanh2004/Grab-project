@@ -1511,7 +1511,7 @@ paths:
             - $ref: '#/definitions/model.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/dto.TripDTO'
+                  $ref: '#/definitions/dto.TripDTOByDate'
               type: object
         "400":
           description: Invalid trip ID
