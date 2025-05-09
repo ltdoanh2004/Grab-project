@@ -484,8 +484,8 @@ func (ss *suggestService) callAISuggestWithComment(req *dto.SuggestWithCommentRe
 // SuggestWithComment calls the AI service for comment-based suggestions,
 // receives the JSON response, parses it into SuggestWithCommentResponse and returns it.
 func (ss *suggestService) SuggestWithComment(req *dto.SuggestWithCommentRequest) (*dto.SuggestWithCommentResponse, error) {
-	// jsonResponse, err := ss.callAISuggestWithComment(req)
-	jsonResponse, err := ss.mockCallSuggestWithCommentAPI(req)
+	jsonResponse, err := ss.callAISuggestWithComment(req)
+	// jsonResponse, err := ss.mockCallSuggestWithCommentAPI(req)
 	if err != nil {
 		return nil, err
 	}
