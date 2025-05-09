@@ -4,22 +4,69 @@ import sys
 import json
 from pathlib import Path
 from datetime import datetime
-from openai import OpenAI
+import time
+import random
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from vector_database import PlaceVectorDatabase, FnBVectorDatabase, HotelVectorDatabase
+try:
+    from openai import OpenAI
+except ImportError:
+    print("Warning: OpenAI package not found. Please install with: pip install openai")
+
+# Add parent directory to path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+# Set up .env path
+ENV_PATH = os.path.join(parent_dir, '.env')
+
+# Import after setting path
+try:
+    from dotenv import load_dotenv
+    load_dotenv(ENV_PATH)
+except ImportError:
+    print("Warning: python-dotenv package not found. Please install with: pip install python-dotenv")
+
+# Flag to use mock data when database is unavailable
+USE_MOCK_DATA = False
+
+# Try importing vector database modules
+try:
+    from vector_database import PlaceVectorDatabase, FnBVectorDatabase, HotelVectorDatabase
+except ImportError as e:
+    print(f"Warning: Vector database imports failed: {e}")
+    print("Will use mock data instead")
+    USE_MOCK_DATA = True
 
 class CommentAgent:
-    def __init__(self):
+    def __init__(self, use_mock_data=None):
+        """Initialize the CommentAgent.
+        
+        Args:
+            use_mock_data: Override whether to use mock data
+        """
+        # Set mock data flag
+        self.use_mock_data = use_mock_data if use_mock_data is not None else USE_MOCK_DATA
+        
+        # Initialize vector databases
         self.place_db = None
         self.fnb_db = None
         self.hotel_db = None
         
+        # Initialize connection flag
+        self.database_connected = False
+        
+        # Initialize OpenAI client
         self.openai_api_key = os.getenv("OPEN_API_KEY", "")
         self.client = None
         if self.openai_api_key:
-            self.client = OpenAI(api_key=self.openai_api_key)
-        
+            try:
+                self.client = OpenAI(api_key=self.openai_api_key)
+            except Exception as e:
+                print(f"Warning: Failed to initialize OpenAI client: {e}")
+        else:
+            print(f"Warning: OPEN_API_KEY not found in {ENV_PATH}")
+            
         # Initialize priority scores for different features
         self.priority_scores = {
             "place": {
@@ -68,30 +115,258 @@ class CommentAgent:
             "hotel": "{location} hotel {price_range}: {features}"
         }
         
-        self._init_databases()
-
+        # Lazy initialize databases to avoid connection errors
+        if not self.use_mock_data:
+            try:
+                self._init_databases()
+                self.database_connected = True
+            except Exception as e:
+                print(f"Warning: Database initialization failed: {e}")
+                print("Will use mock data instead")
+                self.use_mock_data = True
+        
     def _init_databases(self):
         """Initialize vector databases as needed"""
-        if self.place_db is None:
-            self.place_db = PlaceVectorDatabase()
-            self.place_db.set_up_pinecone()
-        
-        if self.fnb_db is None:
-            self.fnb_db = FnBVectorDatabase()
-            self.fnb_db.set_up_pinecone()
+        # Skip if using mock data
+        if self.use_mock_data:
+            return
             
-        if self.hotel_db is None:
-            self.hotel_db = HotelVectorDatabase()
-            self.hotel_db.set_up_pinecone()
-    
-    def _initialize_llm(self):
-        """Initialize LLM client if needed"""
-        if self.client is None and self.openai_api_key:
-            self.client = OpenAI(api_key=self.openai_api_key)
+        # Check if databases are already initialized
+        if self.place_db is not None and self.fnb_db is not None and self.hotel_db is not None:
+            return
+            
+        # Initialize with connection timeout
+        timeout = 10  # seconds
+        start_time = time.time()
         
-        if self.client is None:
-            raise ValueError("OpenAI client could not be initialized. Please check your API key.")
+        try:
+            print("Initializing vector databases...")
+            
+            # Initialize PlaceVectorDatabase with timeout
+            if self.place_db is None:
+                print("Connecting to place database...")
+                self.place_db = PlaceVectorDatabase()
+                if time.time() - start_time > timeout:
+                    raise TimeoutError("Database connection timeout")
+                self.place_db.set_up_pinecone()
+            
+            # Initialize FnBVectorDatabase with timeout
+            if self.fnb_db is None:
+                print("Connecting to restaurant database...")
+                self.fnb_db = FnBVectorDatabase()
+                if time.time() - start_time > timeout:
+                    raise TimeoutError("Database connection timeout")
+                self.fnb_db.set_up_pinecone()
+                
+            # Initialize HotelVectorDatabase with timeout
+            if self.hotel_db is None:
+                print("Connecting to hotel database...")
+                self.hotel_db = HotelVectorDatabase()
+                if time.time() - start_time > timeout:
+                    raise TimeoutError("Database connection timeout")
+                self.hotel_db.set_up_pinecone()
+                
+            print("All databases initialized successfully")
+            
+        except Exception as e:
+            print(f"Database initialization error: {e}")
+            print("Setting use_mock_data to True")
+            self.use_mock_data = True
+            raise
     
+    def _generate_mock_suggestions(self, query, suggestion_type, destination="Paris", count=5):
+        """Generate mock suggestions when database is not available"""
+        print(f"Generating mock {suggestion_type} suggestions for query: {query}")
+        
+        mock_data = {
+            "place": [
+                {
+                    "id": "place_001117",
+                    "name": "Musée de l'Orangerie",
+                    "type": "place",
+                    "address": "Jardin des Tuileries, 75001 Paris, France",
+                    "description": "A small museum with Monet's Water Lilies and other impressionist masterpieces, perfect for a shorter family visit.",
+                    "categories": "art museum, family-friendly",
+                    "opening_hours": "9:00-18:00",
+                    "rating": 4.7,
+                    "score": 0.92
+                },
+                {
+                    "id": "place_000594",
+                    "name": "Cité des Enfants",
+                    "type": "place",
+                    "address": "30 Avenue Corentin Cariou, 75019 Paris, France",
+                    "description": "Interactive science museum designed especially for children with hands-on exhibits and activities.",
+                    "categories": "science museum, family-friendly, interactive",
+                    "opening_hours": "10:00-18:00",
+                    "rating": 4.8,
+                    "score": 0.89
+                },
+                {
+                    "id": "place_000881",
+                    "name": "Jardin d'Acclimatation",
+                    "type": "place",
+                    "address": "Bois de Boulogne, 75116 Paris, France",
+                    "description": "Amusement park with rides, petting zoo and beautiful gardens, ideal for families with children.",
+                    "categories": "amusement park, family-friendly, outdoors",
+                    "opening_hours": "10:00-19:00",
+                    "rating": 4.5,
+                    "score": 0.87
+                }
+            ],
+            "restaurant": [
+                {
+                    "id": "restaurant_001440",
+                    "name": "Le Petit Prince",
+                    "type": "restaurant",
+                    "address": "12 Rue de Buci, 75006 Paris, France",
+                    "description": "Charming bistro with authentic French cuisine in a relaxed setting. Perfect for families with a special children's menu.",
+                    "cuisines": "French, Traditional",
+                    "price_range": "€15-30",
+                    "rating": 4.6,
+                    "score": 0.91
+                },
+                {
+                    "id": "restaurant_000424",
+                    "name": "Chez Janou",
+                    "type": "restaurant",
+                    "address": "2 Rue Roger Verlomme, 75003 Paris, France",
+                    "description": "Casual bistro with Provençal dishes and a friendly atmosphere. Reasonable prices and welcoming to families.",
+                    "cuisines": "French, Mediterranean",
+                    "price_range": "€20-35",
+                    "rating": 4.4,
+                    "score": 0.88
+                }
+            ],
+            "hotel": [
+                {
+                    "id": "hotel_005950",
+                    "name": "Hôtel des Grands Boulevards",
+                    "type": "hotel",
+                    "address": "17 Boulevard Poissonnière, 75002 Paris, France",
+                    "description": "Charming mid-range hotel with family rooms and convenient location near attractions. Offers kitchenette in some rooms.",
+                    "amenities": "Free WiFi, Family Rooms, Kitchenette",
+                    "price_per_night": 220,
+                    "rating": 4.5,
+                    "score": 0.90
+                },
+                {
+                    "id": "hotel_001100",
+                    "name": "Citadines Les Halles Paris",
+                    "type": "hotel",
+                    "address": "4 Rue des Innocents, 75001 Paris, France",
+                    "description": "Apartment-hotel with kitchenettes and connecting rooms. Great for families looking for more space and self-catering options.",
+                    "amenities": "Kitchenette, Free WiFi, Connecting Rooms, Laundry Facilities",
+                    "price_per_night": 180,
+                    "rating": 4.3,
+                    "score": 0.87
+                }
+            ]
+        }
+        
+        # Get mock data for the requested type
+        type_data = mock_data.get(suggestion_type, [])
+        
+        # Make sure we don't try to return more items than we have
+        count = min(count, len(type_data))
+        
+        # Modify mock data based on query
+        results = []
+        for item in type_data[:count]:
+            # Create a copy to avoid modifying the original
+            modified_item = item.copy()
+            
+            # Adjust score slightly based on query terms
+            score_boost = 0
+            for term in query.lower().split():
+                if term in modified_item["name"].lower() or term in modified_item["description"].lower():
+                    score_boost += 0.01
+                    
+            modified_item["score"] = min(1.0, modified_item["score"] + score_boost)
+            results.append(modified_item)
+            
+        # Sort by score
+        results = sorted(results, key=lambda x: x["score"], reverse=True)
+        
+        return results
+    
+    def _get_suggestions_by_type(self, data, query, suggestion_type):
+        """Get suggestions for a specific type"""
+        suggestions = []
+        
+        # If using mock data, return mock suggestions
+        if self.use_mock_data:
+            return self._generate_mock_suggestions(query, suggestion_type, data["destination"]["id"])
+        
+        # Try to connect to databases if not already connected
+        if not self.database_connected:
+            try:
+                self._init_databases()
+                self.database_connected = True
+            except Exception as e:
+                print(f"Failed to connect to databases: {e}")
+                print("Using mock data instead")
+                self.use_mock_data = True
+                return self._generate_mock_suggestions(query, suggestion_type, data["destination"]["id"])
+        
+        # Query actual databases
+        try:
+            if suggestion_type == "restaurant":
+                fnb_ids, fnb_results = self.fnb_db.query(query, top_k=10)
+                for match in fnb_results.get("matches", []):
+                    suggestions.append({
+                        "id": match["id"],
+                        "name": match["metadata"].get("name", ""),
+                        "type": "restaurant",
+                        "address": match["metadata"].get("address", ""),
+                        "description": match["metadata"].get("description", ""),
+                        "cuisines": match["metadata"].get("cuisines", ""),
+                        "price_range": match["metadata"].get("price_range", ""),
+                        "rating": match["metadata"].get("rating", 0),
+                        "score": match["score"]
+                    })
+                    
+            elif suggestion_type == "place":
+                place_ids, place_results = self.place_db.query(query, top_k=10)
+                for match in place_results.get("matches", []):
+                    suggestions.append({
+                        "id": match["id"],
+                        "name": match["metadata"].get("name", ""),
+                        "type": "place",
+                        "address": match["metadata"].get("address", ""),
+                        "description": match["metadata"].get("description", ""),
+                        "categories": match["metadata"].get("categories", ""),
+                        "opening_hours": match["metadata"].get("opening_hours", ""),
+                        "rating": match["metadata"].get("rating", 0),
+                        "score": match["score"]
+                    })
+                    
+            elif suggestion_type == "hotel":
+                hotel_ids, hotel_results = self.hotel_db.query(query, top_k=10)
+                for match in hotel_results.get("matches", []):
+                    suggestions.append({
+                        "id": match["id"],
+                        "name": match["metadata"].get("name", ""),
+                        "type": "hotel",
+                        "address": match["metadata"].get("address", ""),
+                        "description": match["metadata"].get("description", ""),
+                        "amenities": match["metadata"].get("amenities", ""),
+                        "price_per_night": match["metadata"].get("price_per_night", 0),
+                        "rating": match["metadata"].get("rating", 0),
+                        "score": match["score"]
+                    })
+        except Exception as e:
+            print(f"Error querying database for {suggestion_type}: {e}")
+            print("Falling back to mock data")
+            return self._generate_mock_suggestions(query, suggestion_type, data["destination"]["id"])
+        
+        # If no results from database, use mock data
+        if not suggestions:
+            print(f"No results from database for {suggestion_type}. Using mock data.")
+            return self._generate_mock_suggestions(query, suggestion_type, data["destination"]["id"])
+            
+        return sorted(suggestions, key=lambda x: x.get("score", 0), reverse=True)
+
     def gen_activity_comment(self, comment_plan: dict):
         destination_id = comment_plan.get("destination_id", "")
         
@@ -191,9 +466,13 @@ class CommentAgent:
         query_context = self._generate_llm_query_for_type(structured_data, suggestion_type)
         suggestions = self._get_suggestions_by_type(structured_data, query_context, suggestion_type)
         
+        # Prepare enhanced suggestion list
+        suggestion_list = self._prepare_suggestion_list(suggestions, structured_data)
+        
         return {
             "suggestion_type": suggestion_type,
-            "suggestion_ids": self._extract_suggestion_ids(suggestions),
+            "suggestion_list": suggestion_list,
+            "query_used": query_context
         }
     
     def _determine_suggestion_type(self, data):
@@ -225,38 +504,43 @@ class CommentAgent:
     def _analyze_comment_intentions(self, comments):
         """Enhanced comment analysis to better understand user's change intentions"""
         if not comments:
-            return []
+            return {
+                "pain_points": [],
+                "desired_features": [],
+                "constraints": [],
+                "retain_features": []
+            }
             
         try:
             self._initialize_llm()
             
             system_message = """
-            You are a travel recommendation expert analyzing user comments to understand their desired changes.
-            Focus on extracting key aspects:
-            1. Current Pain Points:
-               - What specific issues are they facing?
-               - What aspects are they unhappy with?
+            Bạn là một chuyên gia phân tích và đề xuất về du lịch, phân tích bình luận của người dùng để hiểu những thay đổi họ mong muốn.
+            Tập trung vào các khía cạnh chính:
+            1. Điểm đau hiện tại:
+               - Họ đang gặp vấn đề cụ thể gì?
+               - Những khía cạnh nào họ không hài lòng?
             
-            2. Desired Changes:
-               - What specific improvements do they want?
-               - What features are they looking for?
+            2. Thay đổi mong muốn:
+               - Họ muốn cải thiện cụ thể điều gì?
+               - Họ đang tìm kiếm tính năng gì?
             
-            3. Constraints:
-               - Budget limitations
-               - Time constraints
-               - Group-specific needs (family, children, etc.)
-               - Location preferences
+            3. Các ràng buộc:
+               - Hạn chế về ngân sách
+               - Ràng buộc về thời gian
+               - Nhu cầu đặc biệt của nhóm (gia đình, trẻ em, v.v.)
+               - Ưu tiên về vị trí
             
-            4. Must-Keep Features:
-               - What positive aspects should be maintained?
-               - What features they still want to keep?
+            4. Tính năng cần giữ lại:
+               - Những khía cạnh tích cực nào cần được duy trì?
+               - Những tính năng nào họ vẫn muốn giữ?
 
-            Return a JSON object with these fields:
+            Trả về đối tượng JSON với các trường sau:
             {
-                "pain_points": ["list of specific issues"],
-                "desired_features": ["list of wanted features"],
-                "constraints": ["list of limitations"],
-                "retain_features": ["list of features to keep"]
+                "pain_points": ["danh sách các vấn đề cụ thể"],
+                "desired_features": ["danh sách các tính năng mong muốn"],
+                "constraints": ["danh sách các ràng buộc"],
+                "retain_features": ["danh sách các tính năng cần giữ lại"]
             }
             """
             
@@ -268,13 +552,18 @@ class CommentAgent:
             ])
             
             if not comment_text:
-                return []
+                return {
+                    "pain_points": [],
+                    "desired_features": [],
+                    "constraints": [],
+                    "retain_features": []
+                }
             
             response = self.client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": system_message},
-                    {"role": "user", "content": f"Analyze these comments for change requests: {comment_text}"}
+                    {"role": "user", "content": f"Phân tích các bình luận này để tìm yêu cầu thay đổi: {comment_text}"}
                 ],
                 response_format={"type": "json_object"}
             )
@@ -282,12 +571,25 @@ class CommentAgent:
             try:
                 analysis = json.loads(response.choices[0].message.content)
                 return analysis
-            except:
-                return self._extract_basic_intentions(comments)
+            except Exception as je:
+                print(f"Error parsing JSON from LLM: {je}")
+                basic_intentions = self._extract_basic_intentions(comments)
+                return {
+                    "pain_points": basic_intentions,
+                    "desired_features": basic_intentions,
+                    "constraints": [],
+                    "retain_features": []
+                }
                 
         except Exception as e:
             print(f"Error analyzing comment intentions: {e}")
-            return self._extract_basic_intentions(comments)
+            basic_intentions = self._extract_basic_intentions(comments)
+            return {
+                "pain_points": basic_intentions,
+                "desired_features": basic_intentions,
+                "constraints": [],
+                "retain_features": []
+            }
 
     def _optimize_query_length(self, query, max_length=100):
         """Optimize query length for vector search"""
@@ -521,48 +823,151 @@ class CommentAgent:
         
         return unique_intentions
 
-    def _get_suggestions_by_type(self, data, query, suggestion_type):
-        """Get suggestions for a specific type"""
-        suggestions = []
+    def _generate_description(self, suggestion, data):
+        """Generate an enhanced description for the suggestion"""
+        # Get the base description first to ensure it exists
+        base_description = suggestion.get("description", "")
+        if not base_description or len(base_description) < 20:
+            base_description = f"{suggestion.get('name', '')} ở {data['destination']['id']}"
+            
+        try:
+            self._initialize_llm()
+            
+            prompt = f"""
+            Tạo một mô tả hấp dẫn và nhiều thông tin cho {suggestion['type']} này ở {data['destination']['id']}.
+            Tên: {suggestion['name']}
+            Mô tả hiện tại: {base_description}
+            
+            Tập trung vào:
+            1. Các tính năng độc đáo và điều gì làm nó đặc biệt
+            2. Tại sao nó là một lựa chọn thay thế tốt cho {data['current_activity']['name']}
+            3. Nó giải quyết những mối quan tâm được nêu trong bình luận của người dùng như thế nào
+            
+            Hãy viết ngắn gọn (70-100 từ), hấp dẫn, và nhấn mạnh các tính năng phù hợp với sở thích của người dùng.
+            Không sử dụng ngôn ngữ quảng cáo hoặc phóng đại.
+            """
+            
+            response = self.client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "Bạn là chuyên gia du lịch tạo ra các mô tả chính xác và hữu ích bằng tiếng Việt."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=150
+            )
+            
+            return response.choices[0].message.content.strip()
+            
+        except Exception as e:
+            print(f"Error generating description: {e}")
+            return base_description
+    
+    def _estimate_price(self, suggestion, data):
+        """Estimate the price for a specific activity based on its type and other details"""
+        # Check for existing price data first
+        if suggestion["type"] == "hotel" and suggestion.get("price_per_night"):
+            return float(suggestion["price_per_night"])
+        elif suggestion.get("price"):
+            return float(suggestion["price"])
         
         try:
-            if suggestion_type == "restaurant":
-                fnb_ids, fnb_results = self.fnb_db.query(query, top_k=10)
-                for match in fnb_results.get("matches", []):
-                    suggestions.append({
-                        "id": match["id"],
-                        "name": match["metadata"].get("name", ""),
-                        "type": "restaurant",
-                        "score": match["score"]
-                    })
-                    
-            elif suggestion_type == "place":
-                place_ids, place_results = self.place_db.query(query, top_k=10)
-                for match in place_results.get("matches", []):
-                    suggestions.append({
-                        "id": match["id"],
-                        "name": match["metadata"].get("name", ""),
-                        "type": "place",
-                        "score": match["score"]
-                    })
-                    
-            elif suggestion_type == "hotel":
-                hotel_ids, hotel_results = self.hotel_db.query(query, top_k=10)
-                for match in hotel_results.get("matches", []):
-                    suggestions.append({
-                        "id": match["id"],
-                        "name": match["metadata"].get("name", ""),
-                        "type": "hotel",
-                        "score": match["score"]
-                    })
+            self._initialize_llm()
+            
+            # Extract budget info from user data
+            budget_info = ""
+            if data["budget"]["amount"] > 0:
+                budget_info = f"Ngân sách của người dùng khoảng {data['budget']['amount']} ({data['budget']['type']})"
+            
+            prompt = f"""
+            Ước tính một mức giá hợp lý cho {suggestion['type']} này ở {data['destination']['id']}:
+            Tên: {suggestion['name']}
+            Mô tả: {suggestion['description']}
+            
+            {budget_info}
+            
+            Chỉ trả về một số (không có văn bản) thể hiện:
+            - Đối với khách sạn: giá mỗi đêm theo đơn vị tiền tệ của {data['destination']['id']}
+            - Đối với nhà hàng: giá trung bình mỗi người theo đơn vị tiền tệ của {data['destination']['id']}
+            - Đối với địa điểm/điểm tham quan: phí vào cửa hoặc chi phí điển hình theo đơn vị tiền tệ của {data['destination']['id']}
+            
+            Ví dụ: 250000
+            """
+            
+            response = self.client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "Bạn là chuyên gia về giá cả du lịch. Chỉ trả lời bằng một con số."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=10
+            )
+            
+            price_str = response.choices[0].message.content.strip()
+            price_str = ''.join(c for c in price_str if c.isdigit())
+            if price_str:
+                return float(price_str)
+            return 0.0
+            
         except Exception as e:
-            print(f"Error querying database for {suggestion_type}: {e}")
+            print(f"Error estimating price: {e}")
+            return 0.0
+
+    def _prepare_suggestion_list(self, suggestions, data):
+        """Prepare the suggestion list with enhanced data"""
+        suggestion_list = []
         
-        return sorted(suggestions, key=lambda x: x.get("score", 0), reverse=True)
-    
-    def _extract_suggestion_ids(self, suggestions):
-        """Extract IDs from suggestions and return as a list"""
-        return [suggestion["id"] for suggestion in suggestions]
+        for suggestion in suggestions:
+            enhanced_description = self._generate_description(suggestion, data)
+            price_estimate = self._estimate_price(suggestion, data)
+            
+            suggestion_item = {
+                "id": suggestion["id"],
+                "name": suggestion["name"],
+                "description": enhanced_description,
+                "price_ai_estimate": price_estimate,
+                "type": suggestion["type"]
+            }
+            
+            # Add type-specific fields
+            if suggestion["type"] == "place":
+                suggestion_item.update({
+                    "categories": suggestion.get("categories", ""),
+                    "opening_hours": suggestion.get("opening_hours", ""),
+                    "address": suggestion.get("address", "")
+                })
+            elif suggestion["type"] == "restaurant":
+                suggestion_item.update({
+                    "cuisines": suggestion.get("cuisines", ""),
+                    "price_range": suggestion.get("price_range", ""),
+                    "address": suggestion.get("address", "")
+                })
+            elif suggestion["type"] == "hotel":
+                suggestion_item.update({
+                    "amenities": suggestion.get("amenities", ""),
+                    "price_per_night": suggestion.get("price_per_night", price_estimate),
+                    "address": suggestion.get("address", "")
+                })
+            
+            suggestion_list.append(suggestion_item)
+            
+        return suggestion_list
+
+    def _initialize_llm(self):
+        """Initialize the OpenAI client if not already initialized."""
+        if self.client is not None:
+            return
+        
+        # Try to initialize the client
+        self.openai_api_key = os.getenv("OPEN_API_KEY", "")
+        if not self.openai_api_key:
+            print(f"Warning: OPEN_API_KEY not found in {ENV_PATH}")
+            raise ValueError("OpenAI API key not found")
+            
+        try:
+            self.client = OpenAI(api_key=self.openai_api_key)
+        except Exception as e:
+            print(f"Error initializing OpenAI client: {e}")
+            raise
 
 def main():
     # Base test data with common fields

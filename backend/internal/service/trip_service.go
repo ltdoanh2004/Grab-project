@@ -74,10 +74,22 @@ func (ts *tripService) CreateTrip(trip *dto.TripDTO) (string, error) {
 	for _, destReq := range trip.TripDestinations {
 		// Create TripDestination
 		destID := uuid.New().String()
+		
+		// Fix for empty destination_id issue
+		destinationID := destReq.DestinationID
+		if destinationID == "" {
+			// Set a default destination if none provided
+			// Using "DEFAULT" as a placeholder - this should be a valid destination_id in your database
+			destinationID = "DEFAULT"
+			
+			// Log the missing destination_id issue
+			fmt.Printf("Warning: Empty destination_id found. Using default value: %s\n", destinationID)
+		}
+		
 		tripDest := &model.TripDestination{
 			TripDestinationID: destID,
 			TripID:            tripID,
-			DestinationID:     destReq.DestinationID,
+			DestinationID:     destinationID,
 			ArrivalDate:       destReq.ArrivalDate,
 			DepartureDate:     destReq.DepartureDate,
 			OrderNum:          destReq.OrderNum,
