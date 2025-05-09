@@ -21,6 +21,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import { SheetExport } from "./travelDetail/SheetExport";
+import { SplitBill } from "./travelDetail/splitBill";
 
 import {
   formatDate,
@@ -230,6 +231,15 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
       children: (
         <div className="min-h-[200px]">
           <SheetExport travelDetail={travelDetail} />
+        </div>
+      ),
+    },
+    {
+      key: "splitbill",
+      label: "Chia chi phí",
+      children: (
+        <div className="min-h-[200px]">
+          <SplitBill travelDetail={travelDetail} />
         </div>
       ),
     },
