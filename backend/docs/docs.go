@@ -552,7 +552,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.TravelPreference"
+                            "$ref": "#/definitions/model.TravelPreference"
                         }
                     }
                 ],
@@ -610,7 +610,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.TravelPreference"
+                            "$ref": "#/definitions/model.TravelPreference"
                         }
                     }
                 ],
@@ -668,7 +668,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.TravelPreference"
+                            "$ref": "#/definitions/model.TravelPreference"
                         }
                     }
                 ],
@@ -726,7 +726,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.TravelPreference"
+                            "$ref": "#/definitions/model.TravelPreference"
                         }
                     }
                 ],
@@ -1365,7 +1365,7 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
-                "price": {
+                "price_ai_estimate": {
                     "type": "number"
                 },
                 "start_time": {
@@ -1378,17 +1378,6 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.Budget": {
-            "type": "object",
-            "properties": {
-                "exactBudget": {
-                    "type": "number"
-                },
-                "type": {
-                    "type": "string"
-                }
-            }
-        },
         "dto.LoginRequest": {
             "type": "object",
             "properties": {
@@ -1396,37 +1385,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.People": {
-            "type": "object",
-            "properties": {
-                "adults": {
-                    "type": "integer"
-                },
-                "children": {
-                    "type": "integer"
-                },
-                "infants": {
-                    "type": "integer"
-                },
-                "pets": {
-                    "type": "integer"
-                }
-            }
-        },
-        "dto.PersonalOption": {
-            "type": "object",
-            "properties": {
-                "description": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "type": {
                     "type": "string"
                 }
             }
@@ -1504,6 +1462,12 @@ const docTemplate = `{
         "dto.PlanByDay": {
             "type": "object",
             "properties": {
+                "daily_tips": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "date": {
                     "description": "\"YYYY-MM-DD\"",
                     "type": "string"
@@ -1670,43 +1634,6 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.TravelPreference": {
-            "type": "object",
-            "properties": {
-                "budget": {
-                    "$ref": "#/definitions/dto.Budget"
-                },
-                "destination": {
-                    "type": "string"
-                },
-                "people": {
-                    "$ref": "#/definitions/dto.People"
-                },
-                "personalOptions": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/dto.PersonalOption"
-                    }
-                },
-                "travelTime": {
-                    "$ref": "#/definitions/dto.TravelTime"
-                }
-            }
-        },
-        "dto.TravelTime": {
-            "type": "object",
-            "properties": {
-                "endDate": {
-                    "type": "string"
-                },
-                "startDate": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                }
-            }
-        },
         "dto.TripAccommodationDTO": {
             "type": "object",
             "properties": {
@@ -1719,14 +1646,14 @@ const docTemplate = `{
                 "check_out_date": {
                     "type": "string"
                 },
-                "cost": {
-                    "type": "number"
-                },
                 "end_time": {
                     "type": "string"
                 },
                 "notes": {
                     "type": "string"
+                },
+                "price_ai_estimate": {
+                    "type": "number"
                 },
                 "start_time": {
                     "type": "string"
@@ -1774,7 +1701,7 @@ const docTemplate = `{
         "dto.TripDTOByDate": {
             "type": "object",
             "properties": {
-                "destination": {
+                "destination_id": {
                     "type": "string"
                 },
                 "end_date": {
@@ -1789,6 +1716,9 @@ const docTemplate = `{
                 },
                 "start_date": {
                     "description": "\"YYYY-MM-DD\"",
+                    "type": "string"
+                },
+                "trip_id": {
                     "type": "string"
                 },
                 "trip_name": {
@@ -1852,6 +1782,9 @@ const docTemplate = `{
                 "place_id": {
                     "type": "string"
                 },
+                "price_ai_estimate": {
+                    "type": "number"
+                },
                 "scheduled_date": {
                     "type": "string"
                 },
@@ -1877,6 +1810,9 @@ const docTemplate = `{
                 },
                 "notes": {
                     "type": "string"
+                },
+                "price_ai_estimate": {
+                    "type": "number"
                 },
                 "reservation_info": {
                     "type": "string"
@@ -1965,6 +1901,17 @@ const docTemplate = `{
                 }
             }
         },
+        "model.Budget": {
+            "type": "object",
+            "properties": {
+                "exact_budget": {
+                    "type": "number"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
         "model.Comment": {
             "type": "object",
             "properties": {
@@ -1988,6 +1935,50 @@ const docTemplate = `{
                 }
             }
         },
+        "model.Destination": {
+            "type": "object",
+            "properties": {
+                "accommodations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Accommodation"
+                    }
+                },
+                "best_season": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "climate": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "image_url": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "places": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Place"
+                    }
+                },
+                "restaurants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Restaurant"
+                    }
+                }
+            }
+        },
         "model.Image": {
             "type": "object",
             "properties": {
@@ -2007,6 +1998,38 @@ const docTemplate = `{
                 },
                 "lon": {
                     "type": "number"
+                }
+            }
+        },
+        "model.People": {
+            "type": "object",
+            "properties": {
+                "adults": {
+                    "type": "integer"
+                },
+                "children": {
+                    "type": "integer"
+                },
+                "infants": {
+                    "type": "integer"
+                },
+                "pets": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.PersonalOption": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "description": "\"places\", \"activities\", \"accommodation\"",
+                    "type": "string"
                 }
             }
         },
@@ -2215,6 +2238,339 @@ const docTemplate = `{
                     "description": "Timestamp when the todo was last updated",
                     "type": "string",
                     "example": "2024-03-15T08:00:00Z"
+                }
+            }
+        },
+        "model.TravelPreference": {
+            "type": "object",
+            "properties": {
+                "budget": {
+                    "$ref": "#/definitions/model.Budget"
+                },
+                "destination": {
+                    "$ref": "#/definitions/model.Destination"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "people": {
+                    "$ref": "#/definitions/model.People"
+                },
+                "personal_options": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.PersonalOption"
+                    }
+                },
+                "travel_preference_id": {
+                    "type": "string"
+                },
+                "travel_time": {
+                    "$ref": "#/definitions/model.TravelTime"
+                },
+                "trip": {
+                    "$ref": "#/definitions/model.Trip"
+                },
+                "trip_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.TravelTime": {
+            "type": "object",
+            "properties": {
+                "end_date": {
+                    "type": "string"
+                },
+                "start_date": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Trip": {
+            "type": "object",
+            "properties": {
+                "budget": {
+                    "type": "number"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "end_date": {
+                    "type": "string"
+                },
+                "start_date": {
+                    "type": "string"
+                },
+                "travel_preference": {
+                    "description": "New association with TravelPreference (one-to-one)",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.TravelPreference"
+                        }
+                    ]
+                },
+                "trip_destinations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.TripDestination"
+                    }
+                },
+                "trip_id": {
+                    "type": "string"
+                },
+                "trip_name": {
+                    "type": "string"
+                },
+                "trip_status": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user": {
+                    "description": "Associations",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    ]
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.TripAccommodation": {
+            "type": "object",
+            "properties": {
+                "accommodation": {
+                    "$ref": "#/definitions/model.Accommodation"
+                },
+                "accommodation_id": {
+                    "type": "string"
+                },
+                "check_in_date": {
+                    "type": "string"
+                },
+                "check_out_date": {
+                    "type": "string"
+                },
+                "comments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Comment"
+                    }
+                },
+                "cost": {
+                    "type": "number"
+                },
+                "end_time": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "price_ai_estimate": {
+                    "type": "number"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "trip_accommodation_id": {
+                    "type": "string"
+                },
+                "trip_destination": {
+                    "description": "Associations",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.TripDestination"
+                        }
+                    ]
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.TripDestination": {
+            "type": "object",
+            "properties": {
+                "arrival_date": {
+                    "type": "string"
+                },
+                "departure_date": {
+                    "type": "string"
+                },
+                "destination": {
+                    "$ref": "#/definitions/model.Destination"
+                },
+                "destination_id": {
+                    "type": "string"
+                },
+                "order_num": {
+                    "type": "integer"
+                },
+                "trip": {
+                    "description": "Associations\nReference to the Trip (from the same package).",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.Trip"
+                        }
+                    ]
+                },
+                "trip_accommodations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.TripAccommodation"
+                    }
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                },
+                "trip_id": {
+                    "type": "string"
+                },
+                "trip_places": {
+                    "description": "Other associations as slices.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.TripPlace"
+                    }
+                },
+                "trip_restaurants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.TripRestaurant"
+                    }
+                }
+            }
+        },
+        "model.TripPlace": {
+            "type": "object",
+            "properties": {
+                "comments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Comment"
+                    }
+                },
+                "end_time": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "place": {
+                    "$ref": "#/definitions/model.Place"
+                },
+                "place_id": {
+                    "type": "string"
+                },
+                "price_ai_estimate": {
+                    "type": "number"
+                },
+                "scheduled_date": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "trip_destination": {
+                    "description": "Update associations",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.TripDestination"
+                        }
+                    ]
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                },
+                "trip_place_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.TripRestaurant": {
+            "type": "object",
+            "properties": {
+                "comments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Comment"
+                    }
+                },
+                "end_time": {
+                    "type": "string"
+                },
+                "meal_date": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "price_ai_estimate": {
+                    "type": "number"
+                },
+                "reservation_info": {
+                    "type": "string"
+                },
+                "restaurant": {
+                    "$ref": "#/definitions/model.Restaurant"
+                },
+                "restaurant_id": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "trip_destination": {
+                    "description": "Associations with proper GORM foreign key definitions",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.TripDestination"
+                        }
+                    ]
+                },
+                "trip_destination_id": {
+                    "type": "string"
+                },
+                "trip_restaurant_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.User": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "trips": {
+                    "description": "Relationships",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Trip"
+                    }
+                },
+                "user_id": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
                 }
             }
         }
