@@ -97,7 +97,7 @@ func (ts *tripService) CreateTrip(trip *dto.TripDTO) (string, error) {
 				CheckOutDate:        acc.CheckOutDate,
 				StartTime:           acc.StartTime,
 				EndTime:             acc.EndTime,
-				Cost:                acc.Cost,
+				PriceAIEstimate:     acc.PriceAIEstimate,
 				Notes:               acc.Notes,
 			}
 			if err := ts.tripAccommodationRepository.Create(tripAccom); err != nil {
@@ -115,6 +115,7 @@ func (ts *tripService) CreateTrip(trip *dto.TripDTO) (string, error) {
 				StartTime:         act.StartTime,
 				EndTime:           act.EndTime,
 				Notes:             act.Notes,
+				PriceAIEstimate:   act.PriceAIEstimate,
 			}
 			if err := ts.tripPlaceRepository.Create(tripAct); err != nil {
 				return "", err
@@ -132,6 +133,7 @@ func (ts *tripService) CreateTrip(trip *dto.TripDTO) (string, error) {
 				EndTime:           rest.EndTime,
 				ReservationInfo:   rest.ReservationInfo,
 				Notes:             rest.Notes,
+				PriceAIEstimate:   rest.PriceAIEstimate,
 			}
 			if err := ts.tripRestaurantRepository.Create(tripRest); err != nil {
 				return "", err
@@ -203,7 +205,7 @@ func (ts *tripService) SaveTrip(trip *dto.TripDTO) error {
 				CheckOutDate:        acc.CheckOutDate,
 				StartTime:           acc.StartTime,
 				EndTime:             acc.EndTime,
-				Cost:                acc.Cost,
+				PriceAIEstimate:     acc.PriceAIEstimate,
 				Notes:               acc.Notes,
 			}
 
@@ -228,6 +230,7 @@ func (ts *tripService) SaveTrip(trip *dto.TripDTO) error {
 				StartTime:         act.StartTime,
 				EndTime:           act.EndTime,
 				Notes:             act.Notes,
+				PriceAIEstimate:   act.PriceAIEstimate,
 			}
 
 			if act.TripPlaceID != "" {
@@ -252,6 +255,7 @@ func (ts *tripService) SaveTrip(trip *dto.TripDTO) error {
 				EndTime:           rest.EndTime,
 				ReservationInfo:   rest.ReservationInfo,
 				Notes:             rest.Notes,
+				PriceAIEstimate:   rest.PriceAIEstimate,
 			}
 
 			if rest.TripRestaurantID != "" {
@@ -318,7 +322,7 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTO, error) {
 				CheckOutDate:        acc.CheckOutDate,
 				StartTime:           acc.StartTime,
 				EndTime:             acc.EndTime,
-				Cost:                acc.Cost,
+				PriceAIEstimate:     acc.PriceAIEstimate,
 				Notes:               acc.Notes,
 			})
 		}
@@ -338,6 +342,7 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTO, error) {
 				StartTime:         act.StartTime,
 				EndTime:           act.EndTime,
 				Notes:             act.Notes,
+				PriceAIEstimate:   act.PriceAIEstimate,
 			})
 		}
 
@@ -357,6 +362,7 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTO, error) {
 				EndTime:           rest.EndTime,
 				ReservationInfo:   rest.ReservationInfo,
 				Notes:             rest.Notes,
+				PriceAIEstimate:   rest.PriceAIEstimate,
 			})
 		}
 

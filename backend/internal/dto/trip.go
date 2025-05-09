@@ -39,6 +39,7 @@ type TripPlaceDTO struct {
 	StartTime         *time.Time `json:"start_time,omitempty"`
 	EndTime           *time.Time `json:"end_time,omitempty"`
 	Notes             string     `json:"notes"`
+	PriceAIEstimate   float64    `json:"price_ai_estimate"`
 }
 
 type TripAccommodationDTO struct {
@@ -49,7 +50,7 @@ type TripAccommodationDTO struct {
 	CheckOutDate        *time.Time `json:"check_out_date,omitempty"`
 	StartTime           *time.Time `json:"start_time,omitempty"`
 	EndTime             *time.Time `json:"end_time,omitempty"`
-	Cost                float64    `json:"cost"`
+	PriceAIEstimate     float64    `json:"price_ai_estimate"`
 	Notes               string     `json:"notes"`
 }
 
@@ -62,6 +63,7 @@ type TripRestaurantDTO struct {
 	EndTime           *time.Time `json:"end_time,omitempty"`
 	ReservationInfo   string     `json:"reservation_info"`
 	Notes             string     `json:"notes"`
+	PriceAIEstimate   float64    `json:"price_ai_estimate"`
 }
 
 type Service struct {
@@ -71,15 +73,15 @@ type Service struct {
 }
 
 type Activity struct {
-	ActivityID  string          `json:"activity_id"`
-	ID          string          `json:"id"`
-	Type        string          `json:"type"` // e.g., "place", "accommodation", "restaurant"
-	Name        string          `json:"name"`
-	StartTime   string          `json:"start_time,omitempty"` // "HH:mm" format
-	EndTime     string          `json:"end_time,omitempty"`
-	Description string          `json:"description,omitempty"`
-	Price       float64         `json:"price,omitempty"`
-	Comments    []model.Comment `json:"comments,omitempty"`
+	ActivityID      string          `json:"activity_id"`
+	ID              string          `json:"id"`
+	Type            string          `json:"type"` // e.g., "place", "accommodation", "restaurant"
+	Name            string          `json:"name"`
+	StartTime       string          `json:"start_time,omitempty"` // "HH:mm" format
+	EndTime         string          `json:"end_time,omitempty"`
+	Description     string          `json:"description,omitempty"`
+	PriceAIEstimate float64         `json:"price_ai_estimate,omitempty"`
+	Comments        []model.Comment `json:"comments,omitempty"`
 }
 
 type Segment struct {
@@ -88,9 +90,10 @@ type Segment struct {
 }
 
 type PlanByDay struct {
-	Date     string    `json:"date"`      // "YYYY-MM-DD"
-	DayTitle string    `json:"day_title"` // e.g., "Ngày 1: Check-in & khám phá biển"
-	Segments []Segment `json:"segments"`
+	Date      string    `json:"date"`      // "YYYY-MM-DD"
+	DayTitle  string    `json:"day_title"` // e.g., "Ngày 1: Check-in & khám phá biển"
+	Segments  []Segment `json:"segments"`
+	DailyTips []string  `json:"daily_tips"`
 }
 
 type TripDTOByDate struct {
@@ -178,6 +181,7 @@ func ConvertTripDTO(input TripDTOByDate) (TripDTO, error) {
 						StartTime:         startTimePtr,
 						EndTime:           endTimePtr,
 						Notes:             activity.Description,
+						PriceAIEstimate:   activity.PriceAIEstimate,
 					})
 				case "accommodation":
 					dest.Accommodations = append(dest.Accommodations, TripAccommodationDTO{
@@ -189,8 +193,8 @@ func ConvertTripDTO(input TripDTOByDate) (TripDTO, error) {
 						StartTime:           startTimePtr,
 						EndTime:             endTimePtr,
 						// If a CheckOutDate is available, parse it similarly.
-						Cost:  activity.Price,
-						Notes: activity.Description,
+						PriceAIEstimate: activity.PriceAIEstimate,
+						Notes:           activity.Description,
 					})
 				case "restaurant":
 					dest.Restaurants = append(dest.Restaurants, TripRestaurantDTO{
@@ -201,6 +205,7 @@ func ConvertTripDTO(input TripDTOByDate) (TripDTO, error) {
 						StartTime:         startTimePtr,
 						EndTime:           endTimePtr,
 						ReservationInfo:   activity.Description,
+						PriceAIEstimate:   activity.PriceAIEstimate,
 						Notes:             activity.Description,
 					})
 				}
@@ -244,10 +249,11 @@ func ConvertTripDTOByDate(input TripDTO) (TripDTOByDate, error) {
 			}
 			dateStr := p.ScheduledDate.Format(layoutDate)
 			act := Activity{
-				ActivityID:  p.TripPlaceID,
-				ID:          p.PlaceID,
-				Type:        "place",
-				Description: p.Notes,
+				ActivityID:      p.TripPlaceID,
+				ID:              p.PlaceID,
+				Type:            "place",
+				Description:     p.Notes,
+				PriceAIEstimate: p.PriceAIEstimate,
 			}
 			if p.StartTime != nil {
 				act.StartTime = p.StartTime.Format(layoutTime)
@@ -265,10 +271,11 @@ func ConvertTripDTOByDate(input TripDTO) (TripDTOByDate, error) {
 			}
 			dateStr := a.CheckInDate.Format(layoutDate)
 			act := Activity{
-				ActivityID:  a.TripAccommodationID,
-				ID:          a.AccommodationID,
-				Type:        "accommodation",
-				Description: a.Notes,
+				ActivityID:      a.TripAccommodationID,
+				ID:              a.AccommodationID,
+				Type:            "accommodation",
+				Description:     a.Notes,
+				PriceAIEstimate: a.PriceAIEstimate,
 			}
 			activitiesByDate[dateStr] = append(activitiesByDate[dateStr], act)
 			if a.StartTime != nil {
@@ -287,10 +294,11 @@ func ConvertTripDTOByDate(input TripDTO) (TripDTOByDate, error) {
 			}
 			dateStr := r.MealDate.Format(layoutDate)
 			act := Activity{
-				ActivityID:  r.TripRestaurantID,
-				ID:          r.RestaurantID,
-				Type:        "restaurant",
-				Description: r.Notes,
+				ActivityID:      r.TripRestaurantID,
+				ID:              r.RestaurantID,
+				Type:            "restaurant",
+				Description:     r.Notes,
+				PriceAIEstimate: r.PriceAIEstimate,
 			}
 			if r.StartTime != nil {
 				act.StartTime = r.StartTime.Format(layoutTime)
