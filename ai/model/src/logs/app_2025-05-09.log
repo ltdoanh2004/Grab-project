@@ -1,0 +1,10 @@
+2025-05-09 13:38:46,392 - __mp_main__ - ERROR - Error registering routers: name 'ReviewAgent' is not defined
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/app.py", line 33, in register_routers
+    from src.services.genrate_plan_api import router as trip_plan_router
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/genrate_plan_api.py", line 17, in <module>
+    model = PlanModel()
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/agents/plan_agent.py", line 60, in __init__
+    self.review_agent = ReviewAgent()
+                        ^^^^^^^^^^^
+NameError: name 'ReviewAgent' is not defined
