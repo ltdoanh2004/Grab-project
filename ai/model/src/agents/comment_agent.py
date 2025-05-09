@@ -283,7 +283,28 @@ class CommentAgent:
                     score_boost += 0.01
                     
             modified_item["score"] = min(1.0, modified_item["score"] + score_boost)
-            results.append(modified_item)
+            
+            # Ensure only necessary fields are included in the result
+            processed_item = {
+                "id": modified_item["id"],
+                "name": modified_item["name"],
+                "description": modified_item["description"],
+                "score": modified_item["score"]
+            }
+            
+            # Add type-specific fields (but not 'type' itself)
+            if suggestion_type == "restaurant":
+                processed_item.update({
+                    "cuisines": modified_item.get("cuisines", ""),
+                    "price_range": modified_item.get("price_range", "")
+                })
+            elif suggestion_type == "hotel":
+                processed_item.update({
+                    "amenities": modified_item.get("amenities", ""),
+                    "price_per_night": modified_item.get("price_per_night", 0)
+                })
+                
+            results.append(processed_item)
             
         # Sort by score
         results = sorted(results, key=lambda x: x["score"], reverse=True)
@@ -317,8 +338,6 @@ class CommentAgent:
                     suggestions.append({
                         "id": match["id"],
                         "name": match["metadata"].get("name", ""),
-                        "type": "restaurant",
-                        "address": match["metadata"].get("address", ""),
                         "description": match["metadata"].get("description", ""),
                         "cuisines": match["metadata"].get("cuisines", ""),
                         "price_range": match["metadata"].get("price_range", ""),
@@ -332,11 +351,7 @@ class CommentAgent:
                     suggestions.append({
                         "id": match["id"],
                         "name": match["metadata"].get("name", ""),
-                        "type": "place",
-                        "address": match["metadata"].get("address", ""),
                         "description": match["metadata"].get("description", ""),
-                        "categories": match["metadata"].get("categories", ""),
-                        "opening_hours": match["metadata"].get("opening_hours", ""),
                         "rating": match["metadata"].get("rating", 0),
                         "score": match["score"]
                     })
@@ -347,8 +362,6 @@ class CommentAgent:
                     suggestions.append({
                         "id": match["id"],
                         "name": match["metadata"].get("name", ""),
-                        "type": "hotel",
-                        "address": match["metadata"].get("address", ""),
                         "description": match["metadata"].get("description", ""),
                         "amenities": match["metadata"].get("amenities", ""),
                         "price_per_night": match["metadata"].get("price_per_night", 0),
@@ -920,32 +933,24 @@ class CommentAgent:
             enhanced_description = self._generate_description(suggestion, data)
             price_estimate = self._estimate_price(suggestion, data)
             
+            # Chỉ bao gồm các trường cơ bản, loại bỏ type, categories, opening_hours, address
             suggestion_item = {
                 "id": suggestion["id"],
                 "name": suggestion["name"],
                 "description": enhanced_description,
-                "price_ai_estimate": price_estimate,
-                "type": suggestion["type"]
+                "price_ai_estimate": price_estimate
             }
             
-            # Add type-specific fields
-            if suggestion["type"] == "place":
-                suggestion_item.update({
-                    "categories": suggestion.get("categories", ""),
-                    "opening_hours": suggestion.get("opening_hours", ""),
-                    "address": suggestion.get("address", "")
-                })
-            elif suggestion["type"] == "restaurant":
+            # Thêm các trường cụ thể theo loại nếu cần (nhưng không thêm type)
+            if suggestion["type"] == "restaurant":
                 suggestion_item.update({
                     "cuisines": suggestion.get("cuisines", ""),
-                    "price_range": suggestion.get("price_range", ""),
-                    "address": suggestion.get("address", "")
+                    "price_range": suggestion.get("price_range", "")
                 })
             elif suggestion["type"] == "hotel":
                 suggestion_item.update({
                     "amenities": suggestion.get("amenities", ""),
-                    "price_per_night": suggestion.get("price_per_night", price_estimate),
-                    "address": suggestion.get("address", "")
+                    "price_per_night": suggestion.get("price_per_night", price_estimate)
                 })
             
             suggestion_list.append(suggestion_item)
