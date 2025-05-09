@@ -14,6 +14,7 @@ type TripRestaurant struct {
 	EndTime           *time.Time `gorm:"column:end_time" json:"end_time,omitempty"`
 	ReservationInfo   string     `gorm:"column:reservation_info;size:255" json:"reservation_info"`
 	Notes             string     `gorm:"column:notes" json:"notes"`
+	PriceAIEstimate   float64    `gorm:"column:price_ai_estimate" json:"price_ai_estimate"`
 
 	// Associations with proper GORM foreign key definitions
 	TripDestination *TripDestination `json:"trip_destination,omitempty"`

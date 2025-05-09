@@ -15,6 +15,7 @@ type TripAccommodation struct {
 	EndTime             *time.Time `gorm:"column:end_time" json:"end_time,omitempty"`
 	Cost                float64    `gorm:"column:cost;type:decimal(10,2)" json:"cost"`
 	Notes               string     `gorm:"column:notes" json:"notes"`
+	PriceAIEstimate     float64    `gorm:"column:price_ai_estimate" json:"price_ai_estimate"`
 
 	// Associations
 	TripDestination *TripDestination `json:"trip_destination,omitempty"`
