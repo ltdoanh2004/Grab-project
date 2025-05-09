@@ -89,3 +89,13 @@ type SuggestWithIDAndType struct {
 	Args string `json:"args"`
 	ID   string `json:"id"`
 }
+
+type SuggestWithCommentRequest struct {
+	TravelPreference model.TravelPreference `json:"travel_preference"`
+	Activity         Activity               `json:"activity"`
+}
+
+type SuggestWithCommentResponse struct {
+	SuggestionType string            `json:"suggestion_type"`
+	SuggestionIDs  model.StringArray `json:"suggestion_ids"`
+}

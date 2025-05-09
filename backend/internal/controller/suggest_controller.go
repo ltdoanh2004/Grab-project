@@ -36,6 +36,7 @@ func (sc *SuggestController) RegisterRoutes(router *gin.Engine) {
 			protected.POST("/places", sc.SuggestPlaces)
 			protected.POST("/restaurants", sc.SuggestRestaurants)
 			protected.POST("/trip", sc.SuggestTrip)
+			protected.POST("/comment", sc.SuggestWithComment)
 		}
 		detail := v1.Group("/detail")
 		{
@@ -244,4 +245,30 @@ func (sc *SuggestController) GetAccommodationByID(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, model.NewResponse("Success", accommodationDetail))
+}
+
+// SuggestWithComment godoc
+// @Summary Suggest by comment
+// @Description Get suggestions based on travel preference and comment activity using AI
+// @Tags suggest
+// @Accept json
+// @Produce json
+// @Param data body dto.SuggestWithCommentRequest true "Suggest with Comment Request"
+// @Success 200 {object} model.Response{data=dto.SuggestWithCommentResponse}
+// @Failure 400 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/v1/suggest/comment [post]
+func (sc *SuggestController) SuggestWithComment(ctx *gin.Context) {
+	var req dto.SuggestWithCommentRequest
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, model.NewResponse("Invalid input: "+err.Error(), nil))
+		return
+	}
+
+	response, err := sc.suggestSerivce.SuggestWithComment(&req)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get comment suggestions: "+err.Error(), nil))
+		return
+	}
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", response))
 }

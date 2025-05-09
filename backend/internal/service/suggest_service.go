@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"skeleton-internship-backend/config"
 	"skeleton-internship-backend/internal/dto"
@@ -20,6 +21,7 @@ type SuggestService interface {
 	GetPlaceByID(id string) (model.Place, error)
 	GetRestaurantByID(id string) (model.Restaurant, error)
 	GetAccommodationByID(id string) (model.Accommodation, error)
+	SuggestWithComment(req *dto.SuggestWithCommentRequest) (*dto.SuggestWithCommentResponse, error)
 }
 
 type suggestService struct {
@@ -443,4 +445,83 @@ func (ss *suggestService) GetAccommodationByID(id string) (model.Accommodation, 
 		return model.Accommodation{}, err
 	}
 	return accommodation, nil
+}
+
+// callAISuggestWithComment now returns the raw JSON response from the AI service.
+func (ss *suggestService) callAISuggestWithComment(req *dto.SuggestWithCommentRequest) ([]byte, error) {
+	client := &http.Client{
+		Timeout: 10000 * time.Second,
+	}
+
+	var jsonBody bytes.Buffer
+	if err := json.NewEncoder(&jsonBody).Encode(req); err != nil {
+		return nil, fmt.Errorf("failed to encode suggest with comment request to JSON: %w", err)
+	}
+
+	aiURL := fmt.Sprintf("http://%s:%s%s",
+		config.AppConfig.AI.Host,
+		config.AppConfig.AI.Port,
+		"/suggest/comment",
+	)
+
+	httpReq, err := http.NewRequest("POST", aiURL, &jsonBody)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %w", err)
+	}
+	httpReq.Header.Set("Content-Type", "application/json")
+
+	resp, err := client.Do(httpReq)
+	if err != nil {
+		return nil, fmt.Errorf("failed to send request to AI service: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("AI service returned non-200 status code: %d", resp.StatusCode)
+	}
+
+	// Read and return the raw JSON response.
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read AI service response body: %w", err)
+	}
+	return body, nil
+}
+
+// SuggestWithComment calls the AI service for comment-based suggestions,
+// receives the JSON response, parses it into SuggestWithCommentResponse and returns it.
+func (ss *suggestService) SuggestWithComment(req *dto.SuggestWithCommentRequest) (*dto.SuggestWithCommentResponse, error) {
+	// jsonResponse, err := ss.callAISuggestWithComment(req)
+	jsonResponse, err := ss.mockCallSuggestWithCommentAPI(req)
+	if err != nil {
+		return nil, err
+	}
+
+	var aiResponse dto.SuggestWithCommentResponse
+	if err := json.Unmarshal(jsonResponse, &aiResponse); err != nil {
+		return nil, fmt.Errorf("failed to decode AI service response: %w", err)
+	}
+	return &aiResponse, nil
+}
+
+// mockCallSuggestWithCommentAPI provides mock JSON data for the comment-based suggestion API.
+func (ss *suggestService) mockCallSuggestWithCommentAPI(req *dto.SuggestWithCommentRequest) ([]byte, error) {
+	mockJSON := `
+	{
+  "suggestion_type": "restaurant",
+  "suggestion_ids": [
+    "restaurant_001440",
+    "restaurant_000280",
+    "restaurant_000424",
+    "restaurant_000040",
+    "restaurant_001247",
+    "restaurant_000769",
+    "restaurant_000712",
+    "restaurant_000193",
+    "restaurant_000631",
+    "restaurant_000149"
+  ]
+}
+`
+	return []byte(mockJSON), nil
 }
