@@ -108,7 +108,7 @@ class PlanModel:
             available_accommodations = []
         
         day_prompt = f"""
-        Tạo chi tiết cho ngày {day_num+1} (ngày {current_date_str}) của lịch trình du lịch {merged_data.get("destination")}.
+        Tạo chi tiết cho ngày {day_num+1} (ngày {current_date_str}) của lịch trình du lịch {merged_data.get("destination_id", merged_data.get("destination", "Unknown"))}.
         Tạo 3 segments (morning, afternoon, evening) với các hoạt động phù hợp.
         
         CHÚ Ý QUAN TRỌNG: 
@@ -126,7 +126,7 @@ class PlanModel:
         - Đã dùng nhà hàng: {used_restaurants}
         
         Thông tin chuyến đi:
-        Điểm đến: {merged_data.get("destination")}
+        Điểm đến: {merged_data.get("destination_id", merged_data.get("destination", "Unknown"))}
         Khách sạn có thể sử dụng: {available_accommodations}
         Địa điểm có thể sử dụng: {available_places}
         Nhà hàng có thể sử dụng: {available_restaurants}
@@ -255,7 +255,7 @@ class PlanModel:
             self.used_restaurant_ids = set()
             
             if "trip_name" not in merged_data:
-                merged_data["trip_name"] = "Trip to " + merged_data.get("destination", "Unknown")
+                merged_data["trip_name"] = "Trip to " + merged_data.get("destination_id", merged_data.get("destination", "Unknown"))
             
             try:
                 from datetime import datetime, timedelta
@@ -287,11 +287,11 @@ class PlanModel:
                 merged_data['end_date'] = end_date.strftime("%Y-%m-%d")
             
             final_plan = {
-                "trip_name": merged_data.get("trip_name", "Trip to " + merged_data.get("destination", "Unknown")),
+                "trip_name": merged_data.get("trip_name", "Trip to " + merged_data.get("destination_id", merged_data.get("destination", "Unknown"))),
                 "start_date": merged_data.get("start_date"),
                 "end_date": merged_data.get("end_date"),
                 "user_id": merged_data.get("user_id", "user123"),
-                "destination": merged_data.get("destination", "Unknown"),
+                "destination_id": merged_data.get("destination_id", merged_data.get("destination", "Unknown")),
                 "plan_by_day": []
             }
             
@@ -494,7 +494,7 @@ class PlanModel:
                 "trip_name": input_data.get("trip_name", meta.get("trip_name", "Trip Plan")),
                 "start_date": datetime.now().strftime("%Y-%m-%d"),
                 "end_date": (datetime.now() + timedelta(days=2)).strftime("%Y-%m-%d"),
-                "destination": input_data.get("destination", meta.get("destination", "Unknown")),
+                "destination_id": input_data.get("destination_id", input_data.get("destination", meta.get("destination_id", meta.get("destination", "Unknown")))),
                 "plan_by_day": []
             }
 

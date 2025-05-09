@@ -12,7 +12,10 @@ from typing import List, Dict, Any, Set, Tuple
 # Get the directory where the script is located
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-ENV_PATH = os.path.join(SCRIPT_DIR, '.env')
+# Go up one level to the src directory
+SRC_DIR = os.path.dirname(SCRIPT_DIR)
+
+ENV_PATH = os.path.join(SRC_DIR, '.env')
 print(f"Loading environment variables from: {ENV_PATH}")
 load_dotenv(ENV_PATH)
 
