@@ -6,13 +6,16 @@ import csv
 import os
 import argparse
 from datetime import datetime
-from playwright.async_api import async_playwright
+from playwright.async_api import async_playwright, TimeoutError
 
 nest_asyncio.apply()
 
 # Constants
 BASE_URL = "https://pasgo.vn"
-TIMEOUT = 8000
+TIMEOUT = 30000  # Increased from 8000 to 30000 (30 seconds)
+NAVIGATION_TIMEOUT = 60000  # 60 seconds for page navigation
+SELECTOR_TIMEOUT = 30000  # 30 seconds for waiting selectors
+RETRY_COUNT = 3  # Number of retries for failed requests
 
 # Setup logging
 logging.basicConfig(
@@ -152,20 +155,35 @@ async def crawl_pasgo_by_page(category_slug, city, max_pages=5):
     stats = {"total_restaurants": 0, "successful": 0, "failed": 0}
     
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
-        page = await browser.new_page()
+        browser = await p.chromium.launch(
+            headless=True,
+            args=['--disable-gpu', '--no-sandbox', '--disable-dev-shm-usage']
+        )
+        context = await browser.new_context(
+            viewport={'width': 1920, 'height': 1080},
+            user_agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+        )
+        page = await context.new_page()
         all_results = []
 
         for page_num in range(1, max_pages + 1):
             url = f"{BASE_URL}/{city}/nha-hang{category_slug}?page={page_num}"
             logger.info(f"🔎 Crawling page {page_num}: {url}")
             
-            try:
-                await page.goto(url)
-                await page.wait_for_selector("div.wapitem a", timeout=TIMEOUT)
-            except Exception as e:
-                logger.error(f"⛔ Error on page {page_num}: {str(e)}")
-                continue
+            for retry in range(RETRY_COUNT):
+                try:
+                    await page.goto(url, timeout=NAVIGATION_TIMEOUT)
+                    await page.wait_for_selector("div.wapitem a", timeout=SELECTOR_TIMEOUT)
+                    break
+                except TimeoutError as e:
+                    if retry == RETRY_COUNT - 1:
+                        logger.error(f"⛔ Timeout after {RETRY_COUNT} retries on page {page_num}: {str(e)}")
+                        continue
+                    logger.warning(f"Retry {retry + 1}/{RETRY_COUNT} for page {page_num}")
+                    await asyncio.sleep(2)  # Wait before retry
+                except Exception as e:
+                    logger.error(f"⛔ Error on page {page_num}: {str(e)}")
+                    break
 
             items = await page.query_selector_all("div.wapitem")
             logger.info(f"Found {len(items)} restaurants on page {page_num}")
@@ -180,8 +198,22 @@ async def crawl_pasgo_by_page(category_slug, city, max_pages=5):
                     # Get detail page data
                     link = await (await item.query_selector("a.waptop")).get_attribute("href")
                     full_link = f"{BASE_URL}{link}" if link.startswith("/") else link
-                    detail_page = await browser.new_page()
-                    result.update(await get_detail_data(detail_page, full_link))
+                    detail_page = await context.new_page()
+                    
+                    # Add retry logic for detail page
+                    for retry in range(RETRY_COUNT):
+                        try:
+                            await detail_page.goto(full_link, timeout=NAVIGATION_TIMEOUT)
+                            await detail_page.wait_for_load_state("domcontentloaded", timeout=SELECTOR_TIMEOUT)
+                            result.update(await get_detail_data(detail_page, full_link))
+                            break
+                        except TimeoutError as e:
+                            if retry == RETRY_COUNT - 1:
+                                logger.error(f"Timeout loading detail page after {RETRY_COUNT} retries: {full_link}")
+                                break
+                            logger.warning(f"Retry {retry + 1}/{RETRY_COUNT} for detail page: {full_link}")
+                            await asyncio.sleep(2)
+                    
                     await detail_page.close()
 
                     # Extract basic info
@@ -210,6 +242,7 @@ async def crawl_pasgo_by_page(category_slug, city, max_pages=5):
                     stats["failed"] += 1
                     logger.error(f"Error processing restaurant: {str(e)}")
 
+        await context.close()
         await browser.close()
         
         # Save results to CSV
