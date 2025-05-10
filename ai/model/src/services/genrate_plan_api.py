@@ -41,7 +41,18 @@ async def get_trip_plan(request: dict):
         places = []
         restaurants = []
         destination = request["destination_id"]
-
+        
+        if "accommodation" in request and "accommodations" in request["accommodation"]:
+            accommodations = request["accommodation"]["accommodations"]
+            
+        
+        if "places" in request and "places" in request["places"]:
+            places = request["places"]["places"]
+            
+        
+        if "restaurants" in request and "restaurants" in request["restaurants"]:
+            restaurants = request["restaurants"]["restaurants"]
+            
         logger.info(f"Extracted {len(accommodations)} accommodations, {len(places)} places, and {len(restaurants)} restaurants")
         logger.info(f"Destination identified as: {destination}")
         
