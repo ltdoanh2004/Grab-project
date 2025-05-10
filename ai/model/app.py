@@ -12,15 +12,12 @@ from fastapi import FastAPI, HTTPException
 
 from src.utils.logger import setup_logger
 
-# Set up logger for this module
 logger = setup_logger(__name__)
 
-# Add the current directory to the path
 current_dir = os.path.dirname(os.path.abspath(__file__))
 if current_dir not in sys.path:
     sys.path.append(current_dir)
 
-# Initialize main FastAPI app
 app = FastAPI(
     title="Travel API",
     description="Travel planning and recommendation API",
@@ -41,7 +38,6 @@ def register_routers():
         logger.error(f"Error registering routers: {e}", exc_info=True)
         raise
 
-# Register the routers at module level to ensure they are available when the app starts
 register_routers()
 
 @app.get("/")
@@ -61,9 +57,6 @@ async def root():
     }
 
 if __name__ == "__main__":
-    # Get port from environment variable or use default
     port = int(os.getenv("API_PORT", 8001))
-    
     print(f"Starting Travel API server on port {port}...")
-    # Use the module:app format for reload to work properly
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True) 
