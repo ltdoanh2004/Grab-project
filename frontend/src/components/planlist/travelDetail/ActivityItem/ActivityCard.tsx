@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useRef } from "react";
 import {
   Card,
   Tag,
@@ -8,6 +8,8 @@ import {
   Tooltip,
   TimePicker,
   Space,
+  Image,
+  Badge,
 } from "antd";
 import {
   SwapOutlined,
@@ -19,9 +21,11 @@ import {
   EnvironmentOutlined,
   RightOutlined,
   MessageOutlined,
+  DollarOutlined,
 } from "@ant-design/icons";
 import { TravelDay, TravelActivity } from "../../../../types/travelPlan";
-import { useActivityDnD } from "../../../../hooks/useActivityDnD";
+import { useDrag, useDrop } from "react-dnd";
+import { ItemTypes } from "../../../../types/travelPlan";
 import { useTimeEdit } from "../../../../hooks/useTimeEdit";
 import { ActivityCommentModal } from "./Comment";
 
@@ -31,6 +35,8 @@ interface ActivityCardProps {
   day: TravelDay;
   activity: TravelActivity;
   index: number;
+  dayIndex: number;
+  segment: string;
   activityTypeColors: Record<TravelActivity["type"], string>;
   onActivityClick: (a: TravelActivity) => void;
   isEditMode: boolean;
@@ -38,18 +44,32 @@ interface ActivityCardProps {
   onDeleteActivity?: (d: TravelDay, a: TravelActivity) => void;
   onUpdateActivityTime?: (d: TravelDay, a: TravelActivity, t: string) => void;
   moveActivity: (
-    from: number,
-    to: number,
+    fromIndex: number,
+    toIndex: number,
     fromDayId: number,
-    toDayId: number
+    toDayId: number,
+    fromSegment: string,
+    toSegment: string
   ) => void;
 }
+
+// Activity drag item type
+interface DragItem {
+  id: string;
+  index: number;
+  dayIndex: number;
+  segment: string;
+}
+
+const DEFAULT_IMAGE = "/hinhnen.jpg";
 
 export const ActivityCard: React.FC<ActivityCardProps> = memo(
   ({
     day,
     activity,
     index,
+    dayIndex,
+    segment,
     activityTypeColors,
     onActivityClick,
     isEditMode,
@@ -58,115 +78,144 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
     onUpdateActivityTime,
     moveActivity,
   }) => {
-    const { ref, isDragging, isOver } = useActivityDnD(
-      isEditMode,
-      index,
-      day.day,
-      moveActivity
-    );
-
-    const timeEdit = useTimeEdit(activity.time, (newTime) => {
-      onUpdateActivityTime?.(day, activity, newTime);
+    const ref = useRef<HTMLDivElement>(null);
+    const [showCommentModal, setShowCommentModal] = React.useState(false);
+    
+    // Simple drag implementation
+    const [{ isDragging }, drag] = useDrag({
+      type: ItemTypes.ACTIVITY,
+      item: (): DragItem => ({
+        id: activity.id,
+        index,
+        dayIndex,
+        segment
+      }),
+      canDrag: () => isEditMode,
+      collect: (monitor) => ({
+        isDragging: !!monitor.isDragging()
+      })
     });
+    
+    // Drop implementation to handle swapping
+    const [{ isOver }, drop] = useDrop({
+      accept: ItemTypes.ACTIVITY,
+      collect: (monitor) => ({
+        isOver: !!monitor.isOver()
+      }),
+      drop: (item: DragItem) => {
+        // Don't do anything if dropping onto itself
+        if (item.index === index && item.dayIndex === dayIndex && item.segment === segment) {
+          return;
+        }
+        
+        // Call the moveActivity function to swap the items
+        moveActivity(
+          item.index,
+          index,
+          item.dayIndex,
+          dayIndex,
+          item.segment,
+          segment
+        );
+      },
+      canDrop: () => isEditMode
+    });
+    
+    // Apply the drag and drop refs
+    drag(drop(ref));
+
+    const timeEdit = useTimeEdit(
+      `${activity.start_time} - ${activity.end_time}`,
+      (newTime) => {
+        onUpdateActivityTime?.(day, activity, newTime);
+      }
+    );
 
     const cardClick = isEditMode ? undefined : () => onActivityClick(activity);
 
-    const [showCommentModal, setShowCommentModal] = React.useState(false);
+    const formatTime = (time: string) => {
+      if (!time) return "";
+      return time.replace(":", "h") + "p";
+    };
+
+    const displayTime = activity.start_time && activity.end_time
+      ? `${formatTime(activity.start_time)} - ${formatTime(activity.end_time)}`
+      : "Chưa có thời gian";
+
+    const typeColor = activityTypeColors[activity.type] || "blue";
 
     return (
       <div
         ref={ref}
-        className="mb-4 flex items-center"
+        className={`mb-4 flex items-center group transition-all duration-300 ${
+          isDragging ? "opacity-40" : "opacity-100"
+        } ${isOver ? "bg-blue-50 rounded-lg" : ""}`}
         style={{
-          opacity: isDragging ? 0.4 : 1,
           cursor: isEditMode ? "move" : "pointer",
-          background: isOver ? "#f0f8ff" : undefined,
           border: isOver ? "1px dashed #1890ff" : undefined,
-          transition: "all .2s ease",
         }}
       >
-        <div className="flex flex-col items-center justify-center h-full mx-1">
-          <Tooltip title="Bình luận">
-            <Button
-              type="text"
-              icon={
-                <MessageOutlined
-                  style={{
-                    fontSize: 18,
-                    color: showCommentModal ? "#1677ff" : "#bdbdbd",
-                    transition: "color 0.2s",
-                  }}
-                />
-              }
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowCommentModal(true);
-              }}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                height: 32,
-                width: 32,
-                borderRadius: "50%",
-                background: showCommentModal ? "#e6f4ff" : "#f5f5f5",
-                boxShadow: showCommentModal
-                  ? "0 0 0 2px #1677ff"
-                  : "0 0 0 1px #e5e7eb",
-                border: "none",
-                marginTop: 4,
-                marginBottom: 4,
-                padding: 0,
-              }}
-            />
-          </Tooltip>
-        </div>
-        <Card hoverable={!isEditMode} onClick={cardClick} className="flex-1">
+        <Card
+          hoverable={!isEditMode}
+          onClick={cardClick}
+          className="flex-1 transition-all duration-300 hover:shadow-lg border border-gray-100 overflow-hidden"
+          styles={{ body: { padding: "16px" } }}
+        >
           <div className="flex">
             {isEditMode && (
-              <div className="mr-2 flex items-center text-gray-500">
-                <DragOutlined />
+              <div className="mr-3 flex items-center text-gray-400">
+                <DragOutlined className="text-lg" />
               </div>
             )}
 
-            <img
-              src={activity.imageUrl}
-              alt={activity.name}
-              className="w-20 h-20 mr-4 rounded object-cover"
-            />
+            <div className="relative w-32 h-24 md:w-36 md:h-28 mr-4 rounded-lg overflow-hidden shadow-md flex-shrink-0">
+              <Image
+                src={activity.image_url || activity.imgUrl || DEFAULT_IMAGE}
+                alt={activity.name}
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                fallback={DEFAULT_IMAGE}
+                preview={false}
+              />
+            </div>
 
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               {timeEdit.editing ? (
-                <Space className="mb-2" onClick={(e) => e.stopPropagation()}>
+                <Space className="mb-3" onClick={(e) => e.stopPropagation()}>
                   <TimePicker
                     value={timeEdit.startTime}
                     format="HH:mm"
                     minuteStep={5}
                     size="small"
                     onChange={(v) => timeEdit.setStartTime(v!)}
+                    className="hover:border-blue-500"
                   />
-                  <span>-</span>
+                  <span className="text-gray-400">-</span>
                   <TimePicker
                     value={timeEdit.endTime}
                     format="HH:mm"
                     minuteStep={5}
                     size="small"
                     onChange={(v) => timeEdit.setEndTime(v!)}
+                    className="hover:border-blue-500"
                   />
                   <Button
                     size="small"
                     type="primary"
                     icon={<CheckOutlined />}
                     onClick={timeEdit.commit}
+                    className="bg-blue-500 hover:bg-blue-600"
                   />
                 </Space>
               ) : (
-                <Tag color={activityTypeColors[activity.type]} className="mb-1">
+                <Tag
+                  color={typeColor}
+                  className="mb-3 px-3 py-1 text-sm font-medium rounded-full"
+                >
                   <ClockCircleOutlined className="mr-1" />
-                  {activity.time}
+                  {displayTime}
                   {isEditMode && (
                     <EditOutlined
-                      className="ml-2 cursor-pointer"
+                      className="ml-2 cursor-pointer hover:text-blue-500 transition-colors"
                       onClick={(e) => {
                         e.stopPropagation();
                         timeEdit.begin();
@@ -176,19 +225,49 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
                 </Tag>
               )}
 
-              <div className="flex items-center">
-                <Title level={5} className="m-0">
+              <div className="flex items-center justify-between mb-2">
+                <Title level={5} className="m-0 text-lg font-semibold text-gray-800 truncate pr-4">
                   {activity.name}
                 </Title>
+                
+                {activity.rating && !isEditMode && (
+                  <div className="flex items-center">
+                    <Rate
+                      disabled
+                      allowHalf
+                      value={activity.rating}
+                      className="text-xs scale-75 origin-right"
+                    />
+                  </div>
+                )}
               </div>
-              <Text type="secondary">
-                <EnvironmentOutlined className="mr-1" /> {activity.location}
-              </Text>
+
+              <div className="space-y-1.5">
+                <Text className="flex items-center text-gray-600 text-sm">
+                  <EnvironmentOutlined className="mr-2 text-gray-400" />
+                  <span className="truncate">
+                    {activity.address || "Chưa có địa chỉ"}
+                  </span>
+                </Text>
+
+                {activity.description && (
+                  <Text className="block text-gray-500 text-sm line-clamp-2">
+                    {activity.description}
+                  </Text>
+                )}
+
+                {(activity.price_range || activity.price) && (
+                  <Text className="flex items-center text-sm font-medium text-green-600">
+                    <DollarOutlined className="mr-1" />
+                    {activity.price_range || `${activity.price?.toLocaleString()} VND`}
+                  </Text>
+                )}
+              </div>
             </div>
 
-            <div className="flex items-start">
+            <div className="flex items-start justify-end ml-3">
               {isEditMode ? (
-                <Space>
+                <Space direction="vertical" size="small">
                   <Tooltip title="Thay thế bằng gợi ý từ AI">
                     <Button
                       icon={<SwapOutlined />}
@@ -197,6 +276,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
                         e.stopPropagation();
                         onReplaceActivity?.(day, activity);
                       }}
+                      className="hover:bg-blue-50 hover:text-blue-500"
                     />
                   </Tooltip>
                   <Tooltip title="Xoá hoạt động">
@@ -208,23 +288,43 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
                         e.stopPropagation();
                         onDeleteActivity?.(day, activity);
                       }}
+                      className="hover:bg-red-50"
                     />
                   </Tooltip>
                 </Space>
               ) : (
-                <>
-                  <Rate
-                    disabled
-                    allowHalf
-                    value={activity.rating}
-                    className="text-xs"
-                  />
-                  <RightOutlined className="ml-2 text-gray-400" />
-                </>
+                <div className="flex flex-col items-end justify-between h-full">
+                  <RightOutlined className="text-gray-300 group-hover:text-gray-400 transition-colors mt-1" />
+                </div>
               )}
             </div>
           </div>
         </Card>
+
+        <div className="flex flex-col items-center justify-center h-full mx-2">
+          <Tooltip title="Bình luận">
+            <Button
+              type="text"
+              icon={
+                <MessageOutlined
+                  className={`text-lg transition-colors duration-200 ${
+                    showCommentModal ? "text-blue-500" : "text-gray-400"
+                  }`}
+                />
+              }
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowCommentModal(true);
+              }}
+              className={`flex items-center justify-center h-8 w-8 rounded-full transition-all duration-200 ${
+                showCommentModal
+                  ? "bg-blue-50 ring-2 ring-blue-500"
+                  : "bg-gray-50 hover:bg-gray-100"
+              }`}
+            />
+          </Tooltip>
+        </div>
+
         <ActivityCommentModal
           open={showCommentModal}
           onClose={() => setShowCommentModal(false)}
