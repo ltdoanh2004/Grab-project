@@ -12,4 +12,7 @@ type Destination struct {
 	Places         []Place         `gorm:"foreignKey:DestinationID" json:"places,omitempty"`
 	Accommodations []Accommodation `gorm:"foreignKey:DestinationID" json:"accommodations,omitempty"`
 	Restaurants    []Restaurant    `gorm:"foreignKey:DestinationID" json:"restaurants,omitempty"`
+
+	// New association with TravelPreference (one-to-many)
+	TravelPreferences []TravelPreference `gorm:"foreignKey:DestinationID;references:DestinationID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"travel_preferences,omitempty"`
 }

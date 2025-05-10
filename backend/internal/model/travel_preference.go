@@ -94,14 +94,14 @@ func (l *ListPersonalOption) Scan(value interface{}) error {
 }
 
 type TravelPreference struct {
-	TravelPreferenceID string           `gorm:"type:char(36);primaryKey" json:"travel_preference_id"`
-	TripID             string           `gorm:"type:char(36);not null" json:"trip_id"`
-	DestinationID      string           `gorm:"size:255" json:"destination_id"`
-	Budget             Budget           `gorm:"type:json" json:"budget"`
-	People             People           `gorm:"type:json" json:"people"`
-	TravelTime         TravelTime       `gorm:"type:json" json:"travel_time"`
+	TravelPreferenceID string             `gorm:"type:char(36);primaryKey" json:"travel_preference_id"`
+	TripID             string             `gorm:"type:char(36);not null" json:"trip_id"`
+	DestinationID      string             `gorm:"size:255" json:"destination_id"`
+	Budget             Budget             `gorm:"type:json" json:"budget"`
+	People             People             `gorm:"type:json" json:"people"`
+	TravelTime         TravelTime         `gorm:"type:json" json:"travel_time"`
 	PersonalOptions    ListPersonalOption `gorm:"type:json" json:"personal_options"`
 
-	Trip        *Trip        `json:"trip,omitempty"`
-	Destination *Destination `json:"destination,omitempty"`
+	// Trip *Trip `json:"trip,omitempty"`
+	// Destination *Destination `json:"destination,omitempty"`
 }

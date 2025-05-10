@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Spin, Typography, Card, Row, Col, List, Button } from "antd";
+import { Spin, Typography, Card, Row, Col, List, Button, message } from "antd";
 import {
   LoadingOutlined,
   CheckOutlined,
   SyncOutlined,
 } from "@ant-design/icons";
+import { getAllSuggestions, getTripPlan } from "../../services/travelPlanApi";
+import { useNavigate } from "react-router-dom";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -17,10 +19,10 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({
   destination,
   onFinish,
 }) => {
-  // State to track progress of loading steps
   const [currentStepIndex, setCurrentStepIndex] = useState(2);
-  // Track which steps have been processed
   const [completedSteps, setCompletedSteps] = useState<number[]>([0, 1]);
+  const [apiLoadingComplete, setApiLoadingComplete] = useState(false);
+  const navigate = useNavigate();
 
   const travelTips = [
     "Đừng quên sạc đầy các thiết bị điện tử trước khi khởi hành",
@@ -38,16 +40,53 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({
     { text: "Hoàn thiện lịch trình", complete: false },
   ];
 
-  // Simulate progressing through steps without ever finishing
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      try {
+        const suggestionsData = await getAllSuggestions();
+        const tripPlanData = await getTripPlan(suggestionsData.data);
+
+        const tripPlanWithId = {
+          ...tripPlanData.data,
+          id: "temp123",
+        };
+
+        localStorage.setItem(
+          "tripPlan_temp123",
+          JSON.stringify(tripPlanWithId)
+        );
+        console.log(tripPlanData.data);
+
+        setApiLoadingComplete(true);
+        navigate("/trips/temp123");
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+        if (
+          typeof error === "object" &&
+          error !== null &&
+          "response" in error
+        ) {
+          const err = error as { response?: { data?: any } };
+          console.error("Error response:", err.response?.data);
+          message.error(
+            `Lỗi: ${err.response?.data?.message || "Không thể tải dữ liệu"}`
+          );
+        } else {
+          message.error("Không thể tải dữ liệu. Vui lòng thử lại sau.");
+        }
+      }
+    };
+
+    fetchSuggestions();
+  }, []);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentStepIndex((prevIndex) => {
-        // Mark current step as completed
         if (!completedSteps.includes(prevIndex)) {
           setCompletedSteps((prev) => [...prev, prevIndex]);
         }
 
-        // Cycle through steps 2-4 to create illusion of progress without completion
         if (prevIndex >= 4) return 2;
         return prevIndex + 1;
       });
@@ -55,6 +94,16 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({
 
     return () => clearInterval(interval);
   }, [completedSteps]);
+
+  useEffect(() => {
+    if (apiLoadingComplete && onFinish) {
+      const timer = setTimeout(() => {
+        onFinish();
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [apiLoadingComplete, onFinish]);
 
   return (
     <div className="p-8 font-inter">

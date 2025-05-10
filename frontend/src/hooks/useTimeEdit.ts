@@ -1,9 +1,9 @@
 import { useState, useCallback, useMemo } from "react";
 import dayjs from "dayjs";
 
-export function useTimeEdit(initial: string, save: (v: string) => void) {
+export function useTimeEdit(initial: string = "", save: (v: string) => void) {
   const [editing, setEditing] = useState(false);
-  const [start, end] = useMemo(() => initial.split(" - "), [initial]);
+  const [start, end] = useMemo(() => (initial || "").split(" - "), [initial]);
   const [startTime, setStartTime] = useState(() => dayjs(start, "HH:mm"));
   const [endTime, setEndTime] = useState(() => dayjs(end, "HH:mm"));
 

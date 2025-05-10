@@ -63,6 +63,11 @@ import (
 // @tag.name         InsertData
 // @tag.description  Operations for importing data from CSV files
 
+// @tag.name         expense
+// @tag.description  Operations about trip expenses and expense splitting
+// @tag.docs.url     http://example.com/docs/expense
+// @tag.docs.description Detailed information about expense operations
+
 // @securityDefinitions.apikey Bearer
 // @in header
 // @name Authorization
@@ -86,6 +91,8 @@ func main() {
 			repository.NewTripRestaurantRepository,
 			repository.NewCommentRepository,
 			repository.NewTravelPreferenceRepository,
+			repository.NewExpenseRepository,
+			repository.NewExpenseUserRepository,
 			service.NewService,
 			service.NewAuthService,
 			service.NewTripService,
@@ -93,6 +100,7 @@ func main() {
 			service.NewInsertDataService,
 			service.NewWebSocketService,
 			service.NewCommentService,
+			service.NewExpenseService,
 			controller.NewController,
 			controller.NewAuthController,
 			controller.NewTripController,
@@ -100,6 +108,7 @@ func main() {
 			controller.NewInsertDataController,
 			controller.NewWebSocketController,
 			controller.NewCommentController,
+			controller.NewExpenseController,
 		),
 		fx.StartTimeout(1*time.Minute),
 		fx.Invoke(RegisterRoutes),
@@ -144,6 +153,7 @@ func RegisterRoutes(
 	comment_controller *controller.CommentController,
 	webSocketController *controller.WebSocketController,
 	insertDataController *controller.InsertDataController,
+	expense_controller *controller.ExpenseController,
 	insertDataService service.InsertDataService,
 ) {
 	controller.RegisterRoutes(router)
@@ -153,6 +163,7 @@ func RegisterRoutes(
 	comment_controller.RegisterRoutes(router)
 	insertDataController.RegisterRoutes(router)
 	webSocketController.RegisterRoutes(router)
+	expense_controller.RegisterRoutes(router)
 
 	logger.Init()
 

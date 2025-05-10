@@ -46,8 +46,11 @@ import {
 /**
  * Format a date using Vietnamese locale
  */
-export const formatDate = (date: Date): string => {
-  return date.toLocaleDateString("vi-VN", {
+export const formatDate = (date: Date | string | undefined | null): string => {
+  if (!date) return "";
+  const d = typeof date === "string" ? new Date(date) : date;
+  if (!d || isNaN(d.getTime())) return "";
+  return d.toLocaleDateString("vi-VN", {
     day: "numeric",
     month: "numeric",
     year: "numeric",
@@ -68,10 +71,18 @@ export const formatCurrency = (value: number): string => {
 /**
  * Calculate the number of days between two dates
  */
-export const calculateDurationDays = (start: Date, end: Date): number => {
-  return Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+export const calculateDurationDays = (
+  start: Date | string | undefined | null,
+  end: Date | string | undefined | null
+): number => {
+  if (!start || !end) return 0;
+  const startDate = typeof start === "string" ? new Date(start) : start;
+  const endDate = typeof end === "string" ? new Date(end) : end;
+  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return 0;
+  return Math.round(
+    (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+  );
 };
-
 /**
  * Get a status tag component based on travel status
  */
@@ -391,188 +402,626 @@ export const TRAVEL_PLAN_TABS = (
 
 export const MOCK_TRAVEL_DETAIL: TravelDetailData = {
   id: "trip-1",
-  destination: "Hà Nội",
-  imageUrl: "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
-  startDate: new Date(2023, 11, 20),
-  endDate: new Date(2023, 11, 25),
+  user_id: "user123",
+  trip_name: "Trip to Hanoi",
+  start_date: "2025-05-07",
+  end_date: "2025-05-09",
+  destination: "hanoi",
   adults: 2,
-  children: 1,
+  children: 0,
   budgetType: "$$$",
   totalBudget: 15000000,
-  spentBudget: 8500000,
+  spentBudget: 5000000,
   status: "confirmed",
-  notes:
-    "Chuẩn bị áo ấm và đồ dùng cá nhân đầy đủ. Kiểm tra thời tiết trước khi đi.",
-  days: [
+  notes: "Mang theo áo mưa và kiểm tra thời tiết trước khi đi.",
+  imageUrl: "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
+  plan_by_day: [
     {
-      day: 1,
-      date: new Date(2023, 11, 20),
-      activities: [
+      date: "2025-05-07",
+      day_title: "Ngày 1: Khám phá phố cổ Hà Nội",
+      segments: [
         {
-          id: "act-1-1",
-          time: "08:00 - 10:00",
-          type: "transport",
-          name: "Khởi hành từ sân bay Tân Sơn Nhất",
-          location: "Sân bay Tân Sơn Nhất, TP HCM",
-          description:
-            "Check-in tại quầy VietJet Air, cửa 5. Chuyến bay VJ123.",
-          imageUrl:
-            "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
-          rating: 4,
-          duration: 2,
+          time_of_day: "morning",
+          activities: [
+            {
+              id: "hotel_006100",
+              type: "accommodation",
+              name: "Hanoi Capital Hostel & Travel",
+              start_time: "08:00",
+              end_time: "10:00",
+              description:
+                "Bắt đầu ngày mới với không gian thoải mái tại Hanoi Capital Hostel & Travel.",
+              rating: 4.5,
+            },
+            {
+              id: "restaurant_020781",
+              type: "restaurant",
+              name: "Beefsteak Nam Sơn - Nguyễn Thị Minh Khai",
+              start_time: "10:30",
+              end_time: "11:30",
+              description:
+                "Thưởng thức bữa sáng với món bò nổi tiếng tại Beefsteak Nam Sơn.",
+              rating: 4.2,
+              cuisines: "Đặc sản địa phương",
+              price_range: "100,000-300,000 VND",
+            },
+          ],
         },
         {
-          id: "act-1-2",
-          time: "12:00 - 14:00",
-          type: "restaurant",
-          name: "Nhà hàng Quán Ăn Ngon",
-          location: "18 Phan Bội Châu, Hoàn Kiếm, Hà Nội",
-          description:
-            "Ăn trưa với các món đặc sản Hà Nội như phở, bún chả, nem rán.",
-          imageUrl:
-            "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
-          rating: 4.5,
-          price: "150.000đ - 300.000đ/người",
-          contactInfo: "024 3733 5656",
+          time_of_day: "afternoon",
+          activities: [
+            {
+              id: "place_000481",
+              type: "place",
+              name: "Hanoi Old Quarter",
+              start_time: "13:00",
+              end_time: "15:00",
+              description:
+                "Chúng ta sẽ bắt đầu hành trình khám phá phố cổ Hà Nội.",
+              categories: "sightseeing",
+              duration: "2h",
+              opening_hours: "08:00-17:00",
+              rating: 4,
+            },
+            {
+              id: "place_000300",
+              type: "place",
+              name: "Ha Noi Nail",
+              start_time: "15:30",
+              end_time: "16:30",
+              description:
+                "Hãy tạm gác lại công việc và thư giãn tại Ha Noi Nail.",
+              categories: "sightseeing",
+              duration: "2h",
+              opening_hours: "08:00-17:00",
+              rating: 4,
+            },
+          ],
         },
         {
-          id: "act-1-3",
-          time: "15:00 - 18:00",
-          type: "attraction",
-          name: "Hoàn Kiếm Lake & Old Quarter",
-          location: "Hoàn Kiếm, Hà Nội",
-          description:
-            "Đi dạo quanh Hồ Hoàn Kiếm, thăm đền Ngọc Sơn và khám phá 36 phố phường.",
-          imageUrl:
-            "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
-          rating: 4.8,
-          duration: 3,
-          price: "30.000đ (vé vào đền Ngọc Sơn)",
+          time_of_day: "evening",
+          activities: [
+            {
+              id: "restaurant_000880",
+              type: "restaurant",
+              name: "Phở Hà Nội - Hồng Hà",
+              start_time: "18:00",
+              end_time: "19:00",
+              description:
+                "Chúng ta sẽ kết thúc ngày bằng bữa tối với món Phở Hà Nội truyền thống.",
+              rating: 4.2,
+              cuisines: "Đặc sản địa phương",
+              price_range: "100,000-300,000 VND",
+            },
+            {
+              id: "place_000159",
+              type: "place",
+              name: "City Game Hanoi",
+              start_time: "19:30",
+              end_time: "21:30",
+              description:
+                "Hãy thư giãn và tận hưởng những trò chơi thú vị tại City Game Hanoi.",
+              categories: "sightseeing",
+              duration: "2h",
+              opening_hours: "08:00-17:00",
+              rating: 4,
+            },
+          ],
         },
       ],
     },
     {
-      day: 2,
-      date: new Date(2023, 11, 21),
-      activities: [
+      date: "2025-05-08",
+      day_title: "Ngày 2: Khám phá những điểm đến nổi tiếng tại Hà Nội",
+      segments: [
         {
-          id: "act-2-1",
-          time: "07:00 - 08:00",
-          type: "restaurant",
-          name: "Phở Thìn",
-          location: "13 Lò Đúc, Hai Bà Trưng, Hà Nội",
-          description: "Phở bò nổi tiếng Hà Nội với thịt bò xào thơm lừng.",
-          imageUrl:
-            "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
-          rating: 4.7,
-          price: "60.000đ - 80.000đ/tô",
-          contactInfo: "024 3821 2709",
+          time_of_day: "morning",
+          activities: [
+            {
+              id: "hotel_005820",
+              type: "accommodation",
+              name: "Hanoi Capital Hostel & Travel",
+              start_time: "08:00",
+              end_time: "10:00",
+              description:
+                "Bạn sẽ được tận hưởng bữa sáng ngon miệng, chuẩn bị cho một ngày dài khám phá Hà Nội.",
+              rating: 4.5,
+              price: 850000,
+            },
+            {
+              id: "place_011097",
+              type: "place",
+              name: "Hanoi Old Quarter",
+              start_time: "10:30",
+              end_time: "12:00",
+              description:
+                "Chúng ta sẽ dạo quanh khu phố cổ, tận hưởng không khí sôi động của Hà Nội.",
+              address: "Hà Nội",
+              categories: "sightseeing",
+              duration: "2h",
+              opening_hours: "08:00-17:00",
+              rating: 4.5,
+              price: 50000,
+            },
+          ],
         },
         {
-          id: "act-2-2",
-          time: "09:00 - 12:00",
-          type: "attraction",
-          name: "Lăng Chủ tịch Hồ Chí Minh & Khu di tích Ba Đình",
-          location: "Số 2 Hùng Vương, Ba Đình, Hà Nội",
-          description:
-            "Thăm Lăng Chủ tịch, nhà sàn, chùa Một Cột và bảo tàng Hồ Chí Minh.",
-          imageUrl:
-            "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
-          rating: 4.6,
-          duration: 3,
-          price: "Miễn phí",
+          time_of_day: "afternoon",
+          activities: [
+            {
+              id: "restaurant_000880",
+              type: "restaurant",
+              name: "Phở Hà Nội - Hồng Hà",
+              start_time: "12:30",
+              end_time: "13:30",
+              description:
+                "Hãy thưởng thức một bữa trưa ngon miệng với món phở truyền thống.",
+              address: "Hà Nội",
+              rating: 4.5,
+              cuisines: "Đặc sản địa phương",
+              price_range: "100,000-300,000 VND",
+            },
+            {
+              id: "place_000159",
+              type: "place",
+              name: "City Game Hanoi",
+              start_time: "14:00",
+              end_time: "16:00",
+              description:
+                "Bạn sẽ được tham gia vào những trò chơi vui nhộn, thú vị.",
+              address: "Hà Nội",
+              categories: "entertainment",
+              duration: "2h",
+              opening_hours: "08:00-17:00",
+              rating: 4,
+              price: 150000,
+            },
+          ],
+        },
+        {
+          time_of_day: "evening",
+          activities: [
+            {
+              id: "restaurant_004226",
+              type: "restaurant",
+              name: "Pho Phuc",
+              start_time: "18:00",
+              end_time: "19:00",
+              description: "Hãy thưởng thức bữa tối với món phở ngon tuyệt.",
+              address: "Hà Nội",
+              rating: 4.5,
+              cuisines: "Đặc sản địa phương",
+              price_range: "100,000-300,000 VND",
+            },
+            {
+              id: "place_000028",
+              type: "place",
+              name: "Nha Hat Cai Luong Ha Noi",
+              start_time: "19:30",
+              end_time: "21:00",
+              description: "Thưởng thức buổi biểu diễn cải lương tuyệt vời.",
+              address: "Hà Nội",
+              categories: "entertainment",
+              duration: "2h",
+              opening_hours: "08:00-17:00",
+              rating: 4.5,
+              price: 200000,
+            },
+          ],
         },
       ],
     },
     {
-      day: 3,
-      date: new Date(2023, 11, 22),
-      activities: [
+      date: "2025-05-09",
+      day_title: "Ngày 3: Hành trình văn hóa Hà Nội",
+      segments: [
         {
-          id: "act-3-1",
-          time: "08:00 - 17:00",
-          type: "attraction",
-          name: "Chuyến tham quan Vịnh Hạ Long 1 ngày",
-          location: "Vịnh Hạ Long, Quảng Ninh",
-          description:
-            "Đi tàu thăm các đảo đá, hang động và làng chài trên Vịnh Hạ Long.",
-          imageUrl:
-            "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
-          rating: 4.9,
-          duration: 9,
-          price: "1.200.000đ/người (bao gồm xe đưa đón, tàu, ăn trưa)",
+          time_of_day: "morning",
+          activities: [
+            {
+              id: "hotel_007260",
+              type: "accommodation",
+              name: "Hanoi Memory Premier Hotel & Spa",
+              start_time: "08:00",
+              end_time: "10:00",
+              description:
+                "Bạn sẽ được thưởng thức bữa sáng phong cách Việt Nam tại khách sạn.",
+              rating: 4.5,
+              price: 850000,
+            },
+            {
+              id: "place_011097",
+              type: "place",
+              name: "Hanoi Old Quarter",
+              start_time: "10:30",
+              end_time: "12:30",
+              description:
+                "Chúng ta sẽ bắt đầu ngày mới bằng việc khám phá khu phố cổ Hà Nội.",
+              address: "Hà Nội",
+              categories: "sightseeing",
+              duration: "2h",
+              opening_hours: "08:00-17:00",
+              rating: 4.5,
+              price: 50000,
+            },
+          ],
+        },
+        {
+          time_of_day: "afternoon",
+          activities: [
+            {
+              id: "restaurant_020781",
+              type: "restaurant",
+              name: "Beefsteak Nam Sơn - Nguyễn Thị Minh Khai",
+              start_time: "13:00",
+              end_time: "14:00",
+              description:
+                "Hãy thưởng thức bữa trưa với món bò nổi tiếng của Hà Nội.",
+              address: "Hà Nội",
+              rating: 4.5,
+              cuisines: "Đặc sản địa phương",
+              price_range: "100,000-300,000 VND",
+            },
+            {
+              id: "place_000481",
+              type: "place",
+              name: "Ha Noi",
+              start_time: "14:30",
+              end_time: "16:30",
+              description:
+                "Tiếp tục hành trình khám phá văn hóa, lịch sử của thủ đô Hà Nội.",
+              address: "Hà Nội",
+              categories: "sightseeing",
+              duration: "2h",
+              opening_hours: "08:00-17:00",
+              rating: 4.5,
+              price: 50000,
+            },
+          ],
+        },
+        {
+          time_of_day: "evening",
+          activities: [
+            {
+              id: "restaurant_016933",
+              type: "restaurant",
+              name: "Highlands Coffee - Trà, Cà Phê & Bánh - Vincom Quang Trung",
+              start_time: "17:00",
+              end_time: "18:00",
+              description:
+                "Thưởng thức ly cà phê đặc sắc của Highlands Coffee.",
+              address: "Hà Nội",
+              rating: 4.5,
+              cuisines: "Cà phê",
+              price_range: "100,000-300,000 VND",
+            },
+            {
+              id: "place_000028",
+              type: "place",
+              name: "Nha Hat Cai Luong Ha Noi",
+              start_time: "19:00",
+              end_time: "21:00",
+              description:
+                "Kết thúc ngày với buổi biểu diễn cải lương đầy màu sắc tại Nhà hát Cải lương Hà Nội.",
+              address: "Hà Nội",
+              categories: "entertainment",
+              duration: "2h",
+              opening_hours: "08:00-17:00",
+              rating: 4.5,
+              price: 100000,
+            },
+          ],
         },
       ],
     },
   ],
 };
+
+export const MOCK_TRAVEL_DETAIL_2: TravelDetailData = {
+  id: "trip-2",
+  user_id: "user123",
+  trip_name: "Trip to Hanoi",
+  start_date: "2025-05-10",
+  end_date: "2025-05-12",
+  destination: "hanoi",
+  adults: 2,
+  children: 0,
+  budgetType: "$$$",
+  totalBudget: 15000000,
+  spentBudget: 5000000,
+  status: "confirmed",
+  notes: "Khám phá ẩm thực và văn hoá Hà Nội.",
+  imageUrl: "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
+  plan_by_day: [
+    {
+      date: "2025-05-10",
+      day_title: "Ngày 1: Khám phá nét cổ kính của Hà Nội",
+      segments: [
+        {
+          time_of_day: "morning",
+          activities: [
+            {
+              id: "hotel_008170",
+              type: "accommodation",
+              name: "Luxury Hanoi Hotel",
+              start_time: "08:00",
+              end_time: "11:00",
+              description: "Thư giãn tại khách sạn sang trọng trong trung tâm thành phố.",
+              address: "Hà Nội",
+              rating: 4.5,
+              price: 850000,
+              image_url: "",
+              price_ai_estimate: 3000000.0
+            }
+          ]
+        },
+        {
+          time_of_day: "afternoon",
+          activities: [
+            {
+              id: "place_000003",
+              type: "place",
+              name: "Chuong Tailor",
+              start_time: "13:00",
+              end_time: "16:00",
+              description: "Trải nghiệm làm đồ thủ công truyền thống tại Chuong Tailor.",
+              address: "Hà Nội",
+              categories: "shopping",
+              rating: 4.2,
+              price: 150000,
+              image_url: "",
+              price_ai_estimate: 300000.0
+            }
+          ]
+        },
+        {
+          time_of_day: "evening",
+          activities: [
+            {
+              id: "restaurant_001958",
+              type: "restaurant",
+              name: "Vietnamese Family Meal",
+              start_time: "18:00",
+              end_time: "20:00",
+              description: "Thưởng thức bữa tối ấm cúng với món ăn gia đình Việt Nam.",
+              address: "Hà Nội",
+              cuisines: "Vietnamese",
+              rating: 4.6,
+              image_url: "",
+              price_ai_estimate: 350000.0
+            }
+          ]
+        }
+      ],
+      daily_tips: [
+        "Nên bắt đầu sớm từ 6-8h sáng để tránh nóng và đông đúc.",
+        "Mang theo nước và đồ ăn nhẹ để giữ năng lượng.",
+        "Sử dụng bản đồ offline để không phụ thuộc vào internet.",
+        "Mặc quần áo thoải mái và mang giày đi bộ.",
+        "Đổi tiền trước khi đi để tránh rắc rối.",
+        "Hãy cẩn thận với tài sản cá nhân khi đi qua khu vực đông người.",
+        "Tham quan Văn Miếu Quốc Tử Giám vào buổi sáng để tránh đông đúc.",
+        "Thưởng thức phở tại một quán nổi tiếng gần Hồ Hoàn Kiếm.",
+        "Chụp ảnh tại Nhà Thờ Lớn Hà Nội vào buổi chiều để có ánh sáng đẹp."
+      ]
+    },
+    {
+      date: "2025-05-11",
+      day_title: "Ngày 2: Thưởng thức Hà Nội qua ẩm thực",
+      segments: [
+        {
+          time_of_day: "morning",
+          activities: [
+            {
+              id: "restaurant_000098",
+              type: "restaurant",
+              name: "Family Restaurant",
+              start_time: "08:00",
+              end_time: "10:00",
+              description: "Bạn sẽ được thưởng thức bữa sáng với các món ăn truyền thống của Hà Nội.",
+              address: "Hà Nội",
+              price_ai_estimate: 120000.0
+            }
+          ]
+        },
+        {
+          time_of_day: "afternoon",
+          activities: [
+            {
+              id: "restaurant_000623",
+              type: "restaurant",
+              name: "Little Hanoi Restaurants",
+              start_time: "12:00",
+              end_time: "14:00",
+              description: "Hãy tận hưởng bữa trưa với những món ăn đặc trưng của Hà Nội.",
+              address: "Hà Nội",
+              price_ai_estimate: 150000.0
+            }
+          ]
+        },
+        {
+          time_of_day: "evening",
+          activities: [
+            {
+              id: "restaurant_000494",
+              type: "restaurant",
+              name: "Maison Sen",
+              start_time: "18:00",
+              end_time: "20:00",
+              description: "Kết thúc ngày với bữa tối tại một trong những nhà hàng nổi tiếng nhất Hà Nội.",
+              address: "Hà Nội",
+              price_ai_estimate: 500000.0
+            }
+          ]
+        }
+      ],
+      daily_tips: [
+        "Đặt chỗ trước và đến Maison Sen vào buổi tối để có trải nghiệm tốt nhất.",
+        "Di chuyển giữa các nhà hàng bằng taxi hoặc xe ôm công nghệ để tiết kiệm thời gian.",
+        "Dự kiến chi phí mỗi bữa ăn từ 200,000 - 500,000 VND tùy món.",
+        "Tránh đến Maison Sen vào giờ cao điểm 18h-20h nếu không đặt chỗ trước.",
+        "Tìm hiểu khuyến mãi hoặc combo tại Family Restaurant để tiết kiệm chi phí.",
+        "Giữ thái độ lịch sự khi giao tiếp với nhân viên nhà hàng và hỏi về cách ăn đúng cách."
+      ]
+    },
+    {
+      date: "2025-05-12",
+      day_title: "Ngày 3: Trải nghiệm văn hóa ẩm thực Hà Nội",
+      segments: [
+        {
+          time_of_day: "morning",
+          activities: [
+            {
+              id: "restaurant_000231",
+              type: "restaurant",
+              name: "Minh´s Family Cooking",
+              start_time: "08:30",
+              end_time: "10:30",
+              description: "Học nấu ăn Việt Nam trong bầu không khí gia đình tại Minh's Family Cooking.",
+              address: "Hà Nội",
+              cuisines: "Việt Nam",
+              rating: 4.3,
+              price_ai_estimate: 500000.0
+            }
+          ]
+        },
+        {
+          time_of_day: "afternoon",
+          activities: [
+            {
+              id: "restaurant_001808",
+              type: "restaurant",
+              name: "Freedom Hostel Restaurant",
+              start_time: "12:00",
+              end_time: "14:00",
+              description: "Thưởng thức bữa trưa tại Freedom Hostel Restaurant, nơi có món ăn đặc trưng của Hà Nội.",
+              address: "Hà Nội",
+              cuisines: "Việt Nam",
+              rating: 4.1,
+              price_ai_estimate: 150000.0
+            },
+            {
+              id: "restaurant_000498",
+              type: "restaurant",
+              name: "Vi Hanoi Restaurant & Cafe",
+              start_time: "14:30",
+              end_time: "16:00",
+              description: "Thưởng thức cà phê Việt Nam tại Vi Hanoi Restaurant & Cafe.",
+              address: "Hà Nội",
+              cuisines: "Cafe",
+              rating: 4.2,
+              price_ai_estimate: 200000.0
+            }
+          ]
+        },
+        {
+          time_of_day: "evening",
+          activities: [
+            {
+              id: "restaurant_000658",
+              type: "restaurant",
+              name: "Bamboo Bar",
+              start_time: "18:00",
+              end_time: "20:00",
+              description: "Cuối ngày, thư giãn tại Bamboo Bar với cocktail tuyệt vời.",
+              address: "Hà Nội",
+              cuisines: "Bar",
+              rating: 4.5,
+              price_ai_estimate: 300000.0
+            }
+          ]
+        }
+      ],
+      daily_tips: [
+        "Bắt đầu ngày mới với lớp học nấu ăn tại Minh's Family Cooking từ 08:30 - 10:30.",
+        "Sử dụng xe ôm công nghệ hoặc taxi để di chuyển giữa các địa điểm trong ngày.",
+        "Dự kiến chi phí cả ngày khoảng 700,000 - 900,000 VND, chuẩn bị thêm tiền mặt để tiện thanh toán.",
+        "Tránh ăn quá no tại một địa điểm để thưởng thức nhiều món khác nhau trong ngày.",
+        "Hỏi trước về nguyên liệu nếu có dị ứng thực phẩm.",
+        "Hỏi về món ăn đặc biệt trong ngày hoặc thực đơn combo để tiết kiệm chi phí.",
+        "Tìm hiểu giờ khuyến mãi \"happy hour\" tại Bamboo Bar.",
+        "Tôn trọng phong tục tập quán địa phương khi tham gia lớp học nấu ăn.",
+        "Thử cà phê trứng tại Vi Hanoi Cafe và các món đặc trưng như phở, bún chả tại Freedom Hostel Restaurant.",
+        "Tôn trọng không gian chung và giữ thái độ lịch sự tại Bamboo Bar."
+      ]
+    }
+  ]
+};
+
 export const MOCK_AI_SUGGESTIONS: TravelActivity[] = [
   {
     id: "ai-suggestion-1",
-    time: "00:00 - 00:00",
     type: "attraction",
     name: "Bảo tàng văn hóa dân tộc Việt Nam",
-    location: "Đường Nguyễn Văn Huyên, Cầu Giấy, Hà Nội",
+    start_time: "09:00",
+    end_time: "11:30",
+    address: "Đường Nguyễn Văn Huyên, Cầu Giấy, Hà Nội",
     description:
       "Một trong những bảo tàng lớn nhất về văn hóa dân tộc tại Hà Nội. Khám phá lịch sử và văn hóa đa dạng của 54 dân tộc Việt Nam.",
-    imageUrl:
+    image_url:
       "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
     rating: 4.8,
-    duration: 2.5,
-    price: "30.000đ/người",
+    duration: "2.5h",
+    price: 30000,
   },
   {
     id: "ai-suggestion-2",
-    time: "00:00 - 00:00",
     type: "restaurant",
     name: "Phở Lý Quốc Sư",
-    location: "Số 42 Lý Quốc Sư, Hoàn Kiếm, Hà Nội",
+    start_time: "12:00",
+    end_time: "13:00",
+    address: "Số 42 Lý Quốc Sư, Hoàn Kiếm, Hà Nội",
     description:
       "Thưởng thức phở truyền thống Hà Nội với nước dùng trong và ngọt tự nhiên. Nhà hàng nổi tiếng với công thức gia truyền nhiều đời.",
-    imageUrl:
+    image_url:
       "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
     rating: 4.9,
-    price: "75.000đ - 95.000đ/tô",
+    price: 95000,
+    duration: "1h",
   },
   {
     id: "ai-suggestion-3",
-    time: "00:00 - 00:00",
     type: "attraction",
     name: "Chùa Trấn Quốc",
-    location: "Thanh Niên, Quận Tây Hồ, Hà Nội",
+    start_time: "14:00",
+    end_time: "17:00",
+    address: "Thanh Niên, Quận Tây Hồ, Hà Nội",
     description:
       "Chùa Phật giáo cổ nhất Hà Nội, nằm trên một hòn đảo nhỏ phía đông Hồ Tây. Kiến trúc độc đáo và bầu không khí thanh bình.",
-    imageUrl:
+    image_url:
       "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
     rating: 4.7,
-    duration: 3,
-    price: "Miễn phí (đóng góp tùy tâm)",
+    duration: "3h",
+    price: 0,
   },
   {
     id: "ai-suggestion-4",
-    time: "00:00 - 00:00",
     type: "restaurant",
     name: "Cha Ca Thang Long",
-    location: "19-21-31 Đường Thành, Hoàn Kiếm, Hà Nội",
+    start_time: "18:00",
+    end_time: "19:30",
+    address: "19-21-31 Đường Thành, Hoàn Kiếm, Hà Nội",
     description:
       "Nhà hàng chuyên về món chả cá truyền thống Hà Nội. Được chế biến ngay tại bàn với cá lóc tươi, thì là, hành và các loại gia vị.",
-    imageUrl:
+    image_url:
       "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
     rating: 4.6,
-    price: "175.000đ/người",
+    price: 175000,
+    duration: "1.5h",
   },
   {
     id: "ai-suggestion-5",
-    time: "00:00 - 00:00",
     type: "attraction",
     name: "Phố cổ Hà Nội về đêm",
-    location: "Khu phố cổ, Hoàn Kiếm, Hà Nội",
+    start_time: "19:30",
+    end_time: "21:00",
+    address: "Khu phố cổ, Hoàn Kiếm, Hà Nội",
     description:
       "Khám phá phố cổ Hà Nội về đêm với không khí sôi động, ẩm thực đường phố phong phú và các cửa hàng mua sắm.",
-    imageUrl:
+    image_url:
       "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
     rating: 4.9,
-    duration: 1.5,
-    price: "Miễn phí",
+    duration: "1.5h",
+    price: 0,
   },
 ];

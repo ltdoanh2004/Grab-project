@@ -60,7 +60,7 @@ definitions:
         type: string
       name:
         type: string
-      price:
+      price_ai_estimate:
         type: number
       start_time:
         description: '"HH:mm" format'
@@ -69,11 +69,31 @@ definitions:
         description: e.g., "place", "accommodation", "restaurant"
         type: string
     type: object
-  dto.Budget:
+  dto.ExpenseBalanceDTO:
     properties:
-      exactBudget:
+      net_balance:
+        description: positive means they are owed money, negative means they owe money
         type: number
-      type:
+      total_owed:
+        type: number
+      total_paid:
+        type: number
+      transactions:
+        items:
+          $ref: '#/definitions/dto.Transaction'
+        type: array
+      user_id:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.ExpenseUserDTO:
+    properties:
+      trip_id:
+        type: string
+      user_id:
+        type: string
+      username:
         type: string
     type: object
   dto.LoginRequest:
@@ -81,26 +101,6 @@ definitions:
       password:
         type: string
       username:
-        type: string
-    type: object
-  dto.People:
-    properties:
-      adults:
-        type: integer
-      children:
-        type: integer
-      infants:
-        type: integer
-      pets:
-        type: integer
-    type: object
-  dto.PersonalOption:
-    properties:
-      description:
-        type: string
-      name:
-        type: string
-      type:
         type: string
     type: object
   dto.PlaceSuggestion:
@@ -151,6 +151,10 @@ definitions:
     type: object
   dto.PlanByDay:
     properties:
+      daily_tips:
+        items:
+          type: string
+        type: array
       date:
         description: '"YYYY-MM-DD"'
         type: string
@@ -233,6 +237,22 @@ definitions:
         description: e.g., "morning", "afternoon", "evening"
         type: string
     type: object
+  dto.SuggestWithCommentRequest:
+    properties:
+      activity:
+        $ref: '#/definitions/dto.Activity'
+      travel_preference:
+        $ref: '#/definitions/model.TravelPreference'
+    type: object
+  dto.SuggestWithCommentResponse:
+    properties:
+      suggestion_list:
+        items:
+          $ref: '#/definitions/dto.Activity'
+        type: array
+      suggestion_type:
+        type: string
+    type: object
   dto.TodoCreate:
     description: Todo creation request body
     properties:
@@ -264,28 +284,17 @@ definitions:
         description: Optional refresh token, used for obtaining new access tokens.
         type: string
     type: object
-  dto.TravelPreference:
+  dto.Transaction:
     properties:
-      budget:
-        $ref: '#/definitions/dto.Budget'
-      destination:
+      amount:
+        type: number
+      from_user_id:
         type: string
-      people:
-        $ref: '#/definitions/dto.People'
-      personalOptions:
-        items:
-          $ref: '#/definitions/dto.PersonalOption'
-        type: array
-      travelTime:
-        $ref: '#/definitions/dto.TravelTime'
-    type: object
-  dto.TravelTime:
-    properties:
-      endDate:
+      from_username:
         type: string
-      startDate:
+      to_user_id:
         type: string
-      type:
+      to_username:
         type: string
     type: object
   dto.TripAccommodationDTO:
@@ -296,12 +305,12 @@ definitions:
         type: string
       check_out_date:
         type: string
-      cost:
-        type: number
       end_time:
         type: string
       notes:
         type: string
+      price_ai_estimate:
+        type: number
       start_time:
         type: string
       trip_accommodation_id:
@@ -332,7 +341,7 @@ definitions:
     type: object
   dto.TripDTOByDate:
     properties:
-      destination:
+      destination_id:
         type: string
       end_date:
         description: '"YYYY-MM-DD"'
@@ -343,6 +352,8 @@ definitions:
         type: array
       start_date:
         description: '"YYYY-MM-DD"'
+        type: string
+      trip_id:
         type: string
       trip_name:
         type: string
@@ -376,6 +387,49 @@ definitions:
       trip_id:
         type: string
     type: object
+  dto.TripExpenseDTO:
+    properties:
+      expense_amount:
+        type: number
+      expense_date:
+        type: string
+      expense_id:
+        type: string
+      expense_name:
+        type: string
+      expense_type:
+        type: string
+      expense_users:
+        items:
+          $ref: '#/definitions/dto.ExpenseUserDTO'
+        type: array
+      paid_by_user:
+        $ref: '#/definitions/model.User'
+      paid_by_user_id:
+        type: string
+      split_type:
+        description: equal, percentage, custom
+        type: string
+      trip_id:
+        type: string
+    type: object
+  dto.TripExpenseSummaryDTO:
+    properties:
+      balances:
+        items:
+          $ref: '#/definitions/dto.ExpenseBalanceDTO'
+        type: array
+      expenses:
+        items:
+          $ref: '#/definitions/dto.TripExpenseDTO'
+        type: array
+      total_expense:
+        type: number
+      trip_id:
+        type: string
+      trip_name:
+        type: string
+    type: object
   dto.TripPlaceDTO:
     properties:
       end_time:
@@ -384,6 +438,8 @@ definitions:
         type: string
       place_id:
         type: string
+      price_ai_estimate:
+        type: number
       scheduled_date:
         type: string
       start_time:
@@ -401,6 +457,8 @@ definitions:
         type: string
       notes:
         type: string
+      price_ai_estimate:
+        type: number
       reservation_info:
         type: string
       restaurant_id:
@@ -458,6 +516,13 @@ definitions:
       unit:
         type: string
     type: object
+  model.Budget:
+    properties:
+      exact_budget:
+        type: number
+      type:
+        type: string
+    type: object
   model.Comment:
     properties:
       comment_id:
@@ -469,6 +534,57 @@ definitions:
       trip_place_id:
         type: string
       trip_restaurant_id:
+        type: string
+      user_id:
+        type: string
+    type: object
+  model.Destination:
+    properties:
+      accommodations:
+        items:
+          $ref: '#/definitions/model.Accommodation'
+        type: array
+      best_season:
+        type: string
+      city:
+        type: string
+      climate:
+        type: string
+      description:
+        type: string
+      destination_id:
+        type: string
+      image_url:
+        type: string
+      name:
+        type: string
+      places:
+        items:
+          $ref: '#/definitions/model.Place'
+        type: array
+      restaurants:
+        items:
+          $ref: '#/definitions/model.Restaurant'
+        type: array
+      travel_preferences:
+        description: New association with TravelPreference (one-to-many)
+        items:
+          $ref: '#/definitions/model.TravelPreference'
+        type: array
+    type: object
+  model.ExpenseUser:
+    properties:
+      expense_user_id:
+        type: string
+      expenses:
+        items:
+          $ref: '#/definitions/model.TripExpense'
+        type: array
+      income:
+        type: number
+      outcome:
+        type: number
+      trip_id:
         type: string
       user_id:
         type: string
@@ -486,6 +602,27 @@ definitions:
         type: number
       lon:
         type: number
+    type: object
+  model.People:
+    properties:
+      adults:
+        type: integer
+      children:
+        type: integer
+      infants:
+        type: integer
+      pets:
+        type: integer
+    type: object
+  model.PersonalOption:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      type:
+        description: '"places", "activities", "accommodation"'
+        type: string
     type: object
   model.Place:
     properties:
@@ -597,6 +734,15 @@ definitions:
       url:
         type: string
     type: object
+  model.SplitExpense:
+    properties:
+      amount:
+        type: number
+      expense_id:
+        type: string
+      user_id:
+        type: string
+    type: object
   model.Todo:
     description: Todo represents a single todo item with its details
     properties:
@@ -627,6 +773,256 @@ definitions:
       updated_at:
         description: Timestamp when the todo was last updated
         example: "2024-03-15T08:00:00Z"
+        type: string
+    type: object
+  model.TravelPreference:
+    properties:
+      budget:
+        $ref: '#/definitions/model.Budget'
+      destination_id:
+        type: string
+      people:
+        $ref: '#/definitions/model.People'
+      personal_options:
+        items:
+          $ref: '#/definitions/model.PersonalOption'
+        type: array
+      travel_preference_id:
+        type: string
+      travel_time:
+        $ref: '#/definitions/model.TravelTime'
+      trip_id:
+        type: string
+    type: object
+  model.TravelTime:
+    properties:
+      end_date:
+        type: string
+      start_date:
+        type: string
+      type:
+        type: string
+    type: object
+  model.Trip:
+    properties:
+      budget:
+        type: number
+      created_at:
+        type: string
+      end_date:
+        type: string
+      expense_users:
+        items:
+          $ref: '#/definitions/model.ExpenseUser'
+        type: array
+      start_date:
+        type: string
+      travel_preference:
+        allOf:
+        - $ref: '#/definitions/model.TravelPreference'
+        description: New association with TravelPreference (one-to-one)
+      trip_destinations:
+        items:
+          $ref: '#/definitions/model.TripDestination'
+        type: array
+      trip_expenses:
+        items:
+          $ref: '#/definitions/model.TripExpense'
+        type: array
+      trip_id:
+        type: string
+      trip_name:
+        type: string
+      trip_status:
+        type: string
+      updated_at:
+        type: string
+      user:
+        allOf:
+        - $ref: '#/definitions/model.User'
+        description: Associations
+      user_id:
+        type: string
+    type: object
+  model.TripAccommodation:
+    properties:
+      accommodation:
+        $ref: '#/definitions/model.Accommodation'
+      accommodation_id:
+        type: string
+      check_in_date:
+        type: string
+      check_out_date:
+        type: string
+      comments:
+        items:
+          $ref: '#/definitions/model.Comment'
+        type: array
+      cost:
+        type: number
+      end_time:
+        type: string
+      notes:
+        type: string
+      price_ai_estimate:
+        type: number
+      start_time:
+        type: string
+      trip_accommodation_id:
+        type: string
+      trip_destination:
+        allOf:
+        - $ref: '#/definitions/model.TripDestination'
+        description: Associations
+      trip_destination_id:
+        type: string
+    type: object
+  model.TripDestination:
+    properties:
+      arrival_date:
+        type: string
+      departure_date:
+        type: string
+      destination:
+        $ref: '#/definitions/model.Destination'
+      destination_id:
+        type: string
+      order_num:
+        type: integer
+      trip:
+        allOf:
+        - $ref: '#/definitions/model.Trip'
+        description: |-
+          Associations
+          Reference to the Trip (from the same package).
+      trip_accommodations:
+        items:
+          $ref: '#/definitions/model.TripAccommodation'
+        type: array
+      trip_destination_id:
+        type: string
+      trip_id:
+        type: string
+      trip_places:
+        description: Other associations as slices.
+        items:
+          $ref: '#/definitions/model.TripPlace'
+        type: array
+      trip_restaurants:
+        items:
+          $ref: '#/definitions/model.TripRestaurant'
+        type: array
+    type: object
+  model.TripExpense:
+    properties:
+      expense_amount:
+        type: number
+      expense_date:
+        type: string
+      expense_id:
+        type: string
+      expense_name:
+        type: string
+      expense_type:
+        type: string
+      expense_users:
+        description: Updated association
+        items:
+          $ref: '#/definitions/model.ExpenseUser'
+        type: array
+      paid_by_user:
+        $ref: '#/definitions/model.User'
+      paid_by_user_id:
+        type: string
+      split_expenses:
+        items:
+          $ref: '#/definitions/model.SplitExpense'
+        type: array
+      trip_id:
+        type: string
+    type: object
+  model.TripPlace:
+    properties:
+      comments:
+        items:
+          $ref: '#/definitions/model.Comment'
+        type: array
+      end_time:
+        type: string
+      notes:
+        type: string
+      place:
+        $ref: '#/definitions/model.Place'
+      place_id:
+        type: string
+      price_ai_estimate:
+        type: number
+      scheduled_date:
+        type: string
+      start_time:
+        type: string
+      trip_destination:
+        allOf:
+        - $ref: '#/definitions/model.TripDestination'
+        description: Update associations
+      trip_destination_id:
+        type: string
+      trip_place_id:
+        type: string
+    type: object
+  model.TripRestaurant:
+    properties:
+      comments:
+        items:
+          $ref: '#/definitions/model.Comment'
+        type: array
+      end_time:
+        type: string
+      meal_date:
+        type: string
+      notes:
+        type: string
+      price_ai_estimate:
+        type: number
+      reservation_info:
+        type: string
+      restaurant:
+        $ref: '#/definitions/model.Restaurant'
+      restaurant_id:
+        type: string
+      start_time:
+        type: string
+      trip_destination:
+        allOf:
+        - $ref: '#/definitions/model.TripDestination'
+        description: Associations with proper GORM foreign key definitions
+      trip_destination_id:
+        type: string
+      trip_restaurant_id:
+        type: string
+    type: object
+  model.User:
+    properties:
+      email:
+        type: string
+      expenses:
+        items:
+          $ref: '#/definitions/model.TripExpense'
+        type: array
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password:
+        type: string
+      trips:
+        description: Relationships
+        items:
+          $ref: '#/definitions/model.Trip'
+        type: array
+      user_id:
+        type: string
+      username:
         type: string
     type: object
 host: localhost:8080
@@ -881,6 +1277,214 @@ paths:
       summary: Get restaurant details by ID
       tags:
       - detail
+  /api/v1/expense/{tripId}:
+    get:
+      consumes:
+      - application/json
+      description: Get all expenses for a trip
+      parameters:
+      - description: Trip ID
+        in: path
+        name: tripId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.TripExpense'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get trip expenses
+      tags:
+      - expense
+  /api/v1/expense/add:
+    post:
+      consumes:
+      - application/json
+      description: Add an expense to a trip
+      parameters:
+      - description: Trip expense details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TripExpenseDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TripExpense'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Add trip expense
+      tags:
+      - expense
+  /api/v1/expense/balance/{tripId}:
+    get:
+      consumes:
+      - application/json
+      description: Get the balance for each user in a trip
+      parameters:
+      - description: Trip ID
+        in: path
+        name: tripId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ExpenseBalanceDTO'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get expense balances
+      tags:
+      - expense
+  /api/v1/expense/summary/{tripId}:
+    get:
+      consumes:
+      - application/json
+      description: Get a summary of all expenses for a trip
+      parameters:
+      - description: Trip ID
+        in: path
+        name: tripId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.TripExpenseSummaryDTO'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get trip expense summary
+      tags:
+      - expense
+  /api/v1/expense/user/add:
+    post:
+      consumes:
+      - application/json
+      description: Add a user to the expense splitting for a trip
+      parameters:
+      - description: Expense user details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ExpenseUserDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Add a user to expense splitting
+      tags:
+      - expense
+  /api/v1/expense/users/{tripId}:
+    get:
+      consumes:
+      - application/json
+      description: Get all users participating in expense splitting for a trip
+      parameters:
+      - description: Trip ID
+        in: path
+        name: tripId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.ExpenseUser'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get expense users
+      tags:
+      - expense
   /api/v1/insert_csv/destination:
     post:
       consumes:
@@ -968,7 +1572,7 @@ paths:
         name: preference
         required: true
         schema:
-          $ref: '#/definitions/dto.TravelPreference'
+          $ref: '#/definitions/model.TravelPreference'
       produces:
       - application/json
       responses:
@@ -992,6 +1596,42 @@ paths:
       summary: Suggest accommodations
       tags:
       - suggest
+  /api/v1/suggest/comment:
+    post:
+      consumes:
+      - application/json
+      description: Get suggestions based on travel preference and comment activity
+        using AI
+      parameters:
+      - description: Suggest with Comment Request
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SuggestWithCommentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.SuggestWithCommentResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Suggest by comment
+      tags:
+      - suggest
   /api/v1/suggest/places:
     post:
       consumes:
@@ -1003,7 +1643,7 @@ paths:
         name: preference
         required: true
         schema:
-          $ref: '#/definitions/dto.TravelPreference'
+          $ref: '#/definitions/model.TravelPreference'
       produces:
       - application/json
       responses:
@@ -1038,7 +1678,7 @@ paths:
         name: preference
         required: true
         schema:
-          $ref: '#/definitions/dto.TravelPreference'
+          $ref: '#/definitions/model.TravelPreference'
       produces:
       - application/json
       responses:
@@ -1074,7 +1714,7 @@ paths:
         name: preference
         required: true
         schema:
-          $ref: '#/definitions/dto.TravelPreference'
+          $ref: '#/definitions/model.TravelPreference'
       produces:
       - application/json
       responses:
@@ -1281,7 +1921,7 @@ paths:
             - $ref: '#/definitions/model.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/dto.TripDTO'
+                  $ref: '#/definitions/dto.TripDTOByDate'
               type: object
         "400":
           description: Invalid trip ID
@@ -1296,6 +1936,37 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: Get trip details
+      tags:
+      - trip
+  /api/v1/trip/activity:
+    put:
+      consumes:
+      - application/json
+      description: Update an activity (accommodation, restaurant, or place) based
+        on its type
+      parameters:
+      - description: Updated Activity Data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.Activity'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Activity updated successfully
+          schema:
+            $ref: '#/definitions/model.Response'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Update an activity
       tags:
       - trip
   /api/v1/trip/create:
@@ -1450,3 +2121,8 @@ tags:
   name: comment
 - description: Operations for importing data from CSV files
   name: InsertData
+- description: Operations about trip expenses and expense splitting
+  externalDocs:
+    description: Detailed information about expense operations
+    url: http://example.com/docs/expense
+  name: expense

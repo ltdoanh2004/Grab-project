@@ -37,6 +37,7 @@ func (tc *TripController) RegisterRoutes(router *gin.Engine) {
 				protected.POST("/create", tc.CreateTrip)
 				protected.PUT("/save", tc.SaveTrip)
 				protected.POST("/get_plan", tc.GetPlan)
+				protected.PUT("/activity", tc.UpdateActivity)
 			}
 		}
 	}
@@ -136,7 +137,7 @@ func (tc *TripController) SaveTrip(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Trip ID"
-// @Success 200 {object} model.Response{data=dto.TripDTO} "Trip details"
+// @Success 200 {object} model.Response{data=dto.TripDTOByDate} "Trip details"
 // @Failure 400 {object} model.Response "Invalid trip ID"
 // @Failure 404 {object} model.Response "Trip not found"
 // @Failure 500 {object} model.Response "Internal server error"
@@ -219,5 +220,40 @@ func (tc *TripController) GetPlan(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, model.Response{
 		Message: "Trip suggestion retrieved successfully",
 		Data:    suggestedTrip,
+	})
+}
+
+// UpdateActivity godoc
+// @Summary Update an activity
+// @Description Update an activity (accommodation, restaurant, or place) based on its type
+// @Tags trip
+// @Accept json
+// @Produce json
+// @Param request body dto.Activity true "Updated Activity Data"
+// @Success 200 {object} model.Response "Activity updated successfully"
+// @Failure 400 {object} model.Response "Invalid request"
+// @Failure 500 {object} model.Response "Internal server error"
+// @Router /api/v1/trip/activity [put]
+func (tc *TripController) UpdateActivity(ctx *gin.Context) {
+	var updatedData dto.Activity
+	if err := ctx.ShouldBindJSON(&updatedData); err != nil {
+		ctx.JSON(http.StatusBadRequest, model.Response{
+			Message: "Invalid request body: " + err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
+	if err := tc.tripService.UpdateActivity(updatedData.Type, updatedData.ActivityID, updatedData); err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.Response{
+			Message: "Failed to update activity: " + err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, model.Response{
+		Message: "Activity updated successfully",
+		Data:    nil,
 	})
 }
