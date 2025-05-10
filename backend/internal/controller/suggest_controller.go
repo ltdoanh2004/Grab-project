@@ -148,7 +148,7 @@ func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get suggestions: "+err.Error(), nil))
 		return
 	}
-	getPlanEndpoint := "/api/v1/suggest/trip"
+
 	// Extract userID from access_token
 	userID, exists := ctx.Get("user_id")
 	if !exists {
@@ -159,19 +159,21 @@ func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
 		return
 	}
 
-	var suggestedTrip *dto.TripDTOByDate
-	suggestedTrip, err = sc.tripService.SuggestTrip(userID.(string), *suggestion, getPlanEndpoint)
-	fmt.Println("suggestedTrip", suggestedTrip)
+	// Create trip directly from suggestion
+	tripID, err := sc.tripService.CreateTrip(&dto.TripDTO{
+		UserID: userID.(string),
+		// Add other necessary fields from suggestion
+	})
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
-			Message: "Failed to get trip suggestion: " + err.Error(),
+			Message: "Failed to create trip: " + err.Error(),
 			Data:    nil,
 		})
 		return
 	}
 
-	_, err = sc.tripService.CreateTravelPreference(suggestedTrip.TripID, travelPreference)
-	fmt.Println("err", err)
+	// Create travel preference
+	_, err = sc.tripService.CreateTravelPreference(tripID, travelPreference)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
 			Message: "Failed to create travel preference: " + err.Error(),
@@ -182,7 +184,7 @@ func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, model.Response{
 		Message: "Trip suggestion retrieved successfully",
-		Data:    suggestedTrip,
+		Data:    suggestion,
 	})
 }
 

@@ -20,7 +20,7 @@ class TravelModel:
         Initialize the travel model with OpenAI API key
         """
         self.openai_client = OpenAI(api_key=os.getenv("OPEN_API_KEY"))
-        self.model = "gpt-4o"
+        self.model = "gpt-4.1-mini-2025-04-14"
         
         logger.info("Setting up all databases...")
         self.hotel_db = HotelVectorDatabase()
