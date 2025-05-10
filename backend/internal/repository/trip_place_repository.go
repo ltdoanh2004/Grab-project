@@ -13,6 +13,7 @@ type TripPlaceRepository interface {
 	Update(tripPlace *model.TripPlace) error
 	Delete(tripPlaceID string) error
 	GetByTripID(tripID string) ([]model.TripPlace, error)
+	UpdateByID(placeID string, updatedData map[string]interface{}) error
 }
 
 // GormTripPlaceRepository implements TripPlaceRepository using GORM.
@@ -56,4 +57,10 @@ func (r *GormTripPlaceRepository) GetByTripID(tripDestinationID string) ([]model
 		return nil, err
 	}
 	return tripActivities, nil
+}
+
+func (r *GormTripPlaceRepository) UpdateByID(placeID string, updatedData map[string]interface{}) error {
+	return r.DB.Model(&model.TripPlace{}).
+		Where("trip_place_id = ?", placeID).
+		Updates(updatedData).Error
 }

@@ -17,6 +17,7 @@ type TripRestaurantRepository interface {
 	GetAll() ([]model.TripRestaurant, error)
 	GetWithAssociations(tripRestaurantID string) (model.TripRestaurant, error)
 	GetAllWithAssociations() ([]model.TripRestaurant, error)
+	UpdateByID(restaurantID string, updatedData map[string]interface{}) error
 }
 
 // GormTripRestaurantRepository implements TripRestaurantRepository using GORM.
@@ -96,4 +97,10 @@ func (r *GormTripRestaurantRepository) GetAllWithAssociations() ([]model.TripRes
 		return nil, err
 	}
 	return tripRestaurants, nil
+}
+
+func (r *GormTripRestaurantRepository) UpdateByID(restaurantID string, updatedData map[string]interface{}) error {
+	return r.DB.Model(&model.TripRestaurant{}).
+		Where("trip_restaurant_id = ?", restaurantID).
+		Updates(updatedData).Error
 }

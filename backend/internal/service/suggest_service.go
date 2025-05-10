@@ -501,26 +501,46 @@ func (ss *suggestService) SuggestWithComment(req *dto.SuggestWithCommentRequest)
 	if err := json.Unmarshal(jsonResponse, &aiResponse); err != nil {
 		return nil, fmt.Errorf("failed to decode AI service response: %w", err)
 	}
+	suggestionList := []dto.Activity{}
+	for i := range aiResponse.SuggestionList {
+		suggestion := aiResponse.SuggestionList[i]
+		suggestion.ID = aiResponse.SuggestionList[i].ID
+		suggestion.Type = aiResponse.SuggestionType
+		suggestion.ActivityID = req.Activity.ActivityID
+		suggestion.StartTime = req.Activity.StartTime
+		suggestion.EndTime = req.Activity.EndTime
+		suggestionList = append(suggestionList, suggestion)
+	}
+	aiResponse.SuggestionList = suggestionList
 	return &aiResponse, nil
 }
 
 // mockCallSuggestWithCommentAPI provides mock JSON data for the comment-based suggestion API.
 func (ss *suggestService) mockCallSuggestWithCommentAPI(req *dto.SuggestWithCommentRequest) ([]byte, error) {
 	mockJSON := `
-	{
-  "suggestion_type": "restaurant",
-  "suggestion_ids": [
-    "restaurant_001440",
-    "restaurant_000280",
-    "restaurant_000424",
-    "restaurant_000040",
-    "restaurant_001247",
-    "restaurant_000769",
-    "restaurant_000712",
-    "restaurant_000193",
-    "restaurant_000631",
-    "restaurant_000149"
-  ]
+{
+  "suggestion_type": "place",
+  "suggestion_list": [
+    {
+      "id": "place_000881",
+      "name": "Bảo tàng Phụ nữ Việt Nam",
+      "description": "Bảo tàng Phụ nữ Việt Nam, tọa lạc tại trung tâm Hà Nội, là một trong những điểm đến hấp dẫn cho cả gia đình và du khách tìm hiểu về vai trò của phụ nữ trong lịch sử và văn hóa Việt Nam. Một trong những điểm độc đáo của bảo tàng là các khu vực tương tác hiện đại, cho phép trẻ em và người lớn tham gia trải nghiệm, khám phá thông qua hoạt động thực tế thay vì chỉ xem tranh ảnh. \n\nBảo tàng sở hữu những triển lãm thân thiện với gia đình, giúp trẻ em dễ dàng tiếp cận thông tin một cách thú vị và sinh động. Với thời gian tham quan ngắn, nơi đây trở thành lựa chọn tối ưu cho những ai bị hạn chế về thời gian nhưng vẫn mong muốn tìm hiểu văn hóa phong phú của đất nước.\n\nĐặc biệt, Bảo tàng Phụ nữ Việt Nam giải quyết những mối quan tâm của nhiều du khách về tính thân thiện và hợp thời cho trẻ em, đáp ứng nhu cầu khám phá và học hỏi của cả người lớn và trẻ nhỏ. Thay vì đến Bảo tàng Lịch sử Quốc gia, nơi có thể thiên về thông tin hàn lâm và không gian rộng lớn, Bảo tàng Phụ nữ mang đến trải nghiệm gần gũi và dễ tiếp cận hơn với mọi lứa tuổi. Đây chính là điểm nhấn làm nên sự đặc biệt của địa điểm này trong",
+      "price_ai_estimate": 80000.0
+    },
+    {
+      "id": "place_001117",
+      "name": "Bảo tàng Dân tộc học Việt Nam",
+      "description": "Bảo tàng Dân tộc học Việt Nam nằm ở Hà Nội, là một điểm đến hấp dẫn cho những ai muốn tìm hiểu về văn hóa và phong tục tập quán của các dân tộc Việt Nam. Bảo tàng không chỉ trưng bày các hiện vật quý giá mà còn có những mô hình tương tác sống động, giúp du khách trải nghiệm chân thực hơn về đời sống dân gian. Điểm đặc biệt là không gian ngoài trời rộng rãi, nơi trẻ em có thể tự do khám phá và vui chơi, tạo điều kiện lý tưởng cho gia đình đến tham quan.\n\nSo với Bảo tàng Lịch sử Quốc gia, Bảo tàng Dân tộc học mang lại trải nghiệm phong phú hơn về văn hóa dân tộc đa dạng của Việt Nam. Các khu vực trưng bày được phân chia rõ ràng theo từng dân tộc, từ trang phục, phong tục tập quán đến nhạc cụ và nghệ thuật dân gian, giúp du khách dễ dàng nắm bắt và hiểu biết sâu sắc hơn về mỗi nền văn hóa.\n\nNgoài ra, bảo tàng cũng chú trọng đến việc giải quyết những băn khoăn của du khách như sự tương tác và học hỏi cho trẻ em, bằng cách đưa vào các hoạt động thực hành và trò chơi dân gian. Nơi đây thực sự là một lựa chọn tuyệt vời cho những ai muốn trải nghiệm văn hóa Việt Nam một cách gần gũi và thú",
+      "price_ai_estimate": 150000.0
+    },
+    {
+      "id": "place_000594",
+      "name": "Khu vui chơi Thiên đường Bảo Sơn",
+      "description": "**Khu vui chơi Thiên đường Bảo Sơn** tại Hà Nội là một địa điểm hấp dẫn tuyệt vời cho cả gia đình, đặc biệt là trẻ em. Nằm trong khuôn viên rộng lớn, nơi đây kết hợp giữa những khu vui chơi giải trí sôi động và bảo tàng tương tác giáo dục. Một trong những điểm nổi bật của Thiên đường Bảo Sơn là không gian tương tác, nơi trẻ em có thể tham gia vào nhiều hoạt động thực tế để khám phá các khía cạnh văn hóa, lịch sử và khoa học một cách sống động.\n\nChọn Khu vui chơi Thiên đường Bảo Sơn làm điểm đến thay cho Bảo tàng Lịch sử Quốc gia không chỉ vì không khí vui tươi, mà còn bởi tính giáo dục thực tiễn mà nó mang lại cho trẻ em. Tại đây, trẻ em có thể học hỏi qua các trò chơi và trải nghiệm thực tế, giúp củng cố kiến thức một cách tự nhiên mà không thấy chán.\n\nNgoài ra, khu vui chơi cũng đã chú trọng cải thiện những vấn đề được người dùng nêu trong các bình luận. Những hoạt động được tổ chức theo chủ đề, không gian sạch sẽ và an toàn, cùng với sự hướng dẫn nhiệt tình từ đội ngũ nhân viên, giúp giải quyết các mối bận tâm của phụ huynh về sự an toàn và chất lượng trải nghiệm cho trẻ em. Thiên đường Bảo Sơn thực sự",
+      "price_ai_estimate": 400000.0
+    }
+  ],
+  "query_used": "Thời gian tham quan ngắn hơn, Môi trường thân thiện với gia đình"
 }
 `
 	return []byte(mockJSON), nil

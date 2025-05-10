@@ -15,6 +15,7 @@ type TripAccommodationRepository interface {
 	GetByTripID(tripID string) ([]model.TripAccommodation, error)
 	GetByAccommodationID(accommodationID string) ([]model.TripAccommodation, error)
 	GetAll() ([]model.TripAccommodation, error)
+	UpdateByID(accommodationID string, updatedData map[string]interface{}) error
 }
 
 // GormTripAccommodationRepository implements TripAccommodationRepository using GORM.
@@ -76,4 +77,10 @@ func (r *GormTripAccommodationRepository) GetAll() ([]model.TripAccommodation, e
 		return nil, err
 	}
 	return tripAccommodations, nil
+}
+
+func (r *GormTripAccommodationRepository) UpdateByID(accommodationID string, updatedData map[string]interface{}) error {
+	return r.DB.Model(&model.TripAccommodation{}).
+		Where("trip_accommodation_id = ?", accommodationID).
+		Updates(updatedData).Error
 }
