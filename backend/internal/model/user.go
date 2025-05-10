@@ -10,6 +10,7 @@ type User struct {
 	LastName  string `gorm:"size:50" json:"last_name"`
 
 	// Relationships
-	Trips    []Trip        `gorm:"foreignKey:UserID;references:UserID" json:"trips,omitempty"`
-	Expenses []TripExpense `gorm:"foreignKey:PaidByUserID;references:UserID" json:"expenses,omitempty"`
+	Trips        []Trip        `gorm:"foreignKey:UserID;references:UserID" json:"trips,omitempty"`
+	Expenses     []TripExpense `gorm:"foreignKey:PaidByUserID;references:UserID" json:"expenses,omitempty"`
+	ExpenseUsers []ExpenseUser `gorm:"foreignKey:UserID;references:UserID" json:"expense_users,omitempty"`
 }

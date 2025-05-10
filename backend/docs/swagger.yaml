@@ -89,6 +89,9 @@ definitions:
     type: object
   dto.ExpenseUserDTO:
     properties:
+      custom_amount:
+        description: Amount for custom split
+        type: number
       trip_id:
         type: string
       user_id:
@@ -474,6 +477,8 @@ definitions:
     properties:
       accommodation:
         $ref: '#/definitions/dto.AccommodationsSuggestion'
+      destination_id:
+        type: string
       places:
         $ref: '#/definitions/dto.PlacesSuggestion'
       restaurants:
@@ -586,6 +591,10 @@ definitions:
         type: number
       trip_id:
         type: string
+      user:
+        allOf:
+        - $ref: '#/definitions/model.User'
+        description: Corrected User relationship
       user_id:
         type: string
     type: object
@@ -926,18 +935,22 @@ definitions:
       expense_type:
         type: string
       expense_users:
-        description: Updated association
+        description: Updated association with proper join table configuration
         items:
           $ref: '#/definitions/model.ExpenseUser'
         type: array
       paid_by_user:
-        $ref: '#/definitions/model.User'
+        allOf:
+        - $ref: '#/definitions/model.User'
+        description: Relationships
       paid_by_user_id:
         type: string
       split_expenses:
         items:
           $ref: '#/definitions/model.SplitExpense'
         type: array
+      trip:
+        $ref: '#/definitions/model.Trip'
       trip_id:
         type: string
     type: object
@@ -1005,6 +1018,10 @@ definitions:
     properties:
       email:
         type: string
+      expense_users:
+        items:
+          $ref: '#/definitions/model.ExpenseUser'
+        type: array
       expenses:
         items:
           $ref: '#/definitions/model.TripExpense'
