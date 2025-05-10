@@ -716,6 +716,238 @@ export const MOCK_TRAVEL_DETAIL: TravelDetailData = {
     },
   ],
 };
+
+export const MOCK_TRAVEL_DETAIL_2: TravelDetailData = {
+  id: "trip-2",
+  user_id: "user123",
+  trip_name: "Trip to Hanoi",
+  start_date: "2025-05-10",
+  end_date: "2025-05-12",
+  destination: "hanoi",
+  adults: 2,
+  children: 0,
+  budgetType: "$$$",
+  totalBudget: 15000000,
+  spentBudget: 5000000,
+  status: "confirmed",
+  notes: "Khám phá ẩm thực và văn hoá Hà Nội.",
+  imageUrl: "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
+  plan_by_day: [
+    {
+      date: "2025-05-10",
+      day_title: "Ngày 1: Khám phá nét cổ kính của Hà Nội",
+      segments: [
+        {
+          time_of_day: "morning",
+          activities: [
+            {
+              id: "hotel_008170",
+              type: "accommodation",
+              name: "Luxury Hanoi Hotel",
+              start_time: "08:00",
+              end_time: "11:00",
+              description: "Thư giãn tại khách sạn sang trọng trong trung tâm thành phố.",
+              address: "Hà Nội",
+              rating: 4.5,
+              price: 850000,
+              image_url: "",
+              price_ai_estimate: 3000000.0
+            }
+          ]
+        },
+        {
+          time_of_day: "afternoon",
+          activities: [
+            {
+              id: "place_000003",
+              type: "place",
+              name: "Chuong Tailor",
+              start_time: "13:00",
+              end_time: "16:00",
+              description: "Trải nghiệm làm đồ thủ công truyền thống tại Chuong Tailor.",
+              address: "Hà Nội",
+              categories: "shopping",
+              rating: 4.2,
+              price: 150000,
+              image_url: "",
+              price_ai_estimate: 300000.0
+            }
+          ]
+        },
+        {
+          time_of_day: "evening",
+          activities: [
+            {
+              id: "restaurant_001958",
+              type: "restaurant",
+              name: "Vietnamese Family Meal",
+              start_time: "18:00",
+              end_time: "20:00",
+              description: "Thưởng thức bữa tối ấm cúng với món ăn gia đình Việt Nam.",
+              address: "Hà Nội",
+              cuisines: "Vietnamese",
+              rating: 4.6,
+              image_url: "",
+              price_ai_estimate: 350000.0
+            }
+          ]
+        }
+      ],
+      daily_tips: [
+        "Nên bắt đầu sớm từ 6-8h sáng để tránh nóng và đông đúc.",
+        "Mang theo nước và đồ ăn nhẹ để giữ năng lượng.",
+        "Sử dụng bản đồ offline để không phụ thuộc vào internet.",
+        "Mặc quần áo thoải mái và mang giày đi bộ.",
+        "Đổi tiền trước khi đi để tránh rắc rối.",
+        "Hãy cẩn thận với tài sản cá nhân khi đi qua khu vực đông người.",
+        "Tham quan Văn Miếu Quốc Tử Giám vào buổi sáng để tránh đông đúc.",
+        "Thưởng thức phở tại một quán nổi tiếng gần Hồ Hoàn Kiếm.",
+        "Chụp ảnh tại Nhà Thờ Lớn Hà Nội vào buổi chiều để có ánh sáng đẹp."
+      ]
+    },
+    {
+      date: "2025-05-11",
+      day_title: "Ngày 2: Thưởng thức Hà Nội qua ẩm thực",
+      segments: [
+        {
+          time_of_day: "morning",
+          activities: [
+            {
+              id: "restaurant_000098",
+              type: "restaurant",
+              name: "Family Restaurant",
+              start_time: "08:00",
+              end_time: "10:00",
+              description: "Bạn sẽ được thưởng thức bữa sáng với các món ăn truyền thống của Hà Nội.",
+              address: "Hà Nội",
+              price_ai_estimate: 120000.0
+            }
+          ]
+        },
+        {
+          time_of_day: "afternoon",
+          activities: [
+            {
+              id: "restaurant_000623",
+              type: "restaurant",
+              name: "Little Hanoi Restaurants",
+              start_time: "12:00",
+              end_time: "14:00",
+              description: "Hãy tận hưởng bữa trưa với những món ăn đặc trưng của Hà Nội.",
+              address: "Hà Nội",
+              price_ai_estimate: 150000.0
+            }
+          ]
+        },
+        {
+          time_of_day: "evening",
+          activities: [
+            {
+              id: "restaurant_000494",
+              type: "restaurant",
+              name: "Maison Sen",
+              start_time: "18:00",
+              end_time: "20:00",
+              description: "Kết thúc ngày với bữa tối tại một trong những nhà hàng nổi tiếng nhất Hà Nội.",
+              address: "Hà Nội",
+              price_ai_estimate: 500000.0
+            }
+          ]
+        }
+      ],
+      daily_tips: [
+        "Đặt chỗ trước và đến Maison Sen vào buổi tối để có trải nghiệm tốt nhất.",
+        "Di chuyển giữa các nhà hàng bằng taxi hoặc xe ôm công nghệ để tiết kiệm thời gian.",
+        "Dự kiến chi phí mỗi bữa ăn từ 200,000 - 500,000 VND tùy món.",
+        "Tránh đến Maison Sen vào giờ cao điểm 18h-20h nếu không đặt chỗ trước.",
+        "Tìm hiểu khuyến mãi hoặc combo tại Family Restaurant để tiết kiệm chi phí.",
+        "Giữ thái độ lịch sự khi giao tiếp với nhân viên nhà hàng và hỏi về cách ăn đúng cách."
+      ]
+    },
+    {
+      date: "2025-05-12",
+      day_title: "Ngày 3: Trải nghiệm văn hóa ẩm thực Hà Nội",
+      segments: [
+        {
+          time_of_day: "morning",
+          activities: [
+            {
+              id: "restaurant_000231",
+              type: "restaurant",
+              name: "Minh´s Family Cooking",
+              start_time: "08:30",
+              end_time: "10:30",
+              description: "Học nấu ăn Việt Nam trong bầu không khí gia đình tại Minh's Family Cooking.",
+              address: "Hà Nội",
+              cuisines: "Việt Nam",
+              rating: 4.3,
+              price_ai_estimate: 500000.0
+            }
+          ]
+        },
+        {
+          time_of_day: "afternoon",
+          activities: [
+            {
+              id: "restaurant_001808",
+              type: "restaurant",
+              name: "Freedom Hostel Restaurant",
+              start_time: "12:00",
+              end_time: "14:00",
+              description: "Thưởng thức bữa trưa tại Freedom Hostel Restaurant, nơi có món ăn đặc trưng của Hà Nội.",
+              address: "Hà Nội",
+              cuisines: "Việt Nam",
+              rating: 4.1,
+              price_ai_estimate: 150000.0
+            },
+            {
+              id: "restaurant_000498",
+              type: "restaurant",
+              name: "Vi Hanoi Restaurant & Cafe",
+              start_time: "14:30",
+              end_time: "16:00",
+              description: "Thưởng thức cà phê Việt Nam tại Vi Hanoi Restaurant & Cafe.",
+              address: "Hà Nội",
+              cuisines: "Cafe",
+              rating: 4.2,
+              price_ai_estimate: 200000.0
+            }
+          ]
+        },
+        {
+          time_of_day: "evening",
+          activities: [
+            {
+              id: "restaurant_000658",
+              type: "restaurant",
+              name: "Bamboo Bar",
+              start_time: "18:00",
+              end_time: "20:00",
+              description: "Cuối ngày, thư giãn tại Bamboo Bar với cocktail tuyệt vời.",
+              address: "Hà Nội",
+              cuisines: "Bar",
+              rating: 4.5,
+              price_ai_estimate: 300000.0
+            }
+          ]
+        }
+      ],
+      daily_tips: [
+        "Bắt đầu ngày mới với lớp học nấu ăn tại Minh's Family Cooking từ 08:30 - 10:30.",
+        "Sử dụng xe ôm công nghệ hoặc taxi để di chuyển giữa các địa điểm trong ngày.",
+        "Dự kiến chi phí cả ngày khoảng 700,000 - 900,000 VND, chuẩn bị thêm tiền mặt để tiện thanh toán.",
+        "Tránh ăn quá no tại một địa điểm để thưởng thức nhiều món khác nhau trong ngày.",
+        "Hỏi trước về nguyên liệu nếu có dị ứng thực phẩm.",
+        "Hỏi về món ăn đặc biệt trong ngày hoặc thực đơn combo để tiết kiệm chi phí.",
+        "Tìm hiểu giờ khuyến mãi \"happy hour\" tại Bamboo Bar.",
+        "Tôn trọng phong tục tập quán địa phương khi tham gia lớp học nấu ăn.",
+        "Thử cà phê trứng tại Vi Hanoi Cafe và các món đặc trưng như phở, bún chả tại Freedom Hostel Restaurant.",
+        "Tôn trọng không gian chung và giữ thái độ lịch sự tại Bamboo Bar."
+      ]
+    }
+  ]
+};
+
 export const MOCK_AI_SUGGESTIONS: TravelActivity[] = [
   {
     id: "ai-suggestion-1",

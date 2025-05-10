@@ -14,7 +14,7 @@ import {
   Typography,
   Divider,
 } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, TeamOutlined } from "@ant-design/icons";
 import { AddExpenseModalProps, Expense } from "../../../../types/splitBillTypes";
 import dayjs from "dayjs";
 
@@ -56,14 +56,16 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
   const handleSplitAmongChange = (value: string[]) => {
     setSelectedParticipants(value);
     
-    // If switching participants in custom mode, update custom amounts
+    // If in custom mode, update custom amounts
     if (splitType === "custom") {
       const newCustomAmounts = { ...customAmounts };
       participants.forEach(p => {
         if (!value.includes(p)) {
           newCustomAmounts[p] = 0;
         } else if (newCustomAmounts[p] === undefined) {
-          newCustomAmounts[p] = 0;
+          // If participant is newly added, set their amount to equal share
+          const perPersonAmount = Math.round(totalAmount / value.length);
+          newCustomAmounts[p] = perPersonAmount;
         }
       });
       setCustomAmounts(newCustomAmounts);
@@ -263,26 +265,34 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
           <Col span={24}>
             <Form.Item
               name="splitAmong"
-              label="Chia giữa"
-              rules={[
-                {
-                  required: true,
-                  message: "Vui lòng chọn người cùng chia",
-                },
-              ]}
+              label="Chia cho"
+              rules={[{ required: true, message: "Vui lòng chọn người chia" }]}
             >
-              <Select
-                mode="multiple"
-                placeholder="Chọn người cùng chia"
-                style={{ width: "100%" }}
-                onChange={handleSplitAmongChange}
-              >
-                {participants.map((participant) => (
-                  <Option key={participant} value={participant}>
-                    {getDisplayName(participant)}
-                  </Option>
-                ))}
-              </Select>
+              <div>
+                <div className="mb-2">
+                  <Button 
+                    type="link" 
+                    onClick={() => handleSplitAmongChange(participants)}
+                    icon={<TeamOutlined />}
+                  >
+                    Chọn tất cả thành viên
+                  </Button>
+                </div>
+                <Select
+                  mode="multiple"
+                  placeholder="Chọn người chia"
+                  style={{ width: "100%" }}
+                  onChange={handleSplitAmongChange}
+                  value={selectedParticipants}
+                  maxTagCount="responsive"
+                >
+                  {participants.map((participant) => (
+                    <Option key={participant} value={participant}>
+                      {getDisplayName(participant)}
+                    </Option>
+                  ))}
+                </Select>
+              </div>
             </Form.Item>
           </Col>
         </Row>

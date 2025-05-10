@@ -155,30 +155,6 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
           border: isOver ? "1px dashed #1890ff" : undefined,
         }}
       >
-        <div className="flex flex-col items-center justify-center h-full mx-2">
-          <Tooltip title="Bình luận">
-            <Button
-              type="text"
-              icon={
-                <MessageOutlined
-                  className={`text-lg transition-colors duration-200 ${
-                    showCommentModal ? "text-blue-500" : "text-gray-400"
-                  }`}
-                />
-              }
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowCommentModal(true);
-              }}
-              className={`flex items-center justify-center h-8 w-8 rounded-full transition-all duration-200 ${
-                showCommentModal
-                  ? "bg-blue-50 ring-2 ring-blue-500"
-                  : "bg-gray-50 hover:bg-gray-100"
-              }`}
-            />
-          </Tooltip>
-        </div>
-
         <Card
           hoverable={!isEditMode}
           onClick={cardClick}
@@ -324,6 +300,30 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
             </div>
           </div>
         </Card>
+
+        <div className="flex flex-col items-center justify-center h-full mx-2">
+          <Tooltip title="Bình luận">
+            <Button
+              type="text"
+              icon={
+                <MessageOutlined
+                  className={`text-lg transition-colors duration-200 ${
+                    showCommentModal ? "text-blue-500" : "text-gray-400"
+                  }`}
+                />
+              }
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowCommentModal(true);
+              }}
+              className={`flex items-center justify-center h-8 w-8 rounded-full transition-all duration-200 ${
+                showCommentModal
+                  ? "bg-blue-50 ring-2 ring-blue-500"
+                  : "bg-gray-50 hover:bg-gray-100"
+              }`}
+            />
+          </Tooltip>
+        </div>
 
         <ActivityCommentModal
           open={showCommentModal}

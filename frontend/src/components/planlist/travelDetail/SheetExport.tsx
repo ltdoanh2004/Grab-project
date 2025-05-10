@@ -11,23 +11,29 @@ interface SheetExportProps {
 }
 
 export const SheetExport: React.FC<SheetExportProps> = ({ travelDetail }) => {
-  const data = travelDetail.days.flatMap((day) =>
-    day.activities.map((activity, idx) => ({
-      key: `${day.day}-${idx}`,
-      day: day.day,
-      date: day.date.toLocaleDateString("vi-VN"),
-      time: activity.time,
-      type: activity.type,
-      name: activity.name,
-      location: activity.location,
-      description: activity.description,
-      price: activity.price ?? "",
-    }))
+  const data = travelDetail.plan_by_day.flatMap((day) =>
+    day.segments.flatMap((segment) =>
+      segment.activities.map((activity, idx) => ({
+        key: `${day.date}-${segment.time_of_day}-${idx}`,
+        day: day.day_title || `Ngày ${travelDetail.plan_by_day.indexOf(day) + 1}`,
+        date: new Date(day.date).toLocaleDateString("vi-VN"),
+        time: `${activity.start_time} - ${activity.end_time}`,
+        segment: segment.time_of_day === 'morning' ? 'Buổi sáng' : 
+                segment.time_of_day === 'afternoon' ? 'Buổi chiều' : 
+                segment.time_of_day === 'evening' ? 'Buổi tối' : segment.time_of_day,
+        type: activity.type,
+        name: activity.name,
+        location: activity.address ?? "",
+        description: activity.description,
+        price: activity.price ?? "",
+      }))
+    )
   );
 
   const columns = [
     { title: "Ngày", dataIndex: "day", key: "day" },
     { title: "Ngày tháng", dataIndex: "date", key: "date" },
+    { title: "Khung giờ", dataIndex: "segment", key: "segment" },
     { title: "Thời gian", dataIndex: "time", key: "time" },
     { title: "Loại", dataIndex: "type", key: "type" },
     { title: "Tên hoạt động", dataIndex: "name", key: "name" },
@@ -47,8 +53,9 @@ export const SheetExport: React.FC<SheetExportProps> = ({ travelDetail }) => {
     const ws = XLSX.utils.aoa_to_sheet(wsData);
 
     ws["!cols"] = [
-      { wch: 6 },
+      { wch: 12 },
       { wch: 14 },
+      { wch: 12 },
       { wch: 14 },
       { wch: 12 },
       { wch: 24 },

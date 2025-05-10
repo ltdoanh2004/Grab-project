@@ -39,17 +39,17 @@ export const SplitBill: React.FC<SplitBillProps> = ({ travelDetail }) => {
         getDisplayName={getDisplayName}
       />
 
-      <ExpenseList
-        expenses={expenses}
-        onRemoveExpense={removeExpense}
-        onAddExpense={() => setModalVisible(true)}
-        getDisplayName={getDisplayName}
-      />
-
       <ParticipantList
         participants={participants}
         onAddParticipant={addParticipant}
         onRemoveParticipant={removeParticipant}
+        getDisplayName={getDisplayName}
+      />
+
+      <ExpenseList
+        expenses={expenses}
+        onRemoveExpense={removeExpense}
+        onAddExpense={() => setModalVisible(true)}
         getDisplayName={getDisplayName}
       />
 

@@ -8,8 +8,11 @@ import {
   Divider,
   Card,
   Empty,
+  Modal,
+  List,
+  Space,
 } from "antd";
-import { PlusOutlined, ClockCircleOutlined } from "@ant-design/icons";
+import { PlusOutlined, ClockCircleOutlined, BulbOutlined } from "@ant-design/icons";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import { ActivityCard } from "./ActivityItem/ActivityCard";
@@ -20,7 +23,7 @@ import {
 } from "../../../types/travelPlan";
 
 const { Panel } = Collapse;
-const { Text } = Typography;
+const { Text, Title } = Typography;
 
 const TIME_OF_DAY_LABELS: Record<string, string> = {
   morning: "Buổi sáng",
@@ -61,6 +64,8 @@ export const TravelItinerary: React.FC<ItineraryProps> = ({
   onMoveActivity,
 }) => {
   const [activeKeys, setActiveKeys] = useState<string[]>(["0"]);
+  const [tipsModalVisible, setTipsModalVisible] = useState(false);
+  const [currentDayTips, setCurrentDayTips] = useState<{ title: string, tips: string[] }>({ title: "", tips: [] });
 
   if (!days || days.length === 0) {
     return (
@@ -92,6 +97,16 @@ export const TravelItinerary: React.FC<ItineraryProps> = ({
     }
   };
 
+  const showDailyTips = (day: TravelDay, dayIdx: number) => {
+    if (day.daily_tips && day.daily_tips.length > 0) {
+      setCurrentDayTips({ 
+        title: day.day_title || `Ngày ${dayIdx + 1}`, 
+        tips: day.daily_tips 
+      });
+      setTipsModalVisible(true);
+    }
+  };
+
   return (
     <DndProvider backend={HTML5Backend}>
       <Collapse 
@@ -104,18 +119,33 @@ export const TravelItinerary: React.FC<ItineraryProps> = ({
           <Panel
             key={day.date}
             header={
-              <div className="flex items-center">
-                <div className="bg-black text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                  {dayIdx + 1}
-                </div>
-                <div>
-                  <Text strong className="text-lg">
-                    {day.day_title || `Ngày ${dayIdx + 1}`}
-                  </Text>
-                  <div className="text-gray-500 text-sm">
-                    {formatDate(day.date)}
+              <div className="flex justify-between items-center w-full">
+                <div className="flex items-center">
+                  <div className="bg-black text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                    {dayIdx + 1}
+                  </div>
+                  <div>
+                    <Text strong className="text-lg">
+                      {day.day_title || `Ngày ${dayIdx + 1}`}
+                    </Text>
+                    <div className="text-gray-500 text-sm">
+                      {formatDate(day.date)}
+                    </div>
                   </div>
                 </div>
+                {day.daily_tips && day.daily_tips.length > 0 && (
+                  <Tooltip title="Xem các mẹo cho ngày này">
+                    <Button 
+                      icon={<BulbOutlined />} 
+                      type="text"
+                      className="text-yellow-500 hover:text-yellow-600"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        showDailyTips(day, dayIdx);
+                      }}
+                    />
+                  </Tooltip>
+                )}
               </div>
             }
             className="mb-4 bg-white rounded-lg shadow-sm"
@@ -176,6 +206,36 @@ export const TravelItinerary: React.FC<ItineraryProps> = ({
           </Panel>
         ))}
       </Collapse>
+
+      <Modal
+        title={
+          <Space>
+            <BulbOutlined className="text-yellow-500" />
+            <span>Mẹo cho {currentDayTips.title}</span>
+          </Space>
+        }
+        open={tipsModalVisible}
+        onCancel={() => setTipsModalVisible(false)}
+        footer={[
+          <Button key="close" onClick={() => setTipsModalVisible(false)}>
+            Đóng
+          </Button>
+        ]}
+      >
+        <List
+          dataSource={currentDayTips.tips}
+          renderItem={(tip, index) => (
+            <List.Item>
+              <div className="flex items-start">
+                <div className="bg-yellow-100 text-yellow-800 rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5">
+                  {index + 1}
+                </div>
+                <Text>{tip}</Text>
+              </div>
+            </List.Item>
+          )}
+        />
+      </Modal>
     </DndProvider>
   );
 };

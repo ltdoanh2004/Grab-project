@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Card, Typography, List, Empty, Button, Input, Modal, Image } from "antd";
-import { SwapRightOutlined, ArrowRightOutlined, QrcodeOutlined } from "@ant-design/icons";
+import { Card, Typography, List, Empty, Button, Input, Modal, Image, Divider } from "antd";
+import { SwapRightOutlined, ArrowRightOutlined, QrcodeOutlined, FileTextOutlined } from "@ant-design/icons";
 import { SettlementSuggestionsProps } from "../../../../types/splitBillTypes";
 import { CURRENT_USER_ID } from "../../../../hooks/useSplitBill";
 import axios from "axios";
@@ -12,22 +12,21 @@ export const SettlementSuggestions: React.FC<SettlementSuggestionsProps> = ({
   getDisplayName,
 }) => {
   const [qrModalVisible, setQrModalVisible] = useState(false);
-  const [selectedSettlement, setSelectedSettlement] = useState<{from: string, to: string, amount: number} | null>(null);
   const [accountNumber, setAccountNumber] = useState("");
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [loading, setLoading] = useState(false);
 
   const generateQrCode = async () => {
-    if (!selectedSettlement || !accountNumber) return;
+    if (!accountNumber) return;
     
     setLoading(true);
     try {
       const response = await axios.post('https://api.vietqr.io/v2/generate', {
         accountNo: accountNumber,
-        accountName: "Vua du lịch", // Default account name
-        acqId: "970415", // Default bank ID for Vietcombank
-        addInfo: `${getDisplayName(selectedSettlement.from)} thanh toán tiền du lịch ${getDisplayName(selectedSettlement.to)}`,
-        amount: `${selectedSettlement.amount}`,
+        accountName: "Vua du lịch", 
+        acqId: "970415", 
+        addInfo: "Thanh toán chi phí du lịch",
+        amount: `${settlements.reduce((sum, s) => sum + s.amount, 0)}`,
         template: "print"
       }, {
         headers: {
@@ -45,11 +44,6 @@ export const SettlementSuggestions: React.FC<SettlementSuggestionsProps> = ({
     }
   };
 
-  const showQrModal = (settlement: {from: string, to: string, amount: number}) => {
-    setSelectedSettlement(settlement);
-    setQrModalVisible(true);
-  };
-
   if (settlements.length === 0) {
     return (
       <Card className="mb-4">
@@ -61,7 +55,16 @@ export const SettlementSuggestions: React.FC<SettlementSuggestionsProps> = ({
 
   return (
     <Card className="mb-4">
-      <Title level={5}>Đề Xuất Thanh Toán</Title>
+      <div className="flex justify-between items-center mb-4">
+        <Title level={5} className="m-0">Đề Xuất Thanh Toán</Title>
+        <Button 
+          type="primary" 
+          icon={<QrcodeOutlined />} 
+          onClick={() => setQrModalVisible(true)}
+        >
+          Tạo QR
+        </Button>
+      </div>
       <Text type="secondary" className="mb-4 block">
         Đây là cách hiệu quả nhất để giải quyết các khoản nợ trong nhóm
       </Text>
@@ -69,38 +72,25 @@ export const SettlementSuggestions: React.FC<SettlementSuggestionsProps> = ({
         itemLayout="horizontal"
         dataSource={settlements}
         renderItem={(settlement, index) => (
-          <List.Item
-            actions={[
-              <Button 
-                type="primary" 
-                icon={<QrcodeOutlined />} 
-                onClick={() => showQrModal(settlement)}
-                size="small"
-              >
-                Tạo QR
-              </Button>
-            ]}
-          >
-            <div className="flex items-center w-full justify-between">
-              <div className="flex items-center">
-                <div className="bg-blue-100 text-blue-800 rounded-full h-8 w-8 flex items-center justify-center mr-3">
-                  {index + 1}
-                </div>
-                <div>
-                  <span className="font-medium">{getDisplayName(settlement.from)}</span>{" "}
-                  {settlement.to === CURRENT_USER_ID ? (
-                    <ArrowRightOutlined className="mx-2 text-green-600" />
-                  ) : settlement.from === CURRENT_USER_ID ? (
-                    <ArrowRightOutlined className="mx-2 text-red-600" />
-                  ) : (
-                    <SwapRightOutlined className="mx-2 text-gray-400" />
-                  )}{" "}
-                  <span className="font-medium">{getDisplayName(settlement.to)}</span>
-                </div>
+          <List.Item>
+            <div className="flex items-center">
+              <div className="bg-blue-100 text-blue-800 rounded-full h-8 w-8 flex items-center justify-center mr-3">
+                {index + 1}
               </div>
-              <div className="font-bold text-lg">
-                {settlement.amount.toLocaleString("vi-VN")}₫
+              <div>
+                <span className="font-medium">{getDisplayName(settlement.from)}</span>{" "}
+                {settlement.to === CURRENT_USER_ID ? (
+                  <ArrowRightOutlined className="mx-2 text-green-600" />
+                ) : settlement.from === CURRENT_USER_ID ? (
+                  <ArrowRightOutlined className="mx-2 text-red-600" />
+                ) : (
+                  <SwapRightOutlined className="mx-2 text-gray-400" />
+                )}{" "}
+                <span className="font-medium">{getDisplayName(settlement.to)}</span>
               </div>
+            </div>
+            <div className="font-bold text-lg">
+              {settlement.amount.toLocaleString("vi-VN")}₫
             </div>
           </List.Item>
         )}
@@ -109,9 +99,17 @@ export const SettlementSuggestions: React.FC<SettlementSuggestionsProps> = ({
       <Modal
         title="Tạo mã QR thanh toán"
         open={qrModalVisible}
-        onCancel={() => setQrModalVisible(false)}
+        onCancel={() => {
+          setQrModalVisible(false);
+          setQrCodeUrl("");
+          setAccountNumber("");
+        }}
         footer={[
-          <Button key="cancel" onClick={() => setQrModalVisible(false)}>
+          <Button key="cancel" onClick={() => {
+            setQrModalVisible(false);
+            setQrCodeUrl("");
+            setAccountNumber("");
+          }}>
             Đóng
           </Button>,
           <Button 
@@ -124,17 +122,36 @@ export const SettlementSuggestions: React.FC<SettlementSuggestionsProps> = ({
             Tạo mã QR
           </Button>
         ]}
+        width={800}
       >
-        {selectedSettlement && (
-          <div>
-            <div className="mb-4">
-              <Text>
-                <strong>{getDisplayName(selectedSettlement.from)}</strong> cần thanh toán{" "}
-                <strong>{selectedSettlement.amount.toLocaleString("vi-VN")}₫</strong> cho{" "}
-                <strong>{getDisplayName(selectedSettlement.to)}</strong>
-              </Text>
-            </div>
-            
+        <div className="flex gap-8">
+          <div className="flex-1">
+            <Title level={5} className="mb-4">Danh sách thanh toán</Title>
+            <List
+              itemLayout="horizontal"
+              dataSource={settlements}
+              renderItem={(settlement, index) => (
+                <List.Item>
+                  <div className="flex items-center">
+                    <div className="bg-blue-100 text-blue-800 rounded-full h-8 w-8 flex items-center justify-center mr-3">
+                      {index + 1}
+                    </div>
+                    <div>
+                      <span className="font-medium">{getDisplayName(settlement.from)}</span>{" "}
+                      <ArrowRightOutlined className="mx-2 text-gray-400" />{" "}
+                      <span className="font-medium">{getDisplayName(settlement.to)}</span>
+                    </div>
+                  </div>
+                  <div className="font-bold text-lg">
+                    {settlement.amount.toLocaleString("vi-VN")}₫
+                  </div>
+                </List.Item>
+              )}
+            />
+          </div>
+          
+          <div className="flex-1">
+            <Title level={5} className="mb-4">Tạo mã QR</Title>
             <div className="mb-4">
               <Text>Nhập số tài khoản ngân hàng của bạn:</Text>
               <Input 
@@ -149,10 +166,13 @@ export const SettlementSuggestions: React.FC<SettlementSuggestionsProps> = ({
               <div className="text-center">
                 <Image src={qrCodeUrl} alt="QR Code" style={{ maxWidth: 200, margin: '0 auto' }} />
                 <Text className="block mt-2">Quét mã QR để chuyển khoản</Text>
+                <Text type="secondary" className="block mt-1">
+                  Tổng số tiền: {settlements.reduce((sum, s) => sum + s.amount, 0).toLocaleString("vi-VN")}₫
+                </Text>
               </div>
             )}
           </div>
-        )}
+        </div>
       </Modal>
     </Card>
   );

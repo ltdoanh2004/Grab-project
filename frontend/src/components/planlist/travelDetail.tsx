@@ -246,7 +246,7 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
   ];
 
   return (
-    <div className="max-w-6xl mx-auto pb-20 relative">
+    <div className="max-w-6xl mx-auto pb-28 relative">
       {/* Custom Notification */}
       {showCopyNotification && (
         <div className="fixed top-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg flex items-center z-50 animate-fade-in-down">
@@ -265,27 +265,6 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
           >
             <span className="ml-1">Quay lại</span>
           </Button>
-          <div className="flex items-center gap-2">
-            <Button
-              icon={<ShareAltOutlined />}
-              onClick={handleShare}
-              className="border-gray-300 hover:border-blue-500 hover:text-blue-500 rounded-full"
-            >
-              Chia sẻ
-            </Button>
-            <Button
-              type="primary"
-              icon={isEditMode ? <SaveOutlined /> : <EditOutlined />}
-              onClick={toggleEditMode}
-              className={
-                isEditMode
-                  ? "bg-green-600 hover:bg-green-700"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }
-            >
-              {isEditMode ? "Lưu thay đổi" : "Chỉnh sửa lịch trình"}
-            </Button>
-          </div>
         </div>
       </Affix>
 
@@ -297,6 +276,21 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
           formatCurrency={formatCurrency}
           getStatusTag={getStatusTag}
         />
+
+        <div className="flex justify-end mb-3">
+          <Button
+            type="primary"
+            icon={isEditMode ? <SaveOutlined /> : <EditOutlined />}
+            onClick={toggleEditMode}
+            className={
+              isEditMode
+                ? "bg-green-600 hover:bg-green-700"
+                : "bg-blue-600 hover:bg-blue-700"
+            }
+          >
+            {isEditMode ? "Lưu thay đổi" : "Chỉnh sửa lịch trình"}
+          </Button>
+        </div>
 
         <Card
           className="rounded-xl shadow-sm overflow-hidden mb-6 border-0"
@@ -332,6 +326,18 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
           />
         </div>
       )}
+
+      {/* Share button at the bottom of the page */}
+      <div className="fixed left-0 right-0 bottom-0 py-3 px-5 bg-white shadow-lg flex justify-center">
+        <Button
+          icon={<ShareAltOutlined />}
+          onClick={handleShare}
+          size="large"
+          className="border-gray-300 hover:border-blue-500 hover:text-blue-500 rounded-full px-6"
+        >
+          Chia sẻ lịch trình
+        </Button>
+      </div>
 
       <ActivityModal
         activity={selectedActivity}

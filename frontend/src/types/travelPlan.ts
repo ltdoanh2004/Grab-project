@@ -74,6 +74,7 @@ export interface TravelActivity {
   categories?: string;
   duration?: string;
   opening_hours?: string;
+  price_ai_estimate?: number;
 }
 
 export interface TravelSegment {
@@ -85,6 +86,7 @@ export interface TravelDay {
   date: string;
   day_title: string;
   segments: TravelSegment[];
+  daily_tips?: string[];
 }
 
 export interface TravelDetailData {

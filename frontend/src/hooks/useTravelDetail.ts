@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   MOCK_TRAVEL_DETAIL,
+  MOCK_TRAVEL_DETAIL_2,
   MOCK_TRAVEL_PLANS,
 } from "../constants/travelPlanConstants";
 import {
@@ -32,6 +33,8 @@ export function useTravelDetail(travelId: string) {
     const mockDetail =
       travelId === MOCK_TRAVEL_DETAIL.id
         ? MOCK_TRAVEL_DETAIL
+        : travelId === MOCK_TRAVEL_DETAIL_2.id
+        ? MOCK_TRAVEL_DETAIL_2
         : (MOCK_TRAVEL_PLANS.find((p) => p.id === travelId) as any);
 
     if (mockDetail && mockDetail.plan_by_day) {

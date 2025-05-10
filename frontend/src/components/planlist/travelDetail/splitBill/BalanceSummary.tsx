@@ -64,7 +64,7 @@ export const BalanceSummary: React.FC<BalanceSummaryProps & { getDisplayName: (i
                   {Math.abs(amount).toLocaleString("vi-VN")}₫
                 </>
               ) : (
-                "Đã cân bằng"
+                "Đã chia đều"
               )}
             </span>
           </div>
