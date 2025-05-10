@@ -48,18 +48,17 @@ FORMAT_INSTRUCTIONS = (
 )
 
 class PlanModel:
-    def __init__(self, temperature: float = 0.7):
+    def __init__(self, temperature: float = 1.0):
         self.llm = ChatOpenAI(
             api_key=os.getenv("OPEN_API_KEY"), 
             temperature=temperature,
-            model="gpt-4",  
+            model="gpt-3.5-turbo",
             max_tokens=4000  
         )
         self.parser = JsonOutputParser()  
 
         self.review_agent = TravelReviewer()
         
-        # Initialize sets to track used entities and avoid duplicates
         self.used_accommodation_ids = set()
         self.used_place_ids = set()
         self.used_restaurant_ids = set()
@@ -477,10 +476,7 @@ class PlanModel:
                 if empty_segments:
                     log.info(f"Ngày {idx+1} có {len(empty_segments)} segment trống, đang bổ sung hoạt động mặc định")
                     day = self._populate_default_activities(day, idx, merged_data)
-            
-            # save_data_to_json(final_plan,z f"../test_api/generated_plan/plan_{input_data.get('trip_name', 'default_trip')}.json")
             review_plan = self.review_agent.process_plan(final_plan)
-            save_data_to_json(review_plan, f"/Users/doa_ai/Developer/Grab-project/ai/model/src/test_api/generated_plan/review_plan_{input_data.get('trip_name', 'default_trip')}.json")
             return review_plan
             
         except Exception as e:

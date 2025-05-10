@@ -20,7 +20,7 @@ class TravelModel:
         Initialize the travel model with OpenAI API key
         """
         self.openai_client = OpenAI(api_key=os.getenv("OPEN_API_KEY"))
-        self.model = "gpt-4o"
+        self.model = "gpt-4.1-mini-2025-04-14"
         
         logger.info("Setting up all databases...")
         self.hotel_db = HotelVectorDatabase()
@@ -219,20 +219,20 @@ class TravelModel:
                     
                 # Set appropriate top_k based on function type
                 if function_name == "query_hotels":
-                    top_k = min(function_args.get("top_k", 5), 5)
+                    top_k = min(function_args.get("top_k", 15), 15)
                 else:
-                    top_k = min(function_args.get("top_k", 20), 20)
+                    top_k = min(function_args.get("top_k", 40), 40)
             else:
                 # Default to maximum allowed values
-                top_k = 20
+                top_k = 40
                 
             logger.info("Querying all databases with context")
             
             formatted_results = []
             
-            # Query hotels (max 5 results)
+            # Query hotels (max 15 results)
             logger.info(f"Querying hotels with context: {search_context}")
-            hotel_ids = self.query_hotels(search_context, top_k=5)
+            hotel_ids = self.query_hotels(search_context, top_k=15)
             for hotel_id in hotel_ids:
                 formatted_results.append({
                     "name": f"Hotel {hotel_id}",
@@ -242,9 +242,9 @@ class TravelModel:
                 })
             logger.info(f"Added {len(hotel_ids)} hotel recommendations")
             
-            # Query places (max 20 results)
+            # Query places (max 40 results)
             logger.info(f"Querying places with context: {search_context}")
-            place_ids = self.query_places(search_context, top_k=20)
+            place_ids = self.query_places(search_context, top_k=40)
             for place_id in place_ids:
                 formatted_results.append({
                     "name": f"Place {place_id}",
@@ -255,15 +255,15 @@ class TravelModel:
             logger.info(f"place_ids: {place_ids}")
             logger.info(f"Added {len(place_ids)} place recommendations")
             
-            # Query restaurants (max 20 results)
+            # Query restaurants (max 40 results)
             logger.info(f"Querying restaurants with context: {search_context}")
-            restaurant_ids = self.query_fnb(search_context, top_k=20)
+            restaurant_ids = self.query_fnb(search_context, top_k=40)
             
             # If no restaurant results, try with broader context
             if not restaurant_ids:
                 logger.warning("No restaurant results found with original context, trying broader search")
                 broader_context = f"restaurant {search_context}"
-                restaurant_ids = self.query_fnb(broader_context, top_k=20)
+                restaurant_ids = self.query_fnb(broader_context, top_k=40)
             
             for restaurant_id in restaurant_ids:
                 formatted_results.append({

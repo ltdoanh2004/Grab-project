@@ -16,16 +16,13 @@ Hãy trả lời bằng tiếng Việt, ngắn gọn và dễ hiểu. Mỗi mẹ
 
 few_shot_review_promt = """
         ### Ngày 1: Khám phá phố cổ Hà Nội
-
         1. **Thời điểm lý tưởng**: Nếu muốn tận hưởng vẻ đẹp bình yên của Hà Nội, bạn hãy dậy sớm từ 6:00 - 8:00. Lúc này, phố phường còn tĩnh lặng, bạn có thể ngắm nhìn nhịp sống buổi sáng của người dân mà không phải lo lắng về đông đúc.
         2. **Di chuyển**: Để có thể khám phá từng ngóc ngách của phố cổ, hãy chọn đi bộ hoặc thuê xe đạp. Những con phố nhỏ sẽ trở nên thú vị hơn khi bạn tự mình lang thang khám phá.
         3. **Chi phí ước tính**: Khoảng 500,000 VND cho cả ngày, đủ để bạn thưởng thức món ngon và tham gia vào các hoạt động mua sắm.
         4. **Mẹo mua sắm**: Hãy tránh mua đồ ở các cửa hàng đầu phố vì giá cả thường cao hơn so với những cửa hàng nhỏ trong các ngõ.
         5. **Tiết kiệm chi phí**: Nếu muốn trải nghiệm ăn sáng với giá hợp lý, đừng ngần ngại dừng chân ở một quán vỉa hè. Mỗi phần ăn chỉ khoảng 20,000 - 30,000 VND nhưng lại rất ngon.
         6. **Văn hóa cần lưu ý**: Khi vào chùa, nhớ mặc đồ kín đáo và cởi giày trước khi bước vào. Đây là nét đẹp văn hóa đáng trân trọng.
-
         ### Ngày 2: Thưởng thức ẩm thực Hà Nội
-
         1. **Thời gian lý tưởng**: Hãy dành buổi tối từ 18:00 - 21:00 để thưởng thức những món ăn đặc sắc của Hà Nội. Lúc này, các quán ăn sôi động hơn và bạn sẽ cảm nhận được không khí ẩm thực đường phố thật sự.
         2. **Di chuyển**: Bạn chỉ cần đi bộ giữa các quán ăn, vì khoảng cách giữa chúng rất gần nhau. Đây là cơ hội tuyệt vời để vừa thưởng thức đồ ăn, vừa ngắm nhìn phố xá về đêm.
         3. **Chi phí ước tính**: Một buổi tối thưởng thức ẩm thực có thể dao động từ 300,000 - 400,000 VND, đủ để bạn nếm thử nhiều món ngon và thưởng thức các món uống đặc trưng.
@@ -64,11 +61,9 @@ summary_tips_promt = """
         5. Giữ nguyên tiếng Việt
         6. Trả về CHÍNH XÁC danh sách các tips, mỗi tip trên một dòng
         7. Nếu tips đó cụ thể cho địa điểm đó thì cứ viết tên địa điểm đó vào tips
-
         Ví dụ: 
         Input:
         "1. **Thời điểm lý tưởng**: Nên bắt đầu sớm để tránh cái nóng và đông đúc."
-
         Output:
         "Nên bắt đầu sớm từ 6-8h sáng để tránh nóng và đông đúc."
 """
