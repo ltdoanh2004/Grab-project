@@ -478,9 +478,9 @@ class PlanModel:
                     log.info(f"Ngày {idx+1} có {len(empty_segments)} segment trống, đang bổ sung hoạt động mặc định")
                     day = self._populate_default_activities(day, idx, merged_data)
             
-            save_data_to_json(final_plan, f"../test_api/generated_plan/plan_{input_data.get('trip_name', 'default_trip')}.json")
+            # save_data_to_json(final_plan,z f"../test_api/generated_plan/plan_{input_data.get('trip_name', 'default_trip')}.json")
             review_plan = self.review_agent.process_plan(final_plan)
-            save_data_to_json(review_plan, f"../test_api/generated_plan/review_plan_{input_data.get('trip_name', 'default_trip')}.json")
+            save_data_to_json(review_plan, f"/Users/doa_ai/Developer/Grab-project/ai/model/src/test_api/generated_plan/review_plan_{input_data.get('trip_name', 'default_trip')}.json")
             return review_plan
             
         except Exception as e:
