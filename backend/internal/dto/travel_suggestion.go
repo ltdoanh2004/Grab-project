@@ -78,6 +78,7 @@ type AccommodationsSuggestion struct {
 }
 
 type TripSuggestionRequest struct {
+	DestinationID string                   `json:"destination_id"`
 	Accommodation AccommodationsSuggestion `json:"accommodation"`
 	Places        PlacesSuggestion         `json:"places"`
 	Restaurants   RestaurantsSuggestion    `json:"restaurants"`

@@ -1828,6 +1828,10 @@ const docTemplate = `{
         "dto.ExpenseUserDTO": {
             "type": "object",
             "properties": {
+                "custom_amount": {
+                    "description": "Amount for custom split",
+                    "type": "number"
+                },
                 "trip_id": {
                     "type": "string"
                 },
@@ -2408,6 +2412,9 @@ const docTemplate = `{
                 "accommodation": {
                     "$ref": "#/definitions/dto.AccommodationsSuggestion"
                 },
+                "destination_id": {
+                    "type": "string"
+                },
                 "places": {
                     "$ref": "#/definitions/dto.PlacesSuggestion"
                 },
@@ -2577,6 +2584,14 @@ const docTemplate = `{
                 },
                 "trip_id": {
                     "type": "string"
+                },
+                "user": {
+                    "description": "Corrected User relationship",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    ]
                 },
                 "user_id": {
                     "type": "string"
@@ -3092,14 +3107,19 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "expense_users": {
-                    "description": "Updated association",
+                    "description": "Updated association with proper join table configuration",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/model.ExpenseUser"
                     }
                 },
                 "paid_by_user": {
-                    "$ref": "#/definitions/model.User"
+                    "description": "Relationships",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    ]
                 },
                 "paid_by_user_id": {
                     "type": "string"
@@ -3109,6 +3129,9 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/model.SplitExpense"
                     }
+                },
+                "trip": {
+                    "$ref": "#/definitions/model.Trip"
                 },
                 "trip_id": {
                     "type": "string"
@@ -3215,6 +3238,12 @@ const docTemplate = `{
             "properties": {
                 "email": {
                     "type": "string"
+                },
+                "expense_users": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ExpenseUser"
+                    }
                 },
                 "expenses": {
                     "type": "array",

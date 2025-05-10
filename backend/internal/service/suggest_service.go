@@ -317,6 +317,7 @@ func (ss *suggestService) SuggestAll(travelPreference *model.TravelPreference) (
 	if err != nil {
 		return nil, err
 	}
+	suggestion.DestinationID = travelPreference.DestinationID
 	// fmt.Println("Converted suggestion: ", suggestion)
 
 	return suggestion, nil
