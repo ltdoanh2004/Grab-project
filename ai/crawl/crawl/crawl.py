@@ -64,6 +64,15 @@ async def extract_price_range(page):
     except Exception as e:
         logger.error(f"Error extracting price range: {str(e)}")
         return {"price_range": ""}
+async def extract_detail_info(article):
+    ps = await article.query_selector_all("p")
+    detail_texts = []
+    for p in ps:
+        text = await p.inner_text()
+        detail_texts.append(text.strip())
+
+    full_text = "\n\n".join(detail_texts)  # cách dòng cho dễ đọc
+    return {"reviews": full_text}
 
 def slug_to_name(slug):
     """Convert URL slug to readable name"""
@@ -132,7 +141,8 @@ async def get_detail_data(page, detail_link):
             result.update(await extract_price_range(article))
         elif article_id == "NH-ANH":
             result['photo_url'].extend(await extract_image_gallery(article))
-            
+        elif article_id == "NH-CHITIET":
+            result.update(await extract_detail_info(article))
     return result
 
 async def crawl_pasgo_by_page(category_slug, city, max_pages=5):
