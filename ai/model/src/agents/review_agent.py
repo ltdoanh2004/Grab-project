@@ -36,7 +36,7 @@ class TravelReviewer:
             raise ValueError("Tavily API key is required")
             
         self.llm = ChatOpenAI(
-            model="gpt-4o",
+            model="gpt-4o-mini",
             temperature=0.5,
             openai_api_key=self.openai_api_key
         )

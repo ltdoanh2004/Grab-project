@@ -22,15 +22,16 @@ router = APIRouter(tags=["Fix activity based on comment"])
 
 
 
-@router.post("/fix_activity", response_model=FixCommentResponse)
+@router.post("/fix/activity")
 async def fix_activity(request: dict):
     """
     Endpoint to fix activity based on comment
     """
     try:
         logger.info(f"Received raw trip plan request: {request.keys()}")
-        response = model.fix_activity(request)
-        return FixCommentResponse(success=True, message="Activity fixed successfully", data=response)
+        response = model.gen_activity_comment(request)
+        logger.info(f"Response: {response}")
+        return response
 
     except Exception as e:
         logger.error(f"Error in fix_activity: {e}")

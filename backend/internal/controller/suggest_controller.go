@@ -6,7 +6,7 @@ import (
 	"skeleton-internship-backend/internal/model"
 	"skeleton-internship-backend/internal/service"
 	"skeleton-internship-backend/middleware"
-
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -161,6 +161,7 @@ func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
 
 	var suggestedTrip *dto.TripDTOByDate
 	suggestedTrip, err = sc.tripService.SuggestTrip(userID.(string), *suggestion, getPlanEndpoint)
+	fmt.Println("suggestedTrip", suggestedTrip)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
 			Message: "Failed to get trip suggestion: " + err.Error(),
@@ -170,6 +171,7 @@ func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
 	}
 
 	_, err = sc.tripService.CreateTravelPreference(suggestedTrip.TripID, travelPreference)
+	fmt.Println("err", err)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
 			Message: "Failed to create travel preference: " + err.Error(),

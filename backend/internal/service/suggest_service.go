@@ -461,7 +461,7 @@ func (ss *suggestService) callAISuggestWithComment(req *dto.SuggestWithCommentRe
 	aiURL := fmt.Sprintf("http://%s:%s%s",
 		config.AppConfig.AI.Host,
 		config.AppConfig.AI.Port,
-		"/suggest/comment",
+		"/api/v1/fix/activity",
 	)
 
 	httpReq, err := http.NewRequest("POST", aiURL, &jsonBody)
@@ -485,6 +485,7 @@ func (ss *suggestService) callAISuggestWithComment(req *dto.SuggestWithCommentRe
 	if err != nil {
 		return nil, fmt.Errorf("failed to read AI service response body: %w", err)
 	}
+	fmt.Println("body", string(body))
 	return body, nil
 }
 
@@ -512,6 +513,7 @@ func (ss *suggestService) SuggestWithComment(req *dto.SuggestWithCommentRequest)
 		suggestionList = append(suggestionList, suggestion)
 	}
 	aiResponse.SuggestionList = suggestionList
+	fmt.Println("aiResponse: ", aiResponse)
 	return &aiResponse, nil
 }
 
