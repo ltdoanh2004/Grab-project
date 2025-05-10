@@ -52,7 +52,7 @@ class PlanModel:
         self.llm = ChatOpenAI(
             api_key=os.getenv("OPEN_API_KEY"), 
             temperature=temperature,
-            model="gpt-3.5-turbo",
+            model="gpt-4o",
             max_tokens=4000  
         )
         self.parser = JsonOutputParser()  
