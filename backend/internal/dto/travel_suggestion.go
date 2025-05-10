@@ -96,6 +96,6 @@ type SuggestWithCommentRequest struct {
 }
 
 type SuggestWithCommentResponse struct {
-	SuggestionType string            `json:"suggestion_type"`
-	SuggestionIDs  model.StringArray `json:"suggestion_ids"`
+	SuggestionType string     `json:"suggestion_type"`
+	SuggestionList []Activity `json:"suggestion_list"`
 }

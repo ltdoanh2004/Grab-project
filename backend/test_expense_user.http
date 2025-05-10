@@ -1,0 +1,23 @@
+### Test adding expense user by username
+POST http://localhost:8081/api/v1/expense/user/add
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+{
+  "trip_id": "9e482a3b-2a39-465d-ba78-a5c4e7185b07",
+  "username": "duythien2212"
+}
+
+### Test adding expense user by user ID
+POST http://localhost:8081/api/v1/expense/user/add
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+{
+  "trip_id": "9e482a3b-2a39-465d-ba78-a5c4e7185b07",
+  "user_id": "652530eb-f27d-4d72-b84d-3c3ddb8d57d7"
+}
+
+### Get expense users for a trip
+GET http://localhost:8081/api/v1/expense/users/9e482a3b-2a39-465d-ba78-a5c4e7185b07
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE

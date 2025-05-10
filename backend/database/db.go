@@ -37,6 +37,7 @@ func NewDB(cfg *config.Config) (*gorm.DB, error) {
 	// 	&model.ChatMessage{},
 	// 	&model.Comment{},
 	// 	&model.TravelPreference{},
+	// 	&model.TripExpense{},
 	// )
 
 	db.Exec("SET FOREIGN_KEY_CHECKS = 0;")
@@ -56,6 +57,8 @@ func NewDB(cfg *config.Config) (*gorm.DB, error) {
 		&model.ChatMessage{},
 		&model.Comment{},
 		&model.TravelPreference{},
+		&model.TripExpense{},
+		&model.ExpenseUser{},
 	)
 	if err != nil {
 		return nil, err
