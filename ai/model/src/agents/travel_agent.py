@@ -53,32 +53,32 @@ class TravelModel:
             logger.error(f"Error setting up database: {e}")
             return False
             
-    def query_hotels(self, query_text: str, top_k: int = 5) -> List[str]:
+    def query_hotels(self, query_text: str, top_k: int = 15) -> List[str]:
         """
         Query hotels based on text input and return hotel IDs
-        Limited to top 5 results
+        Limited to top 15 results
         """
         self.current_db = self.hotel_db
-        top_k = min(top_k, 5)  # Enforce maximum of 5 results
+        top_k = min(top_k, 15)  # Enforce maximum of 15 results
         return self.current_db.get_hotel_ids(query_text, top_k=top_k)
     
-    def query_places(self, query_text: str, top_k: int = 20) -> List[str]:
+    def query_places(self, query_text: str, top_k: int = 40) -> List[str]:
         """
         Query places based on text input and return place IDs
-        Limited to top 20 results
+        Limited to top 40 results
         """
         self.current_db = self.place_db
-        top_k = min(top_k, 20)  # Enforce maximum of 20 results
+        top_k = min(top_k, 40)  # Enforce maximum of 40 results
         return self.current_db.get_place_ids(query_text, top_k=top_k)
     
-    def query_fnb(self, query_text: str, top_k: int = 20) -> List[str]:
+    def query_fnb(self, query_text: str, top_k: int = 40) -> List[str]:
         """
         Query FnB based on text input and return FnB IDs
-        Limited to top 20 results
+        Limited to top 40 results
         """
         try:
             self.current_db = self.fnb_db
-            top_k = min(top_k, 20)  # Enforce maximum of 20 results
+            top_k = min(top_k, 40)  # Enforce maximum of 40 results
             
             # Log the query attempt
             logger.info(f"Attempting to query FnB with text: {query_text}, top_k: {top_k}")

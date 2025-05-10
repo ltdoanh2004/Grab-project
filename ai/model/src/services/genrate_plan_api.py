@@ -40,37 +40,8 @@ async def get_trip_plan(request: dict):
         accommodations = []
         places = []
         restaurants = []
-        destination = "Unknown"
-        
-        if "accommodation" in request and "accommodations" in request["accommodation"]:
-            accommodations = request["accommodation"]["accommodations"]
-            for accommodation in accommodations:
-                if "destination_id" in accommodation:
-                    destination = accommodation["destination_id"]
-                    logger.info(f"destination_accommodation: {destination}")
-            # if accommodations and "destination_id" in accommodations[0]:
-            #     destination = accommodations[0]["destination_id"]
-            #     logger.info(f"destination: {destination}")
-        
-        if "places" in request and "places" in request["places"]:
-            places = request["places"]["places"]
-            for place in places:
-                if "destination_id" in place:
-                    destination = place["destination_id"]
-                    logger.info(f"destination_place: {destination}")
-            # if destination == "Unknown" and places and "destination_id" in places[0]:
-            #     destination = places[0]["destination_id"]
-            #     logger.info(f"destination: {destination}")
-        
-        if "restaurants" in request and "restaurants" in request["restaurants"]:
-            restaurants = request["restaurants"]["restaurants"]
-            for restaurant in restaurants:
-                if "destination_id" in restaurant:
-                    destination = restaurant["destination_id"]
-                    logger.info(f"destination_restaurant: {destination}")
-            # if destination == "Unknown" and restaurants and "destination_id" in restaurants[0]:
-            #     destination = restaurants[0]["destination_id"]
-            #     logger.info(f"destination: {destination}")
+        destination = request["destination_id"]
+
         logger.info(f"Extracted {len(accommodations)} accommodations, {len(places)} places, and {len(restaurants)} restaurants")
         logger.info(f"Destination identified as: {destination}")
         
