@@ -36,12 +36,10 @@ async def get_trip_plan(request: dict):
     """
     try:
         logger.info(f"Received raw trip plan request: {request.keys()}")
-        # logger.info(f"Request: {request}")
         accommodations = []
         places = []
         restaurants = []
         destination = request["destination_id"]
-
         logger.info(f"Extracted {len(accommodations)} accommodations, {len(places)} places, and {len(restaurants)} restaurants")
         logger.info(f"Destination identified as: {destination}")
         
