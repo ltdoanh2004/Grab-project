@@ -132,6 +132,27 @@ func (ec *ExpenseController) AddTripExpense(ctx *gin.Context) {
 		return
 	}
 
+	// Validate required fields
+	if expenseDTO.TripID == "" {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Trip ID is required"})
+		return
+	}
+
+	if expenseDTO.ExpenseName == "" {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Expense name is required"})
+		return
+	}
+
+	if expenseDTO.ExpenseAmount <= 0 {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Expense amount must be greater than zero"})
+		return
+	}
+
+	if expenseDTO.PaidByUserID == "" {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Paid by user ID is required"})
+		return
+	}
+
 	// Convert DTO to model
 	expense := model.TripExpense{
 		ExpenseID:     uuid.New().String(),
@@ -166,10 +187,37 @@ func (ec *ExpenseController) AddTripExpense(ctx *gin.Context) {
 	} else if expenseDTO.SplitType == "custom" {
 		// Use custom split amounts
 		expense.SplitExpenses = make([]model.SplitExpense, 0, len(expenseDTO.ExpenseUsers))
+
+		// Calculate total of custom amounts to ensure they match the expense amount
+		totalCustomAmount := 0.0
+		customAmounts := make(map[string]float64)
+
+		// First pass: collect all custom amounts
 		for _, eu := range expenseDTO.ExpenseUsers {
+			if eu.CustomAmount > 0 {
+				totalCustomAmount += eu.CustomAmount
+				customAmounts[eu.UserID] = eu.CustomAmount
+			}
+		}
+
+		// Second pass: create split expenses with proper amounts
+		for _, eu := range expenseDTO.ExpenseUsers {
+			amount := 0.0
+			if customAmount, exists := customAmounts[eu.UserID]; exists && totalCustomAmount > 0 {
+				// Use the custom amount if provided
+				amount = customAmount
+			} else if totalCustomAmount > 0 {
+				// Skip users with no custom amount in custom split mode
+				continue
+			} else {
+				// Fallback to equal split if no custom amounts were provided
+				amount = expenseDTO.ExpenseAmount / float64(len(expenseDTO.ExpenseUsers))
+			}
+
 			expense.SplitExpenses = append(expense.SplitExpenses, model.SplitExpense{
 				ExpenseID: expense.ExpenseID,
 				UserID:    eu.UserID,
+				Amount:    amount,
 			})
 		}
 	}

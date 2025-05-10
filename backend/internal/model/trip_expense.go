@@ -11,10 +11,12 @@ type TripExpense struct {
 	PaidByUserID  string         `gorm:"type:char(36);column:paid_by_user_id" json:"paid_by_user_id,omitempty"`
 	SplitExpenses []SplitExpense `gorm:"type:json" json:"split_expenses,omitempty"`
 
-	PaidByUser *User `gorm:"foreignKey:PaidByUserID" json:"paid_by_user,omitempty"`
+	// Relationships
+	PaidByUser *User `json:"paid_by_user,omitempty"`
+	Trip       *Trip `json:"trip,omitempty"`
 
-	// Updated association
-	ExpenseUsers []ExpenseUser `gorm:"many2many:expense_user_expenses;" json:"expense_users,omitempty"`
+	// Updated association with proper join table configuration
+	ExpenseUsers []*ExpenseUser `gorm:"many2many:expense_user_expenses;" json:"expense_users"`
 }
 
 type SplitExpense struct {

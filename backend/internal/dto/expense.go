@@ -6,9 +6,10 @@ import (
 
 // ExpenseUserDTO represents a user participating in expense splitting
 type ExpenseUserDTO struct {
-	UserID   string `json:"user_id"`
-	TripID   string `json:"trip_id"`
-	Username string `json:"username"`
+	UserID       string  `json:"user_id"`
+	TripID       string  `json:"trip_id"`
+	Username     string  `json:"username"`
+	CustomAmount float64 `json:"custom_amount,omitempty"` // Amount for custom split
 }
 
 // TripExpenseDTO represents an expense for a trip

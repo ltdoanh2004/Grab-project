@@ -275,42 +275,42 @@ func (ss *suggestService) callAISuggestAll(endpoint string, travelPreference *mo
 }
 
 func (ss *suggestService) SuggestAll(travelPreference *model.TravelPreference) (*dto.TripSuggestionRequest, error) {
-	// rsp, err := ss.callAISuggestAll(
-	// 	"/api/v1/suggest/all",
-	// 	travelPreference,
-	// )
-	// if err != nil {
-	// 	return nil, err
-	// }
-
-	var err error
-	var rsp []dto.SuggestWithIDAndType
-	rsp = append(rsp,
-		dto.SuggestWithIDAndType{
-			Name: "hotel_000000",
-			Type: "accommodation",
-			Args: "...",
-			ID:   "hotel_000000",
-		},
-		dto.SuggestWithIDAndType{
-			Name: "restaurant_000000",
-			Type: "restaurant",
-			Args: "...",
-			ID:   "restaurant_000000",
-		},
-		dto.SuggestWithIDAndType{
-			Name: "place_000000",
-			Type: "place",
-			Args: "...",
-			ID:   "place_000000",
-		},
+	rsp, err := ss.callAISuggestAll(
+		"/api/v1/suggest/all",
+		travelPreference,
 	)
-	data, err := json.MarshalIndent(rsp, "", "  ")
 	if err != nil {
-		fmt.Println("Error converting mockdata to json:", err)
-	} else {
-		fmt.Println("mockdata in JSON:", string(data))
+		return nil, err
 	}
+
+	// var err error
+	// var rsp []dto.SuggestWithIDAndType
+	// rsp = append(rsp,
+	// 	dto.SuggestWithIDAndType{
+	// 		Name: "hotel_000000",
+	// 		Type: "accommodation",
+	// 		Args: "...",
+	// 		ID:   "hotel_000000",
+	// 	},
+	// 	dto.SuggestWithIDAndType{
+	// 		Name: "restaurant_000000",
+	// 		Type: "restaurant",
+	// 		Args: "...",
+	// 		ID:   "restaurant_000000",
+	// 	},
+	// 	dto.SuggestWithIDAndType{
+	// 		Name: "place_000000",
+	// 		Type: "place",
+	// 		Args: "...",
+	// 		ID:   "place_000000",
+	// 	},
+	// )
+	// data, err := json.MarshalIndent(rsp, "", "  ")
+	// if err != nil {
+	// 	fmt.Println("Error converting mockdata to json:", err)
+	// } else {
+	// 	fmt.Println("mockdata in JSON:", string(data))
+	// }
 
 	var suggestion *dto.TripSuggestionRequest
 	suggestion, err = ss.ConvertIntoTripSuggestion(rsp)
