@@ -6,7 +6,7 @@ import (
 	"skeleton-internship-backend/internal/model"
 	"skeleton-internship-backend/internal/service"
 	"skeleton-internship-backend/middleware"
-	"fmt"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -148,7 +148,7 @@ func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get suggestions: "+err.Error(), nil))
 		return
 	}
-
+	getPlanEndpoint := "/api/v1/suggest/trip"
 	// Extract userID from access_token
 	userID, exists := ctx.Get("user_id")
 	if !exists {
@@ -159,21 +159,17 @@ func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
 		return
 	}
 
-	// Create trip directly from suggestion
-	tripID, err := sc.tripService.CreateTrip(&dto.TripDTO{
-		UserID: userID.(string),
-		// Add other necessary fields from suggestion
-	})
+	var suggestedTrip *dto.TripDTOByDate
+	suggestedTrip, err = sc.tripService.SuggestTrip(userID.(string), *suggestion, getPlanEndpoint)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
-			Message: "Failed to create trip: " + err.Error(),
+			Message: "Failed to get trip suggestion: " + err.Error(),
 			Data:    nil,
 		})
 		return
 	}
 
-	// Create travel preference
-	_, err = sc.tripService.CreateTravelPreference(tripID, travelPreference)
+	_, err = sc.tripService.CreateTravelPreference(suggestedTrip.TripID, travelPreference)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
 			Message: "Failed to create travel preference: " + err.Error(),
@@ -184,7 +180,7 @@ func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, model.Response{
 		Message: "Trip suggestion retrieved successfully",
-		Data:    suggestion,
+		Data:    suggestedTrip,
 	})
 }
 
