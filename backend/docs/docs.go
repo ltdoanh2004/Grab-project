@@ -282,7 +282,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/model.Accommodation"
+                                            "$ref": "#/definitions/dto.ActivityDetail"
                                         }
                                     }
                                 }
@@ -338,7 +338,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/model.Place"
+                                            "$ref": "#/definitions/dto.ActivityDetail"
                                         }
                                     }
                                 }
@@ -394,7 +394,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/model.Restaurant"
+                                            "$ref": "#/definitions/dto.ActivityDetail"
                                         }
                                     }
                                 }
@@ -1794,6 +1794,50 @@ const docTemplate = `{
                 },
                 "type": {
                     "description": "e.g., \"place\", \"accommodation\", \"restaurant\"",
+                    "type": "string"
+                }
+            }
+        },
+        "dto.ActivityDetail": {
+            "type": "object",
+            "properties": {
+                "additional_info": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image_urls": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "location": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "opening_hours": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "url": {
                     "type": "string"
                 }
             }

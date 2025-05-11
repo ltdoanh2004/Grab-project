@@ -191,7 +191,7 @@ func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Place ID"
-// @Success 200 {object} model.Response{data=model.Place}
+// @Success 200 {object} model.Response{data=dto.ActivityDetail}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/detail/place/{id} [get]
@@ -202,7 +202,28 @@ func (sc *SuggestController) GetPlaceByID(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get place details: "+err.Error(), nil))
 		return
 	}
-	ctx.JSON(http.StatusOK, model.NewResponse("Success", placeDetail))
+
+	placeSuggestion := dto.PlaceSuggestion{
+		PlaceID:       placeDetail.PlaceID,
+		DestinationID: placeDetail.DestinationID,
+		Name:          placeDetail.Name,
+		URL:           placeDetail.URL,
+		Address:       placeDetail.Address,
+		Duration:      placeDetail.Duration,
+		Type:          placeDetail.Type,
+		Images:        placeDetail.Images,
+		MainImage:     placeDetail.MainImage,
+		Price:         placeDetail.Price,
+		Rating:        placeDetail.Rating,
+		Description:   placeDetail.Description,
+		OpeningHours:  placeDetail.OpeningHours,
+		Reviews:       placeDetail.Reviews,
+		Categories:    placeDetail.Categories,
+		Unit:          placeDetail.Unit,
+	}
+
+	activityDetail := placeSuggestion.ToActivityDetail()
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", activityDetail))
 }
 
 // GetRestaurantByID godoc
@@ -212,7 +233,7 @@ func (sc *SuggestController) GetPlaceByID(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Restaurant ID"
-// @Success 200 {object} model.Response{data=model.Restaurant}
+// @Success 200 {object} model.Response{data=dto.ActivityDetail}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/detail/restaurant/{id} [get]
@@ -223,7 +244,30 @@ func (sc *SuggestController) GetRestaurantByID(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get restaurant details: "+err.Error(), nil))
 		return
 	}
-	ctx.JSON(http.StatusOK, model.NewResponse("Success", restaurantDetail))
+
+	restaurantSuggestion := dto.RestaurantSuggestion{
+		RestaurantID:  restaurantDetail.RestaurantID,
+		DestinationID: restaurantDetail.DestinationID,
+		Name:          restaurantDetail.Name,
+		Address:       restaurantDetail.Address,
+		Rating:        restaurantDetail.Rating,
+		Phone:         restaurantDetail.Phone,
+		PhotoURL:      restaurantDetail.PhotoURL,
+		URL:           restaurantDetail.URL,
+		Location:      restaurantDetail.Location,
+		Reviews:       restaurantDetail.Reviews,
+		Services:      restaurantDetail.Services,
+		IsDelivery:    restaurantDetail.IsDelivery,
+		IsBooking:     restaurantDetail.IsBooking,
+		IsOpening:     restaurantDetail.IsOpening,
+		PriceRange:    restaurantDetail.PriceRange,
+		Description:   restaurantDetail.Description,
+		Cuisines:      restaurantDetail.Cuisines,
+		OpeningHours:  restaurantDetail.OpeningHours,
+	}
+
+	activityDetail := restaurantSuggestion.ToActivityDetail()
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", activityDetail))
 }
 
 // GetAccommodationByID godoc
@@ -233,7 +277,7 @@ func (sc *SuggestController) GetRestaurantByID(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Accommodation ID"
-// @Success 200 {object} model.Response{data=model.Accommodation}
+// @Success 200 {object} model.Response{data=dto.ActivityDetail}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/detail/accommodation/{id} [get]
@@ -244,7 +288,27 @@ func (sc *SuggestController) GetAccommodationByID(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get accommodation details: "+err.Error(), nil))
 		return
 	}
-	ctx.JSON(http.StatusOK, model.NewResponse("Success", accommodationDetail))
+
+	accommodationSuggestion := dto.AccommodationSuggestion{
+		AccommodationID: accommodationDetail.AccommodationID,
+		DestinationID:   accommodationDetail.DestinationID,
+		Name:            accommodationDetail.Name,
+		Location:        accommodationDetail.Location,
+		City:            accommodationDetail.City,
+		Price:           accommodationDetail.Price,
+		Rating:          accommodationDetail.Rating,
+		Description:     accommodationDetail.Description,
+		Link:            accommodationDetail.Link,
+		Images:          accommodationDetail.Images,
+		RoomTypes:       accommodationDetail.RoomTypes,
+		RoomInfo:        accommodationDetail.RoomInfo,
+		Unit:            accommodationDetail.Unit,
+		TaxInfo:         accommodationDetail.TaxInfo,
+		ElderlyFriendly: accommodationDetail.ElderlyFriendly,
+	}
+
+	activityDetail := accommodationSuggestion.ToActivityDetail()
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", activityDetail))
 }
 
 // SuggestWithComment godoc

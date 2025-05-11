@@ -100,3 +100,82 @@ type SuggestWithCommentResponse struct {
 	SuggestionType string     `json:"suggestion_type"`
 	SuggestionList []Activity `json:"suggestion_list"`
 }
+
+type ActivityDetail struct {
+	ID             string            `json:"id"`
+	Type           string            `json:"type"`
+	Name           string            `json:"name"`
+	Address        string            `json:"address"`
+	Rating         float64           `json:"rating"`
+	Price          float64           `json:"price"`
+	Description    string            `json:"description"`
+	ImageURLs      model.StringArray `json:"image_urls"`
+	OpeningHours   string            `json:"opening_hours"`
+	AdditionalInfo string            `json:"additional_info"`
+	Location       string            `json:"location"`
+	URL            string            `json:"url"`
+}
+
+func (a AccommodationSuggestion) ToActivityDetail() ActivityDetail {
+	var images model.StringArray
+	for _, image := range a.Images {
+		images = append(images, image.URL)
+	}
+
+	activityDetail := ActivityDetail{
+		ID:             a.AccommodationID,
+		Type:           "accommodation",
+		Name:           a.Name,
+		Address:        a.Location,
+		Rating:         a.Rating,
+		Price:          a.Price,
+		Description:    a.Description,
+		ImageURLs:      images,
+		OpeningHours:   "",
+		AdditionalInfo: a.TaxInfo,
+		Location:       a.City,
+		URL:            a.Link,
+	}
+	return activityDetail
+}
+
+func (r RestaurantSuggestion) ToActivityDetail() ActivityDetail {
+	return ActivityDetail{
+		ID:             r.RestaurantID,
+		Type:           "restaurant",
+		Name:           r.Name,
+		Address:        r.Address,
+		Rating:         r.Rating,
+		Price:          0, // Price is not available in RestaurantSuggestion
+		Description:    r.Description,
+		ImageURLs:      model.StringArray{r.PhotoURL},
+		OpeningHours:   r.OpeningHours,
+		AdditionalInfo: "",
+		Location:       r.DestinationID,
+		URL:            r.URL,
+	}
+}
+
+func (p PlaceSuggestion) ToActivityDetail() ActivityDetail {
+	var images model.StringArray
+	if p.MainImage != "" {
+		images = append(images, p.MainImage)
+	}
+	for _, image := range p.Images {
+		images = append(images, image.URL)
+	}
+	return ActivityDetail{
+		ID:             p.PlaceID,
+		Type:           "place",
+		Name:           p.Name,
+		Address:        p.Address,
+		Rating:         p.Rating,
+		Price:          p.Price,
+		Description:    p.Description,
+		ImageURLs:      images,
+		OpeningHours:   p.OpeningHours,
+		AdditionalInfo: "",
+		Location:       "",
+		URL:            p.URL,
+	}
+}
