@@ -30,12 +30,12 @@ func (tc *TripController) RegisterRoutes(router *gin.Engine) {
 		{
 			// This endpoint doesn't require middleware
 			trip.GET("/:id", tc.GetTrip)
-			trip.GET("/user/:user_id", tc.GetTripsByUserID)
 
 			// Other endpoints require authentication
 			protected := trip.Group("/")
 			protected.Use(middleware.AuthMiddleware())
 			{
+				protected.GET("/me", tc.GetTripsByUserID)
 				protected.POST("/create", tc.CreateTrip)
 				protected.PUT("/save", tc.SaveTrip)
 				protected.POST("/get_plan", tc.GetPlan)
@@ -262,27 +262,27 @@ func (tc *TripController) UpdateActivity(ctx *gin.Context) {
 
 // GetTripsByUserID godoc
 // @Summary Get trips by user ID
-// @Description Retrieve all trips associated with a specific user ID
+// @Description Retrieve all trips associated with the authenticated user
 // @Tags trip
 // @Accept json
 // @Produce json
-// @Param user_id path string true "User ID"
 // @Success 200 {object} model.Response{data=[]dto.TripDTOByDate} "List of trips"
-// @Failure 400 {object} model.Response "Invalid user ID"
+// @Failure 400 {object} model.Response "Invalid request"
 // @Failure 404 {object} model.Response "No trips found"
 // @Failure 500 {object} model.Response "Internal server error"
-// @Router /api/v1/trip/user/{user_id} [get]
+// @Router /api/v1/trip/me [get]
 func (tc *TripController) GetTripsByUserID(ctx *gin.Context) {
-	userID := ctx.Param("user_id")
-	if userID == "" {
-		ctx.JSON(http.StatusBadRequest, model.Response{
-			Message: "Invalid user ID: ID cannot be empty",
+	// Extract userID from access token
+	userID, exists := ctx.Get("user_id")
+	if !exists {
+		ctx.JSON(http.StatusUnauthorized, model.Response{
+			Message: "Unauthorized: userID not found in access_token",
 			Data:    nil,
 		})
 		return
 	}
 
-	trips, err := tc.tripService.GetTripsByUserID(userID)
+	trips, err := tc.tripService.GetTripsByUserID(userID.(string))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
 			Message: "Failed to retrieve trips: " + err.Error(),
@@ -293,7 +293,7 @@ func (tc *TripController) GetTripsByUserID(ctx *gin.Context) {
 
 	if len(trips) == 0 {
 		ctx.JSON(http.StatusNotFound, model.Response{
-			Message: "No trips found for the given user ID",
+			Message: "No trips found for the authenticated user",
 			Data:    nil,
 		})
 		return

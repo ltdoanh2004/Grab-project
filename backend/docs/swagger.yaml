@@ -2092,6 +2092,40 @@ paths:
       summary: Get trip suggestions
       tags:
       - trip
+  /api/v1/trip/me:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve all trips associated with the authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of trips
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/dto.TripDTOByDate'
+                  type: array
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "404":
+          description: No trips found
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Get trips by user ID
+      tags:
+      - trip
   /api/v1/trip/save:
     put:
       consumes:

@@ -1570,6 +1570,62 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/trip/me": {
+            "get": {
+                "description": "Retrieve all trips associated with the authenticated user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "trip"
+                ],
+                "summary": "Get trips by user ID",
+                "responses": {
+                    "200": {
+                        "description": "List of trips",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.TripDTOByDate"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "No trips found",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/trip/save": {
             "put": {
                 "description": "Update an existing trip with new details including destinations, accommodations, activities, and restaurants",
