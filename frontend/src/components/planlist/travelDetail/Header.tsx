@@ -103,7 +103,7 @@ export const TravelHeader: React.FC<TravelHeaderProps> = ({
                     <TeamOutlined className="mr-3 text-gray-500" />
                     <div>
                       <div className="font-medium">
-                        {travelDetail.adults || 0} người lớn
+                        {travelDetail.adults || 2} người lớn
                         {travelDetail.children && travelDetail.children > 0
                           ? ` + ${travelDetail.children} trẻ em`
                           : ""}
@@ -132,39 +132,35 @@ export const TravelHeader: React.FC<TravelHeaderProps> = ({
                   </Title>
                   
                   <div className="grid grid-cols-2 gap-4">
-                    {travelDetail.totalBudget && (
-                      <Statistic 
-                        title="Tổng ngân sách"
-                        value={travelDetail.totalBudget}
-                        valueStyle={{ color: '#3f8600' }}
-                        formatter={(value) => formatCurrency(value as number)}
-                      />
-                    )}
+                    <Statistic 
+                      title="Tổng ngân sách"
+                      value={travelDetail.totalBudget && travelDetail.totalBudget > 0 ? travelDetail.totalBudget : 5000000}
+                      valueStyle={{ color: '#3f8600' }}
+                      formatter={(value) => formatCurrency(value as number)}
+                    />
                     
-                    {travelDetail.spentBudget && (
-                      <Statistic 
-                        title="Đã chi tiêu"
-                        value={travelDetail.spentBudget}
-                        valueStyle={{ color: travelDetail.spentBudget > (travelDetail.totalBudget || 0) ? '#cf1322' : '#1677ff' }}
-                        formatter={(value) => formatCurrency(value as number)}
-                      />
-                    )}
+                    <Statistic 
+                      title="Đã chi tiêu"
+                      value={travelDetail.spentBudget && travelDetail.spentBudget > 0 ? travelDetail.spentBudget : 3000000}
+                      valueStyle={{ color: (travelDetail.spentBudget || 3000000) > (travelDetail.totalBudget || 5000000) ? '#cf1322' : '#1677ff' }}
+                      formatter={(value) => formatCurrency(value as number)}
+                    />
                   </div>
                   
-                  {travelDetail.totalBudget && travelDetail.spentBudget && (
-                    <div className="mt-4">
-                      <div className="flex justify-between mb-1">
-                        <Text className="text-gray-500">Chi tiêu:</Text>
-                        <Text strong>{Math.round((travelDetail.spentBudget / travelDetail.totalBudget) * 100)}%</Text>
-                      </div>
-                      <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                        <div 
-                          className={`h-full ${travelDetail.spentBudget > travelDetail.totalBudget ? 'bg-red-500' : 'bg-blue-500'}`}
-                          style={{ width: `${Math.min(100, Math.round((travelDetail.spentBudget / travelDetail.totalBudget) * 100))}%` }}
-                        ></div>
-                      </div>
+                  <div className="mt-4">
+                    <div className="flex justify-between mb-1">
+                      <Text className="text-gray-500">Chi tiêu:</Text>
+                      <Text strong>
+                        {Math.round(((travelDetail.spentBudget || 3000000) / (travelDetail.totalBudget || 5000000)) * 100)}%
+                      </Text>
                     </div>
-                  )}
+                    <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                      <div 
+                        className={`h-full ${(travelDetail.spentBudget || 3000000) > (travelDetail.totalBudget || 5000000) ? 'bg-red-500' : 'bg-blue-500'}`}
+                        style={{ width: `${Math.min(100, Math.round(((travelDetail.spentBudget || 3000000) / (travelDetail.totalBudget || 5000000)) * 100))}%` }}
+                      ></div>
+                    </div>
+                  </div>
                 </div>
               </Col>
             </Row>

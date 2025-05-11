@@ -19,12 +19,12 @@ export interface AuthResponse {
   }>;
 }
 
-interface ImageObject {
+export interface ImageObject {
   url: string;
   alt: string;
 }
 
-interface RoomType {
+export interface RoomType {
   name: string;
   bed_type: string;
   occupancy: string;
@@ -33,73 +33,37 @@ interface RoomType {
   tax_and_fee: string;
 }
 
-interface Accommodation {
-  accommodation_id: string;
-  name: string;
-  description: string;
-  city: string;
-  location: string;
-  image_url: ImageObject[];
-  price: number;
-  unit: string;
-  rating: number;
-  booking_link: string;
-  destination_id: string;
-  elderly_friendly: boolean;
-  room_info: string;
-  room_types: RoomType[];
-  tax_info: string;
+export interface ActivityComment {
+  comment_id: string;
+  comment_message: string;
+  user_id: string;
+  trip_accommodation_id?: string;
+  trip_place_id?: string;
+  trip_restaurant_id?: string;
 }
 
-interface Place {
-  place_id: string;
+export interface TripActivity {
+  id: string;
+  activity_id: string;
   name: string;
   description: string;
-  address: string;
+  start_time: string;
+  end_time: string;
   type: string;
-  categories: string;
-  main_image: string;
-  images: ImageObject[];
-  opening_hours: string;
-  price: number;
-  unit: string;
-  rating: number;
-  duration: string;
-  reviews: string[];
-  url: string;
-  destination_id: string;
+  price_ai_estimate: number;
+  comments?: ActivityComment[];
 }
 
-interface ServiceObject {
-  name: string;
-  type: number;
-  url: string;
+export interface DaySegment {
+  time_of_day: string;
+  activities: TripActivity[];
 }
 
-interface Location {
-  lat: number;
-  lon: number;
-}
-
-interface Restaurant {
-  restaurant_id: string;
-  name: string;
-  description: string;
-  address: string;
-  cuisines: string;
-  price_range: string;
-  rating: number;
-  photo_url: string;
-  opening_hours: string;
-  is_opening: boolean;
-  is_booking: boolean;
-  is_delivery: boolean;
-  phone: string;
-  url: string;
-  location: Location;
-  services: ServiceObject[];
-  reviews: string;
-  destination_id: string;
+export interface DayPlan {
+  date: string;
+  day_title: string;
+  daily_tips?: string[];
+  segments: DaySegment[];
 }
 
 export interface SuggestionsResponse {
@@ -111,70 +75,28 @@ export interface SuggestionsResponse {
     end_date?: string;
     destination_id?: string;
     user_id?: string;
-    accommodation: {
-      accommodations: Accommodation[];
-    };
-    places: {
-      places: Place[];
-    };
-    restaurants: {
-      restaurants: Restaurant[];
-    };
-    plan_by_day?: Array<{
-      date: string;
-      day_title: string;
-      daily_tips?: string[];
-      segments: Array<{
-        time_of_day: string;
-        activities: Array<{
-          id: string;
-          activity_id: string;
-          name: string;
-          description: string;
-          start_time: string;
-          end_time: string;
-          type: string;
-          price_ai_estimate: number;
-          comments?: Array<{
-            comment_id: string;
-            comment_message: string;
-            user_id: string;
-            trip_place_id?: string;
-            trip_accommodation_id?: string;
-            trip_restaurant_id?: string;
-          }>;
-        }>;
-      }>;
-    }>;
+    plan_by_day?: DayPlan[];
   };
 }
 
-export interface TripActivity {
+export interface ActivityDetail {
   id: string;
-  type: "accommodation" | "place" | "restaurant";
   name: string;
-  start_time: string;
-  end_time: string;
   description: string;
+  address: string;
+  location: string;
+  type: string;
+  opening_hours: string;
+  price: number;
   rating: number;
-  address?: string;
-  categories?: string;
-  duration?: string;
-  opening_hours?: string;
-  price?: number;
-  cuisines?: string;
-  price_range?: string;
+  image_urls: string[];
+  url: string;
+  additional_info: string;
 }
 
-export interface DaySegment {
-  time_of_day: "morning" | "afternoon" | "evening";
-  activities: TripActivity[];
-}
-
-export interface DayPlan {
-  date: string;
-  day_title: string;
-  segments: DaySegment[];
+export interface ActivityDetailResponse {
+  message: string;
+  data: ActivityDetail;
 }
 
 export interface TripPlanResponse {

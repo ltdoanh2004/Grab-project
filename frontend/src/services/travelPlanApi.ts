@@ -5,6 +5,8 @@ import {
   RegisterPayload,
   SuggestionsResponse,
   TripPlanResponse,
+  ActivityDetail,
+  ActivityDetailResponse
 } from "../types/apiType";
 import { DESTINATION_MAPPINGS } from "../constants/destinationConstants";
 
@@ -67,14 +69,23 @@ export async function getAllSuggestions(): Promise<SuggestionsResponse> {
   }
 }
 
-export async function getCompletePlan(tripId: string): Promise<SuggestionsResponse> {
+export async function getTripById(tripId: string): Promise<SuggestionsResponse> {
   try {
-    const res = await apiClient.get<SuggestionsResponse>(
-      `/trip/${tripId}`
-    );
+    console.log(`[API] Fetching trip data for ID: ${tripId}`);
+    const res = await apiClient.get<SuggestionsResponse>(`/trip/${tripId}`);
     return res.data;
   } catch (error) {
-    console.error("Error fetching complete plan:", error);
+    console.error(`Error fetching trip ${tripId}:`, error);
+    throw error;
+  }
+}
+
+export async function getActivityDetail(type: string, id: string): Promise<ActivityDetail> {
+  try {
+    const res = await apiClient.get<ActivityDetailResponse>(`/detail/${type}/${id}`);
+    return res.data.data;
+  } catch (error) {
+    console.error(`Error fetching ${type} detail for ${id}:`, error);
     throw error;
   }
 }

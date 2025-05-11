@@ -5,7 +5,7 @@ import {
   CheckOutlined,
   SyncOutlined,
 } from "@ant-design/icons";
-import { getAllSuggestions, getCompletePlan } from "../../services/travelPlanApi";
+import { getAllSuggestions } from "../../services/travelPlanApi";
 import { useNavigate } from "react-router-dom";
 
 const { Title, Text, Paragraph } = Typography;
