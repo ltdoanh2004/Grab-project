@@ -884,7 +884,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.AccommodationsSuggestion"
+                                            "$ref": "#/definitions/dto.ActivityDetail"
                                         }
                                     }
                                 }
@@ -1000,7 +1000,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.PlacesSuggestion"
+                                            "$ref": "#/definitions/dto.ActivityDetail"
                                         }
                                     }
                                 }
@@ -1058,7 +1058,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.RestaurantsSuggestion"
+                                            "$ref": "#/definitions/dto.ActivityDetail"
                                         }
                                     }
                                 }

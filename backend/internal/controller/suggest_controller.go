@@ -54,7 +54,7 @@ func (sc *SuggestController) RegisterRoutes(router *gin.Engine) {
 // @Accept json
 // @Produce json
 // @Param preference body model.TravelPreference true "Travel Preferences"
-// @Success 200 {object} model.Response{data=dto.AccommodationsSuggestion}
+// @Success 200 {object} model.Response{data=dto.ActivityDetail}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/suggest/accommodations [post]
@@ -85,7 +85,7 @@ func (sc *SuggestController) SuggestAccommodations(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param preference body model.TravelPreference true "Travel Preferences"
-// @Success 200 {object} model.Response{data=dto.PlacesSuggestion}
+// @Success 200 {object} model.Response{data=dto.ActivityDetail}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/suggest/places [post]
@@ -115,7 +115,7 @@ func (sc *SuggestController) SuggestPlaces(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param preference body model.TravelPreference true "Travel Preferences"
-// @Success 200 {object} model.Response{data=dto.RestaurantsSuggestion}
+// @Success 200 {object} model.Response{data=dto.ActivityDetail}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/suggest/restaurants [post]
