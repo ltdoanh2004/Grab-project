@@ -70,7 +70,12 @@ func (sc *SuggestController) SuggestAccommodations(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get accommodation suggestions: "+err.Error(), nil))
 		return
 	}
-	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
+	activities := []dto.ActivityDetail{}
+	for _, accommodation := range suggestion.Accommodations {
+		activities = append(activities, accommodation.ToActivityDetail())
+	}
+
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", activities))
 }
 
 // SuggestPlaces godoc
@@ -96,7 +101,11 @@ func (sc *SuggestController) SuggestPlaces(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get activity suggestions: "+err.Error(), nil))
 		return
 	}
-	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
+	activities := []dto.ActivityDetail{}
+	for _, place := range suggestion.Places {
+		activities = append(activities, place.ToActivityDetail())
+	}
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", activities))
 }
 
 // SuggestRestaurants godoc
@@ -122,7 +131,11 @@ func (sc *SuggestController) SuggestRestaurants(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get restaurant suggestions: "+err.Error(), nil))
 		return
 	}
-	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
+	activities := []dto.ActivityDetail{}
+	for _, restaurant := range suggestion.Restaurants {
+		activities = append(activities, restaurant.ToActivityDetail())
+	}
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", activities))
 }
 
 // SuggestTrip godoc
