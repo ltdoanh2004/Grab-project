@@ -492,7 +492,6 @@ class HotelVectorDatabase(BaseVectorDatabase):
         Search for hotels with minimum rating
         """
         try:
-            # Get all hotels and filter by rating
             all_hotels = self.get_all_hotels()
             filtered_hotels = [
                 match for match in all_hotels['matches']

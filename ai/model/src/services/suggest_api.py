@@ -76,23 +76,27 @@ async def suggest_trips(request: TripSuggestionRequest):
         - Places to visit: {', '.join(place_prefs) if place_prefs else 'No specific preference'}
         - Activities: {', '.join(activities) if activities else 'No specific preference'}
         - Extra: {', '.join(extra_prefs) if extra_prefs else 'No specific preference'}
+
+        IMPORTANT: Please focus on finding recommendations specifically in {request.destination_id}. All suggestions should be located in or near this destination.
+        
         Please suggest:
-        1. Suitable accommodations
-        2. Interesting activities and places to visit
-        3. Recommended restaurants and food options
+        1. Suitable accommodations in {request.destination_id}
+        2. Interesting activities and places to visit in {request.destination_id}
+        3. Recommended restaurants and food options in {request.destination_id}
         
         Consider:
         - The travel style and preferences
-        - The season and weather conditions
+        - The season and weather conditions in {request.destination_id}
         - The budget constraints
         - The duration of stay
         - The location and its unique offerings
+        - All recommendations must be in {request.destination_id}
         """
         
         logger.info(f"Processing recommendation query for {request.destination_id}")
         
         travel_model = TravelModel()
-        raw_recommendations = travel_model.process_query(query)
+        raw_recommendations = travel_model.process_query(query, destination_id=request.destination_id)
         
         logger.info(f"Recommendation query processed successfully, got {len(raw_recommendations)} items")
         

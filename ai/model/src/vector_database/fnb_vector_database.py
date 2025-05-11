@@ -117,7 +117,6 @@ class FnBVectorDatabase(BaseVectorDatabase):
                                 • Trạng thái hoạt động: {"Đang mở cửa" if row.get('is_opening') else "Đã đóng cửa"}
                                 ''' for _, row in tqdm(rows_to_embed.iterrows(), total=len(rows_to_embed), desc="Creating contexts")]
 
-        # Load checkpoint
         checkpoint = self.load_checkpoint()
         last_processed = checkpoint["last_processed_index"]
         existing_embeddings = checkpoint["embeddings"]
@@ -128,23 +127,18 @@ class FnBVectorDatabase(BaseVectorDatabase):
         embeddings = []
         total_rows = len(rows_to_embed)
         
-        # Initialize embeddings list with None values
         embeddings = [None] * total_rows
         
-        # Fill in existing embeddings from checkpoint
         for idx, embedding in existing_embeddings.items():
             idx = int(idx)
             if idx < len(embeddings):
                 embeddings[idx] = embedding
         
-        # Process remaining rows
         for idx in tqdm(range(last_processed + 1, total_rows), desc="Generating embeddings"):
             try:
-                # Generate new embedding
                 embedding = self.get_openai_embeddings(rows_to_embed.iloc[idx]['context'])
                 embeddings[idx] = embedding
                 
-                # Update checkpoint every 10 rows
                 if idx % 10 == 0:
                     checkpoint["last_processed_index"] = idx
                     checkpoint["embeddings"][str(idx)] = embedding
@@ -153,7 +147,6 @@ class FnBVectorDatabase(BaseVectorDatabase):
                     
             except Exception as e:
                 print(f"Error processing row {idx}: {e}")
-                # Save checkpoint on error
                 checkpoint["last_processed_index"] = idx - 1
                 self.save_checkpoint(checkpoint)
                 print(f"Saved checkpoint after error at index {idx - 1}")
@@ -161,35 +154,27 @@ class FnBVectorDatabase(BaseVectorDatabase):
         
         rows_to_embed['context_embedding'] = embeddings
         
-        # Combine with existing data if doing incremental processing
         final_df = rows_to_embed.copy()
         
         if incremental and existing_df is not None:
-            # Create a combined dataframe: new embeddings + existing embeddings
-            # Filter out any rows from existing_df that might conflict with new_df by index
             existing_indices = set(rows_to_embed['restaurant_id'].astype(str))
             filtered_existing_df = existing_df[~existing_df['restaurant_id'].astype(str).isin(existing_indices)]
             
-            # Concatenate the filtered existing data with the new data
             final_df = pd.concat([filtered_existing_df, rows_to_embed], ignore_index=True)
             print(f"Combined {len(rows_to_embed)} new embeddings with {len(filtered_existing_df)} existing embeddings")
 
-        # Save to the same directory as the input file
         output_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'fnb_processed_embedding.csv')
         print(f"Saving processed data to: {output_path}")
         
-        # Convert embeddings to string representation before saving
         final_df['context_embedding'] = final_df['context_embedding'].apply(
             lambda x: str(x) if x is not None else None
         )
         final_df.to_csv(output_path, index=False)
         
-        # Clear checkpoint after successful completion
         if os.path.exists(self.checkpoint_file):
             os.remove(self.checkpoint_file)
             print("Cleared checkpoint after successful completion")
             
-        # Set the dataframe on the instance for further use
         self.df = final_df
 
     def load_data_to_pinecone(self, incremental=True):
@@ -202,7 +187,6 @@ class FnBVectorDatabase(BaseVectorDatabase):
         if not self.index:
             raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
             
-        # Check if index already has data
         index_stats = self.index.describe_index_stats()
         has_data = index_stats['total_vector_count'] > 0
         
@@ -210,28 +194,23 @@ class FnBVectorDatabase(BaseVectorDatabase):
             print(f"Index {self.index_name} already contains data. Use incremental=True to add or update data.")
             return True
             
-        # Define embedding file path
         embedding_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
                                      'data', 'fnb_processed_embedding.csv')
             
-        # Check if embedding file exists
         if not os.path.exists(embedding_file):
             print(f"Embedding file not found at: {embedding_file}")
             print("Creating embeddings first...")
             
-            # Check if data directory exists
             data_dir = os.path.dirname(embedding_file)
             if not os.path.exists(data_dir):
                 print(f"Creating data directory: {data_dir}")
                 os.makedirs(data_dir, exist_ok=True)
                 
-            # Create embeddings from raw data
             self.prepare_fnb_embedding(incremental=False)
             
             if not os.path.exists(embedding_file):
                 raise ValueError(f"Failed to create embedding file at {embedding_file}")
         
-        # Load data from CSV
         print(f"Loading embeddings from: {embedding_file}")
         self.df = pd.read_csv(embedding_file)
         text_columns = ['address', 'phone', 'photo_url', 'location' ,'reviews', 'services', 'is_delivery', 'is_booking', 'is_opening', 'price_range', 'description', 'cuisines', 'opening_hours']
@@ -245,8 +224,6 @@ class FnBVectorDatabase(BaseVectorDatabase):
         if incremental:
             return self.load_data_to_pinecone_incremental(df=self.df, id_field="restaurant_id", batch_size=100)
             
-        # Otherwise, continue with original full insertion method
-        # Convert string embeddings to lists
         print("Converting embeddings to lists...")
         def safe_eval_embedding(x):
             if x is None:
@@ -254,7 +231,6 @@ class FnBVectorDatabase(BaseVectorDatabase):
             if not isinstance(x, str):
                 return x
             try:
-                # Check if string starts with [ and ends with ]
                 if x.strip().startswith('[') and x.strip().endswith(']'):
                     return eval(x)
                 else:
@@ -288,7 +264,6 @@ class FnBVectorDatabase(BaseVectorDatabase):
                     "is_opening": row.get("is_opening", ""),
                 }
                 
-                # Ensure embedding is a list
                 embedding = row["context_embedding"]
                 if embedding is None:
                     continue
@@ -352,10 +327,8 @@ class FnBVectorDatabase(BaseVectorDatabase):
                 • Trạng thái hoạt động: {"Đang mở cửa" if metadata.get('is_opening') else "Đã đóng cửa"}
             '''
         
-        # Check if we need to generate new context and embedding
         needs_new_context = any(key in new_data for key in ['description', 'categories', 'price_range', 'rating', 'menu_items'])
         
-        # Use the base class update_item method with our custom context generator
         return self.update_item(
             fnb_id, 
             new_data, 
@@ -430,7 +403,6 @@ class FnBVectorDatabase(BaseVectorDatabase):
         Search for FnBs with minimum rating
         """
         try:
-            # Get all FnBs and filter by rating
             all_fnbs = self.get_all_fnbs()
             filtered_fnbs = [
                 match for match in all_fnbs['matches']
@@ -471,7 +443,6 @@ def main():
             vector_db.load_data_to_pinecone(incremental=args.incremental)
         
     if args.query:
-        # Check if Pinecone is set up, if not, set it up first
         if not vector_db.index:
             print("Pinecone index not initialized. Setting up now...")
             if not vector_db.set_up_pinecone():
