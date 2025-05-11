@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+
 	"skeleton-internship-backend/internal/dto"
 	"skeleton-internship-backend/internal/model"
 	"skeleton-internship-backend/internal/service"
@@ -29,6 +30,7 @@ func (tc *TripController) RegisterRoutes(router *gin.Engine) {
 		{
 			// This endpoint doesn't require middleware
 			trip.GET("/:id", tc.GetTrip)
+			trip.GET("/user/:user_id", tc.GetTripsByUserID)
 
 			// Other endpoints require authentication
 			protected := trip.Group("/")
@@ -255,5 +257,50 @@ func (tc *TripController) UpdateActivity(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, model.Response{
 		Message: "Activity updated successfully",
 		Data:    nil,
+	})
+}
+
+// GetTripsByUserID godoc
+// @Summary Get trips by user ID
+// @Description Retrieve all trips associated with a specific user ID
+// @Tags trip
+// @Accept json
+// @Produce json
+// @Param user_id path string true "User ID"
+// @Success 200 {object} model.Response{data=[]dto.TripDTOByDate} "List of trips"
+// @Failure 400 {object} model.Response "Invalid user ID"
+// @Failure 404 {object} model.Response "No trips found"
+// @Failure 500 {object} model.Response "Internal server error"
+// @Router /api/v1/trip/user/{user_id} [get]
+func (tc *TripController) GetTripsByUserID(ctx *gin.Context) {
+	userID := ctx.Param("user_id")
+	if userID == "" {
+		ctx.JSON(http.StatusBadRequest, model.Response{
+			Message: "Invalid user ID: ID cannot be empty",
+			Data:    nil,
+		})
+		return
+	}
+
+	trips, err := tc.tripService.GetTripsByUserID(userID)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.Response{
+			Message: "Failed to retrieve trips: " + err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
+	if len(trips) == 0 {
+		ctx.JSON(http.StatusNotFound, model.Response{
+			Message: "No trips found for the given user ID",
+			Data:    nil,
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, model.Response{
+		Message: "Trips retrieved successfully",
+		Data:    trips,
 	})
 }
