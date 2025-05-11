@@ -61,7 +61,11 @@ export async function getAllSuggestions(): Promise<SuggestionsResponse> {
       "/suggest/trip",
       transformedInput
     );
-
+    
+    const tripId = res.data.data.trip_id || "trip-" + Date.now();
+    
+    localStorage.setItem(`userInput_${tripId}`, JSON.stringify(userInput));
+    
     return res.data;
   } catch (error) {
     console.error("Error fetching suggestions:", error);

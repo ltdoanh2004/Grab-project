@@ -63,6 +63,11 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({
           JSON.stringify(suggestionsData.data)
         );
         
+        const userInput = JSON.parse(localStorage.getItem("planUserInput") || "{}");
+        if (userInput && Object.keys(userInput).length > 0) {
+          localStorage.setItem(`userInput_${tripId}`, JSON.stringify(userInput));
+        }
+        
         setApiLoadingComplete(true);
         navigate(`/trips/${tripId}`);
       } catch (error) {
@@ -93,7 +98,7 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({
           setCompletedSteps((prev) => [...prev, prevIndex]);
         }
 
-        if (prevIndex >= 4) return 2;
+        if (prevIndex >= 4) return 4;
         return prevIndex + 1;
       });
     }, 3000);

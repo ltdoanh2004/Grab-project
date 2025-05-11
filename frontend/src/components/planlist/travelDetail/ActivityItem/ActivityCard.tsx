@@ -28,6 +28,7 @@ import { useDrag, useDrop } from "react-dnd";
 import { ItemTypes } from "../../../../types/travelPlan";
 import { useTimeEdit } from "../../../../hooks/useTimeEdit";
 import { ActivityCommentModal } from "./Comment";
+import { getRandomHotelImage } from "../../../../constants/backup_hotel";
 
 const { Title, Text } = Typography;
 
@@ -143,6 +144,11 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
       : "Chưa có thời gian";
 
     const typeColor = activityTypeColors[activity.type] || "blue";
+    
+    // Use backup hotel image for accommodations instead of API image
+    const imageUrl = activity.type === "accommodation" 
+      ? getRandomHotelImage()
+      : activity.image_url || activity.imgUrl || DEFAULT_IMAGE;
 
     return (
       <div
@@ -170,7 +176,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
 
             <div className="relative w-32 h-24 md:w-36 md:h-28 mr-4 rounded-lg overflow-hidden shadow-md flex-shrink-0">
               <Image
-                src={activity.image_url || activity.imgUrl || DEFAULT_IMAGE}
+                src={imageUrl}
                 alt={activity.name}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 fallback={DEFAULT_IMAGE}

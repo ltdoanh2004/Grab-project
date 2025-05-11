@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Card, Tag, Divider, Image, Row, Col, Statistic } from "antd";
+import { Typography, Card, Tag, Divider, Image, Row, Col, Statistic, Progress, Button } from "antd";
 import {
   CalendarOutlined,
   TeamOutlined,
@@ -7,8 +7,10 @@ import {
   EnvironmentOutlined,
   BankOutlined,
   TagOutlined,
+  DownloadOutlined,
 } from "@ant-design/icons";
 import { TravelDetailData } from "../../../types/travelPlan";
+import { downloadExcel } from "./SheetExport";
 
 const { Title, Text } = Typography;
 
@@ -33,6 +35,11 @@ export const TravelHeader: React.FC<TravelHeaderProps> = ({
     new Date(travelDetail.start_date),
     new Date(travelDetail.end_date)
   );
+
+  // Function to handle Excel export
+  const handleExportExcel = () => {
+    downloadExcel(travelDetail);
+  };
 
   return (
     <div className="mb-6">
@@ -161,6 +168,15 @@ export const TravelHeader: React.FC<TravelHeaderProps> = ({
                       ></div>
                     </div>
                   </div>
+                  
+                  <Button 
+                    type="primary" 
+                    icon={<DownloadOutlined />} 
+                    onClick={handleExportExcel}
+                    className="mt-4 w-full bg-blue-600 hover:bg-blue-700"
+                  >
+                    Xuất Excel
+                  </Button>
                 </div>
               </Col>
             </Row>

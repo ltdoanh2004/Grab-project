@@ -4,6 +4,7 @@ import { PhoneOutlined, EnvironmentOutlined, LeftOutlined, RightOutlined } from 
 import { TravelActivity } from "../../../types/travelPlan";
 import { getActivityDetail } from "../../../services/travelPlanApi";
 import { ActivityDetail } from "../../../types/apiType";
+import { BACKUP_HOTEL_IMAGES, getRandomHotelImage } from "../../../constants/backup_hotel";
 
 const { Paragraph } = Typography;
 
@@ -74,9 +75,11 @@ export const ActivityModal: React.FC<ActivityModalProps> = ({
       ? `${displayData.start_time} - ${displayData.end_time}`
       : displayData.start_time || displayData.end_time || "";
 
-  const images = (displayData.image_urls && displayData.image_urls.length > 0) 
-    ? displayData.image_urls 
-    : [displayData.image_url || displayData.imgUrl || DEFAULT_IMAGE].filter(Boolean);
+  const images = displayData.type === "accommodation" 
+    ? BACKUP_HOTEL_IMAGES 
+    : (displayData.image_urls && displayData.image_urls.length > 0) 
+      ? displayData.image_urls 
+      : [displayData.image_url || displayData.imgUrl || DEFAULT_IMAGE].filter(Boolean);
 
   const currentImage = images[currentImageIndex] || DEFAULT_IMAGE;
 
