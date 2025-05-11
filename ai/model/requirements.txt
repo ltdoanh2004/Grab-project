@@ -3,14 +3,14 @@ uvicorn==0.27.1
 openai==1.58.1
 python-dotenv==1.0.1
 pinecone-client==3.2.0
-pydantic==2.6.1
+pydantic
 torch==2.6.0
 pandas==2.0.3
 tqdm==4.66.1
-langchain==0.3.13
-langchain-community==0.3.13
-langchain-core==0.3.28
-langchain-openai==0.2.14
+langchain
+langchain-community
+langchain-core
+langchain-openai
 # Core dependencies
 requests==2.31.0
 beautifulsoup4==4.12.2
@@ -25,7 +25,7 @@ google-cloud-language==2.9.1
 
 # Additional utilities
 jupyter==1.0.0
-python-dotenv==1.0.0
+python-dotenv
 
 # Vector database and embeddings
 pinecone-client==3.2.0

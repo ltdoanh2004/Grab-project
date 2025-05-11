@@ -30,7 +30,6 @@ from dotenv import load_dotenv
 from langchain_core.output_parsers import JsonOutputParser
 from langchain.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
-
 from utils.utils import save_data_to_json
 
 ROOT = Path(__file__).resolve().parent
@@ -55,7 +54,10 @@ class PlanModel:
             model="gpt-4o",
             max_tokens=4000  
         )
-        self.parser = JsonOutputParser()  
+        try:
+            self.llm.model_rebuild()
+        except Exception as e:
+            print(e)
 
         self.review_agent = TravelReviewer()
         
