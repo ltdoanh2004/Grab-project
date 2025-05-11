@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiClient from './apiService';
 import {
   AuthResponse,
   LoginPayload,
@@ -6,6 +6,7 @@ import {
   SuggestionsResponse,
   TripPlanResponse,
 } from "../types/apiType";
+import { DESTINATION_MAPPINGS } from "../constants/destinationConstants";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8081/api/v1";
@@ -13,34 +14,50 @@ const API_BASE_URL =
 export async function register(
   payload: RegisterPayload
 ): Promise<AuthResponse> {
-  const res = await axios.post<AuthResponse>(
-    `${API_BASE_URL}/auth/register`,
-    payload
-  );
+  const res = await apiClient.post<AuthResponse>("/auth/register", payload);
   return res.data;
 }
 
 export async function login(payload: LoginPayload): Promise<AuthResponse> {
-  const res = await axios.post<AuthResponse>(
-    `${API_BASE_URL}/auth/login`,
-    payload
-  );
+  const res = await apiClient.post<AuthResponse>("/auth/login", payload);
   return res.data;
 }
 
 export async function getAllSuggestions(): Promise<SuggestionsResponse> {
   try {
     const userInput = JSON.parse(localStorage.getItem("planUserInput") || "{}");
-    console.log(userInput);
+    
+    const destinationId = userInput.destination ? 
+      DESTINATION_MAPPINGS[userInput.destination] || userInput.destination : 
+      "";
 
-    const res = await axios.post<SuggestionsResponse>(
-      `${API_BASE_URL}/suggest/all`,
-      userInput,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+    const transformedInput = {
+      destination_id: destinationId,
+      budget: {
+        type: userInput.budget?.type || "",
+        exact_budget: userInput.budget?.exactBudget || 0
+      },
+      people: userInput.people || {
+        adults: 0,
+        children: 0,
+        infants: 0,
+        pets: 0
+      },
+      travel_time: {
+        type: userInput.travelTime?.type || "",
+        start_date: userInput.travelTime?.startDate || "",
+        end_date: userInput.travelTime?.endDate || ""
+      },
+      personal_options: userInput.personalOptions || [],
+      travel_preference_id: "leisure", 
+      trip_id: "temp-" + Date.now() 
+    };
+
+    console.log("[API] Sending request to /suggest/trip");
+
+    const res = await apiClient.post<SuggestionsResponse>(
+      "/suggest/trip",
+      transformedInput
     );
 
     return res.data;
@@ -50,30 +67,16 @@ export async function getAllSuggestions(): Promise<SuggestionsResponse> {
   }
 }
 
-export async function getTripPlan(
-  suggestionData?: any,
-  tripId?: string
-): Promise<TripPlanResponse> {
+export async function getCompletePlan(tripId: string): Promise<SuggestionsResponse> {
   try {
-    // Build the request payload using provided suggestion data
-    const payload = {
-      ...(suggestionData || {}), // Use provided suggestion data directly
-      ...(tripId ? { trip_id: tripId } : {}), // Add trip_id if provided
-    };
-
-    const res = await axios.post<TripPlanResponse>(
-      `${API_BASE_URL}/trip/get_plan`,
-      payload,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+    const res = await apiClient.get<SuggestionsResponse>(
+      `/trip/${tripId}`
     );
-
     return res.data;
   } catch (error) {
-    console.error("Error fetching trip plan:", error);
+    console.error("Error fetching complete plan:", error);
     throw error;
   }
 }
+
+

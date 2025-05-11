@@ -13,10 +13,10 @@ export interface LoginPayload {
 
 export interface AuthResponse {
   message: string;
-  data: {
+  data: Array<{
     access_token: string;
     refresh_token: string;
-  };
+  }>;
 }
 
 interface ImageObject {
@@ -105,6 +105,12 @@ interface Restaurant {
 export interface SuggestionsResponse {
   message: string;
   data: {
+    trip_id: string;
+    trip_name?: string;
+    start_date?: string;
+    end_date?: string;
+    destination_id?: string;
+    user_id?: string;
     accommodation: {
       accommodations: Accommodation[];
     };
@@ -114,6 +120,32 @@ export interface SuggestionsResponse {
     restaurants: {
       restaurants: Restaurant[];
     };
+    plan_by_day?: Array<{
+      date: string;
+      day_title: string;
+      daily_tips?: string[];
+      segments: Array<{
+        time_of_day: string;
+        activities: Array<{
+          id: string;
+          activity_id: string;
+          name: string;
+          description: string;
+          start_time: string;
+          end_time: string;
+          type: string;
+          price_ai_estimate: number;
+          comments?: Array<{
+            comment_id: string;
+            comment_message: string;
+            user_id: string;
+            trip_place_id?: string;
+            trip_accommodation_id?: string;
+            trip_restaurant_id?: string;
+          }>;
+        }>;
+      }>;
+    }>;
   };
 }
 

@@ -22,6 +22,36 @@ export function useTravelDetail(travelId: string) {
     let ignore = false;
     setLoading(true);
     setNotFound(false);
+    
+    console.log(`Looking for trip with ID: ${travelId}`);
+    
+    // Debug: List all localStorage keys
+    const allKeys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key) allKeys.push(key);
+    }
+    console.log("All localStorage keys:", allKeys);
+    
+    const localData = localStorage.getItem(`tripPlan_${travelId}`);
+    console.log(`Checking localStorage for tripPlan_${travelId}:`, localData ? "Found" : "Not found");
+    
+    if (localData) {
+      try {
+        const parsedData = JSON.parse(localData);
+        console.log("Parsed trip data:", parsedData);
+        
+        if (parsedData && parsedData.plan_by_day) {
+          setTravelDetail(parsedData);
+          setLoading(false);
+          return;
+        }
+      } catch (error) {
+        console.error("Error parsing trip data from localStorage:", error);
+      }
+    }
+    
+    // Fallback to temp123 (legacy support)
     if (travelId === "temp123") {
       const local = localStorage.getItem("tripPlan_temp123");
       if (local) {
@@ -30,6 +60,8 @@ export function useTravelDetail(travelId: string) {
         return;
       }
     }
+    
+    // Fallback to mock data
     const mockDetail =
       travelId === MOCK_TRAVEL_DETAIL.id
         ? MOCK_TRAVEL_DETAIL
@@ -38,6 +70,7 @@ export function useTravelDetail(travelId: string) {
         : (MOCK_TRAVEL_PLANS.find((p) => p.id === travelId) as any);
 
     if (mockDetail && mockDetail.plan_by_day) {
+      console.log(`Found mock data for trip ID: ${travelId}`);
       setTimeout(() => {
         if (!ignore) {
           setTravelDetail({ ...mockDetail });
@@ -49,6 +82,7 @@ export function useTravelDetail(travelId: string) {
       };
     }
 
+    console.log(`No data found for trip ID: ${travelId}, setting notFound to true`);
     setTimeout(() => {
       if (!ignore) {
         setNotFound(true);

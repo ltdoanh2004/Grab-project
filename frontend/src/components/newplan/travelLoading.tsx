@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Spin, Typography, Card, Row, Col, List, Button, message } from "antd";
 import {
   LoadingOutlined,
   CheckOutlined,
   SyncOutlined,
 } from "@ant-design/icons";
-import { getAllSuggestions, getTripPlan } from "../../services/travelPlanApi";
+import { getAllSuggestions, getCompletePlan } from "../../services/travelPlanApi";
 import { useNavigate } from "react-router-dom";
 
 const { Title, Text, Paragraph } = Typography;
@@ -23,6 +23,7 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({
   const [completedSteps, setCompletedSteps] = useState<number[]>([0, 1]);
   const [apiLoadingComplete, setApiLoadingComplete] = useState(false);
   const navigate = useNavigate();
+  const apiRequestInitiated = useRef(false);
 
   const travelTips = [
     "Đừng quên sạc đầy các thiết bị điện tử trước khi khởi hành",
@@ -42,23 +43,28 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({
 
   useEffect(() => {
     const fetchSuggestions = async () => {
+      if (apiRequestInitiated.current) return;
+      apiRequestInitiated.current = true;
+      
       try {
         const suggestionsData = await getAllSuggestions();
-        const tripPlanData = await getTripPlan(suggestionsData.data);
-
-        const tripPlanWithId = {
-          ...tripPlanData.data,
-          id: "temp123",
-        };
-
+        console.log(suggestionsData);
+        console.log("API response:", suggestionsData.data);
+        
+        if (!suggestionsData.data.plan_by_day || suggestionsData.data.plan_by_day.length === 0) {
+          message.error("Không nhận được dữ liệu lịch trình");
+          return;
+        }
+        
+        const tripId = suggestionsData.data.trip_id || "trip123";
+        
         localStorage.setItem(
-          "tripPlan_temp123",
-          JSON.stringify(tripPlanWithId)
+          `tripPlan_${tripId}`,
+          JSON.stringify(suggestionsData.data)
         );
-        console.log(tripPlanData.data);
-
+        
         setApiLoadingComplete(true);
-        navigate("/trips/temp123");
+        navigate(`/trips/${tripId}`);
       } catch (error) {
         console.error("Failed to fetch data:", error);
         if (
@@ -78,7 +84,7 @@ export const LoadingStep: React.FC<LoadingStepProps> = ({
     };
 
     fetchSuggestions();
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     const interval = setInterval(() => {
