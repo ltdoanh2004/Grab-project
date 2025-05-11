@@ -310,6 +310,18 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTOByDate, error) {
 		TripStatus: trip.TripStatus,
 	}
 
+	// Update TripStatus based on today's date relative to StartDate and EndDate
+	today := time.Now().Truncate(24 * time.Hour)
+	if tripDTO.TripStatus != "Đã hủy" {
+		if today.Equal(tripDTO.StartDate.AddDate(0, 0, -1)) {
+			tripDTO.TripStatus = "Sắp diễn ra"
+		} else if today.Equal(tripDTO.StartDate) {
+			tripDTO.TripStatus = "Đang diễn ra"
+		} else if today.After(tripDTO.EndDate) {
+			tripDTO.TripStatus = "Đã hoàn thành"
+		}
+	}
+
 	// Process each destination
 	for _, dest := range destinations {
 		destDTO := dto.TripDestinationDTO{

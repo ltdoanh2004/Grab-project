@@ -12,7 +12,7 @@ type Trip struct {
 	StartDate  time.Time `gorm:"not null" json:"start_date"`
 	EndDate    time.Time `gorm:"not null" json:"end_date"`
 	Budget     float64   `gorm:"type:decimal(10,2)" json:"budget"`
-	TripStatus string    `gorm:"type:enum('planning','confirmed','completed','canceled');default:'planning'" json:"trip_status"`
+	TripStatus string    `gorm:"type:enum('Lên kế hoạch','Sắp diễn ra','Đang diễn ra','Đã hoàn thành','Đã hủy');default:'Lên kế hoạch'" json:"trip_status"`
 	CreatedAt  time.Time `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt  time.Time `gorm:"autoUpdateTime" json:"updated_at"`
 
