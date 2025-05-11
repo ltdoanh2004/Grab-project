@@ -277,14 +277,13 @@ func ConvertTripDTOByDate(input TripDTO) (TripDTOByDate, error) {
 				Description:     a.Notes,
 				PriceAIEstimate: a.PriceAIEstimate,
 			}
-			activitiesByDate[dateStr] = append(activitiesByDate[dateStr], act)
 			if a.StartTime != nil {
 				act.StartTime = a.StartTime.Format(layoutTime)
 			}
 			if a.EndTime != nil {
 				act.EndTime = a.EndTime.Format(layoutTime)
 			}
-
+			activitiesByDate[dateStr] = append(activitiesByDate[dateStr], act)
 		}
 
 		// Process restaurants.
