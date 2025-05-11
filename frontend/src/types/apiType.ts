@@ -40,6 +40,8 @@ export interface ActivityComment {
   trip_accommodation_id?: string;
   trip_place_id?: string;
   trip_restaurant_id?: string;
+  activity_id?: string;
+  created_at?: string;
 }
 
 export interface TripActivity {

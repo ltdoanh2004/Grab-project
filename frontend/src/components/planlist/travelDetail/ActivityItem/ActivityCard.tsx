@@ -338,7 +338,8 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
         <ActivityCommentModal
           open={showCommentModal}
           onClose={() => setShowCommentModal(false)}
-          activityId={activity.id}
+          activityId={activity.activity_id || activity.id}
+          activityType={activity.type}
         />
       </div>
     );

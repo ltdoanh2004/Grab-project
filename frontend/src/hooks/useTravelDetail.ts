@@ -27,6 +27,20 @@ export function useTravelDetail(travelId: string) {
     
     console.log(`Looking for trip with ID: ${travelId}`);
     
+    // Log user input from localStorage for this trip
+    const userInputKey = `userInput_${travelId}`;
+    const storedUserInput = localStorage.getItem(userInputKey);
+    if (storedUserInput) {
+      try {
+        const parsedUserInput = JSON.parse(storedUserInput);
+        console.log(`[UserInput] Found stored user input for trip ${travelId}:`, parsedUserInput);
+      } catch (error) {
+        console.error(`Error parsing user input from localStorage for trip ${travelId}:`, error);
+      }
+    } else {
+      console.log(`[UserInput] No stored user input found for trip ${travelId}`);
+    }
+    
     const fetchTripDetails = async () => {
       try {
         // Fetch trip data from API
