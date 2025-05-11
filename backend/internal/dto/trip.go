@@ -103,6 +103,7 @@ type TripDTOByDate struct {
 	StartDate     string      `json:"start_date"` // "YYYY-MM-DD"
 	EndDate       string      `json:"end_date"`   // "YYYY-MM-DD"
 	DestinationID string      `json:"destination_id"`
+	Status        string      `json:"status"`
 	PlanByDay     []PlanByDay `json:"plan_by_day"`
 }
 
@@ -218,6 +219,7 @@ func ConvertTripDTO(input TripDTOByDate) (TripDTO, error) {
 		TripName:         input.TripName,
 		StartDate:        startDate,
 		EndDate:          endDate,
+		TripStatus:       input.Status,
 		TripDestinations: []TripDestinationDTO{dest},
 	}, nil
 }
@@ -371,6 +373,7 @@ func ConvertTripDTOByDate(input TripDTO) (TripDTOByDate, error) {
 		StartDate:     startDateStr,
 		EndDate:       endDateStr,
 		DestinationID: destination,
+		Status:        input.TripStatus,
 		PlanByDay:     planByDay,
 	}, nil
 }
