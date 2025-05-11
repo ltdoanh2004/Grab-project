@@ -884,7 +884,10 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.ActivityDetail"
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.ActivityDetail"
+                                            }
                                         }
                                     }
                                 }
@@ -1000,7 +1003,10 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.ActivityDetail"
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.ActivityDetail"
+                                            }
                                         }
                                     }
                                 }
@@ -1058,7 +1064,10 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.ActivityDetail"
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.ActivityDetail"
+                                            }
                                         }
                                     }
                                 }
