@@ -293,6 +293,19 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTOByDate, error) {
 	if err != nil {
 		return nil, err
 	}
+	// Update TripStatus based on today's date relative to StartDate and EndDate
+	today := time.Now().Truncate(24 * time.Hour)
+	if trip.TripStatus == "canceled" {
+	}
+	if today.Equal(trip.StartDate.AddDate(0, 0, -1)) {
+		trip.TripStatus = "upcoming"
+	} else if today.After(trip.EndDate) {
+		trip.TripStatus = "completed"
+	} else if today.After(trip.StartDate) {
+		trip.TripStatus = "happening"
+	}
+	fmt.Println(trip.StartDate, trip.EndDate, today, trip.TripStatus)
+	ts.tripRepository.Update(&trip)
 
 	// Get all destinations for this trip
 	destinations, err := ts.tripDestinationRepository.GetByTripID(tripID)
@@ -308,18 +321,6 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTOByDate, error) {
 		EndDate:    trip.EndDate,
 		Budget:     trip.Budget,
 		TripStatus: trip.TripStatus,
-	}
-
-	// Update TripStatus based on today's date relative to StartDate and EndDate
-	today := time.Now().Truncate(24 * time.Hour)
-	if tripDTO.TripStatus != "Đã hủy" {
-		if today.Equal(tripDTO.StartDate.AddDate(0, 0, -1)) {
-			tripDTO.TripStatus = "Sắp diễn ra"
-		} else if today.Equal(tripDTO.StartDate) {
-			tripDTO.TripStatus = "Đang diễn ra"
-		} else if today.After(tripDTO.EndDate) {
-			tripDTO.TripStatus = "Đã hoàn thành"
-		}
 	}
 
 	// Process each destination

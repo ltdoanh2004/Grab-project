@@ -2351,6 +2351,9 @@ const docTemplate = `{
                     "description": "\"YYYY-MM-DD\"",
                     "type": "string"
                 },
+                "status": {
+                    "type": "string"
+                },
                 "trip_id": {
                     "type": "string"
                 },
