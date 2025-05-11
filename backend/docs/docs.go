@@ -210,7 +210,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Comment"
+                            "$ref": "#/definitions/dto.Comment"
                         }
                     }
                 ],
@@ -1903,6 +1903,20 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.Comment": {
+            "type": "object",
+            "properties": {
+                "activity_id": {
+                    "type": "string"
+                },
+                "comment_message": {
+                    "type": "string"
+                },
+                "type": {
                     "type": "string"
                 }
             }

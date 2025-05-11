@@ -312,13 +312,13 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTOByDate, error) {
 
 	// Update TripStatus based on today's date relative to StartDate and EndDate
 	today := time.Now().Truncate(24 * time.Hour)
-	if tripDTO.TripStatus != "Đã hủy" {
+	if tripDTO.TripStatus != "cancelled" {
 		if today.Equal(tripDTO.StartDate.AddDate(0, 0, -1)) {
-			tripDTO.TripStatus = "Sắp diễn ra"
+			tripDTO.TripStatus = "upcomming"
 		} else if today.Equal(tripDTO.StartDate) {
-			tripDTO.TripStatus = "Đang diễn ra"
+			tripDTO.TripStatus = "happening"
 		} else if today.After(tripDTO.EndDate) {
-			tripDTO.TripStatus = "Đã hoàn thành"
+			tripDTO.TripStatus = "completed"
 		}
 	}
 
@@ -764,8 +764,8 @@ func (ts *tripService) mockAISuggestTrip(activities dto.TripSuggestionRequest, e
 }
 
 func (ts *tripService) SuggestTrip(userID string, activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error) {
-	suggestionByDate, err := ts.CallAISuggestTrip(activities, endpoint)
-	// suggestionByDate, err := ts.mockAISuggestTrip(activities, endpoint)
+	// suggestionByDate, err := ts.CallAISuggestTrip(activities, endpoint)
+	suggestionByDate, err := ts.mockAISuggestTrip(activities, endpoint)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get trip suggestion: %w", err)
 	}

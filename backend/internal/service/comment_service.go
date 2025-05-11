@@ -1,6 +1,7 @@
 package service
 
 import (
+	"skeleton-internship-backend/internal/dto"
 	"skeleton-internship-backend/internal/model"
 	"skeleton-internship-backend/internal/repository"
 
@@ -8,7 +9,7 @@ import (
 )
 
 type CommentService interface {
-	AddComment(comment *model.Comment) (string, error)
+	AddComment(comment *dto.Comment, userID string) (string, error)
 	GetComment(commentID string) (model.Comment, error)
 	GetCommentsByActivityID(activityID string) ([]model.Comment, error)
 }
@@ -25,12 +26,24 @@ func NewCommentService(
 	}
 }
 
-func (ts *commentService) AddComment(comment *model.Comment) (string, error) {
+func (ts *commentService) AddComment(comment *dto.Comment, userID string) (string, error) {
 	commentID := uuid.New().String()
-	comment.CommentID = commentID
+	commentEntity := &model.Comment{
+		CommentID:      commentID,
+		UserID:         userID,
+		CommentMessage: comment.CommentMessage,
+	}
+
+	if comment.Type == "place" {
+		commentEntity.TripPlaceID = &comment.ActivityID
+	} else if comment.Type == "restaurant" {
+		commentEntity.TripRestaurantID = &comment.ActivityID
+	} else if comment.Type == "accommodation" {
+		commentEntity.TripAccommodationID = &comment.ActivityID
+	}
 
 	// Create the main comment record
-	if err := ts.commentRepository.Create(comment); err != nil {
+	if err := ts.commentRepository.Create(commentEntity); err != nil {
 		return "", err
 	}
 
