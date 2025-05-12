@@ -161,7 +161,6 @@ export const AIActivitySuggestions: React.FC<AIActivitySuggestionsProps> = ({
             <Card 
               className="w-full hover:shadow-md transition-shadow" 
               hoverable
-              bodyStyle={{ padding: "16px" }}
             >
               <div className="flex">
                 <div className="w-24 h-24 mr-4 overflow-hidden rounded-lg shadow-sm flex-shrink-0">
