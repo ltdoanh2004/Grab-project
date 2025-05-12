@@ -1,0 +1,141 @@
+2025-05-12 08:30:55,989 - __main__ - INFO - All routers registered successfully
+2025-05-12 08:31:02,254 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 08:31:02,281 - app - INFO - All routers registered successfully
+2025-05-12 08:48:00,598 - src.services.genrate_plan_api - INFO - Received raw trip plan request: dict_keys(['budget', 'destination_id', 'people', 'personal_options', 'travel_time'])
+2025-05-12 08:48:00,599 - src.services.genrate_plan_api - INFO - Extracted 0 accommodations, 0 places, and 0 restaurants
+2025-05-12 08:48:00,599 - src.services.genrate_plan_api - INFO - Destination identified as: hochiminh
+2025-05-12 08:48:00,599 - src.services.genrate_plan_api - INFO - Generating plan with destination: hochiminh
+2025-05-12 08:48:59,920 - src.services.genrate_plan_api - INFO - Generated plan: {'trip_name': 'Trip to Hochiminh', 'start_date': '2025-05-12', 'end_date': '2025-05-14', 'user_id': 'user123', 'destination_id': 'hochiminh', 'plan_by_day': [{'date': '2025-05-12', 'day_title': 'Ngày 1: Trải nghiệm Sài Gòn sôi động', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'hotel_001', 'type': 'accommodation', 'name': 'Khách sạn Sài Gòn Riverside', 'start_time': '08:00', 'end_time': '10:00', 'description': 'Bạn sẽ được nghỉ ngơi tại khách sạn sang trọng bên sông Sài Gòn.', 'location': 'Quận 1, TP.HCM', 'rating': 4.7, 'price': 1200000.0, 'image_url': '', 'booking_link': '', 'room_info': 'Phòng tiêu chuẩn', 'tax_info': 'Đã bao gồm thuế', 'elderly_friendly': True, 'url': ''}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_002', 'type': 'place', 'name': 'Bảo tàng Lịch sử TP.HCM', 'start_time': '13:00', 'end_time': '15:00', 'description': 'Khám phá lịch sử phong phú của Sài Gòn qua bảo tàng nổi tiếng.', 'address': 'Quận 1, TP.HCM', 'categories': 'culture', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.5, 'price': 30000.0, 'image_url': '', 'url': ''}, {'id': 'place_003', 'type': 'place', 'name': 'Nhà thờ Đức Bà', 'start_time': '15:30', 'end_time': '17:00', 'description': 'Chiêm ngưỡng kiến trúc cổ kính tuyệt đẹp tại Nhà thờ Đức Bà.', 'address': 'Quận 1, TP.HCM', 'categories': 'architecture', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.6, 'price': 0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'restaurant_004', 'type': 'restaurant', 'name': 'Nhà hàng Ngon 38', 'start_time': '18:00', 'end_time': '20:00', 'description': 'Thưởng thức các món ăn truyền thống Việt Nam tuyệt hảo.', 'address': 'Quận 3, TP.HCM', 'cuisines': 'Vietnamese', 'price_range': '100,000-300,000 VND', 'rating': 4.4, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}]}], 'daily_tips': ['- Nên bắt đầu tham quan Hochiminh từ 6-8h sáng để tránh nóng và đông đúc', '- Sử dụng các phương tiện công cộng như xe buýt hoặc Grab để đi lại trong thành phố', '- Ưu tiên các bữa ăn tại các quán ăn địa phương để tiết kiệm chi phí', '- Tránh mua hàng tại các cửa hàng du lịch vì giá cả thường đắt đỏ, nên chọn các chợ truyền thống', '- Tôn trọng văn hóa địa phương bằng cách mặc đồ lịch sự khi thăm các địa điểm tôn giáo']}, {'date': '2025-05-13', 'day_title': 'Ngày 2: Chuyến hành trình văn hoá Sài Gòn', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'place_005', 'type': 'place', 'name': 'Nhà thờ Đức Bà', 'start_time': '08:00', 'end_time': '10:00', 'description': 'Khám phá kiến trúc nguyên bản của Sài Gòn.', 'address': '1 Công xã Paris, Bến Nghé, Quận 1, Hồ Chí Minh', 'categories': 'sightseeing', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.8, 'price': 0, 'image_url': 'https://example.com/image1.jpg', 'url': 'https://example.com'}, {'id': 'place_006', 'type': 'place', 'name': 'Bưu điện Trung tâm', 'start_time': '10:15', 'end_time': '11:30', 'description': 'Tham quan công trình kiến trúc của Gustave Eiffel.', 'address': '125 Công xã Paris, Bến Nghé, Quận 1, Hồ Chí Minh', 'categories': 'sightseeing', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 0, 'image_url': 'https://example.com/image2.jpg', 'url': 'https://example.com'}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_007', 'type': 'place', 'name': 'Bảo tàng Chứng tích Chiến tranh', 'start_time': '13:00', 'end_time': '15:00', 'description': 'Khám phá chiến tranh Việt Nam qua nhiều góc nhìn.', 'address': '28 Võ Văn Tần, Phường 6, Quận 3, Hồ Chí Minh', 'categories': 'museum', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.6, 'price': 40000.0, 'image_url': 'https://example.com/image3.jpg', 'url': 'https://example.com'}, {'id': 'place_008', 'type': 'place', 'name': 'Công viên Tao Đàn', 'start_time': '15:15', 'end_time': '17:00', 'description': 'Thưởng thức không gian xanh mát giữa lòng thành phố.', 'address': '55C Nguyễn Thị Minh Khai, Phường Bến Thành, Quận 1, Hồ Chí Minh', 'categories': 'park', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.5, 'price': 0, 'image_url': 'https://example.com/image4.jpg', 'url': 'https://example.com'}]}, {'time_of_day': 'evening', 'activities': [{'id': 'restaurant_009', 'type': 'restaurant', 'name': 'Nhà hàng Ngon', 'start_time': '18:00', 'end_time': '20:00', 'description': 'Thưởng thức hương vị truyền thống Việt Nam.', 'address': '160 Pasteur, Bến Nghé, Quận 1, Hồ Chí Minh', 'cuisines': 'Việt Nam', 'price_range': '100,000-300,000 VND', 'rating': 4.6, 'phone': '+84 28 3827 7131', 'services': ['đặt bàn'], 'image_url': 'https://example.com/image5.jpg', 'url': 'https://example.com'}]}], 'daily_tips': ['- Bắt đầu từ 6-8h sáng để tránh đông đúc khi thăm Dinh Thống Nhất', '- Mặc đúng trang phục khi đến Bảo tàng Chứng tích Chiến tranh', '- Mua quà lưu niệm tại Chợ Bến Thành vào cuối ngày để có thể được giảm giá', '- Theo đường chính để tránh lạc và bị lừa đảo']}, {'date': '2025-05-14', 'day_title': 'Ngày 3: Khám phá góc khuất Sài Gòn', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'place_009', 'type': 'place', 'name': 'Công viên Tao Đàn', 'start_time': '08:00', 'end_time': '09:30', 'description': 'Hãy thư giãn dưới bóng cây xanh mát và ngắm nhìn chim chóc tung bay.', 'address': 'Quận 1, TP.HCM', 'categories': 'nature', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.4, 'price': 0, 'image_url': '', 'url': ''}, {'id': 'place_010', 'type': 'place', 'name': 'Nhà thờ Đức Bà', 'start_time': '09:45', 'end_time': '11:00', 'description': 'Chiêm ngưỡng kiến trúc cổ kính và nghe tiếng chuông vang vọng.', 'address': 'Quận 1, TP.HCM', 'categories': 'sightseeing', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.6, 'price': 0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_011', 'type': 'place', 'name': 'Bảo tàng Lịch sử Việt Nam', 'start_time': '13:00', 'end_time': '15:00', 'description': 'Khám phá dòng chảy lịch sử qua từng hiện vật sống động.', 'address': 'Quận 1, TP.HCM', 'categories': 'museum', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.3, 'price': 40000.0, 'image_url': '', 'url': ''}, {'id': 'place_012', 'type': 'place', 'name': 'Chợ Bến Thành', 'start_time': '15:15', 'end_time': '16:30', 'description': 'Trải nghiệm mua sắm và thưởng thức ẩm thực sôi động nơi đây.', 'address': 'Quận 1, TP.HCM', 'categories': 'shopping', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.0, 'price': 0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'restaurant_010', 'type': 'restaurant', 'name': 'Nhà hàng Nón Lá', 'start_time': '18:00', 'end_time': '20:00', 'description': 'Thưởng thức món Việt ngon miệng trong không gian thanh lịch.', 'address': 'Quận 1, TP.HCM', 'cuisines': 'Việt Nam', 'price_range': '100,000-300,000 VND', 'rating': 4.5, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}, {'id': 'place_013', 'type': 'place', 'name': 'Skydeck Bitexco', 'start_time': '20:15', 'end_time': '21:30', 'description': 'Ngắm toàn cảnh thành phố từ đỉnh tòa nhà huyền thoại.', 'address': 'Quận 1, TP.HCM', 'categories': 'observation', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 200000.0, 'image_url': '', 'url': ''}]}], 'daily_tips': ['- Nên bắt đầu sớm từ 6-8h sáng để tránh nóng và đông đúc', '- Đem theo nước uống và khẩu trang khi tham quan Công viên Tao Đàn', '- Nên mặc đồ thoáng mát và mang theo nước uống khi thăm phố đi bộ Nguyễn Huệ', '- Đổi tiền tiết Việt Nam để tiện mua sắm tại chợ Bến Thành', '- Luôn thương lượng giá khi mua hàng tại Chợ Bến Thành', '- Nên chuẩn bị camera để chụp ảnh tại Dinh Thống Nhất', '- Tìm hiểu về lịch sử và văn hóa Việt Nam khi thăm Bảo tàng Dân tộc học Việt Nam']}]}
+2025-05-12 08:48:59,920 - src.services.genrate_plan_api - INFO - Trip plan request processed successfully
+2025-05-12 08:49:37,970 - __main__ - INFO - All routers registered successfully
+2025-05-12 08:49:43,666 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 08:49:43,696 - app - INFO - All routers registered successfully
+2025-05-12 08:50:48,169 - src.services.suggest_api - INFO - Processing recommendation query for hochiminh
+2025-05-12 08:50:48,170 - src.services.suggest_api - ERROR - Error processing recommendation query: TravelModel.__init__() missing 1 required positional argument: 'destination_id'
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/suggest_api.py", line 98, in suggest_trips
+    travel_model = TravelModel()
+TypeError: TravelModel.__init__() missing 1 required positional argument: 'destination_id'
+2025-05-12 08:51:15,503 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 08:51:15,525 - app - INFO - All routers registered successfully
+2025-05-12 08:51:15,527 - src.services.suggest_api - INFO - Processing recommendation query for hochiminh
+2025-05-12 08:51:15,534 - src.agents.travel_agent - INFO - Setting up all databases...
+2025-05-12 08:51:17,882 - src.agents.travel_agent - INFO - All databases setup completed
+2025-05-12 08:51:17,883 - src.services.suggest_api - ERROR - Error processing recommendation query: TravelModel.process_query() got an unexpected keyword argument 'destination_id'
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/suggest_api.py", line 99, in suggest_trips
+    raw_recommendations = travel_model.process_query(query, destination_id=request.destination_id)
+TypeError: TravelModel.process_query() got an unexpected keyword argument 'destination_id'
+2025-05-12 08:51:39,889 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 08:51:39,915 - app - INFO - All routers registered successfully
+2025-05-12 08:51:39,916 - src.services.suggest_api - INFO - Processing recommendation query for hochiminh
+2025-05-12 08:51:39,924 - src.agents.travel_agent - INFO - Setting up all databases...
+2025-05-12 08:51:42,060 - src.agents.travel_agent - INFO - All databases setup completed
+2025-05-12 08:51:42,060 - src.agents.travel_agent - INFO - Processing query: 
+        Planning a trip to hochiminh with the following details:
+        - Group: 2 adults, 1 children, 0 infants
+        - Budget: mid (approx. 10000000 VND)
+        - Duration: 10 days
+        - Season: summer
+        - Travel Style: family
+        
+        Preferences:
+        - Transportation: No specific preference
+        - Accommodation: Hotel
+        - Food: Vegetarian
+        - Places to visit: No specific preference
+        - Activities: Hiking
+        - Extra: No specific preference
+
+        IMPORTANT: Please focus on finding recommendations specifically in hochiminh. All suggestions should be located in or near this destination.
+        
+        Please suggest:
+        1. Suitable accommodations in hochiminh
+        2. Interesting activities and places to visit in hochiminh
+        3. Recommended restaurants and food options in hochiminh
+        
+        Consider:
+        - The travel style and preferences
+        - The season and weather conditions in hochiminh
+        - The budget constraints
+        - The duration of stay
+        - The location and its unique offerings
+        - All recommendations must be in hochiminh
+        
+2025-05-12 08:51:42,061 - src.agents.travel_agent - DEBUG - Sending request to OpenAI...
+2025-05-12 08:51:44,671 - src.agents.travel_agent - INFO - OpenAI response: ChatCompletion(id='chatcmpl-BWCcQSzhCDENV0KJu4604qX7E0NzQ', choices=[Choice(finish_reason='function_call', index=0, logprobs=None, message=ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"family friendly hotel in Hochiminh with mid-range budget around 10000000 VND for 10 days","top_k":15}', name='query_hotels'), tool_calls=None))], created=1747014702, model='gpt-4.1-mini-2025-04-14', object='chat.completion', service_tier='default', system_fingerprint='fp_79b79be41f', usage=CompletionUsage(completion_tokens=43, prompt_tokens=1002, total_tokens=1045, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0)))
+2025-05-12 08:51:44,672 - src.agents.travel_agent - INFO - Model response message: ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"family friendly hotel in Hochiminh with mid-range budget around 10000000 VND for 10 days","top_k":15}', name='query_hotels'), tool_calls=None)
+2025-05-12 08:51:44,672 - src.agents.travel_agent - INFO - Function call: query_hotels
+2025-05-12 08:51:44,672 - src.agents.travel_agent - DEBUG - Function arguments: {'query_text': 'family friendly hotel in Hochiminh with mid-range budget around 10000000 VND for 10 days', 'top_k': 15}
+2025-05-12 08:51:44,672 - src.agents.travel_agent - INFO - Querying all databases with context
+2025-05-12 08:51:44,672 - src.agents.travel_agent - INFO - Querying hotels with context: family friendly hotel in Hochiminh with mid-range budget around 10000000 VND for 10 days
+2025-05-12 08:51:47,911 - src.agents.travel_agent - INFO - Added 15 hotel recommendations
+2025-05-12 08:51:47,912 - src.agents.travel_agent - INFO - Querying places with context: family friendly hotel in Hochiminh with mid-range budget around 10000000 VND for 10 days
+2025-05-12 08:51:50,376 - src.agents.travel_agent - INFO - place_ids: ['place_005433', 'place_007854', 'place_010621', 'place_006512', 'place_004755', 'place_003374', 'place_010111', 'place_001471', 'place_005519', 'place_002400', 'place_002960', 'place_008001', 'place_002264', 'place_009211', 'place_006758', 'place_008784', 'place_011047', 'place_006660', 'place_003718', 'place_009831', 'place_008472', 'place_005917', 'place_009962', 'place_003177', 'place_010777', 'place_004245', 'place_007259', 'place_001935', 'place_004838', 'place_001909', 'place_004219', 'place_005493', 'place_003348', 'place_005895', 'place_011025', 'place_008450', 'place_010755', 'place_002934', 'place_002238', 'place_006634']
+2025-05-12 08:51:50,376 - src.agents.travel_agent - INFO - Added 40 place recommendations
+2025-05-12 08:51:50,376 - src.agents.travel_agent - INFO - Querying restaurants with context: family friendly hotel in Hochiminh with mid-range budget around 10000000 VND for 10 days
+2025-05-12 08:51:50,376 - src.agents.travel_agent - INFO - Attempting to query FnB with text: family friendly hotel in Hochiminh with mid-range budget around 10000000 VND for 10 days, top_k: 40
+2025-05-12 08:51:53,245 - src.agents.travel_agent - INFO - FnB query returned 40 results
+2025-05-12 08:51:53,246 - src.agents.travel_agent - INFO - Added 40 restaurant recommendations
+2025-05-12 08:51:53,246 - src.agents.travel_agent - INFO - Final result distribution: 15 hotels, 40 places, 40 restaurants
+2025-05-12 08:51:53,246 - src.services.suggest_api - INFO - Recommendation query processed successfully, got 95 items
+2025-05-12 08:51:53,246 - src.services.suggest_api - INFO - Grouped recommendations: 15 accommodations, 40 places, 40 restaurants
+2025-05-12 08:51:53,246 - src.services.suggest_api - INFO - Final response has 95 items
+2025-05-12 09:00:16,611 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:00:16,638 - app - INFO - All routers registered successfully
+2025-05-12 09:02:19,026 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:02:19,046 - app - INFO - All routers registered successfully
+2025-05-12 09:02:29,786 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:02:29,811 - app - INFO - All routers registered successfully
+2025-05-12 09:03:00,658 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:03:00,684 - app - INFO - All routers registered successfully
+2025-05-12 09:03:40,757 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:03:40,772 - app - INFO - All routers registered successfully
+2025-05-12 09:03:49,220 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:03:49,246 - app - INFO - All routers registered successfully
+2025-05-12 09:04:16,619 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:04:16,641 - app - INFO - All routers registered successfully
+2025-05-12 09:04:23,245 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:04:23,266 - app - INFO - All routers registered successfully
+2025-05-12 09:04:32,769 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:04:32,792 - app - INFO - All routers registered successfully
+2025-05-12 09:05:22,124 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:05:22,138 - app - INFO - All routers registered successfully
+2025-05-12 09:05:45,684 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:05:45,704 - app - INFO - All routers registered successfully
+2025-05-12 09:06:09,886 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:06:09,898 - app - INFO - All routers registered successfully
+2025-05-12 09:06:17,855 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:06:17,879 - app - INFO - All routers registered successfully
+2025-05-12 09:08:31,636 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:08:31,651 - app - INFO - All routers registered successfully
+2025-05-12 09:18:03,638 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:18:03,664 - app - INFO - All routers registered successfully
+2025-05-12 09:21:18,789 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:21:18,807 - app - INFO - All routers registered successfully
+2025-05-12 09:21:25,848 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:21:25,874 - app - INFO - All routers registered successfully
+2025-05-12 09:22:33,828 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:22:33,842 - app - INFO - All routers registered successfully
+2025-05-12 09:23:54,492 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:23:54,506 - app - INFO - All routers registered successfully
+2025-05-12 09:24:41,523 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:24:41,537 - app - INFO - All routers registered successfully
+2025-05-12 09:31:09,589 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:31:09,613 - app - INFO - All routers registered successfully
+2025-05-12 09:31:23,168 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:31:23,186 - app - INFO - All routers registered successfully
+2025-05-12 09:33:13,136 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:33:13,152 - app - INFO - All routers registered successfully
+2025-05-12 09:33:38,559 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:33:38,572 - app - INFO - All routers registered successfully
+2025-05-12 09:35:35,143 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:35:35,169 - app - INFO - All routers registered successfully
+2025-05-12 09:37:31,904 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:37:31,919 - app - INFO - All routers registered successfully
+2025-05-12 09:39:17,548 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:39:17,572 - app - INFO - All routers registered successfully
+2025-05-12 09:39:44,178 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:39:44,198 - app - INFO - All routers registered successfully
+2025-05-12 09:40:18,906 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 09:40:18,930 - app - INFO - All routers registered successfully

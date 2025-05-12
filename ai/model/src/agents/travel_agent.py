@@ -15,13 +15,12 @@ ENV_PATH = os.path.join(SCRIPT_DIR, '.env')
 load_dotenv(ENV_PATH)
 
 class TravelModel:
-    def __init__(self, destination_id: str):
+    def __init__(self, destination_id: Optional[str] = None):
         """
         Initialize the travel model with OpenAI API key
         """
         self.openai_client = OpenAI(api_key=os.getenv("OPEN_API_KEY"))
         self.model = "gpt-4.1-mini-2025-04-14"
-        
         self.destination_id = destination_id
 
         logger.info("Setting up all databases...")
@@ -62,7 +61,11 @@ class TravelModel:
         """
         self.current_db = self.hotel_db
         top_k = min(top_k, 15)  # Enforce maximum of 15 results
-        return self.current_db.get_hotel_ids(query_text, top_k=top_k)
+        if filter is None:
+            filter = {} 
+        else:
+            filter = {"city": self.destination_id}
+        return self.current_db.get_hotel_ids(query_text, filter = filter, top_k=top_k)
     
     def query_places(self, query_text: str, top_k: int = 40) -> List[str]:
         """
