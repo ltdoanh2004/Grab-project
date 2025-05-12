@@ -46,8 +46,43 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
   const searchResultsRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<any>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [searchResultsPosition, setSearchResultsPosition] = useState<{
+    left: number;
+    top: number;
+    width: string | number;
+    maxHeight: string;
+  }>({
+    left: 0,
+    top: 0,
+    width: '100%',
+    maxHeight: 'calc(100vh - 200px)'
+  });
 
-  // Handle click outside to close search results
+  useEffect(() => {
+    if (showSearchResults && searchInputRef.current) {
+      const updatePosition = () => {
+        const rect = searchInputRef.current?.getBoundingClientRect();
+        if (rect) {
+          setSearchResultsPosition({
+            left: rect.left,
+            top: rect.bottom + 10,
+            width: searchInputRef.current?.offsetWidth || '100%',
+            maxHeight: 'calc(100vh - 200px)'
+          });
+        }
+      };
+      
+      updatePosition();
+      window.addEventListener('scroll', updatePosition);
+      window.addEventListener('resize', updatePosition);
+      
+      return () => {
+        window.removeEventListener('scroll', updatePosition);
+        window.removeEventListener('resize', updatePosition);
+      };
+    }
+  }, [showSearchResults]);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -66,7 +101,6 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
     };
   }, []);
 
-  // Auto-advance slideshow
   useEffect(() => {
     const interval = setInterval(() => {
       if (carouselRef.current) {
@@ -196,33 +230,28 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
         </div>
       </div>
 
-      {/* Search results dropdown positioned absolutely in the document */}
-      {showSearchResults && searchInputRef.current && (
+      {showSearchResults && (
         <div 
           ref={searchResultsRef}
-          className="fixed bg-white rounded-lg shadow-2xl z-[9999] max-h-96 overflow-y-auto w-full max-w-xl"
-          style={{
-            top: searchInputRef.current.getBoundingClientRect().bottom + window.scrollY + 8,
-            left: '50%',
-            transform: 'translateX(-50%)'
-          }}
+          className="fixed bg-white rounded-lg border border-gray-200 shadow-2xl z-[99999] w-full mt-2 overflow-y-auto"
+          style={searchResultsPosition}
         >
           {filteredDestinations.length > 0 ? (
             <List
               dataSource={filteredDestinations}
               renderItem={(dest) => (
                 <List.Item 
-                  className="cursor-pointer hover:bg-gray-50 transition-colors px-4"
+                  className="cursor-pointer hover:bg-gray-100 transition-colors px-6 py-4 border-b border-gray-100"
                   onClick={() => handleSelectSearchResult(dest.id)}
                 >
                   <List.Item.Meta
-                    avatar={<Avatar src={dest.imageUrl} size="large" />}
-                    title={<span className="font-medium">{dest.name}</span>}
-                    description={dest.description}
+                    avatar={<Avatar src={dest.imageUrl} size={64} />}
+                    title={<span className="font-semibold text-lg">{dest.name}</span>}
+                    description={<p className="mt-1 text-gray-600">{dest.description}</p>}
                   />
                   <div className="flex items-center">
-                    <Rate value={dest.rating} disabled allowHalf className="text-xs" />
-                    <span className="ml-2 text-gray-500 text-sm">{dest.rating}</span>
+                    <Rate value={dest.rating} disabled allowHalf className="text-sm" />
+                    <span className="ml-2 text-gray-500">{dest.rating}</span>
                   </div>
                 </List.Item>
               )}
@@ -230,7 +259,7 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
           ) : (
             <Empty
               description="Không tìm thấy điểm đến"
-              className="py-4"
+              className="py-12"
               image={Empty.PRESENTED_IMAGE_SIMPLE}
             />
           )}
