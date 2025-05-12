@@ -100,14 +100,12 @@ async def suggest_trips(request: TripSuggestionRequest):
         
         logger.info(f"Recommendation query processed successfully, got {len(raw_recommendations)} items")
         
-        # Group the recommendations by type to ensure we have at least one of each type
         accommodations = [r for r in raw_recommendations if r["type"] == "accommodation"]
         places = [r for r in raw_recommendations if r["type"] == "place"]
         restaurants = [r for r in raw_recommendations if r["type"] == "restaurant"]
         
         logger.info(f"Grouped recommendations: {len(accommodations)} accommodations, {len(places)} places, {len(restaurants)} restaurants")
         
-        # Ensure we have at least one of each type
         if not accommodations:
             accommodations = [{"name": "Luxury Hotel", "type": "accommodation", "args": "luxury", "id": "hotel_000003"}]
         if not places:
@@ -115,7 +113,6 @@ async def suggest_trips(request: TripSuggestionRequest):
         if not restaurants:
             restaurants = [{"name": "Local Restaurant", "type": "restaurant", "args": "local cuisine", "id": "restaurant_000003"}]
             
-        # Add all recommendations to response, with type-specific ones first
         response = []
         for rec in accommodations + places + restaurants:
             response.append(SuggestWithIDAndType(**rec))

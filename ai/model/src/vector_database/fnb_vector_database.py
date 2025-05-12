@@ -72,8 +72,17 @@ class FnBVectorDatabase(BaseVectorDatabase):
         
         print("Processing ratings...")
         if 'rating' in raw_df.columns:
+            # First convert to string and clean the data
+            raw_df['rating'] = raw_df['rating'].astype(str)
+            # Remove any non-numeric characters except decimal points
+            raw_df['rating'] = raw_df['rating'].str.replace(r'[^\d.]', '', regex=True)
+            # Convert to float, coercing errors to NaN
+            raw_df['rating'] = pd.to_numeric(raw_df['rating'], errors='coerce')
+            # Fill NaN values with mean
             raw_df['rating'].fillna(raw_df['rating'].mean(), inplace=True)
+            # Ensure all values are float
             raw_df['rating'] = raw_df['rating'].astype(float)
+
 
 
         
@@ -93,7 +102,7 @@ class FnBVectorDatabase(BaseVectorDatabase):
                 rows_to_embed, existing_df = self.find_missing_embeddings(
                     new_df=raw_df,
                     existing_df=existing_df,
-                    id_field="index"
+                    id_field="restaurant_id"
                 )
                 
                 if len(rows_to_embed) == 0:

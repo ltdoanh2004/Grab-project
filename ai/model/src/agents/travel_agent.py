@@ -61,10 +61,8 @@ class TravelModel:
         """
         self.current_db = self.hotel_db
         top_k = min(top_k, 15)  # Enforce maximum of 15 results
-        if filter is None:
-            filter = {} 
-        else:
-            filter = {"city": {"$eq" : self.destination_id}}
+
+        filter = {"city": {"$eq" : self.destination_id}}
         logger.info(f"top_k for query hotels is: {top_k}")
         logger.info(f"filter for query hotels is: {filter}")
         if top_k > 5:
@@ -82,19 +80,17 @@ class TravelModel:
         Limited to top 40 results
         """
         self.current_db = self.place_db
-        if filter is None:
-            filter = {} 
-        else:
-            filter = {"city": {"$eq" : self.destination_id}}
+
+        filter = {"city": {"$eq" : self.destination_id}}
         top_k = min(top_k, 40)  # Enforce maximum of 40 results
         logger.info(f"top_k for query places is: {top_k}")
         logger.info(f"filter for query places is: {filter}")
         if top_k > 10:
-
             ids = self.current_db.get_place_ids(query_text, filter = filter, top_k=10)
             ids.extend(self.current_db.get_place_ids(query_text, top_k=top_k - 10))
         else:
             ids = self.current_db.get_place_ids(query_text, filter = filter, top_k=top_k)
+
         return ids
     
     def query_fnb(self, query_text: str, top_k: int = 40) -> List[str]:
@@ -102,10 +98,8 @@ class TravelModel:
         Query FnB based on text input and return FnB IDs
         Limited to top 40 results
         """
-        if filter is None:
-            filter = {}
-        else:   
-            filter = {"city": {"$eq" : self.destination_id}}
+
+        filter = {"city": {"$eq" : self.destination_id}}
         self.current_db = self.fnb_db
         top_k = min(top_k, 40)  # Enforce maximum of 40 results
         logger.info(f"top_k for query fnb is: {top_k}")
@@ -354,3 +348,9 @@ class TravelModel:
                 logger.info(f"Added {len(ids)} restaurant IDs from menu item search")
         except Exception as e:
             logger.error(f"Error processing function {function_name}: {e}", exc_info=True) 
+if __name__ == "__main__":
+    # Example usage
+    travel_model = TravelModel(destination_id="hochiminh")
+    user_query = "Find me the best hotels in Paris"
+    results = travel_model.query_fnb(user_query)
+    print(results)
