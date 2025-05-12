@@ -9,24 +9,27 @@ import (
 )
 
 type CommentService interface {
-	AddComment(comment *dto.Comment, userID string) (string, error)
+	AddComment(comment *dto.Comment, userID string) (model.Comment, error)
 	GetComment(commentID string) (model.Comment, error)
 	GetCommentsByActivityID(activityID string) ([]model.Comment, error)
 }
 
 type commentService struct {
 	commentRepository repository.CommentRepository
+	userRepository    repository.UserRepository
 }
 
 func NewCommentService(
 	commentRepo repository.CommentRepository,
+	userRepository repository.UserRepository,
 ) CommentService {
 	return &commentService{
 		commentRepository: commentRepo,
+		userRepository:    userRepository,
 	}
 }
 
-func (ts *commentService) AddComment(comment *dto.Comment, userID string) (string, error) {
+func (ts *commentService) AddComment(comment *dto.Comment, userID string) (model.Comment, error) {
 	commentID := uuid.New().String()
 	commentEntity := &model.Comment{
 		CommentID:      commentID,
@@ -41,13 +44,18 @@ func (ts *commentService) AddComment(comment *dto.Comment, userID string) (strin
 	} else if comment.Type == "accommodation" {
 		commentEntity.TripAccommodationID = &comment.ActivityID
 	}
+	user, err := ts.userRepository.GetByID(userID)
+	if err != nil {
+		return model.Comment{}, err
+	}
+	commentEntity.Username = user.Username
 
 	// Create the main comment record
 	if err := ts.commentRepository.Create(commentEntity); err != nil {
-		return "", err
+		return model.Comment{}, err
 	}
 
-	return commentID, nil
+	return *commentEntity, nil
 }
 
 func (ts *commentService) GetComment(commentID string) (model.Comment, error) {

@@ -2,7 +2,6 @@ package controller
 
 import (
 	"net/http"
-
 	"skeleton-internship-backend/internal/dto"
 	"skeleton-internship-backend/internal/model"
 	"skeleton-internship-backend/internal/service"
@@ -46,7 +45,7 @@ func (cc *CommentController) RegisterRoutes(router *gin.Engine) {
 // @Accept json
 // @Produce json
 // @Param comment body dto.Comment true "Comment Details"
-// @Success 200 {object} model.Response{data=string} "Returns comment ID"
+// @Success 200 {object} model.Response{data=model.Comment} "Returns comment"
 // @Failure 400 {object} model.Response "Invalid request"
 // @Failure 500 {object} model.Response "Internal server error"
 // @Router /api/v1/comment/create [post]
@@ -68,7 +67,7 @@ func (cc *CommentController) CreateComment(ctx *gin.Context) {
 		return
 	}
 
-	commentID, err := cc.commentService.AddComment(&request, userID.(string))
+	comment, err := cc.commentService.AddComment(&request, userID.(string))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
 			Message: "Failed to create comment: " + err.Error(),
@@ -79,7 +78,7 @@ func (cc *CommentController) CreateComment(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, model.Response{
 		Message: "Comment created successfully",
-		Data:    commentID,
+		Data:    comment,
 	})
 }
 
