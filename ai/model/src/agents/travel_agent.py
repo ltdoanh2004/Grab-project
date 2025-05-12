@@ -13,7 +13,26 @@ logger = setup_logger(__name__)
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ENV_PATH = os.path.join(SCRIPT_DIR, '.env')
 load_dotenv(ENV_PATH)
-
+def remove_duplicate_by_name(matches):
+    """
+    Remove duplicate entries from a list of matches based on 'name'.
+    
+    Args:
+        matches (list): A list of dictionaries where each dictionary represents a match.
+        
+    Returns:
+        list: A list of unique matches by 'name'.
+    """
+    seen = set()
+    unique_matches = []
+    
+    for match in matches:
+        name = match['metadata']['name']
+        if name not in seen:
+            unique_matches.append(match)
+            seen.add(name)
+    
+    return unique_matches
 class TravelModel:
     def __init__(self, destination_id: Optional[str] = None):
         """
@@ -66,47 +85,46 @@ class TravelModel:
         logger.info(f"top_k for query hotels is: {top_k}")
         logger.info(f"filter for query hotels is: {filter}")
         if top_k > 5:
-
-            ids = self.current_db.get_hotel_ids(query_text, filter = filter, top_k=5)
-            ids.extend(self.current_db.get_hotel_ids(query_text, top_k=top_k - 5))
+            ids = self.current_db.get_hotel_ids(query_text, filter = filter, top_k=top_k)
         else:
             
             ids = self.current_db.get_hotel_ids(query_text, filter = filter, top_k=top_k)
-        return 
+        return ids
     
-    def query_places(self, query_text: str, top_k: int = 40) -> List[str]:
+    def query_places(self, query_text: str, top_k: int = 100) -> List[str]:
         """
         Query places based on text input and return place IDs
-        Limited to top 40 results
+        Limited to top 50 results
         """
         self.current_db = self.place_db
 
         filter = {"city": {"$eq" : self.destination_id}}
-        top_k = min(top_k, 40)  # Enforce maximum of 40 results
+        top_k = min(top_k, 50)  # Enforce maximum of 50 results
         logger.info(f"top_k for query places is: {top_k}")
         logger.info(f"filter for query places is: {filter}")
+        logger.info(f"{self.destination_id})")
         if top_k > 10:
-            ids = self.current_db.get_place_ids(query_text, filter = filter, top_k=10)
-            ids.extend(self.current_db.get_place_ids(query_text, top_k=top_k - 10))
+            ids = self.current_db.get_place_ids(query_text, filter = filter, top_k=top_k)
+            logger.info(f"ids for query places is: {ids}")
+
+
         else:
             ids = self.current_db.get_place_ids(query_text, filter = filter, top_k=top_k)
-
         return ids
     
-    def query_fnb(self, query_text: str, top_k: int = 40) -> List[str]:
+    def query_fnb(self, query_text: str, top_k: int = 50) -> List[str]:
         """
         Query FnB based on text input and return FnB IDs
-        Limited to top 40 results
+        Limited to top 50 results
         """
 
         filter = {"city": {"$eq" : self.destination_id}}
         self.current_db = self.fnb_db
-        top_k = min(top_k, 40)  # Enforce maximum of 40 results
+        top_k = min(top_k, 50)  # Enforce maximum of 50 results
         logger.info(f"top_k for query fnb is: {top_k}")
         logger.info(f"filter for query fnb is: {filter}")
         if top_k > 10:
-            ids = self.current_db.get_fnb_ids(query_text, filter = filter, top_k=10)
-            ids.extend(self.current_db.get_fnb_ids(query_text, top_k=top_k - 10))
+            ids = self.current_db.get_fnb_ids(query_text, filter = filter, top_k=top_k)
         else:
             ids = self.current_db.get_fnb_ids(query_text, filter = filter, top_k=top_k)
         return ids
@@ -233,10 +251,10 @@ class TravelModel:
                 if function_name == "query_hotels":
                     top_k = min(function_args.get("top_k", 15), 15)
                 else:
-                    top_k = min(function_args.get("top_k", 40), 40)
+                    top_k = min(function_args.get("top_k", 50), 50)
             else:
                 # Default to maximum allowed values
-                top_k = 40
+                top_k = 50
                 
             logger.info("Querying all databases with context")
             
@@ -254,9 +272,9 @@ class TravelModel:
                 })
             logger.info(f"Added {len(hotel_ids)} hotel recommendations")
             
-            # Query places (max 40 results)
+            # Query places (max 50 results)
             logger.info(f"Querying places with context: {search_context}")
-            place_ids = self.query_places(search_context, top_k=40)
+            place_ids = self.query_places(search_context, top_k=50)
             for place_id in place_ids:
                 formatted_results.append({
                     "name": f"Place {place_id}",
@@ -267,15 +285,15 @@ class TravelModel:
             logger.info(f"place_ids: {place_ids}")
             logger.info(f"Added {len(place_ids)} place recommendations")
             
-            # Query restaurants (max 40 results)
+            # Query restaurants (max 50 results)
             logger.info(f"Querying restaurants with context: {search_context}")
-            restaurant_ids = self.query_fnb(search_context, top_k=40)
+            restaurant_ids = self.query_fnb(search_context, top_k=50)
             
             # If no restaurant results, try with broader context
             if not restaurant_ids:
                 logger.warning("No restaurant results found with original context, trying broader search")
                 broader_context = f"restaurant {search_context}"
-                restaurant_ids = self.query_fnb(broader_context, top_k=40)
+                restaurant_ids = self.query_fnb(broader_context, top_k=50)
             
             for restaurant_id in restaurant_ids:
                 formatted_results.append({
