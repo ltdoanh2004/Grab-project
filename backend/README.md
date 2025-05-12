@@ -1,6 +1,9 @@
-# Skeleton Bootcamp Backend
+# Trip Planner
 
 A modern RESTful API for managing todos efficiently, built with Go using clean architecture principles.
+
+## Demo
+
 
 ## Tech Stack
 
