@@ -10,6 +10,7 @@ import { createComment, getActivityComments, suggestComment } from "../../../../
 import { ActivityComment } from "../../../../types/apiType";
 import { TravelActivity } from "../../../../types/travelPlan";
 import { AIActivitySuggestions } from "../AISuggestions";
+import { usePostHog } from "../../../../hooks/usePostHog";
 
 interface Comment {
   comment_id: string;
@@ -72,6 +73,7 @@ export const ActivityCommentModal: React.FC<{
   const [suggestions, setSuggestions] = useState<AISuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const { TextArea } = Input;
+  const { trackEvent } = usePostHog();
 
   const getFakeUsername = (userId: string) => {
     const lastChar = userId.slice(-1);
@@ -122,6 +124,9 @@ export const ActivityCommentModal: React.FC<{
     try {
       await createComment(activityId, value.trim(), activityType);
       
+      // Track comment creation
+      trackEvent('comment_created', { activity_type: activityType });
+      
       const newComment: Comment = {
         comment_id: `temp-${Date.now()}`,
         comment_message: value.trim(),
@@ -146,6 +151,9 @@ export const ActivityCommentModal: React.FC<{
     setAiMode(true);
     setSelectedIdx([]);
     setShowSuggestions(false);
+    
+    // Track when users enter AI mode
+    trackEvent('ai_mode_entered', { activity_type: activityType });
   };
 
   const handleAICall = async () => {
@@ -155,6 +163,12 @@ export const ActivityCommentModal: React.FC<{
       comment_id: comments[idx].comment_id,
       comment_message: comments[idx].comment_message
     }));
+    
+    // Track AI suggestion request
+    trackEvent('ai_suggestion_requested', {
+      activity_type: activityType,
+      comment_count: selectedComments.length
+    });
     
     console.log(
       "Selected comments:",
@@ -221,13 +235,31 @@ export const ActivityCommentModal: React.FC<{
       if (response && response.data && response.data.suggestion_list) {
         setSuggestions(response.data.suggestion_list);
         setShowSuggestions(true);
+        
+        // Track successful AI suggestions
+        trackEvent('ai_suggestions_received', {
+          activity_type: activityType,
+          suggestion_count: response.data.suggestion_list.length
+        });
+        
         message.success('Gợi ý đã được tạo thành công!');
       } else {
         message.info('Không có gợi ý phù hợp.');
+        
+        // Track no suggestions returned
+        trackEvent('ai_suggestions_empty', {
+          activity_type: activityType
+        });
       }
     } catch (error) {
       console.error('Error calling suggest comment API:', error);
       message.error('Không thể tạo gợi ý. Vui lòng thử lại sau.');
+      
+      // Track error
+      trackEvent('ai_suggestions_error', {
+        activity_type: activityType,
+        error: error instanceof Error ? error.message : 'Unknown error'
+      });
     } finally {
       setAiLoading(false);
       setAiMode(false);
@@ -259,20 +291,22 @@ export const ActivityCommentModal: React.FC<{
   const handleAddSuggestion = (suggestion: AISuggestion | TravelActivity) => {
     console.log('Replacing current activity with:', suggestion);
     
-    // Replace the current activity using the same ID
     const replacementActivity = {
       ...suggestion,
-      // Ensure we keep the original activity ID
       activity_id: activityId,
       id: activityId
     };
     
-    // Here you would add code to update the activity in the trip plan
-    // This would typically involve a call to an API or a state update function
+    trackEvent('activity_replaced', {
+      original_activity_type: activityType,
+      new_activity_type: suggestion.type,
+      new_activity_name: suggestion.name
+    });
+    
+
     
     message.success(`Đã thay thế bằng ${suggestion.name}`);
     
-    // Close the modal after replacing
     onClose();
   };
 

@@ -3,6 +3,8 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.tsx";
+// Import PostHog - we don't need to use the import directly since it self-initializes
+import "./utils/posthog";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
