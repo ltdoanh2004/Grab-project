@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
 import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import { TravelHeader } from "./components/travelHeader";
@@ -45,7 +44,6 @@ function App() {
           <Route path="/trips/:id" element={<TravelDetailRouteWrapper />} />{" "}
         </Routes>
       </div>
-      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

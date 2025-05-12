@@ -100,11 +100,7 @@ export const ParticipantList: React.FC<ParticipantListProps> = ({
               title={
                 <div>
                   {getDisplayName(participant)}
-                  {participant === CURRENT_USER_ID && (
-                    <Tag color="blue" className="ml-2">
-                      Chính bạn
-                    </Tag>
-                  )}
+
                 </div>
               }
             />

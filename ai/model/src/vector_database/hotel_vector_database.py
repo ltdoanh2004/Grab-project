@@ -9,6 +9,7 @@ from tqdm import tqdm
 from pinecone import Pinecone, ServerlessSpec
 import json
 from typing import List, Dict, Any
+import ast  # Add ast import
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -158,15 +159,15 @@ class HotelVectorDatabase(BaseVectorDatabase):
                 print(f"Found existing embedding file: {embedding_file}")
                 existing_df = pd.read_csv(embedding_file)
                 
-                # Use base class method to find missing embeddings
-                rows_to_embed, existing_df = self.find_missing_embeddings(
-                    new_df=raw_df,
-                    existing_df=existing_df,
-                    id_field="hotel_id"
-                )
-                
-                if len(rows_to_embed) == 0:
-                    print("No new rows to embed. Using existing embeddings.")
+                # Check for NaN embeddings
+                nan_mask = existing_df['context_embedding'].isna()
+                if nan_mask.any():
+                    print(f"Found {nan_mask.sum()} items with NaN embeddings")
+                    rows_to_embed = existing_df[nan_mask]
+                    existing_df = existing_df[~nan_mask]
+                    print(f"Found {len(existing_df)} items that already have embeddings")
+                else:
+                    print("No items with NaN embeddings found. Using existing embeddings.")
                     self.df = existing_df
                     return
         
@@ -251,7 +252,7 @@ class HotelVectorDatabase(BaseVectorDatabase):
         
         # Convert embeddings to string representation before saving
         final_df['context_embedding'] = final_df['context_embedding'].apply(
-            lambda x: str(x) if x is not None else None
+            lambda x: json.dumps(x) if x is not None else None
         )
         final_df.to_csv(output_path, index=False)
         
@@ -365,7 +366,7 @@ class HotelVectorDatabase(BaseVectorDatabase):
             
         print("Converting embeddings to lists...")
         self.df['context_embedding'] = self.df['context_embedding'].apply(
-            lambda x: eval(x) if isinstance(x, str) and x != 'None' else None
+            lambda x: json.loads(x) if isinstance(x, str) and x != 'None' else None
         )
             
         print("Inserting data into Pinecone...")
@@ -382,11 +383,23 @@ class HotelVectorDatabase(BaseVectorDatabase):
                     "name": row["name"],
                     "price": row["price"],
                     "rating": row["rating"],
-                    "description": row["description"]
+                    "description": row["description"],
+                    "city": str(row["location"]) if isinstance(row["location"], (list, tuple)) else row["location"]  # Handle array case
                 }
                 
                 embedding = row["context_embedding"]
                 if embedding is None:
+                    continue
+                    
+                # Convert embedding to list if it's not already
+                if isinstance(embedding, str):
+                    try:
+                        embedding = json.loads(embedding)
+                    except:
+                        continue
+                
+                # Ensure embedding is a list of floats
+                if not isinstance(embedding, list):
                     continue
                     
                 vectors_to_upsert.append({
@@ -409,7 +422,7 @@ class HotelVectorDatabase(BaseVectorDatabase):
         print(f"Successfully inserted {len(self.df)} vectors into Pinecone index: {self.index_name}")
         return True
 
-    def query(self, query_text, top_k=5, include_metadata=True):
+    def query(self, query_text, filter = None, top_k=5, include_metadata=True):
         """
         Query the database for similar hotels based on text input
         Returns a tuple of (ids, full_results)
@@ -418,11 +431,13 @@ class HotelVectorDatabase(BaseVectorDatabase):
             raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
             
         query_embedding = self.get_openai_embeddings(query_text)
-        
+        if filter is None:
+            filter = {}
         results = self.index.query(
             vector=query_embedding,
             top_k=top_k,
-            include_metadata=include_metadata
+            include_metadata=include_metadata,
+            filter = filter
         )
         
         # Extract IDs
@@ -503,11 +518,13 @@ class HotelVectorDatabase(BaseVectorDatabase):
             print(f"Error searching by rating: {e}")
             return None
 
-    def get_hotel_ids(self, query_text, top_k=5):
+    def get_hotel_ids(self, query_text, filter=None, top_k=5):
         """
         Get hotel IDs from query results
         """
-        ids, _ = self.query(query_text, top_k=top_k)
+        if filter is None:
+            filter = {}
+        ids, _ = self.query(query_text, filter=filter, top_k=top_k)
         return ids
 
 def main():

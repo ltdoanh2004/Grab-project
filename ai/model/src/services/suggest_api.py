@@ -95,8 +95,8 @@ async def suggest_trips(request: TripSuggestionRequest):
         
         logger.info(f"Processing recommendation query for {request.destination_id}")
         
-        travel_model = TravelModel()
-        raw_recommendations = travel_model.process_query(query, destination_id=request.destination_id)
+        travel_model = TravelModel(destination_id=request.destination_id)
+        raw_recommendations = travel_model.process_query(query)
         
         logger.info(f"Recommendation query processed successfully, got {len(raw_recommendations)} items")
         
