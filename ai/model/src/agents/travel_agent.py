@@ -15,13 +15,12 @@ ENV_PATH = os.path.join(SCRIPT_DIR, '.env')
 load_dotenv(ENV_PATH)
 
 class TravelModel:
-    def __init__(self, destination_id: str):
+    def __init__(self, destination_id: Optional[str] = None):
         """
         Initialize the travel model with OpenAI API key
         """
         self.openai_client = OpenAI(api_key=os.getenv("OPEN_API_KEY"))
         self.model = "gpt-4.1-mini-2025-04-14"
-        
         self.destination_id = destination_id
 
         logger.info("Setting up all databases...")
@@ -62,7 +61,20 @@ class TravelModel:
         """
         self.current_db = self.hotel_db
         top_k = min(top_k, 15)  # Enforce maximum of 15 results
-        return self.current_db.get_hotel_ids(query_text, top_k=top_k)
+        if filter is None:
+            filter = {} 
+        else:
+            filter = {"city": {"$eq" : self.destination_id}}
+        logger.info(f"top_k for query hotels is: {top_k}")
+        logger.info(f"filter for query hotels is: {filter}")
+        if top_k > 5:
+
+            ids = self.current_db.get_hotel_ids(query_text, filter = filter, top_k=5)
+            ids.extend(self.current_db.get_hotel_ids(query_text, top_k=top_k - 5))
+        else:
+            
+            ids = self.current_db.get_hotel_ids(query_text, filter = filter, top_k=top_k)
+        return 
     
     def query_places(self, query_text: str, top_k: int = 40) -> List[str]:
         """
@@ -70,37 +82,41 @@ class TravelModel:
         Limited to top 40 results
         """
         self.current_db = self.place_db
+        if filter is None:
+            filter = {} 
+        else:
+            filter = {"city": {"$eq" : self.destination_id}}
         top_k = min(top_k, 40)  # Enforce maximum of 40 results
-        return self.current_db.get_place_ids(query_text, top_k=top_k)
+        logger.info(f"top_k for query places is: {top_k}")
+        logger.info(f"filter for query places is: {filter}")
+        if top_k > 10:
+
+            ids = self.current_db.get_place_ids(query_text, filter = filter, top_k=10)
+            ids.extend(self.current_db.get_place_ids(query_text, top_k=top_k - 10))
+        else:
+            ids = self.current_db.get_place_ids(query_text, filter = filter, top_k=top_k)
+        return ids
     
     def query_fnb(self, query_text: str, top_k: int = 40) -> List[str]:
         """
         Query FnB based on text input and return FnB IDs
         Limited to top 40 results
         """
-        try:
-            self.current_db = self.fnb_db
-            top_k = min(top_k, 40)  # Enforce maximum of 40 results
-            
-            # Log the query attempt
-            logger.info(f"Attempting to query FnB with text: {query_text}, top_k: {top_k}")
-            
-            # Get results
-            results = self.current_db.get_fnb_ids(query_text, top_k=top_k)
-            
-            # Log the results
-            logger.info(f"FnB query returned {len(results)} results")
-            if not results:
-                logger.warning("No FnB results found, trying with broader context")
-                # Try with broader context if no results
-                broader_query = f"restaurant {query_text}"
-                results = self.current_db.get_fnb_ids(broader_query, top_k=top_k)
-                logger.info(f"Broader FnB query returned {len(results)} results")
-            
-            return results
-        except Exception as e:
-            logger.error(f"Error in query_fnb: {e}", exc_info=True)
-            return []
+        if filter is None:
+            filter = {}
+        else:   
+            filter = {"city": {"$eq" : self.destination_id}}
+        self.current_db = self.fnb_db
+        top_k = min(top_k, 40)  # Enforce maximum of 40 results
+        logger.info(f"top_k for query fnb is: {top_k}")
+        logger.info(f"filter for query fnb is: {filter}")
+        if top_k > 10:
+            ids = self.current_db.get_fnb_ids(query_text, filter = filter, top_k=10)
+            ids.extend(self.current_db.get_fnb_ids(query_text, top_k=top_k - 10))
+        else:
+            ids = self.current_db.get_fnb_ids(query_text, filter = filter, top_k=top_k)
+        return ids
+
     
     def search_by_price_range(self, min_price: float, max_price: float, top_k: int = 5) -> List[str]:
         """

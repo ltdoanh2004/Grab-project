@@ -368,12 +368,12 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         except Exception as e:
             print(f"Error searching by rating: {e}")
             return None
-
-    def get_place_ids(self, query_text, top_k=5):
+    
+    def get_place_ids(self, query_text, filter = None, top_k=5):
         """
         Get place IDs from query results
         """
-        ids, _ = self.query(query_text, top_k=top_k)
+        ids, _ = self.query(query_text, filter = filter, top_k=top_k)
         return ids
 
     def update_metadata_from_csv(self, csv_path: str = None, batch_size: int = 100) -> bool:

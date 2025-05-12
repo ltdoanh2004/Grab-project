@@ -414,11 +414,11 @@ class FnBVectorDatabase(BaseVectorDatabase):
             print(f"Error searching by rating: {e}")
             return None
 
-    def get_fnb_ids(self, query_text, top_k=5):
+    def get_fnb_ids(self, query_text, filter = None , top_k=5):
         """
         Get FnB IDs from query results
         """
-        ids, _ = self.query(query_text, top_k=top_k)
+        ids, _ = self.query(query_text, filter = filter, top_k=top_k)
         return ids
 
 def main():
