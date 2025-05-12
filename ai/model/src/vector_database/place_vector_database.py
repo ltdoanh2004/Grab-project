@@ -5,19 +5,16 @@ import sys
 import pandas as pd
 from typing import Dict, Any
 
-# Add parent directory to path for direct execution
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
     from .base_vector_database import BaseVectorDatabase
 except ImportError:
-    # When run directly, use absolute import
     from vector_database.base_vector_database import BaseVectorDatabase
 
 class PlaceVectorDatabase(BaseVectorDatabase):
     def __init__(self):
         super().__init__(index_name="place-recommendations")
-        # Override checkpoint file path to be specific for places
         self.checkpoint_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'place_checkpoint.json')
 
     def prepare_place_embedding(self, data=None, incremental=True):
@@ -28,7 +25,6 @@ class PlaceVectorDatabase(BaseVectorDatabase):
             data: Path to place_processed.csv file (default: None)
             incremental: If True, only generate embeddings for new items (default: True)
         """
-        # Load data
         if data is None:
             data = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'place_processed.csv')
         
@@ -77,12 +73,10 @@ class PlaceVectorDatabase(BaseVectorDatabase):
 
 
 
-        # Try to find existing embeddings file if we're doing incremental processing
         existing_df = None
         rows_to_embed = raw_df
         
         if incremental:
-            # Check for existing embedding file
             embedding_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
                                          'data', 'place_processed_embedding.csv')
             
@@ -90,7 +84,6 @@ class PlaceVectorDatabase(BaseVectorDatabase):
                 print(f"Found existing embedding file: {embedding_file}")
                 existing_df = pd.read_csv(embedding_file)
                 
-                # Use base class method to find missing embeddings
                 rows_to_embed, existing_df = self.find_missing_embeddings(
                     new_df=raw_df,
                     existing_df=existing_df,
@@ -115,7 +108,6 @@ class PlaceVectorDatabase(BaseVectorDatabase):
                                 Các thể loại của nó là {row.get('categories', '')}
                                 ''' for _, row in tqdm(rows_to_embed.iterrows(), total=len(rows_to_embed), desc="Creating contexts")]
 
-        # Load checkpoint
         checkpoint = self.load_checkpoint()
         last_processed = checkpoint["last_processed_index"]
         existing_embeddings = checkpoint["embeddings"]
@@ -126,23 +118,18 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         embeddings = []
         total_rows = len(rows_to_embed)
         
-        # Initialize embeddings list with None values
         embeddings = [None] * total_rows
         
-        # Fill in existing embeddings from checkpoint
         for idx, embedding in existing_embeddings.items():
             idx = int(idx)
             if idx < len(embeddings):
                 embeddings[idx] = embedding
         
-        # Process remaining rows
         for idx in tqdm(range(last_processed + 1, total_rows), desc="Generating embeddings"):
             try:
-                # Generate new embedding
                 embedding = self.get_openai_embeddings(rows_to_embed.iloc[idx]['context'])
                 embeddings[idx] = embedding
                 
-                # Update checkpoint every 10 rows
                 if idx % 10 == 0:
                     checkpoint["last_processed_index"] = idx
                     checkpoint["embeddings"][str(idx)] = embedding
@@ -151,7 +138,6 @@ class PlaceVectorDatabase(BaseVectorDatabase):
                     
             except Exception as e:
                 print(f"Error processing row {idx}: {e}")
-                # Save checkpoint on error
                 checkpoint["last_processed_index"] = idx - 1
                 self.save_checkpoint(checkpoint)
                 print(f"Saved checkpoint after error at index {idx - 1}")
@@ -159,30 +145,23 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         
         rows_to_embed['context_embedding'] = embeddings
         
-        # Combine with existing data if doing incremental processing
         final_df = rows_to_embed.copy()
         
         if incremental and existing_df is not None:
-            # Create a combined dataframe: new embeddings + existing embeddings
-            # Filter out any rows from existing_df that might conflict with new_df by index
             existing_indices = set(rows_to_embed['place_id'].astype(str))
             filtered_existing_df = existing_df[~existing_df['place_id'].astype(str).isin(existing_indices)]
             
-            # Concatenate the filtered existing data with the new data
             final_df = pd.concat([filtered_existing_df, rows_to_embed], ignore_index=True)
             print(f"Combined {len(rows_to_embed)} new embeddings with {len(filtered_existing_df)} existing embeddings")
 
-        # Save to the same directory as the input file
         output_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'place_processed_embedding.csv')
         print(f"Saving processed data to: {output_path}")
         
-        # Convert embeddings to string representation before saving
         final_df['context_embedding'] = final_df['context_embedding'].apply(
             lambda x: str(x) if x is not None else None
         )
         final_df.to_csv(output_path, index=False)
         
-        # Clear checkpoint after successful completion
         if os.path.exists(self.checkpoint_file):
             os.remove(self.checkpoint_file)
             print("Cleared checkpoint after successful completion")

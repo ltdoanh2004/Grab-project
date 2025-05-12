@@ -6,7 +6,6 @@ import (
 	"skeleton-internship-backend/internal/model"
 	"skeleton-internship-backend/internal/service"
 	"skeleton-internship-backend/middleware"
-
 	"github.com/gin-gonic/gin"
 )
 

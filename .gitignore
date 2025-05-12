@@ -6,6 +6,9 @@ ai/crawl/crawl_tripadvisor/checkpoints/
 ai/crawl/crawl_tripadvisor/data_restaurants/
 ai/crawl/crawl_tripadvisor/visited_urls.json
 
+ai/crawl/crawl_pasgo/data/
+
+
 ai/crawl/crawl_booking_web/data_booking/
 ai/crawl/crawl_booking_web/data_hotels/
 ai/crawl/crawl_booking_web/data_attractions/

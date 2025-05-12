@@ -15,13 +15,15 @@ ENV_PATH = os.path.join(SCRIPT_DIR, '.env')
 load_dotenv(ENV_PATH)
 
 class TravelModel:
-    def __init__(self):
+    def __init__(self, destination_id: str):
         """
         Initialize the travel model with OpenAI API key
         """
         self.openai_client = OpenAI(api_key=os.getenv("OPEN_API_KEY"))
         self.model = "gpt-4.1-mini-2025-04-14"
         
+        self.destination_id = destination_id
+
         logger.info("Setting up all databases...")
         self.hotel_db = HotelVectorDatabase()
         self.place_db = PlaceVectorDatabase()

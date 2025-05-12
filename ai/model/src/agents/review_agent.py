@@ -208,11 +208,12 @@ class TravelReviewer:
         Returns:
             List[str]: Simplified list of travel tips
         """
+        tip_text = "\n".join(detailed_tips)
         if not detailed_tips:
             return []
         prompt = f"""Hãy tóm tắt các mẹo du lịch sau đây thành một danh sách đơn giản, mỗi mẹo là một câu ngắn gọn.
         Tips gốc:
-        {"\n".join(detailed_tips)}
+        {tip_text}
         {summary_tips_promt}
         """
         

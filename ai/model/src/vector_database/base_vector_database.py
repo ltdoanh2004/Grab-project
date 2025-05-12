@@ -53,7 +53,6 @@ class BaseVectorDatabase:
         if len(text) <= self.max_tokens:
             return text
             
-        # Simple truncation - you might want to use a more sophisticated method
         return text[:self.max_tokens]
 
     def get_openai_embeddings(self, text: str) -> List[float]:
@@ -61,7 +60,6 @@ class BaseVectorDatabase:
         Get embeddings from OpenAI API with error handling
         """
         try:
-            # Truncate text if too long
             text = self.truncate_text(text)
             
             response = self.client.embeddings.create(
@@ -421,13 +419,10 @@ class BaseVectorDatabase:
             print("Existing dataframe missing required columns")
             return new_df, existing_df
             
-        # Get IDs of rows with embeddings
         existing_ids = set(existing_df[id_field].astype(str))
         
-        # Find rows in new dataframe that don't have embeddings yet
         new_ids = set(new_df[id_field].astype(str))
         
-        # IDs that need embeddings (either new or updated)
         missing_ids = new_ids - existing_ids
         common_ids = new_ids.intersection(existing_ids)
         
@@ -438,7 +433,6 @@ class BaseVectorDatabase:
             print("No new items to embed.")
             return pd.DataFrame(), existing_df
             
-        # Filter new_df to only include rows that need embeddings
         rows_to_embed = new_df[new_df[id_field].astype(str).isin(missing_ids)].copy()
         
         return rows_to_embed, existing_df 
@@ -463,12 +457,9 @@ class BaseVectorDatabase:
             if not current_data:
                 raise ValueError(f"Item with ID {item_id} not found")
                 
-            # Get current metadata and values
             current_metadata = current_data['vectors'][str(item_id)]['metadata']
             current_values = current_data['vectors'][str(item_id)]['values']
             
-            # Update metadata with new values
-            # Handle NaN values in new_metadata
             processed_metadata = {}
             for key, value in new_metadata.items():
                 if pd.isna(value):
@@ -481,14 +472,12 @@ class BaseVectorDatabase:
                 else:
                     processed_metadata[key] = value
             
-            # Merge with existing metadata
             current_metadata.update(processed_metadata)
             
-            # Update in Pinecone
             self.index.upsert(
                 vectors=[{
                     "id": str(item_id),
-                    "values": current_values,  # Keep existing embedding
+                    "values": current_values,
                     "metadata": current_metadata
                 }]
             )
