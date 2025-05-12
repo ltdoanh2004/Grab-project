@@ -11,6 +11,9 @@ import {
   notification,
   Result,
   Affix,
+  List,
+  Rate,
+  Tag,
 } from "antd";
 import {
   ArrowLeftOutlined,
@@ -19,6 +22,10 @@ import {
   ShareAltOutlined,
   CheckCircleFilled,
   PlusOutlined,
+  EnvironmentOutlined,
+  DollarOutlined,
+  ClockCircleOutlined,
+  PlusCircleOutlined,
 } from "@ant-design/icons";
 import { SplitBill } from "./travelDetail/splitBill";
 
@@ -29,12 +36,14 @@ import {
   formatCurrency,
   calculateDurationDays,
   getStatusTag,
+  MOCK_AI_SUGGESTIONS,
 } from "../../constants/travelPlanConstants";
 import { ActivityModal } from "./travelDetail/ActivityDetail";
 import { TravelHeader } from "./travelDetail/Header";
 import { TravelItinerary } from "./travelDetail/Plans";
 import { AIActivitySuggestions } from "./travelDetail/AISuggestions";
 import { useTravelDetail } from "../../hooks/useTravelDetail";
+import { TravelActivity } from "../../types/travelPlan";
 
 const { Search } = Input;
 
@@ -67,7 +76,7 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
     dayForNewActivity,
     showActivityDetail,
     handleReplaceActivity,
-    handleSelectAISuggestion,
+    handleSelectAISuggestion: originalHandleSelectAISuggestion,
     handleDeleteActivity,
     handleUpdateActivityTime,
     handleMoveActivity,
@@ -77,6 +86,53 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
   } = useTravelDetail(travelId);
 
   const [showCopyNotification, setShowCopyNotification] = useState(false);
+  const [searchResults, setSearchResults] = useState<typeof MOCK_AI_SUGGESTIONS>([]);
+  const [searchValue, setSearchValue] = useState('');
+
+  React.useEffect(() => {
+    const handleReplaceActivityEvent = (event: CustomEvent<{
+      activityId: string;
+      replacementActivity: TravelActivity;
+    }>) => {
+      if (!travelDetail) return;
+      
+      const { activityId, replacementActivity } = event.detail;
+      
+      const updatedTravelDetail = {
+        ...travelDetail,
+        plan_by_day: travelDetail.plan_by_day.map(day => {
+          return {
+            ...day,
+            segments: day.segments.map(segment => {
+              return {
+                ...segment,
+                activities: segment.activities.map(act => {
+                  if (act.id === activityId) {
+                    console.log(`Found activity to replace: ${act.name} -> ${replacementActivity.name}`);
+                    return {
+                      ...replacementActivity,
+                      id: act.id,
+                      start_time: act.start_time || replacementActivity.start_time,
+                      end_time: act.end_time || replacementActivity.end_time
+                    };
+                  }
+                  return act;
+                })
+              };
+            })
+          };
+        })
+      };
+      
+      setTravelDetail(updatedTravelDetail);
+    };
+
+    window.addEventListener('replaceActivity', handleReplaceActivityEvent as EventListener);
+
+    return () => {
+      window.removeEventListener('replaceActivity', handleReplaceActivityEvent as EventListener);
+    };
+  }, [travelDetail, setTravelDetail]);
 
   const handleShare = async () => {
     if (!travelDetail) return;
@@ -92,6 +148,137 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
       message.success("Đã copy đường dẫn lịch trình");
     } catch {
       message.error("Không thể sao chép liên kết.");
+    }
+  };
+
+  const handleSelectAISuggestion = (activity: TravelActivity | {
+    activity_id?: string;
+    id: string;
+    type: string;
+    name: string;
+    description: string;
+    address?: string;
+    price?: number;
+    price_range?: string;
+    price_ai_estimate?: number;
+    rating?: number;
+    image_url?: string;
+    start_time?: string;
+    end_time?: string;
+  }) => {
+    // Ensure activity has required properties of TravelActivity
+    const travelActivity: TravelActivity = {
+      ...activity,
+      id: activity.id,
+      type: activity.type,
+      name: activity.name,
+      description: activity.description || '',
+      start_time: activity.start_time || '08:00',
+      end_time: activity.end_time || '09:00',
+      image_url: activity.image_url || '/notfound.png'
+    };
+    
+    if (currentDay && activityToReplace && travelDetail) {
+      const updatedTravelDetail = {
+        ...travelDetail,
+        plan_by_day: travelDetail.plan_by_day.map(day => {
+          if (day.date !== currentDay.date) {
+            return day;
+          }
+          
+          return {
+            ...day,
+            segments: day.segments.map(segment => {
+              return {
+                ...segment,
+                activities: segment.activities.map(act => {
+                  if (act.id === activityToReplace.id) {
+                    return {
+                      ...travelActivity,
+                      id: act.id,
+                      start_time: act.start_time || travelActivity.start_time,
+                      end_time: act.end_time || travelActivity.end_time
+                    };
+                  }
+                  return act;
+                })
+              };
+            })
+          };
+        })
+      };
+      
+      // Update the state
+      setTravelDetail(updatedTravelDetail);
+      
+      setShowAISuggestions(false);
+      
+      message.success(`Đã thay thế ${activityToReplace.name} bằng ${travelActivity.name}`);
+      
+      return;
+    }
+    
+    originalHandleSelectAISuggestion(travelActivity);
+  };
+
+  const handleSearch = (value: string) => {
+    setSearchValue(value);
+    
+    if (!value.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    
+    const filteredResults = MOCK_AI_SUGGESTIONS.filter(item => 
+      item.name.toLowerCase().includes(value.toLowerCase()) ||
+      item.description.toLowerCase().includes(value.toLowerCase()) ||
+      (item.address && item.address.toLowerCase().includes(value.toLowerCase())) ||
+      item.type.toLowerCase().includes(value.toLowerCase())
+    );
+    
+    setSearchResults(filteredResults);
+  };
+  
+  const handleSelectSearchResult = (activity: (typeof MOCK_AI_SUGGESTIONS)[0]) => {
+    if (travelDetail && dayForNewActivity) {
+      const newActivity: TravelActivity = {
+        id: `custom-${Date.now()}`,
+        type: activity.type,
+        name: activity.name,
+        start_time: activity.start_time,
+        end_time: activity.end_time,
+        description: activity.description,
+        address: activity.address,
+        rating: activity.rating,
+        price: activity.price,
+        image_url: activity.image_url,
+        duration: activity.duration,
+      };
+      
+      const updatedTravelDetail = { ...travelDetail };
+      updatedTravelDetail.plan_by_day = updatedTravelDetail.plan_by_day.map(
+        (d) => {
+          if (d.date !== dayForNewActivity.date) return d;
+          return {
+            ...d,
+            segments: d.segments.map((segment, idx) =>
+              idx === 0
+                ? {
+                    ...segment,
+                    activities: [...segment.activities, newActivity],
+                  }
+                : segment
+            ),
+          };
+        }
+      );
+      
+      setTravelDetail(updatedTravelDetail);
+      setActivitySearchModalVisible(false);
+      setSearchResults([]);
+      setSearchValue('');
+      
+      message.success(`Đã thêm ${activity.name} vào lịch trình`);
     }
   };
 
@@ -155,7 +342,6 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
                 );
 
                 if (fromSegmentObj && toSegmentObj) {
-                  // Get activities to swap
                   const fromActivity =
                     fromSegmentObj.activities[fromActivityIndex];
                   const toActivity = toSegmentObj.activities[toActivityIndex];
@@ -188,13 +374,11 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
                     );
 
                     if (updatedFromSegment && updatedToSegment) {
-                      // Extract time information from both activities
                       const fromStartTime = fromActivity.start_time;
                       const fromEndTime = fromActivity.end_time;
                       const toStartTime = toActivity.start_time;
                       const toEndTime = toActivity.end_time;
 
-                      // Create copies of the activities with swapped times
                       const fromActivityCopy = {
                         ...fromActivity,
                         start_time: toStartTime,
@@ -207,7 +391,6 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
                         end_time: fromEndTime,
                       };
 
-                      // Perform the swap
                       updatedFromSegment.activities[fromActivityIndex] =
                         toActivityCopy;
                       updatedToSegment.activities[toActivityIndex] =
@@ -345,22 +528,88 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
       <Modal
         title="Thêm hoạt động tùy chỉnh"
         open={activitySearchModalVisible}
-        onCancel={() => setActivitySearchModalVisible(false)}
+        onCancel={() => {
+          setActivitySearchModalVisible(false);
+          setSearchResults([]);
+          setSearchValue('');
+        }}
         footer={null}
         width={600}
         className="custom-activity-modal"
       >
         <p className="mb-4">
-          Chọn ngày và nhập thông tin để thêm hoạt động mới vào lịch trình của
-          bạn.
+          Tìm kiếm hoạt động để thêm vào lịch trình ngày {dayForNewActivity ? formatDate(dayForNewActivity.date) : ''}.
         </p>
         <Search
           placeholder="Tìm địa điểm, hoạt động..."
           className="mb-4"
-          onSearch={handleAddCustomActivity}
+          value={searchValue}
+          onChange={(e) => handleSearch(e.target.value)}
+          onSearch={handleSearch}
         />
-        <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
-          <p className="text-gray-400">Kết quả tìm kiếm sẽ hiển thị ở đây</p>
+        <div className="max-h-96 overflow-y-auto">
+          {searchResults.length > 0 ? (
+            <List
+              dataSource={searchResults}
+              renderItem={(item) => (
+                <List.Item
+                  className="cursor-pointer hover:bg-gray-50 transition-colors"
+                  onClick={() => handleSelectSearchResult(item)}
+                >
+                  <div className="flex w-full">
+                    <div className="w-16 h-16 mr-3 rounded-lg overflow-hidden">
+                      <img
+                        src={item.image_url || "/notfound.png"}
+                        alt={item.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "/notfound.png";
+                        }}
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-base font-medium m-0">{item.name}</h4>
+                        <Tag color={ACTIVITY_TYPE_COLORS[item.type] || 'blue'}>
+                          {ACTIVITY_TYPE_TEXT[item.type] || item.type}
+                        </Tag>
+                      </div>
+                      <div className="flex items-center mt-1 text-sm text-gray-500">
+                        {item.address && (
+                          <span className="flex items-center mr-3">
+                            <EnvironmentOutlined className="mr-1" />
+                            {item.address.substring(0, 30)}{item.address.length > 30 ? '...' : ''}
+                          </span>
+                        )}
+                        {item.price && (
+                          <span className="flex items-center mr-3">
+                            <DollarOutlined className="mr-1" />
+                            {formatCurrency(item.price)}
+                          </span>
+                        )}
+                        {item.rating && (
+                          <Rate
+                            disabled
+                            allowHalf
+                            defaultValue={item.rating}
+                            style={{ fontSize: 12 }}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </List.Item>
+              )}
+            />
+          ) : searchValue ? (
+            <div className="text-center py-8 bg-gray-50 rounded-lg">
+              <p className="text-gray-500">Không tìm thấy kết quả phù hợp</p>
+            </div>
+          ) : (
+            <div className="text-center py-8 bg-gray-50 rounded-lg">
+              <p className="text-gray-500">Nhập từ khóa để tìm kiếm hoạt động</p>
+            </div>
+          )}
         </div>
       </Modal>
     </div>
