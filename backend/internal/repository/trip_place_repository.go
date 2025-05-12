@@ -47,7 +47,7 @@ func (r *GormTripPlaceRepository) Update(tripPlace *model.TripPlace) error {
 
 // Delete removes a TripPlace record by its ID.
 func (r *GormTripPlaceRepository) Delete(tripPlaceID string) error {
-	return r.DB.Delete(&model.TripPlace{}, tripPlaceID).Error
+	return r.DB.Where("trip_place_id = ?", tripPlaceID).Delete(&model.TripPlace{}).Error
 }
 
 // GetByTripID retrieves all TripPlace records associated with a specific TripID.

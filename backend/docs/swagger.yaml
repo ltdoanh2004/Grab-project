@@ -582,6 +582,8 @@ definitions:
         type: string
       user_id:
         type: string
+      username:
+        type: string
     type: object
   model.Destination:
     properties:
@@ -1213,13 +1215,13 @@ paths:
       - application/json
       responses:
         "200":
-          description: Returns comment ID
+          description: Returns comment
           schema:
             allOf:
             - $ref: '#/definitions/model.Response'
             - properties:
                 data:
-                  type: string
+                  $ref: '#/definitions/model.Comment'
               type: object
         "400":
           description: Invalid request
@@ -2149,7 +2151,7 @@ paths:
         name: trip
         required: true
         schema:
-          $ref: '#/definitions/dto.TripDTO'
+          $ref: '#/definitions/dto.TripDTOByDate'
       produces:
       - application/json
       responses:

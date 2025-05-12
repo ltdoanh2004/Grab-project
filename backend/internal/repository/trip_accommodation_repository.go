@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"fmt"
 	"skeleton-internship-backend/internal/model"
 
 	"gorm.io/gorm"
@@ -44,12 +45,46 @@ func (r *GormTripAccommodationRepository) GetByID(tripAccommodationID string) (m
 
 // Update modifies an existing TripAccommodation record.
 func (r *GormTripAccommodationRepository) Update(tripAccommodation *model.TripAccommodation) error {
-	return r.DB.Save(tripAccommodation).Error
+	// Log the time values before saving
+	if tripAccommodation.StartTime != nil {
+		fmt.Printf("Before save - StartTime: %v (UTC: %v)\n",
+			tripAccommodation.StartTime,
+			tripAccommodation.StartTime.UTC())
+	}
+	if tripAccommodation.EndTime != nil {
+		fmt.Printf("Before save - EndTime: %v (UTC: %v)\n",
+			tripAccommodation.EndTime,
+			tripAccommodation.EndTime.UTC())
+	}
+
+	err := r.DB.Save(tripAccommodation).Error
+	if err != nil {
+		return err
+	}
+
+	// Retrieve the saved record to check the time values
+	var saved model.TripAccommodation
+	r.DB.First(&saved, "trip_accommodation_id = ?", tripAccommodation.TripAccommodationID)
+
+	// Log the time values after saving
+	if saved.StartTime != nil {
+		fmt.Printf("After save - StartTime: %v (UTC: %v)\n",
+			saved.StartTime,
+			saved.StartTime.UTC())
+	}
+	if saved.EndTime != nil {
+		fmt.Printf("After save - EndTime: %v (UTC: %v)\n",
+			saved.EndTime,
+			saved.EndTime.UTC())
+	}
+
+	fmt.Println("Updated trip accommodation:", tripAccommodation)
+	return nil
 }
 
 // Delete removes a TripAccommodation record by its ID.
 func (r *GormTripAccommodationRepository) Delete(tripAccommodationID string) error {
-	return r.DB.Delete(&model.TripAccommodation{}, tripAccommodationID).Error
+	return r.DB.Where("trip_accommodation_id = ?", tripAccommodationID).Delete(&model.TripAccommodation{}).Error
 }
 
 // GetByTripID retrieves all TripAccommodation records associated with a specific TripID.

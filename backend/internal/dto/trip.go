@@ -35,35 +35,44 @@ type TripPlaceDTO struct {
 	TripPlaceID       string     `json:"trip_place_id"`
 	TripDestinationID string     `json:"trip_destination_id"`
 	PlaceID           string     `json:"place_id"`
+	Name              string     `json:"name,omitempty"`
 	ScheduledDate     *time.Time `json:"scheduled_date,omitempty"`
 	StartTime         *time.Time `json:"start_time,omitempty"`
 	EndTime           *time.Time `json:"end_time,omitempty"`
 	Notes             string     `json:"notes"`
 	PriceAIEstimate   float64    `json:"price_ai_estimate"`
+	Address           string     `json:"address,omitempty"`
+	ImageURLs         []string   `json:"image_urls,omitempty"`
 }
 
 type TripAccommodationDTO struct {
 	TripAccommodationID string     `json:"trip_accommodation_id"`
 	TripDestinationID   string     `json:"trip_destination_id"`
 	AccommodationID     string     `json:"accommodation_id"`
+	Name                string     `json:"name,omitempty"`
 	CheckInDate         *time.Time `json:"check_in_date,omitempty"`
 	CheckOutDate        *time.Time `json:"check_out_date,omitempty"`
 	StartTime           *time.Time `json:"start_time,omitempty"`
 	EndTime             *time.Time `json:"end_time,omitempty"`
 	PriceAIEstimate     float64    `json:"price_ai_estimate"`
 	Notes               string     `json:"notes"`
+	Address             string     `json:"address,omitempty"`
+	ImageURLs           []string   `json:"image_urls,omitempty"`
 }
 
 type TripRestaurantDTO struct {
 	TripRestaurantID  string     `json:"trip_restaurant_id"`
 	TripDestinationID string     `json:"trip_destination_id"`
 	RestaurantID      string     `json:"restaurant_id"`
+	Name              string     `json:"name,omitempty"`
 	MealDate          *time.Time `json:"meal_date,omitempty"`
 	StartTime         *time.Time `json:"start_time,omitempty"`
 	EndTime           *time.Time `json:"end_time,omitempty"`
 	ReservationInfo   string     `json:"reservation_info"`
 	Notes             string     `json:"notes"`
 	PriceAIEstimate   float64    `json:"price_ai_estimate"`
+	Address           string     `json:"address,omitempty"`
+	ImageURLs         []string   `json:"image_urls,omitempty"`
 }
 
 type Service struct {
@@ -73,15 +82,18 @@ type Service struct {
 }
 
 type Activity struct {
-	ActivityID      string          `json:"activity_id"`
-	ID              string          `json:"id"`
-	Type            string          `json:"type"` // e.g., "place", "accommodation", "restaurant"
-	Name            string          `json:"name"`
-	StartTime       string          `json:"start_time,omitempty"` // "HH:mm" format
-	EndTime         string          `json:"end_time,omitempty"`
-	Description     string          `json:"description,omitempty"`
-	PriceAIEstimate float64         `json:"price_ai_estimate,omitempty"`
-	Comments        []model.Comment `json:"comments,omitempty"`
+	ActivityID        string          `json:"activity_id"`
+	ID                string          `json:"id"`
+	Type              string          `json:"type"` // e.g., "place", "accommodation", "restaurant"
+	Name              string          `json:"name"`
+	StartTime         string          `json:"start_time,omitempty"` // "HH:mm" format
+	EndTime           string          `json:"end_time,omitempty"`
+	Description       string          `json:"description,omitempty"`
+	PriceAIEstimate   float64         `json:"price_ai_estimate,omitempty"`
+	Comments          []model.Comment `json:"comments,omitempty"`
+	TripDestinationID string          `json:"trip_destination_id,omitempty"`
+	Address           string          `json:"address,omitempty"`
+	ImageURLs         []string        `json:"image_urls,omitempty"`
 }
 
 type Segment struct {
@@ -133,14 +145,10 @@ func ConvertTripDTO(input TripDTOByDate) (TripDTO, error) {
 		return TripDTO{}, err
 	}
 
-	dest := TripDestinationDTO{
-		TripID:        "", // Can be filled later
-		DestinationID: input.DestinationID,
-		ArrivalDate:   &startDate,
-		DepartureDate: &endDate,
-		OrderNum:      1,
-	}
+	// Create a map to store destinations by their ID
+	destinationsMap := make(map[string]*TripDestinationDTO)
 
+	// Process all activities and group them by TripDestinationID
 	for _, day := range input.PlanByDay {
 		// Skip days with empty dates
 		if day.Date == "" {
@@ -172,23 +180,48 @@ func ConvertTripDTO(input TripDTOByDate) (TripDTO, error) {
 					}
 				}
 
+				// Determine which destination to use
+				destID := input.DestinationID
+				if activity.TripDestinationID != "" {
+					destID = activity.TripDestinationID
+				}
+
+				// Create the destination if it doesn't exist
+				if _, exists := destinationsMap[destID]; !exists {
+					destinationsMap[destID] = &TripDestinationDTO{
+						TripDestinationID: destID,
+						TripID:            input.TripID,
+						DestinationID:     input.DestinationID, // Using the same destination ID as input
+						ArrivalDate:       &startDate,
+						DepartureDate:     &endDate,
+						OrderNum:          len(destinationsMap) + 1, // Assign order based on creation order
+					}
+				}
+
+				// Get the destination to add this activity to
+				dest := destinationsMap[destID]
+
 				switch activity.Type {
 				case "place":
 					dest.Places = append(dest.Places, TripPlaceDTO{
 						TripPlaceID:       activity.ActivityID,
-						TripDestinationID: input.DestinationID,
+						TripDestinationID: destID,
 						PlaceID:           activity.ID,
+						Name:              activity.Name,
 						ScheduledDate:     &scheduledDate,
 						StartTime:         startTimePtr,
 						EndTime:           endTimePtr,
 						Notes:             activity.Description,
 						PriceAIEstimate:   activity.PriceAIEstimate,
+						Address:           activity.Address,
+						ImageURLs:         activity.ImageURLs,
 					})
 				case "accommodation":
 					dest.Accommodations = append(dest.Accommodations, TripAccommodationDTO{
 						TripAccommodationID: activity.ActivityID,
-						TripDestinationID:   input.DestinationID,
+						TripDestinationID:   destID,
 						AccommodationID:     activity.ID,
+						Name:                activity.Name,
 						CheckInDate:         &scheduledDate,
 						CheckOutDate:        &scheduledDate, // Assuming CheckOutDate is the same as CheckInDate for simplicity.
 						StartTime:           startTimePtr,
@@ -196,31 +229,44 @@ func ConvertTripDTO(input TripDTOByDate) (TripDTO, error) {
 						// If a CheckOutDate is available, parse it similarly.
 						PriceAIEstimate: activity.PriceAIEstimate,
 						Notes:           activity.Description,
+						Address:         activity.Address,
+						ImageURLs:       activity.ImageURLs,
 					})
+					fmt.Println("accommodation start time: ", dest.Accommodations[len(dest.Accommodations)-1].StartTime)
 				case "restaurant":
 					dest.Restaurants = append(dest.Restaurants, TripRestaurantDTO{
 						TripRestaurantID:  activity.ActivityID,
-						TripDestinationID: input.DestinationID,
+						TripDestinationID: destID,
 						RestaurantID:      activity.ID,
+						Name:              activity.Name,
 						MealDate:          &scheduledDate,
 						StartTime:         startTimePtr,
 						EndTime:           endTimePtr,
 						ReservationInfo:   activity.Description,
 						PriceAIEstimate:   activity.PriceAIEstimate,
 						Notes:             activity.Description,
+						Address:           activity.Address,
+						ImageURLs:         activity.ImageURLs,
 					})
 				}
 			}
 		}
 	}
 
+	// Convert the map to a slice of destinations
+	var destinations []TripDestinationDTO
+	for _, dest := range destinationsMap {
+		destinations = append(destinations, *dest)
+	}
+
 	return TripDTO{
+		TripID:           input.TripID,
 		UserID:           input.UserID,
 		TripName:         input.TripName,
 		StartDate:        startDate,
 		EndDate:          endDate,
 		TripStatus:       input.Status,
-		TripDestinations: []TripDestinationDTO{dest},
+		TripDestinations: destinations,
 	}, nil
 }
 
@@ -239,11 +285,8 @@ func ConvertTripDTOByDate(input TripDTO) (TripDTOByDate, error) {
 	// Group activities by scheduled date.
 	activitiesByDate := make(map[string][]Activity)
 
-	// If there is at least one destination, gather activities from its places,
-	// accommodations, and restaurants.
-	if len(input.TripDestinations) > 0 {
-		dest := input.TripDestinations[0]
-
+	// Process all destinations and their activities
+	for _, dest := range input.TripDestinations {
 		// Process places.
 		for _, p := range dest.Places {
 			if p.ScheduledDate == nil {
@@ -251,11 +294,17 @@ func ConvertTripDTOByDate(input TripDTO) (TripDTOByDate, error) {
 			}
 			dateStr := p.ScheduledDate.Format(layoutDate)
 			act := Activity{
-				ActivityID:      p.TripPlaceID,
-				ID:              p.PlaceID,
-				Type:            "place",
-				Description:     p.Notes,
-				PriceAIEstimate: p.PriceAIEstimate,
+				ActivityID:        p.TripPlaceID,
+				ID:                p.PlaceID,
+				Type:              "place",
+				Name:              p.Name,
+				Description:       p.Notes,
+				PriceAIEstimate:   p.PriceAIEstimate,
+				TripDestinationID: p.TripDestinationID,
+				Address:           p.Address,
+			}
+			if len(p.ImageURLs) > 0 {
+				act.ImageURLs = p.ImageURLs
 			}
 			if p.StartTime != nil {
 				act.StartTime = p.StartTime.Format(layoutTime)
@@ -273,11 +322,17 @@ func ConvertTripDTOByDate(input TripDTO) (TripDTOByDate, error) {
 			}
 			dateStr := a.CheckInDate.Format(layoutDate)
 			act := Activity{
-				ActivityID:      a.TripAccommodationID,
-				ID:              a.AccommodationID,
-				Type:            "accommodation",
-				Description:     a.Notes,
-				PriceAIEstimate: a.PriceAIEstimate,
+				ActivityID:        a.TripAccommodationID,
+				ID:                a.AccommodationID,
+				Type:              "accommodation",
+				Name:              a.Name,
+				Description:       a.Notes,
+				PriceAIEstimate:   a.PriceAIEstimate,
+				TripDestinationID: a.TripDestinationID,
+				Address:           a.Address,
+			}
+			if len(a.ImageURLs) > 0 {
+				act.ImageURLs = a.ImageURLs
 			}
 			if a.StartTime != nil {
 				act.StartTime = a.StartTime.Format(layoutTime)
@@ -295,11 +350,17 @@ func ConvertTripDTOByDate(input TripDTO) (TripDTOByDate, error) {
 			}
 			dateStr := r.MealDate.Format(layoutDate)
 			act := Activity{
-				ActivityID:      r.TripRestaurantID,
-				ID:              r.RestaurantID,
-				Type:            "restaurant",
-				Description:     r.Notes,
-				PriceAIEstimate: r.PriceAIEstimate,
+				ActivityID:        r.TripRestaurantID,
+				ID:                r.RestaurantID,
+				Type:              "restaurant",
+				Name:              r.Name,
+				Description:       r.Notes,
+				PriceAIEstimate:   r.PriceAIEstimate,
+				TripDestinationID: r.TripDestinationID,
+				Address:           r.Address,
+			}
+			if len(r.ImageURLs) > 0 {
+				act.ImageURLs = r.ImageURLs
 			}
 			if r.StartTime != nil {
 				act.StartTime = r.StartTime.Format(layoutTime)
@@ -368,6 +429,7 @@ func ConvertTripDTOByDate(input TripDTO) (TripDTOByDate, error) {
 	}
 
 	return TripDTOByDate{
+		TripID:        input.TripID,
 		UserID:        input.UserID,
 		TripName:      input.TripName,
 		StartDate:     startDateStr,

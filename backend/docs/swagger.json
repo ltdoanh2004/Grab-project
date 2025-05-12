@@ -214,7 +214,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Returns comment ID",
+                        "description": "Returns comment",
                         "schema": {
                             "allOf": [
                                 {
@@ -224,7 +224,7 @@
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "type": "string"
+                                            "$ref": "#/definitions/model.Comment"
                                         }
                                     }
                                 }
@@ -1644,7 +1644,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.TripDTO"
+                            "$ref": "#/definitions/dto.TripDTOByDate"
                         }
                     }
                 ],
@@ -2633,6 +2633,9 @@
                     "type": "string"
                 },
                 "user_id": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }
