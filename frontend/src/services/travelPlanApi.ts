@@ -129,13 +129,76 @@ export async function getActivityComments(activityId: string, type: string) {
     
     let endpoint = `/comment/activity/${activityId}`;
     
-
-    
     console.log(`API: Requesting endpoint: ${endpoint}`);
     const res = await apiClient.get<CommentResponse>(endpoint);
     return res.data;
   } catch (error) {
     console.error(`Error fetching comments for activity ${activityId}:`, error);
+    throw error;
+  }
+}
+
+// Request AI suggestions for comments
+interface SuggestCommentPayload {
+  activity: {
+    activity_id: string;
+    comments: {
+      comment_id: string;
+      comment_message: string;
+    }[];
+    description?: string;
+    end_time?: string;
+    id?: string;
+    name?: string;
+    price_ai_estimate?: number;
+    start_time?: string;
+    type: string;
+  };
+  travel_preference: {
+    budget: {
+      exact_budget: number;
+      type: string;
+    };
+    destination_id: string;
+    people: {
+      adults: number;
+      children: number;
+      infants: number;
+      pets: number;
+    };
+    personal_options: {
+      description: string;
+      name: string;
+      type: string;
+    }[];
+    travel_preference_id: string;
+    travel_time: {
+      end_date: string;
+      start_date: string;
+      type: string;
+    };
+    trip_id: string;
+  };
+  user_input?: string;
+}
+
+export async function suggestComment(payload: SuggestCommentPayload) {
+  try {
+    console.log('API: Sending AI comment suggestion request with data:', payload);
+    // Make sure we're using the full path and sending the exact expected format
+    const res = await apiClient.post('/suggest/comment', payload);
+    console.log('AI comment suggestion response:', res.data);
+    return res.data;
+  } catch (error: any) {
+    // More detailed error logging
+    console.error('Error getting AI comment suggestions:', error);
+    
+    // Log the response data if available (contains error details from the backend)
+    if (error.response) {
+      console.error('Error response from server:', error.response.status);
+      console.error('Error details:', error.response.data);
+    }
+    
     throw error;
   }
 }
