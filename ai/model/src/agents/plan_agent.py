@@ -117,9 +117,10 @@ class PlanModel:
         2. PHẢN HỒI CỦA BẠN PHẢI BẮT ĐẦU BẰNG DẤU "{{" VÀ KẾT THÚC BẰNG DẤU "}}" - KHÔNG CÓ GÌ KHÁC!
         3. MÔ TẢ PHẢI NGẮN GỌN (<100 ký tự) để tránh vượt quá giới hạn token
         4. KHÔNG sử dụng mô tả dài, CHỈ 1-2 câu ngắn gọn
-        5. JSON KHÔNG ĐƯỢC CẮT NGẮN GIỮA CHỪNG - KIỂM TRA KỸ TẤT CẢ DẤU NGOẶC ĐỀU ĐƯỢC ĐÓNG!
-        6. NGHIÊM CẤM SỬ DỤNG LẠI CÙNG PLACES, KHÁCH SẠN, NHÀ HÀNG ĐÃ DÙNG TRONG NHỮNG NGÀY TRƯỚC!
-        7. KHÁCH SẠN CHỈ ĐƯỢC CHỌN TRONG NGÀY ĐẦU TIÊN, NHỮNG NGÀY SAU KHÔNG ĐƯỢC CHỌN KHÁCH SẠN NỮA!
+        5. Mỗi segment (morning/afternoon/evening) có 4-5 hoạt động
+        6. JSON KHÔNG ĐƯỢC CẮT NGẮN GIỮA CHỪNG - KIỂM TRA KỸ TẤT CẢ DẤU NGOẶC ĐỀU ĐƯỢC ĐÓNG!
+        7. NGHIÊM CẤM SỬ DỤNG LẠI CÙNG PLACES, KHÁCH SẠN, NHÀ HÀNG ĐÃ DÙNG TRONG NHỮNG NGÀY TRƯỚC!
+        8. KHÁCH SẠN CHỈ ĐƯỢC CHỌN TRONG NGÀY ĐẦU TIÊN, NHỮNG NGÀY SAU KHÔNG ĐƯỢC CHỌN KHÁCH SẠN NỮA!
         
         DANH SÁCH NHỮNG ID ĐÃ SỬ DỤNG (BẮT BUỘC KHÔNG ĐƯỢC DÙNG LẠI):
         - Đã dùng khách sạn: {used_accommodations}
@@ -157,9 +158,10 @@ class PlanModel:
         
         Hướng dẫn quan trọng:
         - Tiêu đề ngày PHẢI NGẮN GỌN và sáng tạo (ví dụ: "Khám phá Hà Nội cổ kính")
-        - GIẢM ĐỘ DÀI mô tả, chỉ cần 1-2 câu ngắn với phong cách hướng dẫn viên
+        - mô tả, chỉ cần 1-2 câu ngắn với phong cách hướng dẫn viên
+        - Mỗi hoạt động phải có ID duy nhất, không được trùng lặp với các ngày trước
+        - Mỗi segment (morning/afternoon/evening) có 4-5 hoạt động
         - Luôn sử dụng đúng ID từ dữ liệu đầu vào
-        - Mỗi segment có 1-2 hoạt động (KHÔNG cần 3 hoạt động/segment để giảm kích thước JSON)
         - XÓA tất cả chú thích, hướng dẫn trong JSON cuối cùng
         - Description phải ngắn gọn sáng tạo và có thể chèn thêm icon. 
         - Ưu tiên chọn những địa điểm cụ thể, ít lấy từ tour lại

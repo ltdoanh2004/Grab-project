@@ -10,6 +10,7 @@ from pinecone import Pinecone, ServerlessSpec
 import json
 from typing import List, Dict, Any
 import ast  # Add ast import
+import numpy as np  # Add numpy import
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -46,7 +47,7 @@ class HotelVectorDatabase(BaseVectorDatabase):
         self.pinecone_api_key = PINECONE_API_KEY
         self.pc = Pinecone(api_key=self.pinecone_api_key)
         self.checkpoint_file = os.path.join(SCRIPT_DIR, 'hotel_checkpoint.json')
-        self.max_tokens = 8000  # Slightly less than 8192 to be safe
+        self.max_tokens = 8000  
 
     def process_room_type(self, room_type):
         if isinstance(room_type, list):  
@@ -60,7 +61,6 @@ class HotelVectorDatabase(BaseVectorDatabase):
         if len(text) <= self.max_tokens:
             return text
             
-        # Simple truncation - you might want to use a more sophisticated method
         return text[:self.max_tokens]
 
     def get_openai_embeddings(self, text: str) -> List[float]:
@@ -114,6 +114,10 @@ class HotelVectorDatabase(BaseVectorDatabase):
         except Exception as e:
             print(f"Error saving checkpoint: {e}")
 
+    def format_hotel_id(self, idx):
+        """Format hotel ID with leading zeros (e.g., hotel_000001)"""
+        return f"hotel_{str(idx).zfill(6)}"
+
     def prepare_hotel_embedding(self, data=None, incremental=True):
         """
         Prepare hotel embeddings with checkpoint support
@@ -126,17 +130,38 @@ class HotelVectorDatabase(BaseVectorDatabase):
         if data is None:
             data = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'hotel_processed.csv')
             
+        # Check if data file exists    
+        if not os.path.exists(data):
+            print(f"Data file not found at: {data}")
+            print("Please provide a valid data file path")
+            return
+            
         print("Loading and processing hotel data...")
         print(f"Loading data from: {data}")
         raw_df = pd.read_csv(data)
         
+        # Format hotel IDs if they don't exist or are not in the correct format
+        if 'hotel_id' not in raw_df.columns:
+            raw_df['hotel_id'] = [self.format_hotel_id(i) for i in range(len(raw_df))]
+        else:
+            # Check if IDs are in correct format, if not, reformat them
+            def ensure_format(hotel_id):
+                if isinstance(hotel_id, str) and hotel_id.startswith('hotel_') and len(hotel_id) == 12:
+                    return hotel_id
+                try:
+                    num = int(str(hotel_id).replace('hotel_', ''))
+                    return self.format_hotel_id(num)
+                except:
+                    return self.format_hotel_id(0)
+            
+            raw_df['hotel_id'] = raw_df['hotel_id'].apply(ensure_format)
+        
         # Replace NaN values with empty strings for text columns
-        text_columns = ['name', 'description', 'room_types']
+        text_columns = ['name', 'description', 'room_types', 'location', 'elderly_friendly']
         for col in text_columns:
             if col in raw_df.columns:
                 raw_df[col] = raw_df[col].fillna('')
         
-        # Basic processing on raw dataframe
         print("Processing prices...")
         raw_df['price'] = raw_df['price'].replace({'VND': '', ',': '', '\xa0': '', r'\.': ''}, regex=True)
         raw_df['price'] = pd.to_numeric(raw_df['price'], errors='coerce')
@@ -145,8 +170,7 @@ class HotelVectorDatabase(BaseVectorDatabase):
         print("Processing ratings...")
         raw_df['rating'] = pd.to_numeric(raw_df['rating'], errors='coerce')
         raw_df['rating'] = raw_df['rating'].fillna(raw_df['rating'].mean())
-
-        # Try to find existing embeddings file if we're doing incremental processing
+        
         existing_df = None
         rows_to_embed = raw_df
         
@@ -159,31 +183,33 @@ class HotelVectorDatabase(BaseVectorDatabase):
                 print(f"Found existing embedding file: {embedding_file}")
                 existing_df = pd.read_csv(embedding_file)
                 
-                # Check for NaN embeddings
-                nan_mask = existing_df['context_embedding'].isna()
-                if nan_mask.any():
-                    print(f"Found {nan_mask.sum()} items with NaN embeddings")
-                    rows_to_embed = existing_df[nan_mask]
-                    existing_df = existing_df[~nan_mask]
-                    print(f"Found {len(existing_df)} items that already have embeddings")
-                else:
-                    print("No items with NaN embeddings found. Using existing embeddings.")
+                # Ensure existing IDs are in correct format
+                existing_df['hotel_id'] = existing_df['hotel_id'].apply(ensure_format)
+                
+                # Use base class method to find missing embeddings
+                rows_to_embed, existing_df = self.find_missing_embeddings(
+                    new_df=raw_df,
+                    existing_df=existing_df,
+                    id_field="hotel_id"
+                )
+                
+                if len(rows_to_embed) == 0:
+                    print("No new rows to embed. Using existing embeddings.")
                     self.df = existing_df
                     return
         
         print(f"Creating context strings for {len(rows_to_embed)} items...")
         rows_to_embed['context'] = [f'''
-                                Đây là tên của khách sạn: {row['name']}
-                               Đây là mô tả của khách sạn:
-                               {row['description']}
-                               Gía của nó là {row['price']}
-                               Điểm đánh giá của nó là {row['rating']}
-                               Có các loại phòng là {self.process_room_type(row.get('room_types', ''))}
-                                Có hỗ trợ người già/khuyết tật: {row['elderly_friendly']}
-                                Địa điểm/Thành phố của nó là {row['location']}
-                               ''' for _, row in tqdm(rows_to_embed.iterrows(), total=len(rows_to_embed), desc="Creating contexts")]
+                                Thông tin chi tiết về khách sạn:
+                                • Tên khách sạn: {row['name']}
+                                • Mô tả: {row['description']}
+                                • Giá: {row['price']} VND
+                                • Đánh giá: {row['rating']} sao
+                                • Các loại phòng: {self.process_room_type(row.get('room_types', ''))}
+                                • Thân thiện với người cao tuổi/khuyết tật: {"Có" if row.get('elderly_friendly') else "Không"}
+                                • Địa điểm/Thành phố: {row.get('location', '')}
+                                ''' for _, row in tqdm(rows_to_embed.iterrows(), total=len(rows_to_embed), desc="Creating contexts")]
 
-        # Load checkpoint
         checkpoint = self.load_checkpoint()
         last_processed = checkpoint["last_processed_index"]
         existing_embeddings = checkpoint["embeddings"]
@@ -194,24 +220,18 @@ class HotelVectorDatabase(BaseVectorDatabase):
         embeddings = []
         total_rows = len(rows_to_embed)
         
-        # Initialize embeddings list with None values
         embeddings = [None] * total_rows
         
-        # Fill in existing embeddings from checkpoint
         for idx, embedding in existing_embeddings.items():
             idx = int(idx)
             if idx < len(embeddings):
                 embeddings[idx] = embedding
         
-        # Process remaining rows
         for idx in tqdm(range(last_processed + 1, total_rows), desc="Generating embeddings"):
             try:
-                # Generate new embedding
                 embedding = self.get_openai_embeddings(rows_to_embed.iloc[idx]['context'])
-                if embedding is not None:  # Only add if embedding is not None
-                    embeddings[idx] = embedding
+                embeddings[idx] = embedding
                 
-                # Update checkpoint every 10 rows
                 if idx % 10 == 0:
                     checkpoint["last_processed_index"] = idx
                     checkpoint["embeddings"][str(idx)] = embedding
@@ -220,48 +240,34 @@ class HotelVectorDatabase(BaseVectorDatabase):
                     
             except Exception as e:
                 print(f"Error processing row {idx}: {e}")
-                # Save checkpoint on error
                 checkpoint["last_processed_index"] = idx - 1
                 self.save_checkpoint(checkpoint)
                 print(f"Saved checkpoint after error at index {idx - 1}")
-                continue  # Continue with next row instead of raising error
-        
-        # Filter out None embeddings
-        valid_indices = [i for i, emb in enumerate(embeddings) if emb is not None]
-        rows_to_embed = rows_to_embed.iloc[valid_indices]
-        embeddings = [emb for emb in embeddings if emb is not None]
+                raise e
         
         rows_to_embed['context_embedding'] = embeddings
         
-        # Combine with existing data if doing incremental processing
         final_df = rows_to_embed.copy()
         
         if incremental and existing_df is not None:
-            # Create a combined dataframe: new embeddings + existing embeddings
-            # Filter out any rows from existing_df that might conflict with new_df by index
-            existing_indices = set(rows_to_embed["hotel_id"].astype(str))
-            filtered_existing_df = existing_df[~existing_df["hotel_id"].astype(str).isin(existing_indices)]
+            existing_indices = set(rows_to_embed['hotel_id'].astype(str))
+            filtered_existing_df = existing_df[~existing_df['hotel_id'].astype(str).isin(existing_indices)]
             
-            # Concatenate the filtered existing data with the new data
             final_df = pd.concat([filtered_existing_df, rows_to_embed], ignore_index=True)
             print(f"Combined {len(rows_to_embed)} new embeddings with {len(filtered_existing_df)} existing embeddings")
 
-        # Save to the same directory as the input file
         output_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'hotel_processed_embedding.csv')
         print(f"Saving processed data to: {output_path}")
         
-        # Convert embeddings to string representation before saving
         final_df['context_embedding'] = final_df['context_embedding'].apply(
-            lambda x: json.dumps(x) if x is not None else None
+            lambda x: str(x) if x is not None else None
         )
         final_df.to_csv(output_path, index=False)
         
-        # Clear checkpoint after successful completion
         if os.path.exists(self.checkpoint_file):
             os.remove(self.checkpoint_file)
             print("Cleared checkpoint after successful completion")
             
-        # Set the dataframe on the instance for further use
         self.df = final_df
 
     def set_up_pinecone(self, index_name = 'hotel-recommendations'):
@@ -301,7 +307,6 @@ class HotelVectorDatabase(BaseVectorDatabase):
         if not self.index:
             raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
             
-        # Check if index already has data
         index_stats = self.index.describe_index_stats()
         has_data = index_stats['total_vector_count'] > 0
         
@@ -309,51 +314,27 @@ class HotelVectorDatabase(BaseVectorDatabase):
             print(f"Index {self.index_name} already contains data. Use incremental=True to add or update data.")
             return True
             
-        # Define embedding file path
         embedding_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
                                      'data', 'hotel_processed_embedding.csv')
             
-        # Check if embedding file exists
         if not os.path.exists(embedding_file):
             print(f"Embedding file not found at: {embedding_file}")
             print("Creating embeddings first...")
             
-            # Check if data directory exists
             data_dir = os.path.dirname(embedding_file)
             if not os.path.exists(data_dir):
                 print(f"Creating data directory: {data_dir}")
                 os.makedirs(data_dir, exist_ok=True)
-            
-            # Check if checkpoint exists
-            if os.path.exists(self.checkpoint_file):
-                print(f"Found existing checkpoint at: {self.checkpoint_file}")
-                checkpoint_data = self.load_checkpoint()
-                if checkpoint_data and checkpoint_data.get("last_processed_index", -1) >= 0:
-                    user_input = input("Do you want to continue from the last checkpoint? (y/n): ")
-                    if user_input.lower() == 'y':
-                        print("Continuing from checkpoint...")
-                        self.prepare_hotel_embedding(incremental=True)
-                    else:
-                        print("Starting fresh...")
-                        if os.path.exists(self.checkpoint_file):
-                            os.remove(self.checkpoint_file)
-                        self.prepare_hotel_embedding(incremental=False)
-                else:
-                    print("Invalid checkpoint data. Starting fresh...")
-                    if os.path.exists(self.checkpoint_file):
-                        os.remove(self.checkpoint_file)
-                    self.prepare_hotel_embedding(incremental=False)
-            else:
-                print("No checkpoint found. Starting fresh...")
-                self.prepare_hotel_embedding(incremental=False)
+                
+            self.prepare_hotel_embedding(incremental=False)
             
             if not os.path.exists(embedding_file):
                 raise ValueError(f"Failed to create embedding file at {embedding_file}")
         
-        # Load data from CSV
         print(f"Loading embeddings from: {embedding_file}")
         self.df = pd.read_csv(embedding_file)
-        text_columns = ['name', 'description', 'room_types', 'price', 'rating']
+        
+        text_columns = ['name', 'description', 'room_types', 'location', 'elderly_friendly']
         for col in text_columns:
             if col in self.df.columns:
                 self.df[col] = self.df[col].fillna('')
@@ -365,43 +346,54 @@ class HotelVectorDatabase(BaseVectorDatabase):
             return self.load_data_to_pinecone_incremental(df=self.df, id_field="hotel_id", batch_size=100)
             
         print("Converting embeddings to lists...")
-        self.df['context_embedding'] = self.df['context_embedding'].apply(
-            lambda x: json.loads(x) if isinstance(x, str) and x != 'None' else None
-        )
+        def safe_eval_embedding(x):
+            if x is None:
+                return None
+            if not isinstance(x, str):
+                return x
+            try:
+                if x.strip().startswith('[') and x.strip().endswith(']'):
+                    return eval(x)
+                else:
+                    print(f"Warning: Embedding string doesn't look like a list: {x[:50]}...")
+                    return None
+            except Exception as e:
+                print(f"Error evaluating embedding string: {e}")
+                return None
+                
+        self.df['context_embedding'] = self.df['context_embedding'].apply(safe_eval_embedding)
             
         print("Inserting data into Pinecone...")
         vectors_to_upsert = []
         
         for idx, row in tqdm(self.df.iterrows(), total=len(self.df), desc="Preparing vectors"):
             try:
-                # Skip rows with None embeddings
-                if row["context_embedding"] is None:
-                    continue
-                    
                 metadata = {
-                    "id": row["hotel_id"],
-                    "name": row["name"],
-                    "price": row["price"],
-                    "rating": row["rating"],
-                    "description": row["description"],
-                    "city": str(row["location"]) if isinstance(row["location"], (list, tuple)) else row["location"]  # Handle array case
+                    "id": str(row["hotel_id"]),
+                    "name": str(row["name"]),
+                    "price": float(row["price"]) if pd.notna(row["price"]) else 0.0,
+                    "rating": float(row["rating"]) if pd.notna(row["rating"]) else 0.0,
+                    "description": str(row["description"]),
+                    "city": str(row["city"]),
+                    "elderly_friendly": bool(row.get("elderly_friendly", False)),
+                    "room_types": str(row.get("room_types", ""))
                 }
                 
                 embedding = row["context_embedding"]
                 if embedding is None:
                     continue
                     
-                # Convert embedding to list if it's not already
-                if isinstance(embedding, str):
-                    try:
-                        embedding = json.loads(embedding)
-                    except:
-                        continue
-                
-                # Ensure embedding is a list of floats
-                if not isinstance(embedding, list):
+                if isinstance(embedding, (int, float)):
+                    print(f"Warning: Row {idx} has a non-iterable embedding (type: {type(embedding)}). Skipping.")
                     continue
-                    
+                
+                if not isinstance(embedding, list):
+                    try:
+                        embedding = list(embedding)
+                    except Exception as e:
+                        print(f"Error converting embedding to list for row {idx}: {e}")
+                        continue
+
                 vectors_to_upsert.append({
                     "id": str(row["hotel_id"]),
                     "values": embedding,

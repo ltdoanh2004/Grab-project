@@ -72,8 +72,17 @@ class FnBVectorDatabase(BaseVectorDatabase):
         
         print("Processing ratings...")
         if 'rating' in raw_df.columns:
+            # First convert to string and clean the data
+            raw_df['rating'] = raw_df['rating'].astype(str)
+            # Remove any non-numeric characters except decimal points
+            raw_df['rating'] = raw_df['rating'].str.replace(r'[^\d.]', '', regex=True)
+            # Convert to float, coercing errors to NaN
+            raw_df['rating'] = pd.to_numeric(raw_df['rating'], errors='coerce')
+            # Fill NaN values with mean
             raw_df['rating'].fillna(raw_df['rating'].mean(), inplace=True)
+            # Ensure all values are float
             raw_df['rating'] = raw_df['rating'].astype(float)
+
 
 
         
@@ -93,7 +102,7 @@ class FnBVectorDatabase(BaseVectorDatabase):
                 rows_to_embed, existing_df = self.find_missing_embeddings(
                     new_df=raw_df,
                     existing_df=existing_df,
-                    id_field="index"
+                    id_field="restaurant_id"
                 )
                 
                 if len(rows_to_embed) == 0:
@@ -157,11 +166,42 @@ class FnBVectorDatabase(BaseVectorDatabase):
         final_df = rows_to_embed.copy()
         
         if incremental and existing_df is not None:
-            existing_indices = set(rows_to_embed['restaurant_id'].astype(str))
-            filtered_existing_df = existing_df[~existing_df['restaurant_id'].astype(str).isin(existing_indices)]
+            # Convert IDs to string and ensure consistent format
+            rows_to_embed['restaurant_id'] = rows_to_embed['restaurant_id'].astype(str)
+            existing_df['restaurant_id'] = existing_df['restaurant_id'].astype(str)
+            
+            # Check for duplicates in both dataframes
+            embed_duplicates = rows_to_embed['restaurant_id'].duplicated()
+            existing_duplicates = existing_df['restaurant_id'].duplicated()
+            
+            if embed_duplicates.any():
+                print(f"Warning: Found {embed_duplicates.sum()} duplicate IDs in new data")
+                rows_to_embed = rows_to_embed.drop_duplicates(subset=['restaurant_id'], keep='last')
+                
+            if existing_duplicates.any():
+                print(f"Warning: Found {existing_duplicates.sum()} duplicate IDs in existing data")
+                existing_df = existing_df.drop_duplicates(subset=['restaurant_id'], keep='last')
+            
+            # Get unique IDs from both dataframes
+            existing_indices = set(rows_to_embed['restaurant_id'])
+            filtered_existing_df = existing_df[~existing_df['restaurant_id'].isin(existing_indices)]
+            
+            # Validate before concatenation
+            print(f"New data rows: {len(rows_to_embed)}")
+            print(f"Existing data rows to keep: {len(filtered_existing_df)}")
+            print(f"Total unique IDs in new data: {len(rows_to_embed['restaurant_id'].unique())}")
+            print(f"Total unique IDs in existing data: {len(existing_df['restaurant_id'].unique())}")
             
             final_df = pd.concat([filtered_existing_df, rows_to_embed], ignore_index=True)
-            print(f"Combined {len(rows_to_embed)} new embeddings with {len(filtered_existing_df)} existing embeddings")
+            
+            # Final validation
+            print(f"Final dataframe rows: {len(final_df)}")
+            print(f"Final unique IDs: {len(final_df['restaurant_id'].unique())}")
+            
+            if len(final_df) != len(final_df['restaurant_id'].unique()):
+                print("Warning: Duplicate IDs found in final dataframe")
+                final_df = final_df.drop_duplicates(subset=['restaurant_id'], keep='last')
+                print(f"Rows after removing duplicates: {len(final_df)}")
 
         output_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'fnb_processed_embedding.csv')
         print(f"Saving processed data to: {output_path}")
@@ -263,37 +303,29 @@ class FnBVectorDatabase(BaseVectorDatabase):
                     "is_booking": row.get("is_booking", ""),
                     "is_opening": row.get("is_opening", ""),
                 }
-                
                 embedding = row["context_embedding"]
                 if embedding is None:
                     continue
-                    
                 if isinstance(embedding, (int, float)):
                     print(f"Warning: Row {idx} has a non-iterable embedding (type: {type(embedding)}). Skipping.")
                     continue
-                
                 if not isinstance(embedding, list):
                     try:
                         embedding = list(embedding)
                     except Exception as e:
                         print(f"Error converting embedding to list for row {idx}: {e}")
                         continue
-                    
-
                 vectors_to_upsert.append({
                     "id": str(row["restaurant_id"]),
                     "values": embedding,
                     "metadata": metadata
                 })
-                
                 if len(vectors_to_upsert) >= 100:
                     self.index.upsert(vectors=vectors_to_upsert)
                     vectors_to_upsert = []
-                    
             except Exception as e:
                 print(f"Error processing row {idx}: {e}")
                 continue
-        
         if vectors_to_upsert:
             self.index.upsert(vectors=vectors_to_upsert)
         
@@ -448,8 +480,8 @@ def main():
             if not vector_db.set_up_pinecone():
                 print("Failed to setup Pinecone. Please run prepare_fnb_embedding first.")
                 return
-            
-        fnb_ids, results = vector_db.query(args.query, top_k=args.top_k)
+        filter = {"city": {"$eq" : 'hochiminh'}}
+        fnb_ids, results = vector_db.query(args.query,filter = filter, top_k=args.top_k)
         print("FnB IDs:")
         for fnb_id in fnb_ids:
             print(fnb_id)

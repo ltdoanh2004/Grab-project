@@ -13,15 +13,15 @@ When processing a query:
 
 2. Then, call the appropriate query functions with detailed context:
    - query_hotels: For finding accommodations (returns top 15 results)
-   - query_places: For finding attractions and activities (returns top 40 results)
-   - query_fnb: For finding restaurants and food options (returns top 40 results)
+   - query_places: For finding attractions and activities (returns top 100 results)
+   - query_fnb: For finding restaurants and food options (returns top 100 results)
 
 3. For each function call:
    - Create a detailed context that captures all relevant information
    - Use appropriate top_k values:
      * Hotels: Always use top_k=15 (limited to 15 results)
-     * Places: Always use top_k=40 (limited to 40 results)
-     * FnB: Always use top_k=40 (limited to 40 results)
+     * Places: Always use top_k=100 (limited to 100 results)
+     * FnB: Always use top_k=100 (limited to 100 results)
    - Include specific filters when applicable
 
 Remember to:

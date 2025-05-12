@@ -8,7 +8,7 @@ import json
 from tqdm import tqdm
 from pinecone import Pinecone, ServerlessSpec
 from typing import List, Dict, Any, Set, Tuple
-
+import logging
 # Get the directory where the script is located
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -30,7 +30,26 @@ if not OPEN_API_KEY or not PINECONE_API_KEY:
 print(f"Loading environment variables from: {ENV_PATH}")
 print(f"OPEN_API_KEY exists: {bool(OPEN_API_KEY)}")
 print(f"PINECONE_API_KEY exists: {bool(PINECONE_API_KEY)}")
-
+def remove_duplicate_by_name(matches):
+    """
+    Remove duplicate entries from a list of matches based on 'name'.
+    
+    Args:
+        matches (list): A list of dictionaries where each dictionary represents a match.
+        
+    Returns:
+        list: A list of unique matches by 'name'.
+    """
+    seen = set()
+    unique_matches = []
+    
+    for match in matches:
+        name = match['metadata']['name']
+        if name not in seen:
+            unique_matches.append(match)
+            seen.add(name)
+    
+    return unique_matches
 class BaseVectorDatabase:
     def __init__(self, index_name="default-index"):
         self.index = None
@@ -146,17 +165,15 @@ class BaseVectorDatabase:
         query_embedding = self.get_openai_embeddings(query_text)
         
         # Query Pinecone
-        if filter is None:
-            filter = {}
         results = self.index.query(
             vector=query_embedding,
             top_k=top_k,
             include_metadata=include_metadata,
             filter = filter
         )
-        
+        results = remove_duplicate_by_name(results['matches'])
         # Extract IDs
-        ids = [match['id'] for match in results['matches']]
+        ids = [match['id'] for match in results]
         
         return ids, results
 
