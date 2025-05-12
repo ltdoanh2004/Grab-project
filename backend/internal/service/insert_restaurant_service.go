@@ -19,9 +19,8 @@ func (s *insertDataService) InsertRestaurantData(filePath string) error {
 	for _, record := range records {
 		restaurant, err := s.mapRecordToRestaurant(record)
 		if err != nil {
-			fmt.Println(record["id"])
-			tx.Rollback()
-			return err
+			fmt.Println("Error occur in: ", record["id"], ": ", err)
+			continue
 		}
 		if err := tx.Create(restaurant).Error; err != nil {
 			tx.Rollback()
@@ -33,13 +32,17 @@ func (s *insertDataService) InsertRestaurantData(filePath string) error {
 }
 
 func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*model.Restaurant, error) {
-	rating, err := strconv.ParseFloat(record["rating"], 64)
-	if err != nil {
-		fmt.Println("rating: ", record["rating"])
-		return nil, err
+	var err error
+	var rating float64
+	if len(strings.TrimSpace(record["rating"])) != 0 {
+		rating, err = strconv.ParseFloat(strings.ReplaceAll(record["rating"], ",", "."), 64)
+		if err != nil {
+			fmt.Println("rating: ", record["rating"])
+			return nil, err
+		}
 	}
 	var isDelivery bool
-	if len(record["is_delivery"]) != 0 {
+	if len(strings.TrimSpace(record["is_delivery"])) != 0 {
 		isDelivery, err = strconv.ParseBool(record["is_delivery"])
 		if err != nil {
 			fmt.Println("Is delivery: ", record["is_delivery"])
@@ -48,7 +51,7 @@ func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*mo
 	}
 
 	var isBooking bool
-	if len(record["is_booking"]) != 0 {
+	if len(strings.TrimSpace(record["is_booking"])) != 0 {
 		isBooking, err = strconv.ParseBool(record["is_booking"])
 		if err != nil {
 			fmt.Println("Is booking: ", record["is_booking"])
@@ -57,7 +60,7 @@ func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*mo
 	}
 
 	var isOpening bool
-	if len(record["is_opening"]) != 0 {
+	if len(strings.TrimSpace(record["is_opening"])) != 0 {
 		isOpening, err = strconv.ParseBool(record["is_opening"])
 		if err != nil {
 			fmt.Println("Is opening: ", record["is_opening"])
@@ -76,9 +79,12 @@ func (s *insertDataService) mapRecordToRestaurant(record map[string]string) (*mo
 	var services model.ServiceArray
 	if len(strings.TrimSpace(record["services"])) != 0 {
 		if err := json.Unmarshal([]byte(record["services"]), &services); err != nil {
-			fmt.Println(record)
+			fmt.Println(record["services"])
 			return nil, fmt.Errorf("failed to unmarshal services: %w", err)
 		}
+	}
+	if record["city"] == "nan" {
+		return nil, fmt.Errorf("city is nan")
 	}
 
 	restaurant := &model.Restaurant{
