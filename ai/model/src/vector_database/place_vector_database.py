@@ -14,7 +14,7 @@ except ImportError:
 
 class PlaceVectorDatabase(BaseVectorDatabase):
     def __init__(self):
-        super().__init__(index_name="place-recommendations-da")
+        super().__init__(index_name="place-recommendations")
         self.checkpoint_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'place_checkpoint.json')
 
     def prepare_place_embedding(self, data=None, incremental=True):

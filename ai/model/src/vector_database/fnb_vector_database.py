@@ -303,37 +303,29 @@ class FnBVectorDatabase(BaseVectorDatabase):
                     "is_booking": row.get("is_booking", ""),
                     "is_opening": row.get("is_opening", ""),
                 }
-                
                 embedding = row["context_embedding"]
                 if embedding is None:
                     continue
-                    
                 if isinstance(embedding, (int, float)):
                     print(f"Warning: Row {idx} has a non-iterable embedding (type: {type(embedding)}). Skipping.")
                     continue
-                
                 if not isinstance(embedding, list):
                     try:
                         embedding = list(embedding)
                     except Exception as e:
                         print(f"Error converting embedding to list for row {idx}: {e}")
                         continue
-                    
-
                 vectors_to_upsert.append({
                     "id": str(row["restaurant_id"]),
                     "values": embedding,
                     "metadata": metadata
                 })
-                
                 if len(vectors_to_upsert) >= 100:
                     self.index.upsert(vectors=vectors_to_upsert)
                     vectors_to_upsert = []
-                    
             except Exception as e:
                 print(f"Error processing row {idx}: {e}")
                 continue
-        
         if vectors_to_upsert:
             self.index.upsert(vectors=vectors_to_upsert)
         
@@ -488,8 +480,8 @@ def main():
             if not vector_db.set_up_pinecone():
                 print("Failed to setup Pinecone. Please run prepare_fnb_embedding first.")
                 return
-            
-        fnb_ids, results = vector_db.query(args.query, top_k=args.top_k)
+        filter = {"city": {"$eq" : 'hochiminh'}}
+        fnb_ids, results = vector_db.query(args.query,filter = filter, top_k=args.top_k)
         print("FnB IDs:")
         for fnb_id in fnb_ids:
             print(fnb_id)

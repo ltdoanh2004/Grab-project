@@ -374,7 +374,7 @@ class HotelVectorDatabase(BaseVectorDatabase):
                     "price": float(row["price"]) if pd.notna(row["price"]) else 0.0,
                     "rating": float(row["rating"]) if pd.notna(row["rating"]) else 0.0,
                     "description": str(row["description"]),
-                    "city": str(row["location"]),
+                    "city": str(row["city"]),
                     "elderly_friendly": bool(row.get("elderly_friendly", False)),
                     "room_types": str(row.get("room_types", ""))
                 }

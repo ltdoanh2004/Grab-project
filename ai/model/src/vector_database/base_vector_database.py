@@ -8,7 +8,7 @@ import json
 from tqdm import tqdm
 from pinecone import Pinecone, ServerlessSpec
 from typing import List, Dict, Any, Set, Tuple
-
+import logging
 # Get the directory where the script is located
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -146,8 +146,6 @@ class BaseVectorDatabase:
         query_embedding = self.get_openai_embeddings(query_text)
         
         # Query Pinecone
-        if filter is None:
-            filter = {}
         results = self.index.query(
             vector=query_embedding,
             top_k=top_k,
