@@ -480,3 +480,5 @@ TypeError: string indices must be integers, not 'str'
 2025-05-12 16:49:20,060 - app - INFO - All routers registered successfully
 2025-05-12 17:02:51,918 - __mp_main__ - INFO - All routers registered successfully
 2025-05-12 17:02:51,946 - app - INFO - All routers registered successfully
+2025-05-12 18:04:40,874 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 18:04:40,898 - app - INFO - All routers registered successfully
