@@ -63,7 +63,7 @@ export const TravelItinerary: React.FC<ItineraryProps> = ({
   onAddActivity,
   onMoveActivity,
 }) => {
-  const [activeKeys, setActiveKeys] = useState<string[]>(["0"]);
+  const [activeKeys, setActiveKeys] = useState<string[]>(days.map(day => day.date));
   const [tipsModalVisible, setTipsModalVisible] = useState(false);
   const [currentDayTips, setCurrentDayTips] = useState<{ title: string, tips: string[] }>({ title: "", tips: [] });
 

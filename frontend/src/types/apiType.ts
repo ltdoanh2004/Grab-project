@@ -13,18 +13,18 @@ export interface LoginPayload {
 
 export interface AuthResponse {
   message: string;
-  data: {
+  data: Array<{
     access_token: string;
     refresh_token: string;
-  };
+  }>;
 }
 
-interface ImageObject {
+export interface ImageObject {
   url: string;
   alt: string;
 }
 
-interface RoomType {
+export interface RoomType {
   name: string;
   bed_type: string;
   occupancy: string;
@@ -33,116 +33,72 @@ interface RoomType {
   tax_and_fee: string;
 }
 
-interface Accommodation {
-  accommodation_id: string;
-  name: string;
-  description: string;
-  city: string;
-  location: string;
-  image_url: ImageObject[];
-  price: number;
-  unit: string;
-  rating: number;
-  booking_link: string;
-  destination_id: string;
-  elderly_friendly: boolean;
-  room_info: string;
-  room_types: RoomType[];
-  tax_info: string;
-}
-
-interface Place {
-  place_id: string;
-  name: string;
-  description: string;
-  address: string;
-  type: string;
-  categories: string;
-  main_image: string;
-  images: ImageObject[];
-  opening_hours: string;
-  price: number;
-  unit: string;
-  rating: number;
-  duration: string;
-  reviews: string[];
-  url: string;
-  destination_id: string;
-}
-
-interface ServiceObject {
-  name: string;
-  type: number;
-  url: string;
-}
-
-interface Location {
-  lat: number;
-  lon: number;
-}
-
-interface Restaurant {
-  restaurant_id: string;
-  name: string;
-  description: string;
-  address: string;
-  cuisines: string;
-  price_range: string;
-  rating: number;
-  photo_url: string;
-  opening_hours: string;
-  is_opening: boolean;
-  is_booking: boolean;
-  is_delivery: boolean;
-  phone: string;
-  url: string;
-  location: Location;
-  services: ServiceObject[];
-  reviews: string;
-  destination_id: string;
-}
-
-export interface SuggestionsResponse {
-  message: string;
-  data: {
-    accommodation: {
-      accommodations: Accommodation[];
-    };
-    places: {
-      places: Place[];
-    };
-    restaurants: {
-      restaurants: Restaurant[];
-    };
-  };
+export interface ActivityComment {
+  comment_id: string;
+  comment_message: string;
+  user_id: string;
+  trip_accommodation_id?: string;
+  trip_place_id?: string;
+  trip_restaurant_id?: string;
+  activity_id?: string;
+  created_at?: string;
 }
 
 export interface TripActivity {
   id: string;
-  type: "accommodation" | "place" | "restaurant";
+  activity_id: string;
   name: string;
+  description: string;
   start_time: string;
   end_time: string;
-  description: string;
-  rating: number;
-  address?: string;
-  categories?: string;
-  duration?: string;
-  opening_hours?: string;
-  price?: number;
-  cuisines?: string;
-  price_range?: string;
+  type: string;
+  price_ai_estimate: number;
+  comments?: ActivityComment[];
 }
 
 export interface DaySegment {
-  time_of_day: "morning" | "afternoon" | "evening";
+  time_of_day: string;
   activities: TripActivity[];
 }
 
 export interface DayPlan {
   date: string;
   day_title: string;
+  daily_tips?: string[];
   segments: DaySegment[];
+}
+
+export interface SuggestionsResponse {
+  message: string;
+  data: {
+    trip_id: string;
+    trip_name?: string;
+    start_date?: string;
+    end_date?: string;
+    destination_id?: string;
+    user_id?: string;
+    plan_by_day?: DayPlan[];
+  };
+}
+
+export interface ActivityDetail {
+  id: string;
+  name: string;
+  description: string;
+  address: string;
+  location: string;
+  type: string;
+  opening_hours: string;
+  price: number;
+  rating: number;
+  image_urls: string[];
+  url: string;
+  additional_info: string;
+}
+
+export interface ActivityDetailResponse {
+  message: string;
+  data: ActivityDetail;
 }
 
 export interface TripPlanResponse {
