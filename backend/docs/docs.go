@@ -210,7 +210,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Comment"
+                            "$ref": "#/definitions/dto.Comment"
                         }
                     }
                 ],
@@ -282,7 +282,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/model.Accommodation"
+                                            "$ref": "#/definitions/dto.ActivityDetail"
                                         }
                                     }
                                 }
@@ -338,7 +338,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/model.Place"
+                                            "$ref": "#/definitions/dto.ActivityDetail"
                                         }
                                     }
                                 }
@@ -394,7 +394,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/model.Restaurant"
+                                            "$ref": "#/definitions/dto.ActivityDetail"
                                         }
                                     }
                                 }
@@ -884,7 +884,10 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.AccommodationsSuggestion"
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.ActivityDetail"
+                                            }
                                         }
                                     }
                                 }
@@ -1000,7 +1003,10 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.PlacesSuggestion"
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.ActivityDetail"
+                                            }
                                         }
                                     }
                                 }
@@ -1058,7 +1064,10 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.RestaurantsSuggestion"
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.ActivityDetail"
+                                            }
                                         }
                                     }
                                 }
@@ -1561,6 +1570,62 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/trip/me": {
+            "get": {
+                "description": "Retrieve all trips associated with the authenticated user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "trip"
+                ],
+                "summary": "Get trips by user ID",
+                "responses": {
+                    "200": {
+                        "description": "List of trips",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.TripDTOByDate"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "No trips found",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/trip/save": {
             "put": {
                 "description": "Update an existing trip with new details including destinations, accommodations, activities, and restaurants",
@@ -1794,6 +1859,64 @@ const docTemplate = `{
                 },
                 "type": {
                     "description": "e.g., \"place\", \"accommodation\", \"restaurant\"",
+                    "type": "string"
+                }
+            }
+        },
+        "dto.ActivityDetail": {
+            "type": "object",
+            "properties": {
+                "additional_info": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image_urls": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "location": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "opening_hours": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.Comment": {
+            "type": "object",
+            "properties": {
+                "activity_id": {
+                    "type": "string"
+                },
+                "comment_message": {
+                    "type": "string"
+                },
+                "type": {
                     "type": "string"
                 }
             }
@@ -2226,6 +2349,9 @@ const docTemplate = `{
                 },
                 "start_date": {
                     "description": "\"YYYY-MM-DD\"",
+                    "type": "string"
+                },
+                "status": {
                     "type": "string"
                 },
                 "trip_id": {

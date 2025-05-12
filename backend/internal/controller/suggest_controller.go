@@ -53,7 +53,7 @@ func (sc *SuggestController) RegisterRoutes(router *gin.Engine) {
 // @Accept json
 // @Produce json
 // @Param preference body model.TravelPreference true "Travel Preferences"
-// @Success 200 {object} model.Response{data=dto.AccommodationsSuggestion}
+// @Success 200 {object} model.Response{data=[]dto.ActivityDetail}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/suggest/accommodations [post]
@@ -69,7 +69,12 @@ func (sc *SuggestController) SuggestAccommodations(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get accommodation suggestions: "+err.Error(), nil))
 		return
 	}
-	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
+	activities := []dto.ActivityDetail{}
+	for _, accommodation := range suggestion.Accommodations {
+		activities = append(activities, accommodation.ToActivityDetail())
+	}
+
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", activities))
 }
 
 // SuggestPlaces godoc
@@ -79,7 +84,7 @@ func (sc *SuggestController) SuggestAccommodations(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param preference body model.TravelPreference true "Travel Preferences"
-// @Success 200 {object} model.Response{data=dto.PlacesSuggestion}
+// @Success 200 {object} model.Response{data=[]dto.ActivityDetail}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/suggest/places [post]
@@ -95,7 +100,11 @@ func (sc *SuggestController) SuggestPlaces(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get activity suggestions: "+err.Error(), nil))
 		return
 	}
-	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
+	activities := []dto.ActivityDetail{}
+	for _, place := range suggestion.Places {
+		activities = append(activities, place.ToActivityDetail())
+	}
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", activities))
 }
 
 // SuggestRestaurants godoc
@@ -105,7 +114,7 @@ func (sc *SuggestController) SuggestPlaces(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param preference body model.TravelPreference true "Travel Preferences"
-// @Success 200 {object} model.Response{data=dto.RestaurantsSuggestion}
+// @Success 200 {object} model.Response{data=[]dto.ActivityDetail}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/suggest/restaurants [post]
@@ -121,7 +130,11 @@ func (sc *SuggestController) SuggestRestaurants(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get restaurant suggestions: "+err.Error(), nil))
 		return
 	}
-	ctx.JSON(http.StatusOK, model.NewResponse("Success", suggestion))
+	activities := []dto.ActivityDetail{}
+	for _, restaurant := range suggestion.Restaurants {
+		activities = append(activities, restaurant.ToActivityDetail())
+	}
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", activities))
 }
 
 // SuggestTrip godoc
@@ -147,7 +160,7 @@ func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get suggestions: "+err.Error(), nil))
 		return
 	}
-
+	getPlanEndpoint := "/api/v1/suggest/trip"
 	// Extract userID from access_token
 	userID, exists := ctx.Get("user_id")
 	if !exists {
@@ -158,21 +171,17 @@ func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
 		return
 	}
 
-	// Create trip directly from suggestion
-	tripID, err := sc.tripService.CreateTrip(&dto.TripDTO{
-		UserID: userID.(string),
-		// Add other necessary fields from suggestion
-	})
+	var suggestedTrip *dto.TripDTOByDate
+	suggestedTrip, err = sc.tripService.SuggestTrip(userID.(string), *suggestion, getPlanEndpoint)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
-			Message: "Failed to create trip: " + err.Error(),
+			Message: "Failed to get trip suggestion: " + err.Error(),
 			Data:    nil,
 		})
 		return
 	}
 
-	// Create travel preference
-	_, err = sc.tripService.CreateTravelPreference(tripID, travelPreference)
+	_, err = sc.tripService.CreateTravelPreference(suggestedTrip.TripID, travelPreference)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
 			Message: "Failed to create travel preference: " + err.Error(),
@@ -183,7 +192,7 @@ func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, model.Response{
 		Message: "Trip suggestion retrieved successfully",
-		Data:    suggestion,
+		Data:    suggestedTrip,
 	})
 }
 
@@ -194,7 +203,7 @@ func (sc *SuggestController) SuggestTrip(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Place ID"
-// @Success 200 {object} model.Response{data=model.Place}
+// @Success 200 {object} model.Response{data=dto.ActivityDetail}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/detail/place/{id} [get]
@@ -205,7 +214,28 @@ func (sc *SuggestController) GetPlaceByID(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get place details: "+err.Error(), nil))
 		return
 	}
-	ctx.JSON(http.StatusOK, model.NewResponse("Success", placeDetail))
+
+	placeSuggestion := dto.PlaceSuggestion{
+		PlaceID:       placeDetail.PlaceID,
+		DestinationID: placeDetail.DestinationID,
+		Name:          placeDetail.Name,
+		URL:           placeDetail.URL,
+		Address:       placeDetail.Address,
+		Duration:      placeDetail.Duration,
+		Type:          placeDetail.Type,
+		Images:        placeDetail.Images,
+		MainImage:     placeDetail.MainImage,
+		Price:         placeDetail.Price,
+		Rating:        placeDetail.Rating,
+		Description:   placeDetail.Description,
+		OpeningHours:  placeDetail.OpeningHours,
+		Reviews:       placeDetail.Reviews,
+		Categories:    placeDetail.Categories,
+		Unit:          placeDetail.Unit,
+	}
+
+	activityDetail := placeSuggestion.ToActivityDetail()
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", activityDetail))
 }
 
 // GetRestaurantByID godoc
@@ -215,7 +245,7 @@ func (sc *SuggestController) GetPlaceByID(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Restaurant ID"
-// @Success 200 {object} model.Response{data=model.Restaurant}
+// @Success 200 {object} model.Response{data=dto.ActivityDetail}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/detail/restaurant/{id} [get]
@@ -226,7 +256,30 @@ func (sc *SuggestController) GetRestaurantByID(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get restaurant details: "+err.Error(), nil))
 		return
 	}
-	ctx.JSON(http.StatusOK, model.NewResponse("Success", restaurantDetail))
+
+	restaurantSuggestion := dto.RestaurantSuggestion{
+		RestaurantID:  restaurantDetail.RestaurantID,
+		DestinationID: restaurantDetail.DestinationID,
+		Name:          restaurantDetail.Name,
+		Address:       restaurantDetail.Address,
+		Rating:        restaurantDetail.Rating,
+		Phone:         restaurantDetail.Phone,
+		PhotoURL:      restaurantDetail.PhotoURL,
+		URL:           restaurantDetail.URL,
+		Location:      restaurantDetail.Location,
+		Reviews:       restaurantDetail.Reviews,
+		Services:      restaurantDetail.Services,
+		IsDelivery:    restaurantDetail.IsDelivery,
+		IsBooking:     restaurantDetail.IsBooking,
+		IsOpening:     restaurantDetail.IsOpening,
+		PriceRange:    restaurantDetail.PriceRange,
+		Description:   restaurantDetail.Description,
+		Cuisines:      restaurantDetail.Cuisines,
+		OpeningHours:  restaurantDetail.OpeningHours,
+	}
+
+	activityDetail := restaurantSuggestion.ToActivityDetail()
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", activityDetail))
 }
 
 // GetAccommodationByID godoc
@@ -236,7 +289,7 @@ func (sc *SuggestController) GetRestaurantByID(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Accommodation ID"
-// @Success 200 {object} model.Response{data=model.Accommodation}
+// @Success 200 {object} model.Response{data=dto.ActivityDetail}
 // @Failure 400 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/detail/accommodation/{id} [get]
@@ -247,7 +300,27 @@ func (sc *SuggestController) GetAccommodationByID(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, model.NewResponse("Failed to get accommodation details: "+err.Error(), nil))
 		return
 	}
-	ctx.JSON(http.StatusOK, model.NewResponse("Success", accommodationDetail))
+
+	accommodationSuggestion := dto.AccommodationSuggestion{
+		AccommodationID: accommodationDetail.AccommodationID,
+		DestinationID:   accommodationDetail.DestinationID,
+		Name:            accommodationDetail.Name,
+		Location:        accommodationDetail.Location,
+		City:            accommodationDetail.City,
+		Price:           accommodationDetail.Price,
+		Rating:          accommodationDetail.Rating,
+		Description:     accommodationDetail.Description,
+		Link:            accommodationDetail.Link,
+		Images:          accommodationDetail.Images,
+		RoomTypes:       accommodationDetail.RoomTypes,
+		RoomInfo:        accommodationDetail.RoomInfo,
+		Unit:            accommodationDetail.Unit,
+		TaxInfo:         accommodationDetail.TaxInfo,
+		ElderlyFriendly: accommodationDetail.ElderlyFriendly,
+	}
+
+	activityDetail := accommodationSuggestion.ToActivityDetail()
+	ctx.JSON(http.StatusOK, model.NewResponse("Success", activityDetail))
 }
 
 // SuggestWithComment godoc

@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+
 	"skeleton-internship-backend/internal/dto"
 	"skeleton-internship-backend/internal/model"
 	"skeleton-internship-backend/internal/service"
@@ -34,6 +35,7 @@ func (tc *TripController) RegisterRoutes(router *gin.Engine) {
 			protected := trip.Group("/")
 			protected.Use(middleware.AuthMiddleware())
 			{
+				protected.GET("/me", tc.GetTripsByUserID)
 				protected.POST("/create", tc.CreateTrip)
 				protected.PUT("/save", tc.SaveTrip)
 				protected.POST("/get_plan", tc.GetPlan)
@@ -255,5 +257,50 @@ func (tc *TripController) UpdateActivity(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, model.Response{
 		Message: "Activity updated successfully",
 		Data:    nil,
+	})
+}
+
+// GetTripsByUserID godoc
+// @Summary Get trips by user ID
+// @Description Retrieve all trips associated with the authenticated user
+// @Tags trip
+// @Accept json
+// @Produce json
+// @Success 200 {object} model.Response{data=[]dto.TripDTOByDate} "List of trips"
+// @Failure 400 {object} model.Response "Invalid request"
+// @Failure 404 {object} model.Response "No trips found"
+// @Failure 500 {object} model.Response "Internal server error"
+// @Router /api/v1/trip/me [get]
+func (tc *TripController) GetTripsByUserID(ctx *gin.Context) {
+	// Extract userID from access token
+	userID, exists := ctx.Get("user_id")
+	if !exists {
+		ctx.JSON(http.StatusUnauthorized, model.Response{
+			Message: "Unauthorized: userID not found in access_token",
+			Data:    nil,
+		})
+		return
+	}
+
+	trips, err := tc.tripService.GetTripsByUserID(userID.(string))
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.Response{
+			Message: "Failed to retrieve trips: " + err.Error(),
+			Data:    nil,
+		})
+		return
+	}
+
+	if len(trips) == 0 {
+		ctx.JSON(http.StatusNotFound, model.Response{
+			Message: "No trips found for the authenticated user",
+			Data:    nil,
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, model.Response{
+		Message: "Trips retrieved successfully",
+		Data:    trips,
 	})
 }

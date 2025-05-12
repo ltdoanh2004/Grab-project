@@ -17,6 +17,7 @@ type TripRepository interface {
 	GetAll() ([]model.Trip, error)
 	GetWithAssociations(tripID string) (model.Trip, error)
 	GetAllWithAssociations() ([]model.Trip, error)
+	GetByUserIDWithAssociation(userID string) ([]model.Trip, error)
 }
 
 // GormTripRepository implements TripRepository using GORM.
@@ -90,5 +91,42 @@ func (r *GormTripRepository) GetAllWithAssociations() ([]model.Trip, error) {
 	if err := r.DB.Preload("TripDestinations").Find(&trips).Error; err != nil {
 		return nil, err
 	}
+	return trips, nil
+}
+
+// GetByUserIDWithAssociation retrieves all Trip records associated with a specific UserID with associated records.
+func (r *GormTripRepository) GetByUserIDWithAssociation(userID string) ([]model.Trip, error) {
+	var trips []model.Trip
+	if err := r.DB.Preload("TripDestinations").Where("user_id = ?", userID).Find(&trips).Error; err != nil {
+		return nil, err
+	}
+
+	for i := range trips {
+		for j := range trips[i].TripDestinations {
+			tripDestinationID := trips[i].TripDestinations[j].TripDestinationID
+
+			// Get TripAccommodations
+			var accommodations []model.TripAccommodation
+			if err := r.DB.Where("trip_destination_id = ?", tripDestinationID).Find(&accommodations).Error; err != nil {
+				return nil, err
+			}
+			trips[i].TripDestinations[j].Accommodations = accommodations
+
+			// Get TripRestaurants
+			var restaurants []model.TripRestaurant
+			if err := r.DB.Where("trip_destination_id = ?", tripDestinationID).Find(&restaurants).Error; err != nil {
+				return nil, err
+			}
+			trips[i].TripDestinations[j].Restaurants = restaurants
+
+			// Get TripPlaces
+			var places []model.TripPlace
+			if err := r.DB.Where("trip_destination_id = ?", tripDestinationID).Find(&places).Error; err != nil {
+				return nil, err
+			}
+			trips[i].TripDestinations[j].Places = places
+		}
+	}
+
 	return trips, nil
 }

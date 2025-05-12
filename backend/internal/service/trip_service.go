@@ -23,6 +23,7 @@ type TripService interface {
 	GetTravelPreference(tripID string) (*model.TravelPreference, error)
 	CreateTravelPreference(tripID string, tp *model.TravelPreference) (string, error)
 	UpdateActivity(activityType string, activityID string, updatedData dto.Activity) error
+	GetTripsByUserID(userID string) ([]dto.TripDTOByDate, error)
 }
 
 type tripService struct {
@@ -292,6 +293,19 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTOByDate, error) {
 	if err != nil {
 		return nil, err
 	}
+	// Update TripStatus based on today's date relative to StartDate and EndDate
+	today := time.Now().Truncate(24 * time.Hour)
+	if trip.TripStatus == "canceled" {
+	}
+	if today.Equal(trip.StartDate.AddDate(0, 0, -1)) {
+		trip.TripStatus = "upcoming"
+	} else if today.After(trip.EndDate) {
+		trip.TripStatus = "completed"
+	} else if today.After(trip.StartDate) {
+		trip.TripStatus = "happening"
+	}
+	fmt.Println(trip.StartDate, trip.EndDate, today, trip.TripStatus)
+	ts.tripRepository.Update(&trip)
 
 	// Get all destinations for this trip
 	destinations, err := ts.tripDestinationRepository.GetByTripID(tripID)
@@ -853,4 +867,98 @@ func (ts *tripService) UpdateActivity(activityType string, activityID string, up
 		return fmt.Errorf("invalid activity type: %s", activityType)
 	}
 	return nil
+}
+
+func (ts *tripService) GetTripsByUserID(userID string) ([]dto.TripDTOByDate, error) {
+	// Retrieve trips by user ID
+	trips, err := ts.tripRepository.GetByUserIDWithAssociation(userID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to retrieve trips for user ID %s: %w", userID, err)
+	}
+
+	// Convert trips to DTOs
+	var tripDTOs []dto.TripDTO
+	for _, trip := range trips {
+		tripDTO := dto.TripDTO{
+			TripID:     trip.TripID,
+			UserID:     trip.UserID,
+			TripName:   trip.TripName,
+			StartDate:  trip.StartDate,
+			EndDate:    trip.EndDate,
+			Budget:     trip.Budget,
+			TripStatus: trip.TripStatus,
+		}
+
+		// Add TripDestinations
+		for _, dest := range trip.TripDestinations {
+			destDTO := dto.TripDestinationDTO{
+				TripDestinationID: dest.TripDestinationID,
+				TripID:            dest.TripID,
+				DestinationID:     dest.DestinationID,
+				ArrivalDate:       dest.ArrivalDate,
+				DepartureDate:     dest.DepartureDate,
+				OrderNum:          dest.OrderNum,
+			}
+
+			// Add TripAccommodations
+			for _, acc := range dest.Accommodations {
+				destDTO.Accommodations = append(destDTO.Accommodations, dto.TripAccommodationDTO{
+					TripAccommodationID: acc.TripAccommodationID,
+					TripDestinationID:   acc.TripDestinationID,
+					AccommodationID:     acc.AccommodationID,
+					CheckInDate:         acc.CheckInDate,
+					CheckOutDate:        acc.CheckOutDate,
+					StartTime:           acc.StartTime,
+					EndTime:             acc.EndTime,
+					PriceAIEstimate:     acc.PriceAIEstimate,
+					Notes:               acc.Notes,
+				})
+			}
+
+			// Add TripPlaces
+			for _, place := range dest.Places {
+				destDTO.Places = append(destDTO.Places, dto.TripPlaceDTO{
+					TripPlaceID:       place.TripPlaceID,
+					TripDestinationID: place.TripDestinationID,
+					PlaceID:           place.PlaceID,
+					ScheduledDate:     place.ScheduledDate,
+					StartTime:         place.StartTime,
+					EndTime:           place.EndTime,
+					Notes:             place.Notes,
+					PriceAIEstimate:   place.PriceAIEstimate,
+				})
+			}
+
+			// Add TripRestaurants
+			for _, rest := range dest.Restaurants {
+				destDTO.Restaurants = append(destDTO.Restaurants, dto.TripRestaurantDTO{
+					TripRestaurantID:  rest.TripRestaurantID,
+					TripDestinationID: rest.TripDestinationID,
+					RestaurantID:      rest.RestaurantID,
+					MealDate:          rest.MealDate,
+					StartTime:         rest.StartTime,
+					EndTime:           rest.EndTime,
+					ReservationInfo:   rest.ReservationInfo,
+					Notes:             rest.Notes,
+					PriceAIEstimate:   rest.PriceAIEstimate,
+				})
+			}
+
+			tripDTO.TripDestinations = append(tripDTO.TripDestinations, destDTO)
+		}
+
+		tripDTOs = append(tripDTOs, tripDTO)
+	}
+
+	// Convert TripDTOs to TripDTOByDate
+	var tripDTOsByDate []dto.TripDTOByDate
+	for _, trip := range tripDTOs {
+		tripDTOByDate, err := dto.ConvertTripDTOByDate(trip)
+		if err != nil {
+			return nil, fmt.Errorf("failed to convert trip to DTO: %w", err)
+		}
+		tripDTOsByDate = append(tripDTOsByDate, tripDTOByDate)
+	}
+
+	return tripDTOsByDate, nil
 }
