@@ -163,9 +163,7 @@ class HotelVectorDatabase(BaseVectorDatabase):
                 nan_mask = existing_df['context_embedding'].isna()
                 if nan_mask.any():
                     print(f"Found {nan_mask.sum()} items with NaN embeddings")
-                    # Get items with NaN embeddings
                     rows_to_embed = existing_df[nan_mask]
-                    # Remove these items from existing_df
                     existing_df = existing_df[~nan_mask]
                     print(f"Found {len(existing_df)} items that already have embeddings")
                 else:

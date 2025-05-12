@@ -134,7 +134,7 @@ class BaseVectorDatabase:
         print(f"Connected to Pinecone index: {self.index_name}")
         return True
 
-    def query(self, query_text, top_k=5, include_metadata=True):
+    def query(self, query_text, filter = None, top_k=5, include_metadata=True):
         """
         Query the database for similar items based on text input
         Returns a tuple of (ids, full_results)
@@ -146,10 +146,13 @@ class BaseVectorDatabase:
         query_embedding = self.get_openai_embeddings(query_text)
         
         # Query Pinecone
+        if filter is None:
+            filter = {}
         results = self.index.query(
             vector=query_embedding,
             top_k=top_k,
-            include_metadata=include_metadata
+            include_metadata=include_metadata,
+            filter = filter
         )
         
         # Extract IDs

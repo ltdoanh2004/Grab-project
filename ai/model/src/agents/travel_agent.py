@@ -64,8 +64,10 @@ class TravelModel:
         if filter is None:
             filter = {} 
         else:
-            filter = {"city": self.destination_id}
-        return self.current_db.get_hotel_ids(query_text, filter = filter, top_k=top_k)
+            filter = {"city": {"$eq" : self.destination_id}}
+        ids = self.current_db.get_hotel_ids(query_text, filter = filter, top_k=5)
+        ids.extend(self.current_db.get_hotel_ids(query_text, top_k=top_k - 5))
+        return 
     
     def query_places(self, query_text: str, top_k: int = 40) -> List[str]:
         """
@@ -73,37 +75,30 @@ class TravelModel:
         Limited to top 40 results
         """
         self.current_db = self.place_db
+        if filter is None:
+            filter = {} 
+        else:
+            filter = {"city": {"$eq" : self.destination_id}}
         top_k = min(top_k, 40)  # Enforce maximum of 40 results
-        return self.current_db.get_place_ids(query_text, top_k=top_k)
+        return self.current_db.get_place_ids(query_text, filter, top_k=top_k)
     
     def query_fnb(self, query_text: str, top_k: int = 40) -> List[str]:
         """
         Query FnB based on text input and return FnB IDs
         Limited to top 40 results
         """
-        try:
-            self.current_db = self.fnb_db
-            top_k = min(top_k, 40)  # Enforce maximum of 40 results
-            
-            # Log the query attempt
-            logger.info(f"Attempting to query FnB with text: {query_text}, top_k: {top_k}")
-            
-            # Get results
-            results = self.current_db.get_fnb_ids(query_text, top_k=top_k)
-            
-            # Log the results
-            logger.info(f"FnB query returned {len(results)} results")
-            if not results:
-                logger.warning("No FnB results found, trying with broader context")
-                # Try with broader context if no results
-                broader_query = f"restaurant {query_text}"
-                results = self.current_db.get_fnb_ids(broader_query, top_k=top_k)
-                logger.info(f"Broader FnB query returned {len(results)} results")
-            
-            return results
-        except Exception as e:
-            logger.error(f"Error in query_fnb: {e}", exc_info=True)
-            return []
+        if filter is None:
+            filter = {}
+        else:   
+            filter = {"city": {"$eq" : self.destination_id}}
+        self.current_db = self.fnb_db
+        top_k = min(top_k, 40)  # Enforce maximum of 40 results
+        
+        
+        results = self.current_db.get_fnb_ids(query_text,filter = filter, top_k=top_k)
+
+        return results
+
     
     def search_by_price_range(self, min_price: float, max_price: float, top_k: int = 5) -> List[str]:
         """
