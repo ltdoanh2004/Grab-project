@@ -17,7 +17,7 @@ import (
 
 type TripService interface {
 	CreateTrip(trip *dto.TripDTO) (string, error)
-	SaveTrip(trip *dto.TripDTO) error
+	SaveTrip(trip *dto.TripDTOByDate) error
 	GetTrip(tripID string) (*dto.TripDTOByDate, error)
 	SuggestTrip(userID string, activities dto.TripSuggestionRequest, endpoint string) (*dto.TripDTOByDate, error)
 	GetTravelPreference(tripID string) (*model.TravelPreference, error)
@@ -158,7 +158,285 @@ func (ts *tripService) CreateTrip(trip *dto.TripDTO) (string, error) {
 	return tripID, nil
 }
 
-func (ts *tripService) SaveTrip(trip *dto.TripDTO) error {
+// Helper function to process accommodations for a destination
+func (ts *tripService) processAccommodations(destDTO dto.TripDestinationDTO) error {
+	// Get existing accommodations for this destination
+	existingAccommodations, err := ts.tripAccommodationRepository.GetByTripID(destDTO.TripDestinationID)
+	if err != nil {
+		return err
+	}
+
+	// Create maps for tracking
+	existingMap := make(map[string]bool)
+	updatedMap := make(map[string]bool)
+
+	// Map existing accommodations for lookup
+	for _, acc := range existingAccommodations {
+		existingMap[acc.TripAccommodationID] = true
+	}
+
+	// Process each accommodation
+	for _, acc := range destDTO.Accommodations {
+		// Track IDs of accommodations in the updated trip
+		if acc.TripAccommodationID != "" {
+			updatedMap[acc.TripAccommodationID] = true
+		}
+
+		// Generate ID if empty
+		accommodationID := acc.TripAccommodationID
+		if accommodationID == "" {
+			accommodationID = uuid.New().String()
+		}
+
+		// Create model object
+		tripAccom := &model.TripAccommodation{
+			TripAccommodationID: accommodationID,
+			TripDestinationID:   destDTO.TripDestinationID,
+			AccommodationID:     acc.AccommodationID,
+			CheckInDate:         acc.CheckInDate,
+			CheckOutDate:        acc.CheckOutDate,
+			StartTime:           acc.StartTime,
+			EndTime:             acc.EndTime,
+			PriceAIEstimate:     acc.PriceAIEstimate,
+			Notes:               acc.Notes,
+		}
+
+		if acc.TripAccommodationID != "" {
+			// Check if record exists
+			// Update existing record
+			_, err := ts.tripAccommodationRepository.GetByID(acc.TripAccommodationID)
+			if err == nil {
+				if err := ts.tripAccommodationRepository.Update(tripAccom); err != nil {
+					return err
+				}
+			} else {
+				// Create new record with provided ID
+				if err := ts.tripAccommodationRepository.Create(tripAccom); err != nil {
+					return err
+				}
+			}
+		} else {
+			// Create new record with generated ID
+			if err := ts.tripAccommodationRepository.Create(tripAccom); err != nil {
+				return err
+			}
+			// Add to updated map
+			updatedMap[accommodationID] = true
+		}
+	}
+
+	// Delete accommodations no longer in the trip
+	for _, acc := range existingAccommodations {
+		if !updatedMap[acc.TripAccommodationID] {
+			if err := ts.tripAccommodationRepository.Delete(acc.TripAccommodationID); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
+
+// Helper function to process places for a destination
+func (ts *tripService) processPlaces(destDTO dto.TripDestinationDTO) error {
+	// Get existing places for this destination
+	existingPlaces, err := ts.tripPlaceRepository.GetByTripID(destDTO.TripDestinationID)
+	if err != nil {
+		return err
+	}
+
+	// Create maps for tracking
+	existingMap := make(map[string]bool)
+	updatedMap := make(map[string]bool)
+
+	// Map existing places for lookup
+	for _, place := range existingPlaces {
+		existingMap[place.TripPlaceID] = true
+	}
+
+	// Process each place
+	for _, place := range destDTO.Places {
+		// Track IDs of places in the updated trip
+		if place.TripPlaceID != "" {
+			updatedMap[place.TripPlaceID] = true
+		}
+
+		// Generate ID if empty
+		placeID := place.TripPlaceID
+		if placeID == "" {
+			placeID = uuid.New().String()
+		}
+
+		// Create model object
+		tripPlace := &model.TripPlace{
+			TripPlaceID:       placeID,
+			TripDestinationID: destDTO.TripDestinationID,
+			PlaceID:           place.PlaceID,
+			ScheduledDate:     place.ScheduledDate,
+			StartTime:         place.StartTime,
+			EndTime:           place.EndTime,
+			Notes:             place.Notes,
+			PriceAIEstimate:   place.PriceAIEstimate,
+		}
+
+		if place.TripPlaceID != "" {
+			// Check if record exists
+			_, err := ts.tripPlaceRepository.GetByID(place.TripPlaceID)
+			if err == nil {
+				// Update existing record
+				if err := ts.tripPlaceRepository.Update(tripPlace); err != nil {
+					return err
+				}
+			} else {
+				// Create new record with provided ID
+				if err := ts.tripPlaceRepository.Create(tripPlace); err != nil {
+					return err
+				}
+			}
+		} else {
+			// Create new record with generated ID
+			if err := ts.tripPlaceRepository.Create(tripPlace); err != nil {
+				return err
+			}
+			// Add to updated map
+			updatedMap[placeID] = true
+		}
+	}
+
+	// Delete places no longer in the trip
+	for _, place := range existingPlaces {
+		if !updatedMap[place.TripPlaceID] {
+			if err := ts.tripPlaceRepository.Delete(place.TripPlaceID); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
+
+// Helper function to process restaurants for a destination
+func (ts *tripService) processRestaurants(destDTO dto.TripDestinationDTO) error {
+	// Get existing restaurants for this destination
+	existingRestaurants, err := ts.tripRestaurantRepository.GetByTripID(destDTO.TripDestinationID)
+	if err != nil {
+		return err
+	}
+
+	// Create maps for tracking
+	existingMap := make(map[string]bool)
+	updatedMap := make(map[string]bool)
+
+	// Map existing restaurants for lookup
+	for _, restaurant := range existingRestaurants {
+		existingMap[restaurant.TripRestaurantID] = true
+	}
+
+	// Process each restaurant
+	for _, restaurant := range destDTO.Restaurants {
+		// Track IDs of restaurants in the updated trip
+		if restaurant.TripRestaurantID != "" {
+			updatedMap[restaurant.TripRestaurantID] = true
+		}
+
+		// Generate ID if empty
+		restaurantID := restaurant.TripRestaurantID
+		if restaurantID == "" {
+			restaurantID = uuid.New().String()
+		}
+
+		// Create model object
+		tripRestaurant := &model.TripRestaurant{
+			TripRestaurantID:  restaurantID,
+			TripDestinationID: destDTO.TripDestinationID,
+			RestaurantID:      restaurant.RestaurantID,
+			MealDate:          restaurant.MealDate,
+			StartTime:         restaurant.StartTime,
+			EndTime:           restaurant.EndTime,
+			ReservationInfo:   restaurant.ReservationInfo,
+			Notes:             restaurant.Notes,
+			PriceAIEstimate:   restaurant.PriceAIEstimate,
+		}
+
+		if restaurant.TripRestaurantID != "" {
+			// Check if record exists
+			_, err := ts.tripRestaurantRepository.GetByID(restaurant.TripRestaurantID)
+			if err == nil {
+				// Update existing record
+				if err := ts.tripRestaurantRepository.Update(tripRestaurant); err != nil {
+					return err
+				}
+			} else {
+				// Create new record with provided ID
+				if err := ts.tripRestaurantRepository.Create(tripRestaurant); err != nil {
+					return err
+				}
+			}
+		} else {
+			// Create new record with generated ID
+			if err := ts.tripRestaurantRepository.Create(tripRestaurant); err != nil {
+				return err
+			}
+			// Add to updated map
+			updatedMap[restaurantID] = true
+		}
+	}
+
+	// Delete restaurants no longer in the trip
+	for _, restaurant := range existingRestaurants {
+		if !updatedMap[restaurant.TripRestaurantID] {
+			if err := ts.tripRestaurantRepository.Delete(restaurant.TripRestaurantID); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
+
+// Helper function to delete all child records for a destination
+func (ts *tripService) deleteDestinationChildren(destID string) error {
+	// Delete accommodations
+	accommodations, _ := ts.tripAccommodationRepository.GetByTripID(destID)
+	for _, acc := range accommodations {
+		if err := ts.tripAccommodationRepository.Delete(acc.TripAccommodationID); err != nil {
+			return err
+		}
+	}
+
+	// Delete places
+	places, _ := ts.tripPlaceRepository.GetByTripID(destID)
+	for _, place := range places {
+		if err := ts.tripPlaceRepository.Delete(place.TripPlaceID); err != nil {
+			return err
+		}
+	}
+
+	// Delete restaurants
+	restaurants, _ := ts.tripRestaurantRepository.GetByTripID(destID)
+	for _, restaurant := range restaurants {
+		if err := ts.tripRestaurantRepository.Delete(restaurant.TripRestaurantID); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (ts *tripService) SaveTrip(tripByDate *dto.TripDTOByDate) error {
+	fmt.Println("SaveTrip: Converting TripDTOByDate to TripDTO")
+	trip, err := dto.ConvertTripDTO(*tripByDate)
+	if err != nil {
+		fmt.Println("SaveTrip: Error converting TripDTOByDate to TripDTO:", err)
+		return err
+	}
+
+	// Debug: Print trip destinations
+	for i, dest := range trip.TripDestinations {
+		fmt.Printf("SaveTrip: Destination %d - ID: %s, TripID: %s, DestinationID: %s\n",
+			i, dest.TripDestinationID, dest.TripID, dest.DestinationID)
+	}
+
 	// Update main trip record
 	tripEntity := &model.Trip{
 		TripID:     trip.TripID,
@@ -180,14 +458,33 @@ func (ts *tripService) SaveTrip(trip *dto.TripDTO) error {
 		return err
 	}
 
-	// Create a map of existing destinations for easy lookup
+	// Create maps for tracking destinations
 	existingDestMap := make(map[string]bool)
+	updatedDestMap := make(map[string]bool)
+
+	// Map existing destinations for lookup
 	for _, dest := range existingDests {
 		existingDestMap[dest.TripDestinationID] = true
 	}
 
-	// Process destinations
+	// Process each destination
 	for _, destDTO := range trip.TripDestinations {
+		// Ensure TripDestinationID is not empty
+		if destDTO.TripDestinationID == "" {
+			// Generate a new ID if it's empty
+			destDTO.TripDestinationID = trip.TripID + "_" + destDTO.DestinationID
+			if destDTO.TripDestinationID == "_" { // If both TripID and DestinationID are empty
+				destDTO.TripDestinationID = uuid.New().String()
+			}
+			fmt.Printf("SaveTrip: Generated new TripDestinationID: %s\n", destDTO.TripDestinationID)
+		} else {
+			fmt.Printf("SaveTrip: Using existing TripDestinationID: %s\n", destDTO.TripDestinationID)
+		}
+
+		// Add to the map of updated destinations
+		updatedDestMap[destDTO.TripDestinationID] = true
+
+		// Create or update destination
 		tripDest := &model.TripDestination{
 			TripDestinationID: destDTO.TripDestinationID,
 			TripID:            trip.TripID,
@@ -209,77 +506,33 @@ func (ts *tripService) SaveTrip(trip *dto.TripDTO) error {
 			}
 		}
 
-		// Update accommodations
-		for _, acc := range destDTO.Accommodations {
-			tripAccom := &model.TripAccommodation{
-				TripAccommodationID: acc.TripAccommodationID,
-				TripDestinationID:   destDTO.TripDestinationID,
-				AccommodationID:     acc.AccommodationID,
-				CheckInDate:         acc.CheckInDate,
-				CheckOutDate:        acc.CheckOutDate,
-				StartTime:           acc.StartTime,
-				EndTime:             acc.EndTime,
-				PriceAIEstimate:     acc.PriceAIEstimate,
-				Notes:               acc.Notes,
-			}
-
-			if acc.TripAccommodationID != "" {
-				if err := ts.tripAccommodationRepository.Update(tripAccom); err != nil {
-					return err
-				}
-			} else {
-				if err := ts.tripAccommodationRepository.Create(tripAccom); err != nil {
-					return err
-				}
-			}
+		// Process child records
+		if err := ts.processAccommodations(destDTO); err != nil {
+			return err
 		}
 
-		// Update places
-		for _, act := range destDTO.Places {
-			tripAct := &model.TripPlace{
-				TripPlaceID:       act.TripPlaceID,
-				TripDestinationID: destDTO.TripDestinationID,
-				PlaceID:           act.PlaceID,
-				ScheduledDate:     act.ScheduledDate,
-				StartTime:         act.StartTime,
-				EndTime:           act.EndTime,
-				Notes:             act.Notes,
-				PriceAIEstimate:   act.PriceAIEstimate,
-			}
-
-			if act.TripPlaceID != "" {
-				if err := ts.tripPlaceRepository.Update(tripAct); err != nil {
-					return err
-				}
-			} else {
-				if err := ts.tripPlaceRepository.Create(tripAct); err != nil {
-					return err
-				}
-			}
+		if err := ts.processPlaces(destDTO); err != nil {
+			return err
 		}
 
-		// Update restaurants
-		for _, rest := range destDTO.Restaurants {
-			tripRest := &model.TripRestaurant{
-				TripRestaurantID:  rest.TripRestaurantID,
-				TripDestinationID: destDTO.TripDestinationID,
-				RestaurantID:      rest.RestaurantID,
-				MealDate:          rest.MealDate,
-				StartTime:         rest.StartTime,
-				EndTime:           rest.EndTime,
-				ReservationInfo:   rest.ReservationInfo,
-				Notes:             rest.Notes,
-				PriceAIEstimate:   rest.PriceAIEstimate,
+		if err := ts.processRestaurants(destDTO); err != nil {
+			return err
+		}
+	}
+
+	// Delete destinations that are no longer in the updated trip
+	for _, dest := range existingDests {
+		if !updatedDestMap[dest.TripDestinationID] {
+			fmt.Printf("SaveTrip: Deleting destination %s as it's no longer in the updated trip\n", dest.TripDestinationID)
+
+			// Delete all child records first
+			if err := ts.deleteDestinationChildren(dest.TripDestinationID); err != nil {
+				return err
 			}
 
-			if rest.TripRestaurantID != "" {
-				if err := ts.tripRestaurantRepository.Update(tripRest); err != nil {
-					return err
-				}
-			} else {
-				if err := ts.tripRestaurantRepository.Create(tripRest); err != nil {
-					return err
-				}
+			// Then delete the destination itself
+			if err := ts.tripDestinationRepository.Delete(dest.TripDestinationID); err != nil {
+				return err
 			}
 		}
 	}
@@ -341,7 +594,7 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTOByDate, error) {
 		}
 
 		for _, acc := range accommodations {
-			destDTO.Accommodations = append(destDTO.Accommodations, dto.TripAccommodationDTO{
+			accomDTO := dto.TripAccommodationDTO{
 				TripAccommodationID: acc.TripAccommodationID,
 				TripDestinationID:   acc.TripDestinationID,
 				AccommodationID:     acc.AccommodationID,
@@ -351,7 +604,23 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTOByDate, error) {
 				EndTime:             acc.EndTime,
 				PriceAIEstimate:     acc.PriceAIEstimate,
 				Notes:               acc.Notes,
-			})
+			}
+
+			// Set address and images from the associated Accommodation if available
+			if acc.Accommodation != nil {
+				accomDTO.Address = acc.Accommodation.Location
+
+				// Convert Accommodation.Images to string array if available
+				if len(acc.Accommodation.Images) > 0 {
+					var imageURLs []string
+					for _, img := range acc.Accommodation.Images {
+						imageURLs = append(imageURLs, img.URL)
+					}
+					accomDTO.ImageURLs = imageURLs
+				}
+			}
+
+			destDTO.Accommodations = append(destDTO.Accommodations, accomDTO)
 		}
 
 		// Get places for this destination
@@ -361,7 +630,7 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTOByDate, error) {
 		}
 
 		for _, act := range places {
-			destDTO.Places = append(destDTO.Places, dto.TripPlaceDTO{
+			placeDTO := dto.TripPlaceDTO{
 				TripPlaceID:       act.TripPlaceID,
 				TripDestinationID: act.TripDestinationID,
 				PlaceID:           act.PlaceID,
@@ -370,7 +639,26 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTOByDate, error) {
 				EndTime:           act.EndTime,
 				Notes:             act.Notes,
 				PriceAIEstimate:   act.PriceAIEstimate,
-			})
+			}
+
+			// Set address, name, and images from the associated Place if available
+			if act.Place != nil {
+				placeDTO.Address = act.Place.Address
+				placeDTO.Name = act.Place.Name // Add the name from the Place entity
+
+				// Convert Place.Images to string array if available
+				if len(act.Place.Images) > 0 {
+					var imageURLs []string
+					for _, img := range act.Place.Images {
+						imageURLs = append(imageURLs, img.URL)
+					}
+					placeDTO.ImageURLs = imageURLs
+				} else if act.Place.MainImage != "" {
+					placeDTO.ImageURLs = []string{act.Place.MainImage}
+				}
+			}
+
+			destDTO.Places = append(destDTO.Places, placeDTO)
 		}
 
 		// Get restaurants for this destination
@@ -380,7 +668,7 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTOByDate, error) {
 		}
 
 		for _, rest := range restaurants {
-			destDTO.Restaurants = append(destDTO.Restaurants, dto.TripRestaurantDTO{
+			restDTO := dto.TripRestaurantDTO{
 				TripRestaurantID:  rest.TripRestaurantID,
 				TripDestinationID: rest.TripDestinationID,
 				RestaurantID:      rest.RestaurantID,
@@ -390,7 +678,19 @@ func (ts *tripService) GetTrip(tripID string) (*dto.TripDTOByDate, error) {
 				ReservationInfo:   rest.ReservationInfo,
 				Notes:             rest.Notes,
 				PriceAIEstimate:   rest.PriceAIEstimate,
-			})
+			}
+
+			// Set address and images from the associated Restaurant if available
+			if rest.Restaurant != nil {
+				restDTO.Address = rest.Restaurant.Address
+
+				// Add image URL if available
+				if rest.Restaurant.PhotoURL != "" {
+					restDTO.ImageURLs = []string{rest.Restaurant.PhotoURL}
+				}
+			}
+
+			destDTO.Restaurants = append(destDTO.Restaurants, restDTO)
 		}
 
 		tripDTO.TripDestinations = append(tripDTO.TripDestinations, destDTO)
@@ -823,6 +1123,51 @@ func (ts *tripService) CreateTravelPreference(tripID string, tp *model.TravelPre
 }
 
 func (ts *tripService) UpdateActivity(activityType string, activityID string, updatedData dto.Activity) error {
+	// Parse time values if provided
+	layoutTime := "15:04"
+	var startTimePtr *time.Time
+	var endTimePtr *time.Time
+
+	if updatedData.StartTime != "" {
+		// Get the date from the existing record to combine with the new time
+		date := time.Now() // Default to today if we can't get the date
+
+		// Parse the time string
+		startTime, err := time.Parse(layoutTime, updatedData.StartTime)
+		if err == nil {
+			// Create a new time with the date from the existing record and the time from updatedData
+			newStartTime := time.Date(
+				date.Year(), date.Month(), date.Day(),
+				startTime.Hour(), startTime.Minute(), 0, 0,
+				time.UTC, // Use UTC instead of Local
+			)
+			startTimePtr = &newStartTime
+			fmt.Printf("Parsed start time: %v\n", newStartTime)
+		} else {
+			fmt.Printf("Error parsing start time: %v\n", err)
+		}
+	}
+
+	if updatedData.EndTime != "" {
+		// Get the date from the existing record to combine with the new time
+		date := time.Now() // Default to today if we can't get the date
+
+		// Parse the time string
+		endTime, err := time.Parse(layoutTime, updatedData.EndTime)
+		if err == nil {
+			// Create a new time with the date from the existing record and the time from updatedData
+			newEndTime := time.Date(
+				date.Year(), date.Month(), date.Day(),
+				endTime.Hour(), endTime.Minute(), 0, 0,
+				time.UTC, // Use UTC instead of Local
+			)
+			endTimePtr = &newEndTime
+			fmt.Printf("Parsed end time: %v\n", newEndTime)
+		} else {
+			fmt.Printf("Error parsing end time: %v\n", err)
+		}
+	}
+
 	switch activityType {
 	case "accommodation":
 		// Update accommodation
@@ -830,9 +1175,51 @@ func (ts *tripService) UpdateActivity(activityType string, activityID string, up
 		if err != nil {
 			return fmt.Errorf("failed to get accommodation: %w", err)
 		}
+
+		// Update basic fields
 		newTripAccommodation.Notes = updatedData.Description
 		newTripAccommodation.PriceAIEstimate = updatedData.PriceAIEstimate
 		newTripAccommodation.AccommodationID = updatedData.ID
+
+		// Update time fields if provided
+		if startTimePtr != nil {
+			// If we have a date from the existing record, preserve it
+			if newTripAccommodation.CheckInDate != nil {
+				*startTimePtr = time.Date(
+					newTripAccommodation.CheckInDate.Year(),
+					newTripAccommodation.CheckInDate.Month(),
+					newTripAccommodation.CheckInDate.Day(),
+					startTimePtr.Hour(),
+					startTimePtr.Minute(),
+					0, 0,
+					time.UTC, // Use UTC instead of Local
+				)
+			}
+			newTripAccommodation.StartTime = startTimePtr
+		}
+
+		if endTimePtr != nil {
+			// If we have a date from the existing record, preserve it
+			if newTripAccommodation.CheckOutDate != nil {
+				*endTimePtr = time.Date(
+					newTripAccommodation.CheckOutDate.Year(),
+					newTripAccommodation.CheckOutDate.Month(),
+					newTripAccommodation.CheckOutDate.Day(),
+					endTimePtr.Hour(),
+					endTimePtr.Minute(),
+					0, 0,
+					time.UTC, // Use UTC instead of Local
+				)
+			}
+			newTripAccommodation.EndTime = endTimePtr
+		}
+
+		// Set trip_destination_id if provided
+		if updatedData.TripDestinationID != "" {
+			// Note: We don't directly update the trip_destination_id in the model
+			// as it's already a field in the TripAccommodation model
+			// and should be updated through proper channels
+		}
 
 		if err := ts.tripAccommodationRepository.Update(&newTripAccommodation); err != nil {
 			return fmt.Errorf("failed to update accommodation: %w", err)
@@ -843,9 +1230,51 @@ func (ts *tripService) UpdateActivity(activityType string, activityID string, up
 		if err != nil {
 			return fmt.Errorf("failed to get restaurant: %w", err)
 		}
+
+		// Update basic fields
 		newTripRestaurant.Notes = updatedData.Description
 		newTripRestaurant.PriceAIEstimate = updatedData.PriceAIEstimate
 		newTripRestaurant.RestaurantID = updatedData.ID
+
+		// Update time fields if provided
+		if startTimePtr != nil {
+			// If we have a date from the existing record, preserve it
+			if newTripRestaurant.MealDate != nil {
+				*startTimePtr = time.Date(
+					newTripRestaurant.MealDate.Year(),
+					newTripRestaurant.MealDate.Month(),
+					newTripRestaurant.MealDate.Day(),
+					startTimePtr.Hour(),
+					startTimePtr.Minute(),
+					0, 0,
+					time.UTC, // Use UTC instead of Local
+				)
+			}
+			newTripRestaurant.StartTime = startTimePtr
+		}
+
+		if endTimePtr != nil {
+			// If we have a date from the existing record, preserve it
+			if newTripRestaurant.MealDate != nil {
+				*endTimePtr = time.Date(
+					newTripRestaurant.MealDate.Year(),
+					newTripRestaurant.MealDate.Month(),
+					newTripRestaurant.MealDate.Day(),
+					endTimePtr.Hour(),
+					endTimePtr.Minute(),
+					0, 0,
+					time.UTC, // Use UTC instead of Local
+				)
+			}
+			newTripRestaurant.EndTime = endTimePtr
+		}
+
+		// Set trip_destination_id if provided
+		if updatedData.TripDestinationID != "" {
+			// Note: We don't directly update the trip_destination_id in the model
+			// as it's already a field in the TripRestaurant model
+			// and should be updated through proper channels
+		}
 
 		if err := ts.tripRestaurantRepository.Update(&newTripRestaurant); err != nil {
 			return fmt.Errorf("failed to update restaurant: %w", err)
@@ -856,9 +1285,51 @@ func (ts *tripService) UpdateActivity(activityType string, activityID string, up
 		if err != nil {
 			return fmt.Errorf("failed to get place: %w", err)
 		}
+
+		// Update basic fields
 		newTripPlace.Notes = updatedData.Description
 		newTripPlace.PriceAIEstimate = updatedData.PriceAIEstimate
 		newTripPlace.PlaceID = updatedData.ID
+
+		// Update time fields if provided
+		if startTimePtr != nil {
+			// If we have a date from the existing record, preserve it
+			if newTripPlace.ScheduledDate != nil {
+				*startTimePtr = time.Date(
+					newTripPlace.ScheduledDate.Year(),
+					newTripPlace.ScheduledDate.Month(),
+					newTripPlace.ScheduledDate.Day(),
+					startTimePtr.Hour(),
+					startTimePtr.Minute(),
+					0, 0,
+					time.UTC, // Use UTC instead of Local
+				)
+			}
+			newTripPlace.StartTime = startTimePtr
+		}
+
+		if endTimePtr != nil {
+			// If we have a date from the existing record, preserve it
+			if newTripPlace.ScheduledDate != nil {
+				*endTimePtr = time.Date(
+					newTripPlace.ScheduledDate.Year(),
+					newTripPlace.ScheduledDate.Month(),
+					newTripPlace.ScheduledDate.Day(),
+					endTimePtr.Hour(),
+					endTimePtr.Minute(),
+					0, 0,
+					time.UTC, // Use UTC instead of Local
+				)
+			}
+			newTripPlace.EndTime = endTimePtr
+		}
+
+		// Set trip_destination_id if provided
+		if updatedData.TripDestinationID != "" {
+			// Note: We don't directly update the trip_destination_id in the model
+			// as it's already a field in the TripPlace model
+			// and should be updated through proper channels
+		}
 
 		if err := ts.tripPlaceRepository.Update(&newTripPlace); err != nil {
 			return fmt.Errorf("failed to update place: %w", err)
@@ -902,7 +1373,7 @@ func (ts *tripService) GetTripsByUserID(userID string) ([]dto.TripDTOByDate, err
 
 			// Add TripAccommodations
 			for _, acc := range dest.Accommodations {
-				destDTO.Accommodations = append(destDTO.Accommodations, dto.TripAccommodationDTO{
+				accomDTO := dto.TripAccommodationDTO{
 					TripAccommodationID: acc.TripAccommodationID,
 					TripDestinationID:   acc.TripDestinationID,
 					AccommodationID:     acc.AccommodationID,
@@ -912,12 +1383,29 @@ func (ts *tripService) GetTripsByUserID(userID string) ([]dto.TripDTOByDate, err
 					EndTime:             acc.EndTime,
 					PriceAIEstimate:     acc.PriceAIEstimate,
 					Notes:               acc.Notes,
-				})
+				}
+
+				// Set name, address and images from the associated Accommodation if available
+				if acc.Accommodation != nil {
+					accomDTO.Name = acc.Accommodation.Name
+					accomDTO.Address = acc.Accommodation.Location
+
+					// Convert Accommodation.Images to string array if available
+					if len(acc.Accommodation.Images) > 0 {
+						var imageURLs []string
+						for _, img := range acc.Accommodation.Images {
+							imageURLs = append(imageURLs, img.URL)
+						}
+						accomDTO.ImageURLs = imageURLs
+					}
+				}
+
+				destDTO.Accommodations = append(destDTO.Accommodations, accomDTO)
 			}
 
 			// Add TripPlaces
 			for _, place := range dest.Places {
-				destDTO.Places = append(destDTO.Places, dto.TripPlaceDTO{
+				placeDTO := dto.TripPlaceDTO{
 					TripPlaceID:       place.TripPlaceID,
 					TripDestinationID: place.TripDestinationID,
 					PlaceID:           place.PlaceID,
@@ -926,12 +1414,30 @@ func (ts *tripService) GetTripsByUserID(userID string) ([]dto.TripDTOByDate, err
 					EndTime:           place.EndTime,
 					Notes:             place.Notes,
 					PriceAIEstimate:   place.PriceAIEstimate,
-				})
+				}
+
+				// Set address and images from the associated Place if available
+				if place.Place != nil {
+					placeDTO.Address = place.Place.Address
+
+					// Convert Place.Images to string array if available
+					if len(place.Place.Images) > 0 {
+						var imageURLs []string
+						for _, img := range place.Place.Images {
+							imageURLs = append(imageURLs, img.URL)
+						}
+						placeDTO.ImageURLs = imageURLs
+					} else if place.Place.MainImage != "" {
+						placeDTO.ImageURLs = []string{place.Place.MainImage}
+					}
+				}
+
+				destDTO.Places = append(destDTO.Places, placeDTO)
 			}
 
 			// Add TripRestaurants
 			for _, rest := range dest.Restaurants {
-				destDTO.Restaurants = append(destDTO.Restaurants, dto.TripRestaurantDTO{
+				restDTO := dto.TripRestaurantDTO{
 					TripRestaurantID:  rest.TripRestaurantID,
 					TripDestinationID: rest.TripDestinationID,
 					RestaurantID:      rest.RestaurantID,
@@ -941,7 +1447,20 @@ func (ts *tripService) GetTripsByUserID(userID string) ([]dto.TripDTOByDate, err
 					ReservationInfo:   rest.ReservationInfo,
 					Notes:             rest.Notes,
 					PriceAIEstimate:   rest.PriceAIEstimate,
-				})
+				}
+
+				// Set name, address and images from the associated Restaurant if available
+				if rest.Restaurant != nil {
+					restDTO.Name = rest.Restaurant.Name
+					restDTO.Address = rest.Restaurant.Address
+
+					// Add image URL if available
+					if rest.Restaurant.PhotoURL != "" {
+						restDTO.ImageURLs = []string{rest.Restaurant.PhotoURL}
+					}
+				}
+
+				destDTO.Restaurants = append(destDTO.Restaurants, restDTO)
 			}
 
 			tripDTO.TripDestinations = append(tripDTO.TripDestinations, destDTO)

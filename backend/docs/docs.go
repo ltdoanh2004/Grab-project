@@ -216,7 +216,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Returns comment ID",
+                        "description": "Returns comment",
                         "schema": {
                             "allOf": [
                                 {
@@ -226,7 +226,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "type": "string"
+                                            "$ref": "#/definitions/model.Comment"
                                         }
                                     }
                                 }
@@ -1646,7 +1646,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.TripDTO"
+                            "$ref": "#/definitions/dto.TripDTOByDate"
                         }
                     }
                 ],
@@ -2635,6 +2635,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "user_id": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }

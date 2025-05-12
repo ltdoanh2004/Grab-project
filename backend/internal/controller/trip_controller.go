@@ -87,13 +87,13 @@ func (tc *TripController) CreateTrip(ctx *gin.Context) {
 // @Tags trip
 // @Accept json
 // @Produce json
-// @Param trip body dto.TripDTO true "Trip Details"
+// @Param trip body dto.TripDTOByDate true "Trip Details"
 // @Success 200 {object} model.Response "Trip updated successfully"
 // @Failure 400 {object} model.Response "Invalid request"
 // @Failure 500 {object} model.Response "Internal server error"
 // @Router /api/v1/trip/save [put]
 func (tc *TripController) SaveTrip(ctx *gin.Context) {
-	var request dto.TripDTO
+	var request dto.TripDTOByDate
 	if err := ctx.ShouldBindJSON(&request); err != nil {
 		ctx.JSON(http.StatusBadRequest, model.Response{
 			Message: "Invalid request body: " + err.Error(),
