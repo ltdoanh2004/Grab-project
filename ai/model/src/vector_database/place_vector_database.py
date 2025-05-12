@@ -14,7 +14,7 @@ except ImportError:
 
 class PlaceVectorDatabase(BaseVectorDatabase):
     def __init__(self):
-        super().__init__(index_name="place-recommendations")
+        super().__init__(index_name="place-recommendations-da")
         self.checkpoint_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'place_checkpoint.json')
 
     def prepare_place_embedding(self, data=None, incremental=True):
@@ -67,8 +67,15 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         
         print("Processing ratings...")
         if 'rating' in raw_df.columns:
+            # First convert to string and clean the data
+            raw_df['rating'] = raw_df['rating'].astype(str)
+            # Remove any non-numeric characters except decimal points
+            raw_df['rating'] = raw_df['rating'].str.replace(r'[^\d.]', '', regex=True)
+            # Convert to float, coercing errors to NaN
+            raw_df['rating'] = pd.to_numeric(raw_df['rating'], errors='coerce')
+            # Fill NaN values with mean
             raw_df['rating'].fillna(raw_df['rating'].mean(), inplace=True)
-            raw_df['rating'] = raw_df['rating'] * 2
+            # Ensure all values are float
             raw_df['rating'] = raw_df['rating'].astype(float)
 
 
@@ -222,7 +229,7 @@ class PlaceVectorDatabase(BaseVectorDatabase):
         # Use base class method for incremental updates if requested
         if incremental:
             # Convert string embeddings to lists if needed before passing to incremental method
-            return self.load_data_to_pinecone_incremental(df=self.df, id_field="index", batch_size=100)
+            return self.load_data_to_pinecone_incremental(df=self.df, id_field="place_id", batch_size=100)
             
         # Otherwise, continue with original full insertion method
         # Convert string embeddings to lists

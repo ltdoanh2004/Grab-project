@@ -166,11 +166,42 @@ class FnBVectorDatabase(BaseVectorDatabase):
         final_df = rows_to_embed.copy()
         
         if incremental and existing_df is not None:
-            existing_indices = set(rows_to_embed['restaurant_id'].astype(str))
-            filtered_existing_df = existing_df[~existing_df['restaurant_id'].astype(str).isin(existing_indices)]
+            # Convert IDs to string and ensure consistent format
+            rows_to_embed['restaurant_id'] = rows_to_embed['restaurant_id'].astype(str)
+            existing_df['restaurant_id'] = existing_df['restaurant_id'].astype(str)
+            
+            # Check for duplicates in both dataframes
+            embed_duplicates = rows_to_embed['restaurant_id'].duplicated()
+            existing_duplicates = existing_df['restaurant_id'].duplicated()
+            
+            if embed_duplicates.any():
+                print(f"Warning: Found {embed_duplicates.sum()} duplicate IDs in new data")
+                rows_to_embed = rows_to_embed.drop_duplicates(subset=['restaurant_id'], keep='last')
+                
+            if existing_duplicates.any():
+                print(f"Warning: Found {existing_duplicates.sum()} duplicate IDs in existing data")
+                existing_df = existing_df.drop_duplicates(subset=['restaurant_id'], keep='last')
+            
+            # Get unique IDs from both dataframes
+            existing_indices = set(rows_to_embed['restaurant_id'])
+            filtered_existing_df = existing_df[~existing_df['restaurant_id'].isin(existing_indices)]
+            
+            # Validate before concatenation
+            print(f"New data rows: {len(rows_to_embed)}")
+            print(f"Existing data rows to keep: {len(filtered_existing_df)}")
+            print(f"Total unique IDs in new data: {len(rows_to_embed['restaurant_id'].unique())}")
+            print(f"Total unique IDs in existing data: {len(existing_df['restaurant_id'].unique())}")
             
             final_df = pd.concat([filtered_existing_df, rows_to_embed], ignore_index=True)
-            print(f"Combined {len(rows_to_embed)} new embeddings with {len(filtered_existing_df)} existing embeddings")
+            
+            # Final validation
+            print(f"Final dataframe rows: {len(final_df)}")
+            print(f"Final unique IDs: {len(final_df['restaurant_id'].unique())}")
+            
+            if len(final_df) != len(final_df['restaurant_id'].unique()):
+                print("Warning: Duplicate IDs found in final dataframe")
+                final_df = final_df.drop_duplicates(subset=['restaurant_id'], keep='last')
+                print(f"Rows after removing duplicates: {len(final_df)}")
 
         output_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'fnb_processed_embedding.csv')
         print(f"Saving processed data to: {output_path}")
