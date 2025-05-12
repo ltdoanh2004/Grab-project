@@ -10,6 +10,8 @@ import {
   TravelDay,
   TravelSegment,
 } from "../types/travelPlan";
+import apiClient from "../services/apiService";
+import { getActivityDetail } from "../services/travelPlanApi";
 
 export function useTravelDetail(travelId: string) {
   const [travelDetail, setTravelDetail] = useState<TravelDetailData | null>(
@@ -22,39 +24,171 @@ export function useTravelDetail(travelId: string) {
     let ignore = false;
     setLoading(true);
     setNotFound(false);
-    if (travelId === "temp123") {
-      const local = localStorage.getItem("tripPlan_temp123");
-      if (local) {
-        setTravelDetail(JSON.parse(local));
-        setLoading(false);
-        return;
+    
+    console.log(`Looking for trip with ID: ${travelId}`);
+    
+    // Log user input from localStorage for this trip
+    const userInputKey = `userInput_${travelId}`;
+    const storedUserInput = localStorage.getItem(userInputKey);
+    if (storedUserInput) {
+      try {
+        const parsedUserInput = JSON.parse(storedUserInput);
+        console.log(`[UserInput] Found stored user input for trip ${travelId}:`, parsedUserInput);
+      } catch (error) {
+        console.error(`Error parsing user input from localStorage for trip ${travelId}:`, error);
       }
+    } else {
+      console.log(`[UserInput] No stored user input found for trip ${travelId}`);
     }
-    const mockDetail =
-      travelId === MOCK_TRAVEL_DETAIL.id
-        ? MOCK_TRAVEL_DETAIL
-        : travelId === MOCK_TRAVEL_DETAIL_2.id
-        ? MOCK_TRAVEL_DETAIL_2
-        : (MOCK_TRAVEL_PLANS.find((p) => p.id === travelId) as any);
-
-    if (mockDetail && mockDetail.plan_by_day) {
-      setTimeout(() => {
-        if (!ignore) {
-          setTravelDetail({ ...mockDetail });
+    
+    const fetchTripDetails = async () => {
+      try {
+        // Fetch trip data from API
+        const response = await apiClient.get(`/trip/${travelId}`);
+        
+        if (response.data && response.data.data) {
+          const apiTripData = response.data.data;
+          
+          // Check for daily tips in localStorage
+          const localData = localStorage.getItem(`tripPlan_${travelId}`);
+          let localDailyTips: Record<string, string[]> = {};
+          
+          if (localData) {
+            try {
+              const parsedLocalData = JSON.parse(localData);
+              
+              // Extract daily tips from localStorage data
+              if (parsedLocalData && parsedLocalData.plan_by_day) {
+                parsedLocalData.plan_by_day.forEach((day: any, index: number) => {
+                  if (day.daily_tips && day.daily_tips.length > 0) {
+                    localDailyTips[day.date] = day.daily_tips;
+                  }
+                });
+              }
+            } catch (error) {
+              console.error("Error parsing trip data from localStorage:", error);
+            }
+          }
+          
+          // Process trip data with details for each activity
+          const processedTripData = { ...apiTripData };
+          
+          // Create a deep copy of the plan_by_day with enriched activity details
+          const enrichedDays = await Promise.all(
+            apiTripData.plan_by_day.map(async (day: any) => {
+              const enrichedSegments = await Promise.all(
+                day.segments.map(async (segment: any) => {
+                  const enrichedActivities = await Promise.all(
+                    segment.activities.map(async (activity: any) => {
+                      try {
+                        // Fetch detailed information for each activity from the appropriate endpoint
+                        const detailData = await getActivityDetail(activity.type, activity.id);
+                        
+                        // Process image_urls to handle comma separated URLs in a single string
+                        let processedImageUrls: string[] = [];
+                        if (detailData.image_urls && detailData.image_urls.length > 0) {
+                          // Check if the first entry is a comma-separated string
+                          if (typeof detailData.image_urls[0] === 'string' && detailData.image_urls[0].includes(',')) {
+                            // Split by comma and trim whitespace
+                            processedImageUrls = detailData.image_urls[0]
+                              .split(',')
+                              .map(url => url.trim());
+                          } else {
+                            processedImageUrls = detailData.image_urls;
+                          }
+                        }
+                        
+                        // Merge the basic activity data with the detailed information
+                        return {
+                          ...activity,
+                          name: detailData.name || activity.name,
+                          description: activity.description || detailData.description,
+                          address: detailData.address,
+                          location: detailData.location,
+                          opening_hours: detailData.opening_hours,
+                          price: detailData.price,
+                          rating: detailData.rating,
+                          image_urls: processedImageUrls,
+                          image_url: processedImageUrls.length > 0 ? processedImageUrls[0] : undefined,
+                          additional_info: detailData.additional_info,
+                          url: detailData.url
+                        };
+                      } catch (error) {
+                        console.error(`Error fetching details for ${activity.type} with ID ${activity.id}:`, error);
+                        return activity;
+                      }
+                    })
+                  );
+                  
+                  return {
+                    ...segment,
+                    activities: enrichedActivities
+                  };
+                })
+              );
+              
+              return {
+                ...day,
+                segments: enrichedSegments,
+                daily_tips: localDailyTips[day.date] || []
+              };
+            })
+          );
+          
+          processedTripData.plan_by_day = enrichedDays;
+          
+          setTravelDetail(processedTripData);
+          setLoading(false);
+        } else {
+          setNotFound(true);
           setLoading(false);
         }
-      }, 400);
-      return () => {
-        ignore = true;
-      };
-    }
+      } catch (error) {
+        console.error(`Error fetching trip ${travelId} from API:`, error);
+        
+        // Fallback to localStorage for backwards compatibility
+        const localData = localStorage.getItem(`tripPlan_${travelId}`);
+        
+        if (localData) {
+          try {
+            const parsedData = JSON.parse(localData);
+            console.log("Parsed trip data from localStorage:", parsedData);
+            
+            if (parsedData && parsedData.plan_by_day) {
+              setTravelDetail(parsedData);
+              setLoading(false);
+              return;
+            }
+          } catch (error) {
+            console.error("Error parsing trip data from localStorage:", error);
+          }
+        }
+        
+        // Fallback to mock data if API fails and no localStorage data
+        const mockDetail =
+          travelId === MOCK_TRAVEL_DETAIL.id
+            ? MOCK_TRAVEL_DETAIL
+            : travelId === MOCK_TRAVEL_DETAIL_2.id
+            ? MOCK_TRAVEL_DETAIL_2
+            : (MOCK_TRAVEL_PLANS.find((p) => p.id === travelId) as any);
 
-    setTimeout(() => {
-      if (!ignore) {
+        if (mockDetail && mockDetail.plan_by_day) {
+          console.log(`Falling back to mock data for trip ID: ${travelId}`);
+          setTimeout(() => {
+            if (!ignore) {
+              setTravelDetail({ ...mockDetail });
+              setLoading(false);
+            }
+          }, 400);
+          return;
+        }
+        
         setNotFound(true);
         setLoading(false);
       }
-    }, 400);
+    };
+    
+    fetchTripDetails();
 
     return () => {
       ignore = true;

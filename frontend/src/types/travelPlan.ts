@@ -59,10 +59,12 @@ export interface PersonalOptions {
 
 export interface TravelActivity {
   id: string;
+  activity_id?: string;
   type: string;
   name: string;
   imgUrl?: string;
   image_url?: string;
+  image_urls?: string[];
   start_time: string;
   end_time: string;
   description: string;
@@ -75,6 +77,9 @@ export interface TravelActivity {
   duration?: string;
   opening_hours?: string;
   price_ai_estimate?: number;
+  additional_info?: string;
+  url?: string;
+  location?: string;
 }
 
 export interface TravelSegment {

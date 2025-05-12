@@ -27,9 +27,22 @@ export const SignIn: React.FC<SignInProps> = ({
         username: values.username,
       });
 
-      localStorage.setItem("access_token", res.data.access_token);
-      if (res.data.refresh_token) {
-        localStorage.setItem("refresh_token", res.data.refresh_token);
+      if (res.data && Array.isArray(res.data) && res.data.length > 0) {
+        const authData = res.data[0];
+        localStorage.setItem("access_token", authData.access_token);
+        if (authData.refresh_token) {
+          localStorage.setItem("refresh_token", authData.refresh_token);
+        }
+      } else if (res.data && typeof res.data === 'object') {
+        const authData = (res.data as unknown) as { access_token: string; refresh_token?: string };
+        
+        if (authData.access_token) {
+          localStorage.setItem("access_token", authData.access_token);
+        }
+        
+        if (authData.refresh_token) {
+          localStorage.setItem("refresh_token", authData.refresh_token);
+        }
       }
 
       message.success("Đăng nhập thành công!");

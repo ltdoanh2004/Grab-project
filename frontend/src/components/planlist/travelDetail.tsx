@@ -20,7 +20,6 @@ import {
   CheckCircleFilled,
   PlusOutlined,
 } from "@ant-design/icons";
-import { SheetExport } from "./travelDetail/SheetExport";
 import { SplitBill } from "./travelDetail/splitBill";
 
 import {
@@ -226,15 +225,6 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
       ),
     },
     {
-      key: "sheet",
-      label: "Xuất Google Sheet",
-      children: (
-        <div className="min-h-[200px]">
-          <SheetExport travelDetail={travelDetail} />
-        </div>
-      ),
-    },
-    {
       key: "splitbill",
       label: "Chia chi phí",
       children: (
@@ -256,7 +246,7 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
       )}
 
       <Affix offsetTop={0} className="z-10">
-        <div className="flex justify-between items-center py-3 px-4 bg-white shadow-sm">
+        <div className="flex items-center py-3 px-4 bg-white shadow-sm">
           <Button
             icon={<ArrowLeftOutlined />}
             onClick={onBack}
@@ -276,21 +266,6 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
           formatCurrency={formatCurrency}
           getStatusTag={getStatusTag}
         />
-
-        <div className="flex justify-end mb-3">
-          <Button
-            type="primary"
-            icon={isEditMode ? <SaveOutlined /> : <EditOutlined />}
-            onClick={toggleEditMode}
-            className={
-              isEditMode
-                ? "bg-green-600 hover:bg-green-700"
-                : "bg-blue-600 hover:bg-blue-700"
-            }
-          >
-            {isEditMode ? "Lưu thay đổi" : "Chỉnh sửa lịch trình"}
-          </Button>
-        </div>
 
         <Card
           className="rounded-xl shadow-sm overflow-hidden mb-6 border-0"
@@ -313,30 +288,32 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
         </Card>
       </div>
 
-      {/* FAB for adding activity in edit mode */}
-      {isEditMode && (
-        <div className="fixed right-6 bottom-6">
+      {/* Edit and Share buttons at the bottom right */}
+      <div className="fixed right-6 bottom-6 flex flex-col space-y-3">
+        <Tooltip title={isEditMode ? "Lưu thay đổi" : "Chỉnh sửa lịch trình"}>
           <Button
             type="primary"
             shape="circle"
             size="large"
-            icon={<PlusOutlined />}
-            onClick={() => setActivitySearchModalVisible(true)}
-            className="h-14 w-14 flex items-center justify-center bg-blue-600 hover:bg-blue-700 shadow-lg"
+            icon={isEditMode ? <SaveOutlined /> : <EditOutlined />}
+            onClick={toggleEditMode}
+            className={`h-14 w-14 flex items-center justify-center shadow-lg ${
+              isEditMode
+                ? "bg-green-600 hover:bg-green-700"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
           />
-        </div>
-      )}
-
-      {/* Share button at the bottom of the page */}
-      <div className="fixed left-0 right-0 bottom-0 py-3 px-5 bg-white shadow-lg flex justify-center">
-        <Button
-          icon={<ShareAltOutlined />}
-          onClick={handleShare}
-          size="large"
-          className="border-gray-300 hover:border-blue-500 hover:text-blue-500 rounded-full px-6"
-        >
-          Chia sẻ lịch trình
-        </Button>
+        </Tooltip>
+        
+        <Tooltip title="Chia sẻ lịch trình">
+          <Button
+            shape="circle"
+            size="large"
+            icon={<ShareAltOutlined />}
+            onClick={handleShare}
+            className="h-14 w-14 flex items-center justify-center border-gray-300 hover:border-blue-500 hover:text-blue-500 shadow-lg"
+          />
+        </Tooltip>
       </div>
 
       <ActivityModal

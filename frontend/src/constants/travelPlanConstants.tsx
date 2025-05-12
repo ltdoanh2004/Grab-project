@@ -9,6 +9,7 @@ import {
   TeamOutlined,
   DollarOutlined,
   StarOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 import {
   Destination,
@@ -119,7 +120,7 @@ export const getStatusTag = (status: TravelDetailData["status"]) => {
 /**
  * Get an icon component based on activity type
  */
-export const getActivityIcon = (type: TravelActivity["type"]) => {
+export const getActivityIcon = (type: string) => {
   switch (type) {
     case "attraction":
       return <StarOutlined className="text-yellow-500" />;
@@ -127,6 +128,8 @@ export const getActivityIcon = (type: TravelActivity["type"]) => {
       return <DollarOutlined className="text-red-500" />;
     case "hotel":
       return <TeamOutlined className="text-blue-500" />;
+    case "accommodation":
+      return <HomeOutlined className="text-purple-500" />;
     case "transport":
       return <ClockCircleOutlined className="text-green-500" />;
     default:
@@ -136,18 +139,20 @@ export const getActivityIcon = (type: TravelActivity["type"]) => {
 
 // ================= ACTIVITY & TRAVEL CONSTANTS =================
 
-export const ACTIVITY_TYPE_COLORS: Record<TravelActivity["type"], string> = {
+export const ACTIVITY_TYPE_COLORS: Record<string, string> = {
   attraction: "blue",
   restaurant: "green",
   hotel: "red",
   transport: "default",
+  accommodation: "purple",
 };
 
-export const ACTIVITY_TYPE_TEXT: Record<TravelActivity["type"], string> = {
+export const ACTIVITY_TYPE_TEXT: Record<string, string> = {
   attraction: "Tham quan",
   restaurant: "Nhà hàng",
   hotel: "Khách sạn",
   transport: "Di chuyển",
+  accommodation: "Chỗ ở",
 };
 
 export const BUDGET_RANGES = {

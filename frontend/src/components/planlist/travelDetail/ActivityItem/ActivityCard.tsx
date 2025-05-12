@@ -61,7 +61,7 @@ interface DragItem {
   segment: string;
 }
 
-const DEFAULT_IMAGE = "/hinhnen.jpg";
+const DEFAULT_IMAGE = "/notfound.png";
 
 export const ActivityCard: React.FC<ActivityCardProps> = memo(
   ({
@@ -143,6 +143,8 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
       : "Chưa có thời gian";
 
     const typeColor = activityTypeColors[activity.type] || "blue";
+    
+    const imageUrl = activity.image_url || activity.imgUrl || DEFAULT_IMAGE;
 
     return (
       <div
@@ -170,7 +172,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
 
             <div className="relative w-32 h-24 md:w-36 md:h-28 mr-4 rounded-lg overflow-hidden shadow-md flex-shrink-0">
               <Image
-                src={activity.image_url || activity.imgUrl || DEFAULT_IMAGE}
+                src={imageUrl}
                 alt={activity.name}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 fallback={DEFAULT_IMAGE}
@@ -246,7 +248,9 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
                 <Text className="flex items-center text-gray-600 text-sm">
                   <EnvironmentOutlined className="mr-2 text-gray-400" />
                   <span className="truncate">
-                    {activity.address || "Chưa có địa chỉ"}
+                    {activity.address ? activity.address : (
+                      <span className="text-gray-500 italic">Hiện chưa cập nhật địa chỉ</span>
+                    )}
                   </span>
                 </Text>
 
@@ -256,12 +260,14 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
                   </Text>
                 )}
 
-                {(activity.price_range || activity.price) && (
-                  <Text className="flex items-center text-sm font-medium text-green-600">
-                    <DollarOutlined className="mr-1" />
-                    {activity.price_range || `${activity.price?.toLocaleString()} VND`}
-                  </Text>
-                )}
+                <Text className="flex items-center text-sm font-medium text-green-600">
+                  <DollarOutlined className="mr-1" />
+                  {activity.price_range ? activity.price_range :
+                    activity.price && activity.price > 50000 ? `${activity.price.toLocaleString()} VND` :
+                    activity.price_ai_estimate && activity.price_ai_estimate > 0 ? `${activity.price_ai_estimate.toLocaleString()} VND` :
+                    <span className="text-gray-500 italic font-normal">Hiện chưa cập nhật giá tiền</span>
+                  }
+                </Text>
               </div>
             </div>
 
@@ -328,7 +334,8 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
         <ActivityCommentModal
           open={showCommentModal}
           onClose={() => setShowCommentModal(false)}
-          activityId={activity.id}
+          activityId={activity.activity_id || activity.id}
+          activityType={activity.type}
         />
       </div>
     );
