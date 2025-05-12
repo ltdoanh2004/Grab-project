@@ -118,9 +118,10 @@ class PlanModel:
         3. MÔ TẢ PHẢI NGẮN GỌN (<100 ký tự) để tránh vượt quá giới hạn token
         4. KHÔNG sử dụng mô tả dài, CHỈ 1-2 câu ngắn gọn
         5. Mỗi segment (morning/afternoon/evening) có 4-5 hoạt động
-        6. JSON KHÔNG ĐƯỢC CẮT NGẮN GIỮA CHỪNG - KIỂM TRA KỸ TẤT CẢ DẤU NGOẶC ĐỀU ĐƯỢC ĐÓNG!
-        7. NGHIÊM CẤM SỬ DỤNG LẠI CÙNG PLACES, KHÁCH SẠN, NHÀ HÀNG ĐÃ DÙNG TRONG NHỮNG NGÀY TRƯỚC!
-        8. KHÁCH SẠN CHỈ ĐƯỢC CHỌN TRONG NGÀY ĐẦU TIÊN, NHỮNG NGÀY SAU KHÔNG ĐƯỢC CHỌN KHÁCH SẠN NỮA!
+        6. Mỗi segment phải có ít nhất 3 hoạt động
+        7. JSON KHÔNG ĐƯỢC CẮT NGẮN GIỮA CHỪNG - KIỂM TRA KỸ TẤT CẢ DẤU NGOẶC ĐỀU ĐƯỢC ĐÓNG!
+        8. NGHIÊM CẤM SỬ DỤNG LẠI CÙNG PLACES, KHÁCH SẠN, NHÀ HÀNG ĐÃ DÙNG TRONG NHỮNG NGÀY TRƯỚC!
+        9. KHÁCH SẠN CHỈ ĐƯỢC CHỌN TRONG NGÀY ĐẦU TIÊN, NHỮNG NGÀY SAU KHÔNG ĐƯỢC CHỌN KHÁCH SẠN NỮA!
         
         DANH SÁCH NHỮNG ID ĐÃ SỬ DỤNG (BẮT BUỘC KHÔNG ĐƯỢC DÙNG LẠI):
         - Đã dùng khách sạn: {used_accommodations}
@@ -161,6 +162,7 @@ class PlanModel:
         - mô tả, chỉ cần 1-2 câu ngắn với phong cách hướng dẫn viên
         - Mỗi hoạt động phải có ID duy nhất, không được trùng lặp với các ngày trước
         - Mỗi segment (morning/afternoon/evening) có 4-5 hoạt động
+        - Mỗi segment phải có ít nhất 3 hoạt động
         - Luôn sử dụng đúng ID từ dữ liệu đầu vào
         - XÓA tất cả chú thích, hướng dẫn trong JSON cuối cùng
         - Description phải ngắn gọn sáng tạo và có thể chèn thêm icon. 
@@ -573,25 +575,17 @@ class PlanModel:
         """
         import re
         import json
-        
         if not response_text:
             return "{}"
-        
         log.info(f"Raw response (first 200 chars): {response_text[:200]}")
-            
-
         first_brace_index = response_text.find('{')
         if first_brace_index > 0:
             response_text = response_text[first_brace_index:]
             log.info(f"Removed leading text, JSON now starts with: {response_text[:50]}")
-            
         cleaned_text = re.sub(r'^(System:|User:|Assistant:|Day \d+:|Ngày \d+:)[^\{]*', '', response_text.strip())
-        
-
         stack = []
         start_idx = -1
         potential_jsons = []
-        
         for i, char in enumerate(cleaned_text):
             if char == '{':
                 if not stack:  
@@ -602,7 +596,6 @@ class PlanModel:
                     stack.pop()
                     if not stack:  
                         potential_jsons.append(cleaned_text[start_idx:i+1])
-        
         for json_str in sorted(potential_jsons, key=len, reverse=True):
             try:
                 json_obj = json.loads(json_str)
@@ -622,23 +615,18 @@ class PlanModel:
                 except Exception:
                     log.warning(f"Failed to fix JSON: {e}")
                     continue
-        
-
         try:
             json_fragment = cleaned_text
             if cleaned_text.find("{") != -1:
                 json_fragment = cleaned_text[cleaned_text.find("{"):]
-            
             date_match = re.search(r'"date"\s*:\s*"([^"]+)"', json_fragment)
             title_match = re.search(r'"day_title"\s*:\s*"([^"]+)"', json_fragment)
-            
             if date_match or title_match:
                 partial_json = {
                     "date": date_match.group(1) if date_match else "",
                     "day_title": title_match.group(1) if title_match else "",
                     "segments": []
                 }
-                
                 morning_match = re.search(r'"time_of_day"\s*:\s*"morning"', json_fragment)
                 if morning_match:
                     morning_activities = []
@@ -648,7 +636,6 @@ class PlanModel:
                             hotel_id_match = re.search(r'"id"\s*:\s*"([^"]+)"', hotel_match.group(0))
                             hotel_name_match = re.search(r'"name"\s*:\s*"([^"]+)"', hotel_match.group(0))
                             hotel_desc_match = re.search(r'"description"\s*:\s*"([^"]+)"', hotel_match.group(0))
-                            
                             if hotel_id_match:
                                 hotel_activity = {
                                     "id": hotel_id_match.group(1),
@@ -666,40 +653,33 @@ class PlanModel:
                                 morning_activities.append(hotel_activity)
                         except Exception as e:
                             log.warning(f"Error extracting hotel info: {e}")
-                    
                     if morning_activities:
                         partial_json["segments"].append({
                             "time_of_day": "morning",
                             "activities": morning_activities
                         })
-                
                 afternoon_match = re.search(r'"time_of_day"\s*:\s*"afternoon"', json_fragment)
                 if afternoon_match:
                     partial_json["segments"].append({
                         "time_of_day": "afternoon",
                         "activities": []
                     })
-                
                 evening_match = re.search(r'"time_of_day"\s*:\s*"evening"', json_fragment)
                 if evening_match:
                     partial_json["segments"].append({
                         "time_of_day": "evening",
                         "activities": []
                     })
-                
                 if not partial_json["segments"]:
                     partial_json["segments"] = [
                         {"time_of_day": "morning", "activities": []},
                         {"time_of_day": "afternoon", "activities": []},
                         {"time_of_day": "evening", "activities": []}
                     ]
-                
                 log.warning(f"Created partial JSON with extracted properties from truncated response")
                 return json.dumps(partial_json)
         except Exception as e:
             log.error(f"Error during partial extraction: {e}")
-            
-
         try:
             first_brace = cleaned_text.find('{')
             last_brace = cleaned_text.rfind('}')

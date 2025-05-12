@@ -1694,3 +1694,640 @@ TypeError: list indices must be integers or slices, not str
 2025-05-12 20:59:44,778 - src.services.genrate_plan_api - INFO - Trip plan request processed successfully
 2025-05-12 21:27:10,581 - __mp_main__ - INFO - All routers registered successfully
 2025-05-12 21:27:10,604 - app - INFO - All routers registered successfully
+2025-05-12 21:51:16,190 - src.services.suggest_api - INFO - Processing recommendation query for hochiminh
+2025-05-12 21:51:16,227 - src.agents.travel_agent - INFO - Setting up all databases...
+2025-05-12 21:51:18,782 - src.agents.travel_agent - INFO - All databases setup completed
+2025-05-12 21:51:18,782 - src.agents.travel_agent - INFO - Processing query: 
+        Planning a trip to hochiminh with the following details:
+        - Group: 2 adults, 1 children, 0 infants
+        - Budget: mid (approx. 10000000 VND)
+        - Duration: 10 days
+        - Season: summer
+        - Travel Style: family
+        
+        Preferences:
+        - Transportation: No specific preference
+        - Accommodation: Hotel
+        - Food: Vegetarian
+        - Places to visit: No specific preference
+        - Activities: Hiking
+        - Extra: No specific preference
+
+        IMPORTANT: Please focus on finding recommendations specifically in hochiminh. All suggestions should be located in or near this destination.
+        
+        Please suggest:
+        1. Suitable accommodations in hochiminh
+        2. Interesting activities and places to visit in hochiminh
+        3. Recommended restaurants and food options in hochiminh
+        
+        Consider:
+        - The travel style and preferences
+        - The season and weather conditions in hochiminh
+        - The budget constraints
+        - The duration of stay
+        - The location and its unique offerings
+        - All recommendations must be in hochiminh
+        
+2025-05-12 21:51:18,782 - src.agents.travel_agent - DEBUG - Sending request to OpenAI...
+2025-05-12 21:51:22,321 - src.agents.travel_agent - INFO - OpenAI response: ChatCompletion(id='chatcmpl-BWOmuFzOka0CeNjYgepcUiQZhlyb3', choices=[Choice(finish_reason='function_call', index=0, logprobs=None, message=ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"family-friendly hotel in Ho Chi Minh with mid-range budget around 10000000 VND for 3 guests","top_k":15}', name='query_hotels'), tool_calls=None))], created=1747061480, model='gpt-4.1-mini-2025-04-14', object='chat.completion', service_tier='default', system_fingerprint='fp_38647f5e19', usage=CompletionUsage(completion_tokens=43, prompt_tokens=1002, total_tokens=1045, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0)))
+2025-05-12 21:51:22,322 - src.agents.travel_agent - INFO - Model response message: ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"family-friendly hotel in Ho Chi Minh with mid-range budget around 10000000 VND for 3 guests","top_k":15}', name='query_hotels'), tool_calls=None)
+2025-05-12 21:51:22,322 - src.agents.travel_agent - INFO - Function call: query_hotels
+2025-05-12 21:51:22,322 - src.agents.travel_agent - DEBUG - Function arguments: {'query_text': 'family-friendly hotel in Ho Chi Minh with mid-range budget around 10000000 VND for 3 guests', 'top_k': 15}
+2025-05-12 21:51:22,322 - src.agents.travel_agent - INFO - Querying all databases with context
+2025-05-12 21:51:22,322 - src.agents.travel_agent - INFO - Querying hotels with context: family-friendly hotel in Ho Chi Minh with mid-range budget around 10000000 VND for 3 guests
+2025-05-12 21:51:22,322 - src.agents.travel_agent - INFO - top_k for query hotels is: 15
+2025-05-12 21:51:22,322 - src.agents.travel_agent - INFO - filter for query hotels is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 21:51:26,348 - src.agents.travel_agent - INFO - Added 15 hotel recommendations
+2025-05-12 21:51:26,348 - src.agents.travel_agent - INFO - Querying places with context: family-friendly hotel in Ho Chi Minh with mid-range budget around 10000000 VND for 3 guests
+2025-05-12 21:51:26,348 - src.agents.travel_agent - INFO - top_k for query places is: 50
+2025-05-12 21:51:26,348 - src.agents.travel_agent - INFO - filter for query places is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 21:51:26,348 - src.agents.travel_agent - INFO - hochiminh)
+2025-05-12 21:51:29,393 - src.agents.travel_agent - INFO - ids for query places is: ['place_013252', 'place_004755', 'place_001471', 'place_004184', 'place_013620', 'place_013243', 'place_013240', 'place_013542', 'place_012766', 'place_013790', 'place_014065', 'place_013892', 'place_013381', 'place_015811', 'place_013839', 'place_013202', 'place_013746', 'place_001445', 'place_015513', 'place_013628', 'place_001850', 'place_001641', 'place_012910', 'place_013228', 'place_007899', 'place_013603', 'place_012998', 'place_013169', 'place_013868', 'place_015473', 'place_013231', 'place_012937', 'place_001637', 'place_002414', 'place_015881', 'place_001752', 'place_013206', 'place_013400', 'place_015663', 'place_015465', 'place_013355', 'place_013864', 'place_013134', 'place_013065', 'place_013850', 'place_015352', 'place_015725', 'place_014079', 'place_002421', 'place_014127']
+2025-05-12 21:51:29,393 - src.agents.travel_agent - INFO - place_ids: ['place_013252', 'place_004755', 'place_001471', 'place_004184', 'place_013620', 'place_013243', 'place_013240', 'place_013542', 'place_012766', 'place_013790', 'place_014065', 'place_013892', 'place_013381', 'place_015811', 'place_013839', 'place_013202', 'place_013746', 'place_001445', 'place_015513', 'place_013628', 'place_001850', 'place_001641', 'place_012910', 'place_013228', 'place_007899', 'place_013603', 'place_012998', 'place_013169', 'place_013868', 'place_015473', 'place_013231', 'place_012937', 'place_001637', 'place_002414', 'place_015881', 'place_001752', 'place_013206', 'place_013400', 'place_015663', 'place_015465', 'place_013355', 'place_013864', 'place_013134', 'place_013065', 'place_013850', 'place_015352', 'place_015725', 'place_014079', 'place_002421', 'place_014127']
+2025-05-12 21:51:29,394 - src.agents.travel_agent - INFO - Added 50 place recommendations
+2025-05-12 21:51:29,394 - src.agents.travel_agent - INFO - Querying restaurants with context: family-friendly hotel in Ho Chi Minh with mid-range budget around 10000000 VND for 3 guests
+2025-05-12 21:51:29,394 - src.agents.travel_agent - INFO - top_k for query fnb is: 50
+2025-05-12 21:51:29,394 - src.agents.travel_agent - INFO - filter for query fnb is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 21:51:33,663 - src.agents.travel_agent - INFO - Added 46 restaurant recommendations
+2025-05-12 21:51:33,664 - src.agents.travel_agent - INFO - Final result distribution: 15 hotels, 50 places, 46 restaurants
+2025-05-12 21:51:33,664 - src.services.suggest_api - INFO - Recommendation query processed successfully, got 111 items
+2025-05-12 21:51:33,664 - src.services.suggest_api - INFO - Grouped recommendations: 15 accommodations, 50 places, 46 restaurants
+2025-05-12 21:51:33,665 - src.services.suggest_api - INFO - Final response has 111 items
+2025-05-12 21:51:33,841 - src.services.genrate_plan_api - INFO - Received raw trip plan request: dict_keys(['destination_id', 'accommodation', 'places', 'restaurants'])
+2025-05-12 21:51:33,841 - src.services.genrate_plan_api - INFO - Extracted 15 accommodations, 50 places, and 46 restaurants
+2025-05-12 21:51:33,841 - src.services.genrate_plan_api - INFO - Destination identified as: hochiminh
+2025-05-12 21:51:33,841 - src.services.genrate_plan_api - INFO - Generating plan with destination: hochiminh
+2025-05-12 21:54:01,075 - src.services.genrate_plan_api - INFO - Generated plan: {'trip_name': 'Trip to Hochiminh', 'start_date': '2025-05-12', 'end_date': '2025-05-14', 'user_id': 'user123', 'destination_id': 'hochiminh', 'plan_by_day': [{'date': '2025-05-12', 'day_title': 'Ngày 1: Khám phá Sài Gòn rực rỡ', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'hotel_011009', 'type': 'accommodation', 'name': 'Chillfin Saigon', 'start_time': '08:00', 'end_time': '10:00', 'description': 'Tận hưởng không gian nghỉ dưỡng sang trọng. 🌟', 'location': 'Sài Gòn', 'rating': 4.8, 'price': 1200000.0, 'image_url': '', 'booking_link': '', 'room_info': 'Phòng tiêu chuẩn', 'tax_info': 'Đã bao gồm thuế', 'elderly_friendly': True, 'url': ''}, {'id': 'place_004755', 'type': 'place', 'name': 'Eden Spa', 'start_time': '10:15', 'end_time': '11:30', 'description': 'Thư giãn tuyệt đối với liệu pháp spa độc đáo.', 'address': 'Quận 1, Sài Gòn', 'categories': 'spa', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 300000.0, 'image_url': '', 'url': ''}, {'id': 'place_004184', 'type': 'place', 'name': 'The Place Saigon', 'start_time': '11:45', 'end_time': '12:30', 'description': 'Khám phá cà phê độc lạ với view tuyệt đẹp.', 'address': 'Quận 3, Sài Gòn', 'categories': 'coffee shop', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.5, 'price': 75000.0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_013252', 'type': 'place', 'name': 'Cuchi Tunnels & Mekong Delta', 'start_time': '13:30', 'end_time': '15:00', 'description': 'Tìm hiểu lịch sử và cuộc sống Mekong.', 'address': 'Ngoài thành phố', 'categories': 'historical', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.6, 'price': 550000.0, 'image_url': '', 'url': ''}, {'id': 'restaurant_014360', 'type': 'restaurant', 'name': 'Lu Hotdog - Phan Đăng Lưu', 'start_time': '15:15', 'end_time': '16:30', 'description': 'Thưởng thức hotdog hương vị Mỹ. 🌭', 'address': 'Quận Bình Thạnh, Sài Gòn', 'cuisines': 'Fast Food', 'price_range': '100,000-300,000 VND', 'rating': 4.3, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}, {'id': 'place_015811', 'type': 'place', 'name': 'Cu Chi & Mekong Delta Tour', 'start_time': '16:45', 'end_time': '18:00', 'description': 'Khám phá sâu sắc văn hoá và thiên nhiên.', 'address': 'Ngoài thành phố', 'categories': 'sightseeing', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 700000.0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'restaurant_013431', 'type': 'restaurant', 'name': 'Bánh Tráng Kim Ngọc', 'start_time': '18:30', 'end_time': '20:00', 'description': 'Trải nghiệm bánh tráng nướng và cuốn.', 'address': 'Quận 5, Sài Gòn', 'cuisines': 'Đặc sản địa phương', 'price_range': '100,000-300,000 VND', 'rating': 4.4, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}, {'id': 'place_012766', 'type': 'place', 'name': 'Ho Chi Minh City Tour', 'start_time': '20:15', 'end_time': '21:45', 'description': 'Tham gia tour dạo quanh phố phường về đêm. 🌃', 'address': 'Trung tâm thành phố', 'categories': 'city tour', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.6, 'price': 80000.0, 'image_url': '', 'url': ''}]}], 'daily_tips': ['- Nên thăm Củ Chi vào buổi sáng từ 7-9h để tránh đông đúc', '- Mang theo nước uống và đồ ăn nhẹ khi thăm Bảo tàng Dân tộc học', '- Chú ý đến quy định về trang phục khi thăm Nhà thờ Đức Bà', '- Dùng Grab hoặc xe buýt để di chuyển thoải mái ở Hochiminh', '- Nên thử các món ăn đường phố ngon và rẻ ở phố đi bộ Nguyễn Huệ']}, {'date': '2025-05-13', 'day_title': 'Ngày 2: Khám phá nhịp sống Sài Gòn', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'place_007899', 'type': 'place', 'name': 'Diamond E-gaming Club', 'start_time': '08:00', 'end_time': '09:30', 'description': 'Trải nghiệm giải trí đỉnh cao tại câu lạc bộ E-gaming.', 'address': 'Ho Chi Minh City', 'categories': 'entertainment', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.2, 'price': 100000.0, 'image_url': '', 'url': ''}, {'id': 'place_013892', 'type': 'place', 'name': 'Vietnam Family Fun In 9 Days', 'start_time': '09:45', 'end_time': '11:00', 'description': 'Khám phá những hoạt động gia đình đầy thú vị tại thành phố.', 'address': 'Ho Chi Minh City', 'categories': 'family', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.3, 'price': 150000.0, 'image_url': '', 'url': ''}, {'id': 'place_001641', 'type': 'place', 'name': 'The Moc Spa', 'start_time': '11:15', 'end_time': '12:00', 'description': 'Thư giãn tuyệt đối với dịch vụ spa cao cấp.', 'address': 'Ho Chi Minh City', 'categories': 'spa', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 350000.0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_012910', 'type': 'place', 'name': 'French Architecture & War Remnants Museum', 'start_time': '13:30', 'end_time': '15:00', 'description': 'Hòa mình vào nghệ thuật kiến trúc Pháp và lịch sử chiến tranh.', 'address': 'Ho Chi Minh City', 'categories': 'museum', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.6, 'price': 200000.0, 'image_url': '', 'url': ''}, {'id': 'place_001850', 'type': 'place', 'name': 'Reunification Palace', 'start_time': '15:15', 'end_time': '16:45', 'description': 'Khám phá biểu tượng lịch sử của thành phố.', 'address': 'Ho Chi Minh City', 'categories': 'historical', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.5, 'price': 100000.0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'restaurant_013884', 'type': 'restaurant', 'name': 'Bún Cá Châu Đốc Dì Huệ', 'start_time': '18:00', 'end_time': '19:30', 'description': 'Thưởng thức bún cá truyền thống thơm ngon đặc trưng.', 'address': 'Ho Chi Minh City', 'cuisines': 'Vietnamese', 'price_range': '100,000-300,000 VND', 'rating': 4.8, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}, {'id': 'restaurant_014236', 'type': 'restaurant', 'name': 'Trà Sữa Nhà Bao', 'start_time': '19:45', 'end_time': '20:30', 'description': 'Thưởng thức trà sữa thơm ngon đa dạng vị.', 'address': 'Ho Chi Minh City', 'cuisines': 'Beverage', 'price_range': '100,000-300,000 VND', 'rating': 4.5, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}, {'id': 'restaurant_013237', 'type': 'restaurant', 'name': 'Saigon Bread', 'start_time': '20:45', 'end_time': '21:30', 'description': 'Thưởng thức bánh mì Sài Gòn giòn ngon lạ mắt.', 'address': 'Ho Chi Minh City', 'cuisines': 'Vietnamese', 'price_range': '100,000-300,000 VND', 'rating': 4.6, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}]}], 'daily_tips': ['- Nên bắt đầu sớm từ 6-8h sáng để tránh nóng và đông đúc.', '- Sử dụng Grab hoặc GoViet để di chuyển tiện lợi trong thành phố.', '- Thử các món ăn đường phố tại khu chợ Bến Thành.', '- Ghé thăm phố đi bộ Nguyễn Huệ để tham quan và mua sắm.', '- Đặt vé tham quan Thành phố Hồ Chí Minh trước để tránh xếp hàng.', '- Chuẩn bị đủ nước uống khi tham quan Thảo Cầm Viên để tránh mệt mỏi.', '- Nếu ghé vào mùa mưa, nên mang theo dù để phòng tránh.']}, {'date': '2025-05-14', 'day_title': 'Ngày 3: Trải nghiệm văn hóa Sài Gòn', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'place_013542', 'type': 'place', 'name': 'Ho Chi Minh City Private Package Tour 3 Days 2 Nights', 'start_time': '08:00', 'end_time': '09:30', 'description': 'Khám phá nhịp sống Sài Gòn từ góc nhìn địa phương.', 'address': 'Ho Chi Minh City', 'categories': 'tour', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 1400000.0, 'image_url': '', 'url': ''}, {'id': 'restaurant_014355', 'type': 'restaurant', 'name': 'Crystal Jade Kitchen - Saigon Centre - Nhà Hàng Quảng Đông', 'start_time': '09:45', 'end_time': '10:30', 'description': 'Thưởng thức ẩm thực Quảng Đông chính gốc.', 'address': 'Saigon Centre, Ho Chi Minh City', 'cuisines': 'Quảng Đông', 'price_range': '100,000-300,000 VND', 'rating': 4.6, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_014065', 'type': 'place', 'name': 'Private Mekong Delta 3 days 2 nights (My Tho – Can Tho – Chau Doc)', 'start_time': '13:00', 'end_time': '15:00', 'description': 'Chúng ta sẽ tham quan vùng ĐBSCL hữu tình.', 'address': 'Mekong Delta, Ho Chi Minh City', 'categories': 'tour', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.8, 'price': 2300000.0, 'image_url': '', 'url': ''}, {'id': 'restaurant_014770', 'type': 'restaurant', 'name': 'LongBuri Cancook - Gân Bò, Chân Gà Sốt Thái', 'start_time': '15:15', 'end_time': '16:00', 'description': 'Thưởng thức món gân bò chân gà kiểu Thái đặc sắc.', 'address': 'Ho Chi Minh City', 'cuisines': 'Thái Lan', 'price_range': '100,000-300,000 VND', 'rating': 4.5, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'place_013228', 'type': 'place', 'name': 'Mekong Serenity 2 Days 1 Night Riverside Retreat', 'start_time': '18:00', 'end_time': '20:00', 'description': 'Trải nghiệm sự yên ả của miền sông nước.', 'address': 'Mekong Delta, Ho Chi Minh City', 'categories': 'retreat', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.9, 'price': 2100000.0, 'image_url': '', 'url': ''}, {'id': 'restaurant_013019', 'type': 'restaurant', 'name': 'Bún Chả Hà Nội Tiểu Bảo - Nguyễn Văn Nguyễn', 'start_time': '20:15', 'end_time': '21:30', 'description': 'Thử món bún chả Hà Nội tuyệt hảo ngay giữa lòng Sài Gòn.', 'address': 'Nguyễn Văn Nguyễn, Ho Chi Minh City', 'cuisines': 'Việt Nam', 'price_range': '100,000-300,000 VND', 'rating': 4.7, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}]}], 'daily_tips': ['- Bắt đầu sớm từ 6-8h sáng để tránh nóng và đông đúc.', '- Nên mang theo áo mưa khi ghé thăm Thành phố Hồ Chí Minh vào mùa mưa.', '- Để thưởng thức ẩm thực địa phương, nên dành thời gian khám phá chợ Bến Thành.', '- Khám phá Lăng Bác, nhưng nhớ mặc đồ lịch sự và tuân thủ quy định.', '- Sử dụng Grab hoặc taxi chính hãng để di chuyển dễ dàng và an toàn ở Sài Gòn.', '- Tham quan Bảo tàng Chứng tích Chiến tranh, nơi lưu giữ nhiều hiện vật lịch sử quan trọng.']}]}
+2025-05-12 21:54:01,076 - src.services.genrate_plan_api - INFO - Trip plan request processed successfully
+2025-05-12 21:57:19,343 - src.services.suggest_api - INFO - Processing recommendation query for hochiminh
+2025-05-12 21:57:19,350 - src.agents.travel_agent - INFO - Setting up all databases...
+2025-05-12 21:57:22,111 - src.agents.travel_agent - INFO - All databases setup completed
+2025-05-12 21:57:22,111 - src.agents.travel_agent - INFO - Processing query: 
+        Planning a trip to hochiminh with the following details:
+        - Group: 2 adults, 1 children, 0 infants
+        - Budget: mid (approx. 10000000 VND)
+        - Duration: 10 days
+        - Season: summer
+        - Travel Style: family
+        
+        Preferences:
+        - Transportation: No specific preference
+        - Accommodation: Hotel
+        - Food: Vegetarian
+        - Places to visit: No specific preference
+        - Activities: Hiking
+        - Extra: No specific preference
+
+        IMPORTANT: Please focus on finding recommendations specifically in hochiminh. All suggestions should be located in or near this destination.
+        
+        Please suggest:
+        1. Suitable accommodations in hochiminh
+        2. Interesting activities and places to visit in hochiminh
+        3. Recommended restaurants and food options in hochiminh
+        
+        Consider:
+        - The travel style and preferences
+        - The season and weather conditions in hochiminh
+        - The budget constraints
+        - The duration of stay
+        - The location and its unique offerings
+        - All recommendations must be in hochiminh
+        
+2025-05-12 21:57:22,111 - src.agents.travel_agent - DEBUG - Sending request to OpenAI...
+2025-05-12 21:57:24,931 - src.agents.travel_agent - INFO - OpenAI response: ChatCompletion(id='chatcmpl-BWOsm0vfhdnAQlMSpF6fVr8OhxMkk', choices=[Choice(finish_reason='function_call', index=0, logprobs=None, message=ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"hotel in Ho Chi Minh suitable for family, mid budget, summer season, 10 days stay","top_k":15}', name='query_hotels'), tool_calls=None))], created=1747061844, model='gpt-4.1-mini-2025-04-14', object='chat.completion', service_tier='default', system_fingerprint='fp_38647f5e19', usage=CompletionUsage(completion_tokens=40, prompt_tokens=1002, total_tokens=1042, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0)))
+2025-05-12 21:57:24,931 - src.agents.travel_agent - INFO - Model response message: ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"hotel in Ho Chi Minh suitable for family, mid budget, summer season, 10 days stay","top_k":15}', name='query_hotels'), tool_calls=None)
+2025-05-12 21:57:24,931 - src.agents.travel_agent - INFO - Function call: query_hotels
+2025-05-12 21:57:24,931 - src.agents.travel_agent - DEBUG - Function arguments: {'query_text': 'hotel in Ho Chi Minh suitable for family, mid budget, summer season, 10 days stay', 'top_k': 15}
+2025-05-12 21:57:24,931 - src.agents.travel_agent - INFO - Querying all databases with context
+2025-05-12 21:57:24,931 - src.agents.travel_agent - INFO - Querying hotels with context: hotel in Ho Chi Minh suitable for family, mid budget, summer season, 10 days stay
+2025-05-12 21:57:24,931 - src.agents.travel_agent - INFO - top_k for query hotels is: 15
+2025-05-12 21:57:24,931 - src.agents.travel_agent - INFO - filter for query hotels is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 21:57:29,413 - src.agents.travel_agent - INFO - Added 15 hotel recommendations
+2025-05-12 21:57:29,413 - src.agents.travel_agent - INFO - Querying places with context: hotel in Ho Chi Minh suitable for family, mid budget, summer season, 10 days stay
+2025-05-12 21:57:29,413 - src.agents.travel_agent - INFO - top_k for query places is: 50
+2025-05-12 21:57:29,413 - src.agents.travel_agent - INFO - filter for query places is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 21:57:29,413 - src.agents.travel_agent - INFO - hochiminh)
+2025-05-12 21:57:32,418 - src.agents.travel_agent - INFO - ids for query places is: ['place_013892', 'place_013240', 'place_013243', 'place_013809', 'place_013839', 'place_013252', 'place_013628', 'place_013850', 'place_013620', 'place_012691', 'place_013753', 'place_013175', 'place_015811', 'place_015437', 'place_013864', 'place_013542', 'place_013166', 'place_013202', 'place_013531', 'place_013228', 'place_012842', 'place_014065', 'place_015513', 'place_012910', 'place_015459', 'place_013610', 'place_001752', 'place_013381', 'place_013992', 'place_013169', 'place_013231', 'place_015644', 'place_013355', 'place_015663', 'place_015619', 'place_014133', 'place_015630', 'place_013618', 'place_012766', 'place_015635', 'place_013254', 'place_013461', 'place_013774', 'place_013029', 'place_013261', 'place_012736', 'place_013675', 'place_015352', 'place_012903', 'place_001471']
+2025-05-12 21:57:32,418 - src.agents.travel_agent - INFO - place_ids: ['place_013892', 'place_013240', 'place_013243', 'place_013809', 'place_013839', 'place_013252', 'place_013628', 'place_013850', 'place_013620', 'place_012691', 'place_013753', 'place_013175', 'place_015811', 'place_015437', 'place_013864', 'place_013542', 'place_013166', 'place_013202', 'place_013531', 'place_013228', 'place_012842', 'place_014065', 'place_015513', 'place_012910', 'place_015459', 'place_013610', 'place_001752', 'place_013381', 'place_013992', 'place_013169', 'place_013231', 'place_015644', 'place_013355', 'place_015663', 'place_015619', 'place_014133', 'place_015630', 'place_013618', 'place_012766', 'place_015635', 'place_013254', 'place_013461', 'place_013774', 'place_013029', 'place_013261', 'place_012736', 'place_013675', 'place_015352', 'place_012903', 'place_001471']
+2025-05-12 21:57:32,418 - src.agents.travel_agent - INFO - Added 50 place recommendations
+2025-05-12 21:57:32,418 - src.agents.travel_agent - INFO - Querying restaurants with context: hotel in Ho Chi Minh suitable for family, mid budget, summer season, 10 days stay
+2025-05-12 21:57:32,418 - src.agents.travel_agent - INFO - top_k for query fnb is: 50
+2025-05-12 21:57:32,418 - src.agents.travel_agent - INFO - filter for query fnb is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 21:57:35,738 - src.agents.travel_agent - INFO - Added 48 restaurant recommendations
+2025-05-12 21:57:35,738 - src.agents.travel_agent - INFO - Final result distribution: 15 hotels, 50 places, 48 restaurants
+2025-05-12 21:57:35,738 - src.services.suggest_api - INFO - Recommendation query processed successfully, got 113 items
+2025-05-12 21:57:35,739 - src.services.suggest_api - INFO - Grouped recommendations: 15 accommodations, 50 places, 48 restaurants
+2025-05-12 21:57:35,739 - src.services.suggest_api - INFO - Final response has 113 items
+2025-05-12 21:58:02,855 - src.services.suggest_api - INFO - Processing recommendation query for hochiminh
+2025-05-12 21:58:02,868 - src.agents.travel_agent - INFO - Setting up all databases...
+2025-05-12 21:58:05,485 - src.agents.travel_agent - INFO - All databases setup completed
+2025-05-12 21:58:05,485 - src.agents.travel_agent - INFO - Processing query: 
+        Planning a trip to hochiminh with the following details:
+        - Group: 2 adults, 1 children, 0 infants
+        - Budget: mid (approx. 10000000 VND)
+        - Duration: 10 days
+        - Season: summer
+        - Travel Style: family
+        
+        Preferences:
+        - Transportation: No specific preference
+        - Accommodation: Hotel
+        - Food: Vegetarian
+        - Places to visit: No specific preference
+        - Activities: Hiking
+        - Extra: No specific preference
+
+        IMPORTANT: Please focus on finding recommendations specifically in hochiminh. All suggestions should be located in or near this destination.
+        
+        Please suggest:
+        1. Suitable accommodations in hochiminh
+        2. Interesting activities and places to visit in hochiminh
+        3. Recommended restaurants and food options in hochiminh
+        
+        Consider:
+        - The travel style and preferences
+        - The season and weather conditions in hochiminh
+        - The budget constraints
+        - The duration of stay
+        - The location and its unique offerings
+        - All recommendations must be in hochiminh
+        
+2025-05-12 21:58:05,485 - src.agents.travel_agent - DEBUG - Sending request to OpenAI...
+2025-05-12 21:58:07,740 - src.agents.travel_agent - INFO - OpenAI response: ChatCompletion(id='chatcmpl-BWOtSDbaMYhkbWBm5Kb75cQwCwfXR', choices=[Choice(finish_reason='function_call', index=0, logprobs=None, message=ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"hotel in Hochiminh suitable for a family with 2 adults and 1 child, budget around 10000000 VND for 10 days, mid-range","top_k":15}', name='query_hotels'), tool_calls=None))], created=1747061886, model='gpt-4.1-mini-2025-04-14', object='chat.completion', service_tier='default', system_fingerprint='fp_38647f5e19', usage=CompletionUsage(completion_tokens=54, prompt_tokens=1002, total_tokens=1056, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0)))
+2025-05-12 21:58:07,740 - src.agents.travel_agent - INFO - Model response message: ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"hotel in Hochiminh suitable for a family with 2 adults and 1 child, budget around 10000000 VND for 10 days, mid-range","top_k":15}', name='query_hotels'), tool_calls=None)
+2025-05-12 21:58:07,740 - src.agents.travel_agent - INFO - Function call: query_hotels
+2025-05-12 21:58:07,740 - src.agents.travel_agent - DEBUG - Function arguments: {'query_text': 'hotel in Hochiminh suitable for a family with 2 adults and 1 child, budget around 10000000 VND for 10 days, mid-range', 'top_k': 15}
+2025-05-12 21:58:07,740 - src.agents.travel_agent - INFO - Querying all databases with context
+2025-05-12 21:58:07,740 - src.agents.travel_agent - INFO - Querying hotels with context: hotel in Hochiminh suitable for a family with 2 adults and 1 child, budget around 10000000 VND for 10 days, mid-range
+2025-05-12 21:58:07,740 - src.agents.travel_agent - INFO - top_k for query hotels is: 15
+2025-05-12 21:58:07,740 - src.agents.travel_agent - INFO - filter for query hotels is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 21:58:10,434 - src.agents.travel_agent - INFO - Added 15 hotel recommendations
+2025-05-12 21:58:10,434 - src.agents.travel_agent - INFO - Querying places with context: hotel in Hochiminh suitable for a family with 2 adults and 1 child, budget around 10000000 VND for 10 days, mid-range
+2025-05-12 21:58:10,434 - src.agents.travel_agent - INFO - top_k for query places is: 50
+2025-05-12 21:58:10,434 - src.agents.travel_agent - INFO - filter for query places is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 21:58:10,434 - src.agents.travel_agent - INFO - hochiminh)
+2025-05-12 21:58:13,329 - src.agents.travel_agent - INFO - ids for query places is: ['place_013892', 'place_013240', 'place_013243', 'place_013252', 'place_013381', 'place_013628', 'place_015663', 'place_013414', 'place_013372', 'place_015616', 'place_013793', 'place_013809', 'place_013564', 'place_012842', 'place_013594', 'place_013228', 'place_013864', 'place_015437', 'place_013531', 'place_013254', 'place_001445', 'place_013461', 'place_004755', 'place_015644', 'place_012814', 'place_013753', 'place_015619', 'place_014065', 'place_013231', 'place_014133', 'place_013878', 'place_015465', 'place_015499', 'place_014079', 'place_015425', 'place_015811', 'place_013355', 'place_013626', 'place_015635', 'place_013566', 'place_013559', 'place_013839', 'place_012847', 'place_013850', 'place_013532', 'place_015725', 'place_013241', 'place_015494', 'place_013633', 'place_001471']
+2025-05-12 21:58:13,330 - src.agents.travel_agent - INFO - place_ids: ['place_013892', 'place_013240', 'place_013243', 'place_013252', 'place_013381', 'place_013628', 'place_015663', 'place_013414', 'place_013372', 'place_015616', 'place_013793', 'place_013809', 'place_013564', 'place_012842', 'place_013594', 'place_013228', 'place_013864', 'place_015437', 'place_013531', 'place_013254', 'place_001445', 'place_013461', 'place_004755', 'place_015644', 'place_012814', 'place_013753', 'place_015619', 'place_014065', 'place_013231', 'place_014133', 'place_013878', 'place_015465', 'place_015499', 'place_014079', 'place_015425', 'place_015811', 'place_013355', 'place_013626', 'place_015635', 'place_013566', 'place_013559', 'place_013839', 'place_012847', 'place_013850', 'place_013532', 'place_015725', 'place_013241', 'place_015494', 'place_013633', 'place_001471']
+2025-05-12 21:58:13,331 - src.agents.travel_agent - INFO - Added 50 place recommendations
+2025-05-12 21:58:13,331 - src.agents.travel_agent - INFO - Querying restaurants with context: hotel in Hochiminh suitable for a family with 2 adults and 1 child, budget around 10000000 VND for 10 days, mid-range
+2025-05-12 21:58:13,331 - src.agents.travel_agent - INFO - top_k for query fnb is: 50
+2025-05-12 21:58:13,331 - src.agents.travel_agent - INFO - filter for query fnb is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 21:58:16,548 - src.agents.travel_agent - INFO - Added 47 restaurant recommendations
+2025-05-12 21:58:16,549 - src.agents.travel_agent - INFO - Final result distribution: 15 hotels, 50 places, 47 restaurants
+2025-05-12 21:58:16,549 - src.services.suggest_api - INFO - Recommendation query processed successfully, got 112 items
+2025-05-12 21:58:16,549 - src.services.suggest_api - INFO - Grouped recommendations: 15 accommodations, 50 places, 47 restaurants
+2025-05-12 21:58:16,549 - src.services.suggest_api - INFO - Final response has 112 items
+2025-05-12 21:58:16,713 - src.services.genrate_plan_api - INFO - Received raw trip plan request: dict_keys(['destination_id', 'accommodation', 'places', 'restaurants'])
+2025-05-12 21:58:16,713 - src.services.genrate_plan_api - INFO - Extracted 15 accommodations, 50 places, and 47 restaurants
+2025-05-12 21:58:16,713 - src.services.genrate_plan_api - INFO - Destination identified as: hochiminh
+2025-05-12 21:58:16,713 - src.services.genrate_plan_api - INFO - Generating plan with destination: hochiminh
+2025-05-12 21:59:59,659 - src.services.genrate_plan_api - INFO - Generated plan: {'trip_name': 'Trip to Hochiminh', 'start_date': '2025-05-12', 'end_date': '2025-05-14', 'user_id': 'user123', 'destination_id': 'hochiminh', 'plan_by_day': [{'date': '2025-05-12', 'day_title': 'Ngày 1: Chinh phục Sài Gòn hiện đại', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'hotel_010911', 'type': 'accommodation', 'name': 'Hoàng Mai', 'start_time': '08:00', 'end_time': '10:00', 'description': 'Khách sạn tiện nghi cho khởi đầu hoàn hảo.', 'location': 'Hồ Chí Minh', 'rating': 4.5, 'price': 950000.0, 'image_url': '', 'booking_link': '', 'room_info': 'Phòng tiêu chuẩn', 'tax_info': 'Đã bao gồm thuế', 'elderly_friendly': True, 'url': ''}, {'id': 'place_015663', 'type': 'place', 'name': 'Small Group to Mekong Delta 1 Day', 'start_time': '10:30', 'end_time': '12:00', 'description': 'Trải nghiệm nét văn hóa sông nước đặc sắc.', 'address': 'Hồ Chí Minh', 'categories': 'sightseeing', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 700000.0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_013240', 'type': 'place', 'name': '2-Day Mekong Delta Tour Homestay', 'start_time': '13:00', 'end_time': '15:00', 'description': 'Khám phá đời sống dân gian vùng đồng bằng.', 'address': 'Hồ Chí Minh', 'categories': 'cultural', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.8, 'price': 1200000.0, 'image_url': '', 'url': ''}, {'id': 'place_013254', 'type': 'place', 'name': 'Mekong 2 Days 1 Night SMALL GROUP', 'start_time': '15:30', 'end_time': '17:00', 'description': 'Thưởng thức cơm trưa truyền thống.', 'address': 'Hồ Chí Minh', 'categories': 'food', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.6, 'price': 1500000.0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'restaurant_013527', 'type': 'restaurant', 'name': 'Khang Khang - Bún Chả Hà Nội', 'start_time': '18:00', 'end_time': '19:30', 'description': 'Thử ngay món bún chả trứ danh.', 'address': 'Hồ Chí Minh', 'cuisines': 'Vietnamese', 'price_range': '100,000-300,000 VND', 'rating': 4.4, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}, {'id': 'restaurant_014770', 'type': 'restaurant', 'name': 'LongBuri Cancook - Sốt Thái', 'start_time': '20:00', 'end_time': '21:30', 'description': 'Thử ngay món gân bò cực chất.', 'address': 'Hồ Chí Minh', 'cuisines': 'Thai', 'price_range': '100,000-300,000 VND', 'rating': 4.5, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}]}], 'daily_tips': ['- Nên thăm Ben Thanh Market và mặc cả', '- Mang theo đồ mưa trong mùa mưa', '- Hãy luôn giữ cơ thể luôn được cung cấp nước đầy đủ', '- Thận trọng khi di chuyển qua đường ở Hochiminh City', '- Ghé thăm vào buổi sáng sớm để tránh kẹt xe']}, {'date': '2025-05-13', 'day_title': 'Ngày 2: Khám phá Sắc Màu Sài Gòn', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'place_013892', 'type': 'place', 'name': 'Vietnam Family Fun In 9 Days - Departure From Ho Chi Minh', 'start_time': '08:00', 'end_time': '10:00', 'description': 'Bạn sẽ đắm mình trong văn hóa sống động của Sài Gòn.', 'address': 'Sài Gòn', 'categories': 'sightseeing', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 0, 'image_url': '', 'url': ''}, {'id': 'place_013381', 'type': 'place', 'name': 'Vietnam at a Glance - 7 Days', 'start_time': '10:15', 'end_time': '11:15', 'description': 'Khám phá những góc khác lạ của thành phố hiện đại.', 'address': 'Sài Gòn', 'categories': 'tour', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.6, 'price': 150000.0, 'image_url': '', 'url': ''}, {'id': 'place_013414', 'type': 'place', 'name': 'Unique Mekong Delta 1 Day with Cooking Class & Cycling MAX 12 PAX', 'start_time': '11:30', 'end_time': '12:30', 'description': 'Trải nghiệm đạp xe và lớp học nấu ăn địa phương thú vị.', 'address': 'Sài Gòn', 'categories': 'activity', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.8, 'price': 200000.0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_013793', 'type': 'place', 'name': 'Essential Mekong Delta 2 days,1Night', 'start_time': '13:30', 'end_time': '15:00', 'description': 'Khám phá dòng Mekong trù phú với bao thú vị.', 'address': 'Sài Gòn', 'categories': 'river tour', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 250000.0, 'image_url': '', 'url': ''}, {'id': 'place_013809', 'type': 'place', 'name': 'Xin Chao Vietnam 11 Days - Departure from Ho Chi Minh City', 'start_time': '15:15', 'end_time': '17:00', 'description': 'Một chuyến phiêu lưu thú vị bắt đầu từ thành phố phồn hoa.', 'address': 'Sài Gòn', 'categories': 'tour', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.9, 'price': 350000.0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'place_013850', 'type': 'place', 'name': 'Private Ho Chi Minh City Tour Half-day by Car', 'start_time': '18:00', 'end_time': '19:30', 'description': 'Khám phá Sài Gòn về đêm lung linh và quyến rũ.', 'address': 'Sài Gòn', 'categories': 'city tour', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.8, 'price': 100000.0, 'image_url': '', 'url': ''}, {'id': 'restaurant_013028', 'type': 'restaurant', 'name': 'Happy - Steak & Chicken', 'start_time': '19:45', 'end_time': '21:00', 'description': 'Thưởng thức bữa tối hấp dẫn với các món bò tuyệt hảo.', 'address': 'Sài Gòn', 'cuisines': 'steak', 'price_range': '100,000-300,000 VND', 'rating': 4.6, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}]}], 'daily_tips': ['Nên bắt đầu sớm từ 6-8h sáng để tránh nóng và đông đúc.', 'Hãy sử dụng phương tiện công cộng khi đi từ **Sân bay** đến trung tâm thành phố.', 'Dự tính chi phí khoảng 50-70 USD mỗi ngày cho việc đi lại và ăn uống tại **Đài Loan**.', 'Tránh thời gian cao điểm khi tham quan **Kinh Đô** để tránh đợi quá lâu.', 'Nên mua vé trước online để tiết kiệm thời gian đợi đến lượt khi thăm **Bảo Tàng**.', 'Hãy tôn trọng văn hóa địa phương khi thăm **Chùa** và **Lễ Hội**.']}, {'date': '2025-05-14', 'day_title': 'Ngày 3: Sôi động cùng Sài Gòn hoa lệ', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'place_013243', 'type': 'place', 'name': 'Cu Chi Tunnels-Mekong Delta', 'start_time': '08:00', 'end_time': '10:00', 'description': 'Khám phá địa đạo nổi danh lịch sử.', 'address': 'Cu Chi, Ho Chi Minh', 'categories': 'history', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.8, 'price': 250000.0, 'image_url': '', 'url': ''}, {'id': 'restaurant_014324', 'type': 'restaurant', 'name': 'Bánh Canh Cua Lộc Vừng', 'start_time': '10:15', 'end_time': '11:15', 'description': 'Thưởng thức bánh canh cua thơm ngon!', 'address': 'Bình Thới, Ho Chi Minh', 'cuisines': 'Vietnamese', 'price_range': '100,000-300,000 VND', 'rating': 4.5, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_013252', 'type': 'place', 'name': 'Mekong Delta Day Tour', 'start_time': '13:00', 'end_time': '15:00', 'description': 'Thám hiểm chợ nổi trên sông.', 'address': 'Mekong, Ho Chi Minh', 'categories': 'tour', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 400000.0, 'image_url': '', 'url': ''}, {'id': 'restaurant_014285', 'type': 'restaurant', 'name': 'Phở 24 - Grand View', 'start_time': '15:30', 'end_time': '16:30', 'description': 'Thưởng thức phở chuẩn vị Sài Gòn.', 'address': 'Grand View, Ho Chi Minh', 'cuisines': 'Vietnamese', 'price_range': '100,000-300,000 VND', 'rating': 4.3, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'place_013564', 'type': 'place', 'name': 'Private Mekong Riverside Retreat', 'start_time': '18:00', 'end_time': '20:00', 'description': 'Thư giãn tại retreat bên sông nước.', 'address': 'Mekong Delta, Ho Chi Minh', 'categories': 'relaxation', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.9, 'price': 600000.0, 'image_url': '', 'url': ''}, {'id': 'restaurant_014280', 'type': 'restaurant', 'name': 'Gà Mai Sen', 'start_time': '20:15', 'end_time': '21:15', 'description': 'Thưởng thức gà rôti tại Mai Sen.', 'address': 'Ho Chi Minh', 'cuisines': 'Vietnamese', 'price_range': '100,000-300,000 VND', 'rating': 4.6, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}]}], 'daily_tips': ['- Đến chợ Bến Thành vào buổi sáng sớm để tránh đông đúc.', '- Học cách mặc cả khi mua sắm, luôn thương lượng trước khi mua hàng.', '- Đi vào chiều khi đến Dinh Thống Nhất để thưởng ngoạn cảnh hoàng hôn.', '- Thưởng thức đồ ăn đường phố vào buổi tối khi thực phẩm được chuẩn bị sạch sẽ và đông khách.']}]}
+2025-05-12 21:59:59,662 - src.services.genrate_plan_api - INFO - Trip plan request processed successfully
+2025-05-12 22:25:15,798 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 22:25:15,820 - app - INFO - All routers registered successfully
+2025-05-12 22:25:23,826 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 22:25:23,852 - app - INFO - All routers registered successfully
+2025-05-12 22:25:32,851 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 22:25:32,866 - app - INFO - All routers registered successfully
+2025-05-12 22:25:47,101 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 22:25:47,137 - app - INFO - All routers registered successfully
+2025-05-12 22:31:05,104 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 22:31:05,130 - app - INFO - All routers registered successfully
+2025-05-12 22:31:13,243 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 22:31:13,273 - app - INFO - All routers registered successfully
+2025-05-12 22:31:31,689 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 22:31:31,717 - app - INFO - All routers registered successfully
+2025-05-12 22:31:37,731 - src.services.suggest_api - INFO - Processing recommendation query for hochiminh
+2025-05-12 22:31:37,741 - src.agents.travel_agent - INFO - Setting up all databases...
+2025-05-12 22:31:40,463 - src.agents.travel_agent - INFO - All databases setup completed
+2025-05-12 22:31:40,463 - src.agents.travel_agent - INFO - Processing query: 
+        Planning a trip to hochiminh with the following details:
+        - Group: 2 adults, 1 children, 0 infants
+        - Budget: mid (approx. 10000000 VND)
+        - Duration: 10 days
+        - Season: summer
+        - Travel Style: family
+        
+        Preferences:
+        - Transportation: No specific preference
+        - Accommodation: Hotel
+        - Food: Vegetarian
+        - Places to visit: No specific preference
+        - Activities: Hiking
+        - Extra: No specific preference
+
+        IMPORTANT: Please focus on finding recommendations specifically in hochiminh. All suggestions should be located in or near this destination.
+        
+        Please suggest:
+        1. Suitable accommodations in hochiminh
+        2. Interesting activities and places to visit in hochiminh
+        3. Recommended restaurants and food options in hochiminh
+        
+        Consider:
+        - The travel style and preferences
+        - The season and weather conditions in hochiminh
+        - The budget constraints
+        - The duration of stay
+        - The location and its unique offerings
+        - All recommendations must be in hochiminh
+        
+2025-05-12 22:31:40,463 - src.agents.travel_agent - DEBUG - Sending request to OpenAI...
+2025-05-12 22:31:42,133 - src.agents.travel_agent - ERROR - Error in process_query: <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en-US"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en-US"> <!--<![endif]-->
+<head>
+<title>Origin DNS error | api.openai.com | Cloudflare</title>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" id="cf_styles-css" href="/cdn-cgi/styles/main.css" />
+
+
+<script>
+(function(){if(document.addEventListener&&window.XMLHttpRequest&&JSON&&JSON.stringify){var e=function(a){var c=document.getElementById("error-feedback-survey"),d=document.getElementById("error-feedback-success"),b=new XMLHttpRequest;a={event:"feedback clicked",properties:{errorCode:1016,helpful:a,version:1}};b.open("POST","https://sparrow.cloudflare.com/api/v1/event");b.setRequestHeader("Content-Type","application/json");b.setRequestHeader("Sparrow-Source-Key","c771f0e4b54944bebf4261d44bd79a1e");
+b.send(JSON.stringify(a));c.classList.add("feedback-hidden");d.classList.remove("feedback-hidden")};document.addEventListener("DOMContentLoaded",function(){var a=document.getElementById("error-feedback"),c=document.getElementById("feedback-button-yes"),d=document.getElementById("feedback-button-no");"classList"in a&&(a.classList.remove("feedback-hidden"),c.addEventListener("click",function(){e(!0)}),d.addEventListener("click",function(){e(!1)}))})}})();
+</script>
+
+<script defer src="https://performance.radar.cloudflare.com/beacon.js"></script>
+</head>
+<body>
+  <div id="cf-wrapper">
+    <div class="cf-alert cf-alert-error cf-cookie-error hidden" id="cookie-alert" data-translate="enable_cookies">Please enable cookies.</div>
+    <div id="cf-error-details" class="p-0">
+      <header class="mx-auto pt-10 lg:pt-6 lg:px-8 w-240 lg:w-full mb-15 antialiased">
+         <h1 class="inline-block md:block mr-2 md:mb-2 font-light text-60 md:text-3xl text-black-dark leading-tight">
+           <span data-translate="error">Error</span>
+           <span>1016</span>
+         </h1>
+         <span class="inline-block md:block heading-ray-id font-mono text-15 lg:text-sm lg:leading-relaxed">Ray ID: 93eaf6ec0dad5e3a &bull;</span>
+         <span class="inline-block md:block heading-ray-id font-mono text-15 lg:text-sm lg:leading-relaxed">2025-05-12 15:31:42 UTC</span>
+        <h2 class="text-gray-600 leading-1.3 text-3xl lg:text-2xl font-light">Origin DNS error</h2>
+      </header>
+
+      <section class="w-240 lg:w-full mx-auto mb-8 lg:px-8">
+          <div id="what-happened-section" class="w-1/2 md:w-full">
+            <h2 class="text-3xl leading-tight font-normal mb-4 text-black-dark antialiased" data-translate="what_happened">What happened?</h2>
+            <p>You've requested a page on a website (api.openai.com) that is on the <a href="https://www.cloudflare.com/5xx-error-landing/" target="_blank">Cloudflare</a> network. Cloudflare is currently unable to resolve your requested domain (api.openai.com).
+            
+          </div>
+
+          
+          <div id="resolution-copy-section" class="w-1/2 mt-6 text-15 leading-normal">
+            <h2 class="text-3xl leading-tight font-normal mb-4 text-black-dark antialiased" data-translate="what_can_i_do">What can I do?</h2>
+            <p><strong>If you are a visitor of this website:</strong><br />Please try again in a few minutes.</p><p><strong>If you are the owner of this website:</strong><br />Check your DNS settings. If you are using a CNAME origin record, make sure it is valid and resolvable. <a rel="noopener noreferrer" href="https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/#error-1016-origin-dns-error">Additional troubleshooting information here.</a></p>
+          </div>
+          
+      </section>
+
+      <div class="feedback-hidden py-8 text-center" id="error-feedback">
+    <div id="error-feedback-survey" class="footer-line-wrapper">
+        Was this page helpful?
+        <button class="border border-solid bg-white cf-button cursor-pointer ml-4 px-4 py-2 rounded" id="feedback-button-yes" type="button">Yes</button>
+        <button class="border border-solid bg-white cf-button cursor-pointer ml-4 px-4 py-2 rounded" id="feedback-button-no" type="button">No</button>
+    </div>
+    <div class="feedback-success feedback-hidden" id="error-feedback-success">
+        Thank you for your feedback!
+    </div>
+</div>
+
+
+      <div class="cf-error-footer cf-wrapper w-240 lg:w-full py-10 sm:py-4 sm:px-8 mx-auto text-center sm:text-left border-solid border-0 border-t border-gray-300">
+  <p class="text-13">
+    <span class="cf-footer-item sm:block sm:mb-1">Cloudflare Ray ID: <strong class="font-semibold">93eaf6ec0dad5e3a</strong></span>
+    <span class="cf-footer-separator sm:hidden">&bull;</span>
+    <span id="cf-footer-item-ip" class="cf-footer-item hidden sm:block sm:mb-1">
+      Your IP:
+      <button type="button" id="cf-footer-ip-reveal" class="cf-footer-ip-reveal-btn">Click to reveal</button>
+      <span class="hidden" id="cf-footer-ip">103.238.72.73</span>
+      <span class="cf-footer-separator sm:hidden">&bull;</span>
+    </span>
+    <span class="cf-footer-item sm:block sm:mb-1"><span>Performance &amp; security by</span> <a rel="noopener noreferrer" href="https://www.cloudflare.com/5xx-error-landing" id="brand_link" target="_blank">Cloudflare</a></span>
+    
+  </p>
+  <script>(function(){function d(){var b=a.getElementById("cf-footer-item-ip"),c=a.getElementById("cf-footer-ip-reveal");b&&"classList"in b&&(b.classList.remove("hidden"),c.addEventListener("click",function(){c.classList.add("hidden");a.getElementById("cf-footer-ip").classList.remove("hidden")}))}var a=document;document.addEventListener&&a.addEventListener("DOMContentLoaded",d)})();</script>
+</div><!-- /.error-footer -->
+
+
+    </div><!-- /#cf-error-details -->
+  </div><!-- /#cf-wrapper -->
+
+  <script>
+  window._cf_translation = {};
+  
+  
+</script>
+
+</body>
+</html>
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/agents/travel_agent.py", line 229, in process_query
+    response = self.openai_client.chat.completions.create(
+        model=self.model,
+    ...<2 lines>...
+        function_call="auto"
+    )
+  File "/Users/doa_ai/Developer/Grab-project/venv/lib/python3.13/site-packages/openai/_utils/_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/doa_ai/Developer/Grab-project/venv/lib/python3.13/site-packages/openai/resources/chat/completions/completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/doa_ai/Developer/Grab-project/venv/lib/python3.13/site-packages/openai/_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/doa_ai/Developer/Grab-project/venv/lib/python3.13/site-packages/openai/_base_client.py", line 1034, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.InternalServerError: <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en-US"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en-US"> <!--<![endif]-->
+<head>
+<title>Origin DNS error | api.openai.com | Cloudflare</title>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" id="cf_styles-css" href="/cdn-cgi/styles/main.css" />
+
+
+<script>
+(function(){if(document.addEventListener&&window.XMLHttpRequest&&JSON&&JSON.stringify){var e=function(a){var c=document.getElementById("error-feedback-survey"),d=document.getElementById("error-feedback-success"),b=new XMLHttpRequest;a={event:"feedback clicked",properties:{errorCode:1016,helpful:a,version:1}};b.open("POST","https://sparrow.cloudflare.com/api/v1/event");b.setRequestHeader("Content-Type","application/json");b.setRequestHeader("Sparrow-Source-Key","c771f0e4b54944bebf4261d44bd79a1e");
+b.send(JSON.stringify(a));c.classList.add("feedback-hidden");d.classList.remove("feedback-hidden")};document.addEventListener("DOMContentLoaded",function(){var a=document.getElementById("error-feedback"),c=document.getElementById("feedback-button-yes"),d=document.getElementById("feedback-button-no");"classList"in a&&(a.classList.remove("feedback-hidden"),c.addEventListener("click",function(){e(!0)}),d.addEventListener("click",function(){e(!1)}))})}})();
+</script>
+
+<script defer src="https://performance.radar.cloudflare.com/beacon.js"></script>
+</head>
+<body>
+  <div id="cf-wrapper">
+    <div class="cf-alert cf-alert-error cf-cookie-error hidden" id="cookie-alert" data-translate="enable_cookies">Please enable cookies.</div>
+    <div id="cf-error-details" class="p-0">
+      <header class="mx-auto pt-10 lg:pt-6 lg:px-8 w-240 lg:w-full mb-15 antialiased">
+         <h1 class="inline-block md:block mr-2 md:mb-2 font-light text-60 md:text-3xl text-black-dark leading-tight">
+           <span data-translate="error">Error</span>
+           <span>1016</span>
+         </h1>
+         <span class="inline-block md:block heading-ray-id font-mono text-15 lg:text-sm lg:leading-relaxed">Ray ID: 93eaf6ec0dad5e3a &bull;</span>
+         <span class="inline-block md:block heading-ray-id font-mono text-15 lg:text-sm lg:leading-relaxed">2025-05-12 15:31:42 UTC</span>
+        <h2 class="text-gray-600 leading-1.3 text-3xl lg:text-2xl font-light">Origin DNS error</h2>
+      </header>
+
+      <section class="w-240 lg:w-full mx-auto mb-8 lg:px-8">
+          <div id="what-happened-section" class="w-1/2 md:w-full">
+            <h2 class="text-3xl leading-tight font-normal mb-4 text-black-dark antialiased" data-translate="what_happened">What happened?</h2>
+            <p>You've requested a page on a website (api.openai.com) that is on the <a href="https://www.cloudflare.com/5xx-error-landing/" target="_blank">Cloudflare</a> network. Cloudflare is currently unable to resolve your requested domain (api.openai.com).
+            
+          </div>
+
+          
+          <div id="resolution-copy-section" class="w-1/2 mt-6 text-15 leading-normal">
+            <h2 class="text-3xl leading-tight font-normal mb-4 text-black-dark antialiased" data-translate="what_can_i_do">What can I do?</h2>
+            <p><strong>If you are a visitor of this website:</strong><br />Please try again in a few minutes.</p><p><strong>If you are the owner of this website:</strong><br />Check your DNS settings. If you are using a CNAME origin record, make sure it is valid and resolvable. <a rel="noopener noreferrer" href="https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/#error-1016-origin-dns-error">Additional troubleshooting information here.</a></p>
+          </div>
+          
+      </section>
+
+      <div class="feedback-hidden py-8 text-center" id="error-feedback">
+    <div id="error-feedback-survey" class="footer-line-wrapper">
+        Was this page helpful?
+        <button class="border border-solid bg-white cf-button cursor-pointer ml-4 px-4 py-2 rounded" id="feedback-button-yes" type="button">Yes</button>
+        <button class="border border-solid bg-white cf-button cursor-pointer ml-4 px-4 py-2 rounded" id="feedback-button-no" type="button">No</button>
+    </div>
+    <div class="feedback-success feedback-hidden" id="error-feedback-success">
+        Thank you for your feedback!
+    </div>
+</div>
+
+
+      <div class="cf-error-footer cf-wrapper w-240 lg:w-full py-10 sm:py-4 sm:px-8 mx-auto text-center sm:text-left border-solid border-0 border-t border-gray-300">
+  <p class="text-13">
+    <span class="cf-footer-item sm:block sm:mb-1">Cloudflare Ray ID: <strong class="font-semibold">93eaf6ec0dad5e3a</strong></span>
+    <span class="cf-footer-separator sm:hidden">&bull;</span>
+    <span id="cf-footer-item-ip" class="cf-footer-item hidden sm:block sm:mb-1">
+      Your IP:
+      <button type="button" id="cf-footer-ip-reveal" class="cf-footer-ip-reveal-btn">Click to reveal</button>
+      <span class="hidden" id="cf-footer-ip">103.238.72.73</span>
+      <span class="cf-footer-separator sm:hidden">&bull;</span>
+    </span>
+    <span class="cf-footer-item sm:block sm:mb-1"><span>Performance &amp; security by</span> <a rel="noopener noreferrer" href="https://www.cloudflare.com/5xx-error-landing" id="brand_link" target="_blank">Cloudflare</a></span>
+    
+  </p>
+  <script>(function(){function d(){var b=a.getElementById("cf-footer-item-ip"),c=a.getElementById("cf-footer-ip-reveal");b&&"classList"in b&&(b.classList.remove("hidden"),c.addEventListener("click",function(){c.classList.add("hidden");a.getElementById("cf-footer-ip").classList.remove("hidden")}))}var a=document;document.addEventListener&&a.addEventListener("DOMContentLoaded",d)})();</script>
+</div><!-- /.error-footer -->
+
+
+    </div><!-- /#cf-error-details -->
+  </div><!-- /#cf-wrapper -->
+
+  <script>
+  window._cf_translation = {};
+  
+  
+</script>
+
+</body>
+</html>
+2025-05-12 22:31:42,139 - src.services.suggest_api - INFO - Recommendation query processed successfully, got 3 items
+2025-05-12 22:31:42,139 - src.services.suggest_api - INFO - Grouped recommendations: 1 accommodations, 1 places, 1 restaurants
+2025-05-12 22:31:42,139 - src.services.suggest_api - INFO - Final response has 3 items
+2025-05-12 22:31:42,190 - src.services.genrate_plan_api - INFO - Received raw trip plan request: dict_keys(['destination_id', 'accommodation', 'places', 'restaurants'])
+2025-05-12 22:31:42,191 - src.services.genrate_plan_api - INFO - Extracted 1 accommodations, 1 places, and 1 restaurants
+2025-05-12 22:31:42,191 - src.services.genrate_plan_api - INFO - Destination identified as: hochiminh
+2025-05-12 22:31:42,191 - src.services.genrate_plan_api - INFO - Generating plan with destination: hochiminh
+2025-05-12 22:33:31,710 - src.services.genrate_plan_api - INFO - Generated plan: {'trip_name': 'Trip to Hochiminh', 'start_date': '2025-05-12', 'end_date': '2025-05-14', 'user_id': 'user123', 'destination_id': 'hochiminh', 'plan_by_day': [{'date': '2025-05-12', 'day_title': 'Ngày 1: Cuộc Phiêu Lưu Quay Ngược Thời Gian Tại Sài Gòn', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'hotel_000001', 'type': 'accommodation', 'name': 'Sheraton Hanoi Hotel', 'start_time': '08:00', 'end_time': '10:00', 'description': 'Bạn sẽ được tận hưởng dịch vụ cao cấp tại khách sạn sang trọng.', 'location': 'Hồ Chí Minh', 'rating': 4.5, 'price': 2000000.0, 'image_url': '', 'booking_link': '', 'room_info': 'Phòng tiêu chuẩn', 'tax_info': 'Đã bao gồm thuế', 'elderly_friendly': True, 'url': ''}, {'id': 'place_000001', 'type': 'place', 'name': '1960 Cafe', 'start_time': '10:15', 'end_time': '11:30', 'description': 'Hòa mình vào không gian hoài cổ của 1960s 🌸.', 'address': 'Hồ Chí Minh', 'categories': 'quán cafe', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.2, 'price': 50000.0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_000002', 'type': 'place', 'name': 'Bảo tàng Chứng tích Chiến tranh', 'start_time': '13:00', 'end_time': '14:30', 'description': 'Khám phá lịch sử qua các triển lãm đặc sắc 🏛️.', 'address': '28 Võ Văn Tần, Q.3, Hồ Chí Minh', 'categories': 'bảo tàng', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.5, 'price': 40000.0, 'image_url': '', 'url': ''}, {'id': 'place_000003', 'type': 'place', 'name': 'Đường Sách Nguyễn Văn Bình', 'start_time': '15:00', 'end_time': '16:30', 'description': 'Dạo quanh đường sách và ngắm nhìn đa dạng đầu sách 📚.', 'address': 'Q.1, Hồ Chí Minh', 'categories': 'sightseeing', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.3, 'price': 0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'restaurant_000001', 'type': 'restaurant', 'name': 'Nhà hàng Túi Mơ To Garden Restaurant', 'start_time': '18:00', 'end_time': '20:00', 'description': 'Thưởng thức bữa tối với món Việt truyền thống 🍽️.', 'address': 'Hồ Chí Minh', 'cuisines': 'Việt Nam', 'price_range': '100,000-300,000 VND', 'rating': 4.6, 'phone': '0123456789', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}, {'id': 'place_000004', 'type': 'place', 'name': 'Nhà hát Thành phố Hồ Chí Minh', 'start_time': '20:30', 'end_time': '22:00', 'description': 'Tham dự chương trình biểu diễn nghệ thuật đặc sắc 🎭.', 'address': 'Q.1, Hồ Chí Minh', 'categories': 'nhà hát', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 150000.0, 'image_url': '', 'url': ''}]}], 'daily_tips': ['- Ghé thăm Văn Miếu Quốc Tử Giám', '- Thử đồ ăn đường phố ở Quận 5', '- Ghé thăm Bảo tàng Hồ Chí Minh', '- Lưu ý thời gian thích hợp tránh đông đúc và nắng nóng', '- Lưu ý trang phục phù hợp với văn hóa địa phương', '- Ước lượng chi phí cần thiết trước khi điểm danh vào mỗi hoạt động']}, {'date': '2025-05-13', 'day_title': 'Ngày 2: Trải nghiệm văn hóa Sài Gòn', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'place_000005', 'type': 'place', 'name': 'Bảo tàng Lịch sử Việt Nam', 'start_time': '08:00', 'end_time': '09:30', 'description': 'Khám phá lịch sử phong phú của Việt Nam 🏛️.', 'address': '2 Nguyễn Bỉnh Khiêm, Bến Nghé, Quận 1', 'categories': 'museum', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.6, 'price': 30000.0, 'image_url': '', 'url': ''}, {'id': 'place_000006', 'type': 'place', 'name': 'Thảo Cầm Viên', 'start_time': '10:00', 'end_time': '11:30', 'description': 'Tham quan vườn thú lâu đời nhất 🌿.', 'address': '2 Nguyễn Bỉnh Khiêm, Bến Nghé, Quận 1', 'categories': 'zoo', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.3, 'price': 50000.0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_000007', 'type': 'place', 'name': 'Café Apartment', 'start_time': '13:00', 'end_time': '14:30', 'description': 'Thưởng thức café trong không gian sáng tạo ☕.', 'address': '42 Nguyễn Huệ, Bến Nghé, Quận 1', 'categories': 'cafe', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.5, 'price': 60000.0, 'image_url': '', 'url': ''}, {'id': 'place_000008', 'type': 'place', 'name': 'Bưu Điện Thành Phố', 'start_time': '15:00', 'end_time': '16:00', 'description': 'Chiêm ngưỡng kiến trúc độc đáo từ thế kỷ 19 📬.', 'address': '2 Công xã Paris, Bến Nghé, Quận 1', 'categories': 'historical', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'place_000009', 'type': 'place', 'name': 'Phố đi bộ Nguyễn Huệ', 'start_time': '18:00', 'end_time': '19:30', 'description': 'Dạo bộ và thưởng thức không khí nhộn nhịp 🏙️.', 'address': 'Nguyễn Huệ, Bến Nghé, Quận 1', 'categories': 'sightseeing', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.6, 'price': 0, 'image_url': '', 'url': ''}, {'id': 'restaurant_000002', 'type': 'restaurant', 'name': 'Quán Ăn Ngon', 'start_time': '20:00', 'end_time': '21:30', 'description': 'Thưởng thức món ngon ba miền 🍽️.', 'address': '138 Nam Kỳ Khởi Nghĩa, Bến Nghé', 'cuisines': 'Vietnamese', 'price_range': '100,000-300,000 VND', 'rating': 4.5, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}]}], 'daily_tips': ['- Nên bắt đầu sớm từ 6-8h sáng khi đến Saigon để tránh nóng và đông đúc', '- Sử dụng Grab hoặc taxi chính hãng để di chuyển thuận tiện', '- Lưu ý chi phí ước lượng trước để tránh bị lừa đảo', '- Tránh khu vực đông đúc và quá đắt đỏ như phố đi bộ Nguyễn Huệ', '- Cẩn thận với đồ ăn đường phố để tránh vấn đề về vệ sinh', '- Tìm hiểu về văn hóa địa phương và tôn trọng các quy tắc cần thiết']}, {'date': '2025-05-14', 'day_title': 'Ngày 3: Hành trình khám phá ẩm thực', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'place_000011', 'type': 'place', 'name': 'Chợ Bến Thành', 'start_time': '08:00', 'end_time': '10:00', 'description': 'Bạn sẽ được khám phá chợ sầm uất với các món ăn đặc sản.', 'address': 'Trung tâm Quận 1', 'categories': 'chợ', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.3, 'price': 0, 'image_url': '', 'url': ''}, {'id': 'place_000012', 'type': 'place', 'name': 'Công viên Tao Đàn', 'start_time': '10:15', 'end_time': '12:00', 'description': 'Thư giãn giữa không gian xanh mát của công viên lớn nhất trung tâm.', 'address': '55C Nguyễn Thị Minh Khai', 'categories': 'công viên', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.4, 'price': 0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_000013', 'type': 'place', 'name': 'Bảo tàng Lịch sử Việt Nam', 'start_time': '14:00', 'end_time': '15:30', 'description': 'Khám phá di sản lịch sử phong phú của đất nước.', 'address': '2 Nguyễn Bỉnh Khiêm', 'categories': 'bảo tàng', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.6, 'price': 30000.0, 'image_url': '', 'url': ''}, {'id': 'place_000014', 'type': 'place', 'name': 'Chùa Ngọc Hoàng', 'start_time': '15:45', 'end_time': '17:00', 'description': 'Thăm ngôi chùa linh thiêng với kiến trúc độc đáo.', 'address': '73 Mai Thị Lựu', 'categories': 'chùa', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.5, 'price': 0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'restaurant_000003', 'type': 'restaurant', 'name': 'Nhà hàng Chả Cá Lã Vọng', 'start_time': '18:00', 'end_time': '20:00', 'description': 'Thưởng thức món chả cá nổi tiếng của Hà Nội.', 'address': '120 Nguyễn Đình Chiểu', 'cuisines': 'Hà Nội', 'price_range': '100,000-300,000 VND', 'rating': 4.7, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}, {'id': 'place_000015', 'type': 'place', 'name': 'Đường hoa Nguyễn Huệ', 'start_time': '20:15', 'end_time': '21:30', 'description': 'Dạo chơi và chụp ảnh tại con đường hoa rực rỡ sáng đêm.', 'address': 'Nguyễn Huệ', 'categories': 'đi bộ', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.8, 'price': 0, 'image_url': '', 'url': ''}]}], 'daily_tips': ['- Đến Chợ Bến Thành vào buổi sáng sớm để tránh đông đúc', '- Nên thăm Dinh Thống Nhất vào các ngày trong tuần để tránh quá đông', '- Thử đồ ăn đường phố để tiết kiệm chi phí', '- Thuê xe máy để linh hoạt và tiết kiệm chi phí', '- Sử dụng Grab để di chuyển an toàn và tiết kiệm chi phí trong thành phố']}]}
+2025-05-12 22:33:31,712 - src.services.genrate_plan_api - INFO - Trip plan request processed successfully
+2025-05-12 22:33:31,722 - src.services.suggest_api - INFO - Processing recommendation query for hochiminh
+2025-05-12 22:33:31,735 - src.agents.travel_agent - INFO - Setting up all databases...
+2025-05-12 22:33:34,829 - src.agents.travel_agent - INFO - All databases setup completed
+2025-05-12 22:33:34,830 - src.agents.travel_agent - INFO - Processing query: 
+        Planning a trip to hochiminh with the following details:
+        - Group: 2 adults, 1 children, 0 infants
+        - Budget: mid (approx. 10000000 VND)
+        - Duration: 10 days
+        - Season: summer
+        - Travel Style: family
+        
+        Preferences:
+        - Transportation: No specific preference
+        - Accommodation: Hotel
+        - Food: Vegetarian
+        - Places to visit: No specific preference
+        - Activities: Hiking
+        - Extra: No specific preference
+
+        IMPORTANT: Please focus on finding recommendations specifically in hochiminh. All suggestions should be located in or near this destination.
+        
+        Please suggest:
+        1. Suitable accommodations in hochiminh
+        2. Interesting activities and places to visit in hochiminh
+        3. Recommended restaurants and food options in hochiminh
+        
+        Consider:
+        - The travel style and preferences
+        - The season and weather conditions in hochiminh
+        - The budget constraints
+        - The duration of stay
+        - The location and its unique offerings
+        - All recommendations must be in hochiminh
+        
+2025-05-12 22:33:34,830 - src.agents.travel_agent - DEBUG - Sending request to OpenAI...
+2025-05-12 22:33:36,918 - src.agents.travel_agent - INFO - OpenAI response: ChatCompletion(id='chatcmpl-BWPRn6BnU4l6jolOloJ0VSfdS8wrm', choices=[Choice(finish_reason='function_call', index=0, logprobs=None, message=ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"hotel in Ho Chi Minh suitable for family with 2 adults and 1 child, mid budget around 10000000 VND for 10 days, summer season","top_k":15}', name='query_hotels'), tool_calls=None))], created=1747064015, model='gpt-4.1-mini-2025-04-14', object='chat.completion', service_tier='default', system_fingerprint='fp_38647f5e19', usage=CompletionUsage(completion_tokens=54, prompt_tokens=1002, total_tokens=1056, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0)))
+2025-05-12 22:33:36,919 - src.agents.travel_agent - INFO - Model response message: ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"hotel in Ho Chi Minh suitable for family with 2 adults and 1 child, mid budget around 10000000 VND for 10 days, summer season","top_k":15}', name='query_hotels'), tool_calls=None)
+2025-05-12 22:33:36,919 - src.agents.travel_agent - INFO - Function call: query_hotels
+2025-05-12 22:33:36,919 - src.agents.travel_agent - DEBUG - Function arguments: {'query_text': 'hotel in Ho Chi Minh suitable for family with 2 adults and 1 child, mid budget around 10000000 VND for 10 days, summer season', 'top_k': 15}
+2025-05-12 22:33:36,919 - src.agents.travel_agent - INFO - Querying all databases with context
+2025-05-12 22:33:36,919 - src.agents.travel_agent - INFO - Querying hotels with context: hotel in Ho Chi Minh suitable for family with 2 adults and 1 child, mid budget around 10000000 VND for 10 days, summer season
+2025-05-12 22:33:36,919 - src.agents.travel_agent - INFO - top_k for query hotels is: 15
+2025-05-12 22:33:36,919 - src.agents.travel_agent - INFO - filter for query hotels is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 22:33:41,278 - src.agents.travel_agent - INFO - Added 15 hotel recommendations
+2025-05-12 22:33:41,279 - src.agents.travel_agent - INFO - Querying places with context: hotel in Ho Chi Minh suitable for family with 2 adults and 1 child, mid budget around 10000000 VND for 10 days, summer season
+2025-05-12 22:33:41,279 - src.agents.travel_agent - INFO - top_k for query places is: 50
+2025-05-12 22:33:41,279 - src.agents.travel_agent - INFO - filter for query places is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 22:33:41,279 - src.agents.travel_agent - INFO - hochiminh)
+2025-05-12 22:33:44,493 - src.agents.travel_agent - INFO - ids for query places is: ['place_013892', 'place_013243', 'place_013240', 'place_013252', 'place_013628', 'place_013850', 'place_013809', 'place_015465', 'place_015663', 'place_013839', 'place_013864', 'place_013542', 'place_013381', 'place_013620', 'place_013633', 'place_015811', 'place_001445', 'place_013992', 'place_013202', 'place_015644', 'place_012691', 'place_013254', 'place_014065', 'place_013626', 'place_013746', 'place_013372', 'place_012842', 'place_013228', 'place_013166', 'place_013675', 'place_001471', 'place_015437', 'place_015635', 'place_013753', 'place_015616', 'place_001777', 'place_013175', 'place_015719', 'place_013414', 'place_012701', 'place_013774', 'place_013564', 'place_014079', 'place_015619', 'place_013709', 'place_015513', 'place_013938', 'place_013566', 'place_012903', 'place_012758']
+2025-05-12 22:33:44,493 - src.agents.travel_agent - INFO - place_ids: ['place_013892', 'place_013243', 'place_013240', 'place_013252', 'place_013628', 'place_013850', 'place_013809', 'place_015465', 'place_015663', 'place_013839', 'place_013864', 'place_013542', 'place_013381', 'place_013620', 'place_013633', 'place_015811', 'place_001445', 'place_013992', 'place_013202', 'place_015644', 'place_012691', 'place_013254', 'place_014065', 'place_013626', 'place_013746', 'place_013372', 'place_012842', 'place_013228', 'place_013166', 'place_013675', 'place_001471', 'place_015437', 'place_015635', 'place_013753', 'place_015616', 'place_001777', 'place_013175', 'place_015719', 'place_013414', 'place_012701', 'place_013774', 'place_013564', 'place_014079', 'place_015619', 'place_013709', 'place_015513', 'place_013938', 'place_013566', 'place_012903', 'place_012758']
+2025-05-12 22:33:44,493 - src.agents.travel_agent - INFO - Added 50 place recommendations
+2025-05-12 22:33:44,493 - src.agents.travel_agent - INFO - Querying restaurants with context: hotel in Ho Chi Minh suitable for family with 2 adults and 1 child, mid budget around 10000000 VND for 10 days, summer season
+2025-05-12 22:33:44,494 - src.agents.travel_agent - INFO - top_k for query fnb is: 50
+2025-05-12 22:33:44,494 - src.agents.travel_agent - INFO - filter for query fnb is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 22:33:52,971 - src.agents.travel_agent - INFO - Added 48 restaurant recommendations
+2025-05-12 22:33:52,971 - src.agents.travel_agent - INFO - Final result distribution: 15 hotels, 50 places, 48 restaurants
+2025-05-12 22:33:52,972 - src.services.suggest_api - INFO - Recommendation query processed successfully, got 113 items
+2025-05-12 22:33:52,972 - src.services.suggest_api - INFO - Grouped recommendations: 15 accommodations, 50 places, 48 restaurants
+2025-05-12 22:33:52,972 - src.services.suggest_api - INFO - Final response has 113 items
+2025-05-12 22:35:22,339 - __main__ - INFO - All routers registered successfully
+2025-05-12 22:35:27,850 - __mp_main__ - INFO - All routers registered successfully
+2025-05-12 22:35:27,876 - app - INFO - All routers registered successfully
+2025-05-12 22:35:28,290 - src.services.suggest_api - INFO - Processing recommendation query for hochiminh
+2025-05-12 22:35:28,300 - src.agents.travel_agent - INFO - Setting up all databases...
+2025-05-12 22:35:30,768 - src.agents.travel_agent - INFO - All databases setup completed
+2025-05-12 22:35:30,769 - src.agents.travel_agent - INFO - Processing query: 
+        Planning a trip to hochiminh with the following details:
+        - Group: 2 adults, 1 children, 0 infants
+        - Budget: mid (approx. 10000000 VND)
+        - Duration: 10 days
+        - Season: summer
+        - Travel Style: family
+        
+        Preferences:
+        - Transportation: No specific preference
+        - Accommodation: Hotel
+        - Food: Vegetarian
+        - Places to visit: No specific preference
+        - Activities: Hiking
+        - Extra: No specific preference
+
+        IMPORTANT: Please focus on finding recommendations specifically in hochiminh. All suggestions should be located in or near this destination.
+        
+        Please suggest:
+        1. Suitable accommodations in hochiminh
+        2. Interesting activities and places to visit in hochiminh
+        3. Recommended restaurants and food options in hochiminh
+        
+        Consider:
+        - The travel style and preferences
+        - The season and weather conditions in hochiminh
+        - The budget constraints
+        - The duration of stay
+        - The location and its unique offerings
+        - All recommendations must be in hochiminh
+        
+2025-05-12 22:35:30,769 - src.agents.travel_agent - DEBUG - Sending request to OpenAI...
+2025-05-12 22:35:32,803 - src.agents.travel_agent - INFO - OpenAI response: ChatCompletion(id='chatcmpl-BWPTf6kxYReKzhRd7ToD4M6KUQw6h', choices=[Choice(finish_reason='function_call', index=0, logprobs=None, message=ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"hotel in hochiminh suitable for family with mid-range budget around 10000000 VND for 3 people","top_k":15}', name='query_hotels'), tool_calls=None))], created=1747064131, model='gpt-4.1-mini-2025-04-14', object='chat.completion', service_tier='default', system_fingerprint='fp_38647f5e19', usage=CompletionUsage(completion_tokens=44, prompt_tokens=1002, total_tokens=1046, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0)))
+2025-05-12 22:35:32,803 - src.agents.travel_agent - INFO - Model response message: ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"hotel in hochiminh suitable for family with mid-range budget around 10000000 VND for 3 people","top_k":15}', name='query_hotels'), tool_calls=None)
+2025-05-12 22:35:32,803 - src.agents.travel_agent - INFO - Function call: query_hotels
+2025-05-12 22:35:32,803 - src.agents.travel_agent - DEBUG - Function arguments: {'query_text': 'hotel in hochiminh suitable for family with mid-range budget around 10000000 VND for 3 people', 'top_k': 15}
+2025-05-12 22:35:32,804 - src.agents.travel_agent - INFO - Querying all databases with context
+2025-05-12 22:35:32,804 - src.agents.travel_agent - INFO - Querying hotels with context: hotel in hochiminh suitable for family with mid-range budget around 10000000 VND for 3 people
+2025-05-12 22:35:32,804 - src.agents.travel_agent - INFO - top_k for query hotels is: 15
+2025-05-12 22:35:32,804 - src.agents.travel_agent - INFO - filter for query hotels is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 22:35:37,652 - src.agents.travel_agent - INFO - Added 15 hotel recommendations
+2025-05-12 22:35:37,653 - src.agents.travel_agent - INFO - Querying places with context: hotel in hochiminh suitable for family with mid-range budget around 10000000 VND for 3 people
+2025-05-12 22:35:37,653 - src.agents.travel_agent - INFO - top_k for query places is: 50
+2025-05-12 22:35:37,653 - src.agents.travel_agent - INFO - filter for query places is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 22:35:37,653 - src.agents.travel_agent - INFO - hochiminh)
+2025-05-12 22:35:42,394 - src.agents.travel_agent - INFO - ids for query places is: ['place_013240', 'place_013892', 'place_013252', 'place_013381', 'place_004755', 'place_012842', 'place_013243', 'place_001445', 'place_013414', 'place_001471', 'place_015663', 'place_014065', 'place_013228', 'place_013790', 'place_013461', 'place_013864', 'place_015811', 'place_013202', 'place_013231', 'place_012691', 'place_013254', 'place_013839', 'place_013628', 'place_015644', 'place_015619', 'place_013564', 'place_015499', 'place_013355', 'place_013241', 'place_015630', 'place_007920', 'place_013542', 'place_015725', 'place_013029', 'place_013746', 'place_015494', 'place_012814', 'place_013850', 'place_015616', 'place_013620', 'place_015465', 'place_013592', 'place_015635', 'place_013793', 'place_012998', 'place_012696', 'place_004185', 'place_013259', 'place_013169', 'place_012766']
+2025-05-12 22:35:42,396 - src.agents.travel_agent - INFO - place_ids: ['place_013240', 'place_013892', 'place_013252', 'place_013381', 'place_004755', 'place_012842', 'place_013243', 'place_001445', 'place_013414', 'place_001471', 'place_015663', 'place_014065', 'place_013228', 'place_013790', 'place_013461', 'place_013864', 'place_015811', 'place_013202', 'place_013231', 'place_012691', 'place_013254', 'place_013839', 'place_013628', 'place_015644', 'place_015619', 'place_013564', 'place_015499', 'place_013355', 'place_013241', 'place_015630', 'place_007920', 'place_013542', 'place_015725', 'place_013029', 'place_013746', 'place_015494', 'place_012814', 'place_013850', 'place_015616', 'place_013620', 'place_015465', 'place_013592', 'place_015635', 'place_013793', 'place_012998', 'place_012696', 'place_004185', 'place_013259', 'place_013169', 'place_012766']
+2025-05-12 22:35:42,397 - src.agents.travel_agent - INFO - Added 50 place recommendations
+2025-05-12 22:35:42,397 - src.agents.travel_agent - INFO - Querying restaurants with context: hotel in hochiminh suitable for family with mid-range budget around 10000000 VND for 3 people
+2025-05-12 22:35:42,397 - src.agents.travel_agent - INFO - top_k for query fnb is: 50
+2025-05-12 22:35:42,397 - src.agents.travel_agent - INFO - filter for query fnb is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 22:35:47,559 - src.agents.travel_agent - INFO - Added 46 restaurant recommendations
+2025-05-12 22:35:47,559 - src.agents.travel_agent - INFO - Final result distribution: 15 hotels, 50 places, 46 restaurants
+2025-05-12 22:35:47,559 - src.services.suggest_api - INFO - Recommendation query processed successfully, got 111 items
+2025-05-12 22:35:47,560 - src.services.suggest_api - INFO - Grouped recommendations: 15 accommodations, 50 places, 46 restaurants
+2025-05-12 22:35:47,560 - src.services.suggest_api - INFO - Final response has 111 items
+2025-05-12 22:35:56,151 - src.services.suggest_api - INFO - Processing recommendation query for hochiminh
+2025-05-12 22:35:56,163 - src.agents.travel_agent - INFO - Setting up all databases...
+2025-05-12 22:35:59,022 - src.agents.travel_agent - INFO - All databases setup completed
+2025-05-12 22:35:59,023 - src.agents.travel_agent - INFO - Processing query: 
+        Planning a trip to hochiminh with the following details:
+        - Group: 2 adults, 1 children, 0 infants
+        - Budget: mid (approx. 10000000 VND)
+        - Duration: 10 days
+        - Season: summer
+        - Travel Style: family
+        
+        Preferences:
+        - Transportation: No specific preference
+        - Accommodation: Hotel
+        - Food: Vegetarian
+        - Places to visit: No specific preference
+        - Activities: Hiking
+        - Extra: No specific preference
+
+        IMPORTANT: Please focus on finding recommendations specifically in hochiminh. All suggestions should be located in or near this destination.
+        
+        Please suggest:
+        1. Suitable accommodations in hochiminh
+        2. Interesting activities and places to visit in hochiminh
+        3. Recommended restaurants and food options in hochiminh
+        
+        Consider:
+        - The travel style and preferences
+        - The season and weather conditions in hochiminh
+        - The budget constraints
+        - The duration of stay
+        - The location and its unique offerings
+        - All recommendations must be in hochiminh
+        
+2025-05-12 22:35:59,023 - src.agents.travel_agent - DEBUG - Sending request to OpenAI...
+2025-05-12 22:36:00,675 - src.agents.travel_agent - INFO - OpenAI response: ChatCompletion(id='chatcmpl-BWPU7PBZCDcrN69RhBTZRKRaTs1it', choices=[Choice(finish_reason='function_call', index=0, logprobs=None, message=ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"hotel in ho chi minh suitable for family, mid-range budget, summer season","top_k":15}', name='query_hotels'), tool_calls=None))], created=1747064159, model='gpt-4.1-mini-2025-04-14', object='chat.completion', service_tier='default', system_fingerprint='fp_38647f5e19', usage=CompletionUsage(completion_tokens=36, prompt_tokens=1002, total_tokens=1038, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0)))
+2025-05-12 22:36:00,676 - src.agents.travel_agent - INFO - Model response message: ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"hotel in ho chi minh suitable for family, mid-range budget, summer season","top_k":15}', name='query_hotels'), tool_calls=None)
+2025-05-12 22:36:00,676 - src.agents.travel_agent - INFO - Function call: query_hotels
+2025-05-12 22:36:00,676 - src.agents.travel_agent - DEBUG - Function arguments: {'query_text': 'hotel in ho chi minh suitable for family, mid-range budget, summer season', 'top_k': 15}
+2025-05-12 22:36:00,676 - src.agents.travel_agent - INFO - Querying all databases with context
+2025-05-12 22:36:00,676 - src.agents.travel_agent - INFO - Querying hotels with context: hotel in ho chi minh suitable for family, mid-range budget, summer season
+2025-05-12 22:36:00,676 - src.agents.travel_agent - INFO - top_k for query hotels is: 15
+2025-05-12 22:36:00,676 - src.agents.travel_agent - INFO - filter for query hotels is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 22:36:04,001 - src.agents.travel_agent - INFO - Added 15 hotel recommendations
+2025-05-12 22:36:04,002 - src.agents.travel_agent - INFO - Querying places with context: hotel in ho chi minh suitable for family, mid-range budget, summer season
+2025-05-12 22:36:04,002 - src.agents.travel_agent - INFO - top_k for query places is: 50
+2025-05-12 22:36:04,002 - src.agents.travel_agent - INFO - filter for query places is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 22:36:04,002 - src.agents.travel_agent - INFO - hochiminh)
+2025-05-12 22:36:10,866 - src.agents.travel_agent - INFO - ids for query places is: ['place_013240', 'place_013892', 'place_013252', 'place_013202', 'place_013850', 'place_015811', 'place_012691', 'place_013839', 'place_004755', 'place_012766', 'place_013228', 'place_015725', 'place_001752', 'place_012842', 'place_013790', 'place_015719', 'place_013243', 'place_012910', 'place_015760', 'place_013231', 'place_015513', 'place_015976', 'place_015663', 'place_013729', 'place_013864', 'place_015465', 'place_015459', 'place_012681', 'place_013029', 'place_012814', 'place_013166', 'place_001445', 'place_012696', 'place_014065', 'place_013129', 'place_013542', 'place_015630', 'place_013400', 'place_013317', 'place_013746', 'place_015616', 'place_013605', 'place_013190', 'place_015785', 'place_013175', 'place_013169', 'place_001580', 'place_013381', 'place_015352', 'place_015473']
+2025-05-12 22:36:10,866 - src.agents.travel_agent - INFO - place_ids: ['place_013240', 'place_013892', 'place_013252', 'place_013202', 'place_013850', 'place_015811', 'place_012691', 'place_013839', 'place_004755', 'place_012766', 'place_013228', 'place_015725', 'place_001752', 'place_012842', 'place_013790', 'place_015719', 'place_013243', 'place_012910', 'place_015760', 'place_013231', 'place_015513', 'place_015976', 'place_015663', 'place_013729', 'place_013864', 'place_015465', 'place_015459', 'place_012681', 'place_013029', 'place_012814', 'place_013166', 'place_001445', 'place_012696', 'place_014065', 'place_013129', 'place_013542', 'place_015630', 'place_013400', 'place_013317', 'place_013746', 'place_015616', 'place_013605', 'place_013190', 'place_015785', 'place_013175', 'place_013169', 'place_001580', 'place_013381', 'place_015352', 'place_015473']
+2025-05-12 22:36:10,867 - src.agents.travel_agent - INFO - Added 50 place recommendations
+2025-05-12 22:36:10,867 - src.agents.travel_agent - INFO - Querying restaurants with context: hotel in ho chi minh suitable for family, mid-range budget, summer season
+2025-05-12 22:36:10,867 - src.agents.travel_agent - INFO - top_k for query fnb is: 50
+2025-05-12 22:36:10,867 - src.agents.travel_agent - INFO - filter for query fnb is: {'city': {'$eq': 'hochiminh'}}
+2025-05-12 22:36:15,471 - src.agents.travel_agent - INFO - Added 47 restaurant recommendations
+2025-05-12 22:36:15,472 - src.agents.travel_agent - INFO - Final result distribution: 15 hotels, 50 places, 47 restaurants
+2025-05-12 22:36:15,472 - src.services.suggest_api - INFO - Recommendation query processed successfully, got 112 items
+2025-05-12 22:36:15,472 - src.services.suggest_api - INFO - Grouped recommendations: 15 accommodations, 50 places, 47 restaurants
+2025-05-12 22:36:15,472 - src.services.suggest_api - INFO - Final response has 112 items
+2025-05-12 22:36:15,651 - src.services.genrate_plan_api - INFO - Received raw trip plan request: dict_keys(['destination_id', 'accommodation', 'places', 'restaurants'])
+2025-05-12 22:36:15,651 - src.services.genrate_plan_api - INFO - Extracted 15 accommodations, 50 places, and 47 restaurants
+2025-05-12 22:36:15,651 - src.services.genrate_plan_api - INFO - Destination identified as: hochiminh
+2025-05-12 22:36:15,651 - src.services.genrate_plan_api - INFO - Generating plan with destination: hochiminh
