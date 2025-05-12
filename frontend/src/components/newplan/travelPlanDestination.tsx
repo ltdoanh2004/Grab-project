@@ -1,5 +1,5 @@
-import React from "react";
-import { Card, Typography, Input, Rate } from "antd";
+import React, { useState, useRef, useEffect } from "react";
+import { Card, Typography, Input, Rate, List, Avatar, Empty } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { DESTINATIONS } from "../../constants/travelPlanConstants";
 
@@ -16,10 +16,54 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
   onSelectDestination,
   onStartPlan,
 }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showSearchResults, setShowSearchResults] = useState(false);
+  const searchInputRef = useRef<HTMLDivElement>(null);
+  const searchResultsRef = useRef<HTMLDivElement>(null);
+
+  // Handle click outside to close search results
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchResultsRef.current && 
+        searchInputRef.current && 
+        !searchResultsRef.current.contains(event.target as Node) &&
+        !searchInputRef.current.contains(event.target as Node)
+      ) {
+        setShowSearchResults(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleCardClick = (destId: string) => {
     onSelectDestination(destId);
     onStartPlan();
   };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    setShowSearchResults(value.length > 0);
+  };
+
+  const handleSelectSearchResult = (destId: string) => {
+    setSearchTerm("");
+    setShowSearchResults(false);
+    onSelectDestination(destId);
+    onStartPlan();
+  };
+
+  const filteredDestinations = DESTINATIONS.filter(
+    (dest) =>
+      dest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      dest.country.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      dest.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="p-8 font-inter">
@@ -38,15 +82,62 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
           </p>
 
           <div className="relative z-20 max-w-xl mx-auto transform translate-y-12">
-            <Input
-              placeholder="Chọn điểm đến"
-              className="w-full shadow-lg rounded-full py-3"
-              size="large"
-              prefix={<SearchOutlined className="ml-2" />}
-            />
+            <div className="relative" ref={searchInputRef}>
+              <Input
+                placeholder="Tìm kiếm điểm đến"
+                className="w-full shadow-lg rounded-full py-3"
+                size="large"
+                prefix={<SearchOutlined className="ml-2" />}
+                value={searchTerm}
+                onChange={handleSearchChange}
+                onClick={() => setShowSearchResults(searchTerm.length > 0)}
+              />
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Search results dropdown positioned absolutely in the document */}
+      {showSearchResults && searchInputRef.current && (
+        <div 
+          ref={searchResultsRef}
+          className="fixed bg-white rounded-lg shadow-2xl z-[9999] max-h-96 overflow-y-auto w-full max-w-xl"
+          style={{
+            top: searchInputRef.current.getBoundingClientRect().bottom + window.scrollY + 8,
+            left: '50%',
+            transform: 'translateX(-50%)'
+          }}
+        >
+          {filteredDestinations.length > 0 ? (
+            <List
+              dataSource={filteredDestinations}
+              renderItem={(dest) => (
+                <List.Item 
+                  className="cursor-pointer hover:bg-gray-50 transition-colors px-4"
+                  onClick={() => handleSelectSearchResult(dest.id)}
+                >
+                  <List.Item.Meta
+                    avatar={<Avatar src={dest.imageUrl} size="large" />}
+                    title={<span className="font-medium">{dest.name}</span>}
+                    description={dest.description}
+                  />
+                  <div className="flex items-center">
+                    <Rate value={dest.rating} disabled allowHalf className="text-xs" />
+                    <span className="ml-2 text-gray-500 text-sm">{dest.rating}</span>
+                  </div>
+                </List.Item>
+              )}
+            />
+          ) : (
+            <Empty
+              description="Không tìm thấy điểm đến"
+              className="py-4"
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+            />
+          )}
+        </div>
+      )}
+
       <div className="flex justify-center flex-col mb-16">
         <p className="text-center font-semibold text-xl mb-4">
           Khám phá địa điểm phổ biến

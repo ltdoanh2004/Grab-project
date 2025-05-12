@@ -28,7 +28,6 @@ import { useDrag, useDrop } from "react-dnd";
 import { ItemTypes } from "../../../../types/travelPlan";
 import { useTimeEdit } from "../../../../hooks/useTimeEdit";
 import { ActivityCommentModal } from "./Comment";
-import { getRandomHotelImage } from "../../../../constants/backup_hotel";
 
 const { Title, Text } = Typography;
 
@@ -62,7 +61,7 @@ interface DragItem {
   segment: string;
 }
 
-const DEFAULT_IMAGE = "/hinhnen.jpg";
+const DEFAULT_IMAGE = "/notfound.png";
 
 export const ActivityCard: React.FC<ActivityCardProps> = memo(
   ({
@@ -145,10 +144,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
 
     const typeColor = activityTypeColors[activity.type] || "blue";
     
-    // Use backup hotel image for accommodations instead of API image
-    const imageUrl = activity.type === "accommodation" 
-      ? getRandomHotelImage()
-      : activity.image_url || activity.imgUrl || DEFAULT_IMAGE;
+    const imageUrl = activity.image_url || activity.imgUrl || DEFAULT_IMAGE;
 
     return (
       <div
