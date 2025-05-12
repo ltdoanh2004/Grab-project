@@ -35,6 +35,7 @@ import { TravelHeader } from "./travelDetail/Header";
 import { TravelItinerary } from "./travelDetail/Plans";
 import { AIActivitySuggestions } from "./travelDetail/AISuggestions";
 import { useTravelDetail } from "../../hooks/useTravelDetail";
+import { TravelActivity } from "../../types/travelPlan";
 
 const { Search } = Input;
 
@@ -67,7 +68,7 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
     dayForNewActivity,
     showActivityDetail,
     handleReplaceActivity,
-    handleSelectAISuggestion,
+    handleSelectAISuggestion: originalHandleSelectAISuggestion,
     handleDeleteActivity,
     handleUpdateActivityTime,
     handleMoveActivity,
@@ -93,6 +94,36 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
     } catch {
       message.error("Không thể sao chép liên kết.");
     }
+  };
+
+  const handleSelectAISuggestion = (activity: TravelActivity | {
+    activity_id?: string;
+    id: string;
+    type: string;
+    name: string;
+    description: string;
+    address?: string;
+    price?: number;
+    price_range?: string;
+    price_ai_estimate?: number;
+    rating?: number;
+    image_url?: string;
+    start_time?: string;
+    end_time?: string;
+  }) => {
+    const travelActivity: TravelActivity = {
+      ...activity,
+      id: activity.id,
+      type: activity.type,
+      name: activity.name,
+      description: activity.description || '',
+      start_time: activity.start_time || '08:00',
+      end_time: activity.end_time || '09:00',
+      image_url: activity.image_url || '/notfound.png'
+    };
+    
+    // Call the original handler with the properly typed activity
+    originalHandleSelectAISuggestion(travelActivity);
   };
 
   if (loading) {

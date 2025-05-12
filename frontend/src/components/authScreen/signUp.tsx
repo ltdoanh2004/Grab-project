@@ -19,7 +19,16 @@ export const SignUp: React.FC<SignUpProps> = ({
   const handleFinish = async (values: any) => {
     try {
       const res = await register(values);
-      localStorage.setItem("access_token", res.data.access_token);
+      
+      if (res.data && Array.isArray(res.data) && res.data.length > 0) {
+        localStorage.setItem("access_token", res.data[0].access_token);
+      } else if (res.data && typeof res.data === 'object') {
+        const authData = res.data as unknown as { access_token: string };
+        if (authData.access_token) {
+          localStorage.setItem("access_token", authData.access_token);
+        }
+      }
+      
       message.success("Đăng ký thành công! Đã tự động đăng nhập.");
       setTimeout(() => {
         window.dispatchEvent(new Event("storage"));
