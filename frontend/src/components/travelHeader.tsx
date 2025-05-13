@@ -4,6 +4,7 @@ import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { SignIn } from "./authScreen/signIn";
 import { SignUp } from "./authScreen/signUp";
 import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 type TabType = "plan-new" | "plan-list";
 
@@ -16,6 +17,7 @@ export const TravelHeader: React.FC<TravelHeaderProps> = ({
   activeTab,
   onTabChange,
 }) => {
+  const navigate = useNavigate();
   const { isLoggedIn, signOut, authModalState, closeAuthModal, requireAuth } =
     useAuth();
   const [fade, setFade] = useState(false);
@@ -45,10 +47,18 @@ export const TravelHeader: React.FC<TravelHeaderProps> = ({
     },
   ];
 
+  const handleLogoClick = () => {
+    navigate('/');
+    onTabChange('plan-new');
+  };
+
   return (
     <header className="sticky top-0 z-50 shadow-sm bg-white">
       <div className="max-w-7xl mx-auto flex justify-between font-inter items-center py-3 px-4 md:px-6">
-        <div className="flex items-center">
+        <div 
+          className="flex items-center cursor-pointer" 
+          onClick={handleLogoClick}
+        >
           <div className="flex items-center justify-center w-10 h-10 rounded-full bg-black mr-3">
             <img
               src="https://cdn-icons-png.flaticon.com/512/684/684908.png"
