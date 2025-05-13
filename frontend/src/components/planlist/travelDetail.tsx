@@ -175,7 +175,7 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
       description: activity.description || '',
       start_time: activity.start_time || '08:00',
       end_time: activity.end_time || '09:00',
-      image_url: activity.image_url || '/notfound.png'
+      image_url: activity.image_url || getDefaultImage(activity.type)
     };
     
     if (currentDay && activityToReplace && travelDetail) {
@@ -239,6 +239,21 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
     setSearchResults(filteredResults);
   };
   
+  const getDefaultImage = (type: string) => {
+    switch (type) {
+      case 'place':
+      case 'attraction':
+        return "/place.jpg";
+      case 'hotel':
+      case 'accommodation':
+        return "/hotel.jpg";
+      case 'restaurant':
+        return "/restaurant.jpg";
+      default:
+        return "/place.jpg"; // Fallback to place.jpg for unknown types
+    }
+  };
+
   const handleSelectSearchResult = (activity: (typeof MOCK_AI_SUGGESTIONS)[0]) => {
     if (travelDetail && dayForNewActivity) {
       const newActivity: TravelActivity = {
@@ -251,7 +266,7 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
         address: activity.address,
         rating: activity.rating,
         price: activity.price,
-        image_url: activity.image_url,
+        image_url: activity.image_url || getDefaultImage(activity.type),
         duration: activity.duration,
       };
       
@@ -559,11 +574,11 @@ export const TravelDetail: React.FC<TravelDetailProps> = ({
                   <div className="flex w-full">
                     <div className="w-16 h-16 mr-3 rounded-lg overflow-hidden">
                       <img
-                        src={item.image_url || "/notfound.png"}
+                        src={item.image_url || getDefaultImage(item.type)}
                         alt={item.name}
                         className="w-full h-full object-cover"
                         onError={(e) => {
-                          (e.target as HTMLImageElement).src = "/notfound.png";
+                          (e.target as HTMLImageElement).src = getDefaultImage(item.type);
                         }}
                       />
                     </div>

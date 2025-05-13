@@ -132,7 +132,7 @@ export function useTravelDetail(travelId: string) {
           setNotFound(true);
           setLoading(false);
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error(`Error fetching trip ${travelId} from API:`, error);
         
         const localData = localStorage.getItem(`tripPlan_${travelId}`);
@@ -157,7 +157,7 @@ export function useTravelDetail(travelId: string) {
             ? MOCK_TRAVEL_DETAIL
             : travelId === MOCK_TRAVEL_DETAIL_2.id
             ? MOCK_TRAVEL_DETAIL_2
-            : (MOCK_TRAVEL_PLANS.find((p) => p.id === travelId) as any);
+            : (MOCK_TRAVEL_PLANS.find((p) => p.id === travelId || p.trip_id === travelId) as any);
 
         if (mockDetail && mockDetail.plan_by_day) {
           console.log(`Falling back to mock data for trip ID: ${travelId}`);

@@ -45,18 +45,6 @@ interface AISuggestionResponse {
   };
 }
 
-// Fake usernames to display
-const FAKE_USERNAMES = [
-  'Nguyễn Văn A',
-  'Trần Thị B',
-  'Lê Hoàng C',
-  'Phạm Minh D',
-  'Vũ Thành E',
-  'Đỗ Hương F',
-  'Hoàng Lan G',
-  'Đinh Tuấn H',
-];
-
 export const ActivityCommentModal: React.FC<{
   open: boolean;
   onClose: () => void;
@@ -74,12 +62,6 @@ export const ActivityCommentModal: React.FC<{
   const [showSuggestions, setShowSuggestions] = useState(false);
   const { TextArea } = Input;
   const { trackEvent } = usePostHog();
-
-  const getFakeUsername = (userId: string) => {
-    const lastChar = userId.slice(-1);
-    const index = parseInt(lastChar, 16) % FAKE_USERNAMES.length;
-    return FAKE_USERNAMES[index];
-  };
 
   useEffect(() => {
     if (open && activityId) {
@@ -102,7 +84,7 @@ export const ActivityCommentModal: React.FC<{
           comment_id: comment.comment_id,
           comment_message: comment.comment_message,
           user_id: comment.user_id,
-          user_name: getFakeUsername(comment.user_id),
+          user_name: comment.username || 'Người dùng',
           created_at: comment.created_at || new Date().toISOString() 
         }));
         setComments(transformedComments);
@@ -199,6 +181,17 @@ export const ActivityCommentModal: React.FC<{
         price_ai_estimate: 0
       };
       
+      // Format dates properly with time component for API
+      const formatDateForAPI = (dateStr: string | undefined) => {
+        if (!dateStr) return new Date().toISOString();
+        
+        // If it's already in ISO format, return as is
+        if (dateStr.includes('T')) return dateStr;
+        
+        // Otherwise add time component (midnight)
+        return `${dateStr}T00:00:00Z`;
+      };
+      
       const travelPreference = {
         budget: {
           exact_budget: Number(userInput.budget?.exactBudget) || 0,
@@ -214,8 +207,8 @@ export const ActivityCommentModal: React.FC<{
         personal_options: Array.isArray(userInput.personalOptions) ? userInput.personalOptions : [],
         travel_preference_id: 'leisure',
         travel_time: {
-          end_date: userInput.travelTime?.endDate || new Date().toISOString().split('T')[0],
-          start_date: userInput.travelTime?.startDate || new Date().toISOString().split('T')[0],
+          end_date: formatDateForAPI(userInput.travelTime?.endDate),
+          start_date: formatDateForAPI(userInput.travelTime?.startDate),
           type: userInput.travelTime?.type || 'exact'
         },
         trip_id: tripId 
@@ -303,7 +296,14 @@ export const ActivityCommentModal: React.FC<{
       new_activity_name: suggestion.name
     });
     
-
+    // Dispatch a custom event that the parent component will listen for
+    const event = new CustomEvent('replaceActivity', {
+      detail: {
+        activityId,
+        replacementActivity
+      }
+    });
+    window.dispatchEvent(event);
     
     message.success(`Đã thay thế bằng ${suggestion.name}`);
     
@@ -393,67 +393,59 @@ export const ActivityCommentModal: React.FC<{
                 className="mb-2"
                 disabled={aiMode || submitting}
               />
-              <div className="flex justify-between items-center mt-2">
+              
+              <div className="flex justify-between">
                 <Button
-                  type="primary"
-                  icon={<SendOutlined />}
-                  size="small"
-                  onClick={handleAdd}
-                  loading={submitting}
-                  disabled={!value.trim() || aiMode || submitting}
+                  onClick={handleAIMode}
+                  type="text"
+                  icon={<RobotOutlined />}
+                  disabled={comments.length === 0 || aiMode || submitting}
                 >
-                  Gửi
+                  Dùng AI gợi ý
                 </Button>
                 {!aiMode ? (
                   <Button
-                    icon={<RobotOutlined />}
-                    size="small"
-                    type="dashed"
-                    onClick={handleAIMode}
+                    onClick={handleAdd}
+                    type="primary"
+                    icon={<SendOutlined />}
+                    loading={submitting}
+                    disabled={!value.trim() || aiMode}
+                    className="bg-black"
                   >
-                    Gọi AI
+                    Bình luận
                   </Button>
                 ) : (
-                  <Button
-                    icon={aiLoading ? <Spin size="small" /> : <RobotOutlined />}
-                    size="small"
-                    type="primary"
-                    disabled={selectedIdx.length === 0 || aiLoading}
-                    loading={aiLoading}
-                    onClick={handleAICall}
-                  >
-                    Xác nhận AI ({selectedIdx.length})
-                  </Button>
+                  <div>
+                    <Button 
+                      className="mr-2"
+                      onClick={() => {
+                        setAiMode(false);
+                        setSelectedIdx([]);
+                      }}
+                    >
+                      Hủy
+                    </Button>
+                    <Button
+                      type="primary"
+                      loading={aiLoading}
+                      disabled={selectedIdx.length === 0}
+                      onClick={handleAICall}
+                      className="bg-black"
+                    >
+                      Gợi ý
+                    </Button>
+                  </div>
                 )}
               </div>
             </>
           ) : (
             // AI Suggestions section
-            <>
-              <p className="text-sm text-gray-500 mb-4">
-                Dựa trên các bình luận bạn đã chọn, AI gợi ý những địa điểm sau:
-              </p>
-              
+            <div className="max-h-[540px] overflow-y-auto">
               <AIActivitySuggestions 
                 suggestions={suggestions}
-                loading={false}
                 onSelectActivity={handleAddSuggestion}
               />
-              
-              <div className="flex justify-between mt-4">
-                <Button 
-                  onClick={() => setShowSuggestions(false)}
-                >
-                  Quay lại bình luận
-                </Button>
-                <Button 
-                  type="primary"
-                  onClick={onClose}
-                >
-                  Đóng
-                </Button>
-              </div>
-            </>
+            </div>
           )}
         </>
       )}

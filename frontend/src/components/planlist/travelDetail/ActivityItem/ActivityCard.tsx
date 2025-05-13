@@ -61,11 +61,6 @@ interface DragItem {
   segment: string;
 }
 
-const DEFAULT_IMAGE = "/notfound.png";
-const HOTEL_IMAGE = "/hotel.jpg";
-const PLACE_IMAGE = "/place.jpg";
-const RESTAURANT_IMAGE = "/restaurant.jpg";
-
 export const ActivityCard: React.FC<ActivityCardProps> = memo(
   ({
     day,
@@ -84,20 +79,23 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
     const ref = useRef<HTMLDivElement>(null);
     const [showCommentModal, setShowCommentModal] = React.useState(false);
     
+    // Get default image based on activity type
     const getDefaultImage = (type: string) => {
-      if (type === "hotel" || type === "accommodation") {
-        return HOTEL_IMAGE;
-      } else if (type === "attraction" || type === "place") {
-        return PLACE_IMAGE;
-      } else if (type === "restaurant") {
-        return RESTAURANT_IMAGE;
+      switch (type) {
+        case 'place':
+        case 'attraction':
+          return "/place.jpg";
+        case 'hotel':
+        case 'accommodation':
+          return "/hotel.jpg";
+        case 'restaurant':
+          return "/restaurant.jpg";
+        default:
+          return "/place.jpg"; // Fallback to place.jpg for unknown types
       }
-      return DEFAULT_IMAGE;
     };
     
-    const imageUrl = activity.type === "hotel" || activity.type === "accommodation" 
-      ? HOTEL_IMAGE 
-      : (activity.image_url || activity.imgUrl || getDefaultImage(activity.type));
+    const imageUrl = activity.image_url || activity.imgUrl || getDefaultImage(activity.type);
     
     // Simple drag implementation
     const [{ isDragging }, drag] = useDrag({
@@ -191,7 +189,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
                 src={imageUrl}
                 alt={activity.name}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                fallback={DEFAULT_IMAGE}
+                fallback={getDefaultImage(activity.type)}
                 preview={false}
               />
             </div>

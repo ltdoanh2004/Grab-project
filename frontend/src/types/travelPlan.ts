@@ -95,12 +95,14 @@ export interface TravelDay {
 }
 
 export interface TravelDetailData {
-  id: string;
+  id?: string;
+  trip_id?: string;
   user_id: string;
   trip_name: string;
   start_date: string;
   end_date: string;
   destination: string;
+  destination_id?: string;
   plan_by_day: TravelDay[];
 
   // Faked/optional fields for UI compatibility

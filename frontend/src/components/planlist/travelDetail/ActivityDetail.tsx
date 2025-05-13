@@ -7,7 +7,20 @@ import { ActivityDetail } from "../../../types/apiType";
 
 const { Paragraph } = Typography;
 
-const DEFAULT_IMAGE = "/notfound.png";
+const getDefaultImage = (type: string) => {
+  switch (type) {
+    case 'place':
+    case 'attraction':
+      return "/place.jpg";
+    case 'hotel':
+    case 'accommodation':
+      return "/hotel.jpg";
+    case 'restaurant':
+      return "/restaurant.jpg";
+    default:
+      return "/place.jpg"; // Fallback to place.jpg for unknown types
+  }
+};
 
 interface ActivityModalProps {
   activity: TravelActivity | null;
@@ -76,9 +89,9 @@ export const ActivityModal: React.FC<ActivityModalProps> = ({
 
   const images = (displayData.image_urls && displayData.image_urls.length > 0) 
       ? displayData.image_urls 
-      : [displayData.image_url || displayData.imgUrl || DEFAULT_IMAGE].filter(Boolean);
+      : [displayData.image_url || displayData.imgUrl || getDefaultImage(activity.type)].filter(Boolean);
 
-  const currentImage = images[currentImageIndex] || DEFAULT_IMAGE;
+  const currentImage = images[currentImageIndex] || getDefaultImage(activity.type);
 
   const nextImage = () => {
     setImageLoading(true);
@@ -141,7 +154,7 @@ export const ActivityModal: React.FC<ActivityModalProps> = ({
               src={currentImage}
               alt={displayData.name}
               className="w-full h-full object-cover"
-              fallback={DEFAULT_IMAGE}
+              fallback={getDefaultImage(activity.type)}
               preview={false}
               onLoad={handleImageLoad}
             />
@@ -197,7 +210,7 @@ export const ActivityModal: React.FC<ActivityModalProps> = ({
                         alt={`${displayData.name} - ảnh ${index + 1}`}
                         className="max-h-full max-w-full object-cover"
                         onError={(e) => {
-                          e.currentTarget.src = DEFAULT_IMAGE;
+                          e.currentTarget.src = getDefaultImage(activity.type);
                         }}
                       />
                     </div>

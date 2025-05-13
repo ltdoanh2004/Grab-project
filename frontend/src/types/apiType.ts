@@ -37,6 +37,7 @@ export interface ActivityComment {
   comment_id: string;
   comment_message: string;
   user_id: string;
+  username?: string;
   trip_accommodation_id?: string;
   trip_place_id?: string;
   trip_restaurant_id?: string;
