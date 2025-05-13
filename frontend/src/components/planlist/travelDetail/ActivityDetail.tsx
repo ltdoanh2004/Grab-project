@@ -110,6 +110,17 @@ export const ActivityModal: React.FC<ActivityModalProps> = ({
         <Button key="back" onClick={onClose}>
           Đóng
         </Button>,
+        displayData.url && (
+          <Button 
+            key="link" 
+            type="primary"
+            href={displayData.url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            Truy cập website
+          </Button>
+        )
       ]}
       width={700}
       styles={{ body: { padding: "16px" } }}
@@ -278,15 +289,6 @@ export const ActivityModal: React.FC<ActivityModalProps> = ({
             <div className="mb-4">
               <div className="text-gray-500">Thông tin thêm</div>
               <Paragraph>{displayData.additional_info}</Paragraph>
-            </div>
-          )}
-
-          {displayData.url && (
-            <div className="mb-4">
-              <div className="text-gray-500">Trang web</div>
-              <a href={displayData.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
-                {displayData.url}
-              </a>
             </div>
           )}
         </>

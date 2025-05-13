@@ -62,6 +62,9 @@ interface DragItem {
 }
 
 const DEFAULT_IMAGE = "/notfound.png";
+const HOTEL_IMAGE = "/hotel.jpg";
+const PLACE_IMAGE = "/place.jpg";
+const RESTAURANT_IMAGE = "/restaurant.jpg";
 
 export const ActivityCard: React.FC<ActivityCardProps> = memo(
   ({
@@ -80,6 +83,21 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
   }) => {
     const ref = useRef<HTMLDivElement>(null);
     const [showCommentModal, setShowCommentModal] = React.useState(false);
+    
+    const getDefaultImage = (type: string) => {
+      if (type === "hotel" || type === "accommodation") {
+        return HOTEL_IMAGE;
+      } else if (type === "attraction" || type === "place") {
+        return PLACE_IMAGE;
+      } else if (type === "restaurant") {
+        return RESTAURANT_IMAGE;
+      }
+      return DEFAULT_IMAGE;
+    };
+    
+    const imageUrl = activity.type === "hotel" || activity.type === "accommodation" 
+      ? HOTEL_IMAGE 
+      : (activity.image_url || activity.imgUrl || getDefaultImage(activity.type));
     
     // Simple drag implementation
     const [{ isDragging }, drag] = useDrag({
@@ -144,8 +162,6 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
 
     const typeColor = activityTypeColors[activity.type] || "blue";
     
-    const imageUrl = activity.image_url || activity.imgUrl || DEFAULT_IMAGE;
-
     return (
       <div
         ref={ref}

@@ -27,7 +27,6 @@ export function useTravelDetail(travelId: string) {
     
     console.log(`Looking for trip with ID: ${travelId}`);
     
-    // Log user input from localStorage for this trip
     const userInputKey = `userInput_${travelId}`;
     const storedUserInput = localStorage.getItem(userInputKey);
     if (storedUserInput) {
@@ -43,13 +42,11 @@ export function useTravelDetail(travelId: string) {
     
     const fetchTripDetails = async () => {
       try {
-        // Fetch trip data from API
         const response = await apiClient.get(`/trip/${travelId}`);
         
         if (response.data && response.data.data) {
           const apiTripData = response.data.data;
           
-          // Check for daily tips in localStorage
           const localData = localStorage.getItem(`tripPlan_${travelId}`);
           let localDailyTips: Record<string, string[]> = {};
           
@@ -57,7 +54,6 @@ export function useTravelDetail(travelId: string) {
             try {
               const parsedLocalData = JSON.parse(localData);
               
-              // Extract daily tips from localStorage data
               if (parsedLocalData && parsedLocalData.plan_by_day) {
                 parsedLocalData.plan_by_day.forEach((day: any, index: number) => {
                   if (day.daily_tips && day.daily_tips.length > 0) {
@@ -70,10 +66,8 @@ export function useTravelDetail(travelId: string) {
             }
           }
           
-          // Process trip data with details for each activity
           const processedTripData = { ...apiTripData };
           
-          // Create a deep copy of the plan_by_day with enriched activity details
           const enrichedDays = await Promise.all(
             apiTripData.plan_by_day.map(async (day: any) => {
               const enrichedSegments = await Promise.all(
@@ -81,15 +75,11 @@ export function useTravelDetail(travelId: string) {
                   const enrichedActivities = await Promise.all(
                     segment.activities.map(async (activity: any) => {
                       try {
-                        // Fetch detailed information for each activity from the appropriate endpoint
                         const detailData = await getActivityDetail(activity.type, activity.id);
                         
-                        // Process image_urls to handle comma separated URLs in a single string
                         let processedImageUrls: string[] = [];
                         if (detailData.image_urls && detailData.image_urls.length > 0) {
-                          // Check if the first entry is a comma-separated string
                           if (typeof detailData.image_urls[0] === 'string' && detailData.image_urls[0].includes(',')) {
-                            // Split by comma and trim whitespace
                             processedImageUrls = detailData.image_urls[0]
                               .split(',')
                               .map(url => url.trim());
@@ -98,7 +88,6 @@ export function useTravelDetail(travelId: string) {
                           }
                         }
                         
-                        // Merge the basic activity data with the detailed information
                         return {
                           ...activity,
                           name: detailData.name || activity.name,
@@ -146,7 +135,6 @@ export function useTravelDetail(travelId: string) {
       } catch (error) {
         console.error(`Error fetching trip ${travelId} from API:`, error);
         
-        // Fallback to localStorage for backwards compatibility
         const localData = localStorage.getItem(`tripPlan_${travelId}`);
         
         if (localData) {
@@ -164,7 +152,6 @@ export function useTravelDetail(travelId: string) {
           }
         }
         
-        // Fallback to mock data if API fails and no localStorage data
         const mockDetail =
           travelId === MOCK_TRAVEL_DETAIL.id
             ? MOCK_TRAVEL_DETAIL
@@ -195,7 +182,6 @@ export function useTravelDetail(travelId: string) {
     };
   }, [travelId]);
 
-  // All handlers below
   const [activeTab, setActiveTab] = useState<string>("itinerary");
   const [activityModalVisible, setActivityModalVisible] = useState(false);
   const [selectedActivity, setSelectedActivity] =
@@ -216,17 +202,14 @@ export function useTravelDetail(travelId: string) {
     setActivityModalVisible(true);
   };
 
-  // Helper: flatten all activities for a day (from segments)
   const getAllActivitiesOfDay = (day: TravelDay): TravelActivity[] => {
     return day.segments.flatMap((segment: TravelSegment) => segment.activities);
   };
 
-  // Helper: update activities in a day (by segments)
   const updateActivitiesOfDay = (
     day: TravelDay,
     newActivities: TravelActivity[]
   ) => {
-    // Distribute newActivities back into segments by original segment lengths
     let idx = 0;
     const newSegments = day.segments.map((segment) => {
       const segActs = segment.activities.length;
@@ -239,7 +222,6 @@ export function useTravelDetail(travelId: string) {
 
   const toggleEditMode = () => {
     if (isEditMode && travelDetail) {
-      // Sort activities in each segment by start_time
       const sortedTravelDetail = {
         ...travelDetail,
         plan_by_day: travelDetail.plan_by_day.map((day) => ({
@@ -247,11 +229,12 @@ export function useTravelDetail(travelId: string) {
           segments: day.segments.map((segment) => ({
             ...segment,
             activities: [...segment.activities].sort((a, b) => {
-              const getStart = (time: string) => {
-                const [h, m] = a.start_time.split(":").map(Number);
-                return h * 60 + m;
+              const getTimeInMinutes = (time: string) => {
+                if (!time) return 0;
+                const [h, m] = time.split(":").map(Number);
+                return h * 60 + (m || 0);
               };
-              return getStart(a.start_time) - getStart(b.start_time);
+              return getTimeInMinutes(a.start_time) - getTimeInMinutes(b.start_time);
             }),
           })),
         })),
@@ -277,14 +260,30 @@ export function useTravelDetail(travelId: string) {
           if (day.date !== currentDay.date) return day;
           return {
             ...day,
-            segments: day.segments.map((segment) => ({
-              ...segment,
-              activities: segment.activities.map((a) =>
+            segments: day.segments.map((segment) => {
+              const updatedActivities = segment.activities.map((a) =>
                 a.id === activityToReplace.id
-                  ? { ...newActivity, id: activityToReplace.id }
+                  ? { 
+                      ...newActivity, 
+                      id: activityToReplace.id,
+                      start_time: activityToReplace.start_time || newActivity.start_time,
+                      end_time: activityToReplace.end_time || newActivity.end_time 
+                    }
                   : a
-              ),
-            })),
+              );
+              
+              return {
+                ...segment,
+                activities: updatedActivities.sort((a, b) => {
+                  const getTimeInMinutes = (time: string) => {
+                    if (!time) return 0;
+                    const [h, m] = time.split(":").map(Number);
+                    return h * 60 + (m || 0);
+                  };
+                  return getTimeInMinutes(a.start_time) - getTimeInMinutes(b.start_time);
+                }),
+              };
+            }),
           };
         }
       );
@@ -324,9 +323,8 @@ export function useTravelDetail(travelId: string) {
         if (d.date !== day.date) return d;
         return {
           ...d,
-          segments: d.segments.map((segment) => ({
-            ...segment,
-            activities: segment.activities.map((a) =>
+          segments: d.segments.map((segment) => {
+            const updatedActivities = segment.activities.map((a) =>
               a.id === activity.id
                 ? {
                     ...a,
@@ -334,51 +332,59 @@ export function useTravelDetail(travelId: string) {
                     end_time: end_time || a.end_time,
                   }
                 : a
-            ),
-          })),
+            );
+            
+            return {
+              ...segment,
+              activities: updatedActivities.sort((a, b) => {
+                const getTimeInMinutes = (time: string) => {
+                  if (!time) return 0;
+                  const [h, m] = time.split(":").map(Number);
+                  return h * 60 + (m || 0);
+                };
+                return getTimeInMinutes(a.start_time) - getTimeInMinutes(b.start_time);
+              }),
+            };
+          }),
         };
       }
     );
     setTravelDetail(updatedTravelDetail);
   };
 
-  // Move activity between segments/days
   const handleMoveActivity = (
-    fromIndex: number,
-    toIndex: number,
-    fromDayDate: string,
-    toDayDate: string
+    fromDayIndex: number,
+    fromSegment: string,
+    fromActivityIndex: number,
+    toDayIndex: number,
+    toSegment: string,
+    toActivityIndex: number
   ) => {
     if (!travelDetail) return;
     const updatedTravelDetail = { ...travelDetail };
-    const fromDayIdx = updatedTravelDetail.plan_by_day.findIndex(
-      (d) => d.date === fromDayDate
-    );
-    const toDayIdx = updatedTravelDetail.plan_by_day.findIndex(
-      (d) => d.date === toDayDate
-    );
-    if (fromDayIdx === -1 || toDayIdx === -1) return;
-
-    // Flatten activities for both days
-    const fromDay = updatedTravelDetail.plan_by_day[fromDayIdx];
-    const toDay = updatedTravelDetail.plan_by_day[toDayIdx];
-    let fromActs = getAllActivitiesOfDay(fromDay);
-    let toActs = getAllActivitiesOfDay(toDay);
-
-    // Move activity
-    const [moved] = fromActs.splice(fromIndex, 1);
-    toActs.splice(toIndex, 0, moved);
-
-    // Update days
-    updatedTravelDetail.plan_by_day[fromDayIdx] = updateActivitiesOfDay(
-      fromDay,
-      fromActs
-    );
-    updatedTravelDetail.plan_by_day[toDayIdx] = updateActivitiesOfDay(
-      toDay,
-      toActs
-    );
-
+    const fromDay = updatedTravelDetail.plan_by_day[fromDayIndex];
+    const toDay = updatedTravelDetail.plan_by_day[toDayIndex];
+    
+    if (!fromDay || !toDay) return;
+    
+    const fromSegmentObj = fromDay.segments.find(s => s.time_of_day === fromSegment);
+    const toSegmentObj = toDay.segments.find(s => s.time_of_day === toSegment);
+    
+    if (!fromSegmentObj || !toSegmentObj) return;
+    
+    const [movedActivity] = fromSegmentObj.activities.splice(fromActivityIndex, 1);
+    
+    toSegmentObj.activities.splice(toActivityIndex, 0, movedActivity);
+    
+    toSegmentObj.activities.sort((a, b) => {
+      const getTimeInMinutes = (time: string) => {
+        if (!time) return 0;
+        const [h, m] = time.split(":").map(Number);
+        return h * 60 + (m || 0);
+      };
+      return getTimeInMinutes(a.start_time) - getTimeInMinutes(b.start_time);
+    });
+    
     setTravelDetail(updatedTravelDetail);
   };
 
@@ -389,7 +395,6 @@ export function useTravelDetail(travelId: string) {
 
   const handleAddCustomActivity = (searchValue: string) => {
     if (travelDetail && dayForNewActivity && searchValue.trim()) {
-      // Add to first segment by default
       const newActivity: TravelActivity = {
         id: `custom-${Date.now()}`,
         type: "attraction",
@@ -405,14 +410,23 @@ export function useTravelDetail(travelId: string) {
           if (d.date !== dayForNewActivity.date) return d;
           return {
             ...d,
-            segments: d.segments.map((segment, idx) =>
-              idx === 0
-                ? {
-                    ...segment,
-                    activities: [...segment.activities, newActivity],
-                  }
-                : segment
-            ),
+            segments: d.segments.map((segment, idx) => {
+              if (idx === 0) {
+                const updatedActivities = [...segment.activities, newActivity];
+                return {
+                  ...segment,
+                  activities: updatedActivities.sort((a, b) => {
+                    const getTimeInMinutes = (time: string) => {
+                      if (!time) return 0;
+                      const [h, m] = time.split(":").map(Number);
+                      return h * 60 + (m || 0);
+                    };
+                    return getTimeInMinutes(a.start_time) - getTimeInMinutes(b.start_time);
+                  }),
+                };
+              }
+              return segment;
+            }),
           };
         }
       );
