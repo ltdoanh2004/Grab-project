@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import {
   TravelTime,
   PersonalOption,
@@ -6,6 +6,8 @@ import {
   NumOfPeople,
 } from "../types/travelPlan";
 import { BUDGET_RANGES } from "../constants/travelPlanConstants";
+import { getUserTrips } from "../services/travelPlanApi";
+import { useAuth } from "./useAuth";
 
 export const useTravelPlan = () => {
   //step magnage
@@ -165,3 +167,69 @@ export const useTravelPlan = () => {
     handleAddOption,
   };
 };
+
+export function useTravelPlans() {
+  const [travelPlans, setTravelPlans] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const { isLoggedIn } = useAuth();
+
+  useEffect(() => {
+    let ignore = false;
+    
+    const fetchTravelPlans = async () => {
+      if (!isLoggedIn) {
+        setTravelPlans([]);
+        setLoading(false);
+        return;
+      }
+      
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const response = await getUserTrips();
+        
+        if (!ignore) {
+          if (response && response.data) {
+            setTravelPlans(response.data);
+          } else {
+            setTravelPlans([]);
+          }
+          setLoading(false);
+        }
+      } catch (err) {
+        console.error("Error fetching travel plans:", err);
+        if (!ignore) {
+          setError("Failed to load travel plans. Please try again later.");
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchTravelPlans();
+    
+    return () => {
+      ignore = true;
+    };
+  }, [isLoggedIn]);
+
+  return {
+    travelPlans,
+    loading,
+    error,
+    refetch: async () => {
+      setLoading(true);
+      try {
+        const response = await getUserTrips();
+        if (response && response.data) {
+          setTravelPlans(response.data);
+        }
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to refresh travel plans. Please try again later.");
+        setLoading(false);
+      }
+    }
+  };
+}

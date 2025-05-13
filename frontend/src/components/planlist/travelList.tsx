@@ -9,6 +9,8 @@ import {
   Empty,
   Dropdown,
   Menu,
+  Spin,
+  Alert,
 } from "antd";
 import {
   ClockCircleOutlined,
@@ -17,18 +19,20 @@ import {
   DollarOutlined,
   CalendarOutlined,
   MoreOutlined,
+  ReloadOutlined,
 } from "@ant-design/icons";
 import {
-  MOCK_TRAVEL_PLANS,
   TRAVEL_PLAN_TABS,
   ACTION_MENU_ITEMS,
   formatDate,
 } from "../../constants/travelPlanConstants";
 import { TravelDetail } from "./travelDetail";
+import { useTravelPlans } from "../../hooks/useTravelPlans";
 
 const { Title, Text, Paragraph } = Typography;
 
 export const TravelPlanListTab: React.FC = () => {
+  const { travelPlans, loading, error, refetch } = useTravelPlans();
   const [activeTab, setActiveTab] = useState<string>("upcoming");
   const [selectedTravelId, setSelectedTravelId] = useState<string | null>(null);
 
@@ -46,8 +50,8 @@ export const TravelPlanListTab: React.FC = () => {
   }
 
   const getStatusTag = (status: string) => {
-    if (status === "upcoming") {
-      return <Tag color="blue">Sắp tới</Tag>;
+    if (status === "planning") {
+      return <Tag color="blue">Đang lên kế hoạch</Tag>;
     } else if (status === "completed") {
       return <Tag color="green">Đã hoàn thành</Tag>;
     } else {
@@ -55,8 +59,13 @@ export const TravelPlanListTab: React.FC = () => {
     }
   };
 
-  function renderTravelPlanItem(item: (typeof MOCK_TRAVEL_PLANS)[0]) {
+  function renderTravelPlanItem(item: any) {
     const actionMenu = <Menu items={ACTION_MENU_ITEMS} />;
+    const startDate = item.start_date ? new Date(item.start_date) : new Date();
+    const endDate = item.end_date ? new Date(item.end_date) : new Date();
+    const tripDuration = Math.round(
+      (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+    );
 
     return (
       <List.Item>
@@ -64,8 +73,8 @@ export const TravelPlanListTab: React.FC = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/4 h-48 md:h-auto overflow-hidden rounded-lg">
               <img
-                src={item.imageUrl}
-                alt={`${item.destination}`}
+                src="https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg"
+                alt={item.trip_name || item.destination_id}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -75,25 +84,20 @@ export const TravelPlanListTab: React.FC = () => {
                 <div className="flex justify-between items-start">
                   <div>
                     <Title level={4} className="mb-1">
-                      {item.destination}
+                      {item.trip_name || `Trip to ${item.destination_id}`}
                     </Title>
                     <div className="flex items-center text-gray-600 mb-3">
                       <CalendarOutlined className="mr-2" />
                       <Text>
-                        {formatDate(item.startDate)} -{" "}
-                        {formatDate(item.endDate)}
+                        {formatDate(startDate)} - {formatDate(endDate)}
                       </Text>
-                      <Text className="mx-2">•</Text>
-                      <TeamOutlined className="mr-1" />
-                      <Text>
-                        {item.adults +
-                          (item.children > 0
-                            ? ` + ${item.children} trẻ em`
-                            : "")}
-                      </Text>
-                      <Text className="mx-2">•</Text>
-                      <DollarOutlined className="mr-1" />
-                      <Text>{item.budgetType}</Text>
+                      {item.destination_id && (
+                        <>
+                          <Text className="mx-2">•</Text>
+                          <EnvironmentOutlined className="mr-1" />
+                          <Text>{item.destination_id}</Text>
+                        </>
+                      )}
                     </div>
                   </div>
                   <div className="flex">
@@ -111,21 +115,38 @@ export const TravelPlanListTab: React.FC = () => {
                   </div>
                 </div>
 
-                <Paragraph className="mb-2 text-gray-600">
-                  <EnvironmentOutlined className="mr-2" />
-                  Hoạt động: {item.activities.join(", ")}
-                </Paragraph>
+                {item.plan_by_day && item.plan_by_day.length > 0 && (
+                  <Paragraph className="mb-2 text-gray-600">
+                    <EnvironmentOutlined className="mr-2" />
+                    Hoạt động: {item.plan_by_day.reduce((acc: string[], day: any) => {
+                      day.segments.forEach((segment: any) => {
+                        segment.activities.forEach((activity: any) => {
+                          if (activity.name && !acc.includes(activity.name)) {
+                            acc.push(activity.name);
+                          }
+                        });
+                      });
+                      return acc;
+                    }, []).slice(0, 3).join(", ")}
+                    {item.plan_by_day.reduce((acc: string[], day: any) => {
+                      day.segments.forEach((segment: any) => {
+                        segment.activities.forEach((activity: any) => {
+                          if (activity.name && !acc.includes(activity.name)) {
+                            acc.push(activity.name);
+                          }
+                        });
+                      });
+                      return acc;
+                    }, []).length > 3 ? '...' : ''}
+                  </Paragraph>
+                )}
               </div>
 
               <div className="flex justify-between items-center mt-4">
                 <div className="flex">
                   <ClockCircleOutlined className="mr-2 text-gray-500" />
                   <Text type="secondary">
-                    {Math.round(
-                      (item.endDate.getTime() - item.startDate.getTime()) /
-                        (1000 * 60 * 60 * 24)
-                    )}{" "}
-                    ngày
+                    {tripDuration} ngày
                   </Text>
                 </div>
 
@@ -133,7 +154,7 @@ export const TravelPlanListTab: React.FC = () => {
                   <Button
                     type="primary"
                     className="!bg-black"
-                    onClick={() => handleViewDetails(item.id)}
+                    onClick={() => handleViewDetails(item.trip_id)}
                   >
                     Chi tiết
                   </Button>
@@ -146,7 +167,78 @@ export const TravelPlanListTab: React.FC = () => {
     );
   }
 
-  const tabItems = TRAVEL_PLAN_TABS(renderTravelPlanItem, MOCK_TRAVEL_PLANS);
+  if (loading) {
+    return (
+      <div className="max-w-6xl mx-auto px-4 py-8 flex justify-center">
+        <Spin size="large" tip="Đang tải..." />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <Alert
+          message="Error"
+          description={error}
+          type="error"
+          showIcon
+          action={
+            <Button onClick={() => refetch()} icon={<ReloadOutlined />}>
+              Thử lại
+            </Button>
+          }
+        />
+      </div>
+    );
+  }
+
+  // Filter travel plans by status
+  const upcomingTrips = travelPlans.filter(
+    (trip) => trip.status === "planning"
+  );
+  const ongoingTrips = travelPlans.filter(
+    (trip) => trip.status === "ongoing"
+  );
+  const completedTrips = travelPlans.filter(
+    (trip) => trip.status === "completed"
+  );
+
+  const renderTripList = (trips: any[]) => {
+    if (trips.length === 0) {
+      return <Empty description="Không có chuyến đi nào" />;
+    }
+    return (
+      <List
+        dataSource={trips}
+        renderItem={renderTravelPlanItem}
+        pagination={trips.length > 5 ? { pageSize: 5 } : false}
+      />
+    );
+  };
+
+  const tabItems = [
+    {
+      key: "upcoming",
+      label: "Sắp tới",
+      children: renderTripList(upcomingTrips)
+    },
+    {
+      key: "ongoing",
+      label: "Đang diễn ra",
+      children: renderTripList(ongoingTrips)
+    },
+    {
+      key: "completed",
+      label: "Đã hoàn thành",
+      children: renderTripList(completedTrips)
+    },
+    {
+      key: "all",
+      label: "Tất cả",
+      children: renderTripList(travelPlans)
+    }
+  ];
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">

@@ -203,4 +203,15 @@ export async function suggestComment(payload: SuggestCommentPayload) {
   }
 }
 
+export async function getUserTrips() {
+  try {
+    console.log("[API] Fetching user trips from /trip/me");
+    const res = await apiClient.get('/trip/me');
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching user trips:", error);
+    throw error;
+  }
+}
+
 

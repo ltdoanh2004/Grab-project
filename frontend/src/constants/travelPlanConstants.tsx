@@ -317,6 +317,7 @@ export const PERSONAL_OPTIONS: PersonalOptions = {
 export const MOCK_TRAVEL_PLANS = [
   {
     id: "trip-1",
+    trip_id: "trip-1",
     destination: "Hà Nội",
     imageUrl:
       "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
@@ -330,6 +331,7 @@ export const MOCK_TRAVEL_PLANS = [
   },
   {
     id: "trip-2",
+    trip_id: "trip-2",
     destination: "Đà Nẵng",
     imageUrl:
       "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",
@@ -343,6 +345,7 @@ export const MOCK_TRAVEL_PLANS = [
   },
   {
     id: "trip-3",
+    trip_id: "trip-3",
     destination: "Nha Trang",
     imageUrl:
       "https://rosevalleydalat.com/wp-content/uploads/2019/04/doiche.jpg",

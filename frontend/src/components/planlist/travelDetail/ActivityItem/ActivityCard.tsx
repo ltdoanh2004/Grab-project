@@ -61,8 +61,6 @@ interface DragItem {
   segment: string;
 }
 
-const DEFAULT_IMAGE = "/notfound.png";
-
 export const ActivityCard: React.FC<ActivityCardProps> = memo(
   ({
     day,
@@ -80,6 +78,24 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
   }) => {
     const ref = useRef<HTMLDivElement>(null);
     const [showCommentModal, setShowCommentModal] = React.useState(false);
+    
+    // Get default image based on activity type
+    const getDefaultImage = (type: string) => {
+      switch (type) {
+        case 'place':
+        case 'attraction':
+          return "/place.jpg";
+        case 'hotel':
+        case 'accommodation':
+          return "/hotel.jpg";
+        case 'restaurant':
+          return "/restaurant.jpg";
+        default:
+          return "/place.jpg"; // Fallback to place.jpg for unknown types
+      }
+    };
+    
+    const imageUrl = activity.image_url || activity.imgUrl || getDefaultImage(activity.type);
     
     // Simple drag implementation
     const [{ isDragging }, drag] = useDrag({
@@ -144,8 +160,6 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
 
     const typeColor = activityTypeColors[activity.type] || "blue";
     
-    const imageUrl = activity.image_url || activity.imgUrl || DEFAULT_IMAGE;
-
     return (
       <div
         ref={ref}
@@ -175,7 +189,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = memo(
                 src={imageUrl}
                 alt={activity.name}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                fallback={DEFAULT_IMAGE}
+                fallback={getDefaultImage(activity.type)}
                 preview={false}
               />
             </div>

@@ -28,40 +28,56 @@ interface AISuggestion {
   end_time?: string;
 }
 
-// Mock data in the new format
+// Add this function near the top of the file
+const getDefaultImage = (type: string) => {
+  switch (type) {
+    case 'place':
+    case 'attraction':
+      return "/place.jpg";
+    case 'hotel':
+    case 'accommodation':
+      return "/hotel.jpg";
+    case 'restaurant':
+      return "/restaurant.jpg";
+    default:
+      return "/place.jpg"; // Fallback to place.jpg for unknown types
+  }
+};
+
+// Update the mock suggestions to use the new images
 const MOCK_AI_SUGGESTIONS: AISuggestion[] = [
   {
-    activity_id: "f96177d2-67dc-4052-8a57-3d2f912526df",
-    id: "restaurant_004013",
-    type: "restaurant",
-    name: "Cơm Chay Tịnh Độ",
-    description: "Cơm Chay Tịnh Độ là một địa điểm lý tưởng dành cho những người thích ẩm thực chay. Không gian yên tĩnh và món ăn đa dạng sẽ mang đến trải nghiệm tuyệt vời.",
-    address: "30 Nguyễn Thiện Thuật, Q3, TP.HCM",
+    activity_id: "s1",
+    id: "attr_001",
+    type: "attraction",
+    name: "Bảo tàng Lịch sử Quốc gia",
+    description: "Bảo tàng lớn với nhiều hiện vật quý về lịch sử Việt Nam từ thời tiền sử đến hiện đại.",
+    address: "1 Tràng Tiền, Hoàn Kiếm, Hà Nội",
     rating: 4.5,
-    price_range: "50,000đ - 150,000đ",
-    image_url: "/notfound.png"
+    price_ai_estimate: 30000,
+    image_url: getDefaultImage("attraction")
   },
   {
-    activity_id: "f96177d2-67dc-4052-8a57-3d2f912526df",
-    id: "restaurant_010395",
-    type: "restaurant",
-    name: "Quán Chay Hương Sen",
-    description: "Quán Chay Hương Sen nổi tiếng với các món ăn chay tinh tế, được chế biến từ nguyên liệu tươi ngon. Không gian thoáng đãng và phục vụ chu đáo.",
-    address: "101 Võ Văn Tần, Q3, TP.HCM",
-    rating: 4.7,
-    price_range: "60,000đ - 200,000đ",
-    image_url: "/notfound.png"
+    activity_id: "s2",
+    id: "attr_002",
+    type: "attraction",
+    name: "Văn Miếu - Quốc Tử Giám",
+    description: "Di tích lịch sử văn hóa quan trọng của Hà Nội, đại diện cho nền giáo dục Việt Nam thời phong kiến.",
+    address: "58 Quốc Tử Giám, Đống Đa, Hà Nội",
+    rating: 4.8,
+    price_ai_estimate: 30000,
+    image_url: getDefaultImage("attraction")
   },
   {
-    activity_id: "f96177d2-67dc-4052-8a57-3d2f912526df",
-    id: "restaurant_011911",
+    activity_id: "s3",
+    id: "restaurant_042",
     type: "restaurant",
     name: "Nhà hàng chay An Lạc",
     description: "Nhà hàng chay An Lạc mang đến thực đơn đa dạng với các món ăn chay được chế biến cầu kỳ và bổ dưỡng. Không gian yên tĩnh, thích hợp cho các buổi gặp gỡ.",
     address: "10 Trần Nhật Duật, Q1, TP.HCM",
     rating: 4.3,
     price_ai_estimate: 120000,
-    image_url: "/notfound.png"
+    image_url: getDefaultImage("restaurant")
   }
 ];
 
@@ -165,11 +181,11 @@ export const AIActivitySuggestions: React.FC<AIActivitySuggestionsProps> = ({
               <div className="flex">
                 <div className="w-24 h-24 mr-4 overflow-hidden rounded-lg shadow-sm flex-shrink-0">
                   <img
-                    src={suggestion.image_url || "/notfound.png"}
+                    src={suggestion.image_url || getDefaultImage(suggestion.type)}
                     alt={suggestion.name}
                     className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = "/notfound.png";
+                      (e.target as HTMLImageElement).src = getDefaultImage(suggestion.type);
                     }}
                   />
                 </div>
@@ -260,103 +276,108 @@ export const AIActivitySuggestions: React.FC<AIActivitySuggestionsProps> = ({
 
       {/* Detail Modal */}
       <Modal
-        title={
-          <div className="flex items-center">
-            <Tag 
-              color={selectedSuggestion ? getActivityTypeColor(selectedSuggestion.type) : 'default'} 
-              className="mr-2"
-            >
-              {selectedSuggestion?.type}
-            </Tag>
-            <span>{selectedSuggestion?.name}</span>
-          </div>
-        }
+        title="Chi tiết gợi ý"
         open={detailModalVisible}
         onCancel={hideDetailModal}
         footer={[
-          <Button key="close" onClick={hideDetailModal}>
+          <Button key="back" onClick={hideDetailModal}>
             Đóng
           </Button>,
           <Button
-            key="add"
+            key="select"
             type="primary"
-            icon={<CheckOutlined />}
             onClick={() => {
               if (selectedSuggestion) {
                 onSelectActivity(selectedSuggestion);
                 hideDetailModal();
               }
             }}
-            className="bg-blue-500 hover:bg-blue-600"
           >
-            Thêm vào lịch trình
+            Chọn gợi ý này
           </Button>,
         ]}
         width={600}
       >
         {selectedSuggestion && (
-          <div className="py-2">
-            <div className="mb-4 h-64 overflow-hidden rounded-lg">
-              <img 
-                src={selectedSuggestion.image_url || "/notfound.png"} 
-                alt={selectedSuggestion.name}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = "/notfound.png";
-                }}
-              />
+          <div className="flex flex-col md:flex-row">
+            <div className="w-full md:w-1/2 pr-0 md:pr-4 mb-4 md:mb-0">
+              <div className="rounded-lg overflow-hidden shadow-md h-48 md:h-64">
+                <img
+                  src={selectedSuggestion.image_url || getDefaultImage(selectedSuggestion.type)}
+                  alt={selectedSuggestion.name}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = getDefaultImage(selectedSuggestion.type);
+                  }}
+                />
+              </div>
             </div>
-            
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center">
-                {selectedSuggestion.rating && (
-                  <div className="flex items-center">
-                    <Rate 
-                      disabled 
-                      defaultValue={selectedSuggestion.rating} 
-                      allowHalf 
-                    />
-                    <span className="ml-2 text-gray-600">
-                      {selectedSuggestion.rating}
+            <div className="w-full md:w-1/2">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center">
+                  <h3 className="text-xl font-semibold m-0">
+                    {selectedSuggestion.name}
+                  </h3>
+                  <Tag
+                    color={getActivityTypeColor(selectedSuggestion.type)}
+                    className="ml-2"
+                  >
+                    {selectedSuggestion.type}
+                  </Tag>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center">
+                  {selectedSuggestion.rating && (
+                    <div className="flex items-center">
+                      <Rate 
+                        disabled 
+                        defaultValue={selectedSuggestion.rating} 
+                        allowHalf 
+                      />
+                      <span className="ml-2 text-gray-600">
+                        {selectedSuggestion.rating}
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <Text type="secondary" className="flex items-center text-lg">
+                  <DollarOutlined className="mr-1" />
+                  {formatPrice(selectedSuggestion)}
+                </Text>
+              </div>
+              
+              {selectedSuggestion.address && (
+                <div className="mb-4">
+                  <Title level={5}>Địa chỉ:</Title>
+                  <div className="flex items-start">
+                    <EnvironmentOutlined className="mt-1 mr-2 text-gray-500" />
+                    <span>{selectedSuggestion.address}</span>
+                  </div>
+                </div>
+              )}
+              
+              {(selectedSuggestion.start_time || selectedSuggestion.end_time) && (
+                <div className="mb-4">
+                  <Title level={5}>Thời gian:</Title>
+                  <div className="flex items-start">
+                    <ClockCircleOutlined className="mt-1 mr-2 text-gray-500" />
+                    <span>
+                      {selectedSuggestion.start_time && selectedSuggestion.end_time
+                        ? `${selectedSuggestion.start_time} - ${selectedSuggestion.end_time}`
+                        : selectedSuggestion.start_time || selectedSuggestion.end_time}
                     </span>
                   </div>
-                )}
-              </div>
-              <Text type="secondary" className="flex items-center text-lg">
-                <DollarOutlined className="mr-1" />
-                {formatPrice(selectedSuggestion)}
-              </Text>
-            </div>
-            
-            {selectedSuggestion.address && (
-              <div className="mb-4">
-                <Title level={5}>Địa chỉ:</Title>
-                <div className="flex items-start">
-                  <EnvironmentOutlined className="mt-1 mr-2 text-gray-500" />
-                  <span>{selectedSuggestion.address}</span>
                 </div>
+              )}
+              
+              <Divider />
+              
+              <div>
+                <Title level={5}>Mô tả:</Title>
+                <Paragraph>{selectedSuggestion.description}</Paragraph>
               </div>
-            )}
-            
-            {(selectedSuggestion.start_time || selectedSuggestion.end_time) && (
-              <div className="mb-4">
-                <Title level={5}>Thời gian:</Title>
-                <div className="flex items-start">
-                  <ClockCircleOutlined className="mt-1 mr-2 text-gray-500" />
-                  <span>
-                    {selectedSuggestion.start_time && selectedSuggestion.end_time
-                      ? `${selectedSuggestion.start_time} - ${selectedSuggestion.end_time}`
-                      : selectedSuggestion.start_time || selectedSuggestion.end_time}
-                  </span>
-                </div>
-              </div>
-            )}
-            
-            <Divider />
-            
-            <div>
-              <Title level={5}>Mô tả:</Title>
-              <Paragraph>{selectedSuggestion.description}</Paragraph>
             </div>
           </div>
         )}
