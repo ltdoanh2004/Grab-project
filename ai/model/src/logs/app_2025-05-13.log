@@ -1,0 +1,284 @@
+2025-05-13 11:25:15,916 - __mp_main__ - INFO - All routers registered successfully
+2025-05-13 11:25:15,938 - app - INFO - All routers registered successfully
+2025-05-13 11:26:02,580 - __mp_main__ - INFO - All routers registered successfully
+2025-05-13 11:26:02,599 - app - INFO - All routers registered successfully
+2025-05-13 11:26:15,979 - __mp_main__ - INFO - All routers registered successfully
+2025-05-13 11:26:15,999 - app - INFO - All routers registered successfully
+2025-05-13 11:26:30,829 - __mp_main__ - INFO - All routers registered successfully
+2025-05-13 11:26:30,846 - app - INFO - All routers registered successfully
+2025-05-13 11:26:48,291 - __mp_main__ - INFO - All routers registered successfully
+2025-05-13 11:26:48,311 - app - INFO - All routers registered successfully
+2025-05-13 11:26:58,581 - __mp_main__ - INFO - All routers registered successfully
+2025-05-13 11:26:58,607 - app - INFO - All routers registered successfully
+2025-05-13 11:29:16,802 - __mp_main__ - ERROR - Error registering routers: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/app.py", line 30, in register_routers
+    from src.services.genrate_plan_api import router as trip_plan_router
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/genrate_plan_api.py", line 17, in <module>
+    model = PlanModel()
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/agents/plan_agent.py", line 62, in __init__
+    self.llm = client = OpenAI()
+                        ~~~~~~^^
+  File "/Users/doa_ai/Developer/Grab-project/venv/lib/python3.13/site-packages/openai/_client.py", line 116, in __init__
+    raise OpenAIError(
+        "The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable"
+    )
+openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+2025-05-13 11:29:19,921 - __mp_main__ - ERROR - Error registering routers: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/app.py", line 30, in register_routers
+    from src.services.genrate_plan_api import router as trip_plan_router
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/genrate_plan_api.py", line 17, in <module>
+    model = PlanModel()
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/agents/plan_agent.py", line 62, in __init__
+    self.llm = OpenAI()
+               ~~~~~~^^
+  File "/Users/doa_ai/Developer/Grab-project/venv/lib/python3.13/site-packages/openai/_client.py", line 116, in __init__
+    raise OpenAIError(
+        "The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable"
+    )
+openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+2025-05-13 11:29:38,151 - __mp_main__ - ERROR - Error registering routers: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/app.py", line 30, in register_routers
+    from src.services.genrate_plan_api import router as trip_plan_router
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/genrate_plan_api.py", line 17, in <module>
+    model = PlanModel()
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/agents/plan_agent.py", line 62, in __init__
+    self.llm = OpenAI()
+               ~~~~~~^^
+  File "/Users/doa_ai/Developer/Grab-project/venv/lib/python3.13/site-packages/openai/_client.py", line 116, in __init__
+    raise OpenAIError(
+        "The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable"
+    )
+openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+2025-05-13 11:29:43,539 - __mp_main__ - ERROR - Error registering routers: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/app.py", line 30, in register_routers
+    from src.services.genrate_plan_api import router as trip_plan_router
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/genrate_plan_api.py", line 17, in <module>
+    model = PlanModel()
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/agents/plan_agent.py", line 62, in __init__
+    self.llm = OpenAI()
+               ~~~~~~^^
+  File "/Users/doa_ai/Developer/Grab-project/venv/lib/python3.13/site-packages/openai/_client.py", line 116, in __init__
+    raise OpenAIError(
+        "The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable"
+    )
+openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+2025-05-13 11:29:47,023 - __mp_main__ - ERROR - Error registering routers: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/app.py", line 30, in register_routers
+    from src.services.genrate_plan_api import router as trip_plan_router
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/genrate_plan_api.py", line 17, in <module>
+    model = PlanModel()
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/agents/plan_agent.py", line 62, in __init__
+    self.llm = OpenAI()
+               ~~~~~~^^
+  File "/Users/doa_ai/Developer/Grab-project/venv/lib/python3.13/site-packages/openai/_client.py", line 116, in __init__
+    raise OpenAIError(
+        "The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable"
+    )
+openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+2025-05-13 11:29:53,097 - __mp_main__ - ERROR - Error registering routers: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/app.py", line 30, in register_routers
+    from src.services.genrate_plan_api import router as trip_plan_router
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/genrate_plan_api.py", line 17, in <module>
+    model = PlanModel()
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/agents/plan_agent.py", line 62, in __init__
+    self.llm = OpenAI()
+               ~~~~~~^^
+  File "/Users/doa_ai/Developer/Grab-project/venv/lib/python3.13/site-packages/openai/_client.py", line 116, in __init__
+    raise OpenAIError(
+        "The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable"
+    )
+openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+2025-05-13 11:29:58,155 - __mp_main__ - ERROR - Error registering routers: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/app.py", line 30, in register_routers
+    from src.services.genrate_plan_api import router as trip_plan_router
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/genrate_plan_api.py", line 17, in <module>
+    model = PlanModel()
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/agents/plan_agent.py", line 62, in __init__
+    self.llm = OpenAI()
+               ~~~~~~^^
+  File "/Users/doa_ai/Developer/Grab-project/venv/lib/python3.13/site-packages/openai/_client.py", line 116, in __init__
+    raise OpenAIError(
+        "The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable"
+    )
+openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+2025-05-13 11:30:08,645 - __mp_main__ - ERROR - Error registering routers: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/app.py", line 30, in register_routers
+    from src.services.genrate_plan_api import router as trip_plan_router
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/genrate_plan_api.py", line 17, in <module>
+    model = PlanModel()
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/agents/plan_agent.py", line 62, in __init__
+    self.llm = OpenAI()
+               ~~~~~~^^
+  File "/Users/doa_ai/Developer/Grab-project/venv/lib/python3.13/site-packages/openai/_client.py", line 116, in __init__
+    raise OpenAIError(
+        "The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable"
+    )
+openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+2025-05-13 11:31:17,844 - __mp_main__ - ERROR - Error registering routers: OpenAI.__init__() got an unexpected keyword argument 'temperature'
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/app.py", line 30, in register_routers
+    from src.services.genrate_plan_api import router as trip_plan_router
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/genrate_plan_api.py", line 17, in <module>
+    model = PlanModel()
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/agents/plan_agent.py", line 62, in __init__
+    self.llm = OpenAI(api_key=os.getenv("OPEN_API_KEY"), temperature=temperature, model="gpt-4o", max_tokens=4000)
+               ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: OpenAI.__init__() got an unexpected keyword argument 'temperature'
+2025-05-13 11:31:21,400 - __mp_main__ - ERROR - Error registering routers: OpenAI.__init__() got an unexpected keyword argument 'temperature'
+Traceback (most recent call last):
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/app.py", line 30, in register_routers
+    from src.services.genrate_plan_api import router as trip_plan_router
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/services/genrate_plan_api.py", line 17, in <module>
+    model = PlanModel()
+  File "/Users/doa_ai/Developer/Grab-project/ai/model/src/agents/plan_agent.py", line 62, in __init__
+    self.llm = OpenAI(api_key=os.getenv("OPEN_API_KEY"), temperature=temperature, model="gpt-4o", max_tokens=4000)
+               ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: OpenAI.__init__() got an unexpected keyword argument 'temperature'
+2025-05-13 11:31:35,057 - __mp_main__ - INFO - All routers registered successfully
+2025-05-13 11:31:35,081 - app - INFO - All routers registered successfully
+2025-05-13 11:32:30,469 - __mp_main__ - INFO - All routers registered successfully
+2025-05-13 11:32:30,491 - app - INFO - All routers registered successfully
+2025-05-13 11:32:30,493 - src.services.suggest_api - INFO - Processing recommendation query for hochiminh
+2025-05-13 11:32:30,500 - src.agents.travel_agent - INFO - Setting up all databases...
+2025-05-13 11:32:32,410 - src.agents.travel_agent - INFO - All databases setup completed
+2025-05-13 11:32:32,411 - src.agents.travel_agent - INFO - Processing query: 
+        Planning a trip to hochiminh with the following details:
+        - Group: 2 adults, 1 children, 0 infants
+        - Budget: mid (approx. 10000000 VND)
+        - Duration: 10 days
+        - Season: summer
+        - Travel Style: family
+        
+        Preferences:
+        - Transportation: No specific preference
+        - Accommodation: Hotel
+        - Food: Vegetarian
+        - Places to visit: No specific preference
+        - Activities: Hiking
+        - Extra: No specific preference
+
+        IMPORTANT: Please focus on finding recommendations specifically in hochiminh. All suggestions should be located in or near this destination.
+        
+        Please suggest:
+        1. Suitable accommodations in hochiminh
+        2. Interesting activities and places to visit in hochiminh
+        3. Recommended restaurants and food options in hochiminh
+        
+        Consider:
+        - The travel style and preferences
+        - The season and weather conditions in hochiminh
+        - The budget constraints
+        - The duration of stay
+        - The location and its unique offerings
+        - All recommendations must be in hochiminh
+        
+2025-05-13 11:32:32,411 - src.agents.travel_agent - DEBUG - Sending request to OpenAI...
+2025-05-13 11:32:34,961 - src.agents.travel_agent - INFO - OpenAI response: ChatCompletion(id='chatcmpl-BWbbdldjDCqyu4bAaXT2CRUBATzv5', choices=[Choice(finish_reason='function_call', index=0, logprobs=None, message=ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"hotel in Ho Chi Minh for family with 2 adults and 1 child, mid-range budget, suitable for summer stay","top_k":15}', name='query_hotels'), tool_calls=None))], created=1747110753, model='gpt-4.1-mini-2025-04-14', object='chat.completion', service_tier='default', system_fingerprint='fp_79b79be41f', usage=CompletionUsage(completion_tokens=45, prompt_tokens=1002, total_tokens=1047, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0)))
+2025-05-13 11:32:34,961 - src.agents.travel_agent - INFO - Model response message: ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"hotel in Ho Chi Minh for family with 2 adults and 1 child, mid-range budget, suitable for summer stay","top_k":15}', name='query_hotels'), tool_calls=None)
+2025-05-13 11:32:34,961 - src.agents.travel_agent - INFO - Function call: query_hotels
+2025-05-13 11:32:34,961 - src.agents.travel_agent - DEBUG - Function arguments: {'query_text': 'hotel in Ho Chi Minh for family with 2 adults and 1 child, mid-range budget, suitable for summer stay', 'top_k': 15}
+2025-05-13 11:32:34,961 - src.agents.travel_agent - INFO - Querying all databases with context
+2025-05-13 11:32:34,961 - src.agents.travel_agent - INFO - Querying hotels with context: hotel in Ho Chi Minh for family with 2 adults and 1 child, mid-range budget, suitable for summer stay
+2025-05-13 11:32:34,961 - src.agents.travel_agent - INFO - top_k for query hotels is: 15
+2025-05-13 11:32:34,962 - src.agents.travel_agent - INFO - filter for query hotels is: {'city': {'$eq': 'hochiminh'}}
+2025-05-13 11:32:37,486 - src.agents.travel_agent - INFO - Added 15 hotel recommendations
+2025-05-13 11:32:37,487 - src.agents.travel_agent - INFO - Querying places with context: hotel in Ho Chi Minh for family with 2 adults and 1 child, mid-range budget, suitable for summer stay
+2025-05-13 11:32:37,487 - src.agents.travel_agent - INFO - top_k for query places is: 50
+2025-05-13 11:32:37,487 - src.agents.travel_agent - INFO - filter for query places is: {'city': {'$eq': 'hochiminh'}}
+2025-05-13 11:32:37,487 - src.agents.travel_agent - INFO - hochiminh)
+2025-05-13 11:32:41,241 - src.agents.travel_agent - INFO - ids for query places is: ['place_013240', 'place_001445', 'place_013243', 'place_013228', 'place_013892', 'place_013252', 'place_001752', 'place_013202', 'place_004755', 'place_013231', 'place_015811', 'place_015465', 'place_013938', 'place_013029', 'place_012766', 'place_012842', 'place_013633', 'place_015635', 'place_013850', 'place_015494', 'place_015663', 'place_013254', 'place_013839', 'place_013790', 'place_012691', 'place_013709', 'place_013372', 'place_013542', 'place_015725', 'place_013793', 'place_013746', 'place_013400', 'place_013626', 'place_015719', 'place_015352', 'place_013594', 'place_002414', 'place_014065', 'place_012903', 'place_012814', 'place_013178', 'place_015630', 'place_013620', 'place_013700', 'place_013672', 'place_013864', 'place_014079', 'place_013697', 'place_013381', 'place_012910']
+2025-05-13 11:32:41,242 - src.agents.travel_agent - INFO - place_ids: ['place_013240', 'place_001445', 'place_013243', 'place_013228', 'place_013892', 'place_013252', 'place_001752', 'place_013202', 'place_004755', 'place_013231', 'place_015811', 'place_015465', 'place_013938', 'place_013029', 'place_012766', 'place_012842', 'place_013633', 'place_015635', 'place_013850', 'place_015494', 'place_015663', 'place_013254', 'place_013839', 'place_013790', 'place_012691', 'place_013709', 'place_013372', 'place_013542', 'place_015725', 'place_013793', 'place_013746', 'place_013400', 'place_013626', 'place_015719', 'place_015352', 'place_013594', 'place_002414', 'place_014065', 'place_012903', 'place_012814', 'place_013178', 'place_015630', 'place_013620', 'place_013700', 'place_013672', 'place_013864', 'place_014079', 'place_013697', 'place_013381', 'place_012910']
+2025-05-13 11:32:41,242 - src.agents.travel_agent - INFO - Added 50 place recommendations
+2025-05-13 11:32:41,242 - src.agents.travel_agent - INFO - Querying restaurants with context: hotel in Ho Chi Minh for family with 2 adults and 1 child, mid-range budget, suitable for summer stay
+2025-05-13 11:32:41,242 - src.agents.travel_agent - INFO - top_k for query fnb is: 50
+2025-05-13 11:32:41,242 - src.agents.travel_agent - INFO - filter for query fnb is: {'city': {'$eq': 'hochiminh'}}
+2025-05-13 11:32:44,121 - src.agents.travel_agent - INFO - Added 49 restaurant recommendations
+2025-05-13 11:32:44,122 - src.agents.travel_agent - INFO - Final result distribution: 15 hotels, 50 places, 49 restaurants
+2025-05-13 11:32:44,122 - src.services.suggest_api - INFO - Recommendation query processed successfully, got 114 items
+2025-05-13 11:32:44,122 - src.services.suggest_api - INFO - Grouped recommendations: 15 accommodations, 50 places, 49 restaurants
+2025-05-13 11:32:44,122 - src.services.suggest_api - INFO - Final response has 114 items
+2025-05-13 11:32:44,280 - src.services.genrate_plan_api - INFO - Received raw trip plan request: dict_keys(['destination_id', 'accommodation', 'places', 'restaurants'])
+2025-05-13 11:32:44,280 - src.services.genrate_plan_api - INFO - Extracted 15 accommodations, 50 places, and 49 restaurants
+2025-05-13 11:32:44,281 - src.services.genrate_plan_api - INFO - Destination identified as: hochiminh
+2025-05-13 11:32:44,281 - src.services.genrate_plan_api - INFO - Generating plan with destination: hochiminh
+2025-05-13 11:33:35,437 - src.services.genrate_plan_api - INFO - Generated plan: {'trip_name': 'Trip to Hochiminh', 'start_date': '2025-05-13', 'end_date': '2025-05-15', 'user_id': 'user123', 'destination_id': 'hochiminh', 'plan_by_day': [{'date': '2025-05-13', 'day_title': 'Ngày 1: Khám phá biển', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'hotel_011054', 'type': 'accommodation', 'name': 'Scenic Valley 2 Near SECC, Cresent Mall', 'start_time': '08:00', 'end_time': '10:00', 'description': 'Bạn sẽ được tận hưởng không gian thoải mái tại khách sạn này. Đây là nơi lý tưởng để nghỉ ngơi và chuẩn bị cho hành trình khám phá thú vời phía trước.', 'location': 'Quận 7, TP. Hồ Chí Minh', 'rating': 8.4, 'price': 1980000.0, 'image_url': 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/592010155.jpg', 'booking_link': 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/592010155.jpg', 'room_info': '', 'tax_info': 'Đã bao gồm thuế và phí', 'elderly_friendly': False, 'url': ''}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_013240', 'type': 'place', 'name': 'From Ho Chi Minh City: 2-Day Mekong Delta Tour Homestay', 'start_time': '14:00', 'end_time': '16:00', 'description': 'Bạn sẽ được khám phá địa điểm tuyệt vời này với những cảnh quan độc đáo. Hãy chuẩn bị máy ảnh để lưu lại những khoảnh khắc đáng nhớ!', 'address': 'TP. Hồ Chí Minh', 'categories': '', 'duration': '', 'opening_hours': 'Mở cửa từ ngày mai', 'rating': 5.0, 'price': 89.0, 'image_url': 'https://www.booking.com/attractions/vn/pra5rfmsfykg-2days-1night-stay-homestay-adventure-cycling-kayak-mekong-delta.vi.html?adplat=www-searchresults_irene-web_shell_header-attraction-missing_creative-1HRTulv2EAgQ9bVsRka1O2&aid=304142&label=gen173nr-1FCAQoggJCEHNlYXJjaF9ow6AgbuG7mWlIKlgEaPQBiAEBmAEquAEHyAEM2AEB6AEB-AEDiAIBqAIDuAKV75HABsACAdICJDJjNTc3NTFlLTBkZjctNGFiOC05MjlhLTk3ZTJlYzBhMmE2ZtgCBeACAQ&client_name=b-web-shell-bff&distribution_id=1HRTulv2EAgQ9bVsRka1O2&source=searchresults-product-card&ufi=-3730078', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'restaurant_013431', 'type': 'restaurant', 'name': 'Bánh Tráng Kim Ngọc - Nguyễn Trãi', 'start_time': '19:00', 'end_time': '21:00', 'description': 'Hãy cùng thưởng thức những món ăn đặc sản địa phương tại nhà hàng này. Bạn sẽ được đắm mình trong hương vị đặc trưng không thể tìm thấy ở nơi nào khác.', 'address': '402 Nguyễn Trãi, P. 8, Quận 5, TP. HCM', 'cuisines': '', 'price_range': '', 'rating': 4.12, 'phone': '0903112131', 'services': [{'name': 'ShopeeFood', 'url': 'https://www.deliverynow.vn/ho-chi-minh/banh-trang-kim-ngoc-nguyen-trai', 'type': 0}], 'image_url': '', 'url': 'https://www.foody.vn/ho-chi-minh/banh-trang-kim-ngoc-nguyen-trai'}]}], 'daily_tips': ['- Nên tham gia các tour du lịch để thuận tiện hơn', '- Đặt vé tham quan sớm để tránh tình trạng hết chỗ', '- Thời gian di chuyển giữa các địa điểm khoảng 1-2 giờ, cần lên lịch trước', '- Nên mang theo nước uống và đồ ăn nhẹ khi tham quan', '- Đeo khẩu trang và sát khuẩn tay đề phòng dịch bệnh']}, {'date': '2025-05-14', 'day_title': 'Ngày 2: Khám phá núi', 'segments': [{'time_of_day': 'morning', 'activities': []}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_013243', 'type': 'place', 'name': '2 Days 1 Nights Cu Chi Tunnels-Mekong Delta Homestay Special Trip', 'start_time': '14:00', 'end_time': '16:00', 'description': 'Bạn sẽ được khám phá địa điểm tuyệt vời này với những cảnh quan độc đáo. Hãy chuẩn bị máy ảnh để lưu lại những khoảnh khắc đáng nhớ!', 'address': 'TP. Hồ Chí Minh', 'categories': '', 'duration': '', 'opening_hours': 'Mở cửa từ ngày mai', 'rating': 0.0, 'price': 419.0, 'image_url': 'https://www.booking.com/attractions/vn/prefphpgv68d-2-days-1-nights-cu-chi-tunnels-mekong-delta-homestay-special-trip.vi.html?adplat=www-searchresults_irene-web_shell_header-attraction-missing_creative-1HRTulv2EAgQ9bVsRka1O2&aid=304142&label=gen173nr-1FCAQoggJCEHNlYXJjaF9ow6AgbuG7mWlIKlgEaPQBiAEBmAEquAEHyAEM2AEB6AEB-AEDiAIBqAIDuAKV75HABsACAdICJDJjNTc3NTFlLTBkZjctNGFiOC05MjlhLTk3ZTJlYzBhMmE2ZtgCBeACAQ&client_name=b-web-shell-bff&distribution_id=1HRTulv2EAgQ9bVsRka1O2&source=searchresults-product-card&ufi=-3730078', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'restaurant_014360', 'type': 'restaurant', 'name': 'Lu Hotdog - Hotdog & Hamburger - Phan Đăng Lưu', 'start_time': '19:00', 'end_time': '21:00', 'description': 'Hãy cùng thưởng thức những món ăn đặc sản địa phương tại nhà hàng này. Bạn sẽ được đắm mình trong hương vị đặc trưng không thể tìm thấy ở nơi nào khác.', 'address': '107 Phan Đăng Lưu, P. 7, Quận Phú Nhuận, TP. HCM', 'cuisines': '', 'price_range': '', 'rating': 8.0, 'phone': 'Đang cập nhật', 'services': [{'name': 'ShopeeFood', 'url': 'https://www.deliverynow.vn/ho-chi-minh/lu-hotdog-hotdog-hamburger-phan-dang-luu', 'type': 0}], 'image_url': '', 'url': 'https://www.foody.vn/ho-chi-minh/lu-hotdog-hotdog-hamburger-phan-dang-luu'}]}], 'daily_tips': ['- Chọn thời gian sáng sớm hoặc buổi chiều để tham quan núi.', '- Chuẩn bị đủ nước uống và thức ăn khi leo núi.', '- Chuẩn bị kỹ lưỡng trước khi mua vé vào cửa để nhận ưu đãi giảm giá.', '- Mặc đồ lịch sự khi thăm núi.', '- Mang đủ tiền mặt và điện thoại di động có pin dự phòng khi đi du lịch.']}, {'date': '2025-05-15', 'day_title': 'Ngày 3: Khám phá văn hóa', 'segments': [{'time_of_day': 'morning', 'activities': []}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_013892', 'type': 'place', 'name': 'Vietnam Family Fun In 9 Days - Departure From Ho Chi Minh', 'start_time': '14:00', 'end_time': '16:00', 'description': 'Bạn sẽ được khám phá địa điểm tuyệt vời này với những cảnh quan độc đáo. Hãy chuẩn bị máy ảnh để lưu lại những khoảnh khắc đáng nhớ!', 'address': 'TP. Hồ Chí Minh', 'categories': '', 'duration': '', 'opening_hours': 'Mở cửa từ 13 thg 5', 'rating': 0.0, 'price': 1.91, 'image_url': 'https://www.booking.com/attractions/vn/prdwxqumfquu-vietnam-family-fun-in-9-days-departure-from-ho-chi-minh.vi.html?adplat=www-searchresults_irene-web_shell_header-attraction-missing_creative-1HRTulv2EAgQ9bVsRka1O2&aid=304142&label=gen173nr-1FCAQoggJCEHNlYXJjaF9ow6AgbuG7mWlIKlgEaPQBiAEBmAEquAEHyAEM2AEB6AEB-AEDiAIBqAIDuAKV75HABsACAdICJDJjNTc3NTFlLTBkZjctNGFiOC05MjlhLTk3ZTJlYzBhMmE2ZtgCBeACAQ&client_name=b-web-shell-bff&distribution_id=1HRTulv2EAgQ9bVsRka1O2&source=searchresults-product-card&ufi=-3730078', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'restaurant_014868', 'type': 'restaurant', 'name': '248 Trường Sa Quán', 'start_time': '19:00', 'end_time': '21:00', 'description': 'Hãy cùng thưởng thức những món ăn đặc sản địa phương tại nhà hàng này. Bạn sẽ được đắm mình trong hương vị đặc trưng không thể tìm thấy ở nơi nào khác.', 'address': '248 Trường Sa, P. 3, Quận Bình Thạnh, TP. HCM', 'cuisines': '', 'price_range': '', 'rating': 7.558, 'phone': '0938003636', 'services': [{'name': 'ShopeeFood', 'url': 'https://www.deliverynow.vn/ho-chi-minh/248-truong-sa-quan', 'type': 0}], 'image_url': '', 'url': 'https://www.foody.vn/ho-chi-minh/248-truong-sa-quan'}]}], 'daily_tips': ['- Nên bắt đầu sớm từ 6-8h sáng khi thăm thành phố Hồ Chí Minh để tránh nóng và đông đúc.', '- Sử dụng Grab hoặc taxi chính hãng khi di chuyển ở Hồ Chí Minh để tránh bị lừa đảo.', '- Dự kiến chi phí khoảng 500.000 - 1.000.000 VND mỗi ngày khi du lịch tại Hồ Chí Minh.', '- Tránh mua hàng tại các điểm du lịch nổi tiếng để tiết kiệm.', '- Tôn trọng văn hóa địa phương khi ăn uống tại các quán ăn ở Hồ Chí Minh.']}]}
+2025-05-13 11:33:35,440 - src.services.genrate_plan_api - INFO - Trip plan request processed successfully
+2025-05-13 11:33:57,492 - __mp_main__ - INFO - All routers registered successfully
+2025-05-13 11:33:57,522 - app - INFO - All routers registered successfully
+2025-05-13 11:34:20,323 - __mp_main__ - INFO - All routers registered successfully
+2025-05-13 11:34:20,346 - app - INFO - All routers registered successfully
+2025-05-13 11:34:29,239 - __mp_main__ - INFO - All routers registered successfully
+2025-05-13 11:34:29,284 - app - INFO - All routers registered successfully
+2025-05-13 11:34:33,894 - src.services.suggest_api - INFO - Processing recommendation query for hochiminh
+2025-05-13 11:34:33,907 - src.agents.travel_agent - INFO - Setting up all databases...
+2025-05-13 11:34:36,365 - src.agents.travel_agent - INFO - All databases setup completed
+2025-05-13 11:34:36,366 - src.agents.travel_agent - INFO - Processing query: 
+        Planning a trip to hochiminh with the following details:
+        - Group: 2 adults, 1 children, 0 infants
+        - Budget: mid (approx. 10000000 VND)
+        - Duration: 10 days
+        - Season: summer
+        - Travel Style: family
+        
+        Preferences:
+        - Transportation: No specific preference
+        - Accommodation: Hotel
+        - Food: Vegetarian
+        - Places to visit: No specific preference
+        - Activities: Hiking
+        - Extra: No specific preference
+
+        IMPORTANT: Please focus on finding recommendations specifically in hochiminh. All suggestions should be located in or near this destination.
+        
+        Please suggest:
+        1. Suitable accommodations in hochiminh
+        2. Interesting activities and places to visit in hochiminh
+        3. Recommended restaurants and food options in hochiminh
+        
+        Consider:
+        - The travel style and preferences
+        - The season and weather conditions in hochiminh
+        - The budget constraints
+        - The duration of stay
+        - The location and its unique offerings
+        - All recommendations must be in hochiminh
+        
+2025-05-13 11:34:36,366 - src.agents.travel_agent - DEBUG - Sending request to OpenAI...
+2025-05-13 11:34:37,891 - src.agents.travel_agent - INFO - OpenAI response: ChatCompletion(id='chatcmpl-BWbdclkLe1zwlgI51aghJyFpOjwbx', choices=[Choice(finish_reason='function_call', index=0, logprobs=None, message=ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"hotel in Hochiminh suitable for family, mid budget, 2 adults and 1 child, summer travel","top_k":15}', name='query_hotels'), tool_calls=None))], created=1747110876, model='gpt-4.1-mini-2025-04-14', object='chat.completion', service_tier='default', system_fingerprint='fp_79b79be41f', usage=CompletionUsage(completion_tokens=43, prompt_tokens=1002, total_tokens=1045, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0)))
+2025-05-13 11:34:37,892 - src.agents.travel_agent - INFO - Model response message: ChatCompletionMessage(content=None, refusal=None, role='assistant', annotations=[], audio=None, function_call=FunctionCall(arguments='{"query_text":"hotel in Hochiminh suitable for family, mid budget, 2 adults and 1 child, summer travel","top_k":15}', name='query_hotels'), tool_calls=None)
+2025-05-13 11:34:37,892 - src.agents.travel_agent - INFO - Function call: query_hotels
+2025-05-13 11:34:37,892 - src.agents.travel_agent - DEBUG - Function arguments: {'query_text': 'hotel in Hochiminh suitable for family, mid budget, 2 adults and 1 child, summer travel', 'top_k': 15}
+2025-05-13 11:34:37,892 - src.agents.travel_agent - INFO - Querying all databases with context
+2025-05-13 11:34:37,892 - src.agents.travel_agent - INFO - Querying hotels with context: hotel in Hochiminh suitable for family, mid budget, 2 adults and 1 child, summer travel
+2025-05-13 11:34:37,892 - src.agents.travel_agent - INFO - top_k for query hotels is: 15
+2025-05-13 11:34:37,892 - src.agents.travel_agent - INFO - filter for query hotels is: {'city': {'$eq': 'hochiminh'}}
+2025-05-13 11:34:40,119 - src.agents.travel_agent - INFO - Added 15 hotel recommendations
+2025-05-13 11:34:40,119 - src.agents.travel_agent - INFO - Querying places with context: hotel in Hochiminh suitable for family, mid budget, 2 adults and 1 child, summer travel
+2025-05-13 11:34:40,119 - src.agents.travel_agent - INFO - top_k for query places is: 50
+2025-05-13 11:34:40,119 - src.agents.travel_agent - INFO - filter for query places is: {'city': {'$eq': 'hochiminh'}}
+2025-05-13 11:34:40,119 - src.agents.travel_agent - INFO - hochiminh)
+2025-05-13 11:34:42,398 - src.agents.travel_agent - INFO - ids for query places is: ['place_013240', 'place_013252', 'place_013892', 'place_001445', 'place_015663', 'place_012842', 'place_015465', 'place_015616', 'place_013372', 'place_013938', 'place_004755', 'place_013381', 'place_013254', 'place_015494', 'place_013243', 'place_015811', 'place_013793', 'place_013202', 'place_013414', 'place_013228', 'place_013594', 'place_015719', 'place_012691', 'place_012696', 'place_013850', 'place_013564', 'place_013241', 'place_012814', 'place_013461', 'place_015630', 'place_001471', 'place_013592', 'place_013864', 'place_012925', 'place_013790', 'place_013231', 'place_013709', 'place_004185', 'place_013878', 'place_001616', 'place_013029', 'place_013633', 'place_015725', 'place_014065', 'place_015784', 'place_001507', 'place_015644', 'place_015635', 'place_004718', 'place_001543']
+2025-05-13 11:34:42,398 - src.agents.travel_agent - INFO - place_ids: ['place_013240', 'place_013252', 'place_013892', 'place_001445', 'place_015663', 'place_012842', 'place_015465', 'place_015616', 'place_013372', 'place_013938', 'place_004755', 'place_013381', 'place_013254', 'place_015494', 'place_013243', 'place_015811', 'place_013793', 'place_013202', 'place_013414', 'place_013228', 'place_013594', 'place_015719', 'place_012691', 'place_012696', 'place_013850', 'place_013564', 'place_013241', 'place_012814', 'place_013461', 'place_015630', 'place_001471', 'place_013592', 'place_013864', 'place_012925', 'place_013790', 'place_013231', 'place_013709', 'place_004185', 'place_013878', 'place_001616', 'place_013029', 'place_013633', 'place_015725', 'place_014065', 'place_015784', 'place_001507', 'place_015644', 'place_015635', 'place_004718', 'place_001543']
+2025-05-13 11:34:42,398 - src.agents.travel_agent - INFO - Added 50 place recommendations
+2025-05-13 11:34:42,398 - src.agents.travel_agent - INFO - Querying restaurants with context: hotel in Hochiminh suitable for family, mid budget, 2 adults and 1 child, summer travel
+2025-05-13 11:34:42,398 - src.agents.travel_agent - INFO - top_k for query fnb is: 50
+2025-05-13 11:34:42,398 - src.agents.travel_agent - INFO - filter for query fnb is: {'city': {'$eq': 'hochiminh'}}
+2025-05-13 11:34:44,953 - src.agents.travel_agent - INFO - Added 47 restaurant recommendations
+2025-05-13 11:34:44,953 - src.agents.travel_agent - INFO - Final result distribution: 15 hotels, 50 places, 47 restaurants
+2025-05-13 11:34:44,953 - src.services.suggest_api - INFO - Recommendation query processed successfully, got 112 items
+2025-05-13 11:34:44,953 - src.services.suggest_api - INFO - Grouped recommendations: 15 accommodations, 50 places, 47 restaurants
+2025-05-13 11:34:44,954 - src.services.suggest_api - INFO - Final response has 112 items
+2025-05-13 11:34:45,080 - src.services.genrate_plan_api - INFO - Received raw trip plan request: dict_keys(['destination_id', 'accommodation', 'places', 'restaurants'])
+2025-05-13 11:34:45,080 - src.services.genrate_plan_api - INFO - Extracted 15 accommodations, 50 places, and 47 restaurants
+2025-05-13 11:34:45,080 - src.services.genrate_plan_api - INFO - Destination identified as: hochiminh
+2025-05-13 11:34:45,080 - src.services.genrate_plan_api - INFO - Generating plan with destination: hochiminh
+2025-05-13 11:36:27,109 - src.services.genrate_plan_api - INFO - Generated plan: {'trip_name': 'Trip to Hochiminh', 'start_date': '2025-05-13', 'end_date': '2025-05-15', 'user_id': 'user123', 'destination_id': 'hochiminh', 'plan_by_day': [{'date': '2025-05-13', 'day_title': 'Ngày 1: Sài Gòn năng động rực rỡ', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'hotel_011054', 'type': 'accommodation', 'name': 'Scenic Valley 2 Near SECC, Cresent Mall', 'start_time': '08:00', 'end_time': '09:00', 'description': 'Bạn sẽ được thư giãn tại khách sạn hiện đại, view đẹp trung tâm quận 7. 🏨', 'location': 'Số 801 Nguyễn Văn Linh, P. Tân Phú, Quận 7, TP.HCM', 'rating': 4.6, 'price': 1100000.0, 'image_url': '', 'booking_link': '', 'room_info': 'Phòng tiêu chuẩn', 'tax_info': 'Đã bao gồm thuế', 'elderly_friendly': True, 'url': ''}, {'id': 'place_004755', 'type': 'place', 'name': 'Eden Spa', 'start_time': '09:15', 'end_time': '10:30', 'description': 'Chúng ta sẽ trải nghiệm massage thư giãn, nạp lại năng lượng cho ngày mới. 💆', 'address': '44 Nguyễn Duy Hiệu, TP.HCM', 'categories': 'spa, relaxation', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.5, 'price': 350000.0, 'image_url': '', 'url': ''}, {'id': 'restaurant_014770', 'type': 'restaurant', 'name': 'LongBuri Cancook - Gân Bò, Chân Gà Sốt Thái', 'start_time': '10:45', 'end_time': '11:45', 'description': 'Bạn sẽ thưởng thức các món gân bò, chân gà sốt Thái lạ miệng cực ngon. 🍗', 'address': '198 Nguyễn Trãi, Quận 1, TP.HCM', 'cuisines': 'món Thái, các món nhậu', 'price_range': '100,000-300,000 VND', 'rating': 4.2, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_001543', 'type': 'place', 'name': 'Sky Tourist', 'start_time': '13:00', 'end_time': '14:15', 'description': 'Chúng ta sẽ ngắm toàn cảnh thành phố từ độ cao cực chất, check-in tuyệt vời! 🏙️', 'address': '36 Lê Lợi, Quận 1, TP.HCM', 'categories': 'ngắm cảnh, giải trí', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.3, 'price': 150000.0, 'image_url': '', 'url': ''}, {'id': 'restaurant_014631', 'type': 'restaurant', 'name': 'Quán Cơm Bapy', 'start_time': '14:30', 'end_time': '15:30', 'description': 'Bạn sẽ được thưởng thức các món cơm Việt ngon, no bụng giữa thành phố tấp nập. 🍚', 'address': '325 Nguyễn Trãi, Quận 5, TP.HCM', 'cuisines': 'ẩm thực Việt', 'price_range': '100,000-300,000 VND', 'rating': 4.1, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}, {'id': 'place_004718', 'type': 'place', 'name': 'Ria Spa - Massage Hochiminh', 'start_time': '15:45', 'end_time': '17:15', 'description': 'Chúng ta sẽ được chăm sóc da và thư giãn với các liệu trình đặc biệt. 🌿', 'address': '19-21 Đinh Tiên Hoàng, Quận 1, TP.HCM', 'categories': 'spa, chăm sóc sức khỏe', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.4, 'price': 300000.0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'restaurant_013028', 'type': 'restaurant', 'name': 'Happy - Steak & Chicken', 'start_time': '18:00', 'end_time': '19:15', 'description': 'Bạn sẽ được thưởng thức bít tết và gà nướng ngon chuẩn Âu giữa Sài Gòn sôi động. 🥩', 'address': '94A Cống Quỳnh, Quận 1, TP.HCM', 'cuisines': 'bít tết, gà nướng', 'price_range': '100,000-300,000 VND', 'rating': 4.3, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}, {'id': 'restaurant_014136', 'type': 'restaurant', 'name': 'Kem Bạch Đằng', 'start_time': '19:30', 'end_time': '20:00', 'description': 'Chúng ta cùng thưởng thức kem Bạch Đằng truyền thống nổi tiếng. 🍨', 'address': '26 Lê Lợi, Quận 1, TP.HCM', 'cuisines': 'kem, tráng miệng', 'price_range': '100,000-300,000 VND', 'rating': 4.0, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}, {'id': 'restaurant_013537', 'type': 'restaurant', 'name': 'The Daymaker Coffee - Cao Thắng', 'start_time': '20:15', 'end_time': '21:00', 'description': 'Bạn sẽ tận hưởng không gian café trẻ trung, kết thúc ngày tuyệt vời. ☕', 'address': '62 Cao Thắng, Quận 3, TP.HCM', 'cuisines': 'cà phê, đồ uống', 'price_range': '100,000-300,000 VND', 'rating': 4.3, 'phone': '', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}]}], 'daily_tips': ['- Nên chuẩn bị giấy tờ tùy thân khi tham quan Củ Chi', '- Đi chợ Bến Thành vào buổi tối để mua sắm với giá rẻ hơn', '- Tận hưởng ẩm thực đường phố tại quận 1', '- Tham quan Nhà thờ Đức Bà vào lúc hoàng hôn để cảm nhận không gian yên bình', '- Ghé Công viên 30/4 vào buổi sáng để tận hưởng không khí trong lành', '- Cẩn thận với các vụ mất cắp khi đi tham quan ở phố cổ Hội An']}, {'date': '2025-05-14', 'day_title': 'Ngày 2: Sôi động phố phương Nam', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'place_015616', 'type': 'place', 'name': 'City Half Day by car', 'start_time': '08:00', 'end_time': '09:40', 'description': 'Chúng ta sẽ tham quan thành phố sôi động trên xe hơi, ngắm cảnh đô thị rực rỡ 🚗.', 'address': 'Quận 1, TP.HCM', 'categories': 'city tour', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.6, 'price': 320000.0, 'image_url': 'https://static.example.com/tour_car.jpg', 'url': 'https://hochi.minh/city-half-day-by-car'}, {'id': 'restaurant_013428', 'type': 'restaurant', 'name': 'Bánh Mì Heo Quay A Nhiều - Phạm Hùng', 'start_time': '09:40', 'end_time': '10:15', 'description': 'Bạn sẽ được nếm bánh mì heo quay giòn thơm, chuẩn vị Sài Gòn 🥖.', 'address': '402 Phạm Hùng, Bình Chánh, TP.HCM', 'cuisines': 'Bánh mì, Đặc sản', 'price_range': '100,000-300,000 VND', 'rating': 4.4, 'phone': '0933 348 673', 'services': ['đặt bàn'], 'image_url': 'https://static.example.com/banhmi.jpg', 'url': 'https://banhmi-phanhung.nhi'}, {'id': 'place_015719', 'type': 'place', 'name': 'Small Group Cu Chi Tunnels Half Day', 'start_time': '10:15', 'end_time': '12:00', 'description': 'Khám phá đường hầm huyền thoại, trải nghiệm cảm giác lịch sử sâu sắc 🔦.', 'address': 'Tỉnh lộ 15, Củ Chi, TP.HCM', 'categories': 'history, adventure', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 400000.0, 'image_url': 'https://static.example.com/cu-chi-tunnel.jpg', 'url': 'https://hochiminh/cuchi-halfday'}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_013372', 'type': 'place', 'name': 'Small-group 2-Day Mekong Delta: Floating market, Cooking Class...', 'start_time': '13:30', 'end_time': '15:00', 'description': 'Bạn sẽ được ghe xuồng khám phá chợ nổi, thử lớp học nấu ăn truyền thống 🛶.', 'address': 'Mekong Delta', 'categories': 'culture, floating market', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.8, 'price': 1350000.0, 'image_url': 'https://static.example.com/mekong-market.jpg', 'url': 'https://tourmekong.vn'}, {'id': 'restaurant_014680', 'type': 'restaurant', 'name': 'Daruma Sushi - Thạnh Lộc 16', 'start_time': '15:00', 'end_time': '16:00', 'description': 'Thưởng thức sushi tươi ngon giữa lòng Sài Gòn 🍣.', 'address': '18 Thạnh Lộc 16, Quận 12, TP.HCM', 'cuisines': 'Sushi, Nhật', 'price_range': '100,000-300,000 VND', 'rating': 4.3, 'phone': '0932 144 246', 'services': ['đặt bàn'], 'image_url': 'https://static.example.com/daruma.jpg', 'url': 'https://daruma-sushi.vn'}, {'id': 'place_012814', 'type': 'place', 'name': 'Mekong Delta Day Trip: Explore Cycling & Cooking Classes at Farm', 'start_time': '16:10', 'end_time': '17:30', 'description': 'Chúng ta sẽ đạp xe giữa ruộng đồng và học nấu ăn với người bản địa 🚲.', 'address': 'Mekong Delta', 'categories': 'cycling, cooking', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 650000.0, 'image_url': 'https://static.example.com/mekong-farm.jpg', 'url': 'https://mekongcycling.vn'}]}, {'time_of_day': 'evening', 'activities': [{'id': 'restaurant_013335', 'type': 'restaurant', 'name': 'Bà Lâm - Cháo Vịt & Gỏi', 'start_time': '18:30', 'end_time': '19:30', 'description': 'Bạn sẽ được thưởng thức cháo vịt nóng hổi đặc trưng miền Nam 🍲.', 'address': '73/1A, Phan Đăng Lưu, Quận Bình Thạnh, TP.HCM', 'cuisines': 'Cháo vịt, món Việt', 'price_range': '100,000-300,000 VND', 'rating': 4.5, 'phone': '0977 325 473', 'services': ['đặt bàn'], 'image_url': 'https://static.example.com/chaovit.jpg', 'url': 'https://chaovitbalam.vn'}, {'id': 'restaurant_014109', 'type': 'restaurant', 'name': 'Trà Sữa Nghiện - Shop Online - Cầu Xéo', 'start_time': '19:30', 'end_time': '20:00', 'description': 'Thưởng thức trà sữa thơm mát, béo ngậy chuẩn Sài Gòn 🧋.', 'address': '26 Cầu Xéo, Tân Phú, TP.HCM', 'cuisines': 'Trà sữa, đồ uống', 'price_range': '100,000-300,000 VND', 'rating': 4.2, 'phone': '0987 897 645', 'services': ['đặt bàn'], 'image_url': 'https://static.example.com/trasua.jpg', 'url': 'https://trasuannghien.vn'}, {'id': 'place_013892', 'type': 'place', 'name': 'Vietnam Family Fun In 9 Days - Departure From Ho Chi Minh', 'start_time': '20:10', 'end_time': '21:30', 'description': 'Khám phá trò chơi dân gian vui nhộn cùng gia đình tại trung tâm Sài Gòn 🎉.', 'address': 'Quận 1, TP.HCM', 'categories': 'familiy, culture', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.6, 'price': 850000.0, 'image_url': 'https://static.example.com/familyfun.jpg', 'url': 'https://vietnamfamilyfun.vn'}]}], 'daily_tips': ['Nên bắt đầu sớm để tránh nóng và đông đúc.', 'Tôn trọng văn hóa địa phương.', 'Đặt dịch vụ trước để tránh hết chỗ.', 'Cẩn thận với việc mất cắp.']}, {'date': '2025-05-15', 'day_title': 'Ngày 3: Đắm mình hương vị Sài Gòn mới lạ', 'segments': [{'time_of_day': 'morning', 'activities': [{'id': 'place_013252', 'type': 'place', 'name': 'Must-see: A day to Cuchi Tunnels & Mekong Delta', 'start_time': '08:00', 'end_time': '09:30', 'description': 'Bạn sẽ được len lỏi qua địa đạo Củ Chi, khám phá bí mật dưới lòng đất.🕳️', 'address': 'Củ Chi, TP.HCM', 'categories': 'exploration,history', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 320000.0, 'image_url': '', 'url': ''}, {'id': 'restaurant_013889', 'type': 'restaurant', 'name': 'Gỏi Cuốn Tôm Nhảy', 'start_time': '09:50', 'end_time': '10:30', 'description': 'Chúng ta sẽ thưởng thức gỏi cuốn tươi ngon, đậm chất miền Nam! 🥢', 'address': '67/1B Nguyễn Thông, Q.3', 'cuisines': 'Món Việt, Gỏi cuốn', 'price_range': '100,000-300,000 VND', 'rating': 4.2, 'phone': '0928289955', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}, {'id': 'place_001445', 'type': 'place', 'name': 'Hot Sulphur Springs Resort & Spa', 'start_time': '10:40', 'end_time': '11:50', 'description': 'Bạn sẽ được thư giãn trong suối nước nóng và tận hưởng dịch vụ spa đẳng cấp.💧', 'address': 'Phước Kiển, Nhà Bè, TP.HCM', 'categories': 'spa,relaxation', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.6, 'price': 150000.0, 'image_url': '', 'url': ''}]}, {'time_of_day': 'afternoon', 'activities': [{'id': 'place_013793', 'type': 'place', 'name': 'Essential Mekong Delta 2 days,1Night', 'start_time': '13:00', 'end_time': '14:15', 'description': 'Bạn sẽ lên thuyền khám phá sông nước Cửu Long độc đáo.⛵', 'address': 'Mekong Delta, TP.HCM', 'categories': 'river,local life', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.8, 'price': 490000.0, 'image_url': '', 'url': ''}, {'id': 'restaurant_012971', 'type': 'restaurant', 'name': 'Gà Rán & Burger Lotteria - Vành Đai Trong', 'start_time': '14:30', 'end_time': '15:10', 'description': 'Cùng thưởng thức vị gà rán giòn rụm nổi tiếng. 🍗', 'address': '34 Đường Vành Đai Trong, Q.Bình Tân', 'cuisines': 'Gà rán, Đồ ăn nhanh', 'price_range': '100,000-300,000 VND', 'rating': 4.0, 'phone': '02839393939', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}, {'id': 'place_013850', 'type': 'place', 'name': 'Private Ho Chi Minh City Tour Half-day by Car', 'start_time': '15:20', 'end_time': '16:30', 'description': 'Chúng ta sẽ vi vu tham quan thành phố bằng xe riêng siêu thú vị! 🚗', 'address': 'TP.HCM', 'categories': 'city tour,private', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.7, 'price': 550000.0, 'image_url': '', 'url': ''}, {'id': 'restaurant_013263', 'type': 'restaurant', 'name': '33MAMA - Pizza & Gà Rán - Ấp Đình', 'start_time': '16:40', 'end_time': '17:20', 'description': 'Ghé 33MAMA thưởng thức pizza nóng hổi & gà rán thơm phức. 🍕', 'address': '123 Ấp Đình, Q.12', 'cuisines': 'Pizza, Gà rán', 'price_range': '100,000-300,000 VND', 'rating': 4.3, 'phone': '0912334567', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}]}, {'time_of_day': 'evening', 'activities': [{'id': 'restaurant_014360', 'type': 'restaurant', 'name': 'Lu Hotdog - Hotdog & Hamburger - Phan Đăng Lưu', 'start_time': '18:10', 'end_time': '18:50', 'description': 'Bạn sẽ thưởng thức hotdog thơm lừng giữa lòng thành phố.🌭', 'address': '11 Phan Đăng Lưu, Q.Bình Thạnh', 'cuisines': 'Hotdog, Hamburger', 'price_range': '100,000-300,000 VND', 'rating': 4.1, 'phone': '0937889555', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}, {'id': 'place_012696', 'type': 'place', 'name': 'Ho Chi Minh City Private Half-Day Tour by U.S Army Jeep', 'start_time': '19:10', 'end_time': '20:30', 'description': 'Chúng ta sẽ khám phá Sài Gòn đêm độc đáo trên chiếc xe Jeep cổ!🚙', 'address': 'TP.HCM', 'categories': 'night tour,adventure', 'duration': '2h', 'opening_hours': '08:00-17:00', 'rating': 4.9, 'price': 680000.0, 'image_url': '', 'url': ''}, {'id': 'restaurant_014285', 'type': 'restaurant', 'name': 'Phở 24 - Grand View', 'start_time': '20:40', 'end_time': '21:30', 'description': 'Thưởng thức phở Việt chuẩn vị trong không gian sang trọng.🍜', 'address': '24 Đồng Khởi, Q.1', 'cuisines': 'Phở, Đặc sản Việt', 'price_range': '100,000-300,000 VND', 'rating': 4.4, 'phone': '02839252525', 'services': ['đặt bàn'], 'image_url': '', 'url': ''}]}], 'daily_tips': ['- Nên bắt đầu sớm từ 6-8h sáng để tránh nóng và đông đúc.', '- Nếu đến **Chợ Bến Thành**, hãy thử những món ăn đường phố ngon lành.', '- Để di chuyển thuận tiện, nên sử dụng Grab hoặc taxi chính hãng.', '- Đặt thời gian thăm **Bảo Tàng Chứng Tích Chiến Tranh** để hiểu rõ hơn về lịch sử Việt Nam.', '- Đến **Nhà Thờ Đức Bà** vào buổi sáng để có không gian yên tĩnh và thoáng đãng.', '- Nếu có thời gian, hãy ghé qua **Lotte Mart** để mua sắm đặc sản vùng miền.']}]}
+2025-05-13 11:36:27,112 - src.services.genrate_plan_api - INFO - Trip plan request processed successfully
