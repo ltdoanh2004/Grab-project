@@ -31,6 +31,7 @@ from langchain_core.output_parsers import JsonOutputParser
 from langchain.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 from utils.utils import save_data_to_json
+from openai import OpenAI
 
 ROOT = Path(__file__).resolve().parent
 print(ROOT)
@@ -48,17 +49,18 @@ FORMAT_INSTRUCTIONS = (
 
 class PlanModel:
     def __init__(self, temperature: float = 1.0):
-        self.llm = ChatOpenAI(
-            api_key=os.getenv("OPEN_API_KEY"), 
-            temperature=temperature,
-            model="gpt-4o",
-            max_tokens=4000  
-        )
-        try:
-            self.llm.model_rebuild()
-        except Exception as e:
-            print(e)
-
+        # self.llm = ChatOpenAI(
+        #     api_key=os.getenv("OPEN_API_KEY"), 
+        #     temperature=temperature,
+        #     model="gpt-4o",
+        #     max_tokens=4000  
+        # )
+        # try:
+        #     self.llm.model_rebuild()
+        # except Exception as e:
+        #     print(e)
+        self.llm = OpenAI(api_key=os.getenv("OPEN_API_KEY"))
+        self.parser = JsonOutputParser()
         self.review_agent = TravelReviewer()
         
         self.used_accommodation_ids = set()
@@ -86,12 +88,10 @@ class PlanModel:
         else:
             self.day_title += "Khám phá địa phương"
         
-        # Get lists of used IDs to exclude from this day's plan
         used_places = list(self.used_place_ids)
         used_restaurants = list(self.used_restaurant_ids)
         used_accommodations = list(self.used_accommodation_ids)
         
-        # Filter available items for this day
         available_places = [(place.get("name", ""), place.get("place_id", place.get("id", ""))) 
                            for place in merged_data.get("places", []) 
                            if place.get("place_id", place.get("id", "")) not in self.used_place_ids]
@@ -100,7 +100,6 @@ class PlanModel:
                                for rest in merged_data.get("restaurants", []) 
                                if rest.get("restaurant_id", rest.get("id", "")) not in self.used_restaurant_ids]
         
-        # For accommodation, only include if it's day 0 and there are unused accommodations
         if day_num == 0:
             available_accommodations = [(acc.get("name", ""), acc.get("accommodation_id", acc.get("id", ""))) 
                                       for acc in merged_data.get("accommodations", []) 
@@ -113,11 +112,13 @@ class PlanModel:
         Tạo 3 segments (morning, afternoon, evening) với các hoạt động phù hợp.
         
         CHÚ Ý QUAN TRỌNG: 
+        Tôi muốn bạn tạo một lịch trình thời gian hoạt đọng không được nằm trong khoảng từ 12h tối trờ đi đến 6h sáng hôm sau.
+        Tên hoạt động đôi khi kèm những từ thừa thãi, nếu bạn thấy không hợp lí thì thay đổi sao cho hợp lí
         1. CHỈ TRẢ VỀ JSON THUẦN TÚY! KHÔNG THÊM BẤT KỲ VĂN BẢN NÀO TRƯỚC HOẶC SAU JSON!
         2. PHẢN HỒI CỦA BẠN PHẢI BẮT ĐẦU BẰNG DẤU "{{" VÀ KẾT THÚC BẰNG DẤU "}}" - KHÔNG CÓ GÌ KHÁC!
         3. MÔ TẢ PHẢI NGẮN GỌN (<100 ký tự) để tránh vượt quá giới hạn token
         4. KHÔNG sử dụng mô tả dài, CHỈ 1-2 câu ngắn gọn
-        5. Mỗi segment (morning/afternoon/evening) có 4-5 hoạt động
+        5. Mỗi segment (morning/afternoon/evening) có 3-4 hoạt động
         6. Mỗi segment phải có ít nhất 3 hoạt động
         7. JSON KHÔNG ĐƯỢC CẮT NGẮN GIỮA CHỪNG - KIỂM TRA KỸ TẤT CẢ DẤU NGOẶC ĐỀU ĐƯỢC ĐÓNG!
         8. NGHIÊM CẤM SỬ DỤNG LẠI CÙNG PLACES, KHÁCH SẠN, NHÀ HÀNG ĐÃ DÙNG TRONG NHỮNG NGÀY TRƯỚC!
@@ -314,9 +315,13 @@ class PlanModel:
                 ]
                 
                 try:
-                    day_response = self.llm.invoke(messages)
-                    
-                    day_response_content = day_response.content if hasattr(day_response, 'content') else day_response
+                    # day_response = self.llm.invoke(messages)
+                    day_response = self.llm.responses.create(
+                        model="gpt-4.1",
+                        input=messages
+                    )
+                    # day_response_content = day_response.content if hasattr(day_response, 'content') else day_response
+                    day_response_content = day_response.output_text if hasattr(day_response, 'output_text') else day_response
                     
                     day_response_content = self._cleanup_llm_response(day_response_content)
                     
