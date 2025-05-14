@@ -6,6 +6,7 @@ from pathlib import Path
 from datetime import datetime
 import time
 import random
+import logging
 
 try:
     from openai import OpenAI
@@ -104,6 +105,9 @@ class CommentAgent:
             "restaurant": "{cuisine} restaurant in {location}: {features}",
             "hotel": "{location} hotel {price_range}: {features}"
         }
+        
+        logging.basicConfig(level=logging.INFO)
+        self.logger = logging.getLogger(__name__)
         
         if not self.use_mock_data:
             try:
@@ -300,75 +304,105 @@ class CommentAgent:
     
     def _get_suggestions_by_type(self, data, query, suggestion_type):
         """Get suggestions for a specific type"""
+        self.logger.info(f"Getting suggestions for type: {suggestion_type}")
+        self.logger.info(f"Query: {query}")
         suggestions = []
         
         # If using mock data, return mock suggestions
         if self.use_mock_data:
+            self.logger.info("Using mock data for suggestions")
             return self._generate_mock_suggestions(query, suggestion_type, data["destination"]["id"])
         
         # Try to connect to databases if not already connected
         if not self.database_connected:
             try:
+                self.logger.info("Initializing databases")
                 self._init_databases()
                 self.database_connected = True
             except Exception as e:
-                print(f"Failed to connect to databases: {e}")
-                print("Using mock data instead")
+                self.logger.error(f"Failed to connect to databases: {str(e)}", exc_info=True)
+                self.logger.info("Falling back to mock data")
                 self.use_mock_data = True
                 return self._generate_mock_suggestions(query, suggestion_type, data["destination"]["id"])
         
         # Query actual databases
+        self.logger.info(f"Querying {suggestion_type} database")
         try:
             if suggestion_type == "restaurant":
-                fnb_ids, fnb_results = self.fnb_db.query(query, top_k=10)
-                for match in fnb_results.get("matches", []):
-                    suggestions.append({
-                        "id": match["id"],
-                        "name": match["metadata"].get("name", ""),
-                        "description": match["metadata"].get("description", ""),
-                        "cuisines": match["metadata"].get("cuisines", ""),
-                        "price_range": match["metadata"].get("price_range", ""),
-                        "rating": match["metadata"].get("rating", 0),
-                        "score": match["score"]
-                    })
+                self.logger.info("Querying restaurant database")
+                fnb_ids, fnb_results = self.fnb_db.query(query, filter=self.filter, top_k=10)
+                self.logger.info(f"Received {len(fnb_results)} restaurant results")
+                
+                for match in fnb_results:
+                    try:
+                        suggestions.append({
+                            "id": match["id"],
+                            "name": match["metadata"].get("name", ""),
+                            "description": match["metadata"].get("description", ""),
+                            "cuisines": match["metadata"].get("cuisines", ""),
+                            "price_range": match["metadata"].get("price_range", ""),
+                            "rating": match["metadata"].get("rating", 0),
+                            "score": match["score"]
+                        })
+                    except Exception as e:
+                        self.logger.error(f"Error processing restaurant match: {str(e)}", exc_info=True)
+                        continue
                     
             elif suggestion_type == "place":
-                place_ids, place_results = self.place_db.query(query, top_k=10)
-                for match in place_results.get("matches", []):
-                    suggestions.append({
-                        "id": match["id"],
-                        "name": match["metadata"].get("name", ""),
-                        "description": match["metadata"].get("description", ""),
-                        "rating": match["metadata"].get("rating", 0),
-                        "score": match["score"]
-                    })
+                self.logger.info("Querying place database")
+                place_ids, place_results = self.place_db.query(query, filter=self.filter, top_k=10)
+                self.logger.info(f"Received {len(place_results)} place results")
+                
+                for match in place_results:
+                    try:
+                        suggestions.append({
+                            "id": match["id"],
+                            "name": match["metadata"].get("name", ""),
+                            "description": match["metadata"].get("description", ""),
+                            "rating": match["metadata"].get("rating", 0),
+                            "score": match["score"]
+                        })
+                    except Exception as e:
+                        self.logger.error(f"Error processing place match: {str(e)}", exc_info=True)
+                        continue
                     
             elif suggestion_type == "hotel":
-                hotel_ids, hotel_results = self.hotel_db.query(query, top_k=10)
-                for match in hotel_results.get("matches", []):
-                    suggestions.append({
-                        "id": match["id"],
-                        "name": match["metadata"].get("name", ""),
-                        "description": match["metadata"].get("description", ""),
-                        "amenities": match["metadata"].get("amenities", ""),
-                        "price_per_night": match["metadata"].get("price_per_night", 0),
-                        "rating": match["metadata"].get("rating", 0),
-                        "score": match["score"]
-                    })
+                self.logger.info("Querying hotel database")
+                hotel_ids, hotel_results = self.hotel_db.query(query, filter=self.filter, top_k=10)
+                self.logger.info(f"Received {len(hotel_results)} hotel results")
+                
+                for match in hotel_results:
+                    try:
+                        suggestions.append({
+                            "id": match["id"],
+                            "name": match["metadata"].get("name", ""),
+                            "description": match["metadata"].get("description", ""),
+                            "amenities": match["metadata"].get("amenities", ""),
+                            "price_per_night": match["metadata"].get("price_per_night", 0),
+                            "rating": match["metadata"].get("rating", 0),
+                            "score": match["score"]
+                        })
+                    except Exception as e:
+                        self.logger.error(f"Error processing hotel match: {str(e)}", exc_info=True)
+                        continue
+                        
         except Exception as e:
-            print(f"Error querying database for {suggestion_type}: {e}")
-            print("Falling back to mock data")
+            self.logger.error(f"Error querying database for {suggestion_type}: {str(e)}", exc_info=True)
+            self.logger.info("Falling back to mock data")
             return self._generate_mock_suggestions(query, suggestion_type, data["destination"]["id"])
         
         # If no results from database, use mock data
         if not suggestions:
-            print(f"No results from database for {suggestion_type}. Using mock data.")
+            self.logger.warning(f"No results from database for {suggestion_type}. Using mock data.")
             return self._generate_mock_suggestions(query, suggestion_type, data["destination"]["id"])
             
+        self.logger.info(f"Returning {len(suggestions)} suggestions for {suggestion_type}")
         return sorted(suggestions, key=lambda x: x.get("score", 0), reverse=True)
 
     def gen_activity_comment(self, comment_plan: dict):
-        destination_id = comment_plan.get("destination_id", "")
+        self.logger.info(f"Received trip plan request: {comment_plan}")
+        self.destination_id = comment_plan.get("destination_id", "")
+        self.filter = {"city": {"$eq" : self.destination_id}}
         
         budget = comment_plan.get("budget", {})
         budget_type = budget.get("type", "") if isinstance(budget, dict) else ""
@@ -426,7 +460,7 @@ class CommentAgent:
         
         structured_data = {
             "destination": {
-                "id": destination_id
+                "id": self.destination_id
             },
             "budget": {
                 "type": budget_type,

@@ -40,15 +40,39 @@ def remove_duplicate_by_name(matches):
     Returns:
         list: A list of unique matches by 'name'.
     """
+    logging.info(f"Starting remove_duplicate_by_name with {len(matches)} matches")
+    
+    if not matches:
+        logging.warning("Empty matches list received")
+        return []
+        
     seen = set()
     unique_matches = []
     
-    for match in matches:
-        name = match['metadata']['name']
-        if name not in seen:
-            unique_matches.append(match)
-            seen.add(name)
+    for idx, match in enumerate(matches):
+        try:
+            if not isinstance(match, dict):
+                logging.error(f"Match at index {idx} is not a dictionary: {type(match)}")
+                continue
+                
+            if 'metadata' not in match:
+                logging.error(f"Match at index {idx} has no metadata field")
+                continue
+                
+            name = match['metadata'].get('name', '')
+            if not name:
+                logging.warning(f"Match at index {idx} has no name in metadata")
+                continue
+                
+            if name not in seen:
+                unique_matches.append(match)
+                seen.add(name)
+                logging.debug(f"Added unique match: {name}")
+        except Exception as e:
+            logging.error(f"Error processing match at index {idx}: {str(e)}")
+            continue
     
+    logging.info(f"Finished remove_duplicate_by_name. Found {len(unique_matches)} unique matches")
     return unique_matches
 class BaseVectorDatabase:
     def __init__(self, index_name="default-index"):
@@ -64,6 +88,8 @@ class BaseVectorDatabase:
         self.checkpoint_file = os.path.join(SCRIPT_DIR, f'{index_name}_checkpoint.json')
         self.max_tokens = 8000  # Slightly less than 8192 to be safe
         self.df = None
+        logging.basicConfig(level=logging.INFO)
+        self.logger = logging.getLogger(__name__)
 
     def truncate_text(self, text: str) -> str:
         """
@@ -158,24 +184,51 @@ class BaseVectorDatabase:
         Query the database for similar items based on text input
         Returns a tuple of (ids, full_results)
         """
+        self.logger.info(f"Starting query with text: {query_text}")
+        self.logger.info(f"Filter: {filter}, top_k: {top_k}")
+        
         if not self.index:
+            self.logger.error("Pinecone index not initialized")
             raise ValueError("Pinecone index not initialized. Please run set_up_pinecone first.")
             
-        # Generate embedding for the query
-        query_embedding = self.get_openai_embeddings(query_text)
-        
-        # Query Pinecone
-        results = self.index.query(
-            vector=query_embedding,
-            top_k=top_k,
-            include_metadata=include_metadata,
-            filter = filter
-        )
-        results = remove_duplicate_by_name(results['matches'])
-        # Extract IDs
-        ids = [match['id'] for match in results]
-        
-        return ids, results
+        try:
+            # Generate embedding for the query
+            self.logger.info("Generating embedding for query")
+            query_embedding = self.get_openai_embeddings(query_text)
+            if not query_embedding:
+                self.logger.error("Failed to generate embedding")
+                return [], []
+            
+            # Query Pinecone
+            self.logger.info("Querying Pinecone index")
+            results = self.index.query(
+                vector=query_embedding,
+                top_k=top_k,
+                include_metadata=include_metadata,
+                filter = filter
+            )
+            
+            self.logger.info(f"Received {len(results.get('matches', []))} matches from Pinecone")
+            
+            # Process results
+            matches = results.get('matches', [])
+            if not matches:
+                self.logger.warning("No matches found in Pinecone response")
+                return [], []
+                
+            # Remove duplicates
+            self.logger.info("Removing duplicates from matches")
+            unique_matches = remove_duplicate_by_name(matches)
+            
+            # Extract IDs
+            ids = [match['id'] for match in unique_matches]
+            self.logger.info(f"Returning {len(ids)} unique results")
+            
+            return ids, unique_matches
+            
+        except Exception as e:
+            self.logger.error(f"Error in query: {str(e)}", exc_info=True)
+            return [], []
 
     def get_item_by_id(self, item_id):
         """

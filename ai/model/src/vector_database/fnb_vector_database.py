@@ -486,7 +486,7 @@ def main():
         for fnb_id in fnb_ids:
             print(fnb_id)
         print("\nFull results:")
-        for match in results['matches']:
+        for match in results:
             print(f"Tên nhà hàng: {match['metadata']['name']}")
             print(f"Địa chỉ: {match['metadata']['address']}")
             print(f"Đánh giá: {match['metadata']['rating']} sao")
