@@ -1,8 +1,8 @@
 import posthog from 'posthog-js';
 
 // Initialize PostHog with your project API key
-const posthogKey = 'phc_PWEBHvMCazdbJLb31dLGr9OYhYExgvVNSYY49rCI3TA';
-const posthogHost = 'https://us.i.posthog.com';
+const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY || '';
+const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com';
 
 if (typeof window !== 'undefined') {
   posthog.init(posthogKey, {
