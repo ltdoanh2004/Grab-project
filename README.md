@@ -2,7 +2,7 @@
 A web app that allows users to easily select and customize their tour itinerary based on personal preferences, using either predefined suggestions or AI-generated recommendations.
 
 ## Demo
-https://www.youtube.com/watch?v=jjYC0ocranI&t=1s
+[![](https://markdown-videos-api.jorgenkh.no/youtube/jjYC0ocranI)](https://youtu.be/jjYC0ocranI)
 
 ## Tech Stack
 
