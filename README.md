@@ -6,7 +6,9 @@ A web app that allows users to easily select and customize their tour itinerary 
 [![](https://markdown-videos-api.jorgenkh.no/youtube/jjYC0ocranI)](https://youtu.be/jjYC0ocranI)
 
 ## Installation
-[Install Backend](./backend/README.md)
+[Frontend](./frontend/README.md)
+[Backend](./backend/README.md)
+[AI](./ai/requirements.md)
 
 ### Frontend
 - **Framework**: React 19 with TypeScript
