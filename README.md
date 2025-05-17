@@ -7,7 +7,9 @@ A web app that allows users to easily select and customize their tour itinerary 
 
 ## Installation
 [Frontend](./frontend/README.md)
+
 [Backend](./backend/README.md)
+
 [AI](./ai/requirements.md)
 
 ### Frontend
