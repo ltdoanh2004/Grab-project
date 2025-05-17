@@ -2,9 +2,6 @@
 
 A modern RESTful API for managing todos efficiently, built with Go using clean architecture principles.
 
-## Demo
-
-
 ## Tech Stack
 
 - Go 1.21
@@ -82,46 +79,6 @@ make mysql
 make server
 ```
 
-## API Endpoints
-
-### Health Check
-- `GET /health` - Check API health status
-
-### Todo Endpoints
-
-- `GET /api/v1/todos` - Get all todos
-- `GET /api/v1/todos/:id` - Get a specific todo
-- `POST /api/v1/todos` - Create a new todo
-- `PUT /api/v1/todos/:id` - Update a todo
-- `DELETE /api/v1/todos/:id` - Delete a todo
-
-## Request/Response Examples
-
-### Create Todo
-```json
-POST /api/v1/todos
-{
-    "title": "Complete project",
-    "description": "Finish the todo app",
-    "status": "pending"
-}
-```
-
-### Response Format
-```json
-{
-    "message": "Todo created successfully",
-    "data": {
-        "id": 1,
-        "title": "Complete project",
-        "description": "Finish the todo app",
-        "status": "pending",
-        "created_at": "2024-03-12T10:00:00Z",
-        "updated_at": "2024-03-12T10:00:00Z"
-    }
-}
-```
-
 ## API Documentation
 
 ### Swagger
@@ -135,7 +92,7 @@ go install github.com/swaggo/swag/cmd/swag@latest
 
 2. Generate Swagger documentation:
 ```bash
-swag init -g cmd/main.go
+make swag
 ```
 
 3. Access the Swagger UI:
@@ -149,14 +106,33 @@ The Swagger UI provides interactive documentation where you can:
 - View request/response schemas
 
 ## Features
+### User Experience
+- **Personalized Trip Planning**: Create customized travel itineraries based on preferences
+- **AI-Powered Recommendations**: Get intelligent suggestions for destinations, activities, and restaurants
+- **Interactive Itinerary Builder**: Drag and drop interface for organizing daily activities
+- **Expense Tracking**: Track and split expenses among travel companions
+- **Plan Sharing**: Share travel plans with friends and family
+- **Export Options**: Export plans to spreadsheets or take screenshots
 
-- Clean Architecture implementation
-- Dependency Injection using Uber FX
-- Structured logging with Zerolog
-- Configuration management with Viper
-- CORS support
-- Swagger API documentation
-- Docker support
-- Health check endpoint
-- MySQL database integration
-- GORM ORM for database operations 
+### Travel Planning Flow
+- **Destination Selection**: Choose from popular destinations or discover new places
+- **Budget Management**: Set and track travel budget constraints
+- **Date Selection**: Flexible date picking with duration optimization
+- **Preference Configuration**: Specify travel style, interests, and special requirements
+- **AI Plan Generation**: Receive AI-generated itineraries based on your inputs
+- **Plan Customization**: Modify suggested plans to perfectly match your preferences
+
+### AI Capabilities
+- **Smart Recommendations**: Context-aware suggestions based on user preferences
+- **Multi-Source Data**: Recommendations drawn from extensive travel databases
+- **Natural Language Processing**: Understand and respond to user requests in natural language
+- **Optimization Algorithms**: Create efficient itineraries considering distances, opening hours, and more
+- **Personalization**: Learn from user feedback to improve future recommendations
+- **Real-time Updates**: Adjust plans based on weather, events, or other changing factors
+
+### Technical Features
+- **Responsive Design**: Works seamlessly across desktop, tablet, and mobile devices
+- **Secure Authentication**: JWT-based authentication system
+- **API Documentation**: Comprehensive Swagger documentation
+- **Scalable Architecture**: Microservices-based design for future expansion
+- **Data Visualization**: Interactive maps and charts for better planning
